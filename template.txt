@@ -1,0 +1,42 @@
+{ name:     
+  , rarity:   5
+  , class:    
+  , attr:     
+  , deck:     Deck
+  , stats:    { base:  { atk: ,  hp:  }
+              , max:   { atk: , hp:  }
+              , grail: { atk: , hp:  }
+              }
+  , ratings:  { damage:, np:, critical:, utility:, support:, durability: }
+  , actives:  [ { name:   
+                , icon:   
+                , cd:     
+                , effect: [ ]
+                }
+              , { name:   
+                , icon:   
+                , cd:     
+                , effect: [ ]
+                }
+              , { name:   
+                , icon:   
+                , cd:     
+                , effect: [ ]
+                }
+              ]
+  , passives: []
+  , phantasm: { name:   
+              , desc:   
+              , rank:   
+              , card:   
+              , kind:   "Anti-"
+              , hits:   
+              , effect: 
+              , over:   
+              }
+  , gen:      { starAbsorb: , starGen: , npPerHit: , npAttacked:  }
+  , hits:     { a: , b: , q: , ex:  }
+  , traits:   []
+  , death:    
+  , align:    
+  }

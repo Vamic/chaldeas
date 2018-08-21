@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CHALDEAS</title>
+    <style>
+      body
+        { margin: 0; padding: 0
+        ; background-color: #e6e6e6 
+        ; color: #585858
+        ; font-family: "Helvetica Neue",Helvetica,"Roboto",Arial,sans-serif
+        ; font-size: 15px
+        }
+      #layout
+        { display: flex
+        ; position: absolute
+        ; top:0;left:0;right:0;bottom:0
+        }
+      #filters 
+        { overflow: scroll
+        ; padding: 0.75em 1.5em
+        ; background-color: #ffffff
+        ; width: 310px
+        ; flex-shrink: 0
+        }
+      #servants 
+        { overflow: scroll }
+      #servants > div
+        { position: relative
+        ; display: inline-block
+        ; margin: 3px
+        }
+      #servants header, #servants footer
+        { position: absolute
+        ; left:0;right:0
+        ; text-align: center
+        }
+      #servants header
+        { bottom: 25px }
+      #servants footer
+        { bottom: 5px 
+        ; font-size: 8px
+        ; color: #ffffff
+        }
+      #servants header span
+        { background-color: #ffffff
+        ; font-size: 12px
+        ; border-radius: 20px
+        ; padding: 1px 4px 2px 4px
+        ; border: 2px solid #cccccc
+        }
+      #servants img
+        { width: 150px
+        ; border: 3px solid #000000 
+        ; border-bottom-width: 11px
+        }
+      #servants .stars5 img, #servants .stars5 header span
+        { border-color: #bf9000; color: #bf9000 }
+      #servants > div:hover
+        { cursor: pointer }
+      #servants > div:hover footer, #servants > div:hover header span
+        { color: #222222 }
+    </style>
+    <script type="text/javascript" src="js/chaldeas.js"></script>
+  </head>
+  <body>
+  </body>
+</html>

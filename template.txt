@@ -1,5 +1,5 @@
-{ name:     
-  , rarity:   5
+, { name:     
+  , rarity:   3
   , class:    
   , attr:     
   , deck:     Deck

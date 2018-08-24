@@ -8,6 +8,10 @@ import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum 
 import Data.Generic.Rep.Show 
 
+
+data Class = Saber | Archer | Lancer | Caster | Rider | Assassin | Berserker
+           | Shielder | Ruler | Avenger | MoonCancer | AlterEgo
+
 data Trait = Arthur 
            | Beast 
            | Brynhildr
@@ -16,12 +20,12 @@ data Trait = Arthur
            | Demonic
            | Divine
            | Dragon
-           | EarthOrSky
+           | HeavenOrEarth
            | Female
            | GreekMyth
-           | HeavenOrEarth
            | Humanoid
            | King
+           | Magical
            | Male
            | Mecha
            | PseudoServant
@@ -32,13 +36,12 @@ data Trait = Arthur
            | Undead
            | EnumaElish
 
-instance showTrait ∷ Show Trait where
+instance _a_ ∷ Show Trait where
   show = case _ of
     Brynhildr        → "Brynhildr's Beloved"
     DemiServant      → "Demi-servant"
-    EarthOrSky       → "Earth or Sky"
+    HeavenOrEarth       → "Heaven or Earth"
     GreekMyth        → "Greek Mythology Males"
-    HeavenOrEarth    → "Heaven or Earth"
     PseudoServant    → "Pseudo-Servant"
     ThreatToHumanity → "Threat to Humanity"
     EnumaElish       → "Weak to Enuma Elish"
@@ -58,6 +61,22 @@ instance _4_ ∷ Bounded Trait where
   top = genericTop
   bottom = genericBottom
 instance _5_ ∷ BoundedEnum Trait where
+  cardinality = genericCardinality
+  toEnum = genericToEnum
+  fromEnum = genericFromEnum
+
+derive instance _13_ ∷ Eq Class
+derive instance _14_ ∷ Ord Class
+derive instance _15_ ∷ Generic Class _
+instance _16_ ∷ Show Class where
+  show = genericShow
+instance _17_ ∷ Enum Class where
+  succ = genericSucc
+  pred = genericPred
+instance _18_ ∷ Bounded Class where
+  top = genericTop
+  bottom = genericBottom
+instance _19_ ∷ BoundedEnum Class where
   cardinality = genericCardinality
   toEnum = genericToEnum
   fromEnum = genericFromEnum

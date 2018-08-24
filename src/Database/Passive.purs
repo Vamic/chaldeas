@@ -3,297 +3,231 @@ module Database.Passive where
 import Prelude
 import Operators
 
+import Data.Array  (singleton)
 import Data.Map    (Map, lookup)
 import Data.Maybe  (fromMaybe)
-import Data.String (joinWith)
-import Data.Tuple  (Tuple(..))
 
+import Database.Trait
 import Database.Skill
 import Database.Icon
 
 data PassiveEffect = Give Target BuffEffect (Map Rank Number)
 
+type Passive = { name   ∷ String
+               , rank   ∷ Rank
+               , icon   ∷ Icon
+               , effect ∷ Array ActiveEffect
+               }
+
+{-
 showPassiveEffect ∷ Rank → PassiveEffect → String
 showPassiveEffect rank (Give target buff ranks)
     = showBuff target (fromMaybe (-1.0) $ lookup rank ranks) buff
-
-type Passive = { name   ∷ String
-               , icon   ∷ Icon
-               , effect ∷ Array PassiveEffect
-               }
 showPassive ∷ Tuple Passive Rank → String
 showPassive (Tuple {effect} rank) 
     = joinWith "\n" $ (_ ⧺ ".") ∘ showPassiveEffect rank ↤ effect
+-}
 
-altreactor =
-  { name:   "Altreactor" 
-  , icon:   IconHoodUp
-  , effect: [ Give Self DebuffResist $m[A:20.0] ]
-  } ∷ Passive
+activate ∷ Rank → PassiveEffect → ActiveEffect
+activate rank (Give target buff ranks) 
+    = Grant target 0 buff ∘ fromMaybe (-1.0) $ lookup rank ranks
 
-atTheBoundary =
-  { name:   "At The Boundary"
-  , icon:   IconFire
-  , effect: [ Give Self KillImmunity $m[A:100.0]
-            , Give Self CharmResist  $m[A:100.0]
-            , Give Self KillChance   $m[A:5.0]
-            ]
-  } ∷ Passive
+type PassiveBase = Rank → Passive
 
-avenger =
-  { name:   "Avenger"
-  , icon:   IconAvenger
-  , effect: [ Give Others DebuffResist $m[A:10.0, B:8.0,  C:6.0]
-            , Give Self NPFromDamage   $m[A:20.0, B:18.0, C:16.0]
-            ]
-  } ∷ Passive
+passiveBase ∷ String → Icon → Array PassiveEffect → PassiveBase
+passiveBase name icon effects rank = { name
+                                     , rank
+                                     , icon
+                                     , effect: activate rank ↤ effects
+                                     }
 
-beastsAuthority =
-  { name:   "Beast's Authority"
-  , icon:   IconExclamationUp
-  , effect: [ Give Self CritUp $m[D:8.0] ]
-  } ∷ Passive
+altReactor ∷ PassiveBase
+altReactor = passiveBase "AltReactor" IconHoodUp
+  [ Give Self DebuffResist $m[A:20.0] ]
 
-beastForm =
-  { name:   "Beast Form"
-  , icon:   IconTeeth
-  , effect: [ Give Self BusterUp $m[B:8.0]
-            , Give Self StarGen     $m[B:8.0]
-            ]
-  } ∷ Passive
+atTheBoundary ∷ PassiveBase
+atTheBoundary = passiveBase "At The Boundary" IconFire
+  [ Give Self KillImmunity $m[A:0.0]
+  , Give Self CharmResist  $m[A:100.0]
+  , Give Self KillChance   $m[A:5.0]
+  ]
 
-connectionToTheRoot =
-  { name:   "Connection to the Root"
-  , icon:   IconDamageUp
-  , effect: [ Give Self QuickUp  $m[A:6.0, C:4.0]
-            , Give Self ArtsUp   $m[A:6.0, C:4.0]
-            , Give Self BusterUp $m[A:6.0, C:4.0]
-            ]
-  } ∷ Passive
+avenger ∷ PassiveBase
+avenger = passiveBase "Avenger" IconAvenger
+  [ Give Others DebuffResist $m[A:10.0, B:8.0,  C:6.0]
+  , Give Self NPFromDamage   $m[A:20.0, B:18.0, C:16.0]
+  ] 
 
-contractWithSamovilas =
-  { name:   "Contract with Samovilas"
-  , icon:   IconHoodUp
-  , effect: [ Give Self DebuffResist  $m[A:10.0]
-            , Give Self DebuffSuccess $m[A:10.0]
-            ]
-  } ∷ Passive
+beastsAuthority ∷ PassiveBase
+beastsAuthority = passiveBase "Beast's Authority" IconExclamationUp
+  [ Give Self CritUp $m[D:8.0] ]
 
-cosmoReactor =
-  { name:   "Cosmo Reactor"
-  , icon:   IconStarUp
-  , effect: [ Give Self StarGen $m[A:10.0, B:8.0] ]
-  } ∷ Passive
+beastForm ∷ PassiveBase
+beastForm = passiveBase "Beast Form" IconTeeth
+  [ Give Self BusterUp $m[B:8.0]
+  , Give Self StarUp   $m[B:8.0]
+  ]
 
-declineOfCivilization =
-  { name:   "Decline of Civilization"
-  , icon:   IconExclamationUp
-  , effect: [ Give Self CritUp $m[EX:10.0] ]
-  } ∷ Passive
+connectionRoot ∷ PassiveBase
+connectionRoot = passiveBase "Connection to the Root" IconDamageUp
+  [ Give Self QuickUp  $m[A:6.0, C:4.0]
+  , Give Self ArtsUp   $m[A:6.0, C:4.0]
+  , Give Self BusterUp $m[A:6.0, C:4.0]
+  ]
 
-doubleClass =
-  { name:   "Double Class"
-  , icon:   IconMissing
-  , effect: []
-  } ∷ Passive
+contractWithSamovilas ∷ PassiveBase
+contractWithSamovilas = passiveBase "Contract with Samovilas" IconHoodUp
+  [ Give Self DebuffResist  $m[A:10.0]
+  , Give Self DebuffSuccess $m[A:10.0]
+  ]
 
-divinity =
-  { name:   "Divinity"
-  , icon:   IconSun
-  , effect: [ Give Self DamageUp $m[ APlusPlus:230.0, A:200.0, BPlus:185.0
-                                      , B:175.0, BMinus:170.0, C:150.0, D:125.0
-                                      , E:100.0, EMinus:95.0
-                                      ] ]
-  } ∷ Passive
+coreOfGoddess ∷ PassiveBase
+coreOfGoddess = passiveBase "Core of the Goddess" IconGoddess
+  [ Give Self DamageUp  $m[EX:300.0, A:250.0, B:225.0, C:200.0] 
+  , Give Self DebuffResist $m[EX:30.0,  A:25.0,  B:22.5,  C:20.0]
+  ]
 
-existenceOutsideTheDomain =
-  { name:   "Existence Outside the Domain"
-  , icon:   IconSpotlight
-  , effect: [ Give Party StarsPerTurn $m[EX:2.0,  B:2.0, D:2.0] 
-            , Give Self  DebuffResist $m[EX:12.0, B:8.0, D:4.0]
-            ]
-  } ∷ Passive
+cosmoReactor ∷ PassiveBase
+cosmoReactor = passiveBase "Cosmo Reactor" IconStarHaloUp
+  [ Give Self StarUp $m[A:10.0, B:8.0] ]
 
-goddessEssence =
-  { name:   "Goddess' Essence"
-  , icon:   IconGoddess
-  , effect: [ Give Self DamageUp  $m[EX:300.0, A:250.0, B:225.0, C:200.0] 
-            , Give Self DebuffResist $m[EX:30.0,  A:25.0,  B:22.5,  C:20.0]
-            ]
-  } ∷ Passive
+declineOfCivilization ∷ PassiveBase
+declineOfCivilization = passiveBase "Decline of Civilization" IconExclamationUp
+  [ Give Self CritUp $m[EX:10.0] ]
 
-homunculus = 
-  { name:   "Homunculus"
-  , icon:   IconArtsUp
-  , effect: [ Give Self ArtsUp    $m[CPlus:6.5] 
-            , Give Self DebuffResist $m[CPlus:6.5]
-            ]
-  } ∷ Passive
+doubleClass ∷ PassiveBase
+doubleClass = passiveBase "Double Class" IconMissing []
 
-highServant =
-  { name:   "High Servant"
-  , icon:   IconMissing
-  , effect: []
-  } ∷ Passive
+divinity ∷ PassiveBase
+divinity = passiveBase "Divine" IconSun 
+  ∘ singleton ∘ Give Self DamageUp 
+  $m[ APlusPlus:230.0, A:200.0, BPlus:185.0, B:175.0, BMinus:170.0
+    , C:150.0, D:125.0, E:100.0, EMinus:95.0
+    ]
 
-independentAction =
-  { name:   "Independent Action"
-  , icon:   IconDash
-  , effect: [ Give Self CritUp $m[ EX:12.0, APlus:11.0, A:10.0, B:8.0
-                                     , C:6.0 
-                                     ] ]
-  } ∷ Passive
+existOutsideDomain ∷ PassiveBase
+existOutsideDomain = passiveBase "Existence Outside the Domain" IconSpotlight
+  [ Give Party StarsPerTurn $m[EX:2.0,  B:2.0, D:2.0] 
+  , Give Self  DebuffResist $m[EX:12.0, B:8.0, D:4.0]
+  ]
 
-independentActionCeleb =
-  { name:   "Independent Action (Celeb)"
-  , icon:   IconDash
-  , effect: [ Give Self CritUp $m[EX:10.0] 
-            --- TODO Charges own NP gauge by 3% on Waterside and Beach Field. 
-            ]
-  } ∷ Passive
+homunculus ∷ PassiveBase
+homunculus = passiveBase "Homunculus" IconArtsUp
+  [ Give Self ArtsUp    $m[CPlus:6.5] 
+  , Give Self DebuffResist $m[CPlus:6.5]
+  ]
 
-independentManifestation =
-  { name:   "Independent Manifestation"
-  , icon:   IconDash
-  , effect: [ Give Self CritUp   $m[C:6.0, E:2.0]
-            , Give Self MentalResist $m[C:6.0, E:2.0]
-            , Give Self KillResist   $m[C:6.0, E:2.0]
-            ]
-  } ∷ Passive
+highServant ∷ PassiveBase
+highServant = passiveBase "High Servant" IconMissing []
 
-insanity = 
-  { name:   "Insanity"
-  , icon:   IconBusterUp
-  , effect: [ Give Self BusterUp $m[C:8.0] ]
-  } ∷ Passive
+independentAction ∷ PassiveBase
+independentAction = passiveBase "Independent Action" IconDash
+  [ Give Self CritUp $m[EX:12.0, APlus:11.0, A:10.0, B:8.0, C:6.0] ] 
 
-itemConstruction =
-  { name:   "Item Construction"
-  , icon:   IconPotion
-  , effect: [ Give Self DebuffSuccess $m[ EX:12.0, A:10.0, BPlus:9.0, B:8.0
-                                        , C:6.0, D:4.0
-                                        ] ]
-  } ∷ Passive
+independentActionCeleb ∷ PassiveBase
+independentActionCeleb = passiveBase "Independent Action (Celeb)" IconDash
+  [ Give Self CritUp $m[EX:10.0] ]
+  --- TODO Charges own NP gauge by 3% on Waterside and Beach Field. 
 
-itemConstructionFalse = 
-  { name:   "Item Construction (False)"
-  , icon:   IconPotion
-  , effect: [ Give Self DebuffSuccess $m[A:10.0] ]
-  } ∷ Passive
+independentManifestation ∷ PassiveBase
+independentManifestation = passiveBase "Independent Manifestation" IconDash
+  [ Give Self CritUp       $m[C:6.0, E:2.0]
+  , Give Self MentalResist $m[C:6.0, E:2.0]
+  , Give Self KillResist   $m[C:6.0, E:2.0]
+  ]
 
-itemConstructionOdd =
-  { name:   "Item Construction (Odd)"
-  , icon:   IconPotion
-  , effect: [ Give Self HealingReceived $m[EX:10.0] ]
-  } ∷ Passive
+insanity ∷ PassiveBase
+insanity = passiveBase "Insanity" IconBusterUp
+  [ Give Self BusterUp $m[C:8.0] ]
 
-logosEater = 
-  { name:   "Logos Eater"
-  , icon:   IconShieldUp
-  , effect: [] -- TODO Increases own defense against Humanoid enemies by 16%. 
-  } ∷ Passive
+itemConstruction ∷ PassiveBase
+itemConstruction = passiveBase "Item Construction" IconPotion 
+  ∘ singleton ∘ Give Self DebuffSuccess 
+  $m[ EX:12.0, A:10.0, BPlus:9.0, B:8.0, C:6.0, D:4.0 ] 
 
-madness =
-  { name:   "Madness Enhancement"
-  , icon:   IconTeeth
-  , effect: [ Give Self BusterUp $m[ EX:12.0, APlus:11.0, A:10.0, B:8.0
-                                      , C:6.0, DPlus:5.0, D:4.0, EPlus:3.0
-                                      , E:2.0, EMinus:1.0
-                                      ] ]   
-  } ∷ Passive
+itemConstructionFalse ∷ PassiveBase
+itemConstructionFalse = passiveBase "Item Construction (False)" IconPotion
+  [ Give Self DebuffSuccess $m[A:10.0] ]
 
-magicResistance = 
-  { name:   "Magic Resistance"
-  , icon:   IconDiamonds
-  , effect: [ Give Self DebuffResist $m[ EX:25.0, APlus:21.0, A:20.0
-                                       , BPlus:18.0, BPlus:18.0, B:17.5
-                                       , CPlus:15.5, C:15.0, DPlus:13.0, D:12.5
-                                       , E:10.0
-                                       ] ]
-  } ∷ Passive
+itemConstructionOdd ∷ PassiveBase
+itemConstructionOdd = passiveBase "Item Construction (Odd)" IconPotion
+  [ Give Self HealingReceived $m[EX:10.0] ]
 
-mixedBlood =
-  { name:   "Mixed Blood"
-  , icon:   IconNobleTurn
-  , effect: [ Give Self GaugePerTurn $m[EX:5.0] ]
-  } ∷ Passive
+logosEater ∷ PassiveBase
+logosEater = passiveBase "Logos Eater" IconShieldUp 
+  [ Give Self (DefenseUpVs Humanoid) $m[C:16.0] ]
 
-negaSaver =
-  { name:   "Nega Saver"
-  , icon:   IconDamageUp
-  , effect: [] -- TODO Deals x1.5 damage against Ruler class enemies. 
-  } ∷ Passive
+madness ∷ PassiveBase
+madness = passiveBase "Madness Enhancement" IconTeeth 
+  ∘ singleton ∘ Give Self BusterUp
+  $m[ EX:12.0, APlus:11.0, A:10.0, B:8.0, C:6.0, DPlus:5.0, D:4.0, EPlus:3.0
+    , E:2.0, EMinus:1.0 
+    ]
 
-oblivionCorrection =
-  { name:   "Oblivion Correction"
-  , icon:   IconEclipse
-  , effect: [ Give Self CritUp $m[A:10.0, B:8.0, C:6.0] ]
-  } ∷ Passive
+magicResistance ∷ PassiveBase
+magicResistance = passiveBase "Magic Resistance" IconDiamonds 
+  ∘ singleton ∘ Give Self DebuffResist
+  $m[ EX:25.0, APlus:21.0, A:20.0, BPlus:18.0, BPlus:18.0, B:17.5, CPlus:15.5
+    , C:15.0, DPlus:13.0, D:12.5, E:10.0 
+    ]
 
-presenceConcealment =
-  { name:   "Presence Concealment"
-  , icon:   IconMask
-  , effect: [ Give Self StarGen $m[ APlus:10.5, A:10.0, B:8.0, CPlus:6.5, C:6.0
-                                  , CMinus:5.5, D:4.0, E:2.0
-                                  ] ]
-  } ∷ Passive
+mixedBlood ∷ PassiveBase
+mixedBlood = passiveBase "Mixed Blood" IconNobleTurn
+  [ Give Self GaugePerTurn $m[EX:5.0] ]
 
-presenceConcealmentShade =
-  { name:   "Presence Concealment (Shade)"
-  , icon:   IconMask
-  , effect: [ Give Self StarGen       $m[B:8.0] 
-            , Give Self DemeritDebuff  $m[B:10.0]
-            ]
-  } ∷ Passive
+negaSaver ∷ PassiveBase
+negaSaver = passiveBase "Nega Saver" IconDamageUp 
+  [ Give Self (DamageAffinity Ruler) $m[A:1500.0] ]
 
-riding = 
-  { name:   "Riding"
-  , icon:   IconHorse
-  , effect: [ Give Self QuickUp $m[ EX:12.0, APlusPlus:11.5, APlus:11.0
-                                     , A:10.0, B:8.0, CPlus:7.0, C:6.0, E:2.0
-                                     ] ]
-  } ∷ Passive
+oblivionCorrection ∷ PassiveBase
+oblivionCorrection = passiveBase "Oblivion Correction" IconEclipse
+  [ Give Self CritUp $m[A:10.0, B:8.0, C:6.0] ]
 
-ruffian = 
-  { name:   "Ruffian"
-  , icon:   IconExclamationUp
-  , effect: [ Give Self CritUp $m[A:5.0] 
-            , Give Self QuickUp $m[A:5.0]
-            ]
-  } ∷ Passive
+presenceConcealment ∷ PassiveBase
+presenceConcealment = passiveBase "Presence Concealment" IconMask 
+  ∘ singleton ∘ Give Self StarUp
+  $m[ APlus:10.5, A:10.0, B:8.0, CPlus:6.5, C:6.0, CMinus:5.5, D:4.0, E:2.0 ]
 
-selfRestoreMagic =
-  { name:   "Self-Restoration (Magical Energy)"
-  , icon:   IconNiffin
-  , effect: [ Give Self GaugePerTurn $m[ APlus:4.0, A:3.8, B:3.5, C:3.3, D:3.0
-                                    , D:2.0 
-                                    ] ]
-  } ∷ Passive
+presenceConcealmentShade ∷ PassiveBase
+presenceConcealmentShade = passiveBase "Presence Concealment (Shade)" IconMask
+  [ Give Self StarUp $m[B:8.0] ]
+            --, Give Self DebuffResist $m[B:(-10.0)] TODO Demerit
 
-surfing = 
-  { name:   "Surfing"
-  , icon:   IconArtsUp
-  , effect: [ Give Self ArtsUp $m[A:5.0]
-            , Give Self StarGen   $m[A:5.0]
-            ]
-  } ∷ Passive
+riding ∷ PassiveBase
+riding = passiveBase "Riding" IconHorse 
+  ∘ singleton ∘ Give Self QuickUp
+  $m[ EX:12.0, APlusPlus:11.5, APlus:11.0, A:10.0, B:8.0, CPlus:7.0, C:6.0
+    , E:2.0
+    ]
 
-territoryCreation = 
-  { name:   "Territory Creation"
-  , icon:   IconMagicCircle
-  , effect: [ Give Self ArtsUp $m[ EX:12.0, APlusPlus:11.5, APlus:11.0
-                                    , A:10.0, B:8.0, CPlus:7.0, C:6.0, D:4.0
-                                    ] ]
-  } ∷ Passive
+ruffian ∷ PassiveBase    
+ruffian = passiveBase "Ruffian" IconExclamationUp
+  [ Give Self CritUp $m[A:5.0] 
+  , Give Self QuickUp $m[A:5.0]
+  ]
 
-theOneWhoSwallowsTheEarth = 
-  { name:   "The One Who Swallows the Earth"
-  , icon:   IconHoodUp
-  , effect: [ Give Self BurnImmunity $m[EX:100.0] ]
-  } ∷ Passive
-  
-unlimitedPranaSupply =
-  { name:   "Unlimited Prana Supply"
-  , icon:   IconNobleTurn
-  , effect: [ Give Self GaugePerTurn $m[C:3.0] ]
-  } ∷ Passive
+selfRestoreMagic ∷ PassiveBase
+selfRestoreMagic = passiveBase "Self-Restoration (Magical Energy)" IconNiffin
+  ∘ singleton ∘ Give Self GaugePerTurn
+  $m[ APlus:4.0, A:3.8, B:3.5, C:3.3, D:3.0, D:2.0 ]
+
+surfing ∷ PassiveBase
+surfing = passiveBase "Surfing" IconArtsUp 
+  [ Give Self ArtsUp $m[A:5.0]
+  , Give Self StarUp $m[A:5.0]
+  ]
+
+territoryCreation ∷ PassiveBase
+territoryCreation = passiveBase "Territory Creation" IconMagicCircle
+  ∘ singleton ∘ Give Self ArtsUp
+  $m[ EX:12.0, APlusPlus:11.5, APlus:11.0, A:10.0, B:8.0, CPlus:7.0, C:6.0
+    , D:4.0
+    ]
+
+theOneWhoSwallowsEarth ∷ PassiveBase
+theOneWhoSwallowsEarth = passiveBase "The One Who Swallows the Earth" IconHoodUp
+  [ Give Self BurnImmunity $m[EX:0.0] ]
+
+unlimitedManaSupply ∷ PassiveBase  
+unlimitedManaSupply = passiveBase "Unlimited Mana Supply" IconNobleTurn
+  [ Give Self GaugePerTurn $m[C:3.0] ]

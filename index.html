@@ -10,56 +10,186 @@
         ; color: #585858
         ; font-family: "Helvetica Neue",Helvetica,"Roboto",Arial,sans-serif
         ; font-size: 15px
+        ; line-height: 0
+        }
+      span, p, table, br, h1, h2, h3, h4, h5
+        { line-height: 1.4em }
+      h1, h2, h3        { margin: 0.5em 0 0 0 }
+      h2                { font-size: 1.4em }
+      p, h4             { margin: 0 }
+      thead th, tbody   { text-align: center }
+      th                { text-align: right }
+      th, td            { padding: 0 5px }
+      td.rating         { color: #777777 }
+      nav h4            { cursor: pointer }
+      #layout > aside p { cursor: pointer }
+      #layout > aside p:hover, #layout > aside h4:hover
+        { text-decoration: underline }
+      #layout > article table 
+        { width: 230px 
+        ; margin-top: -1px
         }
       #layout
         { display: flex
         ; position: absolute
         ; top:0;left:0;right:0;bottom:0
         }
-      #filters 
+      #layout > aside 
         { overflow: scroll
         ; padding: 0.75em 1.5em
-        ; background-color: #ffffff
-        ; width: 310px
-        ; flex-shrink: 0
+        ; flex: 1 1 0
         }
+      #layout > aside > nav span
+        { display: block }
       #servants 
-        { overflow: scroll }
-      #servants > div
-        { position: relative
-        ; display: inline-block
-        ; margin: 3px
+        { overflow: scroll 
+        ; flex: 4 1 0
+        ; text-align: center
         }
-      #servants header, #servants footer
+      .servant
+        { position: relative 
+        ; display: inline-block
+        }
+      .servant > img 
+        { border-style: solid }
+      .servant.stars5 img, .servant.stars5 header span
+        { border-color: #d29f01; color: #d29f01 }
+      .servant.stars4 img, .servant.stars4 header span
+        { border-color: #d4802f; color: #d4802f }
+      .servant.stars3 img, .servant.stars3 header span
+        { border-color: #919191; color: #919191 }
+      .servant.stars2 img, .servant.stars2 header span
+        { border-color: #9d6e47; color: #9d6e47 }
+      .servant.stars1 img, .servant.stars1 header span
+        { border-color: #9f8f3f; color: #9f8f3f }
+      .servant header, .servant footer
         { position: absolute
         ; left:0;right:0
         ; text-align: center
-        }
-      #servants header
-        { bottom: 25px }
-      #servants footer
-        { bottom: 5px 
-        ; font-size: 8px
         ; color: #ffffff
         }
-      #servants header span
-        { background-color: #ffffff
-        ; font-size: 12px
-        ; border-radius: 20px
+      .servant header span
+        { border-radius: 20px
+        ; border-style: solid
+        ; border-width: 2px
+        ; background-color: #ffffff
+        ; display: inline-block
+        ; margin: 0 6px
+        }
+      .servant div
+        { position: absolute }
+      .servant aside
+        { display: none /*flex*/
+        ; flex-direction: column
+        ; position: absolute
+        ; top:0;right:0
+        }
+      .servant aside img
+        { width: 15px }
+      #servants .servant header
+        { bottom: 20px }
+      #servants .servant footer
+        { bottom: 6px 
+        ; font-size: 7px
+        }
+      #servants .servant header span
+        { font-size: 11.5px
         ; padding: 1px 4px 2px 4px
-        ; border: 2px solid #cccccc
         }
-      #servants img
-        { width: 150px
-        ; border: 3px solid #000000 
-        ; border-bottom-width: 11px
+      #servants .servant div
+        { top:-2px;left:-2px }
+      #servants .servant div img
+        { width: 25px }
+      article .servant div
+        { top:-10px;left:-4px; display: none }
+      article .servant div img
+        { width: 50px }
+      article .servant
+        { float: left
+        ; margin-right: 10px
+        ; margin-bottom: -4px
         }
-      #servants .stars5 img, #servants .stars5 header span
-        { border-color: #bf9000; color: #bf9000 }
-      #servants > div:hover
+      article .servant header
+        { bottom: 25px }
+      article .servant footer
+        { bottom: 7px
+        ; font-size: 10px
+        }
+      article .servant header span
+        { font-size: 16px
+        ; padding: 1px 6px 3px 6px
+        }
+      article .servant > img
+        { border-width: 6px
+        ; border-bottom-width: 16px
+        ; margin: -5px 0 -1px 0
+        }
+      #servants .servant
+        { margin: 3px }
+      #servants .servant > img
+        { width: 150px 
+        ; border-width: 3px
+        ; border-bottom-width: 12px
+        }
+      #servants .servant:hover
         { cursor: pointer }
-      #servants > div:hover footer, #servants > div:hover header span
+      #servants .servant:hover footer, #servants .servant:hover header span
         { color: #222222 }
+      #cover
+        { position: absolute 
+        ; top:0;bottom:0;left:0;right:0
+        ; cursor: pointer
+        ; z-index: 3
+        }
+      #layout > article, #cover { display: none }
+      .fade#layout > article, .fade #cover { display: block }
+      .fade > section, .fade > aside
+        { opacity: 0.2
+        ; pointer-events: none
+        ; filter: blur(1px)
+        }
+      #layout > article
+        { position: absolute
+        ; top:30px;left:0;bottom:30px;right:0
+        ; overflow: scroll
+        ; margin: auto
+        ; max-width: 520px
+        ; box-sizing: border-box
+        ; z-index: 10
+        ; background-color: #ffffff
+        ; border: 1px solid #aaaaaa
+        ; border-top-color: rgb(170, 170, 170)
+        ; border-top-color: #bbbbbb
+        ; box-shadow: 0 0px 10px rgba(0,0,0,0.25)
+        ; padding: 5px 0
+        }
+      td:first-child 
+        { padding-right: 0.5em
+        ; font-weight: bold
+        }
+      .card
+        { display: inline-block 
+        ; font-weight: bold
+        ; margin-right: 3px
+        }
+      .Arts { color: #0000d2 }
+      .Quick { color: #009000 }
+      .Buster { color: #c30000 }
+      article section, article h2 
+        { padding-left: 12px 
+        ; padding-right: 12px
+        }
+      article h2 { margin-top: 0.2em }
+      article section img
+        { float: left 
+        ; width: 40px
+        ; margin-right: 10px
+        ; margin-top: 5px
+        }
+      article section:last-child
+        { margin-bottom: 15px }
+      th::after { content: ":" }
+      thead th::after { content: "" }
     </style>
     <script type="text/javascript" src="js/chaldeas.js"></script>
   </head>

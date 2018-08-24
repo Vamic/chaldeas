@@ -1,2 +1,2 @@
-pulp build -- --stash --censor-codes=ImplicitImport,HidingImport
-pulp browserify --optimise --skip-compile --to js/chaldeas.js --no-check-main
+#pulp build -- --stash --censor-codes=ImplicitImport,HidingImport
+pulp build --to js/chaldeas.js --no-check-main

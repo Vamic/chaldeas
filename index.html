@@ -20,12 +20,14 @@
       thead th, tbody    { text-align: center }
       th                 { text-align: right }
       th, td             { padding: 0 5px }
+      th::after          { content: ":" }
+      thead th::after    { content: "" }
       td.rating          { color: #777777 }
       h1, h2, aside h3   { text-transform: uppercase }
       .selected          { font-weight: bold }
       .unselected        { cursor: pointer }
       .unselected:hover  { text-decoration: underline }
-      aside p:last-child {margin-bottom: 1em}
+      aside p:last-child { margin-bottom: 1em }
       #layout > article table 
         { width: 225px 
         ; margin-top: -1px
@@ -148,8 +150,10 @@
         ; cursor: pointer
         ; z-index: 3
         }
-      #layout > article, #cover { display: none }
-      .fade#layout > article, .fade #cover { display: block }
+      #layout > article, #cover 
+        { display: none }
+      .fade#layout > article, .fade #cover 
+        { display: block }
       .fade > section, .fade > aside
         { opacity: 0.2
         ; pointer-events: none
@@ -179,9 +183,6 @@
         ; font-weight: bold
         ; margin-right: 3px
         }
-      .Arts { color: #0000d2 }
-      .Quick { color: #009000 }
-      .Buster { color: #c30000 }
       article section
         { padding: 0 20px }
       article h2 
@@ -196,10 +197,12 @@
         { margin-top: -4px }
       article section:last-child
         { margin-bottom: 15px }
-      th::after { content: ":" }
-      thead th::after { content: "" }
-      .trait::after { content: ", " }
-      .trait:last-child::after { content: none }
+      .trait::after 
+        { content: ", " }
+      .trait:last-child::after 
+        { content: none }
+    aside form
+      { margin-bottom: 6px }
     </style>
     <script type="text/javascript" src="js/chaldeas.js"></script>
   </head>

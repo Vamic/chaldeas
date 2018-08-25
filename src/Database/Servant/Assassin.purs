@@ -100,7 +100,7 @@ assassins = Servant ↤
               }
   , gen:      { starAbsorb: 98, starGen: 25.0, npPerHit: 0.55, npAttacked: 4 }
   , hits:     { a: 3, b: 1, q: 4, ex: 6 }
-  , traits:   [Female, Demon, EnumaElish, Divine, Dragon]
+  , traits:   [Female, Demonic, EnumaElish, Divine, Dragon]
   , death:    31.6
   , align:    Chaotic:Evil
   }

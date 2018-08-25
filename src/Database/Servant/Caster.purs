@@ -103,7 +103,7 @@ casters = Servant ↤
               }
   , gen:      { starAbsorb: 49, starGen: 11.0, npPerHit: 0.32, npAttacked: 3 }
   , hits:     { a: 5, b: 1, q: 3, ex: 4 }
-  , traits:   [Male, Divine, EnumaElish]
+  , traits:   [Female, Divine, EnumaElish]
   , death:    36.0
   , align:    Neutral:Evil
   }

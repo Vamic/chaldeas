@@ -488,7 +488,7 @@ archers = Servant ↤
   , death:    31.5
   , align:    Neutral:Evil
   }
-, { name:     "Anne Bonny & Mary Read (Archer)"
+, { name:     "Anne Bonny & Mary Read (Archer)"
   , rarity:   4
   , class:    Archer
   , attr:     Mankind

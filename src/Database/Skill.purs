@@ -265,7 +265,7 @@ showInstant target amount instant = case instant of
     Cure          → "Remove " ⧺ p ⧺ " poison debuffs"
     GaugeDown     → "Reduce " ⧺ p ⧺ " NP gauge by " ⧺ n
     Damage        → "Deal " ⧺ n ⧺ "% damage" ⧺ to
-    DamageThruDef → "Deal " ⧺ n ⧺ "% damage" ⧺ to ⧺ ", ignores defense"
+    DamageThruDef → "Deal " ⧺ n ⧺ "% damage" ⧺ to ⧺ ", ignoring defense"
     DemeritCharge → "Increase " ⧺ s ⧺ " NP gauge by " ⧺ n ⧺ " [Demerit]"
     DemeritGauge  → "Decrease " ⧺ p ⧺ " NP gauge by " ⧺ n ⧺ "% [Demerit]"
     DemeritHealth → "Deal " ⧺ n ⧺ " damage" ⧺ to ⧺ " [Demerit]"

@@ -13,21 +13,28 @@
         ; line-height: 0
         }
       span, p, table, br, h1, h2, h3, h4, h5
-        { line-height: 1.4em }
-      h1, h2, h3        { margin: 0.5em 0 0 0 }
-      h2                { font-size: 1.4em }
-      p, h4             { margin: 0 }
-      thead th, tbody   { text-align: center }
-      th                { text-align: right }
-      th, td            { padding: 0 5px }
-      td.rating         { color: #777777 }
-      nav h4            { cursor: pointer }
-      #layout > aside p { cursor: pointer }
-      #layout > aside p:hover, #layout > aside h4:hover
-        { text-decoration: underline }
+        { line-height: 1.31em }
+      h1, h2, h3         { margin: 0.5em 0 0 0 }
+      h2                 { font-size: 1.4em }
+      p, h4              { margin: 0 }
+      thead th, tbody    { text-align: center }
+      th                 { text-align: right }
+      th, td             { padding: 0 5px }
+      td.rating          { color: #777777 }
+      h1, h2, aside h3   { text-transform: uppercase }
+      .selected          { font-weight: bold }
+      .unselected        { cursor: pointer }
+      .unselected:hover  { text-decoration: underline }
+      aside p:last-child {margin-bottom: 1em}
       #layout > article table 
         { width: 230px 
         ; margin-top: -1px
+        }
+      #layout > article table.phantasm
+        { width: 100% }
+      .phantasm th
+        { width: 104px 
+        ; vertical-align: text-top
         }
       #layout
         { display: flex
@@ -53,7 +60,7 @@
       .servant > img 
         { border-style: solid }
       .servant.stars5 img, .servant.stars5 header span
-        { border-color: #d29f01; color: #d29f01 }
+        { border-color: #ba8d00; color: #ba8d00 }
       .servant.stars4 img, .servant.stars4 header span
         { border-color: #d4802f; color: #d4802f }
       .servant.stars3 img, .servant.stars3 header span
@@ -175,14 +182,15 @@
       .Arts { color: #0000d2 }
       .Quick { color: #009000 }
       .Buster { color: #c30000 }
-      article section, article h2 
-        { padding-left: 12px 
-        ; padding-right: 12px
+      article section
+        { padding: 0 20px }
+      article h2 
+        { margin-top: 0.2em 
+        ; text-align: center
         }
-      article h2 { margin-top: 0.2em }
       article section img
         { float: left 
-        ; width: 40px
+        ; width: 35px
         ; margin-right: 10px
         ; margin-top: 5px
         }

@@ -378,7 +378,7 @@ riders = Servant ↤
   , death:    35.0
   , align:    Lawful:Good
   }
-, { name:     "Anne Bonny & Mary Read"
+, { name:     "Anne Bonny & Mary Read"
   , rarity:   4
   , class:    Rider
   , attr:     Mankind

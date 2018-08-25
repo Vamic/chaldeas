@@ -454,7 +454,7 @@ berserkers = Servant ↤
               , kind:   "Anti-Personnel"
               , hits:   12
               , effect: [ Grant Self 1 SureHit 0.0 
-                        , To Enemy Damage 11100.0 
+                        , To Enemy Damage 1100.0 
                         ]
               , over:   [ Debuff Enemy 3 CritDown 30.0 ]
               }

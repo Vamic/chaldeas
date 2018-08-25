@@ -8,7 +8,8 @@ import Halogen.HTML            as H
 import Halogen.HTML.Events     as E
 import Halogen.HTML.Properties as P
 
-import Data.Array              (all, cons, delete, filter, find, replicate, sortWith)
+import Data.Array              (any, all, concat, cons, delete, filter, find, null, replicate, reverse, singleton, sortWith)
+import Data.Foldable           (sum)
 import Data.Maybe 
 import Effect.Class            (class MonadEffect)
 import Halogen.HTML            (HTML)
@@ -22,7 +23,7 @@ import Data.Generic.Rep
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum 
 import Data.Generic.Rep.Show 
-import Data.String
+import Data.String             (Pattern(..), Replacement(..), replaceAll, split, take, joinWith)
 import Data.Tuple              (uncurry)
 import Routing.Hash
 
@@ -43,14 +44,22 @@ print = print' ∘ toNumber
 
 type Input = Unit
 type Message = Void
-data Query a = ToTab FilterTab a
-             | Focus (Maybe Servant) a
+data Query a = Focus (Maybe Servant) a
              | AddFilter Filter a
-             | UnFilter Filter a
+             | UnFilter  Filter a
+             | MatchAny  Boolean a
+             | SetSort   SortBy  a
 
-data FilterTab = Phantasms
-               | Actions | Buffs | Debuffs 
-               | Classes | Traits | Attributes | Alignments
+data FilterTab = Phantasm | Class | Attribute
+               | Action | Buff | Debuff 
+               | Alignment | Trait
+
+data SortBy = Rarity
+            | ATK
+            | HP
+            | StarRate
+            | Hits
+            | NPDamage
 
 data Filter = Filter String (Servant → Boolean)
 instance _b_ ∷ Eq Filter where
@@ -60,10 +69,10 @@ instance _c_ ∷ Show Filter where
 matchFilter ∷ ∀ a. MatchServant a ⇒ a → Filter
 matchFilter = uncurry Filter ∘ (show&&&has)
   
-type State = { filters   ∷ Array Filter
-             , filterTab ∷ FilterTab
-             , focus     ∷ Maybe Servant
-             , sorter    ∷ Servant → String
+type State = { filters  ∷ Array Filter
+             , matchAny ∷ Boolean
+             , focus    ∷ Maybe Servant
+             , sortBy   ∷ SortBy
              }
 
 urlName ∷ Servant → String
@@ -79,42 +88,62 @@ component initialHash = Halogen.component
   where
 
   initialState ∷ Input → State
-  initialState = const { filters:   []
-                       , filterTab: Buffs
-                       , focus:     find ((_ ≡ initialHash) ∘ urlName) servants
-                       , sorter:    \(Servant s) → show (5 - s.rarity) ⧺ s.name
+  initialState = const { filters:  []
+                       , matchAny: false
+                       , focus:    find ((_ ≡ initialHash) ∘ urlName) servants
+                       , sortBy:   Rarity
                        }
 
   render ∷ State → ComponentHTML Query
-  render {filters, filterTab, focus, sorter} 
+  render {filters, focus, matchAny, sortBy} 
       = modal focus
-        [ H.aside [_i "active"] ∘ cons 
-          ( _h 1 "Active filters" )
-          $ filters ↦ \filt 
-            → H.p [_click $ UnFilter filt] ∘ _txt $ show filt 
-        , H.section [_i "servants"]
-          $ portrait ↤ sortWith sorter' (filter match servants)
-        , H.aside [_i "filters"] ∘ append
-          [ _h 1 "Filters"
-          , H.nav_ $ enumArray ↦ \tab 
-              → H.h4 [_click $ ToTab tab] ∘ _txt $ show tab
-          ] $ filterEffects ↦ \filt 
-              → H.p [_click $ AddFilter filt] ∘ _txt $ show filt
+        [ H.aside [_i "active"] ∘ append
+          [_h 1 "Sort by"
+          , H.form_ $ enumArray ↦ \sort 
+            → H.p [_click $ SetSort sort] $ _radio (show sort) (sortBy ≡ sort)
+          , _h 1 "Active filters"
+          , H.form_ ∘ singleton ∘ H.table_ ∘ singleton $ H.tr_ 
+            [ _th "Match"
+            , H.td [_click $ MatchAny false] $ _radio "All" (not matchAny)
+            , H.td [_click $ MatchAny true]  $ _radio "Any"      matchAny
+            ]
+          ] $ filters ↦ \filt 
+            → H.p [_click $ UnFilter filt, _c "unselected"] ∘ _txt 
+              $ "ⓧ " ⧺ show filt 
+        , H.section [_i "servants"] 
+          ∘ (if sortBy ≡ Rarity then identity else reverse)
+          $ portrait ↤ doSort (maybeFilter servants)
+        , H.aside [_i "filters"] ∘ cons
+            (_h 1 "Filters") ∘ concat 
+            $ enumArray ↦ \tab
+            → cons (_h 3 $ show tab) 
+            $ filterEffects tab ↦ \filt
+            → H.p (meta filt) ∘ _txt $ show filt
         ]
     where
-      sorter' serv@(Servant s) = sorter serv ⧺ s.name
-      --match (Servant s) = Male ∉ s.traits ∧ Female ∉ s.traits
-      match serv = all (\(Filter _ f) → f serv) filters
-      filterEffects = case filterTab of
-          Actions    → matchFilter ↤ getAll ∷ Array InstantEffect
-          Alignments → matchFilter ↤ getAll ∷ Array Alignment
-          Attributes → matchFilter ↤ getAll ∷ Array Attribute
-          Buffs      → matchFilter ↤ getAll ∷ Array BuffEffect
-          Classes    → matchFilter ↤ getAll ∷ Array Class
-          Debuffs    → matchFilter ↤ getAll ∷ Array DebuffEffect
-          Phantasms  → matchFilter ↤ getAll ∷ Array PhantasmType
-          Traits     → matchFilter ↤ getAll ∷ Array Trait
-
+      maybeFilter = if null filters then identity else filter match
+      match serv  = (if matchAny then any else all) 
+                    (\(Filter _ f) → f serv) filters
+      filterEffects = case _ of
+          Action    → matchFilter ↤ getAll ∷ Array InstantEffect
+          Alignment → matchFilter ↤ getAll ∷ Array Alignment
+          Attribute → matchFilter ↤ getAll ∷ Array Attribute
+          Buff      → matchFilter ↤ getAll ∷ Array BuffEffect
+          Class     → matchFilter ↤ getAll ∷ Array Class
+          Debuff    → matchFilter ↤ getAll ∷ Array DebuffEffect
+          Phantasm  → matchFilter ↤ getAll ∷ Array PhantasmType
+          Trait     → matchFilter ↤ getAll ∷ Array Trait
+      doSort = case sortBy of
+          NPDamage → sortWith $ \serv → npDamage serv
+          Rarity   → sortWith $ \(Servant s) → show (5 - s.rarity) ⧺ s.name
+          ATK      → sortWith $ \(Servant s) → s.stats.max.atk
+          HP       → sortWith $ \(Servant s) → s.stats.max.hp
+          StarRate → sortWith $ \(Servant s) → s.gen.starGen
+          Hits     → sortWith $ \(Servant {hits}) 
+                   → hits.a + hits.b + hits.q + hits.ex
+      meta filt 
+        | filt ∈ filters = [_c "selected"]
+        | otherwise      = [_c "unselected", _click $ AddFilter filt]
 {-
 ToTab FilterTab a
              | Focus (Maybe Servant) a
@@ -125,16 +154,45 @@ ToTab FilterTab a
 -}
   eval ∷ Query ~> ComponentDSL State Query Message m
   eval = case _ of
-      ToTab     tab     next → (_ ≫ next) $ modify_ _{ filterTab = tab }
-      AddFilter filt    next → (_ ≫ next) $ modFilters (cons filt)
-      UnFilter  filt    next → (_ ≫ next) $ modFilters (delete filt)
-      Focus     focus   next → (_ ≫ next) $ do
+      AddFilter filt     next → (_ ≫ next) $ modFilters (cons filt)
+      UnFilter  filt     next → (_ ≫ next) $ modFilters (delete filt)
+      MatchAny  matchAny next → (_ ≫ next) $ modify_ _{ matchAny = matchAny }
+      SetSort   sortBy   next → (_ ≫ next) $ modify_ _{ sortBy = sortBy }
+      Focus     focus    next → (_ ≫ next) $ do
           liftEffect $ hash focus
           modify_ _{ focus = focus } 
     where
       modFilters f = modify_ \state@{filters} → state{ filters = f filters }
       hash Nothing = setHash ""
       hash (Just s) = setHash $ urlName s
+
+classModifier ∷ Class → Number
+classModifier Berserker = 1.1
+classModifier Ruler = 1.1
+classModifier Avenger = 1.1
+classModifier Lancer = 1.05
+classModifier Archer = 0.95
+classModifier Caster = 0.90
+classModifier Assassin = 0.90
+classModifier _ = 1.0
+
+npDamage ∷ Servant → Number
+npDamage (Servant s@{stats:{max:{atk}}, phantasm:{card, effect, over}}) 
+    = cardBonus * toNumber atk * classModifier s.class 
+    * sum (((_ / 100.0) ∘ dmg) ↤ effect ⧺ over)
+  where
+    dmg (To Enemy Damage a) = a
+    dmg (To Enemy DamageThruDef a) = a
+    dmg (To (EnemyType _) Damage a) = a
+    dmg (To (EnemyType _) DamageThruDef a) = a
+    dmg (To Enemies Damage a) = 3.0 * a
+    dmg (To Enemies DamageThruDef a) = 3.0 * a
+    dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * a
+    dmg _ = 0.0
+    cardBonus = case card of
+        Arts → 1.0
+        Buster → 1.5
+        Quick → 0.8
 
 noBreakName ∷ String → String
 noBreakName = unBreak ∘ split (Pattern "(")
@@ -160,7 +218,7 @@ portrait serv@(Servant s)
 modal ∷ ∀ a. Maybe Servant → Array (HTML a (Query Unit)) → HTML a (Query Unit)
 modal Nothing = H.div [_i "layout"] ∘ append 
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal (Just serv@(Servant s@{ratings, gen, hits, stats:{base, max, grail}, phantasm})) 
+modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm})) 
   = H.div [_i "layout", _c "fade"] ∘ append 
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
@@ -172,6 +230,7 @@ modal (Just serv@(Servant s@{ratings, gen, hits, stats:{base, max, grail}, phant
         , H.br_
         ]
       , _table ["", "", "Q", "A", "B", "EX", "NP"]
+      
         [ H.tr_
           [ _td ""
           , _th "Hits"
@@ -181,20 +240,21 @@ modal (Just serv@(Servant s@{ratings, gen, hits, stats:{base, max, grail}, phant
           , _td $ show hits.ex
           , _td $ show phantasm.hits
           ] 
-        ]
+        ] 
       , H.table_ 
         [ H.br_
-        , _tr "Class"      $ show s.class 
+        , _tr "Class"       $ show s.class 
         --, H.tr_ [_th "Deck", H.td_ $ deck s.deck]
-        , _tr "NP Type"    ∘ show ∘ fromMaybe Support 
-                           $ find (_ `has` serv) [SingleTarget, MultiTarget]
-        , _tr "Alignment"  $ showAlignment s.align
-        , _tr "Attribute"  $ show s.attr
+        , _tr "NP Type"     ∘ show ∘ fromMaybe Support 
+                            $ find (_ `has` serv) [SingleTarget, MultiTarget]
+        --, _tr "NP Damage"   ∘ print' $ npDamage serv
+        , _tr "Alignment"   $ showAlignment s.align
+        , _tr "Attribute"   $ show s.attr
         , _tr "Star Weight" $ show gen.starAbsorb
         , _tr "Star Rate"   $ show gen.starGen ⧺ "%"
         , _tr "NP/Hit"      $ show gen.npPerHit ⧺ "%"
         , _tr "NP/Defend"   $ show gen.npAttacked ⧺ "%"
-        --, _tr "Death Rate"  $ show s.death ⧺ "%"
+        , _tr "Death Rate"  $ show s.death ⧺ "%"
         {-
         , rate "Damage"     ratings.damage
         , rate "NP Gain"    ratings.np
@@ -203,6 +263,15 @@ modal (Just serv@(Servant s@{ratings, gen, hits, stats:{base, max, grail}, phant
         , rate "Support"    ratings.support
         , rate "Durability" ratings.durability
         -}
+        ]
+      , _h 2 "Noble Phantasm"
+      , H.table [_c "phantasm"]
+        [ _tr "Name" $ phantasm.name
+        , _tr "Rank" $ show phantasm.rank
+        , _tr "Card" $ show phantasm.card
+        , _tr "Class" $ phantasm.kind
+        , H.tr_ [_th "Effects", H.td_ $ _p ∘ show ↤ phantasm.effect]
+        , H.tr_ [_th "Overcharge", H.td_ $ _p ∘ show ↤ phantasm.over]
         ]
       , _h 2 "Active Skills"
       ] ⧺ (activeEl ↤ s.actives) ⧺
@@ -258,6 +327,15 @@ _table headings tbody
 _tr ∷ ∀ a b. String → String → HTML a b
 _tr a b = H.tr_ [ _th a, _td b ]
 
+_radio ∷ ∀ a b. String → Boolean → Array (HTML a b)
+_radio label checked
+    = [ H.input 
+        [ P.type_ P.InputRadio
+        , P.checked checked
+        ]
+      , H.label_ $ _txt label
+      ]
+
 _span ∷ ∀ a b. String → HTML a b
 _span = H.span_ ∘ _txt
 _p ∷ ∀ a b. String → HTML a b
@@ -284,7 +362,7 @@ derive instance _0_ ∷ Generic FilterTab _
 derive instance _1_ ∷ Eq FilterTab
 derive instance _2_ ∷ Ord FilterTab
 instance _3_ ∷ Show FilterTab where
-  show Phantasms = "Noble Phantasm"
+  show Phantasm = "Noble Phantasm"
   show a = genericShow a
 instance _4_ ∷ Enum FilterTab where
   succ = genericSucc
@@ -293,6 +371,23 @@ instance _5_ ∷ Bounded FilterTab where
   top = genericTop
   bottom = genericBottom
 instance _6_ ∷ BoundedEnum FilterTab where
+  cardinality = genericCardinality
+  toEnum = genericToEnum
+  fromEnum = genericFromEnum
+derive instance _7_ ∷ Generic SortBy _
+derive instance _8_ ∷ Eq SortBy
+derive instance _9_ ∷ Ord SortBy
+instance _10_ ∷ Show SortBy where
+  show StarRate = "Star Rate"
+  show NPDamage = "NP Damage"
+  show a = genericShow a
+instance _11_ ∷ Enum SortBy where
+  succ = genericSucc
+  pred = genericPred
+instance _12_ ∷ Bounded SortBy where
+  top = genericTop
+  bottom = genericBottom
+instance _13_ ∷ BoundedEnum SortBy where
   cardinality = genericCardinality
   toEnum = genericToEnum
   fromEnum = genericFromEnum

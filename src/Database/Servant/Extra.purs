@@ -85,7 +85,7 @@ extra = Servant ↤
               , desc:   "Dual Arm Zero-Order Convergence"
               , rank:   APlus
               , card:   Buster
-              , kind:   "Anti-"
+              , kind:   "Anti-Army"
               , hits:   1
               , effect: [ To Enemies RemoveBuffs 0.0 
                         , To Enemies Damage 500.0

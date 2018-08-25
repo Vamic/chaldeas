@@ -4,8 +4,8 @@ import Prelude
 import Operators
 import Database.Model
 
-extra ∷ Array Servant
-extra = Servant ↤
+extras ∷ Array Servant
+extras = Servant ↤
 [ { name:     "Jeanne d'Arc"
   , rarity:   5
   , class:    Ruler
@@ -90,7 +90,7 @@ extra = Servant ↤
               , effect: [ To Enemies RemoveBuffs 0.0 
                         , To Enemies Damage 500.0
                         ]
-              , over:   [ Debuff Enemies 1 CritDown 30.0 ]
+              , over:   [ Debuff Enemies 1 CritChance 30.0 ]
               }
   , gen:      { starAbsorb: 100, starGen: 10.0, npPerHit: 0.86, npAttacked: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 7 }
@@ -127,7 +127,7 @@ extra = Servant ↤
                 , cd:     6
                 , effect: [ Grant Self 1 BusterUp 50.0 
                           , Grant Self 1 Invincibility 0.0
-                          , To Self DemeritLose 1000.0
+                          , To Self DemeritHealth 1000.0
                           ]
                 }
               ]
@@ -294,6 +294,62 @@ extra = Servant ↤
   , traits:   [Female, Riding, EnumaElish]
   , death:    24.5
   , align:    Lawful:Good
+  }
+, { name:     "Angra Mainyu"
+  , rarity:   0
+  , class:    Avenger
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Arts Arts Buster
+  , stats:    { base:  { atk: 1008,  hp: 1502 }
+              , max:   { atk: 5683, hp: 7981 }
+              , grail: { atk: 8235, hp: 11518 }
+              }
+  , ratings:  { damage:2, np:2, critical:2, utility:2, support:1, durability:1 }
+  , actives:  [ { name:   "Zarich C"
+                , icon:   IconExclamationDown
+                , cd:     6
+                , effect: [ Debuff Enemy 3 CritChance 50.0 ]
+                }
+              , { name:   "Tawrich C"
+                , icon:   IconDarkMagic
+                , cd:     6
+                , effect: [ To Enemy GaugeDown 1.0 
+                          , Debuff Enemy 3 AttackDown 30.0
+                          ]
+                }
+              , { name:   "Annihilation Wish A"
+                , icon:   IconQuickUp
+                , cd:     8
+                -- TODO in sequence
+                , effect: [ Grant Self 1 QuickUp 40.0 
+                          , Grant Self 1 QuickUp 80.0
+                          , Grant Self 1 QuickUp 120.0
+                          , Grant Self 1 QuickUp 160.0
+                          , Grant Self 1 QuickUp 200.0
+                          , To Self DemeritKill 0.0
+                          ] 
+                }
+              ]
+  , passives: [avenger A, oblivionCorrection A, selfRestoreMagic E]
+  , phantasm: { name:   "Verg Avesta"
+              , desc:   "False Copy of Inscribed Creation"
+              , rank:   CMinus
+              , card:   Arts
+              , kind:   "Anti-Unit"
+              , hits:   1 
+              , effect: [ -- TODO Wait 1 turn, then deal damage equal to damage
+                          -- received in the previous turn times 3
+                          -- damage cannot be blocked
+                          Debuff Self 1 Stun 0.0
+                        , To Enemy Damage 0.0
+                        ]
+              , over:   [ To Self Heal 5000.0 ]
+              }
+  , gen:      { starAbsorb: 29, starGen: 7.0, npPerHit: 0.79, npAttacked: 5 }
+  , hits:     { a: 2, b: 1, q: 4, ex: 5 }
+  , traits:   [Male, EnumaElish]
+  , death:    9.0
+  , align:    Chaotic:Evil
   }
 
 ]

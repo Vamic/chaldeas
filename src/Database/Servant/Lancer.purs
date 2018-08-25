@@ -179,7 +179,7 @@ lancers = Servant ↤
               , { name:   "Primordial Rune"
                 , icon:   IconExclamationDown
                 , cd:     6
-                , effect: [ Debuff Enemy 3 CritDown 50.0 
+                , effect: [ Debuff Enemy 3 CritChance 50.0 
                           , Debuff Enemy 1 NPDown 30.0
                           ]
                 }
@@ -365,7 +365,7 @@ lancers = Servant ↤
   , actives:  [ { name:   "Passionate Summer A"
                 , icon:   IconExclamationDown
                 , cd:     5
-                , effect: [ Debuff Enemies 3 CritDown 30.0 ]
+                , effect: [ Debuff Enemies 3 CritChance 30.0 ]
                 }
               , { name:   "Bath Transformation A"
                 , icon:   IconBusterUp
@@ -585,7 +585,7 @@ lancers = Servant ↤
   , align:    Lawful:Neutral
   }
 , { name:     "Leonidas"
-  , rarity:   3
+  , rarity:   2
   , class:    Lancer
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Buster Buster
@@ -628,6 +628,190 @@ lancers = Servant ↤
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    32.0
+  , align:    Lawful:Neutral
+  }
+, { name:     "Romulus"
+  , rarity:   7
+  , class:    Lancer
+  , attr:     Star
+  , deck:     Deck Quick Quick Arts Buster Buster
+  , stats:    { base:  { atk: 1344,  hp: 1779 }
+              , max:   { atk: 7239, hp: 9883 }
+              , grail: { atk: 9797, hp: 13400 }
+              }
+  , ratings:  { damage:4, np:3, critical:2, utility:2, support:2, durability:4 }
+  , actives:  [ { name:   "Natural Body C"
+                , icon:   IconHoodUp
+                , cd:     5
+                 -- TODO "attack debuff?"
+                , effect: [ Grant Self 3 DebuffResist 100.0 
+                          , To Self Heal 2500.0
+                          ]
+                }
+              , { name:   "Imperial Privilege EX"
+                , icon:   IconHeal
+                , cd:     5
+                , effect: [ To Self Heal 3400.0
+                          , Chance 60 $ Grant Self 3 AttackUp 44.0 
+                          , Chance 60 $ Grant Self 3 DefenseUp 44.0
+                          ]
+                }
+              , { name:   "Seven Hills A"
+                , icon:   IconKneel
+                , cd:     7
+                , effect: [ Grant Ally 1 Guts 1.0 ]
+                }
+              ]
+  , passives: [magicResistance B]
+  , phantasm: { name:   "Magna Voluisse Magnum"
+              , desc:   "All Things Lead to My Spear"
+              , rank:   APlusPlus
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   7
+              , effect: [ To Enemies Damage 500.0 ]
+              , over:   [ Grant Party 3 AttackUp 10.0 ]
+              }
+  , gen:      { starAbsorb: 90, starGen: 12.1, npPerHit: 1.07, npAttacked: 4 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, Roman]
+  , death:    32.0
+  , align:    Chaotic:Neutral
+  }
+, { name:     "Hektor"
+  , rarity:   3
+  , class:    Lancer
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Arts Buster Buster
+  , stats:    { base:  { atk: 1286,  hp: 1836 }
+              , max:   { atk: 6928 , hp: 10200 }
+              , grail: { atk: 9376, hp: 13829 }
+              }
+  , ratings:  { damage:4, np:3, critical:2, utility:3, support:3, durability:3 }
+  , actives:  [ { name:   "Tactics C+"
+                , icon:   IconBeamUp
+                , cd:     4
+                , effect: [ Grant Party 1 NPUp 17.0 ]
+                }
+              , { name:   "Proof of Friendship C"
+                , icon:   IconDarkMagic
+                , cd:     5
+                , effect: [ Chance 80 $ To Enemy GaugeDown 1.0 
+                          , Chance 80 $ Debuff Enemy 1 Stun 0.0
+                          ]
+                }
+              , { name:   "Disengage B"
+                , icon:   IconBubbles
+                , cd:     5
+                , effect: [ To Self RemoveDebuffs 0.0 
+                          , To Self Heal 2000.0
+                          ]
+                }
+              ]
+  , passives: [magicResistance B, riding B]
+  , phantasm: { name:   "Durindana"
+              , desc:   "Ultimate Unbroken Spear"
+              , rank:   A
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   1
+              , effect: [ To Enemies DamageThruDef 600.0 ]
+              , over:   [ Debuff Enemies 3 DefenseDown 20.0 ]
+              }
+  , gen:      { starAbsorb: 90, starGen: 12.2, npPerHit: 1.08, npAttacked: 4 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, Riding, EnumaElish]
+  , death:    28.0
+  , align:    Lawful:Neutral
+  }
+, { name:     "Musashibou Benkei"
+  , rarity:   2
+  , class:    Lancer
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Arts Arts Buster
+  , stats:    { base:  { atk: 1029,  hp: 1722 }
+              , max:   { atk: 5801, hp: 9149 }
+              , grail: { atk: 8406, hp: 13204 }
+              }
+  , ratings:  { damage:1, np:3, critical:2, utility:4, support:3, durability:4 }
+  , actives:  [ { name:   "Vengeful Spirit Exorcism A"
+                , icon:   IconCircuits
+                , cd:     5
+                , effect: [ Chance 100 $ Debuff Enemy 1 SealSkills 0.0 ]
+                }
+              , { name:   "Imposing Stance B"
+                , icon:   IconCrosshairUp
+                , cd:     5
+                , effect: [ Grant Self 1 Taunt 0.0 
+                          , Grant Self 1 DefenseUp 60.0
+                          ]
+                }
+              , { name:   "Blank Subscription List"
+                , icon:   IconCircuits
+                , cd:     8
+                , effect: [ Chance 80 $ Debuff Enemies 1 SealNP 0.0 ]
+                }
+              ]
+  , passives: [magicResistance CPlus]
+  , phantasm: { name:   "Pilgrimage of the Five Hundred Arhat"
+              , desc:   "Gohyaku Rakan Fudarakutokai"
+              , rank:   EX
+              , card:   Arts
+              , kind:   "Anti-Army"
+              , hits:   0
+              , effect: [ Chance 80 $ Debuff Enemies 1 Stun 0.0 ]
+              , over:   [ Debuff Enemies 3 Curse 500.0 ]
+              }
+  , gen:      { starAbsorb: 89, starGen: 11.9, npPerHit: 0.79, npAttacked: 4 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish, Brynhildr]
+  , death:    36.0
+  , align:    Chaotic:Good
+  }
+, { name:     "Diarmuid ua Duibhne"
+  , rarity:   3
+  , class:    Lancer
+  , attr:     Earth
+  , deck:     Deck Quick Quick Arts Arts Buster
+  , stats:    { base:  { atk: 1277,  hp: 1817 }
+              , max:   { atk: 6877, hp: 10098 }
+              , grail: { atk: 9307, hp: 13691 }
+              }
+  , ratings:  { damage:3, np:3, critical:2, utility:3, support:3, durability:4 }
+  , actives:  [ { name:   "Mind's Eye (True) B"
+                , icon:   IconDodge
+                , cd:     6
+                , effect: [ Grant Self 1 Evasion 0.0 
+                          , Grant Self 3 DefenseUp 18.0
+                          ]
+                }
+              , { name:   "Love Spot C"
+                , icon:   IconSwordDown
+                , cd:     5
+                , effect: [ Debuff (EnemiesType Female) 1 AttackDown 50.0 ]
+                }
+              , { name:   "Knight's Strategy B"
+                , icon:   IconStarHaloUp
+                , cd:     5
+                , effect: [ Grant Self 3 StarUp 50.0 ]
+                }
+              ]
+  , passives: [magicResistance B]
+  , phantasm: { name:   "Gae Dearg & Gae Buidhe B+"
+              , desc:   "Crimson Rose of Exorcism & Yellow Rose of Mortality"
+              , rank:   BPlus
+              , card:   Quick
+              , kind:   "Anti-Personnel"
+              , hits:   2
+              , effect: [ To Enemy Damage 2400.0 
+                        , To Enemy RemoveDebuffs 0.0
+                        ]
+              , over:   [ Debuff Enemy 5 Curse 500.0 ]
+              }
+  , gen:      { starAbsorb: 87, starGen: 12.3, npPerHit: 0.78, npAttacked: 4 }
+  , hits:     { a: 2, b: 2, q: 2, ex: 4 }
+  , traits:   [Male, EnumaElish, Brynhildr]
+  , death:    36.0
   , align:    Lawful:Neutral
   }
 

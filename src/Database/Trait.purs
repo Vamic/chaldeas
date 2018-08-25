@@ -12,6 +12,16 @@ import Data.Generic.Rep.Show
 data Class = Saber | Archer | Lancer | Caster | Rider | Assassin | Berserker
            | Shielder | Ruler | Avenger | MoonCancer | AlterEgo
 
+classModifier ∷ Class → Number
+classModifier Berserker = 1.1
+classModifier Ruler = 1.1
+classModifier Avenger = 1.1
+classModifier Lancer = 1.05
+classModifier Archer = 0.95
+classModifier Caster = 0.90
+classModifier Assassin = 0.90
+classModifier _ = 1.0
+
 data Trait = Arthur 
            | Beast 
            | Brynhildr
@@ -24,6 +34,7 @@ data Trait = Arthur
            | Female
            | GreekMyth
            | Humanoid
+           | Human
            | King
            | Magical
            | Male

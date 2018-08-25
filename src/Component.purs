@@ -8,26 +8,26 @@ import Halogen.HTML            as H
 import Halogen.HTML.Events     as E
 import Halogen.HTML.Properties as P
 
-import Data.Array              (any, all, concat, cons, delete, filter, find, null, replicate, reverse, singleton, sortWith)
-import Data.Foldable           (sum)
 import Data.Maybe 
-import Effect.Class            (class MonadEffect)
-import Halogen.HTML            (HTML)
-import Halogen.HTML.Properties (IProp)
-import Web.UIEvent.MouseEvent  (MouseEvent)
+import Effect.Class          
+import Halogen.HTML          
+import Halogen.HTML.Properties 
+import Web.UIEvent.MouseEvent  
 import Data.Enum     
-import Data.Int                (toNumber)
+import Data.Int                
 import Data.Formatter.Number
 import Data.Profunctor.Strong
 import Data.Generic.Rep    
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum 
 import Data.Generic.Rep.Show 
-import Data.String             (Pattern(..), Replacement(..), replaceAll, split, take, joinWith)
-import Data.Tuple              (uncurry)
+import Data.Tuple             
 import Routing.Hash
 
-import Halogen (ClassName(..), Component, ComponentDSL, ComponentHTML, liftEffect, modify_)
+import Data.Array  hiding (take)
+import Data.String hiding (null, singleton)
+
+import Halogen (Component, ComponentDSL, ComponentHTML, liftEffect, modify_)
 
 import Database
 
@@ -50,7 +50,7 @@ data Query a = Focus (Maybe Servant) a
              | MatchAny  Boolean a
              | SetSort   SortBy  a
 
-data FilterTab = Phantasm | Class | Attribute
+data FilterTab = Phantasm | Class | DeckType | Attribute
                | Action | Buff | Debuff 
                | Alignment | Trait
 
@@ -131,6 +131,7 @@ component initialHash = Halogen.component
           Buff      → matchFilter ↤ getAll ∷ Array BuffEffect
           Class     → matchFilter ↤ getAll ∷ Array Class
           Debuff    → matchFilter ↤ getAll ∷ Array DebuffEffect
+          DeckType  → matchFilter ↤ getAll ∷ Array Deck
           Phantasm  → matchFilter ↤ getAll ∷ Array PhantasmType
           Trait     → matchFilter ↤ getAll ∷ Array Trait
       doSort = case sortBy of
@@ -165,34 +166,6 @@ ToTab FilterTab a
       modFilters f = modify_ \state@{filters} → state{ filters = f filters }
       hash Nothing = setHash ""
       hash (Just s) = setHash $ urlName s
-
-classModifier ∷ Class → Number
-classModifier Berserker = 1.1
-classModifier Ruler = 1.1
-classModifier Avenger = 1.1
-classModifier Lancer = 1.05
-classModifier Archer = 0.95
-classModifier Caster = 0.90
-classModifier Assassin = 0.90
-classModifier _ = 1.0
-
-npDamage ∷ Servant → Number
-npDamage (Servant s@{stats:{max:{atk}}, phantasm:{card, effect, over}}) 
-    = cardBonus * toNumber atk * classModifier s.class 
-    * sum (((_ / 100.0) ∘ dmg) ↤ effect ⧺ over)
-  where
-    dmg (To Enemy Damage a) = a
-    dmg (To Enemy DamageThruDef a) = a
-    dmg (To (EnemyType _) Damage a) = a
-    dmg (To (EnemyType _) DamageThruDef a) = a
-    dmg (To Enemies Damage a) = 3.0 * a
-    dmg (To Enemies DamageThruDef a) = 3.0 * a
-    dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * a
-    dmg _ = 0.0
-    cardBonus = case card of
-        Arts → 1.0
-        Buster → 1.5
-        Quick → 0.8
 
 noBreakName ∷ String → String
 noBreakName = unBreak ∘ split (Pattern "(")
@@ -363,6 +336,7 @@ derive instance _1_ ∷ Eq FilterTab
 derive instance _2_ ∷ Ord FilterTab
 instance _3_ ∷ Show FilterTab where
   show Phantasm = "Noble Phantasm"
+  show DeckType = "Deck"
   show a = genericShow a
 instance _4_ ∷ Enum FilterTab where
   succ = genericSucc

@@ -702,5 +702,47 @@ riders = Servant ↤
   , death:    40.0
   , align:    Neutral:Good
   }
+, { name:     "Boudica"
+  , rarity:   3
+  , class:    Rider
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Arts Arts Buster
+  , stats:    { base:  { atk: 1168,  hp: 1823 }
+              , max:   { atk: 6289, hp: 10130 }
+              , grail: { atk: 8511, hp: 13735 }
+              }
+  , ratings:  { damage:2, np:3, critical:3, utility:2, support:3, durability:4 }
+  , actives:  [ { name:   "Vow to the Goddess B"
+                , icon:   IconDamageUp
+                , cd:     5
+                , effect: [ Grant Self 3 (AttackUpVs Roman) 60.0 ]
+                }
+              , { name:   "Battle Continuation A"
+                , icon:   IconKneel
+                , cd:     7
+                , effect: [ Grant Self 5 Guts 1.0 ]
+                }
+              , { name:   "Andraste's Protection A"
+                , icon:   IconArtsUp
+                , cd:     5
+                , effect: [ Grant Party 3 ArtsUp 20.0 ]
+                }
+              ]
+  , passives: [magicResistance D, riding A]
+  , phantasm: { name:   "Chariot of Boudica"
+              , desc:   "Chariot Without Promised Protection"
+              , rank:   BPlus
+              , card:   Arts
+              , kind:   "Anti-Army"
+              , hits:   0
+              , effect: [ Grant Party 3 DefenseUp 20.0 ]
+              , over:   [ Grant Party 1 DefenseUp 20.0 ]
+              }
+  , gen:      { starAbsorb: 196, starGen: 8.9, npPerHit: 0.85, npAttacked: 3 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Female, Riding, EnumaElish]
+  , death:    45.0
+  , align:    Neutral:Good
+  }
 
 ]

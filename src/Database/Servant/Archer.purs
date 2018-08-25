@@ -141,7 +141,7 @@ archers = Servant ↤
               , hits:   3
               , effect: [ To Enemies Damage 600.0 
                         , Chance 40 $ Debuff Enemies 1 Stun 0.0
-                        , To Self DemeritHealth 500.0
+                        , To Self DemeritDamage 500.0
                         ]
               , over:   [ To (EnemiesType HeavenOrEarth) Damage 150.0 ]
               }
@@ -193,7 +193,7 @@ archers = Servant ↤
                         , Debuff Enemy 3 AttackDown 20.0
                         , To Enemy GaugeDown 1.0
                         ]
-              , over:   [ Debuff Enemy 3 CritDown 20.0 ]
+              , over:   [ Debuff Enemy 3 CritChance 20.0 ]
               }
   , gen:      { starAbsorb: 153, starGen: 8.0, npPerHit: 1.0, npAttacked: 3 }
   , hits:     { a: 1, b: 1, q: 3, ex: 4 }
@@ -294,7 +294,7 @@ archers = Servant ↤
               , effect: [ Grant Self 1 SureHit 0.0 
                         , To Enemy Damage 1500.0
                         ]
-              , over:   [ Debuff Enemy 3 CritDown 20.0 ]
+              , over:   [ Debuff Enemy 3 CritChance 20.0 ]
               }
   , gen:      { starAbsorb: 148, starGen: 8.0, npPerHit: 0.38, npAttacked: 3 }
   , hits:     { a: 6, b: 2, q: 3, ex: 4 }
@@ -375,7 +375,7 @@ archers = Servant ↤
                 , icon:   IconCircuits
                 , cd:     5
                 , effect: [ To Enemy RemoveBuffs 0.0 
-                          , Debuff Enemy 3 CritDown 20.0
+                          , Debuff Enemy 3 CritChance 20.0
                           ]
                 }
               ]
@@ -728,6 +728,143 @@ archers = Servant ↤
   , traits:   [Male, EnumaElish]
   , death:    36.0
   , align:    Lawful:Neutral
+  }
+, { name:     "Kid Gilgamesh"
+  , rarity:   3
+  , class:    Archer
+  , attr:     Heaven
+  , deck:     Deck Quick Arts Arts Buster Buster
+  , stats:    { base:  { atk: 1429,  hp: 1571 }
+              , max:   { atk: 7696, hp: 8731 }
+              , grail: { atk: 10415, hp: 11838 }
+              }
+  , ratings:  { damage:4, np:4, critical:4, utility:3, support:3, durability:2 }
+  , actives:  [ { name:   "Charisma A+"
+                , icon:   IconSwordUp
+                , cd:     5
+                , effect: [ Grant Party 3 AttackUp 21.0 ]
+                }
+              , { name:   "Fair Youth C"
+                , icon:   IconHeart
+                , cd:     7
+                , effect: [ Chance 75 $ Debuff (EnemyType Humanoid) 1 Charm 0.0 ]
+                }
+              , { name:   "Golden Rule A"
+                , icon:   IconNobleUp
+                , cd:     6
+                , effect: [ Grant Self 3 NPGen 50.0 ]
+                }
+              ]
+  , passives: [magicResistance E, independentAction A, divinity B]
+  , phantasm: { name:   "Gate of Babylon"
+              , desc:   "King's Treasure"
+              , rank:   BPlus
+              , card:   Buster
+              , kind:   "Anti-Unit"
+              , hits:   10
+              , effect: [ To Enemies Damage 500.0 ]
+              , over:   [ Debuff Enemies 1 NPDown 50.0
+                        , Debuff Enemies 1 CritDown 50.0
+                        , Debuff Enemies 1 DebuffVuln 20.0
+                        ]
+              }
+  , gen:      { starAbsorb: 153, starGen: 7.9, npPerHit: 0.62, npAttacked: 3 }
+  , hits:     { a: 3, b: 3, q: 3, ex: 3 }
+  , traits:   [Male, Divine, EnumaElish]
+  , death:    36.0
+  , align:    Chaotic:Good
+  }
+, { name:     "Billy the Kid"
+  , rarity:   3
+  , class:    Archer
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Arts Arts Buster
+  , stats:    { base:  { atk: 1279,  hp: 1711 }
+              , max:   { atk: 6890, hp: 9506 }
+              , grail: { atk: 9325, hp: 12889 }
+              }
+  , ratings:  { damage:4, np:3, critical:5, utility:2, support:1, durability:3 }
+  , actives:  [ { name:   "Marksmanship A++"
+                , icon:   IconExclamationUp
+                , cd:     5
+                , effect: [ Grant Self 1 CritUp 120.0 ]
+                }
+              , { name:   "Quick Draw A+"
+                , icon:   IconNoble
+                , cd:     6
+                , effect: [ To Self GaugeUp 50.0 ]
+                }
+              , { name:   "Mind's Eye (Fake) C"
+                , icon:   IconDodge
+                , cd:     6
+                , effect: [ Grant Self 1 Evasion 0.0 
+                          , Grant Self 3 CritUp 32.0
+                          ]
+                }
+              ]
+  , passives: [independentAction A, riding CPlus]
+  , phantasm: { name:   "Thunderer"
+              , desc:   "Thunderbolt of Broken Sound"
+              , rank:   CPlus
+              , card:   Quick
+              , kind:   "Anti-Unit"
+              , hits:   3
+              , effect: [ Grant Self 1 SureHit 0.0 
+                        , To Enemy Damage 2000.0
+                        ]
+              , over:   [ Debuff Enemy 3 CritChance 10.0 ]
+              }
+  , gen:      { starAbsorb: 150, starGen: 8.0, npPerHit: 0.56, npAttacked: 3 }
+  , hits:     { a: 3, b: 4, q: 2, ex: 4 }
+  , traits:   [Male, Riding, EnumaElish]
+  , death:    45.0
+  , align:    Chaotic:Neutral
+  }
+, { name:     "Tawara Touta"
+  , rarity:   3
+  , class:    Archer
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Arts Buster Buster
+  , stats:    { base:  { atk: 1306,  hp: 1764 }
+              , max:   { atk: 7032, hp: 9800 }
+              , grail: { atk: 9517, hp: 13287 }
+              }
+  , ratings:  { damage:3, np:3, critical:2, utility:3, support:3, durability:4 }
+  , actives:  [ { name:   "Protection of the Dragon King C"
+                , icon:   IconBusterUp
+                , cd:     6
+                , effect: [ Grant Self 3 BusterUp 30.0 
+                          , To Self Heal 2000.0
+                          ]
+                }
+              , { name:   "Protection from Arrows C"
+                , icon:   IconDodge
+                , cd:     5
+                , effect: [ Grant Self 0 Evasion 2.0 
+                          , Grant Self 3 DefenseUp 14.0
+                          ]
+                }
+              , { name:   "Inexhaustible Straw Bag EX"
+                , icon:   IconHPUp
+                , cd:     5
+                , effect: [ Grant Party 3 MaxHP 2000.0 ]
+                }
+              ]
+  , passives: [magicResistance C, independentAction B]
+  , phantasm: { name:   "Hachiman Prayer"
+              , desc:   "Hachiman Prayer—Shooting Through a Great Demon"
+              , rank:   B
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   3
+              , effect: [ To Enemies Damage 500.0 ]
+              , over:   [ Grant Self 1 (AttackUpVs Magical) 50.0 ]
+              }
+  , gen:      { starAbsorb: 150, starGen: 7.8, npPerHit: 0.57, npAttacked: 3 }
+  , hits:     { a: 3, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, Brynhildr, EnumaElish]
+  , death:    36.0
+  , align:    Neutral:Good
   }
 
 ]

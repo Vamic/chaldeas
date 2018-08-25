@@ -27,7 +27,7 @@ assassins = Servant ↤
                 , icon:   IconCircuits
                 , cd:     5
                 , effect: [ To Enemy RemoveBuffs 0.0 
-                          , Debuff Enemy 3 CritDown 30.0
+                          , Debuff Enemy 3 CritChance 30.0
                           ]
                 }
               , { name:   "Surgery E"
@@ -93,7 +93,7 @@ assassins = Servant ↤
                         , Debuff Enemies 3 DebuffVuln 10.0
                         , Debuff Enemies 3 AttackDown 10.0
                         , Debuff Enemies 3 NPDown 10.0
-                        , Debuff Enemies 3 CritDown 10.0
+                        , Debuff Enemies 3 CritChance 10.0
                         , Debuff Enemies 1 SealSkills 0.0
                         ]
               , over:   [ Debuff Enemies 5 Poison 1000.0 ]
@@ -175,7 +175,7 @@ assassins = Servant ↤
                 , icon:   IconYinYang
                 , cd:     6
                 , effect: [ To Self GaugeUp 30.0 
-                          , To Self DemeritLose 1000.0
+                          , To Self DemeritHealth 1000.0
                           ]
                 }
               ]
@@ -220,7 +220,7 @@ assassins = Servant ↤
               , { name:   "Bath of Fresh Blood A"
                 , icon:   IconExclamationDown
                 , cd:     6
-                , effect: [ Debuff Enemy 3 CritDown 50.0
+                , effect: [ Debuff Enemy 3 CritChance 50.0
                           , Grant Self 3 StarsPerTurn 10.0
                           ]
                 }
@@ -285,7 +285,7 @@ assassins = Servant ↤
               , effect: [ To Enemy Damage 1500.0 
                         , To Enemy GaugeDown 1.0
                         ]
-              , over:   [ Debuff Enemy 3 CritDown 10.0 ]
+              , over:   [ Debuff Enemy 3 CritChance 10.0 ]
               }
   , gen:      { starAbsorb: 97, starGen: 25.6, npPerHit: 0.46, npAttacked: 4 }
   , hits:     { a: 2, b: 6, q: 4, ex: 8 }
@@ -403,7 +403,7 @@ assassins = Servant ↤
                 , icon:   IconSwordDown
                 , cd:     5
                 , effect: [ Debuff Enemies 3 AttackDown 10.0 
-                          , Debuff Enemies 3 CritDown 20.0
+                          , Debuff Enemies 3 CritChance 20.0
                           ]
                 }
               , { name:   "Ninjutsu A+++"
@@ -526,6 +526,348 @@ assassins = Servant ↤
   , traits:   [Male, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
+  }
+, { name:     "Henry Jekyll & Hyde"
+  , rarity:   3
+  , class:    Assassin
+  , attr:     Earth
+  , deck:     Deck Quick Quick Arts Buster Buster
+  , stats:    { base:  { atk: 1173,  hp: 1741 }
+              , max:   { atk: 6320, hp: 9675 }
+              , grail: { atk: 8553, hp: 13118 }
+              }
+  , ratings:  { damage:4, np:2, critical:3, utility:3, support:1, durability:3 }
+  , actives:  [ { name:   "Monstrous Strength B (Jekyll & Hyde)"
+                , icon:   IconSwordUp
+                , cd:     5
+                , effect: [ Grant Self 3 AttackUp 15.0 
+                          , Grant Self 3 AttackUp 35.0 -- TODO as Hyde
+                          ]
+                }
+              , { name:   "Panicky Voice A"
+                , icon:   IconStun
+                , cd:     6
+                , effect: [ Grant Self 0 StunSuccess 25.0 
+                          , Grant Self 0 StunSuccess 135.0 -- TODO as Hyde
+                          , Chance 10 $ Debuff Enemy 1 Stun 0.0
+                          ]
+                }
+              , { name:   "Self-Modification D"
+                , icon:   IconExclamationUp
+                , cd:     5
+                , effect: [ Grant Self 3 CritUp 15.0 
+                          , Grant Self 3 CritUp 35.0 -- TODO as Hyde
+                          ]
+                }
+              ]
+  , passives: [presenceConcealment A, madness A]
+  , phantasm: { name:   "Dangerous Game C"
+              , desc:   "Game of Silent Crime"
+              , rank:   CPlus
+              , card:   Buster
+              , kind:   "Anti-Personnel"
+              , hits:   0
+              , effect: [ -- TODO Transform into Hyde (Berserker)
+                          Grant Self 0 MaxHP 6000.0
+                        , To Self HealToFull 0.0
+                        ]
+              , over:   [ Grant Self 0 BusterUp 40.0 ] 
+              }
+  , gen:      { starAbsorb: 99, starGen: 25.6, npPerHit: 1.05, npAttacked: 4 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish, Brynhildr]
+  , death:    55.0
+  , align:    Lawful:Good
+  }
+, { name:     "Jing Ke"
+  , rarity:   3
+  , class:    Assassin
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Quick Arts Buster
+  , stats:    { base:  { atk: 1338,  hp: 1492 }
+              , max:   { atk: 7207, hp: 8293 }
+              , grail: { atk: 9754, hp: 11244 }
+              }
+  , ratings:  { damage:3, np:4, critical:4, utility:2, support:2, durability:2 }
+  , actives:  [ { name:   "Restrain A"
+                , icon:   IconStarUp
+                , cd:     5
+                , effect: [ Grant Self 3 StarAbsorb 200.0 
+                          , To Party GainStars 15.0
+                          ]
+                }
+              , { name:   "Planning B"
+                , icon:   IconStarHaloUp
+                , cd:     5
+                , effect: [ Grant Self 3 StarUp 30.0 ]
+                }
+              , { name:   "Insolent A"
+                , icon:   IconQuickUp
+                , cd:     5
+                , effect: [ Grant Self 1 QuickUp 30.0 
+                          , Grant Self 1 CritUp 50.0
+                          ]
+                }
+              ]
+  , passives: [presenceConcealment B]
+  , phantasm: { name:   "All I Do Is Kill"
+              , desc:   "Unreturning Dagger"
+              , rank:   B
+              , card:   Quick
+              , kind:   "Anti-Personnel"
+              , hits:   1
+              , effect: [ To Enemy Damage 2000.0 
+                        , To Self DemeritDamage 1000.0
+                        ]
+              , over:   [ To Enemy Kill 50.0 
+                        , To Party GainStars 15.0
+                        ]
+              }
+  , gen:      { starAbsorb: 98, starGen: 25.2, npPerHit: 1.05, npAttacked: 4 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Female, EnumaElish]
+  , death:    55.0
+  , align:    Chaotic:Good
+  }
+, { name:     "Charles-Henri Sanson"
+  , rarity:   3
+  , class:    Assassin
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Quick Arts Buster
+  , stats:    { base:  { atk: 968,  hp: 1564 }
+              , max:   { atk: 5456, hp: 8309 }
+              , grail: { atk: 7906, hp: 11991 }
+              }
+  , ratings:  { damage:3, np:4, critical:3, utility:4, support:3, durability:2 }
+  , actives:  [ { name:   "Executioner A++"
+                , icon:   IconDamageUp
+                , cd:     5
+                , effect: [ Grant Self 3 (AttackUpVs Beast) 60.0 ] --TODO vs evil
+                }
+              , { name:   "Medicine A+"
+                , icon:   IconHeal
+                , cd:     5
+                , effect: [ To Ally Heal 3000.0 
+                          , To Ally RemoveDebuffs 0.0
+                          ]
+                }
+              , { name:   "Human Study B"
+                , icon:   IconDamageUp
+                , cd:     5
+                , effect: [ Grant Self 3 (AttackUpVs Human) 60.0 ]
+                }
+              ]
+  , passives: [presenceConcealment D]
+  , phantasm: { name:   "La Mort Espoir"
+              , desc:   "Death is Hope For Tomorrow"
+              , rank:   A
+              , card:   Buster
+              , kind:   "Anti-Personnel"
+              , hits:   1
+              , effect: [ To Enemy Damage 1000.0 ]
+              , over:   [ To Enemy Kill 30.0 
+                        , Debuff Enemy 3 DefenseDown 20.0
+                        ]
+              }
+  , gen:      { starAbsorb: 102, starGen: 24.8, npPerHit: 1.06, npAttacked: 4 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish]
+  , death:    49.5
+  , align:    Lawful:Evil
+  }
+, { name:     "Hassan of the Hundred Personas"
+  , rarity:   3
+  , class:    Assassin
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Arts Arts Buster
+  , stats:    { base:  { atk: 1241,  hp: 1675 }
+              , max:   { atk: 6686, hp: 9310 }
+              , grail: { atk: 9049, hp: 12623 }
+              }
+  , ratings:  { damage:0, np:0, critical:0, utility:0, support:0, durability:0 }
+  , actives:  [ { name:   "Librarian of Knowledge C"
+                , icon:   IconNobleUp
+                , cd:     5
+                , effect: [ Grant Self 3 NPGen 20.0 
+                          , Grant Self 3 StarUp 40.0
+                          ]
+                }
+              , { name:   "Wide Specialization A+"
+                , icon:   IconAllUp
+                , cd:     5
+                , effect: [ Chance 80 $ Grant Self 3 BusterUp 30.0 
+                          , Chance 80 $ Grant Self 3 QuickUp 30.0
+                          , Chance 80 $ Grant Self 3 ArtsUp 30.0
+                          , Grant Self 1 Evasion 0.0
+                          ]
+                }
+              , { name:   "Battle Retreat B"
+                , icon:   IconHeal
+                , cd:     6
+                , effect: [ To Self Heal 4000.0 
+                          , To Self DemeritBuffs 0.0
+                          ]
+                }
+              ]
+  , passives: [presenceConcealment A]
+  , phantasm: { name:   "Zabaniya"
+              , desc:   "Delusional Illusion"
+              , rank:   BPlus
+              , card:   Arts
+              , kind:   "Anti-Unit"
+              , hits:   13
+              , effect: [ To Enemy Damage 1500.0 ]
+              , over:   [ Debuff Enemy 3 CritChance 10.0 ]
+              }
+  , gen:      { starAbsorb: 97, starGen: 25.5, npPerHit: 0.38, npAttacked: 4 }
+  , hits:     { a: 3, b: 1, q: 3, ex: 6 }
+  , traits:   [Female, EnumaElish]
+  , death:    44.0
+  , align:    Chaotic:Evil
+  }
+, { name:     "Hassan of the Serenity"
+  , rarity:   3
+  , class:    Assassin
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Arts Arts Buster
+  , stats:    { base:  { atk: 1232,  hp: 1675 }
+              , max:   { atk: 6636, hp: 9310 }
+              , grail: { atk: 8981, hp: 12623 }
+              }
+  , ratings:  { damage:2, np:3, critical:4, utility:4, support:3, durability:2 }
+  , actives:  [ { name:   "Morph (Infiltration) C"
+                , icon:   IconExclamationDown
+                , cd:     7
+                , effect: [ Debuff Enemy 3 CritChance 20.0 
+                          , To Enemy GaugeDown 1.0
+                          ]
+                }
+              , { name:   "Throw (Dagger) C"
+                , icon:   IconStar
+                , cd:     4
+                , effect: [ To Party GainStars 12.0 ]
+                }
+              , { name:   "Dance of Silence B"
+                , icon:   IconReaperUp
+                , cd:     6
+                , effect: [ Grant Self 3 KillUp 50.0 
+                          , Grant Self 3 DebuffSuccess 50.0
+                          ]
+                }
+              ]
+  , passives: [presenceConcealment APlus, independentAction A]
+  , phantasm: { name:   "Zabaniya"
+              , desc:   "Delusional Poison Body"
+              , rank:   C
+              , card:   Arts
+              , kind:   "Anti-Unit"
+              , hits:   1
+              , effect: [ Debuff Enemy 5 Poison 1000.0 
+                        , Chance 40 $ Debuff Enemy 1 SealSkills 0.0
+                        , Chance 40 $ Debuff Enemy 1 SealNP 0.0
+                        , To Enemy Damage 1500.0
+                        ]
+              , over:   [ To Enemy Kill 60.0 ]
+              }
+  , gen:      { starAbsorb: 102, starGen: 25.6, npPerHit: 0.53, npAttacked: 4 }
+  , hits:     { a: 3, b: 4, q: 3, ex: 5 }
+  , traits:   [Female, EnumaElish]
+  , death:    44.0
+  , align:    Lawful:Evil
+  }
+, { name:     "Phantom of the Opera"
+  , rarity:   2
+  , class:    Assassin
+  , attr:     Earth
+  , deck:     Deck Quick Quick Quick Arts Buster
+  , stats:    { base:  { atk: 1003,  hp: 1580 }
+              , max:   { atk: 5654, hp: 8393 }
+              , grail: { atk: 8193, hp: 12112 }
+              }
+  , ratings:  { damage:2, np:3, critical:4, utility:3, support:3, durability:2 }
+  , actives:  [ { name:   "Innocent Monster D"
+                , icon:   IconStarTurn
+                , cd:     5
+                , effect: [ Grant Self 3 StarsPerTurn 9.0 
+                          , Debuff Self 3 DefenseDown 14.0
+                          ]
+                }
+              , { name:   "Siren Song B"
+                , icon:   IconHeart
+                , cd:     7
+                , effect: [ Chance 90 $ Debuff (EnemyType Female) 1 Charm 0.0 ]
+                }
+              , { name:   "Mental Corruption A"
+                , icon:   IconStaffUp
+                , cd:     5
+                , effect: [ Grant Self 3 MentalSuccess 25.0 
+                          , Grant Self 3 MentalResist 100.0
+                          ]
+                }
+              ]
+  , passives: [presenceConcealment A]
+  , phantasm: { name:   "Christine Christine"
+              , desc:   "My Love Song Shall Resound Through Hell"
+              , rank:   BPlus
+              , card:   Arts
+              , kind:   "Anti-Army"
+              , hits:   1
+              , effect: [ To Enemies DamageThruDef 900.0 ]
+              , over:   [ Debuff Enemies 6 DebuffVuln 50.0 ]
+              }
+  , gen:      { starAbsorb: 98, starGen: 25.2, npPerHit: 0.71, npAttacked: 4 }
+  , hits:     { a: 2, b: 2, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish]
+  , death:    49.5
+  , align:    Chaotic:Evil
+  }
+, { name:     "Mata Hari"
+  , rarity:   3
+  , class:    Assassin
+  , attr:     Mankind
+  , deck:     Deck Quick Quick Quick Arts Buster
+  , stats:    { base:  { atk: 977,  hp: 1313 }
+              , max:   { atk: 5377, hp: 6565 }
+              , grail: { atk: 8355, hp: 10120 }
+              }
+  , ratings:  { damage:1, np:5, critical:4, utility:4, support:4, durability:2 }
+  , actives:  [ { name:   "Espionage A++"
+                , icon:   IconStarHaloUp
+                , cd:     5
+                , effect: [ Grant Self 3 StarUp 30.0 ]
+                }
+              , { name:   "Pheromone B"
+                , icon:   IconHeart
+                , cd:     6
+                , effect: [ Chance 60 $ Debuff (EnemiesType Male) 1 Charm 0.0 
+                          , Debuff (EnemiesType Male) 3 DefenseDown 20.0
+                          ]
+                }
+              , { name:   "Double-Cross B"
+                , icon:   IconCircuits
+                , cd:     6
+                , effect: [ Debuff Enemy 1 SealSkills 0.0 
+                          , Debuff Enemy 3 DefenseDown 20.0
+                          ]
+                }
+              ]
+  , passives: []
+  , phantasm: { name:   "Mata Hari"
+              , desc:   "The Woman with Dazzling Eyes"
+              , rank:   A
+              , card:   Arts
+              , kind:   "Anti-Army"
+              , hits:   0
+              , effect: [ Chance 60 $ Debuff Enemies 1 Charm 0.0 ]
+              , over:   [ Debuff Enemies 1 AttackDown 20.0 
+                        , Debuff Enemies 1 DefenseDown 20.0
+                        ]
+              }
+  , gen:      { starAbsorb: 98, starGen: 24.6, npPerHit: 2.1, npAttacked: 4 }
+  , hits:     { a: 1, b: 1, q: 2, ex: 3 }
+  , traits:   [Female, EnumaElish]
+  , death:    55.0
+  , align:    Chaotic:Neutral
   }
 
 ]

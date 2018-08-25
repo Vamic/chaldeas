@@ -5,20 +5,20 @@ module Database
   where
 
 import Operators
-import Database
 
 import Prelude
-import Data.Array (any, cons, filter)
+import Data.Array
+import Data.Function.Memoize
 
 import Database.Model
-import Database.Servant.Archer 
-import Database.Servant.Assassin
-import Database.Servant.Berserker
-import Database.Servant.Caster
-import Database.Servant.Extra
-import Database.Servant.Lancer
-import Database.Servant.Rider
-import Database.Servant.Saber
+import Database.Servant.Archer   
+import Database.Servant.Assassin  
+import Database.Servant.Berserker 
+import Database.Servant.Caster    
+import Database.Servant.Extra     
+import Database.Servant.Lancer    
+import Database.Servant.Rider     
+import Database.Servant.Saber     
 
 servants ∷ Array Servant
 servants = addUniversal ∘ addHeavenOrEarth
@@ -26,7 +26,7 @@ servants = addUniversal ∘ addHeavenOrEarth
          ⧺ assassins
          ⧺ berserkers
          ⧺ casters
-         ⧺ extra
+         ⧺ extras
          ⧺ lancers
          ⧺ riders
          ⧺ sabers    
@@ -35,7 +35,8 @@ servants = addUniversal ∘ addHeavenOrEarth
     addHeavenOrEarth serv@(Servant s@{attr, traits})
       | attr ≡ Earth ∨ attr ≡ Earth = Servant s{traits = cons HeavenOrEarth traits}
       | otherwise                   = serv
+
 getAll ∷ ∀ a. MatchServant a ⇒ Array a
-getAll = filter exists enumArray
-  where 
-    exists eff = any (has eff) servants
+getAll = (_ $ unit) ∘ memoize $ \_ → filter exists enumArray
+  where
+    exists eff = any (has eff) servants 

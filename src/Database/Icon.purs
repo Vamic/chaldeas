@@ -3,11 +3,11 @@ module Database.Icon (Icon(..)) where
 import Prelude
 import Operators
 import Data.Enum         
-import Data.Generic.Rep    
+import Data.Generic.Rep         
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum 
-import Data.Generic.Rep.Show 
-import Data.String              (drop)
+import Data.Generic.Rep.Show   
+import Data.String
 
 data Icon 
   = IconAllUp
@@ -37,7 +37,9 @@ data Icon
   | IconHeart
   | IconHoodUp
   | IconHoodDown
+  | IconHoodX
   | IconHorse
+  | IconHPUp
   | IconKneel
   | IconMagicCircle
   | IconMask
@@ -46,7 +48,7 @@ data Icon
   | IconNiffin
   | IconNoble
   | IconNobleTurn
-  | IconNobleUp
+  | IconNobleUp 
   | IconPotion
   | IconQuickUp
   | IconReaperUp

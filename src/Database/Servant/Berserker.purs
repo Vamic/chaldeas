@@ -20,7 +20,7 @@ berserkers = Servant ↤
                 , icon:   IconExclamationDown
                 , cd:     6
                 , effect: [ Debuff Enemies 3 AttackDown 20.0 
-                          , Debuff Enemies 3 CritDown 50.0
+                          , Debuff Enemies 3 CritChance 50.0
                           ]
                 }
               , { name:   "Protection from Arrows C"
@@ -316,7 +316,7 @@ berserkers = Servant ↤
               , effect: [ To Enemies Damage 1300.0 
                         , Debuff Self 2 Stun 0.0
                         ]
-              , over:   [ Debuff Enemies 3 CritDown 20.0 ]
+              , over:   [ Debuff Enemies 3 CritChance 20.0 ]
               }
   , gen:      { starAbsorb: 10, starGen: 4.9, npPerHit: 0.83, npAttacked: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
@@ -456,7 +456,7 @@ berserkers = Servant ↤
               , effect: [ Grant Self 1 SureHit 0.0 
                         , To Enemy Damage 1100.0 
                         ]
-              , over:   [ Debuff Enemy 3 CritDown 30.0 ]
+              , over:   [ Debuff Enemy 3 CritChance 30.0 ]
               }
   , gen:      { starAbsorb: 10, starGen: 4.9, npPerHit: 0.68, npAttacked: 5 }
   , hits:     { a: 3, b: 1, q: 3, ex: 4 }
@@ -696,6 +696,149 @@ berserkers = Servant ↤
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    65.0
+  , align:    Chaotic:Evil
+  }
+, { name:     "Eric Bloodaxe"
+  , rarity:   2
+  , class:    Berserker
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Buster Buster Buster
+  , stats:    { base:  { atk: 1116,  hp: 1447 }
+              , max:   { atk: 6290, hp: 7688 }
+              , grail: { atk: 9115, hp: 11095 }
+              }
+  , ratings:  { damage:4, np:3, critical:1, utility:2, support:3, durability:3 }
+  , actives:  [ { name:   "Supporting Curse C+"
+                , icon:   IconSwordDown
+                , cd:     5
+                , effect: [ Debuff Enemy 2 AttackDown 15.0 
+                          , Debuff Enemy 2 DefenseDown 30.0
+                          ]
+                }
+              , { name:   "Battle Continuation B"
+                , icon:   IconKneel
+                , cd:     7
+                , effect: [ Grant Self 4 Guts 1.0 ]
+                }
+              , { name:   "Half-Dead Bloodaxe A+"
+                , icon:   IconBubbles
+                , cd:     6
+                , effect: [ To Self RemoveDebuffs 0.0 
+                          , Grant Self 3 MaxHP 3000.0
+                          ]
+                }
+              ]
+  , passives: [madness B]
+  , phantasm: { name:   "Bloodbath Crown"
+              , desc:   "Bloodstained Coronation"
+              , rank:   B
+              , card:   Buster
+              , kind:   "Anti-Personnel"
+              , hits:   5
+              , effect: [ To Enemies Damage 500.0 
+                        , To Self DemeritDamage 1000.0
+                        ]
+              , over:   [ Grant Self 1 AttackUp 50.0 ]
+              }
+  , gen:      { starAbsorb: 9, starGen: 4.9, npPerHit: 1.02, npAttacked: 5 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish]
+  , death:    58.5
+  , align:    Chaotic:Neutral
+  }
+, { name:     "Darius III"
+  , rarity:   3
+  , class:    Berserker
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Buster Buster Buster
+  , stats:    { base:  { atk: 1412,  hp: 1577 }
+              , max:   { atk: 7608, hp: 8763 }
+              , grail: { atk: 10297, hp: 11881 }
+              }
+  , ratings:  { damage:4, np:3, critical:2, utility:2, support:2, durability:3 }
+  , actives:  [ { name:   "Golden Rule B"
+                , icon:   IconNobleUp
+                , cd:     6
+                , effect: [ Grant Self 3 NPGen 45.0 ]
+                }
+              , { name:   "Disengage A"
+                , icon:   IconHeal
+                , cd:     5
+                , effect: [ To Self RemoveDebuffs 0.0 
+                          , To Self Heal 2500.0
+                          ]
+                }
+              , { name:   "Battle Continuation A"
+                , icon:   IconKneel
+                , cd:     7
+                , effect: [ Grant Self 5 Guts 1.0 ]
+                }
+              ]
+  , passives: [madness B]
+  , phantasm: { name:   "Athanaton Ten Thousand"
+              , desc:   "Ten Thousand Immortals"
+              , rank:   A
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   10
+              , effect: [ To Enemies Damage 500.0 ]
+              , over:   [ Debuff Enemies 3 AttackDown 10.0 
+                        , Debuff Enemies 3 DefenseDown 10.0
+                        ]
+              }
+  , gen:      { starAbsorb: 9, starGen: 5.0, npPerHit: 0.67, npAttacked: 5 }
+  , hits:     { a: 3, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish]
+  , death:    65.0
+  , align:    Lawful:Neutral
+  }
+, { name:     "Caligula"
+  , rarity:   2
+  , class:    Berserker
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Buster Buster Buster
+  , stats:    { base:  { atk: 1211,  hp: 1374 }
+              , max:   { atk: 6831, hp: 7303 }
+              , grail: { atk: 9899, hp: 10540 }
+              }
+  , ratings:  { damage:3, np:2, critical:1, utility:3, support:3, durability:2 }
+  , actives:  [ { name:   "Sadistic Streak A"
+                , icon:   IconSwordUp
+                , cd:     5
+                , effect: [ Grant Self 3 AttackUp 30.0 
+                          , Debuff Self 3 DefenseDown 10.0
+                          ]
+                }
+              , { name:   "Imperial Privilege A"
+                , icon:   IconHeal
+                , cd:     5
+                , effect: [ To Self Heal 3000.0 
+                          , Chance 60 $ Grant Self 3 AttackUp 40.0
+                          , Chance 60 $ Grant Self 3 DefenseUp 40.0
+                          ]
+                }
+              , { name:   "Glory of Past Days B"
+                , icon:   IconBusterUp
+                , cd:     3
+                , effect: [ Grant Self 1 BusterUp 50.0 
+                          , To Self DemeritHealth 500.0
+                          ]
+                }
+              ]
+  , passives: [madness APlus]
+  , phantasm: { name:   "Flucticulus Diana"
+              , desc:   "Moonlight, Devour my Soul"
+              , rank:   C
+              , card:   Arts
+              , kind:   "Anti-Army"
+              , hits:   0
+              , effect: [ Chance 150 $ Debuff Enemies 3 SealSkills 0.0 ]
+              , over:   [ Chance 70 $ Debuff Enemies 3 SealNP 0.0 ]
+              }
+  , gen:      { starAbsorb: 9, starGen: 5.0, npPerHit: 0.68, npAttacked: 5 }
+  , hits:     { a: 3, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, Roman, EnumaElish]
+  , death:    56.8
   , align:    Chaotic:Evil
   }
 

@@ -136,7 +136,7 @@ sabers = Servant ↤
               , effect: [ To Enemy Damage 1500.0 ]
               , over:   [ Debuff Enemy 5 Burn 500.0 
                         , Debuff Enemy 5 DefenseDown 20.0
-                        , Debuff Enemy 5 CritDown 20.0
+                        , Debuff Enemy 5 CritChance 20.0
                         ]
               }
   , gen:      { starAbsorb: 102, starGen: 10.1, npPerHit: 0.7, npAttacked: 3 }
@@ -698,6 +698,146 @@ sabers = Servant ↤
   , traits:   [Male, Riding, Brynhildr, Roman, Divine, EnumaElish]
   , death:    31.5
   , align:    Neutral:Neutral
+  }
+, { name:     "Fergus mac Roich"
+  , rarity:   3
+  , class:    Saber
+  , attr:     Earth
+  , deck:     Deck Quick Arts Buster Buster Buster
+  , stats:    { base:  { atk: 1385,  hp: 1761 }
+              , max:   { atk: 7460, hp: 9786 }
+              , grail: { atk: 10096, hp: 13268 }
+              }
+  , ratings:  { damage:4, np:3, critical:1, utility:2, support:2, durability:4 }
+  , actives:  [ { name:   "Valor A"
+                , icon:   IconSwordUp
+                , cd:     5
+                , effect: [ Grant Self 3 AttackUp 30.0  
+                          , Grant Self 3 DebuffResist 40.0
+                          ]
+                }
+              , { name:   "Defiant B"
+                , icon:   IconShieldUp
+                , cd:     4
+                , effect: [ Grant Self 3 DefenseUp 25.0 
+                          , Debuff Self 3 BuffFail 50.0
+                          ]
+                }
+              , { name:   "Mind's Eye (True) A"
+                , icon:   IconDodge
+                , cd:     6
+                , effect: [ Grant Self 1 Evasion 0.0 
+                          , Grant Self 3 DefenseUp 20.0
+                          ]
+                }
+              ]
+  , passives: [magicResistance B, riding B]
+  , phantasm: { name:   "Caladbolg"
+              , desc:   "Rainbow Sword"
+              , rank:   APlus
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   5
+              , effect: [ To Enemies Damage 600.0 
+                        , Debuff Enemies 3 DefenseDown 20.0
+                        ]
+              , over:   [ Debuff Enemies 3 DebuffVuln 20.0 ]
+              }
+  , gen:      { starAbsorb: 99, starGen: 10.0, npPerHit: 1.09, npAttacked: 3 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, Riding, Brynhildr, EnumaElish]
+  , death:    35.0
+  , align:    Lawful:Neutral
+  }
+, { name:     "Bedivere"
+  , rarity:   3
+  , class:    Saber
+  , attr:     Star
+  , deck:     Deck Quick Quick Arts Buster Buster
+  , stats:    { base:  { atk: 1416,  hp: 1727 }
+              , max:   { atk: 7627, hp: 9595 }
+              , grail: { atk: 10322, hp: 13009 }
+              }
+  , ratings:  { damage:4, np:4, critical:1, utility:1, support:3, durability:3 }
+  , actives:  [ { name:   "Tactics C"
+                , icon:   IconBeamUp
+                , cd:     5
+                , effect: [ Grant Party 1 NPUp 16.0 ]
+                }
+              , { name:   "Calm and Collected B"
+                , icon:   IconNoble
+                , cd:     6
+                , effect: [ To Self GaugeUp 30.0 
+                          , Grant Self 3 DebuffResist 50.0
+                          ]
+                }
+              , { name:   "Oath of Protection B"
+                , icon:   IconShieldUp
+                , cd:     6
+                , effect: [ Grant Party 1 DefenseUp 30.0 
+                          , Grant Self 1 DebuffResist 50.0
+                          ]
+                }
+              ]
+  , passives: [magicResistance B, riding A]
+  , phantasm: { name:   "Switch On—Airgetlám"
+              , desc:   "Take Up a Sword, Silver-Colored Arm"
+              , rank:   C
+              , card:   Buster
+              , kind:   "Anti-Unit"
+              , hits:   2
+              , effect: [ To Enemy Damage 1000.0 ]
+              , over:   [ Grant Self 1 BusterUp 30.0 ]
+              }
+  , gen:      { starAbsorb: 100, starGen: 10.2, npPerHit: 1.11, npAttacked: 3 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 5 }
+  , traits:   [Male, Brynhildr, Riding, EnumaElish]
+  , death:    28.0
+  , align:    Lawful:Good
+  }
+, { name:     "Gilles de Rais"
+  , rarity:   3
+  , class:    Saber
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Arts Buster Buster
+  , stats:    { base:  { atk: 1228,  hp: 1889 }
+              , max:   { atk: 6615, hp: 10498 }
+              , grail: { atk: 8952, hp: 14234 }
+              }
+  , ratings:  { damage:4, np:3, critical:2, utility:1, support:2, durability:2 }
+  , actives:  [ { name:   "Tactics C"
+                , icon:   IconBeamUp
+                , cd:     5
+                , effect: [ Grant Party 1 NPUp 16.0 ]
+                }
+              , { name:   "Golden Rule B"
+                , icon:   IconNobleUp
+                , cd:     6
+                , effect: [ Grant Self 3 NPGen 45.0 ]
+                }
+              , { name:   "Prelati's Encouragement B"
+                , icon:   IconBusterUp
+                , cd:     5
+                , effect: [ Grant Self 5 BusterUp 40.0 ]
+                }
+              ]
+  , passives: [magicResistance B, riding B, madness EX]
+  , phantasm: { name:   "Saint War Order"
+              , desc:   "Rally Thy War Cries Under the Holy Flag"
+              , rank:   B
+              , card:   Arts
+              , kind:   "Anti-Personnel"
+              , hits:   0
+              , effect: [ Grant Self 2 AttackUp 100.0 
+                        , Debuff Self 3 DefenseDown 50.0
+                        ]
+              , over:   [ To Party GainStars 5.0 ]
+              }
+  , gen:      { starAbsorb: 98, starGen: 9.9, npPerHit: 0.82, npAttacked: 3 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, Riding, Brynhildr, EnumaElish]
+  , death:    31.5
+  , align:    Lawful:Good
   }
 
 ]

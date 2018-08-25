@@ -15,6 +15,7 @@
     , "purescript-formatters": "^4.0.0"
     , "purescript-generics-rep": "^6.0.0"
     , "purescript-maybe": "^4.0.0"
+    , "purescript-memoize": "^5.0.0"
     , "purescript-numbers": "^6.0.0"
     , "purescript-profunctor": "^4.0.0"
     , "purescript-routing": "^8.0.0"

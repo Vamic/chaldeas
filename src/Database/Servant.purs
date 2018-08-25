@@ -9,8 +9,11 @@ import Data.Generic.Rep
 import Data.Generic.Rep.Bounded    
 import Data.Generic.Rep.Enum      
 import Data.Generic.Rep.Show 
-import Data.Tuple (Tuple)
-
+import Data.Maybe              
+import Data.Int                
+import Data.String.CodeUnits   
+import Data.Tuple             
+ 
 import Database.Skill
 import Database.Passive
 import Database.Trait
@@ -83,6 +86,24 @@ getEffects (Servant {phantasm:{effect, over}, actives})
 phantasmEffects ∷ Servant → Array ActiveEffect
 phantasmEffects (Servant {phantasm:{effect, over}}) = effect ⧺ over
 
+npDamage ∷ Servant → Number
+npDamage (Servant s@{stats:{max:{atk}}, phantasm:{card, effect, over}}) 
+    = cardBonus * toNumber atk * classModifier s.class 
+    * sum (((_ / 100.0) ∘ dmg) ↤ effect ⧺ over)
+  where
+    dmg (To Enemy Damage a) = a
+    dmg (To Enemy DamageThruDef a) = a
+    dmg (To (EnemyType _) Damage a) = a
+    dmg (To (EnemyType _) DamageThruDef a) = a
+    dmg (To Enemies Damage a) = 3.0 * a
+    dmg (To Enemies DamageThruDef a) = 3.0 * a
+    dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * a
+    dmg _ = 0.0
+    cardBonus = case card of
+        Arts → 1.0
+        Buster → 1.5
+        Quick → 0.8
+
 data PhantasmType = SingleTarget | MultiTarget | Support
 instance _01_ ∷ Show PhantasmType where
   show = case _ of
@@ -128,6 +149,8 @@ instance _g_ ∷ MatchServant Class where
     has a (Servant {class: cla}) = a ≡ cla
 instance _h_ ∷ MatchServant Attribute where
     has a (Servant {attr}) = a ≡ attr
+instance _i_ ∷ MatchServant Deck where
+    has a (Servant {deck}) = a ≡ deck
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
@@ -179,6 +202,35 @@ instance _26_ ∷ BoundedEnum Attribute where
   toEnum = genericToEnum
   fromEnum = genericFromEnum
 
-derive instance _27_ ∷ Generic Card _
-instance _28_ ∷ Show Card where
+derive instance _27_ ∷ Eq Card
+derive instance _28_ ∷ Ord Card
+derive instance _29_ ∷ Generic Card _
+instance _30_ ∷ Enum Card where
+  succ = genericSucc
+  pred = genericPred
+instance _31_ ∷ Bounded Card where
+  top = genericTop
+  bottom = genericBottom
+instance _32_ ∷ BoundedEnum Card where
+  cardinality = genericCardinality
+  toEnum = genericToEnum
+  fromEnum = genericFromEnum
+instance _33_ ∷ Show Card where
   show = genericShow
+
+derive instance _34_ ∷ Eq Deck
+derive instance _35_ ∷ Ord Deck
+derive instance _36_ ∷ Generic Deck _
+instance _37_ ∷ Enum Deck where
+  succ = genericSucc
+  pred = genericPred
+instance _38_ ∷ Bounded Deck where
+  top = genericTop
+  bottom = genericBottom
+instance _39_ ∷ BoundedEnum Deck where
+  cardinality = genericCardinality
+  toEnum = genericToEnum
+  fromEnum = genericFromEnum
+instance _40_ ∷ Show Deck where
+  show (Deck a b c d e) = fromCharArray 
+                        $ (fromMaybe '?' ∘ charAt 0 ∘ show) ↤ [a, b, c, d, e]

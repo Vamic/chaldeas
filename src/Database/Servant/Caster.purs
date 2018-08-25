@@ -148,7 +148,7 @@ casters = Servant ↤
               , kind:   "Anti-Army"
               , hits:   12
               , effect: [ To Enemy Damage 1000.0 ]
-              , over:   [ Debuff Enemy 1 CritDown 80.0 ]
+              , over:   [ Debuff Enemy 1 CritChance 80.0 ]
               }
   , gen:      { starAbsorb: 52, starGen: 11.0, npPerHit: 0.82, npAttacked: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 6 }
@@ -199,7 +199,7 @@ casters = Servant ↤
               , kind:   "Anti-Unit/Anti-Army"
               , hits:   1
               , effect: [ To Enemies DamageThruDef 750.0 
-                        , Debuff Enemies 3 CritDown 10.0
+                        , Debuff Enemies 3 CritChance 10.0
                         ]
               , over:   [ Grant Self 1 NPUp 30.0 ]
               }
@@ -445,7 +445,7 @@ casters = Servant ↤
               , hits:   3
               , effect: [ To Enemies Damage 750.0 ]
               , over:   [ Debuff Enemies 3 DefenseDown 10.0 
-                        , Debuff Enemies 3 CritDown 10.0
+                        , Debuff Enemies 3 CritChance 10.0
                         , Debuff Enemies 3 DebuffVuln 10.0  
                         ]
               }
@@ -583,7 +583,7 @@ casters = Servant ↤
               , kind:   "Anti-Army/Anti-Populace"
               , hits:   3
               , effect: [ To Enemies Damage 750.0 
-                        , Debuff Enemies 3 CritDown 20.0
+                        , Debuff Enemies 3 CritChance 20.0
                         ]
               , over:   [ Grant Party 3 CritUp 20.0 ]
               }
@@ -634,7 +634,7 @@ casters = Servant ↤
                         , Debuff Enemies 1 SealSkills 0.0
                         , Debuff Enemies 1 SealNP 0.0
                         ]
-              , over:   [ Debuff Enemies 3 CritDown 10.0 ]
+              , over:   [ Debuff Enemies 3 CritChance 10.0 ]
               }
   , gen:      { starAbsorb: 51, starGen: 10.6, npPerHit: 0.51, npAttacked: 3 }
   , hits:     { a: 3, b: 3, q: 3, ex: 5 }
@@ -825,6 +825,282 @@ casters = Servant ↤
   , traits:   [Male, Brynhildr]
   , death:    40.5
   , align:    Neutral:Good
+  }
+, { name:     "Charles Babbage"
+  , rarity:   3
+  , class:    Caster
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Arts Buster Buster
+  , stats:    { base:  { atk: 1113,  hp: 1959 }
+              , max:   { atk: 5996, hp: 10887 }
+              , grail: { atk: 8115, hp: 14761 }
+              }
+  , ratings:  { damage:0, np:0, critical:0, utility:0, support:0, durability:0 }
+  , actives:  [ { name:   "Concentration C"
+                , icon:   IconNobleUp
+                , cd:     6
+                , effect: [ Grant Self 3 NPGen 30.0 
+                          , Grant Self 1 StarAbsorb 1000.0
+                          ]
+                }
+              , { name:   "Mechanized Armor EX"
+                , icon:   IconSwordUp
+                , cd:     5
+                , effect: [ Grant Self 1 AttackUp 25.0 
+                          , Grant Self 1 Invincibility 0.0
+                          ]
+                }
+              , { name:   "Overload D"
+                , icon:   IconBeamUp
+                , cd:     5
+                , effect: [ Grant Self 1 NPUp 25.0 
+                          , Debuff Self 5 Burn 300.0
+                          ]
+                }
+              ]
+  , passives: [itemConstructionFalse A]
+  , phantasm: { name:   "Dimension of Steam"
+              , desc:   "Gorgeous World of Ashes"
+              , rank:   EX
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   4
+              , effect: [ To Enemies Damage 600.0 ]
+              , over:   [ Debuff Enemies 3 DefenseDown 10.0 ]
+              }
+  , gen:      { starAbsorb: 48, starGen: 10.8, npPerHit: 0.91, npAttacked: 3 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish]
+  , death:    36.0
+  , align:    Chaotic:Neutral
+  }
+, { name:     "Cu Chulainn (Caster)"
+  , rarity:   3
+  , class:    Caster
+  , attr:     Heaven
+  , deck:     Deck Quick Arts Arts Arts Buster
+  , stats:    { base:  { atk: 1222,  hp: 1728 }
+              , max:   { atk: 6580, hp: 9604 }
+              , grail: { atk: 8905, hp: 13022 }
+              }
+  , ratings:  { damage:2, np:4, critical:3, utility:2, support:1, durability:4 }
+  , actives:  [ { name:   "Rune Spell A"
+                , icon:   IconExclamationUp
+                , cd:     5
+                , effect: [ Grant Self 3 CritUp 50.0 
+                          , Grant Self 3 DebuffResist 50.0
+                          ]
+                }
+              , { name:   "Divine Protection from Arrows A"
+                , icon:   IconDodge
+                , cd:     5
+                , effect: [ Grant Self 0 Evasion 3.0 
+                          , Grant Self 3 DefenseUp 18.0
+                          ]
+                }
+              , { name:   "Disengage C"
+                , icon:   IconBubbles
+                , cd:     5
+                , effect: [ To Self RemoveDebuffs 0.0 
+                          , To Self Heal 1500.0
+                          ]
+                }
+              ]
+  , passives: [territoryCreation B, divinity B]
+  , phantasm: { name:   "Wicker Man"
+              , desc:   "Flame Cage that Burns All"
+              , rank:   B
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   1
+              , effect: [ To Enemies Damage 500.0 ]
+              , over:   [ Debuff Enemies 3 DefenseDown 10.0 
+                        , Debuff Enemies 10 Burn 300.0
+                        ]
+              }
+  , gen:      { starAbsorb: 49, starGen: 10.9, npPerHit: 1.6, npAttacked: 3 }
+  , hits:     { a: 1, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, Divine, Brynhildr, EnumaElish]
+  , death:    42.0
+  , align:    Lawful:Neutral
+  }
+, { name:     "Mephistopheles"
+  , rarity:   3
+  , class:    Caster
+  , attr:     Earth
+  , deck:     Deck Quick Arts Arts Arts Buster
+  , stats:    { base:  { atk: 1270,  hp: 1659 }
+              , max:   { atk: 6839, hp: 9216 }
+              , grail: { atk: 9255, hp: 12495 }
+              }
+  , ratings:  { damage:2, np:4, critical:2, utility:2, support:2, durability:2 }
+  , actives:  [ { name:   "Curse A"
+                , icon:   IconDarkMagic
+                , cd:     5
+                , effect: [ Chance 80 $ To Enemy GaugeDown 1.0 ]
+                }
+              , { name:   "Innocent Monster B"
+                , icon:   IconStarTurn
+                , cd:     5
+                , effect: [ Grant Self 3 StarsPerTurn 9.0 
+                          , Debuff Self 3 DefenseDown 18.0
+                          ]
+                }
+              , { name:   "Clown's Laughter A+"
+                , icon:   IconHoodX
+                , cd:     6
+                , effect: [ Debuff Enemy 0 BuffBlock 3.0 
+                          , Debuff Enemy 5 Curse 1000.0
+                          ]
+                }
+              ]
+  , passives: [territoryCreation CPlus, itemConstruction B]
+  , phantasm: { name:   "Ticktock Bomb"
+              , desc:   "Slumbering Explosive"
+              , rank:   APlus
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   1
+              , effect: [ To Enemies DamageThruDef 500.0 ]
+              , over:   [ Debuff Enemies 3 Curse 500.0 ]
+              }
+  , gen:      { starAbsorb: 50, starGen: 11.0, npPerHit: 0.81, npAttacked: 3 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish]
+  , death:    36.0
+  , align:    Chaotic:Evil
+  }
+, { name:     "Paracelsus von Hohenheim"
+  , rarity:   3
+  , class:    Caster
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Arts Arts Buster
+  , stats:    { base:  { atk: 1246,  hp: 1711 }
+              , max:   { atk: 6711, hp: 9506 }
+              , grail: { atk: 9082, hp: 12889 }
+              }
+  , ratings:  { damage:2, np:4, critical:1, utility:3, support:3, durability:2 }
+  , actives:  [ { name:   "Rapid Casting A"
+                , icon:   IconNoble
+                , cd:     8
+                , effect: [ To Self GaugeUp 80.0 ]
+                }
+              , { name:   "Elemental A+"
+                , icon:   IconArtsUp
+                , cd:     7
+                , effect: [ Grant Party 3 ArtsUp 20.0 ]
+                }
+              , { name:   "Philosopher's Stone A"
+                , icon:   IconKneel
+                , cd:     8
+                , effect: [ Grant Ally 3 Guts 1.0 ]
+                }
+              ]
+  , passives: [territoryCreation A, itemConstruction EX]
+  , phantasm: { name:   "Sword of Paracelsus"
+              , desc:   "Magic Sword of the Elementalist"
+              , rank:   APlus
+              , card:   Arts
+              , kind:   "Anti-Army"
+              , hits:   3
+              , effect: [ To Enemies Damage 600.0 ]
+              , over:   [ Debuff Enemies 3 AttackDown 10.0 ]
+              }
+  , gen:      { starAbsorb: 50, starGen: 10.8, npPerHit: 0.55, npAttacked: 3 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish, Brynhildr]
+  , death:    36.0
+  , align:    Chaotic:Good
+  }
+, { name:     "Geronimo"
+  , rarity:   3
+  , class:    Caster
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Arts Buster Buster
+  , stats:    { base:  { atk: 1273,  hp: 1642 }
+              , max:   { atk: 6857, hp: 9123 }
+              , grail: { atk: 9280, hp: 12369 }
+              }
+  , ratings:  { damage:3, np:2, critical:2, utility:1, support:3, durability:2 }
+  , actives:  [ { name:   "Bloody Devil B"
+                , icon:   IconBusterUp
+                , cd:     5
+                , effect: [ Grant Self 1 BusterUp 50.0 ]
+                }
+              , { name:   "Shamanism B"
+                , icon:   IconArtsUp
+                , cd:     5
+                , effect: [ Grant Self 1 ArtsUp 50.0 ]
+                }
+              , { name:   "Guardian Beast B"
+                , icon:   IconQuickUp
+                , cd:     5
+                , effect: [ Grant Self 1 QuickUp 50.0 ]
+                }
+              ]
+  , passives: [territoryCreation B, itemConstruction C]
+  , phantasm: { name:   "Tsago Degi Naleya"
+              , desc:   "The One Who Makes the Earth"
+              , rank:   B
+              , card:   Arts
+              , kind:   "Anti-Army"
+              , hits:   1
+              , effect: [ To Enemies Damage 700.0 
+                        , Debuff Enemies 3 CritChance 20.0
+                        ]
+              , over:   [ To Party Heal 1000.0 
+                        , Grant Party 3 DebuffResist 20.0
+                        ]
+              }
+  , gen:      { starAbsorb: 49, starGen: 11.0, npPerHit: 0.9, npAttacked: 3 }
+  , hits:     { a: 2, b: 1, q: 2, ex: 4 }
+  , traits:   [Male, EnumaElish, Brynhildr]
+  , death:    40.5
+  , align:    Neutral:Good
+  }
+, { name:     "Gilles de Rais (Caster)"
+  , rarity:   3
+  , class:    Caster
+  , attr:     Mankind
+  , deck:     Deck Quick Arts Arts Arts Buster
+  , stats:    { base:  { atk: 1209,  hp: 1711 }
+              , max:   { atk: 6514, hp: 9506 }
+              , grail: { atk: 10816, hp: 14889 }
+              }
+  , ratings:  { damage:2, np:4, critical:1, utility:3, support:2, durability:2 }
+  , actives:  [ { name:   "Mental Corruption A"
+                , icon:   IconStaffUp
+                , cd:     5
+                , effect: [ Grant Self 3 MentalSuccess 25.0 
+                          , Grant Self 3 MentalResist 100.0 
+                          ]
+                }
+              , { name:   "Aesthetic Appreciation E-"
+                , icon:   IconBeamDown
+                , cd:     5
+                , effect: [ Debuff Enemy 1 NPDown 11.0 ]
+                }
+              , { name:   "Evil Eye of the Abyss C"
+                , icon:   IconStun
+                , cd:     8
+                , effect: [ Debuff Enemies 5 Terror 40.0 ]
+                }
+              ]
+  , passives: [territoryCreation B]
+  , phantasm: { name:   "Prelati's Spellbook"
+              , desc:   "Text of the Sunken Spiraled City "
+              , rank:   APlus
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   3
+              , effect: [ To Enemies Damage 500.0 ]
+              , over:   [ Debuff Enemies 3 AttackDown 20.0 ]
+              }
+  , gen:      { starAbsorb: 48, starGen: 10.8, npPerHit: 1.58, npAttacked: 3 }
+  , hits:     { a: 1, b: 1, q: 2, ex: 3 }
+  , traits:   [Male, EnumaElish]
+  , death:    48.0
+  , align:    Chaotic:Evil
   }
 
 ]

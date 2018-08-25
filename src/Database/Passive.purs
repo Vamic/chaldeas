@@ -5,7 +5,7 @@ import Operators
 
 import Data.Array  (singleton)
 import Data.Map    (Map, lookup)
-import Data.Maybe  (fromMaybe)
+import Data.Maybe
 
 import Database.Trait
 import Database.Skill

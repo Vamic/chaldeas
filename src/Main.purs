@@ -6,8 +6,8 @@ import Operators
 
 import Halogen.Aff as HA
 
-import Effect              (Effect)
-import Halogen.VDom.Driver (runUI)
+import Effect              
+import Halogen.VDom.Driver 
 import Routing.Hash
 
 import Component

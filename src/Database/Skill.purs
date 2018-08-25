@@ -4,13 +4,13 @@ import Prelude
 import Operators
 
 import Data.Enum          
-import Data.Number.Format       (toString)
+import Data.Number.Format      
 import Data.Generic.Rep    
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum 
 import Data.Maybe
-import Data.String              (toLower, singleton, uncons)
-import Data.Tuple               (Tuple)
+import Data.String            
+import Data.Tuple             
 
 import Database.Icon
 import Database.Trait
@@ -119,6 +119,7 @@ data BuffEffect = ArtsUp
                 | KillImmunity
                 | KillResist
                 | KillUp
+                | MaxHP
                 | MentalResist
                 | MentalSuccess
                 | NPUp
@@ -132,6 +133,7 @@ data BuffEffect = ArtsUp
                 | StarDrop
                 | StarUp
                 | StarsPerTurn
+                | StunSuccess
                 | SureHit
                 | Taunt
 instance _b_ ∷ Show BuffEffect where
@@ -170,6 +172,7 @@ showBuff target amount buff = case buff of
     KillImmunity     → "Grant " ⧺ s ⧺ " Instant-Kill Immunity" ⧺ times amount
     KillResist       → "Increase " ⧺ p ⧺ " Instant-Kill resistance " ⧺ by
     KillUp           → "Increase " ⧺ p ⧺ " Instant-Kill success rate " ⧺ by
+    MaxHP            → "Increase " ⧺ p ⧺ " Max HP by " ⧺ n
     MentalResist     → "Increase " ⧺ p ⧺ " mental debuff resistance " ⧺ by
     MentalSuccess    → "Increase " ⧺ p ⧺ " mental debuff success rate " ⧺ by
     NPUp             → "Increase " ⧺ p ⧺ " NP Damage " ⧺ by
@@ -184,6 +187,7 @@ showBuff target amount buff = case buff of
     StarDrop         → "Increase C. Star Drop Rate for " ⧺ s ⧺ " " ⧺ by
     StarUp           →  "Increase " ⧺ p ⧺ " critical star generation rate " ⧺ by
     StarsPerTurn     → "Gain " ⧺ n ⧺ " stars every turn"
+    StunSuccess      → "Increase " ⧺ p ⧺ " Stun success rate for 1 time " ⧺ by
     SureHit          → "Grant " ⧺ s ⧺ " Sure Hit" ⧺ times amount
     Taunt            → "Draw attention of all enemies" ⧺ to
   where 
@@ -197,6 +201,7 @@ data DebuffEffect = AttackDown
                   | BuffFail
                   | Burn
                   | Charm
+                  | CritChance
                   | CritDown
                   | Curse
                   | DamageVuln
@@ -210,6 +215,7 @@ data DebuffEffect = AttackDown
                   | SealSkills
                   | Stun
                   | StunBomb
+                  | Terror
 instance _c_ ∷ Show DebuffEffect where
     show = showDebuff Someone (-1.0)
 
@@ -220,7 +226,8 @@ showDebuff target amount debuff = case debuff of
     BuffFail    → "Reduce " ⧺ p ⧺ " attack buff success rate by " ⧺ n ⧺ "%"
     Burn        → "Inflict " ⧺ n ⧺ " Burn damage" ⧺ to
     Charm       → "Charm " ⧺ s
-    CritDown    → "Reduce " ⧺ p ⧺ " critical attack chance by " ⧺ n ⧺ "%"
+    CritChance  → "Reduce " ⧺ p ⧺ " critical attack chance by " ⧺ n ⧺ "%"
+    CritDown    → "Reduce " ⧺ p ⧺ " critical damage by " ⧺ n ⧺ " %"
     Curse       → "Inflict " ⧺ n ⧺ " Curse damage" ⧺ to
     DamageVuln  → "Increase " ⧺ s ⧺ " damage taken by " ⧺ n
     DeathDown   → "Reduce " ⧺ p ⧺ " Instant-Death resistance by " ⧺ n ⧺ "%"
@@ -234,6 +241,8 @@ showDebuff target amount debuff = case debuff of
     SealSkills  → "Seal " ⧺ p ⧺ " skills"
     Stun        → "Stun " ⧺ s
     StunBomb    → "Stun " ⧺ s ⧺ " after 1 turn"
+    Terror      → "Inflict Terror status" ⧺ to ⧺ ", causing " ⧺ n 
+                ⧺ "% chance to be Stunned every turn"
   where 
     n   = outputNumber amount
     p:s = possessiveAndSubject target
@@ -244,14 +253,16 @@ data InstantEffect = GaugeDown
                    | Cure
                    | Damage
                    | DamageThruDef
+                   | DemeritBuffs
                    | DemeritCharge
+                   | DemeritDamage
                    | DemeritGauge
                    | DemeritHealth
                    | DemeritKill
-                   | DemeritLose
                    | GainStars
                    | GaugeUp
                    | Heal
+                   | HealToFull
                    | Kill
                    | RemoveBuffs
                    | RemoveDebuffs
@@ -266,13 +277,15 @@ showInstant target amount instant = case instant of
     GaugeDown     → "Reduce " ⧺ p ⧺ " NP gauge by " ⧺ n
     Damage        → "Deal " ⧺ n ⧺ "% damage" ⧺ to
     DamageThruDef → "Deal " ⧺ n ⧺ "% damage" ⧺ to ⧺ ", ignoring defense"
+    DemeritBuffs  → "Removes " ⧺ p ⧺ " buffs [Demerit]"
     DemeritCharge → "Increase " ⧺ s ⧺ " NP gauge by " ⧺ n ⧺ " [Demerit]"
     DemeritGauge  → "Decrease " ⧺ p ⧺ " NP gauge by " ⧺ n ⧺ "% [Demerit]"
-    DemeritHealth → "Deal " ⧺ n ⧺ " damage" ⧺ to ⧺ " [Demerit]"
+    DemeritDamage → "Deal " ⧺ n ⧺ " damage" ⧺ to ⧺ " [Demerit]"
     DemeritKill   → "Sacrifice " ⧺ s ⧺ " (can trigger Guts) [Demerit]"
-    DemeritLose   → "Deal " ⧺ n ⧺ " damage" ⧺ to ⧺ " down to a minimum of 1 [Demerit]"
+    DemeritHealth → "Deal " ⧺ n ⧺ " damage" ⧺ to ⧺ " down to a minimum of 1 [Demerit]"
     GaugeUp       → "Increase " ⧺ p ⧺ " NP gauge by " ⧺ n ⧺ "%"
     Heal          → "Restore " ⧺ n ⧺ " health" ⧺ to
+    HealToFull    → "Heal " ⧺ s ⧺ " to full"
     RemoveBuffs   → "Remove " ⧺ p ⧺ " buffs"
     RemoveDebuffs → "Remove " ⧺ p ⧺ " debuffs"
     RemoveMental  → "Remove " ⧺ p ⧺ " mental debuffs"
@@ -285,17 +298,19 @@ showInstant target amount instant = case instant of
     p:s = possessiveAndSubject target
     to  = if s ≡ "" then "" else " to " ⧺ s
 
+-- | Int field is duration, Number field is amount
 data ActiveEffect = Grant Target Int BuffEffect Number
                   | Debuff Target Int DebuffEffect Number
                   | To Target InstantEffect Number
                   | Chance Int ActiveEffect
 
-getTarget ∷ ActiveEffect → Target
-getTarget = case _ of
-    Grant    t _ _ _ → t
-    Debuff   t _ _ _ → t
-    To       t _ _   → t
-    Chance _ ef → getTarget ef
+{-
+activeVal ∷ ActiveEffect → Number
+activeVal (Grant _ _ _ val)  = val
+activeVal (Debuff _ _ _ val) = val
+activeVal (To _ _ val)       = val
+activeVal (Chance _ active)  = activeVal active
+-}
 
 instance _01_ ∷ Eq ActiveEffect where
   eq activeA activeB = case activeA, activeB of
@@ -309,10 +324,10 @@ instance _01_ ∷ Eq ActiveEffect where
 
 instance _e_ ∷ Show ActiveEffect where
   show = case _ of
-      Grant t dur buff amt    → showBuff t amt buff ⧺ turns dur ⧺ "."
-                              ⧺ if not allied t then " [Demerit]" else ""
-      Debuff t dur debuff amt → showDebuff t amt debuff ⧺ turns dur ⧺ "."
-                              ⧺ if allied t then " [Demerit]" else ""
+      Grant t dur buff amt    → showBuff t amt buff ⧺ turns dur
+                              ⧺ if not allied t then " [Demerit]." else "."
+      Debuff t dur debuff amt → showDebuff t amt debuff ⧺ turns dur
+                              ⧺ if allied t then " [Demerit]." else "."
       To t instant amt        → showInstant t amt instant ⧺ "."
       Chance per ef           → show per ⧺ "% chance to " ⧺ show ef
     where

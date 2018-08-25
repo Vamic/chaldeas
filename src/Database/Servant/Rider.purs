@@ -49,7 +49,7 @@ riders = Servant ↤
                         ]
               , over:   [ Debuff Enemy 3 DefenseDown 20.0 ]
               }
-  , gen:      { starAbsorb: 205, starGen: 9.0, npPerHit: 0.59, npAttacked: 3 }
+  , gen:      { starWeight: 205, starRate: 9.0, npPerHit: 0.59, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 5, ex: 5 }
   , traits:   [Male, Brynhildr, Divine, Riding, EnumaElish]
   , death:    30.0
@@ -96,7 +96,7 @@ riders = Servant ↤
               , effect: [ To Enemies Damage 600.0 ]
               , over:   [ To Party GainStars 20.0 ]
               }
-  , gen:      { starAbsorb: 208, starGen: 9.0, npPerHit: 0.42, npAttacked: 3 }
+  , gen:      { starWeight: 208, starRate: 9.0, npPerHit: 0.42, npPerDefend: 3 }
   , hits:     { a: 4, b: 2, q: 6, ex: 4 }
   , traits:   [Female, Riding]
   , death:    50.0
@@ -140,7 +140,7 @@ riders = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ Debuff Enemies 3 DefenseDown 10.0 ]
               }
-  , gen:      { starAbsorb: 205, starGen: 8.8, npPerHit: 0.66, npAttacked: 3 }
+  , gen:      { starWeight: 205, starRate: 8.8, npPerHit: 0.66, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 6 }
   , traits:   [Male, Brynhildr, Divine, GreekMyth, King, Riding, EnumaElish]
   , death:    40.0
@@ -186,7 +186,7 @@ riders = Servant ↤
               , effect: [ To Enemy Damage 2000.0 ]
               , over:   [ Grant Self 1 QuickUp 10.0 ]
               }
-  , gen:      { starAbsorb: 198, starGen: 9.0, npPerHit: 1.15, npAttacked: 3 }
+  , gen:      { starWeight: 198, starRate: 9.0, npPerHit: 1.15, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 4, ex: 5 }
   , traits:   [Male, Brynhildr, Divine, EnumaElish]
   , death:    40.0
@@ -230,7 +230,7 @@ riders = Servant ↤
               , effect: [ To Enemies Damage 650.0 ]
               , over:   [ To Self GaugeUp 10.0 ]
               }
-  , gen:      { starAbsorb: 204, starGen: 8.9, npPerHit: 0.87, npAttacked: 3 }
+  , gen:      { starWeight: 204, starRate: 8.9, npPerHit: 0.87, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Arthur, Dragon, Riding, Saberface, EnumaElish, King]
   , death:    35.0
@@ -278,7 +278,7 @@ riders = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ Debuff Enemies 3 DefenseDown 40.0 ]
               }
-  , gen:      { starAbsorb: 205, starGen: 9.0, npPerHit: 1.58, npAttacked: 3 }
+  , gen:      { starWeight: 205, starRate: 9.0, npPerHit: 1.58, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    30.0
@@ -324,7 +324,7 @@ riders = Servant ↤
               , effect: [ To Enemies Damage 750.0 ]
               , over:   [ Chance 50 $ To Enemies GaugeDown 1.0 ]
               }
-  , gen:      { starAbsorb: 204, starGen: 9.2, npPerHit: 0.71, npAttacked: 3 }
+  , gen:      { starWeight: 204, starRate: 9.2, npPerHit: 0.71, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 4 }
   , traits:   [Female, Dragon, Saberface, EnumaElish]
   , death:    35.0
@@ -372,7 +372,7 @@ riders = Servant ↤
                         ]
               , over:   [ To Party Heal 500.0 ]
               }
-  , gen:      { starAbsorb: 201, starGen: 9.0, npPerHit: 1.0, npAttacked: 3 }
+  , gen:      { starWeight: 201, starRate: 9.0, npPerHit: 1.0, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, EnumaElish]
   , death:    35.0
@@ -417,7 +417,7 @@ riders = Servant ↤
               , over:   [ To Enemy Damage 1200.0 ] 
               -- TODO multiply by extra damage when own HP Is low
               }
-  , gen:      { starAbsorb: 200, starGen: 9.1, npPerHit: 0.84, npAttacked: 3 }
+  , gen:      { starWeight: 200, starRate: 9.1, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    50.0
@@ -464,7 +464,7 @@ riders = Servant ↤
                         ]
               , over:   [ To Party GainStars 25.0 ]
               }
-  , gen:      { starAbsorb: 205, starGen: 9.0, npPerHit: 0.66, npAttacked: 1 }
+  , gen:      { starWeight: 205, starRate: 9.0, npPerHit: 0.66, npPerDefend: 1 }
   , hits:     { a: 2, b: 1, q: 2, ex: 4 }
   , traits:   [Riding, EnumaElish]
   , death:    40.0
@@ -512,7 +512,7 @@ riders = Servant ↤
                         ]
               , over:   [ Grant Self 1 DefenseUp 20.0 ]
               }
-  , gen:      { starAbsorb: 205, starGen: 8.9, npPerHit: 0.85, npAttacked: 3 }
+  , gen:      { starWeight: 205, starRate: 8.9, npPerHit: 0.85, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, Brynhildr, EnumaElish]
   , death:    45.0
@@ -556,7 +556,7 @@ riders = Servant ↤
               , effect: [ To Enemy Damage 2400.0 ]
               , over:   [ Grant Self 3 StarUp 50.0 ]
               }
-  , gen:      { starAbsorb: 204, starGen: 9.1, npPerHit: 0.87, npAttacked: 3 }
+  , gen:      { starWeight: 204, starRate: 9.1, npPerHit: 0.87, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, Brynhildr, EnumaElish]
   , death:    35.0
@@ -602,7 +602,7 @@ riders = Servant ↤
               , effect: [ To Enemies Damage 1000.0 ]
               , over:   [ Grant Party 3 StarUp 20.0 ]
               }
-  , gen:      { starAbsorb: 194, starGen: 9.0, npPerHit: 0.58, npAttacked: 3 }
+  , gen:      { starWeight: 194, starRate: 9.0, npPerHit: 0.58, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, Divine]
   , death:    35.0
@@ -654,7 +654,7 @@ riders = Servant ↤
                         ]
               , over:   [ Chance 30 $ To Enemies GaugeDown 1.0 ]
               }
-  , gen:      { starAbsorb: 198, starGen: 8.8, npPerHit: 0.56, npAttacked: 3 }
+  , gen:      { starWeight: 198, starRate: 8.8, npPerHit: 0.56, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    45.0
@@ -696,7 +696,7 @@ riders = Servant ↤
               , effect: [ To Enemies Damage 1200.0 ]
               , over:   [ To Party GainStars 15.0 ]
               }
-  , gen:      { starAbsorb: 205, starGen: 9.0, npPerHit: 0.86, npAttacked: 3 }
+  , gen:      { starWeight: 205, starRate: 9.0, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, Divine, EnumaElish]
   , death:    40.0
@@ -738,11 +738,10 @@ riders = Servant ↤
               , effect: [ Grant Party 3 DefenseUp 20.0 ]
               , over:   [ Grant Party 1 DefenseUp 20.0 ]
               }
-  , gen:      { starAbsorb: 196, starGen: 8.9, npPerHit: 0.85, npAttacked: 3 }
+  , gen:      { starWeight: 196, starRate: 8.9, npPerHit: 0.85, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, EnumaElish]
   , death:    45.0
   , align:    Neutral:Good
   }
-
 ]

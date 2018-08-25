@@ -45,7 +45,7 @@ extras = Servant ↤
                         ]
               , over:   [ Grant Party 2 HealPerTurn 1000.0 ]
               }
-  , gen:      { starAbsorb: 99, starGen: 10.1, npPerHit: 0.76, npAttacked: 3 }
+  , gen:      { starWeight: 99, starRate: 10.1, npPerHit: 0.76, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish, Saberface]
   , death:    21.0
@@ -92,7 +92,7 @@ extras = Servant ↤
                         ]
               , over:   [ Debuff Enemies 1 CritChance 30.0 ]
               }
-  , gen:      { starAbsorb: 100, starGen: 10.0, npPerHit: 0.86, npAttacked: 3 }
+  , gen:      { starWeight: 100, starRate: 10.0, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 7 }
   , traits:   [Male, EnumaElish]
   , death:    21.0
@@ -143,7 +143,7 @@ extras = Servant ↤
                         ]
               , over:   [ Debuff Enemy 5 Curse 500.0 ]
               }
-  , gen:      { starAbsorb: 29, starGen: 6.0, npPerHit: 0.83, npAttacked: 5 }
+  , gen:      { starWeight: 29, starRate: 6.0, npPerHit: 0.83, npPerDefend: 5 }
   , hits:     { a: 2, b: 4, q: 3, ex: 7 }
   , traits:   [Female, EnumaElish, Saberface]
   , death:    5.7
@@ -193,7 +193,7 @@ extras = Servant ↤
                         , Debuff Enemies 5 Curse 500.0
                         ]
               }
-  , gen:      { starAbsorb: 30, starGen: 5.9, npPerHit: 0.62, npAttacked: 5 }
+  , gen:      { starWeight: 30, starRate: 5.9, npPerHit: 0.62, npPerDefend: 5 }
   , hits:     { a: 2, b: 3, q: 4, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    7.0
@@ -239,7 +239,7 @@ extras = Servant ↤
               , effect: [ To Enemy Damage 1000.0 ]
               , over:   [ Debuff Enemy 1 DefenseDown 10.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 10.0, npPerHit: 0.76, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 10.0, npPerHit: 0.76, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 4, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    21.0
@@ -289,7 +289,7 @@ extras = Servant ↤
                         ]
               , over:   [ Grant Party 3 DefenseUp 30.0 ]
               }
-  , gen:      { starAbsorb: 99, starGen: 9.9, npPerHit: 0.84, npAttacked: 3 }
+  , gen:      { starWeight: 99, starRate: 9.9, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, EnumaElish]
   , death:    24.5
@@ -345,7 +345,7 @@ extras = Servant ↤
                         ]
               , over:   [ To Self Heal 5000.0 ]
               }
-  , gen:      { starAbsorb: 29, starGen: 7.0, npPerHit: 0.79, npAttacked: 5 }
+  , gen:      { starWeight: 29, starRate: 7.0, npPerHit: 0.79, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 4, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    9.0

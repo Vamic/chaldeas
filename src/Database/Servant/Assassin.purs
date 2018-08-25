@@ -46,7 +46,7 @@ assassins = Servant ↤
               , effect: [ To Enemy DamageThruDef 2200.0 ]
               , over:   [ Grant Self 1 (AttackUpVs Female) 50.0 ]
               }
-  , gen:      { starAbsorb: 153, starGen: 7.9, npPerHit: 0.34, npAttacked: 3 }
+  , gen:      { starWeight: 153, starRate: 7.9, npPerHit: 0.34, npPerDefend: 3 }
   , hits:     { a: 5, b: 5, q: 5, ex: 8 }
   , traits:   [Female, EnumaElish]
   , death:    31.5
@@ -98,7 +98,7 @@ assassins = Servant ↤
                         ]
               , over:   [ Debuff Enemies 5 Poison 1000.0 ]
               }
-  , gen:      { starAbsorb: 98, starGen: 25.0, npPerHit: 0.55, npAttacked: 4 }
+  , gen:      { starWeight: 98, starRate: 25.0, npPerHit: 0.55, npPerDefend: 4 }
   , hits:     { a: 3, b: 1, q: 4, ex: 6 }
   , traits:   [Female, Demonic, EnumaElish, Divine, Dragon]
   , death:    31.6
@@ -140,7 +140,7 @@ assassins = Servant ↤
               , effect: [ To Enemy Damage 2400.0 ]
               , over:   [ To (EnemyType Saberface) Damage 150.0 ]
               }
-  , gen:      { starAbsorb: 98, starGen: 25.6, npPerHit: 0.81, npAttacked: 4 }
+  , gen:      { starWeight: 98, starRate: 25.6, npPerHit: 0.81, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 4, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur]
   , death:    38.5
@@ -189,7 +189,7 @@ assassins = Servant ↤
               , effect: [ To Enemy DamageThruDef 1500.0 ]
               , over:   [ To Enemy Kill 100.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 25.6, npPerHit: 0.8, npAttacked: 4 }
+  , gen:      { starWeight: 102, starRate: 25.6, npPerHit: 0.8, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 4, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
@@ -238,7 +238,7 @@ assassins = Servant ↤
                         ]
               , over:   [ To (EnemyType Female) Damage 120.0 ]
               }
-  , gen:      { starAbsorb: 98, starGen: 25.2, npPerHit: 21.5, npAttacked: 4 }
+  , gen:      { starWeight: 98, starRate: 25.2, npPerHit: 21.5, npPerDefend: 4 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
@@ -287,7 +287,7 @@ assassins = Servant ↤
                         ]
               , over:   [ Debuff Enemy 3 CritChance 10.0 ]
               }
-  , gen:      { starAbsorb: 97, starGen: 25.6, npPerHit: 0.46, npAttacked: 4 }
+  , gen:      { starWeight: 97, starRate: 25.6, npPerHit: 0.46, npPerDefend: 4 }
   , hits:     { a: 2, b: 6, q: 4, ex: 8 }
   , traits:   [Male, Brynhildr, EnumaElish]
   , death:    44.0
@@ -335,7 +335,7 @@ assassins = Servant ↤
               , effect: [ To Enemies Damage 1000.0 ]
               , over:   [ To Enemies Kill 30.0 ]
               }
-  , gen:      { starAbsorb: 98, starGen: 25.6, npPerHit: 0.71, npAttacked: 4 }
+  , gen:      { starWeight: 98, starRate: 25.6, npPerHit: 0.71, npPerDefend: 4 }
   , hits:     { a: 3, b: 3, q: 3, ex: 5 }
   , traits:   [Female, King, EnumaElish]
   , death:    44.0
@@ -383,7 +383,7 @@ assassins = Servant ↤
                         ] 
               , over:   [ Chance 100 $ Debuff (EnemyType Male) 1 Charm 0.0 ]
               }
-  , gen:      { starAbsorb: 104, starGen: 25.0, npPerHit: 2.26, npAttacked: 4 }
+  , gen:      { starWeight: 104, starRate: 25.0, npPerHit: 2.26, npPerDefend: 4 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    27.5
@@ -429,7 +429,7 @@ assassins = Servant ↤
               , effect: [ To Enemies Damage 1000.0 ]
               , over:   [ Debuff Enemies 5 Disorder 30.0 ]
               }
-  , gen:      { starAbsorb: 100, starGen: 25.6, npPerHit: 0.54, npAttacked: 4 }
+  , gen:      { starWeight: 100, starRate: 25.6, npPerHit: 0.54, npPerDefend: 4 }
   , hits:     { a: 4, b: 1, q: 4, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    38.5
@@ -477,7 +477,7 @@ assassins = Servant ↤
               , effect: [ To Enemy Damage 2000.0 ]
               , over:   [ To Party GainStars 15.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 25.3, npPerHit: 1.05, npAttacked: 4 }
+  , gen:      { starWeight: 102, starRate: 25.3, npPerHit: 1.05, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    55.0
@@ -521,7 +521,7 @@ assassins = Servant ↤
               , effect: [ To Enemy Damage 2000.0 ]
               , over:   [ To Enemy Kill 80.0 ]
               }
-  , gen:      { starAbsorb: 97, starGen: 25.2, npPerHit: 1.07, npAttacked: 4 }
+  , gen:      { starWeight: 97, starRate: 25.2, npPerHit: 1.07, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 3, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    44.0
@@ -573,7 +573,7 @@ assassins = Servant ↤
                         ]
               , over:   [ Grant Self 0 BusterUp 40.0 ] 
               }
-  , gen:      { starAbsorb: 99, starGen: 25.6, npPerHit: 1.05, npAttacked: 4 }
+  , gen:      { starWeight: 99, starRate: 25.6, npPerHit: 1.05, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    55.0
@@ -623,7 +623,7 @@ assassins = Servant ↤
                         , To Party GainStars 15.0
                         ]
               }
-  , gen:      { starAbsorb: 98, starGen: 25.2, npPerHit: 1.05, npAttacked: 4 }
+  , gen:      { starWeight: 98, starRate: 25.2, npPerHit: 1.05, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0
@@ -669,7 +669,7 @@ assassins = Servant ↤
                         , Debuff Enemy 3 DefenseDown 20.0
                         ]
               }
-  , gen:      { starAbsorb: 102, starGen: 24.8, npPerHit: 1.06, npAttacked: 4 }
+  , gen:      { starWeight: 102, starRate: 24.8, npPerHit: 1.06, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    49.5
@@ -719,7 +719,7 @@ assassins = Servant ↤
               , effect: [ To Enemy Damage 1500.0 ]
               , over:   [ Debuff Enemy 3 CritChance 10.0 ]
               }
-  , gen:      { starAbsorb: 97, starGen: 25.5, npPerHit: 0.38, npAttacked: 4 }
+  , gen:      { starWeight: 97, starRate: 25.5, npPerHit: 0.38, npPerDefend: 4 }
   , hits:     { a: 3, b: 1, q: 3, ex: 6 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
@@ -769,7 +769,7 @@ assassins = Servant ↤
                         ]
               , over:   [ To Enemy Kill 60.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 25.6, npPerHit: 0.53, npAttacked: 4 }
+  , gen:      { starWeight: 102, starRate: 25.6, npPerHit: 0.53, npPerDefend: 4 }
   , hits:     { a: 3, b: 4, q: 3, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
@@ -815,7 +815,7 @@ assassins = Servant ↤
               , effect: [ To Enemies DamageThruDef 900.0 ]
               , over:   [ Debuff Enemies 6 DebuffVuln 50.0 ]
               }
-  , gen:      { starAbsorb: 98, starGen: 25.2, npPerHit: 0.71, npAttacked: 4 }
+  , gen:      { starWeight: 98, starRate: 25.2, npPerHit: 0.71, npPerDefend: 4 }
   , hits:     { a: 2, b: 2, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    49.5
@@ -863,7 +863,7 @@ assassins = Servant ↤
                         , Debuff Enemies 1 DefenseDown 20.0
                         ]
               }
-  , gen:      { starAbsorb: 98, starGen: 24.6, npPerHit: 2.1, npAttacked: 4 }
+  , gen:      { starWeight: 98, starRate: 24.6, npPerHit: 2.1, npPerDefend: 4 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0

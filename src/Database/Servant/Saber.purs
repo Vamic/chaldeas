@@ -44,7 +44,7 @@ sabers = Servant ↤
               , effect: [ To Enemy DamageThruDef 2000.0 ]
               , over:   [ Debuff Enemy 3 DefenseDown 30.0 ]
               }
-  , gen:      { starAbsorb: 98, starGen: 10.2, npPerHit: 1.09, npAttacked: 3 }
+  , gen:      { starWeight: 98, starRate: 10.2, npPerHit: 1.09, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 5, ex: 3 }
   , traits:   [Female, Riding, Saberface, EnumaElish]
   , death:    35.0
@@ -90,7 +90,7 @@ sabers = Servant ↤
               , effect: [ To Enemies Damage 600.0 ]
               , over:   [ Debuff Enemies 3 DefenseDown 40.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 10.1, npPerHit: 0.84, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 10.1, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    24.5
@@ -139,7 +139,7 @@ sabers = Servant ↤
                         , Debuff Enemy 5 CritChance 20.0
                         ]
               }
-  , gen:      { starAbsorb: 102, starGen: 10.1, npPerHit: 0.7, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 10.1, npPerHit: 0.7, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 3, ex: 4 }
   , traits:   [Female, Riding, Saberface, Roman, EnumaElish ]
   , death:    35.0
@@ -186,7 +186,7 @@ sabers = Servant ↤
                         , To Self GaugeUp 20.0
                         ]
               }
-  , gen:      { starAbsorb: 98, starGen: 10.0, npPerHit: 0.56, npAttacked: 3 }
+  , gen:      { starWeight: 98, starRate: 10.0, npPerHit: 0.56, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 2, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, EnumaElish]
   , death:    24.5
@@ -237,7 +237,7 @@ sabers = Servant ↤
                         ]
               , over:   [ To Enemies Kill 60.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 9.9, npPerHit: 0.84, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 9.9, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 4, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    24.5
@@ -279,7 +279,7 @@ sabers = Servant ↤
               , effect: [ To Enemies Damage 600.0 ]
               , over:   [ To Self GaugeUp 20.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 10.0, npPerHit: 0.86, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 10.0, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
   , death:    21.0
@@ -327,7 +327,7 @@ sabers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 5 DamageVuln 1000.0 ]
               }
-  , gen:      { starAbsorb: 100, starGen: 10.0, npPerHit: 0.83, npAttacked: 3 }
+  , gen:      { starWeight: 100, starRate: 10.0, npPerHit: 0.83, npPerDefend: 3 }
   , hits:     { a: 2, b: 4, q: 3, ex: 5 }
   , traits:   [Male, Brynhildr, Riding, EnumaElish]
   , death:    28.0
@@ -369,7 +369,7 @@ sabers = Servant ↤
               , effect: [ To Enemies Damage 650.0 ]
               , over:   [ To Self GaugeUp 10.0 ]
               }
-  , gen:      { starAbsorb: 99, starGen: 9.9, npPerHit: 0.86, npAttacked: 3 }
+  , gen:      { starWeight: 99, starRate: 9.9, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, King, Dragon, Saberface, Arthur, EnumaElish]
   , death:    19.2
@@ -415,7 +415,7 @@ sabers = Servant ↤
               , effect: [ To Enemy Damage 1000.0 ]
               , over:   [ To (EnemyType Demonic) Damage 150.0]
               }
-  , gen:      { starAbsorb: 100, starGen: 10.2, npPerHit: 0.84, npAttacked: 3 }
+  , gen:      { starWeight: 100, starRate: 10.2, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 4 }
   , traits:   [Male, Riding, Brynhildr, Divine, EnumaElish]
   , death:    24.5
@@ -462,7 +462,7 @@ sabers = Servant ↤
               , effect: [ To Enemies DamageThruDef 900.0 ]
               , over:   [ Debuff Enemies 1 DefenseDown 20.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 10.1, npPerHit: 0.84, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 10.1, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 5 }
   , traits:   [Female, Riding, Roman, Saberface, EnumaElish]
   , death:    24.5
@@ -512,7 +512,7 @@ sabers = Servant ↤
                         ]
               , over:   [ Chance 10 $ Debuff Enemies 1 Charm 0.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 10.0, npPerHit: 0.83, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 10.0, npPerHit: 0.83, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Riding, EnumaElish]
   , death:    28.0
@@ -558,7 +558,7 @@ sabers = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ To (EnemiesType Dragon) Damage 150.0 ]
               }
-  , gen:      { starAbsorb: 97, starGen: 10.0, npPerHit: 0.83, npAttacked: 3 }
+  , gen:      { starWeight: 97, starRate: 10.0, npPerHit: 0.83, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, Brynhildr, Dragon, EnumaElish]
   , death:    28.0
@@ -607,7 +607,7 @@ sabers = Servant ↤
                         ]
               , over:   [ Debuff Enemies 5 Burn 1000.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 10.0, npPerHit: 1.14, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 10.0, npPerHit: 1.14, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 5 }
   , traits:   [Male, Brynhildr, Riding, EnumaElish]
   , death:    21.0
@@ -649,7 +649,7 @@ sabers = Servant ↤
               , effect: [ To Enemies Damage 600.0 ]
               , over:   [ To Self Heal 1000.0 ]
               }
-  , gen:      { starAbsorb: 102, starGen: 10.0, npPerHit: 0.86, npAttacked: 3 }
+  , gen:      { starWeight: 102, starRate: 10.0, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
   , death:    21.0
@@ -693,7 +693,7 @@ sabers = Servant ↤
               , effect: [ To Enemy Damage 2000.0 ]
               , over:   [ To Party GainStars 5.0 ]
               }
-  , gen:      { starAbsorb: 99, starGen: 10.0, npPerHit: 1.1, npAttacked: 3 }
+  , gen:      { starWeight: 99, starRate: 10.0, npPerHit: 1.1, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, Brynhildr, Roman, Divine, EnumaElish]
   , death:    31.5
@@ -743,7 +743,7 @@ sabers = Servant ↤
                         ]
               , over:   [ Debuff Enemies 3 DebuffVuln 20.0 ]
               }
-  , gen:      { starAbsorb: 99, starGen: 10.0, npPerHit: 1.09, npAttacked: 3 }
+  , gen:      { starWeight: 99, starRate: 10.0, npPerHit: 1.09, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, Brynhildr, EnumaElish]
   , death:    35.0
@@ -789,7 +789,7 @@ sabers = Servant ↤
               , effect: [ To Enemy Damage 1000.0 ]
               , over:   [ Grant Self 1 BusterUp 30.0 ]
               }
-  , gen:      { starAbsorb: 100, starGen: 10.2, npPerHit: 1.11, npAttacked: 3 }
+  , gen:      { starWeight: 100, starRate: 10.2, npPerHit: 1.11, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 5 }
   , traits:   [Male, Brynhildr, Riding, EnumaElish]
   , death:    28.0
@@ -833,7 +833,7 @@ sabers = Servant ↤
                         ]
               , over:   [ To Party GainStars 5.0 ]
               }
-  , gen:      { starAbsorb: 98, starGen: 9.9, npPerHit: 0.82, npAttacked: 3 }
+  , gen:      { starWeight: 98, starRate: 9.9, npPerHit: 0.82, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, Brynhildr, EnumaElish]
   , death:    31.5

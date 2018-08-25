@@ -44,7 +44,7 @@ archers = Servant ↤
                         ]
               , over:   [ To (EnemiesType EnumaElish) Damage 150.0 ]
               }
-  , gen:      { starAbsorb: 153, starGen: 7.9, npPerHit: 0.34, npAttacked: 3 }
+  , gen:      { starWeight: 153, starRate: 7.9, npPerHit: 0.34, npPerDefend: 3 }
   , hits:     { a: 5, b: 5, q: 5, ex: 8 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    31.5
@@ -94,7 +94,7 @@ archers = Servant ↤
                         ]
               , over:   [ To Self GaugeUp 20.0 ]
               }
-  , gen:      { starAbsorb: 153, starGen: 8.0, npPerHit: 0.59, npAttacked: 3 }
+  , gen:      { starWeight: 153, starRate: 8.0, npPerHit: 0.59, npPerDefend: 3 }
   , hits:     { a: 3, b: 3, q: 4, ex: 5 }
   , traits:   [Female, Dragon, Saberface, EnumaElish]
   , death:    25.8
@@ -145,7 +145,7 @@ archers = Servant ↤
                         ]
               , over:   [ To (EnemiesType HeavenOrEarth) Damage 150.0 ]
               }
-  , gen:      { starAbsorb: 147, starGen: 7.9, npPerHit: 0.87, npAttacked: 3 }
+  , gen:      { starWeight: 147, starRate: 7.9, npPerHit: 0.87, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 3 }
   , traits:   [Male, Brynhildr]
   , death:    31.5
@@ -195,7 +195,7 @@ archers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 3 CritChance 20.0 ]
               }
-  , gen:      { starAbsorb: 153, starGen: 8.0, npPerHit: 1.0, npAttacked: 3 }
+  , gen:      { starWeight: 153, starRate: 8.0, npPerHit: 1.0, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 3, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    27.0
@@ -245,7 +245,7 @@ archers = Servant ↤
                         ]
               , over:   [ Debuff Enemies 3 DefenseDown 20.0 ]
               }
-  , gen:      { starAbsorb: 154, starGen: 8.0, npPerHit: 0.51, npAttacked: 3 }
+  , gen:      { starWeight: 154, starRate: 8.0, npPerHit: 0.51, npPerDefend: 3 }
   , hits:     { a: 3, b: 3, q: 2, ex: 5 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    31.5
@@ -296,7 +296,7 @@ archers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 3 CritChance 20.0 ]
               }
-  , gen:      { starAbsorb: 148, starGen: 8.0, npPerHit: 0.38, npAttacked: 3 }
+  , gen:      { starWeight: 148, starRate: 8.0, npPerHit: 0.38, npPerDefend: 3 }
   , hits:     { a: 6, b: 2, q: 3, ex: 4 }
   , traits:   [Female, PseudoServant, EnumaElish]
   , death:    36.0
@@ -340,7 +340,7 @@ archers = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ To (EnemiesType Riding) Damage 150.0 ]
               }
-  , gen:      { starAbsorb: 150, starGen: 7.9, npPerHit: 0.43, npAttacked: 3 }
+  , gen:      { starWeight: 150, starRate: 7.9, npPerHit: 0.43, npPerDefend: 3 }
   , hits:     { a: 4, b: 4, q: 2, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    31.5
@@ -391,7 +391,7 @@ archers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 3 DebuffVuln 30.0 ]
               }
-  , gen:      { starAbsorb: 145, starGen: 8.1, npPerHit: 0.58, npAttacked: 3 }
+  , gen:      { starWeight: 145, starRate: 8.1, npPerHit: 0.58, npPerDefend: 3 }
   , hits:     { a: 3, b: 5, q: 4, ex: 6 }
   , traits:   [Male, EnumaElish]
   , death:    31.5
@@ -438,7 +438,7 @@ archers = Servant ↤
               , effect: [ To Enemies DamageThruDef 600.0 ]
               , over:   [ Debuff Enemies 3 AttackDown 10.0 ]
               }
-  , gen:      { starAbsorb: 145, starGen: 7.9, npPerHit: 0.51, npAttacked: 3 }
+  , gen:      { starWeight: 145, starRate: 7.9, npPerHit: 0.51, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 2, ex: 5 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    31.5
@@ -482,7 +482,7 @@ archers = Servant ↤
               , effect: [ To Enemies Damage 1200.0 ]
               , over:   [ To Party GainStars 35.0 ]
               }
-  , gen:      { starAbsorb: 148, starGen: 8.0, npPerHit: 0.5, npAttacked: 3 }
+  , gen:      { starWeight: 148, starRate: 8.0, npPerHit: 0.5, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    31.5
@@ -532,7 +532,7 @@ archers = Servant ↤
               -- TODO Extra Damage Formula = 600% * [1 - (Current HP/Max HP)]
               , over:   [ Debuff Enemy 3 DefenseDown 10.0 ]
               }
-  , gen:      { starAbsorb: 153, starGen: 8.1, npPerHit: 0.85, npAttacked: 3 }
+  , gen:      { starWeight: 153, starRate: 8.1, npPerHit: 0.85, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    40.5
@@ -579,7 +579,7 @@ archers = Servant ↤
               , effect: [ To Enemy Damage 1500.0 ]
               , over:   [  ] -- TODO Deal 200% extra daamge against poisoned 
               }
-  , gen:      { starAbsorb: 150, starGen: 8.0, npPerHit: 0.87, npAttacked: 3 }
+  , gen:      { starWeight: 150, starRate: 8.0, npPerHit: 0.87, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    31.5
@@ -626,7 +626,7 @@ archers = Servant ↤
                         ]
               , over:   [ Chance 100 $ Debuff (EnemyType Male) 1 Charm 0.0 ]
               }
-  , gen:      { starAbsorb: 156, starGen: 7.9, npPerHit: 0.9, npAttacked: 3 }
+  , gen:      { starWeight: 156, starRate: 7.9, npPerHit: 0.9, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 3 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    22.5
@@ -674,7 +674,7 @@ archers = Servant ↤
                         ]
               , over:   [ To Enemies Damage 0.0 ]
               }
-  , gen:      { starAbsorb: 147, starGen: 8.0, npPerHit: 0.84, npAttacked: 3 }
+  , gen:      { starWeight: 147, starRate: 8.0, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    45.0
@@ -723,7 +723,7 @@ archers = Servant ↤
                         ]
               , over:   [ Chance 100 $ Debuff Enemy 0 SealSkills 0.0 ]
               }
-  , gen:      { starAbsorb: 153, starGen: 8.0, npPerHit: 0.76, npAttacked: 3 }
+  , gen:      { starWeight: 153, starRate: 8.0, npPerHit: 0.76, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
@@ -768,7 +768,7 @@ archers = Servant ↤
                         , Debuff Enemies 1 DebuffVuln 20.0
                         ]
               }
-  , gen:      { starAbsorb: 153, starGen: 7.9, npPerHit: 0.62, npAttacked: 3 }
+  , gen:      { starWeight: 153, starRate: 7.9, npPerHit: 0.62, npPerDefend: 3 }
   , hits:     { a: 3, b: 3, q: 3, ex: 3 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    36.0
@@ -814,7 +814,7 @@ archers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 3 CritChance 10.0 ]
               }
-  , gen:      { starAbsorb: 150, starGen: 8.0, npPerHit: 0.56, npAttacked: 3 }
+  , gen:      { starWeight: 150, starRate: 8.0, npPerHit: 0.56, npPerDefend: 3 }
   , hits:     { a: 3, b: 4, q: 2, ex: 4 }
   , traits:   [Male, Riding, EnumaElish]
   , death:    45.0
@@ -860,7 +860,7 @@ archers = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ Grant Self 1 (AttackUpVs Magical) 50.0 ]
               }
-  , gen:      { starAbsorb: 150, starGen: 7.8, npPerHit: 0.57, npAttacked: 3 }
+  , gen:      { starWeight: 150, starRate: 7.8, npPerHit: 0.57, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Brynhildr, EnumaElish]
   , death:    36.0

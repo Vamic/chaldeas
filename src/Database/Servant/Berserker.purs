@@ -48,7 +48,7 @@ berserkers = Servant ↤
                         , Grant Self 1 DefenseUp 30.0
                         ]
               }
-  , gen:      { starAbsorb: 9, starGen: 5.1, npPerHit: 0.69, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 5.1, npPerHit: 0.69, npPerDefend: 5 }
   , hits:     { a: 3, b: 3, q: 4, ex: 5 }
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    52.0
@@ -94,7 +94,7 @@ berserkers = Servant ↤
               , effect: [ To Enemies Damage 300.0 ]
               , over:   [ Grant Self 1 StarUp 100.0 ]
               }
-  , gen:      { starAbsorb: 9, starGen: 4.9, npPerHit: 0.46, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 0.46, npPerDefend: 5 }
   , hits:     { a: 4, b: 1, q: 3, ex: 5 }
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    39.0
@@ -138,7 +138,7 @@ berserkers = Servant ↤
               , effect: [ To Enemy DamageThruDef 1000.0 ]
               , over:   [ Chance 50 $ Debuff Enemy 1 Stun 0.0 ]
               }
-  , gen:      { starAbsorb: 9, starGen: 5.0, npPerHit: 1.03, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 5.0, npPerHit: 1.03, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    52.0
@@ -180,7 +180,7 @@ berserkers = Servant ↤
               , effect: [ To Enemy Damage 1500.0 ]
               , over:   [ To Party GainStars 20.0 ]
               }
-  , gen:      { starAbsorb: 9, starGen: 4.9, npPerHit: 0.5, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 0.5, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    45.5
@@ -226,7 +226,7 @@ berserkers = Servant ↤
                         ]
               , over:   [ Debuff Enemies 1 NPDown 50.0 ]
               }
-  , gen:      { starAbsorb: 10, starGen: 5.0, npPerHit: 0.77, npAttacked: 5 }
+  , gen:      { starWeight: 10, starRate: 5.0, npPerHit: 0.77, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 6, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    56.8
@@ -272,7 +272,7 @@ berserkers = Servant ↤
               , effect: [ To Enemy Damage 1000.0 ]
               , over:   [ Debuff Enemy 3 DefenseDown 10.0 ]
               }
-  , gen:      { starAbsorb: 10, starGen: 5.0, npPerHit: 1.07, npAttacked: 5 }
+  , gen:      { starWeight: 10, starRate: 5.0, npPerHit: 1.07, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    39.0
@@ -318,7 +318,7 @@ berserkers = Servant ↤
                         ]
               , over:   [ Debuff Enemies 3 CritChance 20.0 ]
               }
-  , gen:      { starAbsorb: 10, starGen: 4.9, npPerHit: 0.83, npAttacked: 5 }
+  , gen:      { starWeight: 10, starRate: 4.9, npPerHit: 0.83, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    58.5
@@ -368,7 +368,7 @@ berserkers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 3 DefenseDown 10.0 ]
               }
-  , gen:      { starAbsorb: 10, starGen: 4.9, npPerHit: 1.03, npAttacked: 5 }
+  , gen:      { starWeight: 10, starRate: 4.9, npPerHit: 1.03, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 4, ex: 5 }
   , traits:   [Female, Magical, EnumaElish]
   , death:    52.0
@@ -412,7 +412,7 @@ berserkers = Servant ↤
               , effect: [ To Enemies Damage 1000.0 ]
               , over:   [ Grant Self 3 AttackUp 30.0 ]
               }
-  , gen:      { starAbsorb: 10, starGen: 5.0, npPerHit: 0.5, npAttacked: 5 }
+  , gen:      { starWeight: 10, starRate: 5.0, npPerHit: 0.5, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    52.0
@@ -458,7 +458,7 @@ berserkers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 3 CritChance 30.0 ]
               }
-  , gen:      { starAbsorb: 10, starGen: 4.9, npPerHit: 0.68, npAttacked: 5 }
+  , gen:      { starWeight: 10, starRate: 4.9, npPerHit: 0.68, npPerDefend: 5 }
   , hits:     { a: 3, b: 1, q: 3, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    58.5
@@ -502,7 +502,7 @@ berserkers = Servant ↤
                         ]
               , over:   [ Grant Self 3 HealPerTurn 2000.0 ]
               }
-  , gen:      { starAbsorb: 10, starGen: 5.0, npPerHit: 0.71, npAttacked: 5 }
+  , gen:      { starWeight: 10, starRate: 5.0, npPerHit: 0.71, npPerDefend: 5 }
   , hits:     { a: 3, b: 2, q: 2, ex: 3 }
   , traits:   [Female, Beast, EnumaElish]
   , death:    39.0
@@ -551,7 +551,7 @@ berserkers = Servant ↤
               , effect: [ To Enemy DamageThruDef 1000.0 ]
               , over:   [ Chance 30 $ Debuff Enemy 1 Stun 0.0 ]
               }
-  , gen:      { starAbsorb: 9, starGen: 5.0, npPerHit: 1.04, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 5.0, npPerHit: 1.04, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    50.3
@@ -595,7 +595,7 @@ berserkers = Servant ↤
               , effect: [ To Enemies DamageThruDef 500.0 ]
               , over:   [ To Self Heal 3000.0 ]
               }
-  , gen:      { starAbsorb: 9, starGen: 4.9, npPerHit: 1.01, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 1.01, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Roman, EnumaElish]
   , death:    65.0
@@ -644,7 +644,7 @@ berserkers = Servant ↤
                         ]
               , over:   [ Debuff Enemies 6 DefenseDown 10.0 ]
               }
-  , gen:      { starAbsorb: 9, starGen: 4.9, npPerHit: 0.68, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 0.68, npPerDefend: 5 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    58.5
@@ -692,7 +692,7 @@ berserkers = Servant ↤
                         , Debuff Enemies 10 Burn 500.0
                         ]
               }
-  , gen:      { starAbsorb: 9, starGen: 4.9, npPerHit: 2.03, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 2.03, npPerDefend: 5 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    65.0
@@ -740,7 +740,7 @@ berserkers = Servant ↤
                         ]
               , over:   [ Grant Self 1 AttackUp 50.0 ]
               }
-  , gen:      { starAbsorb: 9, starGen: 4.9, npPerHit: 1.02, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 1.02, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    58.5
@@ -786,7 +786,7 @@ berserkers = Servant ↤
                         , Debuff Enemies 3 DefenseDown 10.0
                         ]
               }
-  , gen:      { starAbsorb: 9, starGen: 5.0, npPerHit: 0.67, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 5.0, npPerHit: 0.67, npPerDefend: 5 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    65.0
@@ -835,7 +835,7 @@ berserkers = Servant ↤
               , effect: [ Chance 150 $ Debuff Enemies 3 SealSkills 0.0 ]
               , over:   [ Chance 70 $ Debuff Enemies 3 SealNP 0.0 ]
               }
-  , gen:      { starAbsorb: 9, starGen: 5.0, npPerHit: 0.68, npAttacked: 5 }
+  , gen:      { starWeight: 9, starRate: 5.0, npPerHit: 0.68, npPerDefend: 5 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Roman, EnumaElish]
   , death:    56.8

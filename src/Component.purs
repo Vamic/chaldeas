@@ -141,7 +141,7 @@ component initialHash = Halogen.component
           Rarity   → sortWith $ \(Servant s) → show (5 - s.rarity) ⧺ s.name
           ATK      → sortWith $ \(Servant s) → s.stats.max.atk
           HP       → sortWith $ \(Servant s) → s.stats.max.hp
-          StarRate → sortWith $ \(Servant s) → s.gen.starGen
+          StarRate → sortWith $ \(Servant s) → s.gen.starRate
           Hits     → sortWith $ \(Servant {hits}) 
                    → hits.a + hits.b + hits.q + hits.ex
       meta filt 
@@ -223,10 +223,10 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
         --, _tr "NP Damage"   ∘ print' $ npDamage serv
         , _tr "Alignment"   $ showAlignment s.align
         , _tr "Attribute"   $ show s.attr
-        , _tr "Star Weight" $ show gen.starAbsorb
-        , _tr "Star Rate"   $ show gen.starGen ⧺ "%"
+        , _tr "Star Weight" $ show gen.starWeight
+        , _tr "Star Rate"   $ show gen.starRate ⧺ "%"
         , _tr "NP/Hit"      $ show gen.npPerHit ⧺ "%"
-        , _tr "NP/Defend"   $ show gen.npAttacked ⧺ "%"
+        , _tr "NP/Defend"   $ show gen.npPerDefend ⧺ "%"
         , _tr "Death Rate"  $ show s.death ⧺ "%"
         {-
         , rate "Damage"     ratings.damage
@@ -243,6 +243,7 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
         , _tr "Rank" $ show phantasm.rank
         , _tr "Card" $ show phantasm.card
         , _tr "Class" $ phantasm.kind
+        --, _tr "Damage" ∘ print' $ npDamage serv
         , H.tr_ [_th "Effects", H.td_ $ _p ∘ show ↤ phantasm.effect]
         , H.tr_ [_th "Overcharge", H.td_ $ _p ∘ show ↤ phantasm.over]
         ]

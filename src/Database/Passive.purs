@@ -124,11 +124,6 @@ independentAction ∷ PassiveBase
 independentAction = passiveBase "Independent Action" IconDash
   [ Give Self CritUp $m[EX:12.0, APlus:11.0, A:10.0, B:8.0, C:6.0] ] 
 
-independentActionCeleb ∷ PassiveBase
-independentActionCeleb = passiveBase "Independent Action (Celeb)" IconDash
-  [ Give Self CritUp $m[EX:10.0] ]
-  --- TODO Charges own NP gauge by 3% on Waterside and Beach Field. 
-
 independentManifestation ∷ PassiveBase
 independentManifestation = passiveBase "Independent Manifestation" IconDash
   [ Give Self CritUp       $m[C:6.0, E:2.0]
@@ -187,11 +182,6 @@ presenceConcealment ∷ PassiveBase
 presenceConcealment = passiveBase "Presence Concealment" IconMask 
   ∘ singleton ∘ Give Self StarUp
   $m[ APlus:10.5, A:10.0, B:8.0, CPlus:6.5, C:6.0, CMinus:5.5, D:4.0, E:2.0 ]
-
-presenceConcealmentShade ∷ PassiveBase
-presenceConcealmentShade = passiveBase "Presence Concealment (Shade)" IconMask
-  [ Give Self StarUp $m[B:8.0] ]
-            --, Give Self DebuffResist $m[B:(-10.0)] TODO Demerit
 
 riding ∷ PassiveBase
 riding = passiveBase "Riding" IconHorse 

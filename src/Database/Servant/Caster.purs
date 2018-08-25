@@ -53,7 +53,7 @@ casters = Servant ↤
                         ]
               , over:   [ Chance 50 $ Debuff Enemies 1 Stun 0.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.8, npPerHit: 1.64, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 10.8, npPerHit: 1.64, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    34.5
@@ -101,7 +101,7 @@ casters = Servant ↤
                         ]
               , over:   [ To Allies GaugeUp 25.0 ]
               }
-  , gen:      { starAbsorb: 49, starGen: 11.0, npPerHit: 0.32, npAttacked: 3 }
+  , gen:      { starWeight: 49, starRate: 11.0, npPerHit: 0.32, npPerDefend: 3 }
   , hits:     { a: 5, b: 1, q: 3, ex: 4 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    36.0
@@ -150,7 +150,7 @@ casters = Servant ↤
               , effect: [ To Enemy Damage 1000.0 ]
               , over:   [ Debuff Enemy 1 CritChance 80.0 ]
               }
-  , gen:      { starAbsorb: 52, starGen: 11.0, npPerHit: 0.82, npAttacked: 3 }
+  , gen:      { starWeight: 52, starRate: 11.0, npPerHit: 0.82, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 6 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
@@ -203,7 +203,7 @@ casters = Servant ↤
                         ]
               , over:   [ Grant Self 1 NPUp 30.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.8, npPerHit: 0.54, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 10.8, npPerHit: 0.54, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 4, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    34.5
@@ -253,7 +253,7 @@ casters = Servant ↤
                         ]
               , over:   [ Grant Self 1 BusterUp 20.0 ]
               }
-  , gen:      { starAbsorb: 51, starGen: 10.7, npPerHit: 0.32, npAttacked: 3 }
+  , gen:      { starWeight: 51, starRate: 10.7, npPerHit: 0.32, npPerDefend: 3 }
   , hits:     { a: 5, b: 1, q: 3, ex: 5 }
   , traits:   [Female, PseudoServant, EnumaElish]
   , death:    42.0
@@ -299,7 +299,7 @@ casters = Servant ↤
                         ]
               , over:   [ Grant Party 3 DebuffResist 40.0 ]
               }
-  , gen:      { starAbsorb: 51, starGen: 10.7, npPerHit: 0.4, npAttacked: 3 }
+  , gen:      { starWeight: 51, starRate: 10.7, npPerHit: 0.4, npPerDefend: 3 }
   , hits:     { a: 4, b: 3, q: 4, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
@@ -347,7 +347,7 @@ casters = Servant ↤
               , effect: [ To Enemies DamageThruDef 500.0 ]
               , over:   [ Debuff Enemies 3 Curse 500.0 ]
               }
-  , gen:      { starAbsorb: 49, starGen: 10.8, npPerHit: 1.6, npAttacked: 3 }
+  , gen:      { starWeight: 49, starRate: 10.8, npPerHit: 1.6, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 4 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    42.0
@@ -399,7 +399,7 @@ casters = Servant ↤
                         ]
               , over:   [ Chance 60 $ To Enemies GaugeDown 1.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.8, npPerHit: 0.54, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 10.8, npPerHit: 0.54, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 3, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
@@ -449,7 +449,7 @@ casters = Servant ↤
                         , Debuff Enemies 3 DebuffVuln 10.0  
                         ]
               }
-  , gen:      { starAbsorb: 51, starGen: 10.7, npPerHit: 0.45, npAttacked: 3 }
+  , gen:      { starWeight: 51, starRate: 10.7, npPerHit: 0.45, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 6, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
@@ -495,7 +495,7 @@ casters = Servant ↤
               , effect: [ To Enemies Damage 750.0 ]
               , over:   [ To Enemies Kill 50.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.8, npPerHit: 0.54, npAttacked: 4 }
+  , gen:      { starWeight: 50, starRate: 10.8, npPerHit: 0.54, npPerDefend: 4 }
   , hits:     { a: 3, b: 3, q: 4, ex: 5 }
   , traits:   [Female, Divine, King, EnumaElish]
   , death:    36.0
@@ -539,7 +539,7 @@ casters = Servant ↤
               , effect: [ To Party Heal 3000.0 ]
               , over:   [ Grant Party 3 Guts 0.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.8, npPerHit: 0.42, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 10.8, npPerHit: 0.42, npPerDefend: 3 }
   , hits:     { a: 3, b: 3, q: 3, ex: 4 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
@@ -587,7 +587,7 @@ casters = Servant ↤
                         ]
               , over:   [ Grant Party 3 CritUp 20.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.9, npPerHit: 0.32, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 10.9, npPerHit: 0.32, npPerDefend: 3 }
   , hits:     { a: 5, b: 1, q: 3, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
@@ -636,7 +636,7 @@ casters = Servant ↤
                         ]
               , over:   [ Debuff Enemies 3 CritChance 10.0 ]
               }
-  , gen:      { starAbsorb: 51, starGen: 10.6, npPerHit: 0.51, npAttacked: 3 }
+  , gen:      { starWeight: 51, starRate: 10.6, npPerHit: 0.51, npPerDefend: 3 }
   , hits:     { a: 3, b: 3, q: 3, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    60.0
@@ -684,7 +684,7 @@ casters = Servant ↤
                         , To Party Heal 1000.0
                         ]
               }
-  , gen:      { starAbsorb: 48, starGen: 10.8, npPerHit: 1.66, npAttacked: 3 }
+  , gen:      { starWeight: 48, starRate: 10.8, npPerHit: 1.66, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    30.0
@@ -730,7 +730,7 @@ casters = Servant ↤
                         ]
               , over:   [ To Self GaugeUp 20.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.9, npPerHit: 1.64, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 10.9, npPerHit: 1.64, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    34.5
@@ -776,7 +776,7 @@ casters = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ Debuff Enemies 1 Stun 30.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.8, npPerHit: 1.59, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 10.8, npPerHit: 1.59, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    45.0
@@ -820,7 +820,7 @@ casters = Servant ↤
                         ]
               , over:   [ Debuff Enemies 3 Curse 500.0 ]
               }
-  , gen:      { starAbsorb: 49, starGen: 11.0, npPerHit: 1.6, npAttacked: 3 }
+  , gen:      { starWeight: 49, starRate: 11.0, npPerHit: 1.6, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Brynhildr]
   , death:    40.5
@@ -868,7 +868,7 @@ casters = Servant ↤
               , effect: [ To Enemies Damage 600.0 ]
               , over:   [ Debuff Enemies 3 DefenseDown 10.0 ]
               }
-  , gen:      { starAbsorb: 48, starGen: 10.8, npPerHit: 0.91, npAttacked: 3 }
+  , gen:      { starWeight: 48, starRate: 10.8, npPerHit: 0.91, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
@@ -918,7 +918,7 @@ casters = Servant ↤
                         , Debuff Enemies 10 Burn 300.0
                         ]
               }
-  , gen:      { starAbsorb: 49, starGen: 10.9, npPerHit: 1.6, npAttacked: 3 }
+  , gen:      { starWeight: 49, starRate: 10.9, npPerHit: 1.6, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    42.0
@@ -964,7 +964,7 @@ casters = Servant ↤
               , effect: [ To Enemies DamageThruDef 500.0 ]
               , over:   [ Debuff Enemies 3 Curse 500.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 11.0, npPerHit: 0.81, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 11.0, npPerHit: 0.81, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
@@ -1006,7 +1006,7 @@ casters = Servant ↤
               , effect: [ To Enemies Damage 600.0 ]
               , over:   [ Debuff Enemies 3 AttackDown 10.0 ]
               }
-  , gen:      { starAbsorb: 50, starGen: 10.8, npPerHit: 0.55, npAttacked: 3 }
+  , gen:      { starWeight: 50, starRate: 10.8, npPerHit: 0.55, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    36.0
@@ -1052,7 +1052,7 @@ casters = Servant ↤
                         , Grant Party 3 DebuffResist 20.0
                         ]
               }
-  , gen:      { starAbsorb: 49, starGen: 11.0, npPerHit: 0.9, npAttacked: 3 }
+  , gen:      { starWeight: 49, starRate: 11.0, npPerHit: 0.9, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    40.5
@@ -1096,7 +1096,7 @@ casters = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ Debuff Enemies 3 AttackDown 20.0 ]
               }
-  , gen:      { starAbsorb: 48, starGen: 10.8, npPerHit: 1.58, npAttacked: 3 }
+  , gen:      { starWeight: 48, starRate: 10.8, npPerHit: 1.58, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    48.0

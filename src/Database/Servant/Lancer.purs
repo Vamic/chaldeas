@@ -49,7 +49,7 @@ lancers = Servant ↤
                         ]
               , over:   [ To Enemy Kill 50.0 ]
               }
-  , gen:      { starAbsorb: 88, starGen: 12.2, npPerHit: 0.71, npAttacked: 4 }
+  , gen:      { starWeight: 88, starRate: 12.2, npPerHit: 0.71, npPerDefend: 4 }
   , hits:     { a: 3, b: 6, q: 2, ex: 7 }
   , traits:   [Female, EnumaElish, King]
   , death:    32.0
@@ -98,7 +98,7 @@ lancers = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ To (EnemiesType Divine) Damage 150.0 ]
               }
-  , gen:      { starAbsorb: 88, starGen: 12.2, npPerHit: 0.72, npAttacked: 4 }
+  , gen:      { starWeight: 88, starRate: 12.2, npPerHit: 0.72, npPerDefend: 4 }
   , hits:     { a: 3, b: 1, q: 3, ex: 4 }
   , traits:   [Male, Riding, Brynhildr, Divine, EnumaElish]
   , death:    28.0
@@ -153,7 +153,7 @@ lancers = Servant ↤
               , effect: [ To Enemy Damage 1000.0 ]
               , over:   [ To (EnemyType Male) Damage 150.0 ]
               }
-  , gen:      { starAbsorb: 91, starGen: 12.2, npPerHit: 1.05, npAttacked: 4 }
+  , gen:      { starWeight: 91, starRate: 12.2, npPerHit: 1.05, npPerDefend: 4 }
   , hits:     { a: 2, b: 3, q: 4, ex: 4 }
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    40.0
@@ -203,7 +203,7 @@ lancers = Servant ↤
                         ]
               , over:   [ To (EnemyType Brynhildr) Damage 150.0 ]
               }
-  , gen:      { starAbsorb: 87, starGen: 12.2, npPerHit: 1.07, npAttacked: 4 }
+  , gen:      { starWeight: 87, starRate: 12.2, npPerHit: 1.07, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 3, ex: 5 }
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    32.0
@@ -249,7 +249,7 @@ lancers = Servant ↤
                         ]
               , over:   [ To Self GaugeUp 20.0 ]
               }
-  , gen:      { starAbsorb: 89, starGen: 12.2, npPerHit: 1.1, npAttacked: 4 }
+  , gen:      { starWeight: 89, starRate: 12.2, npPerHit: 1.1, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 3, ex: 5 }
   , traits:   [Female, Arthur, Dragon, King, Riding, Saberface, EnumaElish]
   , death:    24.0
@@ -296,7 +296,7 @@ lancers = Servant ↤
                         ]
               , over:   [ Debuff Enemies 5 Curse 1000.0 ]
               }
-  , gen:      { starAbsorb: 88, starGen: 11.8, npPerHit: 0.74, npAttacked: 4 }
+  , gen:      { starWeight: 88, starRate: 11.8, npPerHit: 0.74, npPerDefend: 4 }
   , hits:     { a: 3, b: 1, q: 2, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
   , death:    23.0
@@ -346,7 +346,7 @@ lancers = Servant ↤
                         ]
               , over:   [ To Enemy Kill 40.0 ]
               }
-  , gen:      { starAbsorb: 87, starGen: 12.2, npPerHit: 0.52, npAttacked: 4 }
+  , gen:      { starWeight: 87, starRate: 12.2, npPerHit: 0.52, npPerDefend: 4 }
   , hits:     { a: 3, b: 1, q: 3, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    40.0
@@ -392,7 +392,7 @@ lancers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 5 Burn 500.0 ]
               }
-  , gen:      { starAbsorb: 92, starGen: 12.0, npPerHit: 1.05, npAttacked: 4 }
+  , gen:      { starWeight: 92, starRate: 12.0, npPerHit: 1.05, npPerDefend: 4 }
   , hits:     { a: 2, b: 6, q: 2, ex: 5 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    40.0
@@ -434,7 +434,7 @@ lancers = Servant ↤
               , effect: [ To Enemies DamageThruDef 500.0 ]
               , over:   [ Debuff Enemies 3 Curse 500.0 ]
               }
-  , gen:      { starAbsorb: 90, starGen: 11.0, npPerHit: 1.1, npAttacked: 4 }
+  , gen:      { starWeight: 90, starRate: 11.0, npPerHit: 1.1, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    24.0
@@ -460,8 +460,7 @@ lancers = Servant ↤
                 , cd:     10
                 , effect: [ Chance 100 $ Grant Self 1 Evasion 0.0 
                           , Grant Self 1 Taunt 0.0
-                          -- , Debuff Self 3 CharmResist TODO Charm
-                          -- resist down by 80%
+                          , Debuff Self 3 CharmVuln 80.0
                           ]
                 }
               , { name:   "Magecraft B"
@@ -482,7 +481,7 @@ lancers = Servant ↤
                         ]
               , over:   [ Debuff Enemies 3 AttackDown 10.0 ]
               }
-  , gen:      { starAbsorb: 89, starGen: 12.3, npPerHit: 0.55, npAttacked: 4 }
+  , gen:      { starWeight: 89, starRate: 12.3, npPerHit: 0.55, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 4 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    32.0
@@ -530,7 +529,7 @@ lancers = Servant ↤
                         , Debuff Enemy 3 DefenseDown 10.0
                         ]
               }
-  , gen:      { starAbsorb: 87, starGen: 12.1, npPerHit: 1.07, npAttacked: 4 }
+  , gen:      { starWeight: 87, starRate: 12.1, npPerHit: 1.07, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    32.0
@@ -578,7 +577,7 @@ lancers = Servant ↤
                         , Debuff Enemy 3 DefenseDown 50.0
                         ]
               }
-  , gen:      { starAbsorb: 88, starGen: 12.1, npPerHit: 1.08, npAttacked: 4 }
+  , gen:      { starWeight: 88, starRate: 12.1, npPerHit: 1.08, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    28.0
@@ -624,7 +623,7 @@ lancers = Servant ↤
                         ]
               , over:   [ Grant Self 3 DefenseUp 30.0 ]
               }
-  , gen:      { starAbsorb: 89, starGen: 11.8, npPerHit: 1.07, npAttacked: 4 }
+  , gen:      { starWeight: 89, starRate: 11.8, npPerHit: 1.07, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    32.0
@@ -643,7 +642,6 @@ lancers = Servant ↤
   , actives:  [ { name:   "Natural Body C"
                 , icon:   IconHoodUp
                 , cd:     5
-                 -- TODO "attack debuff?"
                 , effect: [ Grant Self 3 DebuffResist 100.0 
                           , To Self Heal 2500.0
                           ]
@@ -672,7 +670,7 @@ lancers = Servant ↤
               , effect: [ To Enemies Damage 500.0 ]
               , over:   [ Grant Party 3 AttackUp 10.0 ]
               }
-  , gen:      { starAbsorb: 90, starGen: 12.1, npPerHit: 1.07, npAttacked: 4 }
+  , gen:      { starWeight: 90, starRate: 12.1, npPerHit: 1.07, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Roman]
   , death:    32.0
@@ -718,7 +716,7 @@ lancers = Servant ↤
               , effect: [ To Enemies DamageThruDef 600.0 ]
               , over:   [ Debuff Enemies 3 DefenseDown 20.0 ]
               }
-  , gen:      { starAbsorb: 90, starGen: 12.2, npPerHit: 1.08, npAttacked: 4 }
+  , gen:      { starWeight: 90, starRate: 12.2, npPerHit: 1.08, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, EnumaElish]
   , death:    28.0
@@ -762,7 +760,7 @@ lancers = Servant ↤
               , effect: [ Chance 80 $ Debuff Enemies 1 Stun 0.0 ]
               , over:   [ Debuff Enemies 3 Curse 500.0 ]
               }
-  , gen:      { starAbsorb: 89, starGen: 11.9, npPerHit: 0.79, npAttacked: 4 }
+  , gen:      { starWeight: 89, starRate: 11.9, npPerHit: 0.79, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    36.0
@@ -808,7 +806,7 @@ lancers = Servant ↤
                         ]
               , over:   [ Debuff Enemy 5 Curse 500.0 ]
               }
-  , gen:      { starAbsorb: 87, starGen: 12.3, npPerHit: 0.78, npAttacked: 4 }
+  , gen:      { starWeight: 87, starRate: 12.3, npPerHit: 0.78, npPerDefend: 4 }
   , hits:     { a: 2, b: 2, q: 2, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    36.0

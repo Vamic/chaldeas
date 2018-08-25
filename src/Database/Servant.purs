@@ -68,10 +68,10 @@ type NoblePhantasm = { name   ∷ String
 
 type Hits = { a ∷ Int, b ∷ Int, q ∷ Int, ex ∷ Int }
 
-type Gen = { starAbsorb ∷ Int
-           , starGen    ∷ Number
-           , npPerHit   ∷ Number
-           , npAttacked ∷ Int
+type Gen = { starWeight  ∷ Int
+           , starRate    ∷ Number
+           , npPerHit    ∷ Number
+           , npPerDefend ∷ Int
            }
 
 data Alignment = Lawful | Neutral | Chaotic | Good | Evil 
@@ -125,7 +125,7 @@ instance _b_ ∷ MatchServant DebuffEffect where
         match (Debuff t _ b _) = a ≡ b ∧ not (allied t)
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where 
-    has DemeritBuffs  = const false -- TODO or include?
+    has DemeritBuffs  = const false
     has DemeritCharge = const false
     has DemeritDamage = const false
     has DemeritGauge  = const false

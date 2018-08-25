@@ -1,42 +1,42 @@
-, { name:     
-  , rarity:   
-  , class:    
-  , attr:     
-  , deck:     Deck
-  , stats:    { base:  { atk: ,  hp:  }
-              , max:   { atk: , hp:  }
-              , grail: { atk: , hp:  }
+, { name:     ?_
+  , rarity:   ?_
+  , class:    ?_
+  , attr:     ?_
+  , deck:     Deck ?_ ?_ ?_ ?_ ?_
+  , stats:    { base:  { atk: ?_,  hp: ?_ }
+              , max:   { atk: ?_, hp: ?_ }
+              , grail: { atk: ?_, hp: ?_ }
               }
-  , ratings:  { damage:, np:, critical:, utility:, support:, durability: }
-  , actives:  [ { name:   
-                , icon:   
-                , cd:     
+  , ratings:  { damage: ?_, np: ?_, critical: ?_, utility: ?_, support: ?_, durability: ?_ }
+  , actives:  [ { name:   ?_
+                , icon:   ?_
+                , cd:     ?_
                 , effect: [ ]
                 }
-              , { name:   
-                , icon:   
-                , cd:     
+              , { name:   ?_
+                , icon:   ?_
+                , cd:     ?_
                 , effect: [ ]
                 }
-              , { name:   
-                , icon:   
-                , cd:     
+              , { name:   ?_
+                , icon:   ?_
+                , cd:     ?_
                 , effect: [ ]
                 }
               ]
   , passives: []
-  , phantasm: { name:   
-              , desc:   
-              , rank:   
-              , card:   
+  , phantasm: { name:   ?_
+              , desc:   ?_
+              , rank:   ?_
+              , card:   ?_
               , kind:   "Anti-"
-              , hits:   
-              , effect: 
-              , over:   
+              , hits:   ?_
+              , effect: ?_
+              , over:   ?_
               }
-  , gen:      { starAbsorb: , starGen: , npPerHit: , npAttacked:  }
-  , hits:     { a: , b: , q: , ex:  }
+  , gen:      { starAbsorb: ?_, starGen: ?_, npPerHit: ?_, npAttacked: ?_ }
+  , hits:     { a: ?_, b: ?_, q: ?_, ex: ?_ }
   , traits:   []
-  , death:    
-  , align:    
+  , death:    ?_
+  , align:    ?_
   }

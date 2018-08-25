@@ -8,6 +8,7 @@ import Data.Number.Format
 import Data.Generic.Rep    
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum 
+import Data.Generic.Rep.Show 
 import Data.Maybe
 import Data.String            
 import Data.Tuple             
@@ -201,6 +202,7 @@ data DebuffEffect = AttackDown
                   | BuffFail
                   | Burn
                   | Charm
+                  | CharmVuln
                   | CritChance
                   | CritDown
                   | Curse
@@ -226,6 +228,7 @@ showDebuff target amount debuff = case debuff of
     BuffFail    → "Reduce " ⧺ p ⧺ " attack buff success rate by " ⧺ n ⧺ "%"
     Burn        → "Inflict " ⧺ n ⧺ " Burn damage" ⧺ to
     Charm       → "Charm " ⧺ s
+    CharmVuln   → "Reduce " ⧺ p ⧺ " Charm resistance by " ⧺ n ⧺ "%"
     CritChance  → "Reduce " ⧺ p ⧺ " critical attack chance by " ⧺ n ⧺ "%"
     CritDown    → "Reduce " ⧺ p ⧺ " critical damage by " ⧺ n ⧺ " %"
     Curse       → "Inflict " ⧺ n ⧺ " Curse damage" ⧺ to
@@ -394,3 +397,7 @@ instance _19_ ∷ BoundedEnum InstantEffect where
   cardinality = genericCardinality
   toEnum = genericToEnum
   fromEnum = genericFromEnum
+
+derive instance _20_ ∷ Generic Target _
+instance _21_ ∷ Show Target where
+  show = genericShow

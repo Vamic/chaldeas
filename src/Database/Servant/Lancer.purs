@@ -631,7 +631,7 @@ lancers = Servant ↤
   , align:    Lawful:Neutral
   }
 , { name:     "Romulus"
-  , rarity:   7
+  , rarity:   3
   , class:    Lancer
   , attr:     Star
   , deck:     Deck Quick Quick Arts Buster Buster

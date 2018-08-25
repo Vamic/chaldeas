@@ -48,7 +48,7 @@ assassins = Servant ↤
               }
   , gen:      { starAbsorb: 153, starGen: 7.9, npPerHit: 0.34, npAttacked: 3 }
   , hits:     { a: 5, b: 5, q: 5, ex: 8 }
-  , traits:   [Male, Divine, EnumaElish]
+  , traits:   [Female, EnumaElish]
   , death:    31.5
   , align:    Chaotic:Good
   }

@@ -27,8 +27,9 @@
       .unselected:hover  { text-decoration: underline }
       aside p:last-child {margin-bottom: 1em}
       #layout > article table 
-        { width: 230px 
+        { width: 225px 
         ; margin-top: -1px
+        ; margin-bottom: 12px
         }
       #layout > article table.phantasm
         { width: 100% }
@@ -114,10 +115,7 @@
       article .servant div img
         { width: 50px }
       article .servant
-        { float: left
-        ; margin-right: 10px
-        ; margin-bottom: -4px
-        }
+        { float: left }
       article .servant header
         { bottom: 25px }
       article .servant footer
@@ -162,7 +160,7 @@
         ; top:30px;left:0;bottom:30px;right:0
         ; overflow: scroll
         ; margin: auto
-        ; max-width: 520px
+        ; max-width: 490px
         ; box-sizing: border-box
         ; z-index: 10
         ; background-color: #ffffff
@@ -187,19 +185,21 @@
       article section
         { padding: 0 20px }
       article h2 
-        { margin-top: 0.2em 
-        ; text-align: center
-        }
+        { text-align: center }
       article section img
         { float: left 
         ; width: 35px
         ; margin-right: 10px
         ; margin-top: 5px
         }
+      .npheading
+        { margin-top: -4px }
       article section:last-child
         { margin-bottom: 15px }
       th::after { content: ":" }
       thead th::after { content: "" }
+      .trait::after { content: ", " }
+      .trait:last-child::after { content: none }
     </style>
     <script type="text/javascript" src="js/chaldeas.js"></script>
   </head>

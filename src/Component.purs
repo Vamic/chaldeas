@@ -52,7 +52,7 @@ data Query a = Focus (Maybe Servant) a
 
 data FilterTab = Phantasm | Class | DeckType | Attribute
                | Action | Buff | Debuff 
-               | Alignment | Trait
+               | Alignment | Trait | PassiveSkill
 
 data SortBy = Rarity
             | ATK
@@ -61,13 +61,13 @@ data SortBy = Rarity
             | Hits
             | NPDamage
 
-data Filter = Filter String (Servant → Boolean)
+data Filter = Filter FilterTab String (Servant → Boolean)
 instance _b_ ∷ Eq Filter where
-  eq (Filter a _) (Filter b _) = eq a b
+  eq (Filter tabA a _) (Filter tabB b _) = tabA ≡ tabB ∧ a ≡ b
 instance _c_ ∷ Show Filter where
-  show (Filter a _) = a
-matchFilter ∷ ∀ a. MatchServant a ⇒ a → Filter
-matchFilter = uncurry Filter ∘ (show&&&has)
+  show (Filter tab a _) = a
+matchFilter ∷ ∀ a. MatchServant a ⇒ FilterTab → a → Filter
+matchFilter tab = uncurry (Filter tab) ∘ (show&&&has)
   
 type State = { filters  ∷ Array Filter
              , matchAny ∷ Boolean
@@ -107,33 +107,35 @@ component initialHash = Halogen.component
             , H.td [_click $ MatchAny false] $ _radio "All" (not matchAny)
             , H.td [_click $ MatchAny true]  $ _radio "Any"      matchAny
             ]
-          ] $ filters ↦ \filt 
+          ] $ filters ↦ \filt@(Filter tab _ _)
             → H.p [_click $ UnFilter filt, _c "unselected"] ∘ _txt 
-              $ "ⓧ " ⧺ show filt 
+              $ "ⓧ " ⧺ show tab ⧺ ": " ⧺ show filt 
         , H.section [_i "servants"] 
           ∘ (if sortBy ≡ Rarity then identity else reverse)
           $ portrait ↤ doSort (maybeFilter servants)
         , H.aside [_i "filters"] ∘ cons
-            (_h 1 "Filters") ∘ concat 
-            $ enumArray ↦ \tab
+          (_h 1 "Filters") ∘ concat 
+          $ enumArray ↦ \tab
             → cons (_h 3 $ show tab) 
-            $ filterEffects tab ↦ \filt
-            → H.p (meta filt) ∘ _txt $ show filt
+              $ filterEffects tab ↦ \filt
+                → H.p (meta filt) ∘ _txt $ show filt
         ]
     where
       maybeFilter = if null filters then identity else filter match
       match serv  = (if matchAny then any else all) 
-                    (\(Filter _ f) → f serv) filters
-      filterEffects = case _ of
-          Action    → matchFilter ↤ getAll ∷ Array InstantEffect
-          Alignment → matchFilter ↤ getAll ∷ Array Alignment
-          Attribute → matchFilter ↤ getAll ∷ Array Attribute
-          Buff      → matchFilter ↤ getAll ∷ Array BuffEffect
-          Class     → matchFilter ↤ getAll ∷ Array Class
-          Debuff    → matchFilter ↤ getAll ∷ Array DebuffEffect
-          DeckType  → matchFilter ↤ getAll ∷ Array Deck
-          Phantasm  → matchFilter ↤ getAll ∷ Array PhantasmType
-          Trait     → matchFilter ↤ getAll ∷ Array Trait
+                    (\(Filter _ _ f) → f serv) filters
+      filterEffects tab = case tab of
+          Action       → matchFilter tab ↤ getAll ∷ Array InstantEffect
+          Alignment    → matchFilter tab ↤ getAll ∷ Array Alignment
+          Attribute    → matchFilter tab ↤ getAll ∷ Array Attribute
+          Buff         → matchFilter tab ↤ getAll ∷ Array BuffEffect
+          Class        → matchFilter tab ↤ getAll ∷ Array Class
+          Debuff       → matchFilter tab ↤ getAll ∷ Array DebuffEffect
+          DeckType     → matchFilter tab ↤ getAll ∷ Array Deck
+          Phantasm     → matchFilter tab ↤ getAll ∷ Array PhantasmType
+          Trait        → matchFilter tab ↤ getAll ∷ Array Trait
+          PassiveSkill → uncurry (Filter tab) ∘ (identity&&&hasPassive) 
+                       ↤ getPassives
       doSort = case sortBy of
           NPDamage → sortWith $ \serv → npDamage serv
           Rarity   → sortWith $ \(Servant s) → show (5 - s.rarity) ⧺ s.name
@@ -200,13 +202,11 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
         [ H.tr_ [ _th "Base",  _td $ print base.atk,  _td $ print base.hp ]
         , H.tr_ [ _th "Max",   _td $ print max.atk,   _td $ print max.hp ]
         , H.tr_ [ _th "Grail", _td $ print grail.atk, _td $ print grail.hp ]
-        , H.br_
         ]
-      , _table ["", "", "Q", "A", "B", "EX", "NP"]
+      , _table ["", "Q", "A", "B", "EX", "NP"]
       
         [ H.tr_
-          [ _td ""
-          , _th "Hits"
+          [ _th "Hits"
           , _td $ show hits.q
           , _td $ show hits.a
           , _td $ show hits.b
@@ -215,9 +215,9 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
           ] 
         ] 
       , H.table_ 
-        [ H.br_
-        , _tr "Class"       $ show s.class 
-        --, H.tr_ [_th "Deck", H.td_ $ deck s.deck]
+        [ _tr "Class"       $ show s.class 
+        --, H.tr_ [_th "Deck", H.td_ $ show s.deck]
+        , _tr "Deck"        $ show s.deck
         , _tr "NP Type"     ∘ show ∘ fromMaybe Support 
                             $ find (_ `has` serv) [SingleTarget, MultiTarget]
         --, _tr "NP Damage"   ∘ print' $ npDamage serv
@@ -237,7 +237,7 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
         , rate "Durability" ratings.durability
         -}
         ]
-      , _h 2 "Noble Phantasm"
+      , H.h2 [_c "npheading"] $ _txt "Noble Phantasm"
       , H.table [_c "phantasm"]
         [ _tr "Name" $ phantasm.name
         , _tr "Rank" $ show phantasm.rank
@@ -246,10 +246,11 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
         , H.tr_ [_th "Effects", H.td_ $ _p ∘ show ↤ phantasm.effect]
         , H.tr_ [_th "Overcharge", H.td_ $ _p ∘ show ↤ phantasm.over]
         ]
-      , _h 2 "Active Skills"
-      ] ⧺ (activeEl ↤ s.actives) ⧺
-      [ _h 2 "Passive Skills" 
-      ] ⧺ (passiveEl ↤ s.passives)
+      , _h 2 "Active Skills"] ⧺ (activeEl ↤ s.actives) ⧺
+      [ _h 2 "Passive Skills"] ⧺ (passiveEl ↤ s.passives) ⧺
+      [ _h 2 "Traits"
+      , H.section_ $ traitEl ↤ s.traits
+      ]
     ]
   where 
     rate label n = H.tr_ [_th label, H.td [_c "rating"] ∘ _txt ∘ joinWith " " 
@@ -267,6 +268,9 @@ passiveEl {name, rank, icon, effect} = H.section_ $
     [ _img $ "img/Skill/" ⧺ show icon ⧺ ".png" 
     , _h 3 $ name ⧺ " " ⧺ show rank
     ] ⧺ (_p ∘ show ↤ effect)
+
+traitEl ∷ ∀ a b. Trait → HTML a b
+traitEl trait = H.span [_c "trait"] ∘ _txt $ show trait
 
 ----------------
 -- ABBREVIATIONS
@@ -335,8 +339,9 @@ derive instance _0_ ∷ Generic FilterTab _
 derive instance _1_ ∷ Eq FilterTab
 derive instance _2_ ∷ Ord FilterTab
 instance _3_ ∷ Show FilterTab where
-  show Phantasm = "Noble Phantasm"
-  show DeckType = "Deck"
+  show Phantasm     = "Noble Phantasm"
+  show DeckType     = "Deck"
+  show PassiveSkill = "Passive Skill"
   show a = genericShow a
 instance _4_ ∷ Enum FilterTab where
   succ = genericSucc

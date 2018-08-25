@@ -1,6 +1,6 @@
 module Database
   ( module Database.Model
-  , servants, getAll
+  , servants, getAll, getPassives
   )
   where
 
@@ -37,6 +37,11 @@ servants = addUniversal ∘ addHeavenOrEarth
       | otherwise                   = serv
 
 getAll ∷ ∀ a. MatchServant a ⇒ Array a
-getAll = (_ $ unit) ∘ memoize $ \_ → filter exists enumArray
+getAll = (_ $ unit) ∘ memoize $ \_ → sortWith show $ filter exists enumArray
   where
     exists eff = any (has eff) servants 
+
+getPassives ∷ Array String
+getPassives = sort ∘ nub ∘ concat $ getPassive ↤ servants
+  where
+    getPassive (Servant {passives}) = (_.name) ↤ passives

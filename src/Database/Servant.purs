@@ -45,6 +45,9 @@ type Stats = { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
 showStat ∷ Stat → String
 showStat {atk, hp} = "ATK: " ⧺ show atk ⧺ ", HP: " ⧺ show hp
 
+hasPassive ∷ String → Servant → Boolean
+hasPassive passive (Servant {passives}) = any (eq passive) $ (_.name) ↤ passives
+
 type Ratings = { damage     ∷ Int
                , np         ∷ Int
                , critical   ∷ Int
@@ -115,13 +118,19 @@ class (BoundedEnum a, Show a) <= MatchServant a where
     has ∷ a → Servant → Boolean
 instance _a_ ∷ MatchServant BuffEffect where 
     has a = any match ∘ getEffects where 
-        match (Grant _ _ b _) = a ≡ b
+        match (Grant t _ b _) = a ≡ b ∧ allied t
         match _ = false
 instance _b_ ∷ MatchServant DebuffEffect where 
     has a = any match ∘ getEffects where 
         match (Debuff t _ b _) = a ≡ b ∧ not (allied t)
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where 
+    has DemeritBuffs  = const false -- TODO or include?
+    has DemeritCharge = const false
+    has DemeritDamage = const false
+    has DemeritGauge  = const false
+    has DemeritHealth = const false
+    has DemeritKill   = const false
     has a = any match ∘ getEffects where 
         match (To _ b _) = a ≡ b
         match _ = false

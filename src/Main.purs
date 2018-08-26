@@ -2,7 +2,6 @@
 module Main (main) where
 
 import Prelude
-import Operators
 
 import Halogen.Aff as HA
 
@@ -13,5 +12,5 @@ import Routing.Hash
 import Component
 
 main ∷ Effect Unit
-main = getHash ≫= \hash → HA.runHalogenAff 
-     $ HA.awaitBody ≫= runUI (component hash) unit
+main = getHash >>= \hash → HA.runHalogenAff 
+     $ HA.awaitBody >>= runUI (component hash) unit

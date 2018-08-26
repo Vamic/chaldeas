@@ -43,10 +43,10 @@ data Deck = Deck Card Card Card Card Card
 type Stat = { atk ∷ Int, hp ∷ Int }
 type Stats = { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
 showStat ∷ Stat → String
-showStat {atk, hp} = "ATK: " ⧺ show atk ⧺ ", HP: " ⧺ show hp
+showStat {atk, hp} = "ATK: " ++ show atk ++ ", HP: " ++ show hp
 
 hasPassive ∷ String → Servant → Boolean
-hasPassive passive (Servant {passives}) = any (eq passive) $ (_.name) ↤ passives
+hasPassive p (Servant {passives}) = any (eq p) $ (_.name) <$> passives
 
 type Ratings = { damage     ∷ Int
                , np         ∷ Int
@@ -80,19 +80,19 @@ data Alignment = Lawful | Neutral | Chaotic | Good | Evil
 showAlignment ∷ Tuple Alignment Alignment → String
 showAlignment = case _ of
     Neutral:Neutral → "True Neutral"
-    a:b             → show a ⧺ " " ⧺ show b
+    a:b             → show a ++ " " ++ show b
 
 getEffects ∷ Servant → Array ActiveEffect
 getEffects (Servant {phantasm:{effect, over}, actives}) 
-    = effect ⧺ over ⧺ (actives ≫= _.effect)
+    = effect ++ over ++ (actives >>= _.effect)
 
 phantasmEffects ∷ Servant → Array ActiveEffect
-phantasmEffects (Servant {phantasm:{effect, over}}) = effect ⧺ over
+phantasmEffects (Servant {phantasm:{effect, over}}) = effect ++ over
 
 npDamage ∷ Servant → Number
 npDamage (Servant s@{stats:{max:{atk}}, phantasm:{card, effect, over}}) 
     = cardBonus * toNumber atk * classModifier s.class 
-    * sum (((_ / 100.0) ∘ dmg) ↤ effect ⧺ over)
+    * sum (((_ / 100.0) ∘ dmg) <$> effect ++ over)
   where
     dmg (To Enemy Damage a) = a
     dmg (To Enemy DamageThruDef a) = a
@@ -118,11 +118,11 @@ class (BoundedEnum a, Show a) <= MatchServant a where
     has ∷ a → Servant → Boolean
 instance _a_ ∷ MatchServant BuffEffect where 
     has a = any match ∘ getEffects where 
-        match (Grant t _ b _) = a ≡ b ∧ allied t
+        match (Grant t _ b _) = a == b && allied t
         match _ = false
 instance _b_ ∷ MatchServant DebuffEffect where 
     has a = any match ∘ getEffects where 
-        match (Debuff t _ b _) = a ≡ b ∧ not (allied t)
+        match (Debuff t _ b _) = a == b && not (allied t)
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where 
     has DemeritBuffs  = const false
@@ -132,12 +132,12 @@ instance _c_ ∷ MatchServant InstantEffect where
     has DemeritHealth = const false
     has DemeritKill   = const false
     has a = any match ∘ getEffects where 
-        match (To _ b _) = a ≡ b
+        match (To _ b _) = a == b
         match _ = false
 instance _d_ ∷ MatchServant Trait where 
-    has a (Servant {traits}) = a ∈ traits
+    has a (Servant {traits}) = a `elem` traits
 instance _e_ ∷ MatchServant Alignment where
-    has a (Servant {align:(b:c)}) = a ≡ b ∨ a ≡ c
+    has a (Servant {align:(b:c)}) = a == b || a == c
 instance _f_ ∷ MatchServant PhantasmType where
     has SingleTarget s = any match $ phantasmEffects s
       where 
@@ -153,13 +153,13 @@ instance _f_ ∷ MatchServant PhantasmType where
         match (To (EnemiesType _) Damage _) = true
         match (To (EnemiesType _) DamageThruDef _) = true
         match _ = false
-    has Support s = not has SingleTarget s ∧ not has MultiTarget s
+    has Support s = not has SingleTarget s && not has MultiTarget s
 instance _g_ ∷ MatchServant Class where
-    has a (Servant {class: cla}) = a ≡ cla
+    has a (Servant {class: cla}) = a == cla
 instance _h_ ∷ MatchServant Attribute where
-    has a (Servant {attr}) = a ≡ attr
+    has a (Servant {attr}) = a == attr
 instance _i_ ∷ MatchServant Deck where
-    has a (Servant {deck}) = a ≡ deck
+    has a (Servant {deck}) = a == deck
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
@@ -242,4 +242,4 @@ instance _39_ ∷ BoundedEnum Deck where
   fromEnum = genericFromEnum
 instance _40_ ∷ Show Deck where
   show (Deck a b c d e) = fromCharArray 
-                        $ (fromMaybe '?' ∘ charAt 0 ∘ show) ↤ [a, b, c, d, e]
+                        $ (fromMaybe '?' ∘ charAt 0 ∘ show) <$> [a, b, c, d, e]

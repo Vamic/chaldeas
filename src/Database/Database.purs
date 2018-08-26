@@ -22,26 +22,26 @@ import Database.Servant.Saber
 
 servants ∷ Array Servant
 servants = addUniversal ∘ addHeavenOrEarth
-         ↤ archers
-         ⧺ assassins
-         ⧺ berserkers
-         ⧺ casters
-         ⧺ extras
-         ⧺ lancers
-         ⧺ riders
-         ⧺ sabers    
+       <$> archers
+        ++ assassins
+        ++ berserkers
+        ++ casters
+        ++ extras
+        ++ lancers
+        ++ riders
+        ++ sabers    
   where
     addUniversal (Servant s@{traits}) = Servant s{traits = cons Humanoid traits}
     addHeavenOrEarth serv@(Servant s@{attr, traits})
-      | attr ≡ Earth ∨ attr ≡ Earth = Servant s{traits = cons HeavenOrEarth traits}
-      | otherwise                   = serv
+      | attr /= Earth && attr /= Heaven = serv
+      | otherwise = Servant s{traits = cons HeavenOrEarth traits}
 
-getAll ∷ ∀ a. MatchServant a ⇒ Array a
+getAll ∷ ∀ a. MatchServant a => Array a
 getAll = (_ $ unit) ∘ memoize $ \_ → sortWith show $ filter exists enumArray
   where
     exists eff = any (has eff) servants 
 
 getPassives ∷ Array String
-getPassives = sort ∘ nub ∘ concat $ getPassive ↤ servants
+getPassives = sort ∘ nub ∘ concat $ getPassive <$> servants
   where
-    getPassive (Servant {passives}) = (_.name) ↤ passives
+    getPassive (Servant {passives}) = (_.name) <$> passives

@@ -5,7 +5,7 @@ import Operators
 import Database.Model
 
 casters ∷ Array Servant
-casters = Servant ↤
+casters = Servant <$>
 [ { name:     "Zhuge Liang (El-Melloi II)"
   , rarity:   5
   , class:    Caster
@@ -22,7 +22,7 @@ casters = Servant ↤
                 , effect: [ Grant Ally 3 CritUp 20.0
                           , To Ally GaugeUp 50.0
                           ]
-                }
+                } 
               , { name:   "Tactician's Advice A+"
                 , icon:   IconShieldUp
                 , cd:     6

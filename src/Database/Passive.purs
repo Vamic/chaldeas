@@ -25,7 +25,7 @@ showPassiveEffect rank (Give target buff ranks)
     = showBuff target (fromMaybe (-1.0) $ lookup rank ranks) buff
 showPassive ∷ Tuple Passive Rank → String
 showPassive (Tuple {effect} rank) 
-    = joinWith "\n" $ (_ ⧺ ".") ∘ showPassiveEffect rank ↤ effect
+    = joinWith "\n" $ (_ ++ ".") ∘ showPassiveEffect rank <$> effect
 -}
 
 activate ∷ Rank → PassiveEffect → ActiveEffect
@@ -38,7 +38,7 @@ passiveBase ∷ String → Icon → Array PassiveEffect → PassiveBase
 passiveBase name icon effects rank = { name
                                      , rank
                                      , icon
-                                     , effect: activate rank ↤ effects
+                                     , effect: activate rank <$> effects
                                      }
 
 altReactor ∷ PassiveBase

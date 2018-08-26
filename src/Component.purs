@@ -63,7 +63,7 @@ data SortBy = Rarity
 
 data Filter = Filter FilterTab String (Servant → Boolean)
 instance _b_ ∷ Eq Filter where
-  eq (Filter tabA a _) (Filter tabB b _) = tabA ≡ tabB ∧ a ≡ b
+  eq (Filter tabA a _) (Filter tabB b _) = tabA == tabB && a == b
 instance _c_ ∷ Show Filter where
   show (Filter tab a _) = a
 matchFilter ∷ ∀ a. MatchServant a ⇒ FilterTab → a → Filter
@@ -78,7 +78,7 @@ type State = { filters  ∷ Array Filter
 urlName ∷ Servant → String
 urlName (Servant {name}) = replaceAll (Pattern " ") (Replacement "") name
 
-component ∷ ∀ m. MonadEffect m ⇒ String → Component HTML Query Unit Message m
+component ∷ ∀ m. MonadEffect m => String → Component HTML Query Unit Message m
 component initialHash = Halogen.component
     { initialState
     , render
@@ -86,67 +86,67 @@ component initialHash = Halogen.component
     , receiver: const Nothing
     }
   where
-
+ 
   initialState ∷ Input → State
   initialState = const { filters:  []
                        , matchAny: false
-                       , focus:    find ((_ ≡ initialHash) ∘ urlName) servants
+                       , focus:    find ((_ == initialHash) ∘ urlName) servants
                        , sortBy:   Rarity
                        }
-
+ 
   render ∷ State → ComponentHTML Query
   render {filters, focus, matchAny, sortBy} 
       = modal focus
         [ H.aside [_i "active"] ∘ append
           [_h 1 "Sort by"
-          , H.form_ $ enumArray ↦ \sort 
-            → H.p [_click $ SetSort sort] $ _radio (show sort) (sortBy ≡ sort)
+          , H.form_ $ enumArray <#> \sort 
+            → H.p [_click $ SetSort sort] $ _radio (show sort) (sortBy == sort)
           , _h 1 "Active filters"
           , H.form_ ∘ singleton ∘ H.table_ ∘ singleton $ H.tr_ 
             [ _th "Match"
             , H.td [_click $ MatchAny false] $ _radio "All" (not matchAny)
             , H.td [_click $ MatchAny true]  $ _radio "Any"      matchAny
-            ]
-          ] $ filters ↦ \filt@(Filter tab _ _)
+            ] 
+          ] $ filters <#> \filt@(Filter tab _ _)
             → H.p [_click $ UnFilter filt, _c "unselected"] ∘ _txt 
-              $ "ⓧ " ⧺ show tab ⧺ ": " ⧺ show filt 
+              $ "ⓧ " ++ show tab ++ ": " ++ show filt 
         , H.section [_i "servants"] 
-          ∘ (if sortBy ≡ Rarity then identity else reverse)
-          $ portrait ↤ doSort (maybeFilter servants)
+          ∘ (if sortBy == Rarity then identity else reverse)
+          $ portrait <$> doSort (maybeFilter servants)
         , H.aside [_i "filters"] ∘ cons
           (_h 1 "Filters") ∘ concat 
-          $ enumArray ↦ \tab
+          $ enumArray <#> \tab
             → cons (_h 3 $ show tab) 
-              $ filterEffects tab ↦ \filt
+              $ filterEffects tab <#> \filt
                 → H.p (meta filt) ∘ _txt $ show filt
         ]
-    where
+    where 
       maybeFilter = if null filters then identity else filter match
       match serv  = (if matchAny then any else all) 
                     (\(Filter _ _ f) → f serv) filters
       filterEffects tab = case tab of
-          Action       → matchFilter tab ↤ getAll ∷ Array InstantEffect
-          Alignment    → matchFilter tab ↤ getAll ∷ Array Alignment
-          Attribute    → matchFilter tab ↤ getAll ∷ Array Attribute
-          Buff         → matchFilter tab ↤ getAll ∷ Array BuffEffect
-          Class        → matchFilter tab ↤ getAll ∷ Array Class
-          Debuff       → matchFilter tab ↤ getAll ∷ Array DebuffEffect
-          DeckType     → matchFilter tab ↤ getAll ∷ Array Deck
-          Phantasm     → matchFilter tab ↤ getAll ∷ Array PhantasmType
-          Trait        → matchFilter tab ↤ getAll ∷ Array Trait
+          Action       → matchFilter tab <$> getAll ∷ Array InstantEffect
+          Alignment    → matchFilter tab <$> getAll ∷ Array Alignment
+          Attribute    → matchFilter tab <$> getAll ∷ Array Attribute
+          Buff         → matchFilter tab <$> getAll ∷ Array BuffEffect
+          Class        → matchFilter tab <$> getAll ∷ Array Class
+          Debuff       → matchFilter tab <$> getAll ∷ Array DebuffEffect
+          DeckType     → matchFilter tab <$> getAll ∷ Array Deck
+          Phantasm     → matchFilter tab <$> getAll ∷ Array PhantasmType
+          Trait        → matchFilter tab <$> getAll ∷ Array Trait
           PassiveSkill → uncurry (Filter tab) ∘ (identity&&&hasPassive) 
-                       ↤ getPassives
+                     <$> getPassives
       doSort = case sortBy of
           NPDamage → sortWith $ \serv → npDamage serv
-          Rarity   → sortWith $ \(Servant s) → show (5 - s.rarity) ⧺ s.name
+          Rarity   → sortWith $ \(Servant s) → show (5 - s.rarity) ++ s.name
           ATK      → sortWith $ \(Servant s) → s.stats.max.atk
           HP       → sortWith $ \(Servant s) → s.stats.max.hp
           StarRate → sortWith $ \(Servant s) → s.gen.starRate
           Hits     → sortWith $ \(Servant {hits}) 
                    → hits.a + hits.b + hits.q + hits.ex
       meta filt 
-        | filt ∈ filters = [_c "selected"]
-        | otherwise      = [_c "unselected", _click $ AddFilter filt]
+        | filt `elem` filters = [_c "selected"]
+        | otherwise           = [_c "unselected", _click $ AddFilter filt]
 {-
 ToTab FilterTab a
              | Focus (Maybe Servant) a
@@ -157,11 +157,11 @@ ToTab FilterTab a
 -}
   eval ∷ Query ~> ComponentDSL State Query Message m
   eval = case _ of
-      AddFilter filt     next → (_ ≫ next) $ modFilters (cons filt)
-      UnFilter  filt     next → (_ ≫ next) $ modFilters (delete filt)
-      MatchAny  matchAny next → (_ ≫ next) $ modify_ _{ matchAny = matchAny }
-      SetSort   sortBy   next → (_ ≫ next) $ modify_ _{ sortBy = sortBy }
-      Focus     focus    next → (_ ≫ next) $ do
+      AddFilter filt     next → (_ >> next) $ modFilters (cons filt)
+      UnFilter  filt     next → (_ >> next) $ modFilters (delete filt)
+      MatchAny  matchAny next → (_ >> next) $ modify_ _{ matchAny = matchAny }
+      SetSort   sortBy   next → (_ >> next) $ modify_ _{ sortBy = sortBy }
+      Focus     focus    next → (_ >> next) $ do
           liftEffect $ hash focus
           modify_ _{ focus = focus } 
     where
@@ -172,19 +172,19 @@ ToTab FilterTab a
 noBreakName ∷ String → String
 noBreakName = unBreak ∘ split (Pattern "(")
   where
-    unBreak [a, b] = a ⧺ "(" ⧺ replaceAll (Pattern " ") (Replacement " ") b
+    unBreak [a, b] = a ++ "(" ++ replaceAll (Pattern " ") (Replacement " ") b
     unBreak xs = joinWith "(" xs
 
 deck ∷ ∀ a b. Deck → Array (HTML a b)
-deck (Deck a b c d e) = card ∘ show ↤ [a, b, c, d, e]
+deck (Deck a b c d e) = card ∘ show <$> [a, b, c, d, e]
   where 
-    card x = H.span [_c x] ∘ _txt $ take 1 x --_img $ "img/Card/" ⧺ show x ⧺ ".png"
+    card x = H.span [_c x] ∘ _txt $ take 1 x --_img $ "img/Card/" ++ show x ++ ".png"
 
 portrait ∷ ∀ a. Servant → HTML a (Query Unit)
 portrait serv@(Servant s) 
-    = H.div [_c $ "servant stars" ⧺ show s.rarity, _click ∘ Focus $ Just serv]
-      [ _img $ "img/Servant/" ⧺ s.name ⧺ ".png"
-      , H.div_ [ _img $ "img/Class/" ⧺ show s.class ⧺ ".png"]
+    = H.div [_c $ "servant stars" ++ show s.rarity, _click ∘ Focus $ Just serv]
+      [ _img $ "img/Servant/" ++ s.name ++ ".png"
+      , H.div_ [ _img $ "img/Class/" ++ show s.class ++ ".png"]
       , H.aside_ $ deck s.deck
       , H.header_ [ _span $ noBreakName s.name ]
       , H.footer_ ∘ _txt ∘ joinWith "  " $ replicate s.rarity "★" 
@@ -224,10 +224,10 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
         , _tr "Alignment"   $ showAlignment s.align
         , _tr "Attribute"   $ show s.attr
         , _tr "Star Weight" $ show gen.starWeight
-        , _tr "Star Rate"   $ show gen.starRate ⧺ "%"
-        , _tr "NP/Hit"      $ show gen.npPerHit ⧺ "%"
-        , _tr "NP/Defend"   $ show gen.npPerDefend ⧺ "%"
-        , _tr "Death Rate"  $ show s.death ⧺ "%"
+        , _tr "Star Rate"   $ show gen.starRate ++ "%"
+        , _tr "NP/Hit"      $ show gen.npPerHit ++ "%"
+        , _tr "NP/Defend"   $ show gen.npPerDefend ++ "%"
+        , _tr "Death Rate"  $ show s.death ++ "%"
         {-
         , rate "Damage"     ratings.damage
         , rate "NP Gain"    ratings.np
@@ -244,13 +244,13 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
         , _tr "Card" $ show phantasm.card
         , _tr "Class" $ phantasm.kind
         --, _tr "Damage" ∘ print' $ npDamage serv
-        , H.tr_ [_th "Effects", H.td_ $ _p ∘ show ↤ phantasm.effect]
-        , H.tr_ [_th "Overcharge", H.td_ $ _p ∘ show ↤ phantasm.over]
+        , H.tr_ [_th "Effects", H.td_ $ _p ∘ show <$> phantasm.effect]
+        , H.tr_ [_th "Overcharge", H.td_ $ _p ∘ show <$> phantasm.over]
         ]
-      , _h 2 "Active Skills"] ⧺ (activeEl ↤ s.actives) ⧺
-      [ _h 2 "Passive Skills"] ⧺ (passiveEl ↤ s.passives) ⧺
+      , _h 2 "Active Skills"] ++ (activeEl <$> s.actives) ++
+      [ _h 2 "Passive Skills"] ++ (passiveEl <$> s.passives) ++
       [ _h 2 "Traits"
-      , H.section_ $ traitEl ↤ s.traits
+      , H.section_ $ traitEl <$> s.traits
       ]
     ]
   where 
@@ -259,16 +259,16 @@ modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm}))
 
 activeEl ∷ ∀ a b. Active → HTML a b
 activeEl {name, icon, cd, effect} = H.section_ $
-    [ _img $ "img/Skill/" ⧺ show icon ⧺ ".png"
+    [ _img $ "img/Skill/" ++ show icon ++ ".png"
     , _h 3 name
-    , _span $ "CD: " ⧺ show cd
-    ] ⧺ (_p ∘ show ↤ effect)
+    , _span $ "CD: " ++ show cd
+    ] ++ (_p ∘ show <$> effect)
 
 passiveEl ∷ ∀ a b. Passive → HTML a b
 passiveEl {name, rank, icon, effect} = H.section_ $
-    [ _img $ "img/Skill/" ⧺ show icon ⧺ ".png" 
-    , _h 3 $ name ⧺ " " ⧺ show rank
-    ] ⧺ (_p ∘ show ↤ effect)
+    [ _img $ "img/Skill/" ++ show icon ++ ".png" 
+    , _h 3 $ name ++ " " ++ show rank
+    ] ++ (_p ∘ show <$> effect)
 
 traitEl ∷ ∀ a b. Trait → HTML a b
 traitEl trait = H.span [_c "trait"] ∘ _txt $ show trait
@@ -299,18 +299,17 @@ _click ∷ ∀ a b. (Unit → b Unit) → IProp ( onClick ∷ MouseEvent | a ) (
 _click = E.onClick ∘ E.input_
 
 _table ∷ ∀ a b. Array String → Array (HTML a b) → HTML a b
-_table headings tbody 
-    = H.table_ [ H.thead_ [ H.tr_ $ H.th_ ∘ _txt ↤ headings ], H.tbody_ tbody ]
+_table headings tbody = H.table_ 
+  [ H.thead_ [ H.tr_ $ H.th_ ∘ _txt <$> headings ]
+  , H.tbody_ tbody 
+  ]
 
 _tr ∷ ∀ a b. String → String → HTML a b
 _tr a b = H.tr_ [ _th a, _td b ]
 
 _radio ∷ ∀ a b. String → Boolean → Array (HTML a b)
 _radio label checked
-    = [ H.input 
-        [ P.type_ P.InputRadio
-        , P.checked checked
-        ]
+    = [ H.input [ P.type_ P.InputRadio, P.checked checked ]
       , H.label_ $ _txt label
       ]
 

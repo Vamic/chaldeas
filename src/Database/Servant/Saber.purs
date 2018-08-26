@@ -5,7 +5,7 @@ import Operators
 import Database.Model
 
 sabers ∷ Array Servant
-sabers = Servant ↤
+sabers = Servant <$>
 [ { name:     "Okita Souji"
   , rarity:   5
   , class:    Saber

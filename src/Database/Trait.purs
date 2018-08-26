@@ -51,7 +51,7 @@ instance _a_ ∷ Show Trait where
   show = case _ of
     Brynhildr        → "Brynhildr's Beloved"
     DemiServant      → "Demi-servant"
-    HeavenOrEarth       → "Heaven or Earth"
+    HeavenOrEarth    → "Heaven or Earth"
     GreekMyth        → "Greek Mythology Males"
     PseudoServant    → "Pseudo-Servant"
     ThreatToHumanity → "Threat to Humanity"

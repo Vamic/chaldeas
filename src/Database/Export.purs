@@ -2,10 +2,10 @@ module Export (servants) where
 
 import Prelude
 import Operators
+import Data.String.CodeUnits (toCharArray)
+
 import Database  hiding (servants)
 import Database  as D
-
-import Data.String.CodeUnits (toCharArray)
 
 servants ∷ Unit → Array _
 servants = \_ → D.servants <#> \(Servant s@{align: alignA:alignB}) → 
@@ -73,5 +73,6 @@ servants = \_ → D.servants <#> \(Servant s@{align: alignA:alignB}) →
         }
     exportEffect (Chance chance activeEffect) = 
         (exportEffect activeEffect) { chance = chance }  
-    
-    
+    exportEffect (When condition activeEffect) =
+        baseEffect { effect = "If " ++ condition ++ ": " ++ baseEffect.effect }
+      where baseEffect = exportEffect activeEffect

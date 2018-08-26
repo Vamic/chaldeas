@@ -199,7 +199,7 @@ lancers = Servant <$>
               , kind:   "Anti-Personnel"
               , hits:   5
               , effect: [ To Enemy Damage 1000.0
-                        , Grant Allies 3 StarDrop 30.0
+                        , Grant Allies 3 StarUp 30.0
                         ]
               , over:   [ To (EnemyType Brynhildr) Damage 150.0 ]
               }

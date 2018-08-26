@@ -116,9 +116,10 @@ component initialHash = Halogen.component
         , H.aside [_i "filters"] ∘ cons
           (_h 1 "Filters") ∘ concat 
           $ enumArray <#> \tab
-            → cons (_h 3 $ show tab) 
-              $ filterEffects tab <#> \filt
-                → H.p (meta filt) ∘ _txt $ show filt
+            → [ _h 3 $ show tab 
+              , H.ul_ $ filterEffects tab <#> \filt
+                → H.li (meta filt) ∘ _txt $ show filt
+              ]
         ]
     where 
       maybeFilter = if null filters then identity else filter match

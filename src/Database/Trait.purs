@@ -1,13 +1,24 @@
 module Database.Trait where
 
 import Prelude
+import Operators
 
 import Data.Enum           
 import Data.Generic.Rep    
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum 
 import Data.Generic.Rep.Show 
+import Data.Tuple
 
+data Alignment = Lawful | Neutral | Chaotic | Good | Evil 
+               | Mad | Summer | Bride
+
+showAlignment ∷ Tuple Alignment Alignment → String
+showAlignment = case _ of
+    Neutral:Neutral → "True Neutral"
+    a:b             → show a ++ " " ++ show b
+
+data Attribute = Mankind | Earth | Heaven | Star
 
 data Class = Saber | Archer | Lancer | Caster | Rider | Assassin | Berserker
            | Shielder | Ruler | Avenger | MoonCancer | AlterEgo
@@ -39,6 +50,7 @@ data Trait = Arthur
            | Magical
            | Male
            | Mecha
+           | Poisoned 
            | PseudoServant
            | Riding
            | Roman
@@ -47,7 +59,7 @@ data Trait = Arthur
            | Undead
            | EnumaElish
 
-instance _a_ ∷ Show Trait where
+instance _b_ ∷ Show Trait where
   show = case _ of
     Brynhildr        → "Brynhildr's Beloved"
     DemiServant      → "Demi-servant"
@@ -88,6 +100,38 @@ instance _18_ ∷ Bounded Class where
   top = genericTop
   bottom = genericBottom
 instance _19_ ∷ BoundedEnum Class where
+  cardinality = genericCardinality
+  toEnum = genericToEnum
+  fromEnum = genericFromEnum
+
+derive instance _20_ ∷ Eq Alignment
+derive instance _21_ ∷ Ord Alignment
+derive instance _22_ ∷ Generic Alignment _
+instance _23_ ∷ Show Alignment where
+  show = genericShow
+instance _24_ ∷ Enum Alignment where
+  succ = genericSucc
+  pred = genericPred
+instance _25_ ∷ Bounded Alignment where
+  top = genericTop
+  bottom = genericBottom
+instance _26_ ∷ BoundedEnum Alignment where
+  cardinality = genericCardinality
+  toEnum = genericToEnum
+  fromEnum = genericFromEnum
+
+derive instance _27_ ∷ Eq Attribute
+derive instance _28_ ∷ Ord Attribute
+derive instance _29_ ∷ Generic Attribute _
+instance _30_ ∷ Show Attribute where
+  show = genericShow
+instance _31_ ∷ Enum Attribute where
+  succ = genericSucc
+  pred = genericPred
+instance _32_ ∷ Bounded Attribute where
+  top = genericTop
+  bottom = genericBottom
+instance _33_ ∷ BoundedEnum Attribute where
   cardinality = genericCardinality
   toEnum = genericToEnum
   fromEnum = genericFromEnum

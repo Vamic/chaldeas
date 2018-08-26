@@ -528,8 +528,9 @@ archers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Unit"
               , hits:   9
-              , effect: [ To Enemy Damage 1000.0 ] 
-              -- TODO Extra Damage Formula = 600% * [1 - (Current HP/Max HP)]
+              , effect: [ To Enemy Damage 1000.0 
+                        , To Enemy DamageRevenge 600.0
+                        ] 
               , over:   [ Debuff Enemy 3 DefenseDown 10.0 ]
               }
   , gen:      { starWeight: 153, starRate: 8.1, npPerHit: 0.85, npPerDefend: 3 }
@@ -577,7 +578,7 @@ archers = Servant <$>
               , kind:   "Anti-Personnel"
               , hits:   1
               , effect: [ To Enemy Damage 1500.0 ]
-              , over:   [  ] -- TODO Deal 200% extra daamge against poisoned 
+              , over:   [ To (EnemyType Poisoned) Damage 200.0 ]
               }
   , gen:      { starWeight: 150, starRate: 8.0, npPerHit: 0.87, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 3 }

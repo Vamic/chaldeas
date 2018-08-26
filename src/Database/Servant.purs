@@ -35,8 +35,6 @@ newtype Servant = Servant { name     ∷ String
                           , align    ∷ Tuple Alignment Alignment
                           }
 
-data Attribute = Mankind | Earth | Heaven | Star
-
 data Card = Arts | Buster | Quick
 data Deck = Deck Card Card Card Card Card
 
@@ -74,18 +72,13 @@ type Gen = { starWeight  ∷ Int
            , npPerDefend ∷ Int
            }
 
-data Alignment = Lawful | Neutral | Chaotic | Good | Evil 
-               | Mad | Summer | Bride
-
-showAlignment ∷ Tuple Alignment Alignment → String
-showAlignment = case _ of
-    Neutral:Neutral → "True Neutral"
-    a:b             → show a ++ " " ++ show b
-
 getEffects ∷ Servant → Array ActiveEffect
 getEffects (Servant {phantasm:{effect, over}, actives}) 
-    = effect ++ over ++ (actives >>= _.effect)
-
+    = simplify <$> effect ++ over ++ (actives >>= _.effect)
+  where
+    simplify (Chance _ ef) = simplify ef
+    simplify (When _ ef)   = simplify ef
+    simplify ef            = ef
 phantasmEffects ∷ Servant → Array ActiveEffect
 phantasmEffects (Servant {phantasm:{effect, over}}) = effect ++ over
 
@@ -96,11 +89,12 @@ npDamage (Servant s@{stats:{max:{atk}}, phantasm:{card, effect, over}})
   where
     dmg (To Enemy Damage a) = a
     dmg (To Enemy DamageThruDef a) = a
-    dmg (To (EnemyType _) Damage a) = a
-    dmg (To (EnemyType _) DamageThruDef a) = a
+    --dmg (To (EnemyType _) Damage a) = a
+    --dmg (To (EnemyType _) DamageThruDef a) = a
     dmg (To Enemies Damage a) = 3.0 * a
     dmg (To Enemies DamageThruDef a) = 3.0 * a
-    dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * a
+    --dmg (To (EnemiesType _) Damage a) = 3.0 * a
+    --dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * a
     dmg _ = 0.0
     cardBonus = case card of
         Arts → 1.0
@@ -165,22 +159,6 @@ instance _i_ ∷ MatchServant Deck where
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
-derive instance _0_ ∷ Eq Alignment
-derive instance _1_ ∷ Ord Alignment
-derive instance _2_ ∷ Generic Alignment _
-instance _3_ ∷ Show Alignment where
-  show = genericShow
-instance _4_ ∷ Enum Alignment where
-  succ = genericSucc
-  pred = genericPred
-instance _5_ ∷ Bounded Alignment where
-  top = genericTop
-  bottom = genericBottom
-instance _6_ ∷ BoundedEnum Alignment where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
-
 derive instance _7_ ∷ Eq PhantasmType
 derive instance _8_ ∷ Ord PhantasmType
 derive instance _9_ ∷ Generic PhantasmType _
@@ -191,22 +169,6 @@ instance _11_ ∷ Bounded PhantasmType where
   top = genericTop
   bottom = genericBottom
 instance _12_ ∷ BoundedEnum PhantasmType where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
-
-derive instance _20_ ∷ Eq Attribute
-derive instance _21_ ∷ Ord Attribute
-derive instance _22_ ∷ Generic Attribute _
-instance _23_ ∷ Show Attribute where
-  show = genericShow
-instance _24_ ∷ Enum Attribute where
-  succ = genericSucc
-  pred = genericPred
-instance _25_ ∷ Bounded Attribute where
-  top = genericTop
-  bottom = genericBottom
-instance _26_ ∷ BoundedEnum Attribute where
   cardinality = genericCardinality
   toEnum = genericToEnum
   fromEnum = genericFromEnum

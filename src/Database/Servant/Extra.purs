@@ -212,8 +212,10 @@ extras = Servant <$>
   , actives:  [ { name:   "Saint of the Shore B+"
                 , icon:   IconNoble
                 , cd:     6
-                , effect: [ To Self GaugeUp 30.0 ] 
-                -- TODO Increases own attack on Waterside and Beach Field for 3 turns.
+                , effect: [ To Self GaugeUp 30.0 
+                          , When "on Waterside or Beach field" 
+                            $ Grant Self 3 AttackUp 20.0
+                          ] 
                 }
               , { name:   "Natural Body (Sea) A"  
                 , icon:   IconFlex
@@ -321,12 +323,12 @@ extras = Servant <$>
                 , icon:   IconQuickUp
                 , cd:     8
                 -- TODO in sequence
-                , effect: [ Grant Self 1 QuickUp 40.0 
-                          , Grant Self 1 QuickUp 80.0
-                          , Grant Self 1 QuickUp 120.0
-                          , Grant Self 1 QuickUp 160.0
-                          , Grant Self 1 QuickUp 200.0
-                          , To Self DemeritKill 0.0
+                , effect: [ When "turn 1" $ Grant Self 1 QuickUp 40.0 
+                          , When "turn 2" $ Grant Self 1 QuickUp 80.0
+                          , When "turn 3" $ Grant Self 1 QuickUp 120.0
+                          , When "turn 4" $ Grant Self 1 QuickUp 160.0
+                          , When "turn 5" $ Grant Self 1 QuickUp 200.0
+                          , When "turn 6" $ To Self DemeritKill 0.0
                           ] 
                 }
               ]
@@ -341,7 +343,7 @@ extras = Servant <$>
                           -- received in the previous turn times 3
                           -- damage cannot be blocked
                           Debuff Self 1 Stun 0.0
-                        , To Enemy Damage 0.0
+                        , To Enemy DamageRevenge 300.0
                         ]
               , over:   [ To Self Heal 5000.0 ]
               }

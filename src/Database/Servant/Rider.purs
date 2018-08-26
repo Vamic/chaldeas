@@ -414,8 +414,7 @@ riders = Servant <$>
               , kind:   "Anti-Personnel"
               , hits:   6
               , effect: [ To Enemy Damage 2400.0 ]
-              , over:   [ To Enemy Damage 1200.0 ] 
-              -- TODO multiply by extra damage when own HP Is low
+              , over:   [ To Enemy DamageRevenge 1200.0 ]
               }
   , gen:      { starWeight: 200, starRate: 9.1, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
@@ -508,7 +507,7 @@ riders = Servant <$>
               , kind:   "Anti-Personnel"
               , hits:   4
               , effect: [ To Enemy Damage 1500.0 
-                         -- TODO Applies Dragon trait to one enemy (3 turns).
+                        , Debuff Enemy 3 (ApplyTrait Dragon) 0.0
                         ]
               , over:   [ Grant Self 1 DefenseUp 20.0 ]
               }

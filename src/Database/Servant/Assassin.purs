@@ -117,7 +117,7 @@ assassins = Servant <$>
   , actives:  [ { name:   "Fire Support EX"
                 , icon:   IconStun
                 , cd:     8
-                , effect: [ Chance 80 $ Debuff Enemies 1 StunBomb 0.0 ] -- TODO Gains a delayed buff
+                , effect: [ Chance 80 $ Debuff Enemies 1 StunBomb 0.0 ]
                 }
               , { name:   "Intuition C+"
                 , icon:   IconStar
@@ -127,7 +127,9 @@ assassins = Servant <$>
               , { name:   "Galactic Meteor Sword C"
                 , icon:   IconStarHaloUp
                 , cd:     6
-                , effect: [ Grant Self 3 (DamageAffinity Saber) 50.0 ] -- TODOIncreases star gen against Saber by 100.0 for 3 turns
+                , effect: [ Grant Self 3 (DamageAffinity Saber) 50.0 
+                          , Grant Self 3 (StarAffinity Saber) 100.0
+                          ]
                 }
               ]
   , passives: [riding EX, cosmoReactor A]
@@ -541,14 +543,16 @@ assassins = Servant <$>
                 , icon:   IconSwordUp
                 , cd:     5
                 , effect: [ Grant Self 3 AttackUp 15.0 
-                          , Grant Self 3 AttackUp 35.0 -- TODO as Hyde
+                          , When "transformed into Hyde" 
+                            $ Grant Self 3 AttackUp 35.0
                           ]
                 }
               , { name:   "Panicky Voice A"
                 , icon:   IconStun
                 , cd:     6
                 , effect: [ Grant Self 0 StunSuccess 25.0 
-                          , Grant Self 0 StunSuccess 135.0 -- TODO as Hyde
+                          , When "transformed into Hyde" 
+                            $ Grant Self 0 StunSuccess 135.0
                           , Chance 10 $ Debuff Enemy 1 Stun 0.0
                           ]
                 }
@@ -556,7 +560,8 @@ assassins = Servant <$>
                 , icon:   IconExclamationUp
                 , cd:     5
                 , effect: [ Grant Self 3 CritUp 15.0 
-                          , Grant Self 3 CritUp 35.0 -- TODO as Hyde
+                          , When "transformed into Hyde" 
+                            $ Grant Self 3 CritUp 35.0
                           ]
                 }
               ]
@@ -567,8 +572,8 @@ assassins = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   0
-              , effect: [ -- TODO Transform into Hyde (Berserker)
-                          Grant Self 0 MaxHP 6000.0
+              , effect: [ To Self (ChangeClass Berserker) 0.0
+                        , Grant Self 0 MaxHP 6000.0
                         , To Self HealToFull 0.0
                         ]
               , over:   [ Grant Self 0 BusterUp 40.0 ] 
@@ -642,7 +647,7 @@ assassins = Servant <$>
   , actives:  [ { name:   "Executioner A++"
                 , icon:   IconDamageUp
                 , cd:     5
-                , effect: [ Grant Self 3 (AttackUpVs Beast) 60.0 ] --TODO vs evil
+                , effect: [ Grant Self 3 (AlignAffinity Evil) 60.0 ]
                 }
               , { name:   "Medicine A+"
                 , icon:   IconHeal

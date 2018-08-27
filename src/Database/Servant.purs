@@ -40,10 +40,10 @@ data Deck = Deck Card Card Card Card Card
 
 type Stat = { atk ∷ Int, hp ∷ Int }
 type Stats = { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
-showStat ∷ Stat → String
+showStat ∷ Stat -> String
 showStat {atk, hp} = "ATK: " ++ show atk ++ ", HP: " ++ show hp
 
-hasPassive ∷ String → Servant → Boolean
+hasPassive ∷ String -> Servant -> Boolean
 hasPassive p (Servant {passives}) = any (eq p) $ (_.name) <$> passives
 
 type Ratings = { damage     ∷ Int
@@ -72,17 +72,17 @@ type Gen = { starWeight  ∷ Int
            , npPerDefend ∷ Int
            }
 
-getEffects ∷ Servant → Array ActiveEffect
+getEffects ∷ Servant -> Array ActiveEffect
 getEffects (Servant {phantasm:{effect, over}, actives}) 
     = simplify <$> effect ++ over ++ (actives >>= _.effect)
   where
     simplify (Chance _ ef) = simplify ef
     simplify (When _ ef)   = simplify ef
     simplify ef            = ef
-phantasmEffects ∷ Servant → Array ActiveEffect
+phantasmEffects ∷ Servant -> Array ActiveEffect
 phantasmEffects (Servant {phantasm:{effect, over}}) = effect ++ over
 
-npDamage ∷ Servant → Number
+npDamage ∷ Servant -> Number
 npDamage (Servant s@{stats:{max:{atk}}, phantasm:{card, effect, over}}) 
     = cardBonus * toNumber atk * classModifier s.class 
     * sum (((_ / 100.0) ∘ dmg) <$> effect ++ over)
@@ -97,19 +97,19 @@ npDamage (Servant s@{stats:{max:{atk}}, phantasm:{card, effect, over}})
     --dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * a
     dmg _ = 0.0
     cardBonus = case card of
-        Arts → 1.0
-        Buster → 1.5
-        Quick → 0.8
+        Arts -> 1.0
+        Buster -> 1.5
+        Quick -> 0.8
 
 data PhantasmType = SingleTarget | MultiTarget | Support
 instance _01_ ∷ Show PhantasmType where
   show = case _ of
-    SingleTarget → "Single-Target"
-    MultiTarget  → "Multi-Target"
-    Support      → "Support"
+    SingleTarget -> "Single-Target"
+    MultiTarget  -> "Multi-Target"
+    Support      -> "Support"
 
 class (BoundedEnum a, Show a) <= MatchServant a where
-    has ∷ a → Servant → Boolean
+    has ∷ a -> Servant -> Boolean
 instance _a_ ∷ MatchServant BuffEffect where 
     has a = any match ∘ getEffects where 
         match (Grant t _ b _) = a == b && allied t

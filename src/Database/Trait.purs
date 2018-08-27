@@ -13,17 +13,17 @@ import Data.Tuple
 data Alignment = Lawful | Neutral | Chaotic | Good | Evil 
                | Mad | Summer | Bride
 
-showAlignment ∷ Tuple Alignment Alignment → String
+showAlignment ∷ Tuple Alignment Alignment -> String
 showAlignment = case _ of
-    Neutral:Neutral → "True Neutral"
-    a:b             → show a ++ " " ++ show b
+    Neutral:Neutral -> "True Neutral"
+    a:b             -> show a ++ " " ++ show b
 
 data Attribute = Mankind | Earth | Heaven | Star
 
 data Class = Saber | Archer | Lancer | Caster | Rider | Assassin | Berserker
            | Shielder | Ruler | Avenger | MoonCancer | AlterEgo
 
-classModifier ∷ Class → Number
+classModifier ∷ Class -> Number
 classModifier Berserker = 1.1
 classModifier Ruler = 1.1
 classModifier Avenger = 1.1
@@ -61,14 +61,14 @@ data Trait = Arthur
 
 instance _b_ ∷ Show Trait where
   show = case _ of
-    Brynhildr        → "Brynhildr's Beloved"
-    DemiServant      → "Demi-servant"
-    HeavenOrEarth    → "Heaven or Earth"
-    GreekMyth        → "Greek Mythology Males"
-    PseudoServant    → "Pseudo-Servant"
-    ThreatToHumanity → "Threat to Humanity"
-    EnumaElish       → "Weak to Enuma Elish"
-    a                → genericShow a
+    Brynhildr        -> "Brynhildr's Beloved"
+    DemiServant      -> "Demi-servant"
+    HeavenOrEarth    -> "Heaven or Earth"
+    GreekMyth        -> "Greek Mythology Males"
+    PseudoServant    -> "Pseudo-Servant"
+    ThreatToHumanity -> "Threat to Humanity"
+    EnumaElish       -> "Weak to Enuma Elish"
+    a                -> genericShow a
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

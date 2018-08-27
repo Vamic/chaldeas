@@ -12,5 +12,5 @@ import Routing.Hash
 import Component
 
 main ∷ Effect Unit
-main = getHash >>= \hash → HA.runHalogenAff 
+main = getHash >>= \hash -> HA.runHalogenAff 
      $ HA.awaitBody >>= runUI (component hash) unit

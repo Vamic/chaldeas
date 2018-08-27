@@ -7,8 +7,8 @@ import Data.String.CodeUnits (toCharArray)
 import Database  hiding (servants)
 import Database  as D
 
-servants ∷ Unit → Array _
-servants = \_ → D.servants <#> \(Servant s@{align: alignA:alignB}) → 
+servants ∷ Unit -> Array _
+servants = \_ -> D.servants <#> \(Servant s@{align: alignA:alignB}) -> 
     { name:          s.name
     , rarity:        s.rarity
     , class:         show s.class

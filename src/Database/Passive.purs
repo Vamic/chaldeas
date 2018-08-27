@@ -20,21 +20,21 @@ type Passive = { name   ∷ String
                }
 
 {-
-showPassiveEffect ∷ Rank → PassiveEffect → String
+showPassiveEffect ∷ Rank -> PassiveEffect -> String
 showPassiveEffect rank (Give target buff ranks)
     = showBuff target (fromMaybe (-1.0) $ lookup rank ranks) buff
-showPassive ∷ Tuple Passive Rank → String
+showPassive ∷ Tuple Passive Rank -> String
 showPassive (Tuple {effect} rank) 
     = joinWith "\n" $ (_ ++ ".") ∘ showPassiveEffect rank <$> effect
 -}
 
-activate ∷ Rank → PassiveEffect → ActiveEffect
+activate ∷ Rank -> PassiveEffect -> ActiveEffect
 activate rank (Give target buff ranks) 
     = Grant target 0 buff ∘ fromMaybe (-1.0) $ lookup rank ranks
 
-type PassiveBase = Rank → Passive
+type PassiveBase = Rank -> Passive
 
-passiveBase ∷ String → Icon → Array PassiveEffect → PassiveBase
+passiveBase ∷ String -> Icon -> Array PassiveEffect -> PassiveBase
 passiveBase name icon effects rank = { name
                                      , rank
                                      , icon

@@ -13,15 +13,15 @@ infixr 5 append          as ++
 infixr 9 compose         as ∘
 infixr 9 doIf            as ?
 
-m ∷ ∀ f k v. Ord k => Foldable f => f (Tuple k v) → Map k v
+m ∷ ∀ f k v. Ord k => Foldable f => f (Tuple k v) -> Map k v
 m = fromFoldable
 
-doIf ∷ ∀ a. Boolean → (a → a) → (a → a)
+doIf ∷ ∀ a. Boolean -> (a -> a) -> (a -> a)
 doIf true  = identity
 doIf false = const identity
 
-advance ∷ ∀ a b c. Bind a => Applicative a => a c → b → a b
-advance a b = a >>= \_ → pure b
+advance ∷ ∀ a b c. Bind a => Applicative a => a c -> b -> a b
+advance a b = a >>= \_ -> pure b
 
 enumArray ∷ ∀ a. BoundedEnum a => Array a
 enumArray = enumFromTo bottom top

@@ -146,6 +146,53 @@ riders = Servant <$>
   , death:    40.0
   , align:    Neutral:Good
   }
+, { name:     "Queen Medb"
+  , rarity:   5
+  , class:    Rider
+  , attr:     Earth
+  , deck:     Deck Quick Arts Arts Buster Buster
+  , stats:    { base:  { atk: 1591,  hp: 2048 }
+              , max:   { atk: 1026, hp: 13968 }
+              , grail: { atk: 11270, hp: 15303 }
+              }
+  , ratings:  { damage:2, np:4, critical:4, utility:2, support:4, durability:3 }
+  , actives:  [ { name:   "Golden Rule (Body) A"
+                , icon:   IconHealTurn
+                , cd:     6
+                , effect: [ Grant Self 3 DebuffImmunity 0.0 
+                          , Grant Self 3 HealPerTurn 1000.0
+                          , Grant Self 3 GaugePerTurn 10.0
+                          ]
+                }
+              , { name:   "Charisma B"
+                , icon:   IconSwordUp
+                , cd:     5
+                , effect: [ Grant Party 3 AttackUp 18.0 ]
+                }
+              , { name:   "Siren Song C"
+                , icon:   IconHeart
+                , cd:     7
+                , effect: [ Chance 80 $ Debuff (EnemyType Male) 1 Charm 0.0 ]
+                }
+              ]
+  , passives: [magicResistance B, riding A]
+  , phantasm: { name:   "Chariot My Love"
+              , desc:   "My Dear Iron Chariot"
+              , rank:   B
+              , card:   Buster
+              , kind:   "Anti-Army"
+              , hits:   5
+              , effect: [ To Enemy Damage 1000.0 ]
+              , over:   [ To (EnemyType Male) Damage 150.0 
+                        , Debuff Enemy 3 MentalVuln 10.0
+                        ]
+              }
+  , gen:      { starWeight: 208, starRate: 9.0, npPerHit: 0.86, npPerDefend: 3 }
+  , hits:     { a: 2, b: 1, q: 3, ex: 7 }
+  , traits:   [Female, Riding, EnumaElish]
+  , death:    40.0
+  , align:    Chaotic:Evil
+  }
 , { name:     "Sakata Kintoki (Rider)"
   , rarity:   4
   , class:    Rider

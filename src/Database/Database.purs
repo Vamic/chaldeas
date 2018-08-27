@@ -37,7 +37,7 @@ servants = addUniversal ∘ addHeavenOrEarth
       | otherwise = Servant s{traits = cons HeavenOrEarth traits}
 
 getAll ∷ ∀ a. MatchServant a => Array a
-getAll = (_ $ unit) ∘ memoize $ \_ → sortWith show $ filter exists enumArray
+getAll = (_ $ unit) ∘ memoize $ \_ -> sortWith show $ filter exists enumArray
   where
     exists eff = any (has eff) servants 
 

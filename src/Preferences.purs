@@ -19,9 +19,11 @@ import Web.HTML.Window (localStorage)
 
 data Preference = Artorify
                 | ExcludeSelf
+                | MaxAscension
 
 instance _a_ ∷ Show Preference where
   show ExcludeSelf = "Exclude self-applied effects"
+  show MaxAscension = "Show all at max ascension"
   show a = genericShow a
 
 setPreference ∷ Preference -> Boolean -> Effect Unit

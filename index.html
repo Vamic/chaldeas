@@ -14,19 +14,27 @@
         }
       span, p, table, br, h1, h2, h3, h4, h5, ul, ol
         { line-height: 1.31em }
-      h1, h2, h3        { margin: 0.5em 0 0 0 }
-      h2                { font-size: 1.4em }
-      p, h4             { margin: 0 }
-      thead th, tbody   { text-align: center }
-      th                { text-align: right }
-      th, td            { padding: 0 5px }
-      th::after         { content: ":" }
-      thead th::after   { content: "" }
-      td.rating         { color: #777777 }
-      h1, h2, aside h3  { text-transform: uppercase }
-      .selected         { font-weight: bold }
-      ul:last-child     { margin-bottom: 0.5em }
-      ul                { padding: 0; margin: 0 }
+      h1, h2, h3           { margin: 0.5em 0 0 0 }
+      h2                   { font-size: 1.4em }
+      p, h4                { margin: 0 }
+      thead th, tbody      { text-align: center }
+      th                   { text-align: right }
+      th, td               { padding: 0 5px }
+      th::after            { content: ":" }
+      thead th::after      { content: "" }
+      td.rating            { color: #777777 }
+      h1, h2, aside h3     { text-transform: uppercase }
+      .selected            { font-weight: bold }
+      ul:last-child        { margin-bottom: 0.5em }
+      ul                   { padding: 0; margin: 0 }
+      footer a:first-child { left: 9px }
+      footer a:last-child  { right: 9px }
+      footer a
+        { position: absolute 
+        ; cursor: pointer
+        ; font-size: 16px
+        ; bottom: 9px
+        }
       .selected, .unselected 
         { cursor: pointer }
       .selected:hover, .unselected:hover 
@@ -83,6 +91,8 @@
         ; text-align: center
         ; color: #ffffff
         }
+      .servant footer
+        { bottom: 0 }
       .servant header span
         { border-radius: 20px
         ; border-style: solid
@@ -104,9 +114,7 @@
       #servants .servant header
         { bottom: 20px }
       #servants .servant footer
-        { bottom: 6px 
-        ; font-size: 7px
-        }
+        { font-size: 7px }
       #servants .servant header span
         { font-size: 11.5px
         ; padding: 1px 4px 2px 4px
@@ -124,9 +132,7 @@
       article .servant header
         { bottom: 25px }
       article .servant footer
-        { bottom: 7px
-        ; font-size: 10px
-        }
+        { font-size: 10px }
       article .servant header span
         { font-size: 16px
         ; padding: 1px 6px 3px 6px

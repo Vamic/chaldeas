@@ -32,14 +32,16 @@ data Query a = Focus (Maybe Servant) a
              | AddFilter Filter a
              | UnFilter  Filter a
              | MatchAny  Boolean a
-             | SetSort   SortBy  a
+             | SetSort   SortBy a
              | SetPref   Preference Boolean a
+             | Ascend    Int a
 
 type State = { filters  ∷ Array Filter
              , matchAny ∷ Boolean
              , focus    ∷ Maybe Servant
              , sortBy   ∷ SortBy
              , prefs    ∷ Map Preference Boolean
+             , ascend   ∷ Int
              }
 
 urlName ∷ Servant -> String
@@ -61,11 +63,12 @@ component initialHash initialPrefs = Halogen.component
                        , focus:    find ((_ == initialHash) ∘ urlName) servants
                        , sortBy:   Rarity
                        , prefs:    initialPrefs
+                       , ascend:   1
                        }
  
   render ∷ State -> ComponentHTML Query
-  render {filters, focus, matchAny, prefs, sortBy} 
-      = modal artorify focus
+  render {ascend, filters, focus, matchAny, prefs, sortBy} 
+      = modal artorify ascend focus
         [ H.aside [_i "active"] ∘ append
           [ _h 1 "Settings"
           , H.form_ $ M.toUnfoldable prefs <#> \(Tuple k v)
@@ -87,7 +90,7 @@ component initialHash initialPrefs = Halogen.component
                 $ "ⓧ " ++ show tab ++ ": " ++ show filt 
         , H.section [_i "servants"] 
           ∘ (if sortBy == Rarity then identity else reverse)
-          $ portrait artorify <$> doSort sortBy 
+          $ portrait false artorify baseAscend <$> doSort sortBy 
             (not (null filters) ? filter (match excludeSelf) $ servants)
         , H.aside [_i "filters"] ∘ cons
           (_h 1 "Filters") ∘ concat 
@@ -100,6 +103,9 @@ component initialHash initialPrefs = Halogen.component
     where 
       artorify    = fromMaybe false $ M.lookup Artorify prefs
       excludeSelf = fromMaybe false $ M.lookup ExcludeSelf prefs
+      baseAscend 
+        | fromMaybe false $ M.lookup MaxAscension prefs = 4
+        | otherwise                                     = 1
       match serv  = (if matchAny then any else all) 
                     (\(Filter _ _ f) -> f serv) filters
       meta filt 
@@ -112,9 +118,10 @@ component initialHash initialPrefs = Halogen.component
       UnFilter  filt     next -> (_ >> next) $ modFilters (delete filt)
       MatchAny  matchAny next -> (_ >> next) $ modify_ _{ matchAny = matchAny }
       SetSort   sortBy   next -> (_ >> next) $ modify_ _{ sortBy = sortBy }
+      Ascend    ascend   next -> (_ >> next) $ modify_ _{ ascend = ascend }
       Focus     focus    next -> (_ >> next) $ do
           liftEffect $ hash focus
-          modify_ _{ focus = focus } 
+          modify_ _{ focus = focus, ascend = 1 } 
       SetPref   k v      next -> (_ >> next) $ do
           liftEffect $ setPreference k v
           modPrefs $ M.insert k v
@@ -135,29 +142,40 @@ deck (Deck a b c d e) = card ∘ show <$> [a, b, c, d, e]
   where 
     card x = H.span [_c x] ∘ _txt $ take 1 x --_img $ "img/Card/" ++ show x ++ ".png"
 
-portrait ∷ ∀ a. Boolean -> Tuple String Servant -> HTML a (Query Unit)
-portrait artorify (Tuple lab serv@(Servant s))
-    = H.div [_c $ "servant stars" ++ show s.rarity, _click ∘ Focus $ Just serv]
-      [ _img $ "img/Servant/" ++ s.name ++ ".png"
+portrait ∷ ∀ a. Boolean -> Boolean -> Int -> Tuple String Servant 
+           -> HTML a (Query Unit)
+portrait big artorify ascension (Tuple lab serv@(Servant s))
+    = H.div meta
+      [ _img $ "img/Servant/" ++ s.name ++ ascend ++ ".png"
       , H.div_ [ _img $ "img/Class/" ++ show s.class ++ ".png"]
       , H.aside_ $ deck s.deck
       , H.header_ 
         ∘ (lab /= "") ? append [_span lab, H.br_]
         $ [ _span ∘ noBreakName ∘ artorify ? doArtorify $ s.name ]
-      , H.footer_ ∘ _txt ∘ joinWith "  " $ replicate s.rarity "★" 
+      , H.footer_ 
+        ∘ ((big && ascension > 1) ? cons prevAscend)
+        ∘ ((big && ascension < 4) ? (_ `snoc` nextAscend))
+        ∘ singleton ∘ _span ∘ joinWith "  " $ replicate s.rarity "★" 
       ]
-  where doArtorify = replaceAll (Pattern "Altria") (Replacement "Artoria")
+  where meta       = not big ? (cons ∘ _click ∘ Focus $ Just serv) 
+                   $ [_c $ "servant stars" ++ show s.rarity]
+        doArtorify = replaceAll (Pattern "Altria") (Replacement "Artoria")
+        prevAscend = H.a [_click ∘ Ascend $ ascension - 1] $ _txt "<"
+        nextAscend = H.a [_click ∘ Ascend $ ascension + 1] $ _txt ">"
+        ascend
+          | ascension <= 1 = ""
+          | otherwise      = " " ++ show ascension
 
-modal ∷ ∀ a. Boolean -> Maybe Servant -> Array (HTML a (Query Unit)) 
+modal ∷ ∀ a. Boolean -> Int -> Maybe Servant -> Array (HTML a (Query Unit)) 
         -> HTML a (Query Unit)
-modal _ Nothing = H.div [_i "layout"] ∘ append 
+modal _ _ Nothing = H.div [_i "layout"] ∘ append 
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal artorify
+modal artorify ascend
 (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm})) 
   = H.div [_i "layout", _c "fade"] ∘ append 
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait artorify $ Tuple "" serv
+      [ portrait true artorify ascend $ Tuple "" serv
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ print base.atk,  _td $ print base.hp ]
         , H.tr_ [ _th "Max",   _td $ print max.atk,   _td $ print max.hp ]

@@ -54,8 +54,8 @@ data SortBy = Rarity
             | HP
             | StarRate
             | Hits
-            | NPDamage
             | NPGain
+            | NPDamage
 
 type State = { filters  ∷ Array Filter
              , matchAny ∷ Boolean

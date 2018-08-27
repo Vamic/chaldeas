@@ -185,7 +185,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 0.5, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish, Brynhildr]
+  , traits:   [Male, EnumaElish, Brynhildr, King]
   , death:    45.5
   , align:    Lawful:Evil
   , limited:  true
@@ -377,7 +377,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 10, starRate: 4.9, npPerHit: 1.03, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 4, ex: 5 }
-  , traits:   [Female, Magical, EnumaElish]
+  , traits:   [Female, Demonic, EnumaElish]
   , death:    52.0
   , align:    Chaotic:Evil
   , limited:  false
@@ -469,7 +469,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 10, starRate: 4.9, npPerHit: 0.68, npPerDefend: 5 }
   , hits:     { a: 3, b: 1, q: 3, ex: 4 }
-  , traits:   [Male, EnumaElish, Brynhildr]
+  , traits:   [Male, EnumaElish, Brynhildr, King]
   , death:    58.5
   , align:    Chaotic:Good
   , limited:  false
@@ -659,7 +659,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 0.68, npPerDefend: 5 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish]
+  , traits:   [Male, EnumaElish, GreekMyth]
   , death:    58.5
   , align:    Chaotic:Evil
   , limited:  false
@@ -757,7 +757,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 9, starRate: 4.9, npPerHit: 1.02, npPerDefend: 5 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish]
+  , traits:   [Male, EnumaElish, King]
   , death:    58.5
   , align:    Chaotic:Balanced
   , limited:  false
@@ -854,7 +854,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 9, starRate: 5.0, npPerHit: 0.68, npPerDefend: 5 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, Roman, EnumaElish]
+  , traits:   [Male, Roman, EnumaElish, King]
   , death:    56.8
   , align:    Chaotic:Evil
   , limited:  false

@@ -93,7 +93,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 102, starRate: 10.1, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Female, Riding, Divine, EnumaElish]
+  , traits:   [Female, Riding, Divine, EnumaElish, King]
   , death:    24.5
   , align:    Chaotic:Good
   , limited:  false
@@ -143,7 +143,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 102, starRate: 10.1, npPerHit: 0.7, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 3, ex: 4 }
-  , traits:   [Female, Riding, Saberface, Roman, EnumaElish ]
+  , traits:   [Female, Riding, Saberface, Roman, EnumaElish, King]
   , death:    35.0
   , align:    Chaotic:Bride
   , limited:  true
@@ -243,7 +243,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 102, starRate: 9.9, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 4, ex: 4 }
-  , traits:   [Female, EnumaElish]
+  , traits:   [Female, EnumaElish, PseudoServant]
   , death:    24.5
   , align:    Neutral:Balanced
   , limited:  false
@@ -286,7 +286,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 102, starRate: 10.0, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
+  , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    21.0
   , align:    Lawful:Good
   , limited:  false
@@ -425,7 +425,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 100, starRate: 10.2, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 4 }
-  , traits:   [Male, Riding, Brynhildr, Divine, EnumaElish]
+  , traits:   [Male, Riding, Brynhildr, Divine, EnumaElish, King]
   , death:    24.5
   , align:    Lawful:Good
   , limited:  false
@@ -473,7 +473,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 102, starRate: 10.1, npPerHit: 0.84, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 5 }
-  , traits:   [Female, Riding, Roman, Saberface, EnumaElish]
+  , traits:   [Female, Riding, Roman, Saberface, EnumaElish, King]
   , death:    24.5
   , align:    Chaotic:Good
   , limited:  false
@@ -571,7 +571,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 97, starRate: 10.0, npPerHit: 0.83, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, Riding, Brynhildr, Dragon, EnumaElish]
+  , traits:   [Male, Riding, Brynhildr, Dragon, EnumaElish, King]
   , death:    28.0
   , align:    Chaotic:Good
   , limited:  false
@@ -665,7 +665,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 102, starRate: 10.0, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
+  , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    21.0
   , align:    Lawful:Good
   , limited:  false
@@ -710,7 +710,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 99, starRate: 10.0, npPerHit: 1.1, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, Riding, Brynhildr, Roman, Divine, EnumaElish]
+  , traits:   [Male, King, Riding, Brynhildr, Roman, Divine, EnumaElish]
   , death:    31.5
   , align:    Neutral:Balanced
   , limited:  false
@@ -761,7 +761,7 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 99, starRate: 10.0, npPerHit: 1.09, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, Riding, Brynhildr, EnumaElish]
+  , traits:   [Male, Riding, Brynhildr, EnumaElish, King]
   , death:    35.0
   , align:    Lawful:Balanced
   , limited:  false

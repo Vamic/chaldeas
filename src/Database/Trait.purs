@@ -47,7 +47,6 @@ data Trait = Arthur
            | Humanoid
            | Human
            | King
-           | Magical
            | Male
            | Mecha
            | Poisoned 

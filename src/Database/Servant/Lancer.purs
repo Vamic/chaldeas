@@ -303,7 +303,7 @@ lancers = Servant <$>
               }
   , gen:      { starWeight: 88, starRate: 11.8, npPerHit: 0.74, npPerDefend: 4 }
   , hits:     { a: 3, b: 1, q: 2, ex: 4 }
-  , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
+  , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    23.0
   , align:    Lawful:Good
   , limited:  false
@@ -637,7 +637,7 @@ lancers = Servant <$>
               }
   , gen:      { starWeight: 89, starRate: 11.8, npPerHit: 1.07, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish]
+  , traits:   [Male, EnumaElish, King]
   , death:    32.0
   , align:    Lawful:Balanced
   , limited:  false
@@ -685,7 +685,7 @@ lancers = Servant <$>
               }
   , gen:      { starWeight: 90, starRate: 12.1, npPerHit: 1.07, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, Roman]
+  , traits:   [Male, Roman, King]
   , death:    32.0
   , align:    Chaotic:Balanced
   , limited:  false
@@ -732,7 +732,7 @@ lancers = Servant <$>
               }
   , gen:      { starWeight: 90, starRate: 12.2, npPerHit: 1.08, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, Riding, EnumaElish]
+  , traits:   [Male, Riding, EnumaElish, GreekMyth]
   , death:    28.0
   , align:    Lawful:Balanced
   , limited:  false

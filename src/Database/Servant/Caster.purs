@@ -55,7 +55,7 @@ casters = Servant <$>
               }
   , gen:      { starWeight: 50, starRate: 10.8, npPerHit: 1.64, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish, Brynhildr]
+  , traits:   [Male, EnumaElish, Brynhildr, PseudoServant]
   , death:    34.5
   , align:    Neutral:Good
   , limited:  false

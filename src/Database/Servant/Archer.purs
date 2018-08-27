@@ -46,7 +46,7 @@ archers = Servant <$>
               }
   , gen:      { starWeight: 153, starRate: 7.9, npPerHit: 0.34, npPerDefend: 3 }
   , hits:     { a: 5, b: 5, q: 5, ex: 8 }
-  , traits:   [Male, Divine, EnumaElish]
+  , traits:   [Male, Divine, EnumaElish, King]
   , death:    31.5
   , align:    Chaotic:Good
   , limited: true
@@ -97,7 +97,7 @@ archers = Servant <$>
               }
   , gen:      { starWeight: 153, starRate: 8.0, npPerHit: 0.59, npPerDefend: 3 }
   , hits:     { a: 3, b: 3, q: 4, ex: 5 }
-  , traits:   [Female, Dragon, Saberface, EnumaElish]
+  , traits:   [Female, Dragon, Saberface, EnumaElish, King]
   , death:    25.8
   , align:    Lawful:Good
   , limited:  true
@@ -200,7 +200,7 @@ archers = Servant <$>
               }
   , gen:      { starWeight: 153, starRate: 8.0, npPerHit: 1.0, npPerDefend: 3 }
   , hits:     { a: 1, b: 1, q: 3, ex: 4 }
-  , traits:   [Male, EnumaElish]
+  , traits:   [Male, GreekMyth, EnumaElish]
   , death:    27.0
   , align:    Chaotic:Balanced
   , limited:  false
@@ -348,7 +348,7 @@ archers = Servant <$>
               }
   , gen:      { starWeight: 150, starRate: 7.9, npPerHit: 0.43, npPerDefend: 3 }
   , hits:     { a: 4, b: 4, q: 2, ex: 5 }
-  , traits:   [Female, EnumaElish]
+  , traits:   [Female, EnumaElish, King]
   , death:    31.5
   , align:    Lawful:Balanced
   , limited:  false
@@ -740,7 +740,7 @@ archers = Servant <$>
               }
   , gen:      { starWeight: 153, starRate: 8.0, npPerHit: 0.76, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish]
+  , traits:   [Male, EnumaElish, King]
   , death:    36.0
   , align:    Lawful:Balanced
   , limited:  false
@@ -786,7 +786,7 @@ archers = Servant <$>
               }
   , gen:      { starWeight: 153, starRate: 7.9, npPerHit: 0.62, npPerDefend: 3 }
   , hits:     { a: 3, b: 3, q: 3, ex: 3 }
-  , traits:   [Male, Divine, EnumaElish]
+  , traits:   [Male, Divine, EnumaElish, King]
   , death:    36.0
   , align:    Chaotic:Good
   , limited:  false
@@ -876,7 +876,7 @@ archers = Servant <$>
               , kind:   "Anti-Army"
               , hits:   3
               , effect: [ To Enemies Damage 500.0 ]
-              , over:   [ Grant Self 1 (AttackUpVs Magical) 50.0 ]
+              , over:   [ Grant Self 1 (AttackUpVs Demonic) 50.0 ]
               }
   , gen:      { starWeight: 150, starRate: 7.8, npPerHit: 0.57, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }

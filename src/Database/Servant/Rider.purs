@@ -51,7 +51,7 @@ riders = Servant <$>
               }
   , gen:      { starWeight: 205, starRate: 9.0, npPerHit: 0.59, npPerDefend: 3 }
   , hits:     { a: 3, b: 1, q: 5, ex: 5 }
-  , traits:   [Male, Brynhildr, Divine, Riding, EnumaElish]
+  , traits:   [Male, Brynhildr, Divine, Riding, EnumaElish, King]
   , death:    30.0
   , align:    Chaotic:Balanced
   , limited:  false
@@ -192,7 +192,7 @@ riders = Servant <$>
               }
   , gen:      { starWeight: 208, starRate: 9.0, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 3, ex: 7 }
-  , traits:   [Female, Riding, EnumaElish]
+  , traits:   [Female, Riding, EnumaElish, King]
   , death:    40.0
   , align:    Chaotic:Evil
   , limited:  false
@@ -759,7 +759,7 @@ riders = Servant <$>
               }
   , gen:      { starWeight: 205, starRate: 9.0, npPerHit: 0.86, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, Riding, Divine, EnumaElish]
+  , traits:   [Male, Riding, Divine, EnumaElish, GreekMyth, King]
   , death:    40.0
   , align:    Neutral:Good
   , limited:  false
@@ -802,7 +802,7 @@ riders = Servant <$>
               }
   , gen:      { starWeight: 196, starRate: 8.9, npPerHit: 0.85, npPerDefend: 3 }
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Female, Riding, EnumaElish]
+  , traits:   [Female, Riding, EnumaElish, King]
   , death:    45.0
   , align:    Neutral:Good
   , limited:  false

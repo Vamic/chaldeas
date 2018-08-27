@@ -146,7 +146,7 @@ assassins = Servant <$>
               }
   , gen:      { starWeight: 98, starRate: 25.6, npPerHit: 0.81, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 4, ex: 4 }
-  , traits:   [Female, Riding, Dragon, Saberface, Arthur]
+  , traits:   [Female, Riding, Dragon, Saberface, Arthur, King]
   , death:    38.5
   , align:    Chaotic:Balanced
   , limited:  true
@@ -196,7 +196,7 @@ assassins = Servant <$>
               }
   , gen:      { starWeight: 102, starRate: 25.6, npPerHit: 0.8, npPerDefend: 4 }
   , hits:     { a: 2, b: 1, q: 4, ex: 5 }
-  , traits:   [Female, EnumaElish]
+  , traits:   [Female, EnumaElish, PseudoServant]
   , death:    44.0
   , align:    Chaotic:Good
   , limited:  true
@@ -862,7 +862,7 @@ assassins = Servant <$>
                 , icon:   IconHeart
                 , cd:     6
                 , effect: [ Chance 60 $ Debuff (EnemiesType Male) 1 Charm 0.0 
-                          , Debuff (EnemiesType Male) 3 DefenseDown 20.0
+                          , Debuff Enemies 3 DefenseDown 20.0
                           ]
                 }
               , { name:   "Double-Cross B"

@@ -336,7 +336,7 @@ riders = Servant <$>
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    30.0
   , align:    Lawful:Good
-  , limited:  true
+  , limited:  false
   }
 , { name:     "Mordred (Rider)"
   , rarity:   4

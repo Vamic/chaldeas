@@ -211,7 +211,7 @@ lancers = Servant <$>
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    32.0
   , align:    Neutral:Good
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Altria Pendragon (Lancer)"
   , rarity:   5
@@ -404,7 +404,7 @@ lancers = Servant <$>
   , traits:   [Female, Dragon, EnumaElish]
   , death:    40.0
   , align:    Chaotic:Evil
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Elisabeth Bathory"
   , rarity:   4

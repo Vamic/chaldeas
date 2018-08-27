@@ -249,7 +249,7 @@ assassins = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Evil
-  , limited:  true
+  , limited:  false
   }
 , { name:     "EMIYA (Assassin)"
   , rarity:   4

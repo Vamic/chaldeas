@@ -351,7 +351,7 @@ archers = Servant <$>
   , traits:   [Female, EnumaElish, King]
   , death:    31.5
   , align:    Lawful:Balanced
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Tristan"
   , rarity:   4

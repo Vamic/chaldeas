@@ -188,7 +188,7 @@ berserkers = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr, King]
   , death:    45.5
   , align:    Lawful:Evil
-  , limited:  true
+  , limited:  false
   }
 , { name:     "Nightingale"
   , rarity:   5
@@ -235,7 +235,7 @@ berserkers = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    56.8
   , align:    Lawful:Good
-  , limited:  true
+  , limited:  false
   }
 , { name:     "Heracles"
   , rarity:   4

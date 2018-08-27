@@ -246,7 +246,7 @@ sabers = Servant <$>
   , traits:   [Female, EnumaElish, PseudoServant]
   , death:    24.5
   , align:    Neutral:Balanced
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Altria Pendragon"
   , rarity:   5
@@ -668,7 +668,7 @@ sabers = Servant <$>
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    21.0
   , align:    Lawful:Good
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Gaius Julius Caesar"
   , rarity:   3

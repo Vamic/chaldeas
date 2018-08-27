@@ -98,7 +98,7 @@ extras = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Jeanne d'Arc (Alter)"
   , rarity:   5
@@ -150,7 +150,7 @@ extras = Servant <$>
   , traits:   [Female, EnumaElish, Saberface]
   , death:    5.7
   , align:    Chaotic:Evil
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Edmond Dantes"
   , rarity:   5
@@ -201,7 +201,7 @@ extras = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    7.0
   , align:    Chaotic:Evil
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Saint Martha (Ruler)"
   , rarity:   4
@@ -250,7 +250,7 @@ extras = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Mash Kyrielight"
   , rarity:   3

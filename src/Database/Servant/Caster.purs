@@ -309,7 +309,7 @@ casters = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Lawful:Good
-  , limited:  true
+  , limited:  false
   }
 , { name:     "Elisabeth Bathory (Halloween)"
   , rarity:   4
@@ -653,7 +653,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    60.0
   , align:    Lawful:Balanced
-  , limited:  true
+  , limited:  false
   }
 , { name:     "Hans Christian Andersen"
   , rarity:   2

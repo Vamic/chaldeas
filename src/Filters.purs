@@ -30,14 +30,14 @@ extraFilters =
     ]
   , Filter FilterEvent "+50% Kaleid CE" 
     $ \(Servant {traits}) -> Male `notElem` traits
-  , servantBonus FilterOther "New Servant" 
+  , servantBonus FilterOther "New" 
     [ "Illyasviel von Einzbern" 
     , "Chloe von Einzbern"
     ]
   , Filter FilterOther "Limited" $ \(Servant {limited}) -> limited
   , Filter FilterOther "Non-Llimited" $ \(Servant {limited}) -> not limited
   ]
-data FilterTab = FilterOther | FilterEvent
+data FilterTab = FilterEvent | FilterOther
                | FilterPhantasm | FilterCard 
                | FilterClass | FilterDeck | FilterAttribute
                | FilterAction | FilterBuff | FilterDebuff 
@@ -48,7 +48,7 @@ instance _a_ ∷ Show FilterTab where
   show FilterPhantasm = "NP Type"
   show FilterCard     = "NP Card"
   show FilterPassive  = "Passive Skill"
-  show FilterOther    = "Miscellaneous"
+  show FilterOther    = "Availability"
   show a              = drop 6 $ genericShow a
 
 data Filter = Filter FilterTab String (Servant -> Boolean)

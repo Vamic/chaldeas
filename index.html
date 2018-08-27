@@ -25,10 +25,12 @@
       td.rating         { color: #777777 }
       h1, h2, aside h3  { text-transform: uppercase }
       .selected         { font-weight: bold }
-      .unselected       { cursor: pointer }
-      .unselected:hover { text-decoration: underline }
       ul:last-child     { margin-bottom: 0.5em }
       ul                { padding: 0; margin: 0 }
+      .selected, .unselected 
+        { cursor: pointer }
+      .selected:hover, .unselected:hover 
+        { text-decoration: underline }
       #layout > article table 
         { width: 225px 
         ; margin-top: -1px

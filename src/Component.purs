@@ -137,7 +137,7 @@ component initialHash = Halogen.component
           Hits     -> sortWith $ \(Servant {hits}) 
                    -> hits.a + hits.b + hits.q + hits.ex
       meta filt 
-        | filt `elem` filters = [_c "selected"]
+        | filt `elem` filters = [_c "selected", _click $ UnFilter filt]
         | otherwise           = [_c "unselected", _click $ AddFilter filt]
 {-
 ToTab FilterTab a

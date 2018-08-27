@@ -804,7 +804,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 9, starRate: 5.0, npPerHit: 0.67, npPerDefend: 5 }
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish]
+  , traits:   [Male, EnumaElish, King]
   , death:    65.0
   , align:    Lawful:Balanced
   , limited:  false

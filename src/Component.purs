@@ -122,10 +122,11 @@ component initialHash = Halogen.component
           FilterDebuff    -> matchFilter tab <$> getAll ∷ Array DebuffEffect
           FilterDeck      -> matchFilter tab <$> getAll ∷ Array Deck
           FilterEvent     -> eventBonuses
+          FilterOther     -> otherFilters
           FilterPhantasm  -> matchFilter tab <$> getAll ∷ Array PhantasmType
-          FilterTrait     -> matchFilter tab <$> getAll ∷ Array Trait
           FilterPassive   -> uncurry (Filter tab) ∘ (identity&&&hasPassive) 
                         <$> getPassives
+          FilterTrait     -> matchFilter tab <$> getAll ∷ Array Trait
       doSort = case sortBy of
           NPDamage -> sortWith $ \serv -> npDamage serv
           Rarity   -> sortWith $ \(Servant s) -> show (5 - s.rarity) ++ s.name

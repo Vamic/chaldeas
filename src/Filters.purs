@@ -17,12 +17,12 @@ import Database
 
 eventBonuses ∷ Array Filter
 eventBonuses = 
-  [ servantBonus "+100% Attack" 
+  [ servantBonus FilterEvent "+100% Attack" 
     [ "Illyasviel von Einzbern"
     , "Chloe von Einzbern"
     ,  "Mash Kyrielight"
     ]
-  , servantBonus "+50% Attack"
+  , servantBonus FilterEvent "+50% Attack"
     [ "Queen Medb"
     , "Nursery Rhyme"
     , "Helena Blavatsky"
@@ -32,7 +32,15 @@ eventBonuses =
     $ \(Servant {traits}) -> Male `notElem` traits
   ]
 
-data FilterTab = FilterEvent
+otherFilters ∷ Array Filter
+otherFilters = 
+  [ servantBonus FilterOther "New Servants" 
+    [ "Illyasviel von Einzbern" 
+    , "Chloe von Einzbern"
+    ] 
+  ]
+
+data FilterTab = FilterOther | FilterEvent
                | FilterPhantasm | FilterClass | FilterDeck | FilterAttribute
                | FilterAction | FilterBuff | FilterDebuff 
                | FilterAlignment | FilterTrait | FilterPassive
@@ -41,6 +49,7 @@ instance _a_ ∷ Show FilterTab where
   show FilterEvent    = "Event Bonus"
   show FilterPhantasm = "Noble Phantasm"
   show FilterPassive  = "Passive Skill"
+  show FilterOther    = "Miscellaneous"
   show a              = drop 6 $ genericShow a
 
 data Filter = Filter FilterTab String (Servant -> Boolean)
@@ -52,8 +61,8 @@ instance _c_ ∷ Show Filter where
 matchFilter ∷ ∀ a. MatchServant a ⇒ FilterTab -> a -> Filter
 matchFilter tab = uncurry (Filter tab) ∘ (show&&&has)
   
-servantBonus ∷ String -> Array String -> Filter
-servantBonus bonus servants = Filter FilterEvent bonus match
+servantBonus ∷ FilterTab -> String -> Array String -> Filter
+servantBonus tab bonus servants = Filter tab bonus match
     where
       match (Servant {name}) = name `elem` servants
 

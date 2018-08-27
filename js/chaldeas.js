@@ -22506,7 +22506,7 @@ var PS = {};
       return Data_Foldable.notElem(Data_Foldable.foldableArray)(Database_Trait._1_)(Database_Trait.Male.value)(v.traits);
   }), servantBonus(FilterOther.value)("New")([ "Illyasviel von Einzbern", "Chloe von Einzbern" ]), Filter.create(FilterOther.value)("Limited")(function (v) {
       return v.limited;
-  }), Filter.create(FilterOther.value)("Non-Llimited")(function (v) {
+  }), Filter.create(FilterOther.value)("Non-Limited")(function (v) {
       return !v.limited;
   }) ];
   var _c_ = new Data_Show.Show(function (v) {

@@ -35,7 +35,7 @@ extraFilters =
     , "Chloe von Einzbern"
     ]
   , Filter FilterOther "Limited" $ \(Servant {limited}) -> limited
-  , Filter FilterOther "Non-Llimited" $ \(Servant {limited}) -> not limited
+  , Filter FilterOther "Non-Limited" $ \(Servant {limited}) -> not limited
   ]
 data FilterTab = FilterEvent | FilterOther
                | FilterPhantasm | FilterCard 

@@ -54,7 +54,7 @@ lancers = Servant <$>
   , traits:   [Female, EnumaElish, King]
   , death:    32.0
   , align:    Neutral:Good
-  , limited:  false
+  , limited:  true
   }
 , { name:     "Karna"
   , rarity:   5

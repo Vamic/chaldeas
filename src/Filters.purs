@@ -58,7 +58,7 @@ instance _c_ ∷ Show Filter where
   show (Filter tab a _) = a
 
 matchFilter ∷ ∀ a. MatchServant a ⇒ FilterTab -> a -> Filter
-matchFilter tab = uncurry (Filter tab) ∘ (show&&&has)
+matchFilter tab = uncurry (Filter tab) ∘ (show &&& has)
   
 servantBonus ∷ FilterTab -> String -> Array String -> Filter
 servantBonus tab bonus servants = Filter tab bonus match
@@ -69,6 +69,22 @@ getExtraFilters ∷ FilterTab -> Array Filter
 getExtraFilters tab = filter fromTab extraFilters
   where
     fromTab (Filter t _ _) = tab == t
+
+getFilters ∷ FilterTab -> Array Filter
+getFilters f@FilterAction    = matchFilter f <$> getAll ∷ Array InstantEffect
+getFilters f@FilterAlignment = matchFilter f <$> getAll ∷ Array Alignment
+getFilters f@FilterAttribute = matchFilter f <$> getAll ∷ Array Attribute
+getFilters f@FilterBuff      = matchFilter f <$> getAll ∷ Array BuffEffect
+getFilters f@FilterCard      = matchFilter f <$> getAll ∷ Array Card
+getFilters f@FilterClass     = matchFilter f <$> getAll ∷ Array Class
+getFilters f@FilterDebuff    = matchFilter f <$> getAll ∷ Array DebuffEffect
+getFilters f@FilterDeck      = matchFilter f <$> getAll ∷ Array Deck
+getFilters f@FilterPhantasm  = matchFilter f <$> getAll ∷ Array PhantasmType
+getFilters f@FilterTrait     = matchFilter f <$> getAll ∷ Array Trait
+getFilters f@FilterPassive   = uncurry (Filter f) ∘ (identity&&&hasPassive) 
+                           <$> getPassives
+getFilters f@FilterEvent     = getExtraFilters f
+getFilters f@FilterOther     = getExtraFilters f
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

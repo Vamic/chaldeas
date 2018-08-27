@@ -155,7 +155,7 @@ riders = Servant <$>
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
   , stats:    { base:  { atk: 1591,  hp: 2048 }
-              , max:   { atk: 1026, hp: 13968 }
+              , max:   { atk: 10296, hp: 13968 }
               , grail: { atk: 11270, hp: 15303 }
               }
   , ratings:  { damage:2, np:4, critical:4, utility:2, support:4, durability:3 }

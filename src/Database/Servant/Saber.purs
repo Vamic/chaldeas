@@ -48,7 +48,7 @@ sabers = Servant <$>
   , hits:     { a: 2, b: 1, q: 5, ex: 3 }
   , traits:   [Female, Riding, Saberface, EnumaElish]
   , death:    35.0
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
 , { name:     "Altera"
   , rarity:   5
@@ -190,7 +190,7 @@ sabers = Servant <$>
   , hits:     { a: 3, b: 1, q: 2, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, EnumaElish]
   , death:    24.5
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Ryougi Shiki (Saber)"
   , rarity:   5
@@ -241,7 +241,7 @@ sabers = Servant <$>
   , hits:     { a: 2, b: 1, q: 4, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    24.5
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
 , { name:     "Altria Pendragon"
   , rarity:   5
@@ -331,7 +331,7 @@ sabers = Servant <$>
   , hits:     { a: 2, b: 4, q: 3, ex: 5 }
   , traits:   [Male, Brynhildr, Riding, EnumaElish]
   , death:    28.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Altria Pendragon (Alter)"
   , rarity:   4
@@ -516,7 +516,7 @@ sabers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Riding, EnumaElish]
   , death:    28.0
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
   , { name:   "Siegfried"
   , rarity:   4
@@ -698,7 +698,7 @@ sabers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, Brynhildr, Roman, Divine, EnumaElish]
   , death:    31.5
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
 , { name:     "Fergus mac Roich"
   , rarity:   3
@@ -748,7 +748,7 @@ sabers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, Brynhildr, EnumaElish]
   , death:    35.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Bedivere"
   , rarity:   3

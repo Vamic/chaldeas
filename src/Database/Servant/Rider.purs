@@ -53,7 +53,7 @@ riders = Servant <$>
   , hits:     { a: 3, b: 1, q: 5, ex: 5 }
   , traits:   [Male, Brynhildr, Divine, Riding, EnumaElish]
   , death:    30.0
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Francis Drake"
   , rarity:   5
@@ -606,7 +606,7 @@ riders = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, Riding, Brynhildr, EnumaElish]
   , death:    35.0
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Medusa"
   , rarity:   3

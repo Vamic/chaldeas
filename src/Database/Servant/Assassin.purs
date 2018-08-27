@@ -146,7 +146,7 @@ assassins = Servant <$>
   , hits:     { a: 2, b: 1, q: 4, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur]
   , death:    38.5
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Ryougi Shiki (Assassin)"
   , rarity:   4
@@ -872,7 +872,7 @@ assassins = Servant <$>
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 
 ]

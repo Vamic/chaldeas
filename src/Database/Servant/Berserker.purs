@@ -322,7 +322,7 @@ berserkers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    58.5
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Ibaraki-Douji"
   , rarity:   4
@@ -599,7 +599,7 @@ berserkers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Roman, EnumaElish]
   , death:    65.0
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
 , { name:     "Asterios"
   , rarity:   1
@@ -744,7 +744,7 @@ berserkers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    58.5
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Darius III"
   , rarity:   3
@@ -790,7 +790,7 @@ berserkers = Servant <$>
   , hits:     { a: 3, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    65.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Caligula"
   , rarity:   2

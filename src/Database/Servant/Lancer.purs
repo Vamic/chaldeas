@@ -485,7 +485,7 @@ lancers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 4 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    32.0
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
 , { name:     "Cu Chulainn"
   , rarity:   3
@@ -533,7 +533,7 @@ lancers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    32.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Cu Chulainn (Prototype)"
   , rarity:   3
@@ -581,7 +581,7 @@ lancers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    28.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Leonidas"
   , rarity:   2
@@ -627,7 +627,7 @@ lancers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    32.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Romulus"
   , rarity:   3
@@ -674,7 +674,7 @@ lancers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Roman]
   , death:    32.0
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Hektor"
   , rarity:   3
@@ -720,7 +720,7 @@ lancers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Riding, EnumaElish]
   , death:    28.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Musashibou Benkei"
   , rarity:   2
@@ -810,7 +810,7 @@ lancers = Servant <$>
   , hits:     { a: 2, b: 2, q: 2, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    36.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 
 ]

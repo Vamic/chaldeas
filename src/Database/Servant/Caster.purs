@@ -403,7 +403,7 @@ casters = Servant <$>
   , hits:     { a: 3, b: 1, q: 3, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
 , { name:     "Helena Blavatsky"
   , rarity:   4
@@ -640,7 +640,7 @@ casters = Servant <$>
   , hits:     { a: 3, b: 3, q: 3, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    60.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Hans Christian Andersen"
   , rarity:   2
@@ -688,7 +688,7 @@ casters = Servant <$>
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    30.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Medea"
   , rarity:   3
@@ -780,7 +780,7 @@ casters = Servant <$>
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    45.0
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
 , { name:     "Wolfgang Amadeus Mozart"
   , rarity:   1
@@ -872,7 +872,7 @@ casters = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Cu Chulainn (Caster)"
   , rarity:   3
@@ -922,7 +922,7 @@ casters = Servant <$>
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    42.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Mephistopheles"
   , rarity:   3

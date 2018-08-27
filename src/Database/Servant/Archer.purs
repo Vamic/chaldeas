@@ -199,7 +199,7 @@ archers = Servant <$>
   , hits:     { a: 1, b: 1, q: 3, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    27.0
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Arjuna"
   , rarity:   5
@@ -249,7 +249,7 @@ archers = Servant <$>
   , hits:     { a: 3, b: 3, q: 2, ex: 5 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    31.5
-  , align:    Lawful:Neutral   
+  , align:    Lawful:Balanced   
   }
 , { name:     "Chloe von Einzbern"
   , rarity:   4
@@ -344,7 +344,7 @@ archers = Servant <$>
   , hits:     { a: 4, b: 4, q: 2, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    31.5
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Tristan"
   , rarity:   4
@@ -442,7 +442,7 @@ archers = Servant <$>
   , hits:     { a: 3, b: 1, q: 2, ex: 5 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    31.5
-  , align:    Neutral:Neutral
+  , align:    Neutral:Balanced
   }
 , { name:     "Atalante"
   , rarity:   4
@@ -537,7 +537,7 @@ archers = Servant <$>
   , hits:     { a: 2, b: 1, q: 3, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    40.5
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Robin Hood"
   , rarity:   3
@@ -679,7 +679,7 @@ archers = Servant <$>
   , hits:     { a: 2, b: 1, q: 3, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    45.0
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "David"
   , rarity:   3
@@ -728,7 +728,7 @@ archers = Servant <$>
   , hits:     { a: 2, b: 1, q: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
-  , align:    Lawful:Neutral
+  , align:    Lawful:Balanced
   }
 , { name:     "Kid Gilgamesh"
   , rarity:   3
@@ -819,7 +819,7 @@ archers = Servant <$>
   , hits:     { a: 3, b: 4, q: 2, ex: 4 }
   , traits:   [Male, Riding, EnumaElish]
   , death:    45.0
-  , align:    Chaotic:Neutral
+  , align:    Chaotic:Balanced
   }
 , { name:     "Tawara Touta"
   , rarity:   3

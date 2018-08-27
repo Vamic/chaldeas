@@ -10,12 +10,12 @@ import Data.Generic.Rep.Enum
 import Data.Generic.Rep.Show 
 import Data.Tuple
 
-data Alignment = Lawful | Neutral | Chaotic | Good | Evil 
+data Alignment = Lawful | Neutral | Chaotic | Good | Balanced | Evil 
                | Mad | Summer | Bride
 
 showAlignment ∷ Tuple Alignment Alignment -> String
 showAlignment = case _ of
-    Neutral:Neutral -> "True Neutral"
+    Neutral:Balanced -> "True Neutral"
     a:b             -> show a ++ " " ++ show b
 
 data Attribute = Mankind | Earth | Heaven | Star

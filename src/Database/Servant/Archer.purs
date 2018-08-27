@@ -49,6 +49,7 @@ archers = Servant <$>
   , traits:   [Male, Divine, EnumaElish]
   , death:    31.5
   , align:    Chaotic:Good
+  , limited: true
   }
 , { name:     "Altria Pendragon (Archer)"
   , rarity:   5
@@ -99,6 +100,7 @@ archers = Servant <$>
   , traits:   [Female, Dragon, Saberface, EnumaElish]
   , death:    25.8
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Nikola Tesla"
   , rarity:   5
@@ -150,6 +152,7 @@ archers = Servant <$>
   , traits:   [Male, Brynhildr]
   , death:    31.5
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Orion"
   , rarity:   5
@@ -200,6 +203,7 @@ archers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    27.0
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Arjuna"
   , rarity:   5
@@ -250,6 +254,7 @@ archers = Servant <$>
   , traits:   [Male, Divine, EnumaElish]
   , death:    31.5
   , align:    Lawful:Balanced   
+  , limited:  false
   }
 , { name:     "Chloe von Einzbern"
   , rarity:   4
@@ -301,6 +306,7 @@ archers = Servant <$>
   , traits:   [Female, PseudoServant, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Good
+  , limited:  true
   }
 , { name:     "Oda Nobunaga"
   , rarity:   4
@@ -345,6 +351,7 @@ archers = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    31.5
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Tristan"
   , rarity:   4
@@ -396,6 +403,7 @@ archers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    31.5
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "EMIYA"
   , rarity:   4
@@ -443,6 +451,7 @@ archers = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    31.5
   , align:    Neutral:Balanced
+  , limited:  false
   }
 , { name:     "Atalante"
   , rarity:   4
@@ -487,6 +496,7 @@ archers = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    31.5
   , align:    Neutral:Evil
+  , limited:  false
   }
 , { name:     "Anne Bonny & Mary Read (Archer)"
   , rarity:   4
@@ -538,6 +548,7 @@ archers = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    40.5
   , align:    Chaotic:Balanced
+  , limited:  true
   }
 , { name:     "Robin Hood"
   , rarity:   3
@@ -585,6 +596,7 @@ archers = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    31.5
   , align:    Neutral:Good
+  , limited:  false
   }
 , { name:     "Euryale"
   , rarity:   3
@@ -632,6 +644,7 @@ archers = Servant <$>
   , traits:   [Female, Divine, EnumaElish]
   , death:    22.5
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Arash"
   , rarity:   1
@@ -680,6 +693,7 @@ archers = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    45.0
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "David"
   , rarity:   3
@@ -729,6 +743,7 @@ archers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    36.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Kid Gilgamesh"
   , rarity:   3
@@ -774,6 +789,7 @@ archers = Servant <$>
   , traits:   [Male, Divine, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Billy the Kid"
   , rarity:   3
@@ -820,6 +836,7 @@ archers = Servant <$>
   , traits:   [Male, Riding, EnumaElish]
   , death:    45.0
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Tawara Touta"
   , rarity:   3
@@ -866,6 +883,7 @@ archers = Servant <$>
   , traits:   [Male, Brynhildr, EnumaElish]
   , death:    36.0
   , align:    Neutral:Good
+  , limited:  false
   }
 
 ]

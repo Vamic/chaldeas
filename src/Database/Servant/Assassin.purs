@@ -46,11 +46,12 @@ assassins = Servant <$>
               , effect: [ To Enemy DamageThruDef 2200.0 ]
               , over:   [ Grant Self 1 (AttackUpVs Female) 50.0 ]
               }
-  , gen:      { starWeight: 153, starRate: 7.9, npPerHit: 0.34, npPerDefend: 3 }
-  , hits:     { a: 5, b: 5, q: 5, ex: 8 }
+  , gen:      { starWeight: 97, starRate: 25.5, npPerHit: 1.07, npPerDefend: 4 }
+  , hits:     { a: 2, b: 2, q: 5, ex: 4 }
   , traits:   [Female, EnumaElish]
-  , death:    31.5
-  , align:    Chaotic:Good
+  , death:    44.0
+  , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Shuten-Douji"
   , rarity:   5
@@ -79,7 +80,7 @@ assassins = Servant <$>
               , { name:   "Battle Continuation A+"
                 , icon:   IconKneel
                 , cd:     7
-                , effect: [ Grant Self 1 Guts 5.0 ]
+                , effect: [ Grant Self 5 Guts 1.0 ]
                 }
               ]
   , passives: [presenceConcealment C, divinity C]
@@ -103,6 +104,7 @@ assassins = Servant <$>
   , traits:   [Female, Demonic, EnumaElish, Divine, Dragon]
   , death:    31.6
   , align:    Chaotic:Evil
+  , limited:  true
   }
 , { name:     "Mysterious Heroine X"
   , rarity:   5
@@ -147,6 +149,7 @@ assassins = Servant <$>
   , traits:   [Female, Riding, Dragon, Saberface, Arthur]
   , death:    38.5
   , align:    Chaotic:Balanced
+  , limited:  true
   }
 , { name:     "Ryougi Shiki (Assassin)"
   , rarity:   4
@@ -196,6 +199,7 @@ assassins = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Good
+  , limited:  true
   }
 , { name:     "Carmilla"
   , rarity:   4
@@ -245,6 +249,7 @@ assassins = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Evil
+  , limited:  true
   }
 , { name:     "EMIYA (Assassin)"
   , rarity:   4
@@ -294,6 +299,7 @@ assassins = Servant <$>
   , traits:   [Male, Brynhildr, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
+  , limited:  false
   }
 , { name:     "Scathach (Assassin)"
   , rarity:   4
@@ -342,6 +348,7 @@ assassins = Servant <$>
   , traits:   [Female, King, EnumaElish]
   , death:    44.0
   , align:    Neutral:Good
+  , limited:  true
   }
 , { name:     "Stheno"
   , rarity:   4
@@ -390,6 +397,7 @@ assassins = Servant <$>
   , traits:   [Female, Divine, EnumaElish]
   , death:    27.5
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Fuuma Kotarou"
   , rarity:   3
@@ -436,6 +444,7 @@ assassins = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    38.5
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Sasaki Kojiro"
   , rarity:   1
@@ -484,6 +493,7 @@ assassins = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    55.0
   , align:    Neutral:Evil
+  , limited:  false
   }
 , { name:     "Hassan of the Cursed Arm"
   , rarity:   2
@@ -528,6 +538,7 @@ assassins = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
+  , limited:  false
   }
 , { name:     "Henry Jekyll & Hyde"
   , rarity:   3
@@ -583,6 +594,7 @@ assassins = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    55.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Jing Ke"
   , rarity:   3
@@ -633,9 +645,10 @@ assassins = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    55.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Charles-Henri Sanson"
-  , rarity:   3
+  , rarity:   2
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
@@ -679,6 +692,7 @@ assassins = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    49.5
   , align:    Lawful:Evil
+  , limited:  false
   }
 , { name:     "Hassan of the Hundred Personas"
   , rarity:   3
@@ -729,6 +743,7 @@ assassins = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Hassan of the Serenity"
   , rarity:   3
@@ -779,6 +794,7 @@ assassins = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
+  , limited:  false
   }
 , { name:     "Phantom of the Opera"
   , rarity:   2
@@ -825,9 +841,10 @@ assassins = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    49.5
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Mata Hari"
-  , rarity:   3
+  , rarity:   1
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
@@ -873,6 +890,7 @@ assassins = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    55.0
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 
 ]

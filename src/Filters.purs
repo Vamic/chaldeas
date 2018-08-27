@@ -3,7 +3,7 @@ module Filters where
 import Prelude
 import Operators
 
-import Data.Array (elem, notElem)
+import Data.Array (elem, filter, notElem)
 import Data.Enum
 import Data.Profunctor.Strong
 import Data.Generic.Rep    
@@ -15,8 +15,8 @@ import Data.Tuple
 
 import Database
 
-eventBonuses ∷ Array Filter
-eventBonuses = 
+extraFilters ∷ Array Filter
+extraFilters = 
   [ servantBonus FilterEvent "+100% Attack" 
     [ "Illyasviel von Einzbern"
     , "Chloe von Einzbern"
@@ -30,24 +30,23 @@ eventBonuses =
     ]
   , Filter FilterEvent "+50% Kaleid CE" 
     $ \(Servant {traits}) -> Male `notElem` traits
-  ]
-
-otherFilters ∷ Array Filter
-otherFilters = 
-  [ servantBonus FilterOther "New Servants" 
+  , servantBonus FilterOther "New Servant" 
     [ "Illyasviel von Einzbern" 
     , "Chloe von Einzbern"
-    ] 
+    ]
+  , Filter FilterOther "Limited" $ \(Servant {limited}) -> limited
+  , Filter FilterOther "Non-Llimited" $ \(Servant {limited}) -> not limited
   ]
-
 data FilterTab = FilterOther | FilterEvent
-               | FilterPhantasm | FilterClass | FilterDeck | FilterAttribute
+               | FilterPhantasm | FilterCard 
+               | FilterClass | FilterDeck | FilterAttribute
                | FilterAction | FilterBuff | FilterDebuff 
                | FilterAlignment | FilterTrait | FilterPassive
 
 instance _a_ ∷ Show FilterTab where
   show FilterEvent    = "Event Bonus"
-  show FilterPhantasm = "Noble Phantasm"
+  show FilterPhantasm = "NP Type"
+  show FilterCard     = "NP Card"
   show FilterPassive  = "Passive Skill"
   show FilterOther    = "Miscellaneous"
   show a              = drop 6 $ genericShow a
@@ -65,6 +64,11 @@ servantBonus ∷ FilterTab -> String -> Array String -> Filter
 servantBonus tab bonus servants = Filter tab bonus match
     where
       match (Servant {name}) = name `elem` servants
+
+getExtraFilters ∷ FilterTab -> Array Filter
+getExtraFilters tab = filter fromTab extraFilters
+  where
+    fromTab (Filter t _ _) = tab == t
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

@@ -50,6 +50,7 @@ extras = Servant <$>
   , traits:   [Female, EnumaElish, Saberface]
   , death:    21.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Amakusa Shirou"
   , rarity:   5
@@ -97,6 +98,7 @@ extras = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Jeanne d'Arc (Alter)"
   , rarity:   5
@@ -148,6 +150,7 @@ extras = Servant <$>
   , traits:   [Female, EnumaElish, Saberface]
   , death:    5.7
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Edmond Dantes"
   , rarity:   5
@@ -198,6 +201,7 @@ extras = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    7.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Saint Martha (Ruler)"
   , rarity:   4
@@ -246,6 +250,7 @@ extras = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Mash Kyrielight"
   , rarity:   3
@@ -296,6 +301,7 @@ extras = Servant <$>
   , traits:   [Female, Riding, EnumaElish]
   , death:    24.5
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Angra Mainyu"
   , rarity:   0
@@ -339,7 +345,7 @@ extras = Servant <$>
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   1 
-              , effect: [ -- TODO Wait 1 turn, then deal damage equal to damage
+              , effect: [ -- Wait 1 turn, then deal damage equal to damage
                           -- received in the previous turn times 3
                           -- damage cannot be blocked
                           Debuff Self 1 Stun 0.0
@@ -352,6 +358,6 @@ extras = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    9.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
-
 ]

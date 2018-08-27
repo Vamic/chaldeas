@@ -53,6 +53,7 @@ berserkers = Servant <$>
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    52.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Minamoto-no-Raikou"
   , rarity:   5
@@ -99,6 +100,7 @@ berserkers = Servant <$>
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    39.0
   , align:    Chaotic:Good
+  , limited:  true
   }
 , { name:     "Sakata Kintoki"
   , rarity:   5
@@ -143,6 +145,7 @@ berserkers = Servant <$>
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    52.0
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Vlad III"
   , rarity:   5
@@ -185,6 +188,7 @@ berserkers = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    45.5
   , align:    Lawful:Evil
+  , limited:  true
   }
 , { name:     "Nightingale"
   , rarity:   5
@@ -231,6 +235,7 @@ berserkers = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    56.8
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Heracles"
   , rarity:   4
@@ -277,6 +282,7 @@ berserkers = Servant <$>
   , traits:   [Male, Divine, EnumaElish, GreekMyth]
   , death:    39.0
   , align:    Chaotic:Mad
+  , limited:  false
   }
 , { name:     "Frankenstein"
   , rarity:   4
@@ -323,6 +329,7 @@ berserkers = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    58.5
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Ibaraki-Douji"
   , rarity:   4
@@ -373,6 +380,7 @@ berserkers = Servant <$>
   , traits:   [Female, Magical, EnumaElish]
   , death:    52.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Lancelot"
   , rarity:   4
@@ -417,6 +425,7 @@ berserkers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    52.0
   , align:    Lawful:Mad
+  , limited:  false
   }
 , { name:     "Beowulf"
   , rarity:   4
@@ -463,6 +472,7 @@ berserkers = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    58.5
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Tamamo Cat"
   , rarity:   4
@@ -507,6 +517,7 @@ berserkers = Servant <$>
   , traits:   [Female, Beast, EnumaElish]
   , death:    39.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Lu Bu Fengxian"
   , rarity:   3
@@ -556,6 +567,7 @@ berserkers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    50.3
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Spartacus"
   , rarity:   1
@@ -600,6 +612,7 @@ berserkers = Servant <$>
   , traits:   [Male, Roman, EnumaElish]
   , death:    65.0
   , align:    Neutral:Balanced
+  , limited:  false
   }
 , { name:     "Asterios"
   , rarity:   1
@@ -649,6 +662,7 @@ berserkers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    58.5
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Kiyohime"
   , rarity:   3
@@ -697,6 +711,7 @@ berserkers = Servant <$>
   , traits:   [Female, Dragon, EnumaElish]
   , death:    65.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Eric Bloodaxe"
   , rarity:   2
@@ -745,6 +760,7 @@ berserkers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    58.5
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Darius III"
   , rarity:   3
@@ -791,6 +807,7 @@ berserkers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    65.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Caligula"
   , rarity:   2
@@ -840,6 +857,7 @@ berserkers = Servant <$>
   , traits:   [Male, Roman, EnumaElish]
   , death:    56.8
   , align:    Chaotic:Evil
+  , limited:  false
   }
 
 ]

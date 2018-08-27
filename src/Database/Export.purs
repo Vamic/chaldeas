@@ -27,6 +27,7 @@ servants = \_ -> D.servants <#> \(Servant s@{align: alignA:alignB}) ->
     , traits:        show <$> s.traits
     , deathRate:     s.death
     , alignment:     [show alignA, show alignB]
+    , limited:       s.limited
     }
   where
     exportActive {name, icon, cd, effect} =

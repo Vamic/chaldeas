@@ -54,6 +54,7 @@ riders = Servant <$>
   , traits:   [Male, Brynhildr, Divine, Riding, EnumaElish]
   , death:    30.0
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Francis Drake"
   , rarity:   5
@@ -101,6 +102,7 @@ riders = Servant <$>
   , traits:   [Female, Riding]
   , death:    50.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Iskandar"
   , rarity:   5
@@ -145,6 +147,7 @@ riders = Servant <$>
   , traits:   [Male, Brynhildr, Divine, GreekMyth, King, Riding, EnumaElish]
   , death:    40.0
   , align:    Neutral:Good
+  , limited:  true
   }
 , { name:     "Queen Medb"
   , rarity:   5
@@ -192,6 +195,7 @@ riders = Servant <$>
   , traits:   [Female, Riding, EnumaElish]
   , death:    40.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Sakata Kintoki (Rider)"
   , rarity:   4
@@ -238,6 +242,7 @@ riders = Servant <$>
   , traits:   [Male, Brynhildr, Divine, EnumaElish]
   , death:    40.0
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Altria Pendragon (Santa Alter)"
   , rarity:   4
@@ -282,6 +287,7 @@ riders = Servant <$>
   , traits:   [Female, Arthur, Dragon, Riding, Saberface, EnumaElish, King]
   , death:    35.0
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Saint Martha"
   , rarity:   4
@@ -330,6 +336,7 @@ riders = Servant <$>
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    30.0
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Mordred (Rider)"
   , rarity:   4
@@ -376,6 +383,7 @@ riders = Servant <$>
   , traits:   [Female, Dragon, Saberface, EnumaElish]
   , death:    35.0
   , align:    Chaotic:Good
+  , limited:  true
   }
 , { name:     "Marie Antoinette"
   , rarity:   4
@@ -424,6 +432,7 @@ riders = Servant <$>
   , traits:   [Female, Riding, EnumaElish]
   , death:    35.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Anne Bonny & Mary Read"
   , rarity:   4
@@ -468,6 +477,7 @@ riders = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    50.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Astolfo"
   , rarity:   4
@@ -515,6 +525,7 @@ riders = Servant <$>
   , traits:   [Riding, EnumaElish]
   , death:    40.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Georgios"
   , rarity:   2
@@ -563,6 +574,7 @@ riders = Servant <$>
   , traits:   [Male, Riding, Brynhildr, EnumaElish]
   , death:    45.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Ushiwakamaru"
   , rarity:   3
@@ -607,6 +619,7 @@ riders = Servant <$>
   , traits:   [Female, Riding, Brynhildr, EnumaElish]
   , death:    35.0
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Medusa"
   , rarity:   3
@@ -653,6 +666,7 @@ riders = Servant <$>
   , traits:   [Female, Riding, Divine]
   , death:    35.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Edward Teach"
   , rarity:   2
@@ -705,6 +719,7 @@ riders = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    45.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Alexander"
   , rarity:   3
@@ -747,6 +762,7 @@ riders = Servant <$>
   , traits:   [Male, Riding, Divine, EnumaElish]
   , death:    40.0
   , align:    Neutral:Good
+  , limited:  false
   }
 , { name:     "Boudica"
   , rarity:   3
@@ -789,5 +805,6 @@ riders = Servant <$>
   , traits:   [Female, Riding, EnumaElish]
   , death:    45.0
   , align:    Neutral:Good
+  , limited:  false
   }
 ]

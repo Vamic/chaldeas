@@ -49,6 +49,7 @@ sabers = Servant <$>
   , traits:   [Female, Riding, Saberface, EnumaElish]
   , death:    35.0
   , align:    Neutral:Balanced
+  , limited:  true
   }
 , { name:     "Altera"
   , rarity:   5
@@ -95,6 +96,7 @@ sabers = Servant <$>
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    24.5
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Nero Claudius (Bride)"
   , rarity:   5
@@ -144,6 +146,7 @@ sabers = Servant <$>
   , traits:   [Female, Riding, Saberface, Roman, EnumaElish ]
   , death:    35.0
   , align:    Chaotic:Bride
+  , limited:  true
   }
 , { name:     "Mordred"
   , rarity:   5
@@ -191,6 +194,7 @@ sabers = Servant <$>
   , traits:   [Female, Riding, Dragon, Saberface, EnumaElish]
   , death:    24.5
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Ryougi Shiki (Saber)"
   , rarity:   5
@@ -242,6 +246,7 @@ sabers = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    24.5
   , align:    Neutral:Balanced
+  , limited:  false
   }
 , { name:     "Altria Pendragon"
   , rarity:   5
@@ -284,6 +289,7 @@ sabers = Servant <$>
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Lancelot (Saber)"
   , rarity:   4
@@ -332,6 +338,7 @@ sabers = Servant <$>
   , traits:   [Male, Brynhildr, Riding, EnumaElish]
   , death:    28.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Altria Pendragon (Alter)"
   , rarity:   4
@@ -374,6 +381,7 @@ sabers = Servant <$>
   , traits:   [Female, King, Dragon, Saberface, Arthur, EnumaElish]
   , death:    19.2
   , align:    Lawful:Evil
+  , limited:  false
   }
 , { name:     "Rama"
   , rarity:   4
@@ -420,6 +428,7 @@ sabers = Servant <$>
   , traits:   [Male, Riding, Brynhildr, Divine, EnumaElish]
   , death:    24.5
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Nero Claudius"
   , rarity:   4
@@ -467,6 +476,7 @@ sabers = Servant <$>
   , traits:   [Female, Riding, Roman, Saberface, EnumaElish]
   , death:    24.5
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Chevalier d'Eon"
   , rarity:   4
@@ -517,6 +527,7 @@ sabers = Servant <$>
   , traits:   [Riding, EnumaElish]
   , death:    28.0
   , align:    Neutral:Balanced
+  , limited:  false
   }
   , { name:   "Siegfried"
   , rarity:   4
@@ -563,6 +574,7 @@ sabers = Servant <$>
   , traits:   [Male, Riding, Brynhildr, Dragon, EnumaElish]
   , death:    28.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Gawain"
   , rarity:   4
@@ -613,6 +625,7 @@ sabers = Servant <$>
   , traits:   [Male, Brynhildr, Riding, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Altria Pendragon (Lily)"
   , rarity:   4
@@ -655,6 +668,7 @@ sabers = Servant <$>
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Gaius Julius Caesar"
   , rarity:   3
@@ -699,6 +713,7 @@ sabers = Servant <$>
   , traits:   [Male, Riding, Brynhildr, Roman, Divine, EnumaElish]
   , death:    31.5
   , align:    Neutral:Balanced
+  , limited:  false
   }
 , { name:     "Fergus mac Roich"
   , rarity:   3
@@ -749,6 +764,7 @@ sabers = Servant <$>
   , traits:   [Male, Riding, Brynhildr, EnumaElish]
   , death:    35.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Bedivere"
   , rarity:   3
@@ -795,6 +811,7 @@ sabers = Servant <$>
   , traits:   [Male, Brynhildr, Riding, EnumaElish]
   , death:    28.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Gilles de Rais"
   , rarity:   3
@@ -839,6 +856,7 @@ sabers = Servant <$>
   , traits:   [Male, Riding, Brynhildr, EnumaElish]
   , death:    31.5
   , align:    Lawful:Good
+  , limited:  false
   }
 
 ]

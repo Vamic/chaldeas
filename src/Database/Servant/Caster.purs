@@ -58,6 +58,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    34.5
   , align:    Neutral:Good
+  , limited:  false
   }
 , { name:     "Tamamo no Mae"
   , rarity:   5
@@ -106,6 +107,7 @@ casters = Servant <$>
   , traits:   [Female, Divine, EnumaElish]
   , death:    36.0
   , align:    Neutral:Evil
+  , limited:  false
   }
 , { name:     "Xuanzang Sanzang"
   , rarity:   5
@@ -155,6 +157,7 @@ casters = Servant <$>
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Leonardo da Vinci"
   , rarity:   5
@@ -208,6 +211,7 @@ casters = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    34.5
   , align:    Chaotic:Good
+  , limited:  true
   }
 , { name:     "Illyasviel von Einzbern"
   , rarity:   5
@@ -258,6 +262,7 @@ casters = Servant <$>
   , traits:   [Female, PseudoServant, EnumaElish]
   , death:    42.0
   , align:    Neutral:Good
+  , limited:  true
   }
 , { name:     "Medea (Lily)"
   , rarity:   4
@@ -304,6 +309,7 @@ casters = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Elisabeth Bathory (Halloween)"
   , rarity:   4
@@ -352,6 +358,7 @@ casters = Servant <$>
   , traits:   [Female, Dragon, EnumaElish]
   , death:    42.0
   , align:    Chaotic:Evil
+  , limited:  true
   }
 , { name:     "Nursery Rhyme"
   , rarity:   4
@@ -404,6 +411,7 @@ casters = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Neutral:Balanced
+  , limited:  false
   }
 , { name:     "Helena Blavatsky"
   , rarity:   4
@@ -454,6 +462,7 @@ casters = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Nitocris"
   , rarity:   4
@@ -500,6 +509,7 @@ casters = Servant <$>
   , traits:   [Female, Divine, King, EnumaElish]
   , death:    36.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Irisviel (Dress of Heaven)"
   , rarity:   4
@@ -544,6 +554,7 @@ casters = Servant <$>
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Marie Antoinette (Caster)"
   , rarity:   4
@@ -592,6 +603,7 @@ casters = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Lawful:Good
+  , limited:  true
   }
 , { name:     "Thomas Edison"
   , rarity:   4
@@ -641,6 +653,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    60.0
   , align:    Lawful:Balanced
+  , limited:  true
   }
 , { name:     "Hans Christian Andersen"
   , rarity:   2
@@ -689,6 +702,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    30.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Medea"
   , rarity:   3
@@ -735,6 +749,7 @@ casters = Servant <$>
   , traits:   [Female, EnumaElish]
   , death:    34.5
   , align:    Neutral:Evil
+  , limited:  false
   }
 , { name:     "William Shakespeare"
   , rarity:   2
@@ -781,6 +796,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    45.0
   , align:    Neutral:Balanced
+  , limited:  false
   }
 , { name:     "Wolfgang Amadeus Mozart"
   , rarity:   1
@@ -825,6 +841,7 @@ casters = Servant <$>
   , traits:   [Male, Brynhildr]
   , death:    40.5
   , align:    Neutral:Good
+  , limited:  false
   }
 , { name:     "Charles Babbage"
   , rarity:   3
@@ -873,6 +890,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Cu Chulainn (Caster)"
   , rarity:   3
@@ -923,6 +941,7 @@ casters = Servant <$>
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    42.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Mephistopheles"
   , rarity:   3
@@ -969,6 +988,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Paracelsus von Hohenheim"
   , rarity:   3
@@ -1011,6 +1031,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    36.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Geronimo"
   , rarity:   3
@@ -1057,6 +1078,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    40.5
   , align:    Neutral:Good
+  , limited:  false
   }
 , { name:     "Gilles de Rais (Caster)"
   , rarity:   3
@@ -1101,6 +1123,7 @@ casters = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    48.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 
 ]

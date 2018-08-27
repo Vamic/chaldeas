@@ -33,6 +33,7 @@ newtype Servant = Servant { name     ∷ String
                           , traits   ∷ Array Trait
                           , death    ∷ Number
                           , align    ∷ Tuple Alignment Alignment
+                          , limited  ∷ Boolean
                           }
 
 data Card = Arts | Buster | Quick
@@ -154,7 +155,8 @@ instance _h_ ∷ MatchServant Attribute where
     has a (Servant {attr}) = a == attr
 instance _i_ ∷ MatchServant Deck where
     has a (Servant {deck}) = a == deck
-
+instance _j_ ∷ MatchServant Card where
+    has a (Servant {phantasm:{card}}) = a == card
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------

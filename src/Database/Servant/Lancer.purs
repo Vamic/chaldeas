@@ -54,6 +54,7 @@ lancers = Servant <$>
   , traits:   [Female, EnumaElish, King]
   , death:    32.0
   , align:    Neutral:Good
+  , limited:  false
   }
 , { name:     "Karna"
   , rarity:   5
@@ -103,6 +104,7 @@ lancers = Servant <$>
   , traits:   [Male, Riding, Brynhildr, Divine, EnumaElish]
   , death:    28.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Tamamo no Mae (Lancer)"
   , rarity:   5
@@ -158,6 +160,7 @@ lancers = Servant <$>
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    40.0
   , align:    Neutral:Summer
+  , limited:  true
   }
 , { name:     "Brynhild"
   , rarity:   5
@@ -208,6 +211,7 @@ lancers = Servant <$>
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    32.0
   , align:    Neutral:Good
+  , limited:  false
   }
 , { name:     "Altria Pendragon (Lancer)"
   , rarity:   5
@@ -254,6 +258,7 @@ lancers = Servant <$>
   , traits:   [Female, Arthur, Dragon, King, Riding, Saberface, EnumaElish]
   , death:    24.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Altria Pendragon (Lancer Alter)"
   , rarity:   4
@@ -301,6 +306,7 @@ lancers = Servant <$>
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish]
   , death:    23.0
   , align:    Lawful:Good
+  , limited:  false
   }
 , { name:     "Li Shuwen"
   , rarity:   4
@@ -351,6 +357,7 @@ lancers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    40.0
   , align:    Neutral:Evil
+  , limited:  false
   }
 , { name:     "Kiyohime (Lancer)"
   , rarity:   4
@@ -397,6 +404,7 @@ lancers = Servant <$>
   , traits:   [Female, Dragon, EnumaElish]
   , death:    40.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Elisabeth Bathory"
   , rarity:   4
@@ -439,6 +447,7 @@ lancers = Servant <$>
   , traits:   [Female, Dragon, EnumaElish]
   , death:    24.0
   , align:    Chaotic:Evil
+  , limited:  false
   }
 , { name:     "Fionn mac Cumhaill"
   , rarity:   4
@@ -486,6 +495,7 @@ lancers = Servant <$>
   , traits:   [Male, Divine, EnumaElish]
   , death:    32.0
   , align:    Neutral:Balanced
+  , limited:  false
   }
 , { name:     "Cu Chulainn"
   , rarity:   3
@@ -534,6 +544,7 @@ lancers = Servant <$>
   , traits:   [Male, Divine, Brynhildr, EnumaElish]
   , death:    32.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Cu Chulainn (Prototype)"
   , rarity:   3
@@ -582,6 +593,7 @@ lancers = Servant <$>
   , traits:   [Male, Divine, EnumaElish]
   , death:    28.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Leonidas"
   , rarity:   2
@@ -628,6 +640,7 @@ lancers = Servant <$>
   , traits:   [Male, EnumaElish]
   , death:    32.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Romulus"
   , rarity:   3
@@ -675,6 +688,7 @@ lancers = Servant <$>
   , traits:   [Male, Roman]
   , death:    32.0
   , align:    Chaotic:Balanced
+  , limited:  false
   }
 , { name:     "Hektor"
   , rarity:   3
@@ -721,6 +735,7 @@ lancers = Servant <$>
   , traits:   [Male, Riding, EnumaElish]
   , death:    28.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
 , { name:     "Musashibou Benkei"
   , rarity:   2
@@ -765,6 +780,7 @@ lancers = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    36.0
   , align:    Chaotic:Good
+  , limited:  false
   }
 , { name:     "Diarmuid ua Duibhne"
   , rarity:   3
@@ -811,6 +827,6 @@ lancers = Servant <$>
   , traits:   [Male, EnumaElish, Brynhildr]
   , death:    36.0
   , align:    Lawful:Balanced
+  , limited:  false
   }
-
 ]

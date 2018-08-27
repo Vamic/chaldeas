@@ -118,11 +118,12 @@ component initialHash = Halogen.component
           FilterAlignment -> matchFilter tab <$> getAll ∷ Array Alignment
           FilterAttribute -> matchFilter tab <$> getAll ∷ Array Attribute
           FilterBuff      -> matchFilter tab <$> getAll ∷ Array BuffEffect
+          FilterCard      -> matchFilter tab <$> getAll ∷ Array Card
           FilterClass     -> matchFilter tab <$> getAll ∷ Array Class
           FilterDebuff    -> matchFilter tab <$> getAll ∷ Array DebuffEffect
           FilterDeck      -> matchFilter tab <$> getAll ∷ Array Deck
-          FilterEvent     -> eventBonuses
-          FilterOther     -> otherFilters
+          FilterEvent     -> getExtraFilters FilterEvent
+          FilterOther     -> getExtraFilters FilterOther
           FilterPhantasm  -> matchFilter tab <$> getAll ∷ Array PhantasmType
           FilterPassive   -> uncurry (Filter tab) ∘ (identity&&&hasPassive) 
                         <$> getPassives

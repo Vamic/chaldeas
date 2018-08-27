@@ -39,4 +39,5 @@
   , traits:   []
   , death:    ?_
   , align:    ?_
+  , limited:  ?_
   }

@@ -21,7 +21,7 @@ outputNumber (-1.0) = "X"
 outputNumber x = toString x
 
 data Rank = Unknown | EX   
-          | APlusPlus | APlus | A 
+          | APlusPlus | APlus | A | AMinus
           | BPlusPlus | BPlus | B | BMinus 
           | CPlusPlus | CPlus | C | CMinus
                       | DPlus | D 
@@ -33,6 +33,7 @@ instance _a_ ∷ Show Rank where
     APlusPlus -> "A++"
     APlus     -> "A+"
     A         -> "A"
+    AMinus    -> "A-"
     BPlusPlus -> "B++"
     BPlus     -> "B+"
     B         -> "B"

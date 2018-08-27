@@ -35,13 +35,13 @@ extras = Servant <$>
   , passives: [magicResistance EX]
   , phantasm: { name:   "Luminosite Eternelle"
               , desc:   "God is Here With Me"
-              , rank:   A
+              , rank:   AMinus
               , card:   Arts
               , kind:   "Barrier"
               , hits:   0
               , effect: [ Grant Party 3 DefenseUp 25.0 
                         , Grant Party 1 Invincibility 0.0
-                        , To Party RemoveDebuffs 0.0
+                        , Debuff Self 2 Stun 0.0
                         ]
               , over:   [ Grant Party 2 HealPerTurn 1000.0 ]
               }

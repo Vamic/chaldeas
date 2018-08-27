@@ -59,7 +59,7 @@ riders = Servant <$>
 , { name:     "Francis Drake"
   , rarity:   5
   , class:    Rider
-  , attr:     Heaven
+  , attr:     Star
   , deck:     Deck Quick Arts Arts Buster Buster
   , stats:    { base:  { atk: 1750,  hp: 1881 }
               , max:   { atk: 11326, hp: 12830 }

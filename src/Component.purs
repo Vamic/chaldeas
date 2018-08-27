@@ -7,8 +7,10 @@ import Halogen                 as Halogen
 import Halogen.HTML            as H
 import Halogen.HTML.Events     as E
 import Halogen.HTML.Properties as P
+import Data.Map                as M
 
 import Data.Array hiding (take)
+import Data.Map (Map)
 import Data.Maybe
 import Data.String hiding (null, singleton)
 import Data.Tuple (Tuple(..))
@@ -22,6 +24,7 @@ import Web.UIEvent.MouseEvent
 import Database
 import Filters
 import Sorting
+import Preferences
 
 type Input = Unit
 type Message = Void
@@ -30,18 +33,21 @@ data Query a = Focus (Maybe Servant) a
              | UnFilter  Filter a
              | MatchAny  Boolean a
              | SetSort   SortBy  a
+             | SetPref   Preference Boolean a
 
 type State = { filters  ∷ Array Filter
              , matchAny ∷ Boolean
              , focus    ∷ Maybe Servant
              , sortBy   ∷ SortBy
+             , prefs    ∷ Map Preference Boolean
              }
 
 urlName ∷ Servant -> String
 urlName (Servant {name}) = replaceAll (Pattern " ") (Replacement "") name
 
-component ∷ ∀ m. MonadEffect m => String -> Component HTML Query Unit Message m
-component initialHash = Halogen.component
+component ∷ ∀ m. MonadEffect m => String -> Map Preference Boolean
+            -> Component HTML Query Unit Message m
+component initialHash initialPrefs = Halogen.component
     { initialState
     , render
     , eval
@@ -54,15 +60,21 @@ component initialHash = Halogen.component
                        , matchAny: true
                        , focus:    find ((_ == initialHash) ∘ urlName) servants
                        , sortBy:   Rarity
+                       , prefs:    initialPrefs
                        }
  
   render ∷ State -> ComponentHTML Query
-  render {filters, focus, matchAny, sortBy} 
-      = modal focus
+  render {filters, focus, matchAny, prefs, sortBy} 
+      = modal artorify focus
         [ H.aside [_i "active"] ∘ append
-          [_h 1 "Sort by"
+          [ _h 1 "Settings"
+          , H.form_ $ M.toUnfoldable prefs <#> \(Tuple k v)
+             -> H.p [_click ∘ SetPref k $ not v]
+                $ _checkbox (show k) v
+          , _h 1 "Sort by"
           , H.form_ $ enumArray <#> \sort 
-             -> H.p [_click $ SetSort sort] $ _radio (show sort) (sortBy == sort)
+             -> H.p [_click $ SetSort sort] 
+                $ _radio (show sort) (sortBy == sort)
           
           , _h 1 "Active filters"
           , H.form_ ∘ singleton ∘ H.table_ ∘ singleton $ H.tr_ 
@@ -75,7 +87,7 @@ component initialHash = Halogen.component
                 $ "ⓧ " ++ show tab ++ ": " ++ show filt 
         , H.section [_i "servants"] 
           ∘ (if sortBy == Rarity then identity else reverse)
-          $ portrait <$> doSort sortBy (maybeFilter servants)
+          $ portrait artorify <$> doSort sortBy (maybeFilter servants)
         , H.aside [_i "filters"] ∘ cons
           (_h 1 "Filters") ∘ concat 
           $ enumArray <#> \tab
@@ -85,6 +97,7 @@ component initialHash = Halogen.component
               ]
         ]
     where 
+      artorify    = fromMaybe false $ M.lookup Artorify prefs
       maybeFilter = if null filters then identity else filter match
       match serv  = (if matchAny then any else all) 
                     (\(Filter _ _ f) -> f serv) filters
@@ -101,8 +114,12 @@ component initialHash = Halogen.component
       Focus     focus    next -> (_ >> next) $ do
           liftEffect $ hash focus
           modify_ _{ focus = focus } 
+      SetPref   k v      next -> (_ >> next) $ do
+          liftEffect $ setPreference k v
+          modPrefs $ M.insert k v
     where
       modFilters f = modify_ \state@{filters} -> state{ filters = f filters }
+      modPrefs   f = modify_ \state@{prefs}   -> state{ prefs   = f prefs }
       hash Nothing = setHash ""
       hash (Just s) = setHash $ urlName s
 
@@ -117,26 +134,29 @@ deck (Deck a b c d e) = card ∘ show <$> [a, b, c, d, e]
   where 
     card x = H.span [_c x] ∘ _txt $ take 1 x --_img $ "img/Card/" ++ show x ++ ".png"
 
-portrait ∷ ∀ a. Tuple String Servant -> HTML a (Query Unit)
-portrait (Tuple lab serv@(Servant s))
+portrait ∷ ∀ a. Boolean -> Tuple String Servant -> HTML a (Query Unit)
+portrait artorify (Tuple lab serv@(Servant s))
     = H.div [_c $ "servant stars" ++ show s.rarity, _click ∘ Focus $ Just serv]
       [ _img $ "img/Servant/" ++ s.name ++ ".png"
       , H.div_ [ _img $ "img/Class/" ++ show s.class ++ ".png"]
       , H.aside_ $ deck s.deck
       , H.header_ 
         ∘ (lab /= "") ? append [_span lab, H.br_]
-        $ [ _span $ noBreakName s.name ]
+        $ [ _span ∘ noBreakName ∘ artorify ? doArtorify $ s.name ]
       , H.footer_ ∘ _txt ∘ joinWith "  " $ replicate s.rarity "★" 
       ]
+  where doArtorify = replaceAll (Pattern "Altria") (Replacement "Artoria")
 
-modal ∷ ∀ a. Maybe Servant -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
-modal Nothing = H.div [_i "layout"] ∘ append 
+modal ∷ ∀ a. Boolean -> Maybe Servant -> Array (HTML a (Query Unit)) 
+        -> HTML a (Query Unit)
+modal _ Nothing = H.div [_i "layout"] ∘ append 
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal (Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm})) 
+modal artorify
+(Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm})) 
   = H.div [_i "layout", _c "fade"] ∘ append 
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait $ Tuple "" serv
+      [ portrait artorify $ Tuple "" serv
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ print base.atk,  _td $ print base.hp ]
         , H.tr_ [ _th "Max",   _td $ print max.atk,   _td $ print max.hp ]
@@ -249,6 +269,12 @@ _tr a b = H.tr_ [ _th a, _td b ]
 _radio ∷ ∀ a b. String -> Boolean -> Array (HTML a b)
 _radio label checked
     = [ H.input [ P.type_ P.InputRadio, P.checked checked ]
+      , H.label_ $ _txt label
+      ]
+
+_checkbox ∷ ∀ a b. String -> Boolean -> Array (HTML a b)
+_checkbox label checked
+    = [ H.input [P.type_ P.InputCheckbox, P.checked checked ]
       , H.label_ $ _txt label
       ]
 

@@ -10,7 +10,11 @@ import Halogen.VDom.Driver
 import Routing.Hash
 
 import Component
+import Preferences
 
 main ∷ Effect Unit
-main = getHash >>= \hash -> HA.runHalogenAff 
-     $ HA.awaitBody >>= runUI (component hash) unit
+main = do
+    hash <- getHash
+    prefs <- getPreferences
+    HA.runHalogenAff $ 
+    HA.awaitBody >>= runUI (component hash prefs) unit

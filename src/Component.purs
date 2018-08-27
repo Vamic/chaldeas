@@ -87,7 +87,8 @@ component initialHash initialPrefs = Halogen.component
                 $ "ⓧ " ++ show tab ++ ": " ++ show filt 
         , H.section [_i "servants"] 
           ∘ (if sortBy == Rarity then identity else reverse)
-          $ portrait artorify <$> doSort sortBy (maybeFilter servants)
+          $ portrait artorify <$> doSort sortBy 
+            (not (null filters) ? filter (match excludeSelf) $ servants)
         , H.aside [_i "filters"] ∘ cons
           (_h 1 "Filters") ∘ concat 
           $ enumArray <#> \tab
@@ -98,7 +99,7 @@ component initialHash initialPrefs = Halogen.component
         ]
     where 
       artorify    = fromMaybe false $ M.lookup Artorify prefs
-      maybeFilter = if null filters then identity else filter match
+      excludeSelf = fromMaybe false $ M.lookup ExcludeSelf prefs
       match serv  = (if matchAny then any else all) 
                     (\(Filter _ _ f) -> f serv) filters
       meta filt 
@@ -178,7 +179,8 @@ modal artorify
         --, H.tr_ [_th "Deck", H.td_ $ show s.deck]
         , _tr "Deck"        $ show s.deck
         , _tr "NP Type"     ∘ show ∘ fromMaybe Support 
-                            $ find (_ `has` serv) [SingleTarget, MultiTarget]
+                            $ find (\t -> has t false serv) 
+                              [SingleTarget, MultiTarget]
         --, _tr "NP Damage"   ∘ print' $ npDamage serv
         , _tr "Alignment"   $ showAlignment s.align
         , _tr "Attribute"   $ show s.attr

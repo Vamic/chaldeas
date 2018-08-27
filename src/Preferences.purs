@@ -18,8 +18,10 @@ import Web.HTML (window)
 import Web.HTML.Window (localStorage)
 
 data Preference = Artorify
+                | ExcludeSelf
 
 instance _a_ ∷ Show Preference where
+  show ExcludeSelf = "Exclude self-applied effects"
   show a = genericShow a
 
 setPreference ∷ Preference -> Boolean -> Effect Unit

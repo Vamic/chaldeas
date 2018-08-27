@@ -39,7 +39,7 @@ servants = addUniversal ∘ addHeavenOrEarth
 getAll ∷ ∀ a. MatchServant a => Array a
 getAll = (_ $ unit) ∘ memoize $ \_ -> sortWith show $ filter exists enumArray
   where
-    exists eff = any (has eff) servants 
+    exists eff = any (has eff false) servants 
 
 getPassives ∷ Array String
 getPassives = sort ∘ nub ∘ concat $ getPassive <$> servants

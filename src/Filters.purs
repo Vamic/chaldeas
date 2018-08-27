@@ -29,13 +29,13 @@ extraFilters =
     , "Medea (Lily)"
     ]
   , Filter FilterEvent "+50% Kaleid CE" 
-    $ \(Servant {traits}) -> Male `notElem` traits
+    $ \_ (Servant {traits}) -> Male `notElem` traits
   , servantBonus FilterOther "New" 
     [ "Illyasviel von Einzbern" 
     , "Chloe von Einzbern"
     ]
-  , Filter FilterOther "Limited" $ \(Servant {limited}) -> limited
-  , Filter FilterOther "Non-Limited" $ \(Servant {limited}) -> not limited
+  , Filter FilterOther "Limited" $ \_ (Servant {limited}) -> limited
+  , Filter FilterOther "Non-Limited" $ \_ (Servant {limited}) -> not limited
   ]
 data FilterTab = FilterEvent | FilterOther
                | FilterPhantasm | FilterCard 
@@ -51,7 +51,7 @@ instance _a_ ∷ Show FilterTab where
   show FilterOther    = "Availability"
   show a              = drop 6 $ genericShow a
 
-data Filter = Filter FilterTab String (Servant -> Boolean)
+data Filter = Filter FilterTab String (Boolean -> Servant -> Boolean)
 instance _b_ ∷ Eq Filter where
   eq (Filter tabA a _) (Filter tabB b _) = tabA == tabB && a == b
 instance _c_ ∷ Show Filter where
@@ -63,7 +63,7 @@ matchFilter tab = uncurry (Filter tab) ∘ (show &&& has)
 servantBonus ∷ FilterTab -> String -> Array String -> Filter
 servantBonus tab bonus servants = Filter tab bonus match
     where
-      match (Servant {name}) = name `elem` servants
+      match _ (Servant {name}) = name `elem` servants
 
 getExtraFilters ∷ FilterTab -> Array Filter
 getExtraFilters tab = filter fromTab extraFilters
@@ -81,8 +81,8 @@ getFilters f@FilterDebuff    = matchFilter f <$> getAll ∷ Array DebuffEffect
 getFilters f@FilterDeck      = matchFilter f <$> getAll ∷ Array Deck
 getFilters f@FilterPhantasm  = matchFilter f <$> getAll ∷ Array PhantasmType
 getFilters f@FilterTrait     = matchFilter f <$> getAll ∷ Array Trait
-getFilters f@FilterPassive   = uncurry (Filter f) ∘ (identity&&&hasPassive) 
-                           <$> getPassives
+getFilters f@FilterPassive   = uncurry (Filter f) 
+                             ∘ (identity &&& const ∘ hasPassive) <$> getPassives
 getFilters f@FilterEvent     = getExtraFilters f
 getFilters f@FilterOther     = getExtraFilters f
 

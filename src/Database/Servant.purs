@@ -109,54 +109,55 @@ instance _01_ ∷ Show PhantasmType where
     MultiTarget  -> "Multi-Target"
     Support      -> "Support"
 
+
 class (BoundedEnum a, Show a) <= MatchServant a where
-    has ∷ a -> Servant -> Boolean
+    has ∷ a -> Boolean -> Servant -> Boolean
 instance _a_ ∷ MatchServant BuffEffect where 
-    has a = any match ∘ getEffects where 
-        match (Grant t _ b _) = a == b && allied t
+    has a exclude = any match ∘ getEffects where 
+        match (Grant t _ b _) = a == b && allied t && (not exclude || t /= Self)
         match _ = false
 instance _b_ ∷ MatchServant DebuffEffect where 
-    has a = any match ∘ getEffects where 
+    has a _ = any match ∘ getEffects where 
         match (Debuff t _ b _) = a == b && not (allied t)
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where 
-    has DemeritBuffs  = const false
-    has DemeritCharge = const false
-    has DemeritDamage = const false
-    has DemeritGauge  = const false
-    has DemeritHealth = const false
-    has DemeritKill   = const false
-    has a = any match ∘ getEffects where 
-        match (To _ b _) = a == b
+    has DemeritBuffs  _ = const false
+    has DemeritCharge _ = const false
+    has DemeritDamage _ = const false
+    has DemeritGauge  _ = const false
+    has DemeritHealth _ = const false
+    has DemeritKill   _ = const false
+    has a exclude       = any match ∘ getEffects where 
+        match (To t b _) = a == b && (not exclude || t /= Self)
         match _ = false
 instance _d_ ∷ MatchServant Trait where 
-    has a (Servant {traits}) = a `elem` traits
+    has a _ (Servant {traits}) = a `elem` traits
 instance _e_ ∷ MatchServant Alignment where
-    has a (Servant {align:(b:c)}) = a == b || a == c
+    has a _ (Servant {align:(b:c)}) = a == b || a == c
 instance _f_ ∷ MatchServant PhantasmType where
-    has SingleTarget s = any match $ phantasmEffects s
+    has SingleTarget _ s = any match $ phantasmEffects s
       where 
         match (To Enemy Damage _) = true
         match (To Enemy DamageThruDef _) = true
         match (To (EnemyType _) Damage _) = true
         match (To (EnemyType _) DamageThruDef _) = true
         match _ = false
-    has MultiTarget s = any match $ phantasmEffects s
+    has MultiTarget _ s = any match $ phantasmEffects s
       where 
         match (To Enemies Damage _) = true
         match (To Enemies DamageThruDef _) = true
         match (To (EnemiesType _) Damage _) = true
         match (To (EnemiesType _) DamageThruDef _) = true
         match _ = false
-    has Support s = not has SingleTarget s && not has MultiTarget s
+    has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
 instance _g_ ∷ MatchServant Class where
-    has a (Servant {class: cla}) = a == cla
+    has a _ (Servant {class: cla}) = a == cla
 instance _h_ ∷ MatchServant Attribute where
-    has a (Servant {attr}) = a == attr
+    has a _ (Servant {attr}) = a == attr
 instance _i_ ∷ MatchServant Deck where
-    has a (Servant {deck}) = a == deck
+    has a _ (Servant {deck}) = a == deck
 instance _j_ ∷ MatchServant Card where
-    has a (Servant {phantasm:{card}}) = a == card
+    has a _ (Servant {phantasm:{card}}) = a == card
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------

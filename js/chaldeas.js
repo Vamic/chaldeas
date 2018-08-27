@@ -2091,6 +2091,17 @@ var PS = {};
     };
   };
 
+  var replicatePolyfill = function (count) {
+    return function (value) {
+      var result = [];
+      var n = 0;
+      for (var i = 0; i < count; i++) {
+        result[n++] = value;
+      }
+      return result;
+    };
+  };
+
   // In browsers that have Array.prototype.fill we use it, as it's faster.
   exports.replicate = typeof Array.prototype.fill === "function" ? replicate : replicatePolyfill;
 
@@ -11480,6 +11491,44 @@ var PS = {};
   }, function () {
       return _3_;
   }, Data_Generic_Rep_Enum.genericCardinality(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._26_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._5_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._19_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._5_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._19_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))))))))))))))))))))))))))))))))))))))))))), Data_Generic_Rep_Enum.genericFromEnum(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._26_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._5_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._19_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._5_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._19_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))))))))))))))))))))))))))))))))))))))))))), Data_Generic_Rep_Enum.genericToEnum(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._26_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._5_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._19_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._5_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumArgument(Database_Trait._19_)))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))))))))))))))))))))))))))))))))))))))))))));
+  var _00_ = new Data_Eq.Eq(function (x) {
+      return function (y) {
+          if (x instanceof Someone && y instanceof Someone) {
+              return true;
+          };
+          if (x instanceof Self && y instanceof Self) {
+              return true;
+          };
+          if (x instanceof Ally && y instanceof Ally) {
+              return true;
+          };
+          if (x instanceof Allies && y instanceof Allies) {
+              return true;
+          };
+          if (x instanceof Party && y instanceof Party) {
+              return true;
+          };
+          if (x instanceof Enemy && y instanceof Enemy) {
+              return true;
+          };
+          if (x instanceof Enemies && y instanceof Enemies) {
+              return true;
+          };
+          if (x instanceof Others && y instanceof Others) {
+              return true;
+          };
+          if (x instanceof AlliesType && y instanceof AlliesType) {
+              return Data_Eq.eq(Database_Trait._1_)(x.value0)(y.value0);
+          };
+          if (x instanceof EnemyType && y instanceof EnemyType) {
+              return Data_Eq.eq(Database_Trait._1_)(x.value0)(y.value0);
+          };
+          if (x instanceof EnemiesType && y instanceof EnemiesType) {
+              return Data_Eq.eq(Database_Trait._1_)(x.value0)(y.value0);
+          };
+          return false;
+      };
+  });
   exports["outputNumber"] = outputNumber;
   exports["Unknown"] = Unknown;
   exports["EX"] = EX;
@@ -11614,6 +11663,7 @@ var PS = {};
   exports["When"] = When;
   exports["uncap"] = uncap;
   exports["_a_"] = _a_;
+  exports["_00_"] = _00_;
   exports["_b_"] = _b_;
   exports["_c_"] = _c_;
   exports["_d_"] = _d_;
@@ -11734,8 +11784,7 @@ var PS = {};
   exports["unlimitedManaSupply"] = unlimitedManaSupply;
 })(PS["Database.Passive"] = PS["Database.Passive"] || {});
 (function(exports) {
-  // Generated by purs version 0.12.0
-  "use strict";
+    "use strict";
   var Control_Bind = PS["Control.Bind"];
   var Control_Semigroupoid = PS["Control.Semigroupoid"];
   var Data_Bounded = PS["Data.Bounded"];
@@ -11867,10 +11916,10 @@ var PS = {};
           };
           throw new Error("Failed pattern match at Database.Servant line 100, column 17 - line 105, column 1: " + [ v.phantasm.card.constructor.name ]);
       })();
-      return cardBonus * Data_Int.toNumber(v.stats.max.atk) * Database_Trait.classModifier(v["class"]) * Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(function ($255) {
+      return cardBonus * Data_Int.toNumber(v.stats.max.atk) * Database_Trait.classModifier(v["class"]) * Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(function ($272) {
           return (function (v1) {
               return v1 / 100.0;
-          })(dmg($255));
+          })(dmg($272));
       })(Data_Semigroup.append(Data_Semigroup.semigroupArray)(v.phantasm.effect)(v.phantasm.over)));
   };
   var hasPassive = function (p) {
@@ -11914,7 +11963,9 @@ var PS = {};
       return Database_Trait._30_;
   }, function (a) {
       return function (v) {
-          return Data_Eq.eq(Database_Trait._27_)(a)(v.attr);
+          return function (v1) {
+              return Data_Eq.eq(Database_Trait._27_)(a)(v1.attr);
+          };
       };
   });
   var _g_ = new MatchServant(function () {
@@ -11923,7 +11974,9 @@ var PS = {};
       return Database_Trait._16_;
   }, function (a) {
       return function (v) {
-          return Data_Eq.eq(Database_Trait._13_)(a)(v["class"]);
+          return function (v1) {
+              return Data_Eq.eq(Database_Trait._13_)(a)(v1["class"]);
+          };
       };
   });
   var _e_ = new MatchServant(function () {
@@ -11932,7 +11985,9 @@ var PS = {};
       return Database_Trait._23_;
   }, function (a) {
       return function (v) {
-          return Data_Eq.eq(Database_Trait._20_)(a)(v.align.value0) || Data_Eq.eq(Database_Trait._20_)(a)(v.align.value1);
+          return function (v1) {
+              return Data_Eq.eq(Database_Trait._20_)(a)(v1.align.value0) || Data_Eq.eq(Database_Trait._20_)(a)(v1.align.value1);
+          };
       };
   });
   var _d_ = new MatchServant(function () {
@@ -11941,7 +11996,9 @@ var PS = {};
       return Database_Trait._b_;
   }, function (a) {
       return function (v) {
-          return Data_Foldable.elem(Data_Foldable.foldableArray)(Database_Trait._1_)(a)(v.traits);
+          return function (v1) {
+              return Data_Foldable.elem(Data_Foldable.foldableArray)(Database_Trait._1_)(a)(v1.traits);
+          };
       };
   });
   var _c_ = new MatchServant(function () {
@@ -11949,32 +12006,34 @@ var PS = {};
   }, function () {
       return Database_Skill._d_;
   }, function (v) {
-      if (v instanceof Database_Skill.DemeritBuffs) {
-          return Data_Function["const"](false);
-      };
-      if (v instanceof Database_Skill.DemeritCharge) {
-          return Data_Function["const"](false);
-      };
-      if (v instanceof Database_Skill.DemeritDamage) {
-          return Data_Function["const"](false);
-      };
-      if (v instanceof Database_Skill.DemeritGauge) {
-          return Data_Function["const"](false);
-      };
-      if (v instanceof Database_Skill.DemeritHealth) {
-          return Data_Function["const"](false);
-      };
-      if (v instanceof Database_Skill.DemeritKill) {
-          return Data_Function["const"](false);
-      };
-      var match = function (v1) {
-          if (v1 instanceof Database_Skill.To) {
-              return Data_Eq.eq(Database_Skill._15_)(v)(v1.value1);
+      return function (v1) {
+          if (v instanceof Database_Skill.DemeritBuffs) {
+              return Data_Function["const"](false);
           };
-          return false;
-      };
-      return function ($256) {
-          return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($256));
+          if (v instanceof Database_Skill.DemeritCharge) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritDamage) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritGauge) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritHealth) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritKill) {
+              return Data_Function["const"](false);
+          };
+          var match = function (v2) {
+              if (v2 instanceof Database_Skill.To) {
+                  return Data_Eq.eq(Database_Skill._15_)(v)(v2.value1) && (!v1 || Data_Eq.notEq(Database_Skill._00_)(v2.value0)(Database_Skill.Self.value));
+              };
+              return false;
+          };
+          return function ($273) {
+              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($273));
+          };
       };
   });
   var _b_ = new MatchServant(function () {
@@ -11982,14 +12041,16 @@ var PS = {};
   }, function () {
       return Database_Skill._c_;
   }, function (a) {
-      var match = function (v) {
-          if (v instanceof Database_Skill.Debuff) {
-              return Data_Eq.eq(Database_Skill._9_)(a)(v.value2) && !Database_Skill.allied(v.value0);
+      return function (v) {
+          var match = function (v1) {
+              if (v1 instanceof Database_Skill.Debuff) {
+                  return Data_Eq.eq(Database_Skill._9_)(a)(v1.value2) && !Database_Skill.allied(v1.value0);
+              };
+              return false;
           };
-          return false;
-      };
-      return function ($257) {
-          return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($257));
+          return function ($274) {
+              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($274));
+          };
       };
   });
   var _a_ = new MatchServant(function () {
@@ -11997,14 +12058,16 @@ var PS = {};
   }, function () {
       return Database_Skill._b_;
   }, function (a) {
-      var match = function (v) {
-          if (v instanceof Database_Skill.Grant) {
-              return Data_Eq.eq(Database_Skill._1_)(a)(v.value2) && Database_Skill.allied(v.value0);
+      return function (exclude) {
+          var match = function (v) {
+              if (v instanceof Database_Skill.Grant) {
+                  return Data_Eq.eq(Database_Skill._1_)(a)(v.value2) && (Database_Skill.allied(v.value0) && (!exclude || Data_Eq.notEq(Database_Skill._00_)(v.value0)(Database_Skill.Self.value)));
+              };
+              return false;
           };
-          return false;
-      };
-      return function ($258) {
-          return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($258));
+          return function ($275) {
+              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($275));
+          };
       };
   });
   var _9_ = new Data_Generic_Rep.Generic(function (x) {
@@ -12017,7 +12080,7 @@ var PS = {};
       if (x instanceof Support) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value));
       };
-      throw new Error("Failed pattern match at Database.Servant line 166, column 8 - line 166, column 45: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 167, column 8 - line 167, column 45: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return SingleTarget.value;
@@ -12028,7 +12091,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && x.value0 instanceof Data_Generic_Rep.Inr) {
           return Support.value;
       };
-      throw new Error("Failed pattern match at Database.Servant line 166, column 8 - line 166, column 45: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 167, column 8 - line 167, column 45: " + [ x.constructor.name ]);
   });
   var _7_ = new Data_Eq.Eq(function (x) {
       return function (y) {
@@ -12069,7 +12132,7 @@ var PS = {};
           if (x instanceof Support && y instanceof Support) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Servant line 165, column 8 - line 165, column 39: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Servant line 166, column 8 - line 166, column 39: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _36_ = new Data_Generic_Rep.Generic(function (x) {
@@ -12087,7 +12150,7 @@ var PS = {};
       if (x instanceof Quick) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value));
       };
-      throw new Error("Failed pattern match at Database.Servant line 180, column 8 - line 180, column 38: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 181, column 8 - line 181, column 38: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return Arts.value;
@@ -12098,7 +12161,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && x.value0 instanceof Data_Generic_Rep.Inr) {
           return Quick.value;
       };
-      throw new Error("Failed pattern match at Database.Servant line 180, column 8 - line 180, column 38: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 181, column 8 - line 181, column 38: " + [ x.constructor.name ]);
   });
   var _33_ = new Data_Show.Show(Data_Generic_Rep_Show.genericShow(_29_)(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
       return "Arts";
@@ -12108,8 +12171,8 @@ var PS = {};
       return "Quick";
   }))))));
   var _40_ = new Data_Show.Show(function (v) {
-      return Data_String_CodeUnits.fromCharArray(Data_Functor.map(Data_Functor.functorArray)(function ($259) {
-          return Data_Maybe.fromMaybe("?")(Data_String_CodeUnits.charAt(0)(Data_Show.show(_33_)($259)));
+      return Data_String_CodeUnits.fromCharArray(Data_Functor.map(Data_Functor.functorArray)(function ($276) {
+          return Data_Maybe.fromMaybe("?")(Data_String_CodeUnits.charAt(0)(Data_Show.show(_33_)($276)));
       })([ v.value0, v.value1, v.value2, v.value3, v.value4 ]));
   });
   var _27_ = new Data_Eq.Eq(function (x) {
@@ -12151,7 +12214,7 @@ var PS = {};
           if (x instanceof Quick && y instanceof Quick) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Servant line 179, column 8 - line 179, column 32: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Servant line 180, column 8 - line 180, column 32: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _30_ = new Data_Enum.Enum(function () {
@@ -12222,7 +12285,9 @@ var PS = {};
       return _40_;
   }, function (a) {
       return function (v) {
-          return Data_Eq.eq(_34_)(a)(v.deck);
+          return function (v1) {
+              return Data_Eq.eq(_34_)(a)(v1.deck);
+          };
       };
   });
   var _j_ = new MatchServant(function () {
@@ -12231,7 +12296,9 @@ var PS = {};
       return _33_;
   }, function (a) {
       return function (v) {
-          return Data_Eq.eq(_27_)(a)(v.phantasm.card);
+          return function (v1) {
+              return Data_Eq.eq(_27_)(a)(v1.phantasm.card);
+          };
       };
   });
   var _11_ = new Data_Bounded.Bounded(function () {
@@ -12255,54 +12322,56 @@ var PS = {};
       if (v instanceof Support) {
           return "Support";
       };
-      throw new Error("Failed pattern match at Database.Servant line 107, column 10 - line 112, column 1: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 107, column 10 - line 113, column 1: " + [ v.constructor.name ]);
   });
   var _f_ = new MatchServant(function () {
       return _12_;
   }, function () {
       return _01_;
   }, function (v) {
-      return function (s) {
-          if (v instanceof SingleTarget) {
-              var match = function (v1) {
-                  if (v1 instanceof Database_Skill.To && (v1.value0 instanceof Database_Skill.Enemy && v1.value1 instanceof Database_Skill.Damage)) {
-                      return true;
+      return function (v1) {
+          return function (s) {
+              if (v instanceof SingleTarget) {
+                  var match = function (v2) {
+                      if (v2 instanceof Database_Skill.To && (v2.value0 instanceof Database_Skill.Enemy && v2.value1 instanceof Database_Skill.Damage)) {
+                          return true;
+                      };
+                      if (v2 instanceof Database_Skill.To && (v2.value0 instanceof Database_Skill.Enemy && v2.value1 instanceof Database_Skill.DamageThruDef)) {
+                          return true;
+                      };
+                      if (v2 instanceof Database_Skill.To && (v2.value0 instanceof Database_Skill.EnemyType && v2.value1 instanceof Database_Skill.Damage)) {
+                          return true;
+                      };
+                      if (v2 instanceof Database_Skill.To && (v2.value0 instanceof Database_Skill.EnemyType && v2.value1 instanceof Database_Skill.DamageThruDef)) {
+                          return true;
+                      };
+                      return false;
                   };
-                  if (v1 instanceof Database_Skill.To && (v1.value0 instanceof Database_Skill.Enemy && v1.value1 instanceof Database_Skill.DamageThruDef)) {
-                      return true;
-                  };
-                  if (v1 instanceof Database_Skill.To && (v1.value0 instanceof Database_Skill.EnemyType && v1.value1 instanceof Database_Skill.Damage)) {
-                      return true;
-                  };
-                  if (v1 instanceof Database_Skill.To && (v1.value0 instanceof Database_Skill.EnemyType && v1.value1 instanceof Database_Skill.DamageThruDef)) {
-                      return true;
-                  };
-                  return false;
+                  return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(phantasmEffects(s));
               };
-              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(phantasmEffects(s));
-          };
-          if (v instanceof MultiTarget) {
-              var match = function (v1) {
-                  if (v1 instanceof Database_Skill.To && (v1.value0 instanceof Database_Skill.Enemies && v1.value1 instanceof Database_Skill.Damage)) {
-                      return true;
+              if (v instanceof MultiTarget) {
+                  var match = function (v2) {
+                      if (v2 instanceof Database_Skill.To && (v2.value0 instanceof Database_Skill.Enemies && v2.value1 instanceof Database_Skill.Damage)) {
+                          return true;
+                      };
+                      if (v2 instanceof Database_Skill.To && (v2.value0 instanceof Database_Skill.Enemies && v2.value1 instanceof Database_Skill.DamageThruDef)) {
+                          return true;
+                      };
+                      if (v2 instanceof Database_Skill.To && (v2.value0 instanceof Database_Skill.EnemiesType && v2.value1 instanceof Database_Skill.Damage)) {
+                          return true;
+                      };
+                      if (v2 instanceof Database_Skill.To && (v2.value0 instanceof Database_Skill.EnemiesType && v2.value1 instanceof Database_Skill.DamageThruDef)) {
+                          return true;
+                      };
+                      return false;
                   };
-                  if (v1 instanceof Database_Skill.To && (v1.value0 instanceof Database_Skill.Enemies && v1.value1 instanceof Database_Skill.DamageThruDef)) {
-                      return true;
-                  };
-                  if (v1 instanceof Database_Skill.To && (v1.value0 instanceof Database_Skill.EnemiesType && v1.value1 instanceof Database_Skill.Damage)) {
-                      return true;
-                  };
-                  if (v1 instanceof Database_Skill.To && (v1.value0 instanceof Database_Skill.EnemiesType && v1.value1 instanceof Database_Skill.DamageThruDef)) {
-                      return true;
-                  };
-                  return false;
+                  return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(phantasmEffects(s));
               };
-              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(phantasmEffects(s));
+              if (v instanceof Support) {
+                  return !has(_f_)(SingleTarget.value)(v1)(s) && !has(_f_)(MultiTarget.value)(v1)(s);
+              };
+              throw new Error("Failed pattern match at Database.Servant line 137, column 1 - line 137, column 41: " + [ v.constructor.name, v1.constructor.name, s.constructor.name ]);
           };
-          if (v instanceof Support) {
-              return Data_HeytingAlgebra.not(Data_HeytingAlgebra.heytingAlgebraFunction(Data_HeytingAlgebra.heytingAlgebraFunction(Data_HeytingAlgebra.heytingAlgebraBoolean)))(has(_f_))(SingleTarget.value)(s) && Data_HeytingAlgebra.not(Data_HeytingAlgebra.heytingAlgebraFunction(Data_HeytingAlgebra.heytingAlgebraFunction(Data_HeytingAlgebra.heytingAlgebraBoolean)))(has(_f_))(MultiTarget.value)(s);
-          };
-          throw new Error("Failed pattern match at Database.Servant line 136, column 1 - line 136, column 41: " + [ v.constructor.name, s.constructor.name ]);
       };
   });
   exports["has"] = has;
@@ -18401,7 +18470,8 @@ var PS = {};
   exports["extras"] = extras;
 })(PS["Database.Servant.Extra"] = PS["Database.Servant.Extra"] || {});
 (function(exports) {
-    "use strict";
+  // Generated by purs version 0.12.0
+  "use strict";
   var Data_Function = PS["Data.Function"];
   var Data_Functor = PS["Data.Functor"];
   var Data_Tuple = PS["Data.Tuple"];
@@ -19624,7 +19694,8 @@ var PS = {};
   exports["lancers"] = lancers;
 })(PS["Database.Servant.Lancer"] = PS["Database.Servant.Lancer"] || {});
 (function(exports) {
-    "use strict";
+  // Generated by purs version 0.12.0
+  "use strict";
   var Data_Function = PS["Data.Function"];
   var Data_Functor = PS["Data.Functor"];
   var Data_Tuple = PS["Data.Tuple"];
@@ -22142,8 +22213,7 @@ var PS = {};
   exports["sabers"] = sabers;
 })(PS["Database.Servant.Saber"] = PS["Database.Servant.Saber"] || {});
 (function(exports) {
-  // Generated by purs version 0.12.0
-  "use strict";
+    "use strict";
   var Control_Semigroupoid = PS["Control.Semigroupoid"];
   var Data_Array = PS["Data.Array"];
   var Data_Boolean = PS["Data.Boolean"];
@@ -22231,7 +22301,7 @@ var PS = {};
   })();
   var getAll = function (dictMatchServant) {
       var exists = function (eff) {
-          return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(Database_Servant.has(dictMatchServant)(eff))(servants);
+          return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(Database_Servant.has(dictMatchServant)(eff)(false))(servants);
       };
       return (function (v) {
           return v(Data_Unit.unit);
@@ -22486,7 +22556,9 @@ var PS = {};
       return function (bonus) {
           return function (servants) {
               var match = function (v) {
-                  return Data_Foldable.elem(Data_Foldable.foldableArray)(Data_Eq.eqString)(v.name)(servants);
+                  return function (v1) {
+                      return Data_Foldable.elem(Data_Foldable.foldableArray)(Data_Eq.eqString)(v1.name)(servants);
+                  };
               };
               return new Filter(tab, bonus, match);
           };
@@ -22494,17 +22566,23 @@ var PS = {};
   };
   var matchFilter = function (dictMatchServant) {
       return function (tab) {
-          return function ($138) {
-              return Data_Tuple.uncurry(Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Data_Show.show(dictMatchServant.Show1()))(Database_Servant.has(dictMatchServant))($138));
+          return function ($143) {
+              return Data_Tuple.uncurry(Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Data_Show.show(dictMatchServant.Show1()))(Database_Servant.has(dictMatchServant))($143));
           };
       };
   };
   var extraFilters = [ servantBonus(FilterEvent.value)("+100% Attack")([ "Illyasviel von Einzbern", "Chloe von Einzbern", "Mash Kyrielight" ]), servantBonus(FilterEvent.value)("+50% Attack")([ "Queen Medb", "Nursery Rhyme", "Helena Blavatsky", "Medea (Lily)" ]), Filter.create(FilterEvent.value)("+50% Kaleid CE")(function (v) {
-      return Data_Foldable.notElem(Data_Foldable.foldableArray)(Database_Trait._1_)(Database_Trait.Male.value)(v.traits);
+      return function (v1) {
+          return Data_Foldable.notElem(Data_Foldable.foldableArray)(Database_Trait._1_)(Database_Trait.Male.value)(v1.traits);
+      };
   }), servantBonus(FilterOther.value)("New")([ "Illyasviel von Einzbern", "Chloe von Einzbern" ]), Filter.create(FilterOther.value)("Limited")(function (v) {
-      return v.limited;
+      return function (v1) {
+          return v1.limited;
+      };
   }), Filter.create(FilterOther.value)("Non-Limited")(function (v) {
-      return !v.limited;
+      return function (v1) {
+          return !v1.limited;
+      };
   }) ];
   var _c_ = new Data_Show.Show(function (v) {
       return v.value1;
@@ -22714,8 +22792,10 @@ var PS = {};
           return Data_Functor.map(Data_Functor.functorArray)(matchFilter(Database_Servant._d_)(v))(Database.getAll(Database_Servant._d_));
       };
       if (v instanceof FilterPassive) {
-          return Data_Functor.map(Data_Functor.functorArray)(function ($139) {
-              return Data_Tuple.uncurry(Filter.create(v))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Control_Category.identity(Control_Category.categoryFn))(Database_Servant.hasPassive)($139));
+          return Data_Functor.map(Data_Functor.functorArray)(function ($144) {
+              return Data_Tuple.uncurry(Filter.create(v))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Control_Category.identity(Control_Category.categoryFn))(function ($145) {
+                  return Data_Function["const"](Database_Servant.hasPassive($145));
+              })($144));
           })(Database.getPassives);
       };
       if (v instanceof FilterEvent) {
@@ -28095,38 +28175,80 @@ var PS = {};
       Artorify.value = new Artorify();
       return Artorify;
   })();
+  var ExcludeSelf = (function () {
+      function ExcludeSelf() {
+
+      };
+      ExcludeSelf.value = new ExcludeSelf();
+      return ExcludeSelf;
+  })();
   var _1_ = new Data_Eq.Eq(function (x) {
       return function (y) {
-          return true;
+          if (x instanceof Artorify && y instanceof Artorify) {
+              return true;
+          };
+          if (x instanceof ExcludeSelf && y instanceof ExcludeSelf) {
+              return true;
+          };
+          return false;
       };
   });
   var _2_ = new Data_Ord.Ord(function () {
       return _1_;
   }, function (x) {
       return function (y) {
-          return Data_Ordering.EQ.value;
+          if (x instanceof Artorify && y instanceof Artorify) {
+              return Data_Ordering.EQ.value;
+          };
+          if (x instanceof Artorify) {
+              return Data_Ordering.LT.value;
+          };
+          if (y instanceof Artorify) {
+              return Data_Ordering.GT.value;
+          };
+          if (x instanceof ExcludeSelf && y instanceof ExcludeSelf) {
+              return Data_Ordering.EQ.value;
+          };
+          throw new Error("Failed pattern match at Preferences line 53, column 8 - line 53, column 37: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _0_ = new Data_Generic_Rep.Generic(function (x) {
-      return Data_Generic_Rep.NoArguments.value;
+      if (x instanceof Artorify) {
+          return new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value);
+      };
+      if (x instanceof ExcludeSelf) {
+          return new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value);
+      };
+      throw new Error("Failed pattern match at Preferences line 51, column 8 - line 51, column 43: " + [ x.constructor.name ]);
   }, function (x) {
-      return Artorify.value;
+      if (x instanceof Data_Generic_Rep.Inl) {
+          return Artorify.value;
+      };
+      if (x instanceof Data_Generic_Rep.Inr) {
+          return ExcludeSelf.value;
+      };
+      throw new Error("Failed pattern match at Preferences line 51, column 8 - line 51, column 43: " + [ x.constructor.name ]);
   });
   var _3_ = new Data_Enum.Enum(function () {
       return _2_;
-  }, Data_Generic_Rep_Enum.genericPred(_0_)(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments)), Data_Generic_Rep_Enum.genericSucc(_0_)(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments)));
+  }, Data_Generic_Rep_Enum.genericPred(_0_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))), Data_Generic_Rep_Enum.genericSucc(_0_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))));
   var _4_ = new Data_Bounded.Bounded(function () {
       return _2_;
-  }, Data_Generic_Rep_Bounded.genericBottom(_0_)(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)), Data_Generic_Rep_Bounded.genericTop(_0_)(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments)));
+  }, Data_Generic_Rep_Bounded.genericBottom(_0_)(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))), Data_Generic_Rep_Bounded.genericTop(_0_)(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))));
   var _5_ = new Data_Enum.BoundedEnum(function () {
       return _4_;
   }, function () {
       return _3_;
-  }, Data_Generic_Rep_Enum.genericCardinality(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)), Data_Generic_Rep_Enum.genericFromEnum(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)), Data_Generic_Rep_Enum.genericToEnum(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)));
-  var _a_ = new Data_Show.Show(function (a) {
-      return Data_Generic_Rep_Show.genericShow(_0_)(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+  }, Data_Generic_Rep_Enum.genericCardinality(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))), Data_Generic_Rep_Enum.genericFromEnum(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))), Data_Generic_Rep_Enum.genericToEnum(_0_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))));
+  var _a_ = new Data_Show.Show(function (v) {
+      if (v instanceof ExcludeSelf) {
+          return "Exclude self-applied effects";
+      };
+      return Data_Generic_Rep_Show.genericShow(_0_)(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "Artorify";
-      })))(a);
+      })))(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+          return "ExcludeSelf";
+      }))))(v);
   });
   var getPreference = function (pref) {
       var fromFlag = function (v) {
@@ -28136,8 +28258,8 @@ var PS = {};
           return false;
       };
       return function __do() {
-          var $16 = Control_Bind.bind(Effect.bindEffect)(Control_Bind.bind(Effect.bindEffect)(Web_HTML.window)(Web_HTML_Window.localStorage))(Web_Storage_Storage.getItem(Data_Show.show(_a_)(pref)))();
-          return fromFlag($16);
+          var $20 = Control_Bind.bind(Effect.bindEffect)(Control_Bind.bind(Effect.bindEffect)(Web_HTML.window)(Web_HTML_Window.localStorage))(Web_Storage_Storage.getItem(Data_Show.show(_a_)(pref)))();
+          return fromFlag($20);
       };
   };
   var todo = function (k) {
@@ -28153,6 +28275,7 @@ var PS = {};
       };
   };
   exports["Artorify"] = Artorify;
+  exports["ExcludeSelf"] = ExcludeSelf;
   exports["setPreference"] = setPreference;
   exports["getPreference"] = getPreference;
   exports["todo"] = todo;
@@ -28766,7 +28889,8 @@ var PS = {};
   exports["_13_"] = _13_;
 })(PS["Sorting"] = PS["Sorting"] || {});
 (function(exports) {
-    "use strict";
+  // Generated by purs version 0.12.0
+  "use strict";
   var Control_Bind = PS["Control.Bind"];
   var Control_Category = PS["Control.Category"];
   var Control_Monad_State_Class = PS["Control.Monad.State.Class"];
@@ -28896,18 +29020,18 @@ var PS = {};
           };
           return Data_String_Common.joinWith("(")(v);
       };
-      return function ($123) {
-          return unBreak(Data_String_Common.split("(")($123));
+      return function ($121) {
+          return unBreak(Data_String_Common.split("(")($121));
       };
   })();
-  var _txt = function ($124) {
-      return Data_Function.flip(Data_Array.cons)([  ])(Halogen_HTML_Core.text($124));
+  var _txt = function ($122) {
+      return Data_Function.flip(Data_Array.cons)([  ])(Halogen_HTML_Core.text($122));
   };
-  var _th = function ($125) {
-      return Halogen_HTML_Elements.th_(_txt($125));
+  var _th = function ($123) {
+      return Halogen_HTML_Elements.th_(_txt($123));
   };
-  var _td = function ($126) {
-      return Halogen_HTML_Elements.td_(_txt($126));
+  var _td = function ($124) {
+      return Halogen_HTML_Elements.td_(_txt($124));
   };
   var _tr = function (a) {
       return function (b) {
@@ -28916,92 +29040,86 @@ var PS = {};
   };
   var _table = function (headings) {
       return function (tbody) {
-          return Halogen_HTML_Elements.table_([ Halogen_HTML_Elements.thead_([ Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($127) {
-              return Halogen_HTML_Elements.th_(_txt($127));
+          return Halogen_HTML_Elements.table_([ Halogen_HTML_Elements.thead_([ Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($125) {
+              return Halogen_HTML_Elements.th_(_txt($125));
           })(headings)) ]), Halogen_HTML_Elements.tbody_(tbody) ]);
       };
   };                                                 
   var _src = Halogen_HTML_Properties.src;
-  var _span = function ($128) {
-      return Halogen_HTML_Elements.span_(_txt($128));
+  var _span = function ($126) {
+      return Halogen_HTML_Elements.span_(_txt($126));
   };
   var _radio = function (label) {
       return function (checked) {
           return [ Halogen_HTML_Elements.input([ Halogen_HTML_Properties.type_(Halogen_HTML_Core.inputTypeIsProp)(DOM_HTML_Indexed_InputType.InputRadio.value), Halogen_HTML_Properties.checked(checked) ]), Halogen_HTML_Elements.label_(_txt(label)) ];
       };
   };
-  var _p = function ($129) {
-      return Halogen_HTML_Elements.p_(_txt($129));
+  var _p = function ($127) {
+      return Halogen_HTML_Elements.p_(_txt($127));
   };
   var _img = function (src) {
       return Halogen_HTML_Elements.img([ _src(src) ]);
   };
-
-  //--------------
-  // ABBREVIATIONS
-  //--------------
   var _i = Halogen_HTML_Properties.id_;
   var _h = function (v) {
       if (v === 1) {
-          return function ($130) {
-              return Halogen_HTML_Elements.h1_(_txt($130));
+          return function ($128) {
+              return Halogen_HTML_Elements.h1_(_txt($128));
           };
       };
       if (v === 2) {
-          return function ($131) {
-              return Halogen_HTML_Elements.h2_(_txt($131));
+          return function ($129) {
+              return Halogen_HTML_Elements.h2_(_txt($129));
           };
       };
       if (v === 3) {
-          return function ($132) {
-              return Halogen_HTML_Elements.h3_(_txt($132));
+          return function ($130) {
+              return Halogen_HTML_Elements.h3_(_txt($130));
           };
       };
       if (v === 4) {
-          return function ($133) {
-              return Halogen_HTML_Elements.h4_(_txt($133));
+          return function ($131) {
+              return Halogen_HTML_Elements.h4_(_txt($131));
           };
       };
       if (v === 5) {
-          return function ($134) {
-              return Halogen_HTML_Elements.h5_(_txt($134));
+          return function ($132) {
+              return Halogen_HTML_Elements.h5_(_txt($132));
           };
       };
-      return function ($135) {
-          return Halogen_HTML_Elements.h6_(_txt($135));
+      return function ($133) {
+          return Halogen_HTML_Elements.h6_(_txt($133));
       };
   };
   var activeEl = function (v) {
-      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name), _span("CD: " + Data_Show.show(Data_Show.showInt)(v.cd)) ])(Data_Functor.map(Data_Functor.functorArray)(function ($136) {
-          return _p(Data_Show.show(Database_Skill._e_)($136));
+      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name), _span("CD: " + Data_Show.show(Data_Show.showInt)(v.cd)) ])(Data_Functor.map(Data_Functor.functorArray)(function ($134) {
+          return _p(Data_Show.show(Database_Skill._e_)($134));
       })(v.effect)));
   };
   var passiveEl = function (v) {
-      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name + (" " + Data_Show.show(Database_Skill._a_)(v.rank))) ])(Data_Functor.map(Data_Functor.functorArray)(function ($137) {
-          return _p(Data_Show.show(Database_Skill._e_)($137));
+      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name + (" " + Data_Show.show(Database_Skill._a_)(v.rank))) ])(Data_Functor.map(Data_Functor.functorArray)(function ($135) {
+          return _p(Data_Show.show(Database_Skill._e_)($135));
       })(v.effect)));
   };
-  var _click = function ($138) {
-      return Halogen_HTML_Events.onClick(Halogen_HTML_Events.input_($138));
+  var _click = function ($136) {
+      return Halogen_HTML_Events.onClick(Halogen_HTML_Events.input_($136));
   };
   var _checkbox = function (label) {
       return function (checked) {
           return [ Halogen_HTML_Elements.input([ Halogen_HTML_Properties.type_(Halogen_HTML_Core.inputTypeIsProp)(DOM_HTML_Indexed_InputType.InputCheckbox.value), Halogen_HTML_Properties.checked(checked) ]), Halogen_HTML_Elements.label_(_txt(label)) ];
       };
   };
-  var _c = function ($139) {
-      return Halogen_HTML_Properties.class_(Halogen_HTML_Core.ClassName($139));
+  var _c = function ($137) {
+      return Halogen_HTML_Properties.class_(Halogen_HTML_Core.ClassName($137));
   };
   var deck = function (v) {
       var card = function (x) {
           return Halogen_HTML_Elements.span([ _c(x) ])(_txt(Data_String_CodePoints.take(1)(x)));
       };
-      return Data_Functor.map(Data_Functor.functorArray)(function ($140) {
-          return card(Data_Show.show(Database_Servant._33_)($140));
+      return Data_Functor.map(Data_Functor.functorArray)(function ($138) {
+          return card(Data_Show.show(Database_Servant._33_)($138));
       })([ v.value0, v.value1, v.value2, v.value3, v.value4 ]);
   };
-
-  //_img $ "img/Card/" ++ show x ++ ".png"
   var portrait = function (artorify) {
       return function (v) {
           var doArtorify = Data_String_Common.replaceAll("Altria")("Artoria");
@@ -29014,8 +29132,8 @@ var PS = {};
   var modal = function (v) {
       return function (v1) {
           if (v1 instanceof Data_Maybe.Nothing) {
-              return function ($141) {
-                  return Halogen_HTML_Elements.div([ _i("layout") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_([  ]) ])($141));
+              return function ($139) {
+                  return Halogen_HTML_Elements.div([ _i("layout") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_([  ]) ])($139));
               };
           };
           if (v1 instanceof Data_Maybe.Just) {
@@ -29024,17 +29142,17 @@ var PS = {};
                       return Halogen_HTML_Elements.tr_([ _th(label), Halogen_HTML_Elements.td([ _c("rating") ])(_txt(Data_String_Common.joinWith(" ")(Data_Array.replicate(n)("\u2b1b\ufe0e")))) ]);
                   };
               };
-              return function ($142) {
-                  return Halogen_HTML_Elements.div([ _i("layout"), _c("fade") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ portrait(v)(new Data_Tuple.Tuple("", v1.value0)), _table([ "", "ATK", "HP" ])([ Halogen_HTML_Elements.tr_([ _th("Base"), _td(Sorting.print(v1.value0.stats.base.atk)), _td(Sorting.print(v1.value0.stats.base.hp)) ]), Halogen_HTML_Elements.tr_([ _th("Max"), _td(Sorting.print(v1.value0.stats.max.atk)), _td(Sorting.print(v1.value0.stats.max.hp)) ]), Halogen_HTML_Elements.tr_([ _th("Grail"), _td(Sorting.print(v1.value0.stats.grail.atk)), _td(Sorting.print(v1.value0.stats.grail.hp)) ]) ]), _table([ "", "Q", "A", "B", "EX", "NP" ])([ Halogen_HTML_Elements.tr_([ _th("Hits"), _td(Data_Show.show(Data_Show.showInt)(v1.value0.hits.q)), _td(Data_Show.show(Data_Show.showInt)(v1.value0.hits.a)), _td(Data_Show.show(Data_Show.showInt)(v1.value0.hits.b)), _td(Data_Show.show(Data_Show.showInt)(v1.value0.hits.ex)), _td(Data_Show.show(Data_Show.showInt)(v1.value0.phantasm.hits)) ]) ]), Halogen_HTML_Elements.table_([ _tr("Class")(Data_Show.show(Database_Trait._16_)(v1["value0"]["class"])), _tr("Deck")(Data_Show.show(Database_Servant._40_)(v1.value0.deck)), _tr("NP Type")(Data_Show.show(Database_Servant._01_)(Data_Maybe.fromMaybe(Database_Servant.Support.value)(Data_Foldable.find(Data_Foldable.foldableArray)(function (v2) {
-                      return Database_Servant.has(Database_Servant._f_)(v2)(v1.value0);
-                  })([ Database_Servant.SingleTarget.value, Database_Servant.MultiTarget.value ])))), _tr("Alignment")(Database_Trait.showAlignment(v1.value0.align)), _tr("Attribute")(Data_Show.show(Database_Trait._30_)(v1.value0.attr)), _tr("Star Weight")(Data_Show.show(Data_Show.showInt)(v1.value0.gen.starWeight)), _tr("Star Rate")(Data_Show.show(Data_Show.showNumber)(v1.value0.gen.starRate) + "%"), _tr("NP/Hit")(Data_Show.show(Data_Show.showNumber)(v1.value0.gen.npPerHit) + "%"), _tr("NP/Defend")(Data_Show.show(Data_Show.showInt)(v1.value0.gen.npPerDefend) + "%"), _tr("Death Rate")(Data_Show.show(Data_Show.showNumber)(v1.value0.death) + "%") ]), Halogen_HTML_Elements.h2([ _c("npheading") ])(_txt("Noble Phantasm")), Halogen_HTML_Elements.table([ _c("phantasm") ])([ _tr("Name")(v1.value0.phantasm.name), _tr("Rank")(Data_Show.show(Database_Skill._a_)(v1.value0.phantasm.rank)), _tr("Card")(Data_Show.show(Database_Servant._33_)(v1.value0.phantasm.card)), _tr("Class")(v1.value0.phantasm.kind), Halogen_HTML_Elements.tr_([ _th("Effects"), Halogen_HTML_Elements.td_(Data_Functor.map(Data_Functor.functorArray)(function ($143) {
-                      return _p(Data_Show.show(Database_Skill._e_)($143));
-                  })(v1.value0.phantasm.effect)) ]), Halogen_HTML_Elements.tr_([ _th("Overcharge"), Halogen_HTML_Elements.td_(Data_Functor.map(Data_Functor.functorArray)(function ($144) {
-                      return _p(Data_Show.show(Database_Skill._e_)($144));
-                  })(v1.value0.phantasm.over)) ]) ]), _h(2)("Active Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(activeEl)(v1.value0.actives))(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(2)("Passive Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(passiveEl)(v1.value0.passives))([ _h(2)("Traits"), Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(traitEl)(v1.value0.traits)) ]))))) ])($142));
+              return function ($140) {
+                  return Halogen_HTML_Elements.div([ _i("layout"), _c("fade") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ portrait(v)(new Data_Tuple.Tuple("", v1.value0)), _table([ "", "ATK", "HP" ])([ Halogen_HTML_Elements.tr_([ _th("Base"), _td(Sorting.print(v1.value0.stats.base.atk)), _td(Sorting.print(v1.value0.stats.base.hp)) ]), Halogen_HTML_Elements.tr_([ _th("Max"), _td(Sorting.print(v1.value0.stats.max.atk)), _td(Sorting.print(v1.value0.stats.max.hp)) ]), Halogen_HTML_Elements.tr_([ _th("Grail"), _td(Sorting.print(v1.value0.stats.grail.atk)), _td(Sorting.print(v1.value0.stats.grail.hp)) ]) ]), _table([ "", "Q", "A", "B", "EX", "NP" ])([ Halogen_HTML_Elements.tr_([ _th("Hits"), _td(Data_Show.show(Data_Show.showInt)(v1.value0.hits.q)), _td(Data_Show.show(Data_Show.showInt)(v1.value0.hits.a)), _td(Data_Show.show(Data_Show.showInt)(v1.value0.hits.b)), _td(Data_Show.show(Data_Show.showInt)(v1.value0.hits.ex)), _td(Data_Show.show(Data_Show.showInt)(v1.value0.phantasm.hits)) ]) ]), Halogen_HTML_Elements.table_([ _tr("Class")(Data_Show.show(Database_Trait._16_)(v1["value0"]["class"])), _tr("Deck")(Data_Show.show(Database_Servant._40_)(v1.value0.deck)), _tr("NP Type")(Data_Show.show(Database_Servant._01_)(Data_Maybe.fromMaybe(Database_Servant.Support.value)(Data_Foldable.find(Data_Foldable.foldableArray)(function (t) {
+                      return Database_Servant.has(Database_Servant._f_)(t)(false)(v1.value0);
+                  })([ Database_Servant.SingleTarget.value, Database_Servant.MultiTarget.value ])))), _tr("Alignment")(Database_Trait.showAlignment(v1.value0.align)), _tr("Attribute")(Data_Show.show(Database_Trait._30_)(v1.value0.attr)), _tr("Star Weight")(Data_Show.show(Data_Show.showInt)(v1.value0.gen.starWeight)), _tr("Star Rate")(Data_Show.show(Data_Show.showNumber)(v1.value0.gen.starRate) + "%"), _tr("NP/Hit")(Data_Show.show(Data_Show.showNumber)(v1.value0.gen.npPerHit) + "%"), _tr("NP/Defend")(Data_Show.show(Data_Show.showInt)(v1.value0.gen.npPerDefend) + "%"), _tr("Death Rate")(Data_Show.show(Data_Show.showNumber)(v1.value0.death) + "%") ]), Halogen_HTML_Elements.h2([ _c("npheading") ])(_txt("Noble Phantasm")), Halogen_HTML_Elements.table([ _c("phantasm") ])([ _tr("Name")(v1.value0.phantasm.name), _tr("Rank")(Data_Show.show(Database_Skill._a_)(v1.value0.phantasm.rank)), _tr("Card")(Data_Show.show(Database_Servant._33_)(v1.value0.phantasm.card)), _tr("Class")(v1.value0.phantasm.kind), Halogen_HTML_Elements.tr_([ _th("Effects"), Halogen_HTML_Elements.td_(Data_Functor.map(Data_Functor.functorArray)(function ($141) {
+                      return _p(Data_Show.show(Database_Skill._e_)($141));
+                  })(v1.value0.phantasm.effect)) ]), Halogen_HTML_Elements.tr_([ _th("Overcharge"), Halogen_HTML_Elements.td_(Data_Functor.map(Data_Functor.functorArray)(function ($142) {
+                      return _p(Data_Show.show(Database_Skill._e_)($142));
+                  })(v1.value0.phantasm.over)) ]) ]), _h(2)("Active Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(activeEl)(v1.value0.actives))(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(2)("Passive Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(passiveEl)(v1.value0.passives))([ _h(2)("Traits"), Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(traitEl)(v1.value0.traits)) ]))))) ])($140));
               };
           };
-          throw new Error("Failed pattern match at Component line 150, column 1 - line 151, column 31: " + [ v.constructor.name, v1.constructor.name ]);
+          throw new Error("Failed pattern match at Component line 151, column 1 - line 152, column 31: " + [ v.constructor.name, v1.constructor.name ]);
       };
   };
   var component = function (dictMonadEffect) {
@@ -29048,25 +29166,19 @@ var PS = {};
                       if (Data_Boolean.otherwise) {
                           return [ _c("unselected"), _click(AddFilter.create(filt)) ];
                       };
-                      throw new Error("Failed pattern match at Component line 104, column 7 - line 106, column 75: " + [ filt.constructor.name ]);
+                      throw new Error("Failed pattern match at Component line 105, column 7 - line 107, column 75: " + [ filt.constructor.name ]);
                   };
                   var match = function (serv) {
                       return (function () {
                           if (v.matchAny) {
-                              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean);
+                              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraFunction(Data_HeytingAlgebra.heytingAlgebraBoolean));
                           };
-                          return Data_Foldable.all(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean);
+                          return Data_Foldable.all(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraFunction(Data_HeytingAlgebra.heytingAlgebraBoolean));
                       })()(function (v1) {
                           return v1.value2(serv);
                       })(v.filters);
                   };
-                  var maybeFilter = (function () {
-                      var $74 = Data_Array["null"](v.filters);
-                      if ($74) {
-                          return Control_Category.identity(Control_Category.categoryFn);
-                      };
-                      return Data_Array.filter(match);
-                  })();
+                  var excludeSelf = Data_Maybe.fromMaybe(false)(Data_Map_Internal.lookup(Preferences._2_)(Preferences.ExcludeSelf.value)(v.prefs));
                   var artorify = Data_Maybe.fromMaybe(false)(Data_Map_Internal.lookup(Preferences._2_)(Preferences.Artorify.value)(v.prefs));
                   return modal(artorify)(v.focus)([ Halogen_HTML_Elements.aside([ _i("active") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(1)("Settings"), Halogen_HTML_Elements.form_(Data_Functor.mapFlipped(Data_Functor.functorArray)(Data_Map_Internal.toUnfoldable(Data_Unfoldable.unfoldableArray)(v.prefs))(function (v1) {
                       return Halogen_HTML_Elements.p([ _click(SetPref.create(v1.value0)(!v1.value1)) ])(_checkbox(Data_Show.show(Preferences._a_)(v1.value0))(v1.value1));
@@ -29075,12 +29187,12 @@ var PS = {};
                   })), _h(1)("Active filters"), Halogen_HTML_Elements.form_(Data_Array.singleton(Halogen_HTML_Elements.table_(Data_Array.singleton(Halogen_HTML_Elements.tr_([ _th("Match"), Halogen_HTML_Elements.td([ _click(MatchAny.create(false)) ])(_radio("All")(!v.matchAny)), Halogen_HTML_Elements.td([ _click(MatchAny.create(true)) ])(_radio("Any")(v.matchAny)) ]))))) ])(Data_Functor.mapFlipped(Data_Functor.functorArray)(Data_Array.reverse(v.filters))(function (v1) {
                       return Halogen_HTML_Elements.p([ _click(UnFilter.create(v1)), _c("unselected") ])(_txt("\u24e7 " + (Data_Show.show(Filters._a_)(v1.value0) + (": " + Data_Show.show(Filters._c_)(v1)))));
                   }))), Halogen_HTML_Elements.section([ _i("servants") ])((function () {
-                      var $82 = Data_Eq.eq(Sorting._8_)(v.sortBy)(Sorting.Rarity.value);
-                      if ($82) {
+                      var $80 = Data_Eq.eq(Sorting._8_)(v.sortBy)(Sorting.Rarity.value);
+                      if ($80) {
                           return Control_Category.identity(Control_Category.categoryFn);
                       };
                       return Data_Array.reverse;
-                  })()(Data_Functor.map(Data_Functor.functorArray)(portrait(artorify))(Sorting.doSort(v.sortBy)(maybeFilter(Database.servants))))), Halogen_HTML_Elements.aside([ _i("filters") ])(Data_Array.cons(_h(1)("Filters"))(Data_Array.concat(Data_Functor.mapFlipped(Data_Functor.functorArray)(Operators.enumArray(Filters._6_))(function (tab) {
+                  })()(Data_Functor.map(Data_Functor.functorArray)(portrait(artorify))(Sorting.doSort(v.sortBy)(Operators.doIf(!Data_Array["null"](v.filters))(Data_Array.filter(match(excludeSelf)))(Database.servants))))), Halogen_HTML_Elements.aside([ _i("filters") ])(Data_Array.cons(_h(1)("Filters"))(Data_Array.concat(Data_Functor.mapFlipped(Data_Functor.functorArray)(Operators.enumArray(Filters._6_))(function (tab) {
                       return [ _h(3)(Data_Show.show(Filters._a_)(tab)), Halogen_HTML_Elements.ul_(Data_Functor.mapFlipped(Data_Functor.functorArray)(Filters.getFilters(tab))(function (filt) {
                           return Halogen_HTML_Elements.li(meta(filt))(_txt(Data_Show.show(Filters._c_)(filt)));
                       })) ];
@@ -29089,10 +29201,10 @@ var PS = {};
               var initialState = Data_Function["const"]({
                   filters: [  ],
                   matchAny: true,
-                  focus: Data_Foldable.find(Data_Foldable.foldableArray)(function ($145) {
+                  focus: Data_Foldable.find(Data_Foldable.foldableArray)(function ($143) {
                       return (function (v) {
                           return v === initialHash;
-                      })(urlName($145));
+                      })(urlName($143));
                   })(Database.servants),
                   sortBy: Sorting.Rarity.value,
                   prefs: initialPrefs
@@ -29100,26 +29212,26 @@ var PS = {};
               var $$eval = (function () {
                   var modPrefs = function (f) {
                       return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v) {
-                          var $89 = {};
-                          for (var $90 in v) {
-                              if ({}.hasOwnProperty.call(v, $90)) {
-                                  $89[$90] = v[$90];
+                          var $87 = {};
+                          for (var $88 in v) {
+                              if ({}.hasOwnProperty.call(v, $88)) {
+                                  $87[$88] = v[$88];
                               };
                           };
-                          $89.prefs = f(v.prefs);
-                          return $89;
+                          $87.prefs = f(v.prefs);
+                          return $87;
                       });
                   };
                   var modFilters = function (f) {
                       return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v) {
-                          var $94 = {};
-                          for (var $95 in v) {
-                              if ({}.hasOwnProperty.call(v, $95)) {
-                                  $94[$95] = v[$95];
+                          var $92 = {};
+                          for (var $93 in v) {
+                              if ({}.hasOwnProperty.call(v, $93)) {
+                                  $92[$93] = v[$93];
                               };
                           };
-                          $94.filters = f(v.filters);
-                          return $94;
+                          $92.filters = f(v.filters);
+                          return $92;
                       });
                   };
                   var hash = function (v) {
@@ -29129,7 +29241,7 @@ var PS = {};
                       if (v instanceof Data_Maybe.Just) {
                           return Routing_Hash.setHash(urlName(v.value0));
                       };
-                      throw new Error("Failed pattern match at Component line 123, column 7 - line 124, column 7: " + [ v.constructor.name ]);
+                      throw new Error("Failed pattern match at Component line 124, column 7 - line 125, column 7: " + [ v.constructor.name ]);
                   };
                   return function (v) {
                       if (v instanceof AddFilter) {
@@ -29146,28 +29258,28 @@ var PS = {};
                           return (function (v1) {
                               return Operators.advance(Halogen_Query_HalogenM.bindHalogenM)(Halogen_Query_HalogenM.applicativeHalogenM)(v1)(v.value1);
                           })(Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                              var $105 = {};
-                              for (var $106 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $106)) {
-                                      $105[$106] = v1[$106];
+                              var $103 = {};
+                              for (var $104 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $104)) {
+                                      $103[$104] = v1[$104];
                                   };
                               };
-                              $105.matchAny = v.value0;
-                              return $105;
+                              $103.matchAny = v.value0;
+                              return $103;
                           }));
                       };
                       if (v instanceof SetSort) {
                           return (function (v1) {
                               return Operators.advance(Halogen_Query_HalogenM.bindHalogenM)(Halogen_Query_HalogenM.applicativeHalogenM)(v1)(v.value1);
                           })(Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                              var $110 = {};
-                              for (var $111 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $111)) {
-                                      $110[$111] = v1[$111];
+                              var $108 = {};
+                              for (var $109 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $109)) {
+                                      $108[$109] = v1[$109];
                                   };
                               };
-                              $110.sortBy = v.value0;
-                              return $110;
+                              $108.sortBy = v.value0;
+                              return $108;
                           }));
                       };
                       if (v instanceof Focus) {
@@ -29175,14 +29287,14 @@ var PS = {};
                               return Operators.advance(Halogen_Query_HalogenM.bindHalogenM)(Halogen_Query_HalogenM.applicativeHalogenM)(v1)(v.value1);
                           })(Control_Bind.discard(Control_Bind.discardUnit)(Halogen_Query_HalogenM.bindHalogenM)(Effect_Class.liftEffect(Halogen_Query_HalogenM.monadEffectHalogenM(dictMonadEffect))(hash(v.value0)))(function () {
                               return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                                  var $115 = {};
-                                  for (var $116 in v1) {
-                                      if ({}.hasOwnProperty.call(v1, $116)) {
-                                          $115[$116] = v1[$116];
+                                  var $113 = {};
+                                  for (var $114 in v1) {
+                                      if ({}.hasOwnProperty.call(v1, $114)) {
+                                          $113[$114] = v1[$114];
                                       };
                                   };
-                                  $115.focus = v.value0;
-                                  return $115;
+                                  $113.focus = v.value0;
+                                  return $113;
                               });
                           }));
                       };
@@ -29193,7 +29305,7 @@ var PS = {};
                               return modPrefs(Data_Map_Internal.insert(Preferences._2_)(v.value0)(v.value1));
                           }));
                       };
-                      throw new Error("Failed pattern match at Component line 109, column 10 - line 119, column 34: " + [ v.constructor.name ]);
+                      throw new Error("Failed pattern match at Component line 110, column 10 - line 120, column 34: " + [ v.constructor.name ]);
                   };
               })();
               return Halogen_Component.component(Halogen_HTML_Core.bifunctorHTML)({

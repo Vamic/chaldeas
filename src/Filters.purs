@@ -40,8 +40,8 @@ extraFilters =
 data FilterTab = FilterEvent | FilterOther
                | FilterPhantasm | FilterCard 
                | FilterClass | FilterDeck | FilterAttribute
-               | FilterAction | FilterBuff | FilterDebuff 
                | FilterAlignment | FilterTrait | FilterPassive
+               | FilterAction | FilterBuff | FilterDebuff 
 
 instance _a_ ∷ Show FilterTab where
   show FilterEvent    = "Event Bonus"

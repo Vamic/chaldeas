@@ -22469,27 +22469,6 @@ var PS = {};
       FilterAttribute.value = new FilterAttribute();
       return FilterAttribute;
   })();
-  var FilterAction = (function () {
-      function FilterAction() {
-
-      };
-      FilterAction.value = new FilterAction();
-      return FilterAction;
-  })();
-  var FilterBuff = (function () {
-      function FilterBuff() {
-
-      };
-      FilterBuff.value = new FilterBuff();
-      return FilterBuff;
-  })();
-  var FilterDebuff = (function () {
-      function FilterDebuff() {
-
-      };
-      FilterDebuff.value = new FilterDebuff();
-      return FilterDebuff;
-  })();
   var FilterAlignment = (function () {
       function FilterAlignment() {
 
@@ -22510,6 +22489,27 @@ var PS = {};
       };
       FilterPassive.value = new FilterPassive();
       return FilterPassive;
+  })();
+  var FilterAction = (function () {
+      function FilterAction() {
+
+      };
+      FilterAction.value = new FilterAction();
+      return FilterAction;
+  })();
+  var FilterBuff = (function () {
+      function FilterBuff() {
+
+      };
+      FilterBuff.value = new FilterBuff();
+      return FilterBuff;
+  })();
+  var FilterDebuff = (function () {
+      function FilterDebuff() {
+
+      };
+      FilterDebuff.value = new FilterDebuff();
+      return FilterDebuff;
   })();
   var Filter = (function () {
       function Filter(value0, value1, value2) {
@@ -22576,15 +22576,6 @@ var PS = {};
           if (x instanceof FilterAttribute && y instanceof FilterAttribute) {
               return true;
           };
-          if (x instanceof FilterAction && y instanceof FilterAction) {
-              return true;
-          };
-          if (x instanceof FilterBuff && y instanceof FilterBuff) {
-              return true;
-          };
-          if (x instanceof FilterDebuff && y instanceof FilterDebuff) {
-              return true;
-          };
           if (x instanceof FilterAlignment && y instanceof FilterAlignment) {
               return true;
           };
@@ -22592,6 +22583,15 @@ var PS = {};
               return true;
           };
           if (x instanceof FilterPassive && y instanceof FilterPassive) {
+              return true;
+          };
+          if (x instanceof FilterAction && y instanceof FilterAction) {
+              return true;
+          };
+          if (x instanceof FilterBuff && y instanceof FilterBuff) {
+              return true;
+          };
+          if (x instanceof FilterDebuff && y instanceof FilterDebuff) {
               return true;
           };
           return false;
@@ -22664,33 +22664,6 @@ var PS = {};
           if (y instanceof FilterAttribute) {
               return Data_Ordering.GT.value;
           };
-          if (x instanceof FilterAction && y instanceof FilterAction) {
-              return Data_Ordering.EQ.value;
-          };
-          if (x instanceof FilterAction) {
-              return Data_Ordering.LT.value;
-          };
-          if (y instanceof FilterAction) {
-              return Data_Ordering.GT.value;
-          };
-          if (x instanceof FilterBuff && y instanceof FilterBuff) {
-              return Data_Ordering.EQ.value;
-          };
-          if (x instanceof FilterBuff) {
-              return Data_Ordering.LT.value;
-          };
-          if (y instanceof FilterBuff) {
-              return Data_Ordering.GT.value;
-          };
-          if (x instanceof FilterDebuff && y instanceof FilterDebuff) {
-              return Data_Ordering.EQ.value;
-          };
-          if (x instanceof FilterDebuff) {
-              return Data_Ordering.LT.value;
-          };
-          if (y instanceof FilterDebuff) {
-              return Data_Ordering.GT.value;
-          };
           if (x instanceof FilterAlignment && y instanceof FilterAlignment) {
               return Data_Ordering.EQ.value;
           };
@@ -22710,6 +22683,33 @@ var PS = {};
               return Data_Ordering.GT.value;
           };
           if (x instanceof FilterPassive && y instanceof FilterPassive) {
+              return Data_Ordering.EQ.value;
+          };
+          if (x instanceof FilterPassive) {
+              return Data_Ordering.LT.value;
+          };
+          if (y instanceof FilterPassive) {
+              return Data_Ordering.GT.value;
+          };
+          if (x instanceof FilterAction && y instanceof FilterAction) {
+              return Data_Ordering.EQ.value;
+          };
+          if (x instanceof FilterAction) {
+              return Data_Ordering.LT.value;
+          };
+          if (y instanceof FilterAction) {
+              return Data_Ordering.GT.value;
+          };
+          if (x instanceof FilterBuff && y instanceof FilterBuff) {
+              return Data_Ordering.EQ.value;
+          };
+          if (x instanceof FilterBuff) {
+              return Data_Ordering.LT.value;
+          };
+          if (y instanceof FilterBuff) {
+              return Data_Ordering.GT.value;
+          };
+          if (x instanceof FilterDebuff && y instanceof FilterDebuff) {
               return Data_Ordering.EQ.value;
           };
           throw new Error("Failed pattern match at Filters line 79, column 8 - line 79, column 36: " + [ x.constructor.name, y.constructor.name ]);
@@ -22748,22 +22748,22 @@ var PS = {};
       if (x instanceof FilterAttribute) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))))));
       };
-      if (x instanceof FilterAction) {
+      if (x instanceof FilterAlignment) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))))));
       };
-      if (x instanceof FilterBuff) {
+      if (x instanceof FilterTrait) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))))))));
       };
-      if (x instanceof FilterDebuff) {
+      if (x instanceof FilterPassive) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))))))));
       };
-      if (x instanceof FilterAlignment) {
+      if (x instanceof FilterAction) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))))))))));
       };
-      if (x instanceof FilterTrait) {
+      if (x instanceof FilterBuff) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))))))))));
       };
-      if (x instanceof FilterPassive) {
+      if (x instanceof FilterDebuff) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value))))))))))));
       };
       throw new Error("Failed pattern match at Filters line 77, column 8 - line 77, column 42: " + [ x.constructor.name ]);
@@ -22790,22 +22790,22 @@ var PS = {};
           return FilterAttribute.value;
       };
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))) {
-          return FilterAction.value;
-      };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))) {
-          return FilterBuff.value;
-      };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))))) {
-          return FilterDebuff.value;
-      };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))))) {
           return FilterAlignment.value;
       };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))))))) {
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))) {
           return FilterTrait.value;
       };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr))))))))))) {
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))))) {
           return FilterPassive.value;
+      };
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))))) {
+          return FilterAction.value;
+      };
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))))))) {
+          return FilterBuff.value;
+      };
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr))))))))))) {
+          return FilterDebuff.value;
       };
       throw new Error("Failed pattern match at Filters line 77, column 8 - line 77, column 42: " + [ x.constructor.name ]);
   });
@@ -22851,17 +22851,17 @@ var PS = {};
       })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "FilterAttribute";
       })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
-          return "FilterAction";
-      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
-          return "FilterBuff";
-      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
-          return "FilterDebuff";
-      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "FilterAlignment";
       })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "FilterTrait";
-      })))(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "FilterPassive";
+      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+          return "FilterAction";
+      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+          return "FilterBuff";
+      })))(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+          return "FilterDebuff";
       })))))))))))))))(v));
   });
   exports["extraFilters"] = extraFilters;
@@ -22872,12 +22872,12 @@ var PS = {};
   exports["FilterClass"] = FilterClass;
   exports["FilterDeck"] = FilterDeck;
   exports["FilterAttribute"] = FilterAttribute;
-  exports["FilterAction"] = FilterAction;
-  exports["FilterBuff"] = FilterBuff;
-  exports["FilterDebuff"] = FilterDebuff;
   exports["FilterAlignment"] = FilterAlignment;
   exports["FilterTrait"] = FilterTrait;
   exports["FilterPassive"] = FilterPassive;
+  exports["FilterAction"] = FilterAction;
+  exports["FilterBuff"] = FilterBuff;
+  exports["FilterDebuff"] = FilterDebuff;
   exports["Filter"] = Filter;
   exports["matchFilter"] = matchFilter;
   exports["servantBonus"] = servantBonus;

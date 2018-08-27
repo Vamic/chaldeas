@@ -11918,10 +11918,10 @@ var PS = {};
           };
           throw new Error("Failed pattern match at Database.Servant line 100, column 17 - line 105, column 1: " + [ v.phantasm.card.constructor.name ]);
       })();
-      return cardBonus * Data_Int.toNumber(v.stats.max.atk) * Database_Trait.classModifier(v["class"]) * Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(function ($268) {
+      return cardBonus * Data_Int.toNumber(v.stats.max.atk) * Database_Trait.classModifier(v["class"]) * Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(function ($272) {
           return (function (v1) {
               return v1 / 100.0;
-          })(dmg($268));
+          })(dmg($272));
       })(Data_Semigroup.append(Data_Semigroup.semigroupArray)(v.phantasm.effect)(v.phantasm.over)));
   };
   var hasPassive = function (p) {
@@ -12007,16 +12007,34 @@ var PS = {};
       return Database_Skill._19_;
   }, function () {
       return Database_Skill._d_;
-  }, function (a) {
-      return function (exclude) {
-          var match = function (v) {
-              if (v instanceof Database_Skill.To) {
-                  return Data_Eq.eq(Database_Skill._15_)(a)(v.value1) && (!exclude || Data_Eq.notEq(Database_Skill._00_)(v.value0)(Database_Skill.Self.value));
+  }, function (v) {
+      return function (v1) {
+          if (v instanceof Database_Skill.DemeritBuffs) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritCharge) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritDamage) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritGauge) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritHealth) {
+              return Data_Function["const"](false);
+          };
+          if (v instanceof Database_Skill.DemeritKill) {
+              return Data_Function["const"](false);
+          };
+          var match = function (v2) {
+              if (v2 instanceof Database_Skill.To) {
+                  return Data_Eq.eq(Database_Skill._15_)(v)(v2.value1) && (!v1 || Data_Eq.notEq(Database_Skill._00_)(v2.value0)(Database_Skill.Self.value));
               };
               return false;
           };
-          return function ($269) {
-              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($269));
+          return function ($273) {
+              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($273));
           };
       };
   });
@@ -12032,8 +12050,8 @@ var PS = {};
               };
               return false;
           };
-          return function ($270) {
-              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($270));
+          return function ($274) {
+              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($274));
           };
       };
   });
@@ -12049,8 +12067,8 @@ var PS = {};
               };
               return false;
           };
-          return function ($271) {
-              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($271));
+          return function ($275) {
+              return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(match)(getEffects($275));
           };
       };
   });
@@ -12064,7 +12082,7 @@ var PS = {};
       if (x instanceof Support) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value));
       };
-      throw new Error("Failed pattern match at Database.Servant line 161, column 8 - line 161, column 45: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 167, column 8 - line 167, column 45: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return SingleTarget.value;
@@ -12075,7 +12093,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && x.value0 instanceof Data_Generic_Rep.Inr) {
           return Support.value;
       };
-      throw new Error("Failed pattern match at Database.Servant line 161, column 8 - line 161, column 45: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 167, column 8 - line 167, column 45: " + [ x.constructor.name ]);
   });
   var _7_ = new Data_Eq.Eq(function (x) {
       return function (y) {
@@ -12116,7 +12134,7 @@ var PS = {};
           if (x instanceof Support && y instanceof Support) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Servant line 160, column 8 - line 160, column 39: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Servant line 166, column 8 - line 166, column 39: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _36_ = new Data_Generic_Rep.Generic(function (x) {
@@ -12134,7 +12152,7 @@ var PS = {};
       if (x instanceof Quick) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value));
       };
-      throw new Error("Failed pattern match at Database.Servant line 175, column 8 - line 175, column 38: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 181, column 8 - line 181, column 38: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return Arts.value;
@@ -12145,7 +12163,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && x.value0 instanceof Data_Generic_Rep.Inr) {
           return Quick.value;
       };
-      throw new Error("Failed pattern match at Database.Servant line 175, column 8 - line 175, column 38: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 181, column 8 - line 181, column 38: " + [ x.constructor.name ]);
   });
   var _33_ = new Data_Show.Show(Data_Generic_Rep_Show.genericShow(_29_)(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
       return "Arts";
@@ -12155,8 +12173,8 @@ var PS = {};
       return "Quick";
   }))))));
   var _40_ = new Data_Show.Show(function (v) {
-      return Data_String_CodeUnits.fromCharArray(Data_Functor.map(Data_Functor.functorArray)(function ($272) {
-          return Data_Maybe.fromMaybe("?")(Data_String_CodeUnits.charAt(0)(Data_Show.show(_33_)($272)));
+      return Data_String_CodeUnits.fromCharArray(Data_Functor.map(Data_Functor.functorArray)(function ($276) {
+          return Data_Maybe.fromMaybe("?")(Data_String_CodeUnits.charAt(0)(Data_Show.show(_33_)($276)));
       })([ v.value0, v.value1, v.value2, v.value3, v.value4 ]));
   });
   var _27_ = new Data_Eq.Eq(function (x) {
@@ -12198,7 +12216,7 @@ var PS = {};
           if (x instanceof Quick && y instanceof Quick) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Servant line 174, column 8 - line 174, column 32: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Servant line 180, column 8 - line 180, column 32: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _30_ = new Data_Enum.Enum(function () {
@@ -12354,7 +12372,7 @@ var PS = {};
               if (v instanceof Support) {
                   return !has(_f_)(SingleTarget.value)(v1)(s) && !has(_f_)(MultiTarget.value)(v1)(s);
               };
-              throw new Error("Failed pattern match at Database.Servant line 131, column 1 - line 131, column 41: " + [ v.constructor.name, v1.constructor.name, s.constructor.name ]);
+              throw new Error("Failed pattern match at Database.Servant line 137, column 1 - line 137, column 41: " + [ v.constructor.name, v1.constructor.name, s.constructor.name ]);
           };
       };
   });

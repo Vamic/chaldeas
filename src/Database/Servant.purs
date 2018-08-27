@@ -121,6 +121,12 @@ instance _b_ ∷ MatchServant DebuffEffect where
         match (Debuff t _ b _) = a == b && not (allied t)
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where 
+    has DemeritBuffs  _ = const false
+    has DemeritCharge _ = const false
+    has DemeritDamage _ = const false
+    has DemeritGauge  _ = const false
+    has DemeritHealth _ = const false
+    has DemeritKill   _ = const false
     has a exclude       = any match ∘ getEffects where 
         match (To t b _) = a == b && (not exclude || t /= Self)
         match _ = false

@@ -1973,17 +1973,6 @@ var PS = {};
     };
   };
 
-  var replicatePolyfill = function (count) {
-    return function (value) {
-      var result = [];
-      var n = 0;
-      for (var i = 0; i < count; i++) {
-        result[n++] = value;
-      }
-      return result;
-    };
-  };
-
   // In browsers that have Array.prototype.fill we use it, as it's faster.
   exports.replicate = typeof Array.prototype.fill === "function" ? replicate : replicatePolyfill;
 
@@ -14109,7 +14098,7 @@ var PS = {};
       gen: {
           starWeight: 98,
           starRate: 25.2,
-          npPerHit: 21.5,
+          npPerHit: 2.15,
           npPerDefend: 4
       },
       hits: {
@@ -28111,6 +28100,13 @@ var PS = {};
       NPDamage.value = new NPDamage();
       return NPDamage;
   })();
+  var NPGain = (function () {
+      function NPGain() {
+
+      };
+      NPGain.value = new NPGain();
+      return NPGain;
+  })();
   var Focus = (function () {
       function Focus(value0, value1) {
           this.value0 = value0;
@@ -28181,8 +28177,8 @@ var PS = {};
       abbreviations: false,
       sign: false
   });
-  var print = function ($148) {
-      return print$prime(Data_Int.toNumber($148));
+  var print = function ($157) {
+      return print$prime(Data_Int.toNumber($157));
   };
   var noBreakName = (function () {
       var unBreak = function (v) {
@@ -28191,18 +28187,18 @@ var PS = {};
           };
           return Data_String_Common.joinWith("(")(v);
       };
-      return function ($149) {
-          return unBreak(Data_String_Common.split("(")($149));
+      return function ($158) {
+          return unBreak(Data_String_Common.split("(")($158));
       };
   })();
-  var _txt = function ($150) {
-      return Data_Function.flip(Data_Array.cons)([  ])(Halogen_HTML_Core.text($150));
+  var _txt = function ($159) {
+      return Data_Function.flip(Data_Array.cons)([  ])(Halogen_HTML_Core.text($159));
   };
-  var _th = function ($151) {
-      return Halogen_HTML_Elements.th_(_txt($151));
+  var _th = function ($160) {
+      return Halogen_HTML_Elements.th_(_txt($160));
   };
-  var _td = function ($152) {
-      return Halogen_HTML_Elements.td_(_txt($152));
+  var _td = function ($161) {
+      return Halogen_HTML_Elements.td_(_txt($161));
   };
   var _tr = function (a) {
       return function (b) {
@@ -28211,22 +28207,22 @@ var PS = {};
   };
   var _table = function (headings) {
       return function (tbody) {
-          return Halogen_HTML_Elements.table_([ Halogen_HTML_Elements.thead_([ Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($153) {
-              return Halogen_HTML_Elements.th_(_txt($153));
+          return Halogen_HTML_Elements.table_([ Halogen_HTML_Elements.thead_([ Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($162) {
+              return Halogen_HTML_Elements.th_(_txt($162));
           })(headings)) ]), Halogen_HTML_Elements.tbody_(tbody) ]);
       };
   };                                                 
   var _src = Halogen_HTML_Properties.src;
-  var _span = function ($154) {
-      return Halogen_HTML_Elements.span_(_txt($154));
+  var _span = function ($163) {
+      return Halogen_HTML_Elements.span_(_txt($163));
   };
   var _radio = function (label) {
       return function (checked) {
           return [ Halogen_HTML_Elements.input([ Halogen_HTML_Properties.type_(Halogen_HTML_Core.inputTypeIsProp)(DOM_HTML_Indexed_InputType.InputRadio.value), Halogen_HTML_Properties.checked(checked) ]), Halogen_HTML_Elements.label_(_txt(label)) ];
       };
   };
-  var _p = function ($155) {
-      return Halogen_HTML_Elements.p_(_txt($155));
+  var _p = function ($164) {
+      return Halogen_HTML_Elements.p_(_txt($164));
   };
   var _img = function (src) {
       return Halogen_HTML_Elements.img([ _src(src) ]);
@@ -28234,56 +28230,56 @@ var PS = {};
   var _i = Halogen_HTML_Properties.id_;
   var _h = function (v) {
       if (v === 1) {
-          return function ($156) {
-              return Halogen_HTML_Elements.h1_(_txt($156));
+          return function ($165) {
+              return Halogen_HTML_Elements.h1_(_txt($165));
           };
       };
       if (v === 2) {
-          return function ($157) {
-              return Halogen_HTML_Elements.h2_(_txt($157));
+          return function ($166) {
+              return Halogen_HTML_Elements.h2_(_txt($166));
           };
       };
       if (v === 3) {
-          return function ($158) {
-              return Halogen_HTML_Elements.h3_(_txt($158));
+          return function ($167) {
+              return Halogen_HTML_Elements.h3_(_txt($167));
           };
       };
       if (v === 4) {
-          return function ($159) {
-              return Halogen_HTML_Elements.h4_(_txt($159));
+          return function ($168) {
+              return Halogen_HTML_Elements.h4_(_txt($168));
           };
       };
       if (v === 5) {
-          return function ($160) {
-              return Halogen_HTML_Elements.h5_(_txt($160));
+          return function ($169) {
+              return Halogen_HTML_Elements.h5_(_txt($169));
           };
       };
-      return function ($161) {
-          return Halogen_HTML_Elements.h6_(_txt($161));
+      return function ($170) {
+          return Halogen_HTML_Elements.h6_(_txt($170));
       };
   };
   var activeEl = function (v) {
-      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name), _span("CD: " + Data_Show.show(Data_Show.showInt)(v.cd)) ])(Data_Functor.map(Data_Functor.functorArray)(function ($162) {
-          return _p(Data_Show.show(Database_Skill._e_)($162));
+      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name), _span("CD: " + Data_Show.show(Data_Show.showInt)(v.cd)) ])(Data_Functor.map(Data_Functor.functorArray)(function ($171) {
+          return _p(Data_Show.show(Database_Skill._e_)($171));
       })(v.effect)));
   };
   var passiveEl = function (v) {
-      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name + (" " + Data_Show.show(Database_Skill._a_)(v.rank))) ])(Data_Functor.map(Data_Functor.functorArray)(function ($163) {
-          return _p(Data_Show.show(Database_Skill._e_)($163));
+      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name + (" " + Data_Show.show(Database_Skill._a_)(v.rank))) ])(Data_Functor.map(Data_Functor.functorArray)(function ($172) {
+          return _p(Data_Show.show(Database_Skill._e_)($172));
       })(v.effect)));
   };
-  var _click = function ($164) {
-      return Halogen_HTML_Events.onClick(Halogen_HTML_Events.input_($164));
+  var _click = function ($173) {
+      return Halogen_HTML_Events.onClick(Halogen_HTML_Events.input_($173));
   };
-  var _c = function ($165) {
-      return Halogen_HTML_Properties.class_(Halogen_HTML_Core.ClassName($165));
+  var _c = function ($174) {
+      return Halogen_HTML_Properties.class_(Halogen_HTML_Core.ClassName($174));
   };
   var deck = function (v) {
       var card = function (x) {
           return Halogen_HTML_Elements.span([ _c(x) ])(_txt(Data_String_CodePoints.take(1)(x)));
       };
-      return Data_Functor.map(Data_Functor.functorArray)(function ($166) {
-          return card(Data_Show.show(Database_Servant._33_)($166));
+      return Data_Functor.map(Data_Functor.functorArray)(function ($175) {
+          return card(Data_Show.show(Database_Servant._33_)($175));
       })([ v.value0, v.value1, v.value2, v.value3, v.value4 ]);
   };
   var portrait = function (v) {
@@ -28294,8 +28290,8 @@ var PS = {};
   };
   var modal = function (v) {
       if (v instanceof Data_Maybe.Nothing) {
-          return function ($167) {
-              return Halogen_HTML_Elements.div([ _i("layout") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_([  ]) ])($167));
+          return function ($176) {
+              return Halogen_HTML_Elements.div([ _i("layout") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_([  ]) ])($176));
           };
       };
       if (v instanceof Data_Maybe.Just) {
@@ -28304,17 +28300,17 @@ var PS = {};
                   return Halogen_HTML_Elements.tr_([ _th(label), Halogen_HTML_Elements.td([ _c("rating") ])(_txt(Data_String_Common.joinWith(" ")(Data_Array.replicate(n)("\u2b1b\ufe0e")))) ]);
               };
           };
-          return function ($168) {
+          return function ($177) {
               return Halogen_HTML_Elements.div([ _i("layout"), _c("fade") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ portrait(v.value0), _table([ "", "ATK", "HP" ])([ Halogen_HTML_Elements.tr_([ _th("Base"), _td(print(v.value0.stats.base.atk)), _td(print(v.value0.stats.base.hp)) ]), Halogen_HTML_Elements.tr_([ _th("Max"), _td(print(v.value0.stats.max.atk)), _td(print(v.value0.stats.max.hp)) ]), Halogen_HTML_Elements.tr_([ _th("Grail"), _td(print(v.value0.stats.grail.atk)), _td(print(v.value0.stats.grail.hp)) ]) ]), _table([ "", "Q", "A", "B", "EX", "NP" ])([ Halogen_HTML_Elements.tr_([ _th("Hits"), _td(Data_Show.show(Data_Show.showInt)(v.value0.hits.q)), _td(Data_Show.show(Data_Show.showInt)(v.value0.hits.a)), _td(Data_Show.show(Data_Show.showInt)(v.value0.hits.b)), _td(Data_Show.show(Data_Show.showInt)(v.value0.hits.ex)), _td(Data_Show.show(Data_Show.showInt)(v.value0.phantasm.hits)) ]) ]), Halogen_HTML_Elements.table_([ _tr("Class")(Data_Show.show(Database_Trait._16_)(v["value0"]["class"])), _tr("Deck")(Data_Show.show(Database_Servant._40_)(v.value0.deck)), _tr("NP Type")(Data_Show.show(Database_Servant._01_)(Data_Maybe.fromMaybe(Database_Servant.Support.value)(Data_Foldable.find(Data_Foldable.foldableArray)(function (v1) {
                   return Database_Servant.has(Database_Servant._f_)(v1)(v.value0);
-              })([ Database_Servant.SingleTarget.value, Database_Servant.MultiTarget.value ])))), _tr("Alignment")(Database_Trait.showAlignment(v.value0.align)), _tr("Attribute")(Data_Show.show(Database_Trait._30_)(v.value0.attr)), _tr("Star Weight")(Data_Show.show(Data_Show.showInt)(v.value0.gen.starWeight)), _tr("Star Rate")(Data_Show.show(Data_Show.showNumber)(v.value0.gen.starRate) + "%"), _tr("NP/Hit")(Data_Show.show(Data_Show.showNumber)(v.value0.gen.npPerHit) + "%"), _tr("NP/Defend")(Data_Show.show(Data_Show.showInt)(v.value0.gen.npPerDefend) + "%"), _tr("Death Rate")(Data_Show.show(Data_Show.showNumber)(v.value0.death) + "%") ]), Halogen_HTML_Elements.h2([ _c("npheading") ])(_txt("Noble Phantasm")), Halogen_HTML_Elements.table([ _c("phantasm") ])([ _tr("Name")(v.value0.phantasm.name), _tr("Rank")(Data_Show.show(Database_Skill._a_)(v.value0.phantasm.rank)), _tr("Card")(Data_Show.show(Database_Servant._33_)(v.value0.phantasm.card)), _tr("Class")(v.value0.phantasm.kind), Halogen_HTML_Elements.tr_([ _th("Effects"), Halogen_HTML_Elements.td_(Data_Functor.map(Data_Functor.functorArray)(function ($169) {
-                  return _p(Data_Show.show(Database_Skill._e_)($169));
-              })(v.value0.phantasm.effect)) ]), Halogen_HTML_Elements.tr_([ _th("Overcharge"), Halogen_HTML_Elements.td_(Data_Functor.map(Data_Functor.functorArray)(function ($170) {
-                  return _p(Data_Show.show(Database_Skill._e_)($170));
-              })(v.value0.phantasm.over)) ]) ]), _h(2)("Active Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(activeEl)(v.value0.actives))(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(2)("Passive Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(passiveEl)(v.value0.passives))([ _h(2)("Traits"), Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(traitEl)(v.value0.traits)) ]))))) ])($168));
+              })([ Database_Servant.SingleTarget.value, Database_Servant.MultiTarget.value ])))), _tr("Alignment")(Database_Trait.showAlignment(v.value0.align)), _tr("Attribute")(Data_Show.show(Database_Trait._30_)(v.value0.attr)), _tr("Star Weight")(Data_Show.show(Data_Show.showInt)(v.value0.gen.starWeight)), _tr("Star Rate")(Data_Show.show(Data_Show.showNumber)(v.value0.gen.starRate) + "%"), _tr("NP/Hit")(Data_Show.show(Data_Show.showNumber)(v.value0.gen.npPerHit) + "%"), _tr("NP/Defend")(Data_Show.show(Data_Show.showInt)(v.value0.gen.npPerDefend) + "%"), _tr("Death Rate")(Data_Show.show(Data_Show.showNumber)(v.value0.death) + "%") ]), Halogen_HTML_Elements.h2([ _c("npheading") ])(_txt("Noble Phantasm")), Halogen_HTML_Elements.table([ _c("phantasm") ])([ _tr("Name")(v.value0.phantasm.name), _tr("Rank")(Data_Show.show(Database_Skill._a_)(v.value0.phantasm.rank)), _tr("Card")(Data_Show.show(Database_Servant._33_)(v.value0.phantasm.card)), _tr("Class")(v.value0.phantasm.kind), Halogen_HTML_Elements.tr_([ _th("Effects"), Halogen_HTML_Elements.td_(Data_Functor.map(Data_Functor.functorArray)(function ($178) {
+                  return _p(Data_Show.show(Database_Skill._e_)($178));
+              })(v.value0.phantasm.effect)) ]), Halogen_HTML_Elements.tr_([ _th("Overcharge"), Halogen_HTML_Elements.td_(Data_Functor.map(Data_Functor.functorArray)(function ($179) {
+                  return _p(Data_Show.show(Database_Skill._e_)($179));
+              })(v.value0.phantasm.over)) ]) ]), _h(2)("Active Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(activeEl)(v.value0.actives))(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(2)("Passive Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(passiveEl)(v.value0.passives))([ _h(2)("Traits"), Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(traitEl)(v.value0.traits)) ]))))) ])($177));
           };
       };
-      throw new Error("Failed pattern match at Component line 185, column 1 - line 185, column 81: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Component line 187, column 1 - line 187, column 81: " + [ v.constructor.name ]);
   };
   var _8_ = new Data_Eq.Eq(function (x) {
       return function (y) {
@@ -28334,6 +28330,9 @@ var PS = {};
               return true;
           };
           if (x instanceof NPDamage && y instanceof NPDamage) {
+              return true;
+          };
+          if (x instanceof NPGain && y instanceof NPGain) {
               return true;
           };
           return false;
@@ -28391,7 +28390,16 @@ var PS = {};
           if (x instanceof NPDamage && y instanceof NPDamage) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Component line 332, column 8 - line 332, column 33: " + [ x.constructor.name, y.constructor.name ]);
+          if (x instanceof NPDamage) {
+              return Data_Ordering.LT.value;
+          };
+          if (y instanceof NPDamage) {
+              return Data_Ordering.GT.value;
+          };
+          if (x instanceof NPGain && y instanceof NPGain) {
+              return Data_Ordering.EQ.value;
+          };
+          throw new Error("Failed pattern match at Component line 334, column 8 - line 334, column 33: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _7_ = new Data_Generic_Rep.Generic(function (x) {
@@ -28411,9 +28419,12 @@ var PS = {};
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))));
       };
       if (x instanceof NPDamage) {
-          return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value)))));
+          return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))));
       };
-      throw new Error("Failed pattern match at Component line 330, column 8 - line 330, column 39: " + [ x.constructor.name ]);
+      if (x instanceof NPGain) {
+          return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value))))));
+      };
+      throw new Error("Failed pattern match at Component line 332, column 8 - line 332, column 39: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return Rarity.value;
@@ -28430,28 +28441,34 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))) {
           return Hits.value;
       };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr)))) {
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))) {
           return NPDamage.value;
       };
-      throw new Error("Failed pattern match at Component line 330, column 8 - line 330, column 39: " + [ x.constructor.name ]);
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr))))) {
+          return NPGain.value;
+      };
+      throw new Error("Failed pattern match at Component line 332, column 8 - line 332, column 39: " + [ x.constructor.name ]);
   });
   var _12_ = new Data_Bounded.Bounded(function () {
       return _9_;
-  }, Data_Generic_Rep_Bounded.genericBottom(_7_)(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))), Data_Generic_Rep_Bounded.genericTop(_7_)(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))))))));
+  }, Data_Generic_Rep_Bounded.genericBottom(_7_)(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))), Data_Generic_Rep_Bounded.genericTop(_7_)(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments)))))))));
   var _11_ = new Data_Enum.Enum(function () {
       return _9_;
-  }, Data_Generic_Rep_Enum.genericPred(_7_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))), Data_Generic_Rep_Enum.genericSucc(_7_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))));
+  }, Data_Generic_Rep_Enum.genericPred(_7_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))), Data_Generic_Rep_Enum.genericSucc(_7_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))));
   var _13_ = new Data_Enum.BoundedEnum(function () {
       return _12_;
   }, function () {
       return _11_;
-  }, Data_Generic_Rep_Enum.genericCardinality(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))), Data_Generic_Rep_Enum.genericFromEnum(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))), Data_Generic_Rep_Enum.genericToEnum(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))));
+  }, Data_Generic_Rep_Enum.genericCardinality(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)))))))), Data_Generic_Rep_Enum.genericFromEnum(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)))))))), Data_Generic_Rep_Enum.genericToEnum(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)))))))));
   var _10_ = new Data_Show.Show(function (v) {
       if (v instanceof StarRate) {
           return "Star Rate";
       };
       if (v instanceof NPDamage) {
           return "NP Damage";
+      };
+      if (v instanceof NPGain) {
+          return "NP Gain/Hit";
       };
       return Data_Generic_Rep_Show.genericShow(_7_)(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "Rarity";
@@ -28463,9 +28480,11 @@ var PS = {};
           return "StarRate";
       })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "Hits";
-      })))(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "NPDamage";
-      }))))))))(v);
+      })))(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+          return "NPGain";
+      })))))))))(v);
   });
   var component = function (dictMonadEffect) {
       return function (initialHash) {
@@ -28477,7 +28496,7 @@ var PS = {};
                   if (Data_Boolean.otherwise) {
                       return [ _c("unselected"), _click(AddFilter.create(filt)) ];
                   };
-                  throw new Error("Failed pattern match at Component line 139, column 7 - line 141, column 75: " + [ filt.constructor.name ]);
+                  throw new Error("Failed pattern match at Component line 141, column 7 - line 143, column 75: " + [ filt.constructor.name ]);
               };
               var match = function (serv) {
                   return (function () {
@@ -28490,8 +28509,8 @@ var PS = {};
                   })(v.filters);
               };
               var maybeFilter = (function () {
-                  var $103 = Data_Array["null"](v.filters);
-                  if ($103) {
+                  var $111 = Data_Array["null"](v.filters);
+                  if ($111) {
                       return Control_Category.identity(Control_Category.categoryFn);
                   };
                   return Data_Array.filter(match);
@@ -28531,19 +28550,24 @@ var PS = {};
                       return Data_Functor.map(Data_Functor.functorArray)(Filters.matchFilter(Database_Servant._f_)(tab))(Database.getAll(Database_Servant._f_));
                   };
                   if (tab instanceof Filters.FilterPassive) {
-                      return Data_Functor.map(Data_Functor.functorArray)(function ($173) {
-                          return Data_Tuple.uncurry(Filters.Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Control_Category.identity(Control_Category.categoryFn))(Database_Servant.hasPassive)($173));
+                      return Data_Functor.map(Data_Functor.functorArray)(function ($182) {
+                          return Data_Tuple.uncurry(Filters.Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Control_Category.identity(Control_Category.categoryFn))(Database_Servant.hasPassive)($182));
                       })(Database.getPassives);
                   };
                   if (tab instanceof Filters.FilterTrait) {
                       return Data_Functor.map(Data_Functor.functorArray)(Filters.matchFilter(Database_Servant._d_)(tab))(Database.getAll(Database_Servant._d_));
                   };
-                  throw new Error("Failed pattern match at Component line 116, column 27 - line 130, column 70: " + [ tab.constructor.name ]);
+                  throw new Error("Failed pattern match at Component line 117, column 27 - line 131, column 70: " + [ tab.constructor.name ]);
               };
               var doSort = (function () {
                   if (v.sortBy instanceof NPDamage) {
                       return Data_Array.sortWith(Data_Ord.ordNumber)(function (serv) {
                           return Database_Servant.npDamage(serv);
+                      });
+                  };
+                  if (v.sortBy instanceof NPGain) {
+                      return Data_Array.sortWith(Data_Ord.ordNumber)(function (v1) {
+                          return v1.gen.npPerHit;
                       });
                   };
                   if (v.sortBy instanceof Rarity) {
@@ -28571,15 +28595,15 @@ var PS = {};
                           return ((v1.hits.a + v1.hits.b | 0) + v1.hits.q | 0) + v1.hits.ex | 0;
                       });
                   };
-                  throw new Error("Failed pattern match at Component line 131, column 16 - line 138, column 57: " + [ v.sortBy.constructor.name ]);
+                  throw new Error("Failed pattern match at Component line 132, column 16 - line 140, column 57: " + [ v.sortBy.constructor.name ]);
               })();
               return modal(v.focus)([ Halogen_HTML_Elements.aside([ _i("active") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(1)("Sort by"), Halogen_HTML_Elements.form_(Data_Functor.mapFlipped(Data_Functor.functorArray)(Operators.enumArray(_13_))(function (sort) {
                   return Halogen_HTML_Elements.p([ _click(SetSort.create(sort)) ])(_radio(Data_Show.show(_10_)(sort))(Data_Eq.eq(_8_)(v.sortBy)(sort)));
               })), _h(1)("Active filters"), Halogen_HTML_Elements.form_(Data_Array.singleton(Halogen_HTML_Elements.table_(Data_Array.singleton(Halogen_HTML_Elements.tr_([ _th("Match"), Halogen_HTML_Elements.td([ _click(MatchAny.create(false)) ])(_radio("All")(!v.matchAny)), Halogen_HTML_Elements.td([ _click(MatchAny.create(true)) ])(_radio("Any")(v.matchAny)) ]))))) ])(Data_Functor.mapFlipped(Data_Functor.functorArray)(Data_Array.reverse(v.filters))(function (v1) {
                   return Halogen_HTML_Elements.p([ _click(UnFilter.create(v1)), _c("unselected") ])(_txt("\u24e7 " + (Data_Show.show(Filters._a_)(v1.value0) + (": " + Data_Show.show(Filters._c_)(v1)))));
               }))), Halogen_HTML_Elements.section([ _i("servants") ])((function () {
-                  var $116 = Data_Eq.eq(_8_)(v.sortBy)(Rarity.value);
-                  if ($116) {
+                  var $125 = Data_Eq.eq(_8_)(v.sortBy)(Rarity.value);
+                  if ($125) {
                       return Control_Category.identity(Control_Category.categoryFn);
                   };
                   return Data_Array.reverse;
@@ -28592,24 +28616,24 @@ var PS = {};
           var initialState = Data_Function["const"]({
               filters: [  ],
               matchAny: true,
-              focus: Data_Foldable.find(Data_Foldable.foldableArray)(function ($174) {
+              focus: Data_Foldable.find(Data_Foldable.foldableArray)(function ($183) {
                   return (function (v) {
                       return v === initialHash;
-                  })(urlName($174));
+                  })(urlName($183));
               })(Database.servants),
               sortBy: Rarity.value
           });
           var $$eval = (function () {
               var modFilters = function (f) {
                   return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v) {
-                      var $122 = {};
-                      for (var $123 in v) {
-                          if ({}.hasOwnProperty.call(v, $123)) {
-                              $122[$123] = v[$123];
+                      var $131 = {};
+                      for (var $132 in v) {
+                          if ({}.hasOwnProperty.call(v, $132)) {
+                              $131[$132] = v[$132];
                           };
                       };
-                      $122.filters = f(v.filters);
-                      return $122;
+                      $131.filters = f(v.filters);
+                      return $131;
                   });
               };
               var hash = function (v) {
@@ -28619,7 +28643,7 @@ var PS = {};
                   if (v instanceof Data_Maybe.Just) {
                       return Routing_Hash.setHash(urlName(v.value0));
                   };
-                  throw new Error("Failed pattern match at Component line 161, column 7 - line 162, column 7: " + [ v.constructor.name ]);
+                  throw new Error("Failed pattern match at Component line 163, column 7 - line 164, column 7: " + [ v.constructor.name ]);
               };
               return function (v) {
                   if (v instanceof AddFilter) {
@@ -28636,28 +28660,28 @@ var PS = {};
                       return (function (v1) {
                           return Operators.advance(Halogen_Query_HalogenM.bindHalogenM)(Halogen_Query_HalogenM.applicativeHalogenM)(v1)(v.value1);
                       })(Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                          var $133 = {};
-                          for (var $134 in v1) {
-                              if ({}.hasOwnProperty.call(v1, $134)) {
-                                  $133[$134] = v1[$134];
+                          var $142 = {};
+                          for (var $143 in v1) {
+                              if ({}.hasOwnProperty.call(v1, $143)) {
+                                  $142[$143] = v1[$143];
                               };
                           };
-                          $133.matchAny = v.value0;
-                          return $133;
+                          $142.matchAny = v.value0;
+                          return $142;
                       }));
                   };
                   if (v instanceof SetSort) {
                       return (function (v1) {
                           return Operators.advance(Halogen_Query_HalogenM.bindHalogenM)(Halogen_Query_HalogenM.applicativeHalogenM)(v1)(v.value1);
                       })(Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                          var $138 = {};
-                          for (var $139 in v1) {
-                              if ({}.hasOwnProperty.call(v1, $139)) {
-                                  $138[$139] = v1[$139];
+                          var $147 = {};
+                          for (var $148 in v1) {
+                              if ({}.hasOwnProperty.call(v1, $148)) {
+                                  $147[$148] = v1[$148];
                               };
                           };
-                          $138.sortBy = v.value0;
-                          return $138;
+                          $147.sortBy = v.value0;
+                          return $147;
                       }));
                   };
                   if (v instanceof Focus) {
@@ -28665,18 +28689,18 @@ var PS = {};
                           return Operators.advance(Halogen_Query_HalogenM.bindHalogenM)(Halogen_Query_HalogenM.applicativeHalogenM)(v1)(v.value1);
                       })(Control_Bind.discard(Control_Bind.discardUnit)(Halogen_Query_HalogenM.bindHalogenM)(Effect_Class.liftEffect(Halogen_Query_HalogenM.monadEffectHalogenM(dictMonadEffect))(hash(v.value0)))(function () {
                           return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                              var $143 = {};
-                              for (var $144 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $144)) {
-                                      $143[$144] = v1[$144];
+                              var $152 = {};
+                              for (var $153 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $153)) {
+                                      $152[$153] = v1[$153];
                                   };
                               };
-                              $143.focus = v.value0;
-                              return $143;
+                              $152.focus = v.value0;
+                              return $152;
                           });
                       }));
                   };
-                  throw new Error("Failed pattern match at Component line 151, column 10 - line 158, column 37: " + [ v.constructor.name ]);
+                  throw new Error("Failed pattern match at Component line 153, column 10 - line 160, column 37: " + [ v.constructor.name ]);
               };
           })();
           return Halogen_Component.component(Halogen_HTML_Core.bifunctorHTML)({
@@ -28699,6 +28723,7 @@ var PS = {};
   exports["StarRate"] = StarRate;
   exports["Hits"] = Hits;
   exports["NPDamage"] = NPDamage;
+  exports["NPGain"] = NPGain;
   exports["urlName"] = urlName;
   exports["component"] = component;
   exports["noBreakName"] = noBreakName;

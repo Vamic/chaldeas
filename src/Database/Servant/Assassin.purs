@@ -244,7 +244,7 @@ assassins = Servant <$>
                         ]
               , over:   [ To (EnemyType Female) Damage 120.0 ]
               }
-  , gen:      { starWeight: 98, starRate: 25.2, npPerHit: 21.5, npPerDefend: 4 }
+  , gen:      { starWeight: 98, starRate: 25.2, npPerHit: 2.15, npPerDefend: 4 }
   , hits:     { a: 1, b: 1, q: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    44.0

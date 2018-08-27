@@ -55,6 +55,7 @@ data SortBy = Rarity
             | StarRate
             | Hits
             | NPDamage
+            | NPGain
 
 type State = { filters  ∷ Array Filter
              , matchAny ∷ Boolean
@@ -130,6 +131,7 @@ component initialHash = Halogen.component
           FilterTrait     -> matchFilter tab <$> getAll ∷ Array Trait
       doSort = case sortBy of
           NPDamage -> sortWith $ \serv -> npDamage serv
+          NPGain   -> sortWith $ \(Servant s) -> s.gen.npPerHit
           Rarity   -> sortWith $ \(Servant s) -> show (5 - s.rarity) ++ s.name
           ATK      -> sortWith $ \(Servant s) -> s.stats.max.atk
           HP       -> sortWith $ \(Servant s) -> s.stats.max.hp
@@ -333,6 +335,7 @@ derive instance _9_ ∷ Ord SortBy
 instance _10_ ∷ Show SortBy where
   show StarRate = "Star Rate"
   show NPDamage = "NP Damage"
+  show NPGain   = "NP Gain/Hit"
   show a = genericShow a
 instance _11_ ∷ Enum SortBy where
   succ = genericSucc

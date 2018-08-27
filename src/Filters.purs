@@ -42,6 +42,7 @@ data FilterTab = FilterEvent | FilterOther
                | FilterClass | FilterDeck | FilterAttribute
                | FilterAlignment | FilterTrait | FilterPassive
                | FilterAction | FilterBuff | FilterDebuff 
+               | FilterNoClass
 
 instance _a_ ∷ Show FilterTab where
   show FilterEvent    = "Event Bonus"
@@ -49,6 +50,7 @@ instance _a_ ∷ Show FilterTab where
   show FilterCard     = "NP Card"
   show FilterPassive  = "Passive Skill"
   show FilterOther    = "Availability"
+  show FilterNoClass  = "Not Class"
   show a              = drop 6 $ genericShow a
 
 data Filter = Filter FilterTab String (Boolean -> Servant -> Boolean)
@@ -57,9 +59,12 @@ instance _b_ ∷ Eq Filter where
 instance _c_ ∷ Show Filter where
   show (Filter tab a _) = a
 
-matchFilter ∷ ∀ a. MatchServant a ⇒ FilterTab -> a -> Filter
+matchFilter ∷ ∀ a. MatchServant a => FilterTab -> a -> Filter
 matchFilter tab = uncurry (Filter tab) ∘ (show &&& has)
   
+unFilter ∷ ∀ a. MatchServant a => FilterTab -> a -> Filter
+unFilter tab = uncurry (Filter tab) ∘ (show &&& not ∘ has)
+
 servantBonus ∷ FilterTab -> String -> Array String -> Filter
 servantBonus tab bonus servants = Filter tab bonus match
     where
@@ -81,6 +86,7 @@ getFilters f@FilterDebuff    = matchFilter f <$> getAll ∷ Array DebuffEffect
 getFilters f@FilterDeck      = matchFilter f <$> getAll ∷ Array Deck
 getFilters f@FilterPhantasm  = matchFilter f <$> getAll ∷ Array PhantasmType
 getFilters f@FilterTrait     = matchFilter f <$> getAll ∷ Array Trait
+getFilters f@FilterNoClass   = unFilter    f <$> getAll ∷ Array Class
 getFilters f@FilterPassive   = uncurry (Filter f) 
                              ∘ (identity &&& const ∘ hasPassive) <$> getPassives
 getFilters f@FilterEvent     = getExtraFilters f

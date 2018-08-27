@@ -187,7 +187,7 @@ lancers = Servant <$>
                           ]
                 }
               , { name:   "Hero's Assistant C"
-                , icon:   IconStarHaloUp
+                , icon:   IconStarUp
                 , cd:     5
                 , effect: [ Grant Ally 3 StarAbsorb 600.0 
                           , To Ally Heal 1000.0
@@ -276,7 +276,7 @@ lancers = Servant <$>
                 , effect: [ Grant Self 1 BusterUp 55.0 ]
                 }
               , { name:   "Protection of World's End A"
-                , icon:   IconStarHaloUp
+                , icon:   IconStarUp
                 , cd:     5
                 , effect: [ Grant Self 1 StarAbsorb 1000.0 
                           , Grant Self 1 CritUp 50.0

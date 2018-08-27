@@ -73,10 +73,10 @@ sabers = Servant <$>
                           , To Self Heal 2500.0
                           ]
                 }
-              , { name:   "Natural Body EX"
-                , icon:   IconHoodUp
+              , { name:   "Crest of the Star EX"
+                , icon:   IconSwordUp
                 , cd:     5
-                , effect: [ Grant Self 3 AttackUp 10.0 
+                , effect: [ Grant Self 3 AttackUp 30.0 
                           , To Party GainStars 15.0
                           ]
                 }
@@ -545,7 +545,7 @@ sabers = Servant <$>
                 , effect: [ Grant Self 3 NPGen 37.5 ]
                 }
               , { name:   "Disengage A"
-                , icon:   IconHeal
+                , icon:   IconBubbles
                 , cd:     5
                 , effect: [ To Self RemoveDebuffs 0.0 
                           , To Self Heal 2500.0

@@ -58,7 +58,7 @@ toSort HP {stats:{max:{hp}}} = toNumber hp
 toSort GrailATK {stats:{grail:{atk}}} = toNumber atk
 toSort GrailHP {stats:{grail:{hp}}} = toNumber hp
 toSort StarRate {gen:{starRate}} = starRate
-toSort NPArts {gen:{npAtk}, hits:{arts}} = npAtk * toNumber arts
+toSort NPArts {gen:{npAtk}, hits:{arts}} = 2.0 * npAtk * toNumber arts
 toSort Hits {hits:{arts,buster,quick,ex}} 
     = toNumber $ arts + buster + quick + ex
 

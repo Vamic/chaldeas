@@ -3,6 +3,8 @@ module Database.Servant where
 import Prelude
 import Operators
 
+import Control.MonadZero
+import Data.Array (head)
 import Data.Enum              
 import Data.Foldable     
 import Data.Generic.Rep
@@ -18,23 +20,23 @@ import Database.Skill
 import Database.Passive
 import Database.Trait
 
-newtype Servant = Servant { name     ∷ String
-                          , rarity   ∷ Int
-                          , class    ∷ Class
-                          , attr     ∷ Attribute
-                          , deck     ∷ Deck
-                          , stats    ∷ Stats
-                          , ratings  ∷ Ratings
-                          , actives  ∷ Array Active
-                          , passives ∷ Array Passive
-                          , phantasm ∷ NoblePhantasm
-                          , gen      ∷ Gen
-                          , hits     ∷ Hits
-                          , traits   ∷ Array Trait
-                          , death    ∷ Number
-                          , align    ∷ Tuple Alignment Alignment
-                          , limited  ∷ Boolean
-                          }
+type Servant = { name     ∷ String
+               , id       ∷ Int
+               , rarity   ∷ Int
+               , class    ∷ Class
+               , attr     ∷ Attribute
+               , deck     ∷ Deck
+               , stats    ∷ Stats
+               , actives  ∷ Array Active
+               , passives ∷ Array Passive
+               , phantasm ∷ NoblePhantasm
+               , gen      ∷ Gen
+               , hits     ∷ Hits
+               , traits   ∷ Array Trait
+               , death    ∷ Number
+               , align    ∷ Tuple Alignment Alignment
+               , limited  ∷ Boolean
+               }
 
 data Card = Arts | Buster | Quick
 data Deck = Deck Card Card Card Card Card
@@ -45,7 +47,7 @@ showStat ∷ Stat -> String
 showStat {atk, hp} = "ATK: " ++ show atk ++ ", HP: " ++ show hp
 
 hasPassive ∷ String -> Servant -> Boolean
-hasPassive p (Servant {passives}) = any (eq p) $ (_.name) <$> passives
+hasPassive p = any (eq p) ∘ map (_.name) ∘ _.passives
 
 type Ratings = { damage     ∷ Int
                , np         ∷ Int
@@ -63,40 +65,48 @@ type NoblePhantasm = { name   ∷ String
                      , hits   ∷ Int
                      , effect ∷ Array ActiveEffect
                      , over   ∷ Array ActiveEffect
+                     , first  ∷ Boolean
                      }
 
-type Hits = { a ∷ Int, b ∷ Int, q ∷ Int, ex ∷ Int }
+type Hits = { arts ∷ Int, buster ∷ Int, quick ∷ Int, ex ∷ Int }
 
-type Gen = { starWeight  ∷ Int
-           , starRate    ∷ Number
-           , npPerHit    ∷ Number
-           , npPerDefend ∷ Int
+type Gen = { starWeight ∷ Int
+           , starRate   ∷ Number
+           , npAtk      ∷ Number
+           , npDef      ∷ Int
            }
 
 getEffects ∷ Servant -> Array ActiveEffect
-getEffects (Servant {phantasm:{effect, over}, actives}) 
+getEffects {phantasm:{effect, over}, actives}
     = simplify <$> effect ++ over ++ (actives >>= _.effect)
   where
-    simplify (Chance _ ef) = simplify ef
-    simplify (When _ ef)   = simplify ef
-    simplify ef            = ef
-phantasmEffects ∷ Servant -> Array ActiveEffect
-phantasmEffects (Servant {phantasm:{effect, over}}) = effect ++ over
+    simplify (Chances _ _ ef) = simplify ef
+    simplify (Chance _ ef)    = simplify ef
+    simplify (When _ ef)      = simplify ef
+    simplify ef               = ef
+phantasmEffects ∷ NoblePhantasm -> Array ActiveEffect
+phantasmEffects {effect, over} = effect ++ over
 
 npDamage ∷ Servant -> Number
-npDamage (Servant s@{stats:{max:{atk}}, phantasm:{card, effect, over}}) 
+npDamage s@{stats:{max:{atk}}, phantasm:{card, effect, over, first}}
     = cardBonus * toNumber atk * classModifier s.class 
-    * sum (((_ / 100.0) ∘ dmg) <$> effect ++ over)
+    * mapSum dmg effect * mapSum boost effect 
+    * mapSum dmg overFirst * mapSum boost overFirst
   where
-    dmg (To Enemy Damage a) = a
-    dmg (To Enemy DamageThruDef a) = a
-    --dmg (To (EnemyType _) Damage a) = a
-    --dmg (To (EnemyType _) DamageThruDef a) = a
-    dmg (To Enemies Damage a) = 3.0 * a
-    dmg (To Enemies DamageThruDef a) = 3.0 * a
-    --dmg (To (EnemiesType _) Damage a) = 3.0 * a
-    --dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * a
+    overFirst = guard first >> head over
+    mapSum ∷ ∀ f a. Foldable f => Functor f => (a -> Number) -> f a -> Number
+    mapSum f = min 1.0 ∘ sum ∘ map ((_ / 100.0) ∘ f)
+    dmg (To Enemy Damage a) = toNum a
+    dmg (To Enemy DamageThruDef a) = toNum a
+    dmg (To (EnemyType _) Damage a) = toNum a
+    dmg (To (EnemyType _) DamageThruDef a) = toNum a
+    dmg (To Enemies Damage a) = 3.0 * toNum a
+    dmg (To Enemies DamageThruDef a) = 3.0 * toNum a
+    dmg (To (EnemiesType _) Damage a) = 3.0 * toNum a
+    dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * toNum a
     dmg _ = 0.0
+    boost (Grant _ _ ArtsUp a) = toNum a
+    boost _ = 0.0
     cardBonus = case card of
         Arts -> 1.0
         Buster -> 1.5
@@ -131,18 +141,18 @@ instance _c_ ∷ MatchServant InstantEffect where
         match (To t b _) = a == b && (not exclude || t /= Self)
         match _ = false
 instance _d_ ∷ MatchServant Trait where 
-    has a _ (Servant {traits}) = a `elem` traits
+    has a = const $ elem a ∘ _.traits
 instance _e_ ∷ MatchServant Alignment where
-    has a _ (Servant {align:(b:c)}) = a == b || a == c
+    has a _ {align:(b:c)} = a == b || a == c
 instance _f_ ∷ MatchServant PhantasmType where
-    has SingleTarget _ s = any match $ phantasmEffects s
+    has SingleTarget _ {phantasm} = any match $ phantasmEffects phantasm
       where 
         match (To Enemy Damage _) = true
         match (To Enemy DamageThruDef _) = true
         match (To (EnemyType _) Damage _) = true
         match (To (EnemyType _) DamageThruDef _) = true
         match _ = false
-    has MultiTarget _ s = any match $ phantasmEffects s
+    has MultiTarget _ {phantasm} = any match $ phantasmEffects phantasm
       where 
         match (To Enemies Damage _) = true
         match (To Enemies DamageThruDef _) = true
@@ -151,13 +161,13 @@ instance _f_ ∷ MatchServant PhantasmType where
         match _ = false
     has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
 instance _g_ ∷ MatchServant Class where
-    has a _ (Servant {class: cla}) = a == cla
+    has a = const $ eq a ∘ _.class
 instance _h_ ∷ MatchServant Attribute where
-    has a _ (Servant {attr}) = a == attr
+    has a = const $ eq a ∘ _.attr
 instance _i_ ∷ MatchServant Deck where
-    has a _ (Servant {deck}) = a == deck
+    has a = const $ eq a ∘ _.deck
 instance _j_ ∷ MatchServant Card where
-    has a _ (Servant {phantasm:{card}}) = a == card
+    has a = const $ eq a ∘ _.phantasm.card
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------

@@ -29,13 +29,13 @@ extraFilters =
     , "Medea (Lily)"
     ]
   , Filter FilterEvent "+50% Kaleid CE" 
-    $ \_ (Servant {traits}) -> Male `notElem` traits
+    ∘ const $ notElem Male ∘ _.traits
   , servantBonus FilterOther "New" 
     [ "Illyasviel von Einzbern" 
     , "Chloe von Einzbern"
     ]
-  , Filter FilterOther "Limited" $ \_ (Servant {limited}) -> limited
-  , Filter FilterOther "Non-Limited" $ \_ (Servant {limited}) -> not limited
+  , Filter FilterOther "Limited" $ const _.limited
+  , Filter FilterOther "Non-Limited" ∘ const $ not ∘ _.limited
   ]
 data FilterTab = FilterEvent | FilterOther
                | FilterPhantasm | FilterCard 
@@ -66,9 +66,8 @@ unFilter ∷ ∀ a. MatchServant a => FilterTab -> a -> Filter
 unFilter tab = uncurry (Filter tab) ∘ (show &&& not ∘ has)
 
 servantBonus ∷ FilterTab -> String -> Array String -> Filter
-servantBonus tab bonus servants = Filter tab bonus match
-    where
-      match _ (Servant {name}) = name `elem` servants
+servantBonus tab bonus servants 
+    = Filter tab bonus ∘ const $ (_ `elem` servants) ∘ _.name
 
 getExtraFilters ∷ FilterTab -> Array Filter
 getExtraFilters tab = filter fromTab extraFilters

@@ -45,7 +45,7 @@ type State = { filters  ∷ Array Filter
              }
 
 urlName ∷ Servant -> String
-urlName (Servant {name}) = replaceAll (Pattern " ") (Replacement "") name
+urlName = replaceAll (Pattern " ") (Replacement "") ∘ _.name
 
 component ∷ ∀ m. MonadEffect m => String -> Map Preference Boolean
             -> Component HTML Query Unit Message m
@@ -106,23 +106,24 @@ component initialHash initialPrefs = Halogen.component
       baseAscend 
         | fromMaybe false $ M.lookup MaxAscension prefs = 4
         | otherwise                                     = 1
-      match serv  = (if matchAny then any else all) 
-                    (\(Filter _ _ f) -> f serv) filters
+      match s  = (if matchAny then any else all) 
+                 (\(Filter _ _ f) -> f s) filters
       meta filt 
         | filt `elem` filters = [_c "selected", _click $ UnFilter filt]
         | otherwise           = [_c "unselected", _click $ AddFilter filt]
 
   eval ∷ Query ~> ComponentDSL State Query Message m
   eval = case _ of
-      AddFilter filt     next -> (_ >> next) $ modFilters (cons filt)
-      UnFilter  filt     next -> (_ >> next) $ modFilters (delete filt)
-      MatchAny  matchAny next -> (_ >> next) $ modify_ _{ matchAny = matchAny }
-      SetSort   sortBy   next -> (_ >> next) $ modify_ _{ sortBy = sortBy }
-      Ascend    ascend   next -> (_ >> next) $ modify_ _{ ascend = ascend }
-      Focus     focus    next -> (_ >> next) $ do
+      AddFilter filt     next -> (_ >> pure next) $ modFilters (cons filt)
+      UnFilter  filt     next -> (_ >> pure next) $ modFilters (delete filt)
+      SetSort   sortBy   next -> (_ >> pure next) $ modify_ _{ sortBy = sortBy }
+      Ascend    ascend   next -> (_ >> pure next) $ modify_ _{ ascend = ascend }
+      MatchAny  matchAny next -> (_ >> pure next) $ 
+          modify_ _{ matchAny = matchAny }
+      Focus     focus    next -> (_ >> pure next) $ do
           liftEffect $ hash focus
           modify_ _{ focus = focus, ascend = 1 } 
-      SetPref   k v      next -> (_ >> next) $ do
+      SetPref   k v      next -> (_ >> pure next) $ do
           liftEffect $ setPreference k v
           modPrefs $ M.insert k v
     where
@@ -144,7 +145,7 @@ deck (Deck a b c d e) = card ∘ show <$> [a, b, c, d, e]
 
 portrait ∷ ∀ a. Boolean -> Boolean -> Int -> Tuple String Servant 
            -> HTML a (Query Unit)
-portrait big artorify ascension (Tuple lab serv@(Servant s))
+portrait big artorify ascension (Tuple lab s)
     = H.div meta
       [ _img $ "img/Servant/" ++ s.name ++ ascend ++ ".png"
       , H.div_ [ _img $ "img/Class/" ++ show s.class ++ ".png"]
@@ -157,7 +158,7 @@ portrait big artorify ascension (Tuple lab serv@(Servant s))
         ∘ ((big && ascension < 4) ? (_ `snoc` nextAscend))
         ∘ singleton ∘ _span ∘ joinWith "  " $ replicate s.rarity "★" 
       ]
-  where meta       = not big ? (cons ∘ _click ∘ Focus $ Just serv) 
+  where meta       = not big ? (cons ∘ _click ∘ Focus $ Just s) 
                    $ [_c $ "servant stars" ++ show s.rarity]
         doArtorify = replaceAll (Pattern "Altria") (Replacement "Artoria")
         prevAscend = H.a [_click ∘ Ascend $ ascension - 1] $ _txt "<"
@@ -170,12 +171,11 @@ modal ∷ ∀ a. Boolean -> Int -> Maybe Servant -> Array (HTML a (Query Unit))
         -> HTML a (Query Unit)
 modal _ _ Nothing = H.div [_i "layout"] ∘ append 
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal artorify ascend
-(Just serv@(Servant s@{gen, hits, stats:{base, max, grail}, phantasm})) 
+modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
   = H.div [_i "layout", _c "fade"] ∘ append 
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true artorify ascend $ Tuple "" serv
+      [ portrait true artorify ascend $ Tuple "" s
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ print base.atk,  _td $ print base.hp ]
         , H.tr_ [ _th "Max",   _td $ print max.atk,   _td $ print max.hp ]
@@ -185,9 +185,9 @@ modal artorify ascend
       
         [ H.tr_
           [ _th "Hits"
-          , _td $ show hits.q
-          , _td $ show hits.a
-          , _td $ show hits.b
+          , _td $ show hits.quick
+          , _td $ show hits.arts
+          , _td $ show hits.buster
           , _td $ show hits.ex
           , _td $ show phantasm.hits
           ] 
@@ -197,15 +197,15 @@ modal artorify ascend
         --, H.tr_ [_th "Deck", H.td_ $ show s.deck]
         , _tr "Deck"        $ show s.deck
         , _tr "NP Type"     ∘ show ∘ fromMaybe Support 
-                            $ find (\t -> has t false serv) 
+                            $ find (\t -> has t false s) 
                               [SingleTarget, MultiTarget]
-        --, _tr "NP Damage"   ∘ print' $ npDamage serv
+        --, _tr "NP Damage"   ∘ print' $ npDamage s
         , _tr "Alignment"   $ showAlignment s.align
         , _tr "Attribute"   $ show s.attr
         , _tr "Star Weight" $ show gen.starWeight
         , _tr "Star Rate"   $ show gen.starRate ++ "%"
-        , _tr "NP/Hit"      $ show gen.npPerHit ++ "%"
-        , _tr "NP/Defend"   $ show gen.npPerDefend ++ "%"
+        , _tr "NP/Hit"      $ show gen.npAtk ++ "%"
+        , _tr "NP/Defend"   $ show gen.npDef ++ "%"
         , _tr "Death Rate"  $ show s.death ++ "%"
         {-
         , rate "Damage"     ratings.damage
@@ -222,7 +222,7 @@ modal artorify ascend
         , _tr "Rank" $ show phantasm.rank
         , _tr "Card" $ show phantasm.card
         , _tr "Class" $ phantasm.kind
-        --, _tr "Damage" ∘ print' $ npDamage serv
+        --, _tr "Damage" ∘ print' $ npDamage s
         , H.tr_ [_th "Effects", H.td_ $ _p ∘ show <$> phantasm.effect]
         , H.tr_ [_th "Overcharge", H.td_ $ _p ∘ show <$> phantasm.over]
         ]

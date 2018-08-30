@@ -31,10 +31,13 @@ servants = addUniversal ∘ addHeavenOrEarth
         ++ riders
         ++ sabers    
   where
-    addUniversal (Servant s@{traits}) = Servant s{traits = cons Humanoid traits}
-    addHeavenOrEarth serv@(Servant s@{attr, traits})
-      | attr /= Earth && attr /= Heaven = serv
-      | otherwise = Servant s{traits = cons HeavenOrEarth traits}
+    addUniversal s@{traits, passives} 
+        = s { traits   = sortWith show $ cons Humanoid traits 
+            , passives = sortWith show passives
+            }
+    addHeavenOrEarth s@{attr, traits}
+      | attr /= Earth && attr /= Heaven = s
+      | otherwise = s{traits = cons HeavenOrEarth traits}
 
 getAll ∷ ∀ a. MatchServant a => Array a
 getAll = (_ $ unit) ∘ memoize $ \_ -> sortWith show $ filter exists enumArray
@@ -42,6 +45,4 @@ getAll = (_ $ unit) ∘ memoize $ \_ -> sortWith show $ filter exists enumArray
     exists eff = any (has eff false) servants 
 
 getPassives ∷ Array String
-getPassives = sort ∘ nub ∘ concat $ getPassive <$> servants
-  where
-    getPassive (Servant {passives}) = (_.name) <$> passives
+getPassives = sort ∘ nub ∘ concat $ (map _.name ∘ _.passives) <$> servants

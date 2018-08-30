@@ -5,8 +5,9 @@ import Operators
 import Database.Model
 
 lancers ∷ Array Servant
-lancers = Servant <$>
-[ { name:     "Scathach"
+lancers = [
+  { name:     "Scathach"
+  , id:       70
   , rarity:   5
   , class:    Lancer
   , attr:     Star
@@ -15,25 +16,24 @@ lancers = Servant <$>
               , max:   { atk: 11375, hp: 14825 }
               , grail: { atk: 12452, hp: 16241 }
               }
-  , ratings:  { damage:5, np:3, critical:4, utility:3, support:3, durability:4 }
   , actives:  [ { name:   "Wisdom of Dun Scaith A+"
                 , icon:   IconDodge
-                , cd:     5
-                , effect: [ Grant Self 1 Evasion 0.0 
-                          , Chance 80 $ Grant Self 3 CritUp 50.0
-                          , Chance 80 $ Grant Self 3 StarAbsorb 500.0
+                , cd:     7
+                , effect: [ Grant Self 1 Evasion Full
+                          , Chance 80 ∘ Grant Self 3 CritUp $ 30.0 ~ 50.0
+                          , Chance 80 ∘ Grant Self 3 StarAbsorb $ 300.0 ~ 500.0
                           ]
                 }
               , { name:   "Primordial Rune"
                 , icon:   IconQuickUp
-                , cd:     6
-                , effect: [ Grant Ally 1 QuickUp 50.0 ]
+                , cd:     8
+                , effect: [ Grant Ally 1 QuickUp $ 30.0 ~ 50.0 ]
                 }
               , { name:   "God-Slayer B"
                 , icon:   IconDamageUp
-                , cd:     5
-                , effect: [ Grant Self 1 (AttackUpVs Divine) 100.0 
-                          , Grant Self 1 (AttackUpVs Undead)  100.0
+                , cd:     7
+                , effect: [ Grant Self 1 (AttackUpVs Divine) $ 50.0 ~ 100.0 
+                          , Grant Self 1 (AttackUpVs Undead) $ 50.0 ~ 100.0
                           ] 
                 }
               ]
@@ -44,19 +44,21 @@ lancers = Servant <$>
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage 2400.0  
-                        , Debuff Enemy 1 Stun 0.0
+              , effect: [ Chance 500 $ Debuff Enemy 1 Stun Full
+                        , To Enemy Damage $ 1600.0 ~ 2400.0  
                         ]
-              , over:   [ To Enemy Kill 50.0 ]
+              , over:   [ To Enemy Kill $ 60.0 ~ 100.0 ]
+              , first:  true
               }
-  , gen:      { starWeight: 88, starRate: 12.2, npPerHit: 0.71, npPerDefend: 4 }
-  , hits:     { a: 3, b: 6, q: 2, ex: 7 }
+  , gen:      { starWeight: 88, starRate: 12.2, npAtk: 0.71, npDef: 4 }
+  , hits:     { arts: 3, buster: 6, quick: 2, ex: 7 }
   , traits:   [Female, EnumaElish, King]
   , death:    32.0
   , align:    Neutral:Good
   , limited:  true
   }
 , { name:     "Karna"
+  , id:       85
   , rarity:   5
   , class:    Lancer
   , attr:     Heaven
@@ -65,27 +67,26 @@ lancers = Servant <$>
               , max:   { atk: 11976, hp: 13632 }
               , grail: { atk: 13110, hp: 14934 }
               }
-  , ratings:  { damage:4, np:4, critical:4, utility:4, support:3, durability:2 }
   , actives:  [ { name:   "Knowledge of the Deprived A"
                 , icon:   IconCircuits
-                , cd:     6
-                , effect: [ Debuff Enemy 1 SealNP 0.0 
-                          , Debuff Enemy 1 DebuffVuln 50.0
+                , cd:     8
+                , effect: [ Debuff Enemy 1 SealNP Full
+                          , Debuff Enemy 1 DebuffVuln $ 30.0 ~ 50.0
                           ]
                 }
               , { name:   "Mana Burst (Flame) A"
                 , icon:   IconBusterUp
-                , cd:     5
-                , effect: [ Grant Self 1 BusterUp 30.0 
-                          , Grant Self 1 NPUp 20.0
+                , cd:     7
+                , effect: [ Grant Self 1 BusterUp $ 20.0 ~ 30.0 
+                          , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Uncrowned Arms Mastery"
                 , icon:   IconNoble
-                , cd:     6
-                , effect: [ To Self GaugeUp 25.0 
-                          , Grant Self 3 StarUp 50.0
-                          , Grant Self 3 CritUp 40.0
+                , cd:     8
+                , effect: [ To Self GaugeUp $ Flat 25.0 
+                          , Grant Self 3 StarUp $ 30.0 ~ 50.0
+                          , Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
                 }
               ]
@@ -96,17 +97,19 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Divine"
               , hits:   5
-              , effect: [ To Enemies Damage 500.0 ]
-              , over:   [ To (EnemiesType Divine) Damage 150.0 ]
+              , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
+              , over:   [ To (EnemiesType Divine) Damage $ 150.0 ~ 200.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 88, starRate: 12.2, npPerHit: 0.72, npPerDefend: 4 }
-  , hits:     { a: 3, b: 1, q: 3, ex: 4 }
-  , traits:   [Male, Riding, Brynhildr, Divine, EnumaElish]
+  , gen:      { starWeight: 88, starRate: 12.2, npAtk: 0.72, npDef: 4 }
+  , hits:     { arts: 3, buster: 1, quick: 3, ex: 4 }
+  , traits:   [Male, Riding, Brynhild, Divine, EnumaElish]
   , death:    28.0
   , align:    Lawful:Good
   , limited:  false
   }
 , { name:     "Tamamo no Mae (Lancer)"
+  , id:       128
   , rarity:   5
   , class:    Lancer
   , attr:     Heaven
@@ -115,33 +118,32 @@ lancers = Servant <$>
               , max:   { atk: 10726, hp: 15147 }
               , grail: { atk: 11741, hp: 16594 }
               }
-  , ratings:  { damage:4, np:5, critical:4, utility:2, support:3, durability:3 }
   , actives:  [ { name:   "Beach Flower EX"
                 , icon:   IconSwordUp
-                , cd:     5
-                , effect: [ Grant Party 3 AttackUp 10.0 
-                          , Grant (AlliesType Male) 3 StarUp 42.0
+                , cd:     7
+                , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
+                          , Grant (AlliesType Male) 3 StarUp $ 22.0 ~ 42.0
                           ]
                 }
               , { name:   "Midsummer Curse A"
                 , icon:   IconHeart
-                , cd:     7
-                , effect: [ Debuff Enemy 1 Charm 0.0 
-                          , Debuff Enemy 3 DefenseDown 30.0
-                          , Debuff Enemy 5 Curse 1000.0
-                          , To Enemy DemeritCharge 1.0
+                , cd:     9
+                , effect: [ Debuff Enemy 1 Charm Full
+                          , Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0
+                          , Debuff Enemy 5 Curse $ 500.0 ~ 1000.0
+                          , To Enemy DemeritCharge $ Flat 1.0
                           ]
                 }
               , { name:   "Goddess Morph B"
                 , icon:   IconShield
-                , cd:     6
-                , effect: [ Grant Self 1 Invincibility 0.0 
-                          , Grant Self 1 CritUp 50.0
-                          , Grant Self 1 StarUp 50.0
-                          , Grant Self 1 NPGen 50.0
-                          , Grant Self 1 DebuffResist 50.0
-                          , Grant Self 1 HealingReceived 50.0
-                          , Debuff Self 1 StunBomb 0.0
+                , cd:     8
+                , effect: [ Grant Self 1 Invincibility Full
+                          , Grant Self 1 CritUp $ 30.0 ~ 50.0
+                          , Grant Self 1 StarUp $ 30.0 ~ 50.0
+                          , Grant Self 1 NPGen $ 30.0 ~ 50.0
+                          , Grant Self 1 DebuffResist $ 30.0 ~ 50.0
+                          , Grant Self 1 HealingReceived $ 30.0 ~ 50.0
+                          , Debuff Self 1 StunBomb Full
                           ]
                 }
               ]
@@ -152,17 +154,19 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Unit"
               , hits:   4
-              , effect: [ To Enemy Damage 1000.0 ]
-              , over:   [ To (EnemyType Male) Damage 150.0 ]
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 ]
+              , over:   [ To (EnemyType Male) Damage $ 150.0 ~ 200.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 91, starRate: 12.2, npPerHit: 1.05, npPerDefend: 4 }
-  , hits:     { a: 2, b: 3, q: 4, ex: 4 }
+  , gen:      { starWeight: 91, starRate: 12.2, npAtk: 1.05, npDef: 4 }
+  , hits:     { arts: 2, buster: 3, quick: 4, ex: 4 }
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    40.0
   , align:    Neutral:Summer
   , limited:  true
   }
 , { name:     "Brynhild"
+  , id:       88
   , rarity:   5
   , class:    Lancer
   , attr:     Heaven
@@ -171,26 +175,25 @@ lancers = Servant <$>
               , max:   { atk: 11432, hp: 14825 }
               , grail: { atk: 12514, hp: 16241 }
               }
-  , ratings:  { damage:4, np:4, critical:4, utility:3, support:4, durability:3 }
   , actives:  [ { name:   "Mana Burst (Flame) B"
                 , icon:   IconBusterUp
-                , cd:     5
-                , effect: [ Grant Self 1 BusterUp 25.0 
-                          , Grant Self 1 NPUp 15.0
+                , cd:     7
+                , effect: [ Grant Self 1 BusterUp $ 15.0 ~ 25.0 
+                          , Grant Self 1 NPUp $ 8.0 ~ 15.0
                           ]
                 }
               , { name:   "Primordial Rune"
                 , icon:   IconExclamationDown
-                , cd:     6
-                , effect: [ Debuff Enemy 3 CritChance 50.0 
-                          , Debuff Enemy 1 NPDown 30.0
+                , cd:     8
+                , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0 
+                          , Debuff Enemy 1 NPDown $ 15.0 ~ 30.0
                           ]
                 }
               , { name:   "Hero's Assistant C"
                 , icon:   IconStarUp
-                , cd:     5
-                , effect: [ Grant Ally 3 StarAbsorb 600.0 
-                          , To Ally Heal 1000.0
+                , cd:     7
+                , effect: [ Grant Ally 3 StarAbsorb $ 300.0 ~ 600.0 
+                          , To Ally Heal $ 1000.0 ~ 3000.0
                           ]
                 }
               ]
@@ -201,19 +204,21 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   5
-              , effect: [ To Enemy Damage 1000.0
-                        , Grant Allies 3 StarUp 30.0
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
+                        , Grant Allies 3 StarUp $ Flat 30.0
                         ]
-              , over:   [ To (EnemyType Brynhildr) Damage 150.0 ]
+              , over:   [ To (EnemyType Brynhild) Damage $ 150.0 ~ 200.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 87, starRate: 12.2, npPerHit: 1.07, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 3, ex: 5 }
+  , gen:      { starWeight: 87, starRate: 12.2, npAtk: 1.07, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 3, ex: 5 }
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    32.0
   , align:    Neutral:Good
   , limited:  true
   }
 , { name:     "Altria Pendragon (Lancer)"
+  , id:       119
   , rarity:   5
   , class:    Lancer
   , attr:     Heaven
@@ -222,22 +227,21 @@ lancers = Servant <$>
               , max:   { atk: 10995, hp: 15606 }
               , grail: { atk: 12036 , hp: 17097 }
               }
-  , ratings:  { damage:3, np:5, critical:2, utility:3, support:2, durability:2 }
   , actives:  [ { name:   "Mana Burst A"
                 , icon:   IconBusterUp
-                , cd:     5
-                , effect: [ Grant Self 1 BusterUp 50.0 ]
+                , cd:     7
+                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Charisma B"
                 , icon:   IconSwordUp
-                , cd:     5
-                , effect: [ Grant Party 3 AttackUp 18.0 ]
+                , cd:     7
+                , effect: [ Grant Party 3 AttackUp $ 9.0 ~ 18.0 ]
                 }
               , { name:   "Protection of World's End EX"
                 , icon:   IconNoble
-                , cd:     6
-                , effect: [ To Self GaugeUp 50.0 
-                          , To Self RemoveDebuffs 0.0
+                , cd:     8
+                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 
+                          , To Self RemoveDebuffs Full
                           ]
                 }
               ]
@@ -248,19 +252,21 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Fortress"
               , hits:   2
-              , effect: [ Grant Self 1 IgnoreInvinc 0.0 
-                        , To Enemies Damage 500.0
+              , effect: [ Grant Self 1 IgnoreInvinc Full
+                        , To Enemies Damage $ 300.0 ~ 500.0
                         ]
-              , over:   [ To Self GaugeUp 20.0 ]
+              , over:   [ To Self GaugeUp $ 20.0 ~ 60.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 89, starRate: 12.2, npPerHit: 1.1, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 3, ex: 5 }
+  , gen:      { starWeight: 89, starRate: 12.2, npAtk: 1.1, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 3, ex: 5 }
   , traits:   [Female, Arthur, Dragon, King, Riding, Saberface, EnumaElish]
   , death:    24.0
   , align:    Lawful:Good
   , limited:  false
   }
 , { name:     "Altria Pendragon (Lancer Alter)"
+  , id:       78
   , rarity:   4
   , class:    Lancer
   , attr:     Heaven
@@ -269,24 +275,23 @@ lancers = Servant <$>
               , max:   { atk: 9968, hp: 11761 }
               , grail: { atk: 12069, hp: 14260 }
               }
-  , ratings:  { damage:5, np:3, critical:5, utility:2, support:2, durability:2 }
   , actives:  [ { name:   "Mana Burst A+"
                 , icon:   IconBusterUp
-                , cd:     5
-                , effect: [ Grant Self 1 BusterUp 55.0 ]
+                , cd:     7
+                , effect: [ Grant Self 1 BusterUp $ 35.0 ~ 55.0 ]
                 }
               , { name:   "Protection of World's End A"
                 , icon:   IconStarUp
-                , cd:     5
-                , effect: [ Grant Self 1 StarAbsorb 1000.0 
-                          , Grant Self 1 CritUp 50.0
-                          , To Party GainStars 10.0
+                , cd:     7
+                , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0 
+                          , Grant Self 1 CritUp $ 30.0 ~ 50.0
+                          , To Party GainStars $ 5.0 ~ 10.0
                           ]
                 }
               , { name:   "Charisma E"
                 , icon:   IconSwordUp
-                , cd:     5
-                , effect: [ Grant Party 3 AttackUp 12.0 ]
+                , cd:     7
+                , effect: [ Grant Party 3 AttackUp $ 6.0 ~ 12.0 ]
                 }
               ]
   , passives: [magicResistance A, riding A]
@@ -296,19 +301,21 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Fortress"
               , hits:   4
-              , effect: [ To Enemies DamageThruDef 600.0 
-                        , Chance 60 $ Debuff Enemies 1 SealNP 0.0
+              , effect: [ To Enemies DamageThruDef $ 400.0 ~ 600.0 
+                        , Chance 60 $ Debuff Enemies 1 SealNP Full
                         ]
-              , over:   [ Debuff Enemies 5 Curse 1000.0 ]
+              , over:   [ Debuff Enemies 5 Curse $ 1000.0 ~ 3000.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 88, starRate: 11.8, npPerHit: 0.74, npPerDefend: 4 }
-  , hits:     { a: 3, b: 1, q: 2, ex: 4 }
+  , gen:      { starWeight: 88, starRate: 11.8, npAtk: 0.74, npDef: 4 }
+  , hits:     { arts: 3, buster: 1, quick: 2, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    23.0
   , align:    Lawful:Good
   , limited:  false
   }
 , { name:     "Li Shuwen"
+  , id:       102
   , rarity:   4
   , class:    Lancer
   , attr:     Mankind
@@ -317,26 +324,25 @@ lancers = Servant <$>
               , max:   { atk: 9653, hp: 11360 }
               , grail: { atk: 11688, hp: 13774 }
               }
-  , ratings:  { damage:5, np:3, critical:4, utility:3, support:1, durability:3 }
   , actives:  [ { name:   "Chinese Martial Arts (Liu He Da Qiang) A++"
                 , icon:   IconBullseye
-                , cd:     6
-                , effect: [ Grant Self 1 Evasion 0.0
-                          , Grant Self 1 CritUp 100.0
+                , cd:     8
+                , effect: [ Grant Self 1 Evasion Full
+                          , Grant Self 1 CritUp $ 50.0 ~ 100.0
                           ]
                 }
               , { name:   "Sphere Boundary B"
                 , icon:   IconDodge
-                , cd:     6
-                , effect: [ Grant Self 1 Evasion 0.0 
-                          , Grant Self 1 StarAbsorb 500.0
+                , cd:     8
+                , effect: [ Grant Self 1 Evasion Full
+                          , Grant Self 1 StarAbsorb $ 300.0 ~ 500.0
                           ]
                 }
               , { name:   "Juezhao B"
                 , icon:   IconShieldBreak
-                , cd:     6
-                , effect: [ Grant Self 1 IgnoreInvinc 0.0 
-                          , Grant Self 1 ArtsUp 50.0
+                , cd:     8
+                , effect: [ Grant Self 1 IgnoreInvinc Full
+                          , Grant Self 1 ArtsUp $ 30.0 ~ 50.0
                           ]
                 }
               ]
@@ -347,19 +353,21 @@ lancers = Servant <$>
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   3
-              , effect: [ To Enemy DamageThruDef 1500.0 
-                        , Debuff Enemy 3 DefenseDown 20.0
+              , effect: [ To Enemy DamageThruDef $ 900.0 ~ 1500.0 
+                        , Debuff Enemy 3 DefenseDown $ Flat 20.0
                         ]
-              , over:   [ To Enemy Kill 40.0 ]
+              , over:   [ To Enemy Kill $ 40.0 ~ 80.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 87, starRate: 12.2, npPerHit: 0.52, npPerDefend: 4 }
-  , hits:     { a: 3, b: 1, q: 3, ex: 5 }
+  , gen:      { starWeight: 87, starRate: 12.2, npAtk: 0.52, npDef: 4 }
+  , hits:     { arts: 3, buster: 1, quick: 3, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    40.0
   , align:    Neutral:Evil
   , limited:  false
   }
 , { name:     "Kiyohime (Lancer)"
+  , id:       134
   , rarity:   4
   , class:    Lancer
   , attr:     Earth 
@@ -368,22 +376,22 @@ lancers = Servant <$>
               , max:   { atk: 8936, hp: 11870 }
               , grail: { atk: 10820, hp: 14392 }
               }
-  , ratings:  { damage:5, np:3, critical:2, utility:2, support:2, durability:2 }
   , actives:  [ { name:   "Passionate Summer A"
                 , icon:   IconExclamationDown
-                , cd:     5
-                , effect: [ Debuff Enemies 3 CritChance 30.0 ]
+                , cd:     7
+                , effect: [ Debuff Enemies 3 CritChance $ 20.0 ~ 30.0 ]
                 }
               , { name:   "Bath Transformation A"
                 , icon:   IconBusterUp
-                , cd:     5
-                , effect: [ Grant Self 3 BusterUp 30.0 ]
+                , cd:     7
+                , effect: [ Grant Self 3 BusterUp $ 20.0 ~ 30.0 ]
                 }
               , { name:   "Pursuer of Love A"
                 , icon:   IconShieldDown
-                , cd:     5
-                , effect: [ Debuff Enemy 3 DefenseDown 30.0 
-                          , Grant Enemy 3 AttackUp 20.0
+                , cd:     7
+                , effect: [ Chance 500 
+                            ∘ Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0 
+                          , Grant Enemy 3 AttackUp $ Flat 20.0
                           ]
                 }
               ]
@@ -394,19 +402,21 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   6
-              , effect: [ To Enemy Damage 1000.0 
-                        , Chance 150 $ Debuff Enemy 1 SealSkills 0.0
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 
+                        , Chance 150 $ Debuff Enemy 1 SealSkills Full
                         ]
-              , over:   [ Debuff Enemy 5 Burn 500.0 ]
+              , over:   [ Debuff Enemy 5 Burn $ 500.0 ~ 2500.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 92, starRate: 12.0, npPerHit: 1.05, npPerDefend: 4 }
-  , hits:     { a: 2, b: 6, q: 2, ex: 5 }
+  , gen:      { starWeight: 92, starRate: 12.0, npAtk: 1.05, npDef: 4 }
+  , hits:     { arts: 2, buster: 6, quick: 2, ex: 5 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    40.0
   , align:    Chaotic:Evil
   , limited:  true
   }
 , { name:     "Elisabeth Bathory"
+  , id:       18
   , rarity:   4
   , class:    Lancer
   , attr:     Mankind
@@ -415,21 +425,20 @@ lancers = Servant <$>
               , max:   { atk: 9122, hp: 11870 }
               , grail: { atk: 11045, hp: 14392 }
               }
-  , ratings:  { damage:2, np:3, critical:2, utility:2, support:3, durability:3 }
   , actives:  [ { name:   "Charisma C"
                 , icon:   IconSwordUp
-                , cd:     5
-                , effect: [ Grant Party 3 AttackUp 16.0 ]
+                , cd:     7
+                , effect: [ Grant Party 3 AttackUp $ 8.0 ~ 16.0 ]
                 }
               , { name:   "Torture Technique A"
                 , icon:   IconShieldDown
-                , cd:     5
-                , effect: [ Debuff Enemy 3 DefenseDown 20.0 ]
+                , cd:     7
+                , effect: [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 20.0 ]
                 }
               , { name:   "Battle Continuation B"
                 , icon:   IconKneel
-                , cd:     7
-                , effect: [ Grant Self 4 Guts 1.0 ]
+                , cd:     9
+                , effect: [ Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
                 }
               ]
   , passives: [magicResistance A, territoryCreation B]
@@ -439,17 +448,19 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   5
-              , effect: [ To Enemies DamageThruDef 500.0 ]
-              , over:   [ Debuff Enemies 3 Curse 500.0 ]
+              , effect: [ To Enemies DamageThruDef $ 300.0 ~ 500.0 ]
+              , over:   [ Debuff Enemies 3 Curse $ 500.0 ~ 2500.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 90, starRate: 11.0, npPerHit: 1.1, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 90, starRate: 11.0, npAtk: 1.1, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    24.0
   , align:    Chaotic:Evil
   , limited:  false
   }
 , { name:     "Fionn mac Cumhaill"
+  , id:       87
   , rarity:   4
   , class:    Lancer
   , attr:     Heaven
@@ -458,24 +469,23 @@ lancers = Servant <$>
               , max:   { atk: 8930, hp: 12750 }
               , grail: { atk: 10812, hp: 15459 }
               }
-  , ratings:  { damage:2, np:1, critical:1, utility:2, support:3, durability:3 }
   , actives:  [ { name:   "Clairvoyance B"
                 , icon:   IconStarHaloUp
-                , cd:     6
-                , effect: [ Grant Self 3 StarUp 38.0 ]
+                , cd:     8
+                , effect: [ Grant Self 3 StarUp $ 19.0 ~ 38.0 ]
                 }
               , { name:   "Trouble with Women A"
                 , icon:   IconDodge
-                , cd:     10
-                , effect: [ Chance 100 $ Grant Self 1 Evasion 0.0 
-                          , Grant Self 1 Taunt 0.0
-                          , Debuff Self 3 CharmVuln 80.0
+                , cd:     12
+                , effect: [ Chances 60 100 $ Grant Self 1 Evasion Full
+                          , Grant Self 1 Taunt Full
+                          , Debuff Self 3 CharmVuln $ Flat 80.0
                           ]
                 }
               , { name:   "Magecraft B"
                 , icon:   IconArtsUp
-                , cd:     5
-                , effect: [ Grant Self 1 ArtsUp 40.0 ]
+                , cd:     7
+                , effect: [ Grant Self 1 ArtsUp $ 24.0 ~ 40.0 ]
                 }
               ]
   , passives: [magicResistance B, divinity D]
@@ -485,45 +495,46 @@ lancers = Servant <$>
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   3
-              , effect: [ To Enemies Damage 900.0 
-                        , Grant Self 3 DebuffImmunity 0.0
+              , effect: [ To Enemies Damage $ 600.0 ~ 900.0 
+                        , Grant Self 3 DebuffImmunity Full
                         ]
-              , over:   [ Debuff Enemies 3 AttackDown 10.0 ]
+              , over:   [ Debuff Enemies 3 AttackDown $ 10.0 ~ 30.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 89, starRate: 12.3, npPerHit: 0.55, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 4 }
+  , gen:      { starWeight: 89, starRate: 12.3, npAtk: 0.55, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 4 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    32.0
   , align:    Neutral:Balanced
   , limited:  false
   }
 , { name:     "Cu Chulainn"
+  , id:       17
   , rarity:   3
   , class:    Lancer
   , attr:     Heaven
   , deck:     Deck Quick Quick Arts Buster Buster
-  , stats:    { base:  { atk: 1344,  hp: 1726 }
+  , stats:    { base:  { atk: 1334,  hp: 1726 }
               , max:   { atk: 7239, hp: 9593 }
               , grail: { atk: 9797, hp: 13007 }
               }
-  , ratings:  { damage:3, np:3, critical:2, utility:3, support:1, durability:5 }
   , actives:  [ { name:   "Battle Continuation A"
                 , icon:   IconKneel
-                , cd:     7
-                , effect: [ Grant Self 5 Guts 1.0 ]
+                , cd:     9
+                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               , { name:   "Protection from Arrows B"
                 , icon:   IconDodge
-                , cd:     5
-                , effect: [ Grant Self 0 Evasion 3.0 
-                          , Grant Self 3 DefenseUp 16.0
+                , cd:     7
+                , effect: [ Grant Self 0 Evasion $ Flat 3.0 
+                          , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
               , { name:   "Disengage C"
                 , icon:   IconBubbles
-                , cd:     5
-                , effect: [ To Self RemoveDebuffs 0.0
-                          , To Self Heal 1500.0
+                , cd:     7
+                , effect: [ To Self RemoveDebuffs Full
+                          , To Self Heal $ 500.0 ~ 1500.0
                           ]
                 }
               ]
@@ -534,19 +545,21 @@ lancers = Servant <$>
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage 2000.0 ]
-              , over:   [ To Enemy Kill 50.0 
-                        , Debuff Enemy 3 DefenseDown 10.0
+              , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 ]
+              , over:   [ To Enemy Kill $ 50.0 ~ 100.0
+                        , Debuff Enemy 3 DefenseDown $ 10.0 ~ 30.0
                         ]
+              , first:  true
               }
-  , gen:      { starWeight: 87, starRate: 12.1, npPerHit: 1.07, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, Divine, Brynhildr, EnumaElish]
+  , gen:      { starWeight: 87, starRate: 12.1, npAtk: 1.07, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    32.0
   , align:    Lawful:Balanced
   , limited:  false
   }
 , { name:     "Cu Chulainn (Prototype)"
+  , id:       20
   , rarity:   3
   , class:    Lancer
   , attr:     Heaven
@@ -555,25 +568,24 @@ lancers = Servant <$>
               , max:   { atk: 7082, hp: 10098 }
               , grail: { atk: 9584, hp: 13691 }
               }
-  , ratings:  { damage:3, np:3, critical:4, utility:4, support:1, durability:4 }
   , actives:  [ { name:   "Rune Spell B"
                 , icon:   IconExclamationUp
-                , cd:     5
-                , effect: [ Grant Self 3 CritUp 45.0 
-                          , Grant Self 3 DebuffResist 45.0
+                , cd:     7
+                , effect: [ Grant Self 3 CritUp $ 18.0 ~ 45.0 
+                          , Grant Self 3 DebuffResist $ 18.0 ~ 45.0
                           ]
                 }
               , { name:   "Protection from Arrows B"
                 , icon:   IconDodge
-                , cd:     5
-                , effect: [ Grant Self 0 Evasion 3.0 
-                          , Grant Self 3 DefenseUp 16.0
+                , cd:     7
+                , effect: [ Grant Self 0 Evasion $ Flat 3.0 
+                          , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
               , { name:   "Beast-Slayer B+"
                 , icon:   IconDamageUp
-                , cd:     5
-                , effect: [ Grant Self 3 (AttackUpVs Beast) 60.0 ]
+                , cd:     7
+                , effect: [ Grant Self 3 (AttackUpVs Beast) $ 40.0 ~ 60.0 ]
                 }
               ]
   , passives: [magicResistance C, divinity B]
@@ -583,19 +595,21 @@ lancers = Servant <$>
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage 2000.0 ]
-              , over:   [ To Enemy Kill 50.0 
-                        , Debuff Enemy 3 DefenseDown 50.0
+              , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 ]
+              , over:   [ To Enemy Kill $ 50.0 ~ 100.0
+                        , Debuff Enemy 3 DefenseDown $ 50.0 ~ 100.0
                         ]
+              , first:  true
               }
-  , gen:      { starWeight: 88, starRate: 12.1, npPerHit: 1.08, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 88, starRate: 12.1, npAtk: 1.08, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    28.0
   , align:    Lawful:Balanced
   , limited:  false
   }
 , { name:     "Leonidas"
+  , id:       21
   , rarity:   2
   , class:    Lancer
   , attr:     Mankind
@@ -604,23 +618,22 @@ lancers = Servant <$>
               , max:   { atk: 6583, hp: 7959 }
               , grail: { atk: 9539, hp: 11486 }
               }
-  , ratings:  { damage:2, np:5, critical:3, utility:4, support:3, durability:4 }
   , actives:  [ { name:   "Rear Guard's Pride A"
                 , icon:   IconCrosshairUp
-                , cd:     5
-                , effect: [ Grant Self 1 Taunt 0.0 
-                          , Grant Self 3 NPGen 100.0
+                , cd:     7
+                , effect: [ Grant Self 1 Taunt Full
+                          , Grant Self 3 NPGen $ 50.0 ~ 100.0
                           ]
                 }
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
-                , cd:     7
-                , effect: [ Grant Self 5 Guts 1.0 ]
+                , cd:     9
+                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               , { name:   "Warrior's War Cry B"
                 , icon:   IconBusterUp
-                , cd:     5
-                , effect: [ Grant Party 3 BusterUp 25.0 ]
+                , cd:     7
+                , effect: [ Grant Party 3 BusterUp $ 15.0 ~ 25.0 ]
                 }
               ]
   , passives: [magicResistance C]
@@ -630,19 +643,21 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   0
-              , effect: [ Grant Self 3 Taunt 0.0 
-                        , To Party GainStars 25.0
+              , effect: [ Grant Self 3 Taunt Full
+                        , To Party GainStars $ 5.0 ~ 25.0
                         ]
-              , over:   [ Grant Self 3 DefenseUp 30.0 ]
+              , over:   [ Grant Self 3 DefenseUp $ 30.0 ~ 50.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 89, starRate: 11.8, npPerHit: 1.07, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 89, starRate: 11.8, npAtk: 1.07, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    32.0
   , align:    Lawful:Balanced
   , limited:  false
   }
 , { name:     "Romulus"
+  , id:       22
   , rarity:   3
   , class:    Lancer
   , attr:     Star
@@ -651,26 +666,27 @@ lancers = Servant <$>
               , max:   { atk: 7239, hp: 9883 }
               , grail: { atk: 9797, hp: 13400 }
               }
-  , ratings:  { damage:4, np:3, critical:2, utility:2, support:2, durability:4 }
   , actives:  [ { name:   "Natural Body C"
                 , icon:   IconHoodUp
-                , cd:     5
-                , effect: [ Grant Self 3 DebuffResist 100.0 
-                          , To Self Heal 2500.0
+                , cd:     7
+                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0 
+                          , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
               , { name:   "Imperial Privilege EX"
                 , icon:   IconHeal
-                , cd:     5
-                , effect: [ To Self Heal 3400.0
-                          , Chance 60 $ Grant Self 3 AttackUp 44.0 
-                          , Chance 60 $ Grant Self 3 DefenseUp 44.0
+                , cd:     7
+                , effect: [ To Self Heal $ 1200.0 ~ 3400.0
+                          , Chance 60 ∘ Grant Self 3 AttackUp $ 22.0 ~ 44.0 
+                          , Chance 60 ∘ Grant Self 3 DefenseUp $ 22.0 ~ 44.0
                           ]
                 }
               , { name:   "Seven Hills A"
                 , icon:   IconKneel
-                , cd:     7
-                , effect: [ Grant Ally 1 Guts 1.0 ]
+                , cd:     9
+                , effect: [ Grant Ally 1 Guts $ Flat 1000.0 
+                          , Grant Ally 1 BusterUp $ 10.0 ~ 30.0  
+                          ]
                 }
               ]
   , passives: [magicResistance B]
@@ -680,43 +696,44 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   7
-              , effect: [ To Enemies Damage 500.0 ]
-              , over:   [ Grant Party 3 AttackUp 10.0 ]
+              , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
+              , over:   [ Grant Party 3 AttackUp $ 10.0 ~ 30.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 90, starRate: 12.1, npPerHit: 1.07, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 90, starRate: 12.1, npAtk: 1.07, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
   , traits:   [Male, Roman, King]
   , death:    32.0
   , align:    Chaotic:Balanced
   , limited:  false
   }
 , { name:     "Hektor"
+  , id:       64
   , rarity:   3
   , class:    Lancer
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Buster Buster
-  , stats:    { base:  { atk: 1286,  hp: 1836 }
+  , stats:    { base:  { atk: 1334,  hp: 1726 }
               , max:   { atk: 6928 , hp: 10200 }
               , grail: { atk: 9376, hp: 13829 }
               }
-  , ratings:  { damage:4, np:3, critical:2, utility:3, support:3, durability:3 }
   , actives:  [ { name:   "Tactics C+"
                 , icon:   IconBeamUp
-                , cd:     4
-                , effect: [ Grant Party 1 NPUp 17.0 ]
+                , cd:     6
+                , effect: [ Grant Party 1 NPUp $ 8.5 ~ 17.0 ]
                 }
               , { name:   "Proof of Friendship C"
                 , icon:   IconDarkMagic
-                , cd:     5
-                , effect: [ Chance 80 $ To Enemy GaugeDown 1.0 
-                          , Chance 80 $ Debuff Enemy 1 Stun 0.0
+                , cd:     7
+                , effect: [ Chances 60 80 ∘ To Enemy GaugeDown $ Flat 1.0
+                          , Chances 60 80 $ Debuff Enemy 1 Stun Full
                           ]
                 }
               , { name:   "Disengage B"
                 , icon:   IconBubbles
-                , cd:     5
-                , effect: [ To Self RemoveDebuffs 0.0 
-                          , To Self Heal 2000.0
+                , cd:     7
+                , effect: [ To Self RemoveDebuffs Full
+                          , To Self Heal $ 800.0 ~ 2000.0
                           ]
                 }
               ]
@@ -727,17 +744,19 @@ lancers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ To Enemies DamageThruDef 600.0 ]
-              , over:   [ Debuff Enemies 3 DefenseDown 20.0 ]
+              , effect: [ To Enemies DamageThruDef $ 400.0 ~ 600.0 ]
+              , over:   [ Debuff Enemies 3 DefenseDown $ 20.0 ~ 40.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 90, starRate: 12.2, npPerHit: 1.08, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 90, starRate: 12.2, npAtk: 1.08, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
   , traits:   [Male, Riding, EnumaElish, GreekMyth]
   , death:    28.0
   , align:    Lawful:Balanced
   , limited:  false
   }
 , { name:     "Musashibou Benkei"
+  , id:       19
   , rarity:   2
   , class:    Lancer
   , attr:     Mankind
@@ -746,23 +765,22 @@ lancers = Servant <$>
               , max:   { atk: 5801, hp: 9149 }
               , grail: { atk: 8406, hp: 13204 }
               }
-  , ratings:  { damage:1, np:3, critical:2, utility:4, support:3, durability:4 }
   , actives:  [ { name:   "Vengeful Spirit Exorcism A"
                 , icon:   IconCircuits
-                , cd:     5
-                , effect: [ Chance 100 $ Debuff Enemy 1 SealSkills 0.0 ]
+                , cd:     7
+                , effect: [ Chances 50 100 $ Debuff Enemy 1 SealSkills Full ]
                 }
               , { name:   "Imposing Stance B"
                 , icon:   IconCrosshairUp
-                , cd:     5
-                , effect: [ Grant Self 1 Taunt 0.0 
-                          , Grant Self 1 DefenseUp 60.0
+                , cd:     7
+                , effect: [ Grant Self 1 Taunt Full
+                          , Grant Self 1 DefenseUp $ 30.0 ~ 60.0
                           ]
                 }
               , { name:   "Blank Subscription List"
                 , icon:   IconCircuits
-                , cd:     8
-                , effect: [ Chance 80 $ Debuff Enemies 1 SealNP 0.0 ]
+                , cd:     10
+                , effect: [ Chances 60 80 $ Debuff Enemies 1 SealNP Full ]
                 }
               ]
   , passives: [magicResistance CPlus]
@@ -772,17 +790,19 @@ lancers = Servant <$>
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   0
-              , effect: [ Chance 80 $ Debuff Enemies 1 Stun 0.0 ]
-              , over:   [ Debuff Enemies 3 Curse 500.0 ]
+              , effect: [ Chances 50 80 $ Debuff Enemies 1 Stun Full ]
+              , over:   [ Debuff Enemies 3 Curse $ 500.0 ~ 2500.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 89, starRate: 11.9, npPerHit: 0.79, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish, Brynhildr]
+  , gen:      { starWeight: 89, starRate: 11.9, npAtk: 0.79, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0
   , align:    Chaotic:Good
   , limited:  false
   }
 , { name:     "Diarmuid ua Duibhne"
+  , id:       71
   , rarity:   3
   , class:    Lancer
   , attr:     Earth
@@ -791,23 +811,23 @@ lancers = Servant <$>
               , max:   { atk: 6877, hp: 10098 }
               , grail: { atk: 9307, hp: 13691 }
               }
-  , ratings:  { damage:3, np:3, critical:2, utility:3, support:3, durability:4 }
   , actives:  [ { name:   "Mind's Eye (True) B"
                 , icon:   IconDodge
-                , cd:     6
-                , effect: [ Grant Self 1 Evasion 0.0 
-                          , Grant Self 3 DefenseUp 18.0
+                , cd:     8
+                , effect: [ Grant Self 1 Evasion Full
+                          , Grant Self 3 DefenseUp $ 9.0 ~ 18.0
                           ]
                 }
               , { name:   "Love Spot C"
                 , icon:   IconSwordDown
-                , cd:     5
-                , effect: [ Debuff (EnemiesType Female) 1 AttackDown 50.0 ]
+                , cd:     7
+                , effect: [ Debuff (EnemiesType Female) 1 AttackDown 
+                            $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Knight's Strategy B"
                 , icon:   IconStarHaloUp
-                , cd:     5
-                , effect: [ Grant Self 3 StarUp 50.0 ]
+                , cd:     7
+                , effect: [ Grant Self 3 StarUp $ 30.0 ~ 50.0 ]
                 }
               ]
   , passives: [magicResistance B]
@@ -817,14 +837,15 @@ lancers = Servant <$>
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   2
-              , effect: [ To Enemy Damage 2400.0 
-                        , To Enemy RemoveDebuffs 0.0
+              , effect: [ To Enemy Damage $ 1600.0 ~ 2400.0 
+                        , To Enemy RemoveDebuffs Full
                         ]
-              , over:   [ Debuff Enemy 5 Curse 500.0 ]
+              , over:   [ Debuff Enemy 5 Curse $ 500.0 ~ 1500.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 87, starRate: 12.3, npPerHit: 0.78, npPerDefend: 4 }
-  , hits:     { a: 2, b: 2, q: 2, ex: 4 }
-  , traits:   [Male, EnumaElish, Brynhildr]
+  , gen:      { starWeight: 87, starRate: 12.3, npAtk: 0.78, npDef: 4 }
+  , hits:     { arts: 2, buster: 2, quick: 2, ex: 4 }
+  , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0
   , align:    Lawful:Balanced
   , limited:  false

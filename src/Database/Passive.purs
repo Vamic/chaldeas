@@ -30,7 +30,7 @@ showPassive (Tuple {effect} rank)
 
 activate ∷ Rank -> PassiveEffect -> ActiveEffect
 activate rank (Give target buff ranks) 
-    = Grant target 0 buff ∘ fromMaybe (-1.0) $ lookup rank ranks
+    = Grant target 0 buff ∘ Flat ∘ fromMaybe (-1.0) $ lookup rank ranks
 
 type PassiveBase = Rank -> Passive
 

@@ -5,8 +5,9 @@ import Operators
 import Database.Model
 
 assassins ∷ Array Servant
-assassins = Servant <$>
-[ { name:     "Jack the Ripper"
+assassins = [
+  { name:     "Jack the Ripper"
+  , id:       75
   , rarity:   5
   , class:    Assassin
   , attr:     Earth
@@ -15,25 +16,24 @@ assassins = Servant <$>
               , max:   { atk: 11557, hp: 12696 }
               , grail: { atk: 12651, hp: 13909 }
               }
-  , ratings:  { damage:4, np:5, critical:5, utility:4, support:2, durability:3 }
   , actives:  [ { name:   "Murderer on a Misty Night A"
                 , icon:   IconDodge
-                , cd:     6
-                , effect: [ Grant Self 1 Evasion 0.0 
-                          , Grant Self 1 QuickUp 50.0
+                , cd:     8
+                , effect: [ Grant Self 1 Evasion Full
+                          , Grant Self 1 QuickUp $ 30.0 ~ 50.0
                           ]
                 }
               , { name:   "Information Erasure B"
                 , icon:   IconCircuits
-                , cd:     5
-                , effect: [ To Enemy RemoveBuffs 0.0 
-                          , Debuff Enemy 3 CritChance 30.0
+                , cd:     7
+                , effect: [ To Enemy RemoveBuffs Full
+                          , Debuff Enemy 3 CritChance $ 10.0 ~ 30.0
                           ]
                 }
               , { name:   "Surgery E"
                 , icon:   IconHeal
-                , cd:     4
-                , effect: [ To Ally Heal 2500.0 ]
+                , cd:     6
+                , effect: [ To Ally Heal $ 500.0 ~ 2500.0 ]
                 }
               ]
   , passives: [presenceConcealment APlus]
@@ -43,17 +43,19 @@ assassins = Servant <$>
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   4
-              , effect: [ To Enemy DamageThruDef 2200.0 ]
-              , over:   [ Grant Self 1 (AttackUpVs Female) 50.0 ]
+              , effect: [ To Enemy DamageThruDef $ 1400.0 ~ 2200.0 ]
+              , over:   [ Grant Self 1 (AttackUpVs Female) $ 50.0 ~ 100.0 ]
+              , first:  true
               }
-  , gen:      { starWeight: 97, starRate: 25.5, npPerHit: 1.07, npPerDefend: 4 }
-  , hits:     { a: 2, b: 2, q: 5, ex: 4 }
+  , gen:      { starWeight: 97, starRate: 25.5, npAtk: 1.07, npDef: 4 }
+  , hits:     { arts: 2, buster: 2, quick: 5, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Evil
   , limited:  false
   }
 , { name:     "Shuten-Douji"
+  , id:       112
   , rarity:   5
   , class:    Assassin
   , attr:     Earth
@@ -62,25 +64,24 @@ assassins = Servant <$>
               , max:   { atk: 11993, hp: 12825 }
               , grail: { atk: 13128, hp: 14050 }
               }
-  , ratings:  { damage:3, np:4, critical:3, utility:5, support:3, durability:3 }
   , actives:  [ { name:   "Intoxicating Aroma of Fruits A"
                 , icon:   IconHeart
-                , cd:     7
-                , effect: [ Chance 60 $ Debuff Enemies 1 Charm 0.0
-                          , Debuff Enemies 3 DefenseDown 20.0
+                , cd:     9
+                , effect: [ Chance 60 $ Debuff Enemies 1 Charm Full
+                          , Debuff Enemies 3 DefenseDown $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Demonic Nature of Oni A"
                 , icon:   IconSwordUp
-                , cd:     5
-                , effect: [ Grant Party 3 AttackUp 20.0 
-                          , Grant Self 3 NPUp 30.0
+                , cd:     7
+                , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0 
+                          , Grant Self 3 NPUp $ 20.0 ~ 30.0
                           ]
                 }
               , { name:   "Battle Continuation A+"
                 , icon:   IconKneel
-                , cd:     7
-                , effect: [ Grant Self 5 Guts 1.0 ]
+                , cd:     9
+                , effect: [ Grant Self 5 Guts $ 1200.0 ~ 2700.0 ]
                 }
               ]
   , passives: [presenceConcealment C, divinity C]
@@ -90,23 +91,25 @@ assassins = Servant <$>
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ To Enemies Damage 750.0 
-                        , Debuff Enemies 3 DebuffVuln 10.0
-                        , Debuff Enemies 3 AttackDown 10.0
-                        , Debuff Enemies 3 NPDown 10.0
-                        , Debuff Enemies 3 CritChance 10.0
-                        , Debuff Enemies 1 SealSkills 0.0
+              , effect: [ To Enemies Damage $ 450.0 ~ 750.0 
+                        , Debuff Enemies 3 DebuffVuln $ Flat 10.0
+                        , Debuff Enemies 3 AttackDown $ Flat 10.0
+                        , Debuff Enemies 3 NPDown $ Flat 10.0
+                        , Debuff Enemies 3 CritChance $ Flat 10.0
+                        , Debuff Enemies 1 SealSkills Full
                         ]
-              , over:   [ Debuff Enemies 5 Poison 1000.0 ]
+              , over:   [ Debuff Enemies 5 Poison $ 1000.0 ~ 5000.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 98, starRate: 25.0, npPerHit: 0.55, npPerDefend: 4 }
-  , hits:     { a: 3, b: 1, q: 4, ex: 6 }
+  , gen:      { starWeight: 98, starRate: 25.0, npAtk: 0.55, npDef: 4 }
+  , hits:     { arts: 3, buster: 1, quick: 4, ex: 6 }
   , traits:   [Female, Demonic, EnumaElish, Divine, Dragon]
   , death:    31.6
   , align:    Chaotic:Evil
   , limited:  true
   }
 , { name:     "Mysterious Heroine X"
+  , id:       86
   , rarity:   5
   , class:    Assassin
   , attr:     Star
@@ -115,22 +118,21 @@ assassins = Servant <$>
               , max:   { atk: 11761, hp: 12696 }
               , grail: { atk: 12874, hp: 13909 }
               }
-  , ratings:  { damage:4, np:5, critical:3, utility:2, support:1, durability:1 }
   , actives:  [ { name:   "Fire Support EX"
                 , icon:   IconStun
-                , cd:     8
-                , effect: [ Chance 80 $ Debuff Enemies 1 StunBomb 0.0 ]
+                , cd:     10
+                , effect: [ Chances 60 80 $ Debuff Enemies 1 StunBomb Full ]
                 }
               , { name:   "Intuition C+"
                 , icon:   IconStar
-                , cd:     5
-                , effect: [ To Party GainStars 14.0 ]
+                , cd:     7
+                , effect: [ To Party GainStars $ 4.0 ~ 14.0 ]
                 }
               , { name:   "Galactic Meteor Sword C"
                 , icon:   IconStarHaloUp
-                , cd:     6
-                , effect: [ Grant Self 3 (DamageAffinity Saber) 50.0 
-                          , Grant Self 3 (StarAffinity Saber) 100.0
+                , cd:     8
+                , effect: [ Grant Self 3 (DamageAffinity Saber) $ 30.0 ~ 50.0 
+                          , Grant Self 3 (StarAffinity Saber) $ 50.0 ~ 100.0
                           ]
                 }
               ]
@@ -141,17 +143,19 @@ assassins = Servant <$>
               , card:   Quick
               , kind:   "Anti-Unit"
               , hits:   12
-              , effect: [ To Enemy Damage 2400.0 ]
-              , over:   [ To (EnemyType Saberface) Damage 150.0 ]
+              , effect: [ To Enemy Damage $ 1600.0 ~ 2400.0 ]
+              , over:   [ To (EnemyType Saberface) Damage $ 150.0 ~ 200.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 98, starRate: 25.6, npPerHit: 0.81, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 4, ex: 4 }
+  , gen:      { starWeight: 98, starRate: 25.6, npAtk: 0.81, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 4, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, King]
   , death:    38.5
-  , align:    Chaotic:Balanced
+  , align:    Chaotic:Good
   , limited:  true
   }
 , { name:     "Ryougi Shiki (Assassin)"
+  , id:       92
   , rarity:   4
   , class:    Assassin
   , attr:     Mankind
@@ -160,48 +164,49 @@ assassins = Servant <$>
               , max:   { atk: 8867, hp: 11055 }
               , grail: { atk: 10736, hp: 13404 }
               }
-  , ratings:  { damage:5, np:5, critical:3, utility:2, support:2, durability:3 }
   , actives:  [ { name:   "Mystic Eyes of Death Perception A"
                 , icon:   IconMystic
-                , cd:     5
-                , effect: [ Grant Self 1 IgnoreInvinc 0.0 
-                          , Grant Self 1 ArtsUp 50.0
-                          , Debuff Enemy 1 DeathDown 100.0
+                , cd:     7
+                , effect: [ Grant Self 1 IgnoreInvinc Full
+                          , Grant Self 1 ArtsUp $ 30.0 ~ 50.0
+                          , Debuff Enemy 1 DeathDown $ 80.0 ~ 100.0
                           ]
                 }
               , { name:   "Mind's Eye (Fake) A"
                 , icon:   IconDodge
-                , cd:     6
-                , effect: [ Grant Self 1 Evasion 0.0 
-                          , Grant Self 3 CritUp 40.0
+                , cd:     8
+                , effect: [ Grant Self 1 Evasion Full
+                          , Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Yin-Yang B"
                 , icon:   IconYinYang
-                , cd:     6
-                , effect: [ To Self GaugeUp 30.0 
-                          , To Self DemeritHealth 1000.0
+                , cd:     8
+                , effect: [ To Self GaugeUp $ 20.0 ~ 30.0 
+                          , To Self DemeritHealth $ Flat 1000.0
                           ]
                 }
               ]
-  , passives: [presenceConcealment A, independentAction A]
+  , passives: [presenceConcealment C, independentAction A]
   , phantasm: { name:   "Vijñāpti-mātratā: Mystic Eyes of Death Perception"
               , desc:   "Yuishiki—Chokushi no Magan"
               , rank:   EX
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   3
-              , effect: [ To Enemy DamageThruDef 1500.0 ]
-              , over:   [ To Enemy Kill 100.0 ]
+              , effect: [ To Enemy DamageThruDef $ 900.0 ~ 1500.0 ]
+              , over:   [ To Enemy Kill $ 100.0 ~ 140.0 ]
+              , first:  true
               }
-  , gen:      { starWeight: 102, starRate: 25.6, npPerHit: 0.8, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 4, ex: 5 }
+  , gen:      { starWeight: 102, starRate: 25.6, npAtk: 0.8, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 4, ex: 5 }
   , traits:   [Female, EnumaElish, PseudoServant]
   , death:    44.0
   , align:    Chaotic:Good
   , limited:  true
   }
 , { name:     "Carmilla"
+  , id:       46
   , rarity:   4
   , class:    Assassin
   , attr:     Earth
@@ -210,24 +215,23 @@ assassins = Servant <$>
               , max:   { atk: 9408, hp: 10473 }
               , grail: { atk: 11391, hp: 12698 }
               }
-  , ratings:  { damage:4, np:5, critical:3, utility:3, support:3, durability:3 }
   , actives:  [ { name:   "Vampirism C"
                 , icon:   IconDarkMagic
-                , cd:     6
-                , effect: [ Chance 80 $ To Enemy GaugeDown 1.0
-                          , To Self GaugeUp 27.0
+                , cd:     8
+                , effect: [ Chances 60 80 ∘ To Enemy GaugeDown $ Flat 1.0
+                          , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
                 }
               , { name:   "Torture Technique A"
                 , icon:   IconShieldDown
-                , cd:     5
-                , effect: [ Debuff Enemy 3 DefenseDown 20.0 ]
+                , cd:     7
+                , effect: [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 20.0 ]
                 }
               , { name:   "Bath of Fresh Blood A"
                 , icon:   IconExclamationDown
-                , cd:     6
-                , effect: [ Debuff Enemy 3 CritChance 50.0
-                          , Grant Self 3 StarsPerTurn 10.0
+                , cd:     8
+                , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0
+                          , Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0
                           ]
                 }
               ]
@@ -238,20 +242,22 @@ assassins = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage 1000.0 
-                        , To Self Heal 2000.0
-                        , Grant Self 3 AttackUp 20.0
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 
+                        , To Self Heal $ Flat 2000.0
+                        , Grant Self 3 AttackUp $ Flat 20.0
                         ]
-              , over:   [ To (EnemyType Female) Damage 120.0 ]
+              , over:   [ To (EnemyType Female) Damage $ 120.0 ~ 170.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 98, starRate: 25.2, npPerHit: 2.15, npPerDefend: 4 }
-  , hits:     { a: 1, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 98, starRate: 25.2, npAtk: 2.15, npDef: 4 }
+  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Evil
   , limited:  false
   }
 , { name:     "EMIYA (Assassin)"
+  , id:       109
   , rarity:   4
   , class:    Assassin
   , attr:     Mankind
@@ -260,25 +266,24 @@ assassins = Servant <$>
               , max:   { atk: 8958, hp: 11168 }
               , grail: { atk: 10846, hp: 13541 }
               }
-  , ratings:  { damage:4, np:3, critical:4, utility:3, support:2, durability:3 }
   , actives:  [ { name:   "Magecraft B"
                 , icon:   IconArtsUp
-                , cd:     5
-                , effect: [ Grant Self 1 ArtsUp 40.0 ]
+                , cd:     7
+                , effect: [ Grant Self 1 ArtsUp $ 24.0 ~ 40.0 ]
                 }
               , { name:   "Affection of the Holy Grail A+"
                 , icon:   IconShieldBreak
-                , cd:     5
-                , effect: [ Grant Self 3 IgnoreInvinc 0.0 
-                          , Grant Self 3 CritUp 50.0
-                          , Debuff Others 3 DebuffVuln 20.0
+                , cd:     7
+                , effect: [ Grant Self 3 IgnoreInvinc Full
+                          , Grant Self 3 CritUp $ 30.0 ~ 50.0
+                          , Debuff Others 3 DebuffVuln $ Flat 20.0
                           ]
                 }
-              , { name:   "Spacegoat C"
+              , { name:   "Scapegoat C"
                 , icon:   IconCrosshairUp
-                , cd:     5
-                , effect: [ Grant Ally 1 Taunt 0.0 
-                          , To Party GainStars 15.0
+                , cd:     7
+                , effect: [ Grant Ally 1 Taunt Full
+                          , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
               ]
@@ -289,19 +294,21 @@ assassins = Servant <$>
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   15
-              , effect: [ To Enemy Damage 1500.0 
-                        , To Enemy GaugeDown 1.0
+              , effect: [ To Enemy Damage $ 900.0 ~ 1500.0 
+                        , To Enemy GaugeDown Full
                         ]
-              , over:   [ Debuff Enemy 3 CritChance 10.0 ]
+              , over:   [ Debuff Enemy 3 CritChance $ 10.0 ~ 50.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 97, starRate: 25.6, npPerHit: 0.46, npPerDefend: 4 }
-  , hits:     { a: 2, b: 6, q: 4, ex: 8 }
-  , traits:   [Male, Brynhildr, EnumaElish]
+  , gen:      { starWeight: 97, starRate: 25.6, npAtk: 0.46, npDef: 4 }
+  , hits:     { arts: 2, buster: 6, quick: 4, ex: 8 }
+  , traits:   [Male, Brynhild, EnumaElish]
   , death:    44.0
-  , align:    Lawful:Evil
+  , align:    Chaotic:Evil
   , limited:  false
   }
 , { name:     "Scathach (Assassin)"
+  , id:       133
   , rarity:   4
   , class:    Assassin
   , attr:     Star
@@ -310,26 +317,25 @@ assassins = Servant <$>
               , max:   { atk: 9049, hp: 11168 }
               , grail: { atk: 10956, hp: 13541 }
               }
-  , ratings:  { damage:4, np:3, critical:4, utility:3, support:3, durability:3 }
   , actives:  [ { name:   "Beach Crisis A+"
                 , icon:   IconCrosshairUp
-                , cd:     6
-                , effect: [ Grant Self 1 Taunt 0.0 
-                          , Grant Self 1 CritUp 50.0
+                , cd:     8
+                , effect: [ Grant Self 1 Taunt Full
+                          , Grant Self 1 CritUp $ 30.0 ~ 50.0
                           ]
                 }
               , { name:   "Primordial Rune (Sea) A"
                 , icon:   IconHeal
-                , cd:     6
-                , effect: [ To Ally Heal 3000.0 
-                          , Grant Ally 1 ReduceDamage 1000.0
+                , cd:     8
+                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0 
+                          , Grant Ally 1 ReduceDamage $ 500.0 ~ 1000.0
                           ]
                 }
               , { name:   "Midsummer Mistake C"
                 , icon:   IconShieldBreak
-                , cd:     6
-                , effect: [ Grant Self 1 IgnoreInvinc 0.0 
-                          , Grant Self 1 QuickUp 50.0
+                , cd:     8
+                , effect: [ Grant Self 1 IgnoreInvinc Full 
+                          , Grant Self 1 QuickUp $ 30.0 ~ 50.0
                           ]
                 }
               ]
@@ -340,17 +346,19 @@ assassins = Servant <$>
               , card:   Quick
               , kind:   "Anti-Army"
               , hits:   5
-              , effect: [ To Enemies Damage 1000.0 ]
-              , over:   [ To Enemies Kill 30.0 ]
+              , effect: [ To Enemies Damage $ 600.0 ~ 1000.0 ]
+              , over:   [ To Enemies Kill $ 30.0 ~ 70.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 98, starRate: 25.6, npPerHit: 0.71, npPerDefend: 4 }
-  , hits:     { a: 3, b: 3, q: 3, ex: 5 }
+  , gen:      { starWeight: 98, starRate: 25.6, npAtk: 0.71, npDef: 4 }
+  , hits:     { arts: 3, buster: 3, quick: 3, ex: 5 }
   , traits:   [Female, King, EnumaElish]
   , death:    44.0
   , align:    Neutral:Good
   , limited:  true
   }
 , { name:     "Stheno"
+  , id:       41
   , rarity:   4
   , class:    Assassin
   , attr:     Heaven
@@ -359,24 +367,24 @@ assassins = Servant <$>
               , max:   { atk: 8985, hp: 11518 }
               , grail: { atk: 10879, hp: 13965 }
               }
-  , ratings:  { damage:1, np:5, critical:3, utility:3, support:3, durability:2 }
   , actives:  [ { name:   "Vampirism C"
                 , icon:   IconDarkMagic
-                , cd:     7
-                , effect: [ Chance 80 $ To Enemy GaugeDown 1.0
-                          , To Self GaugeUp 27.0
+                , cd:     9
+                , effect: [ Chances 60 80 ∘ To Enemy GaugeDown $ Flat 1.0
+                          , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
                 }
               , { name:   "Siren Song A"
                 , icon:   IconHeart
-                , cd:     7
-                , effect: [ Chance 100 $ Debuff (EnemyType Male) 1 Charm 0.0 ] 
+                , cd:     9
+                , effect: [ Chances 70 100 
+                            $ Debuff (EnemyType Male) 1 Charm Full ] 
                 }
-              , { name:   "Whim of the Goddess A (Stheno)"
+              , { name:   "Whim of the Goddess A"
                 , icon:   IconSwordUp
-                , cd:     5
-                , effect: [ Grant Party 3 AttackUp 20.0 
-                          , Grant (AlliesType Divine) 3 AttackUp 20.0
+                , cd:     7
+                , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0 
+                          , Grant (AlliesType Divine) 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }
               ]
@@ -387,19 +395,22 @@ assassins = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   0
-              , effect: [ To (EnemyType Male) Kill 150.0 
-                        , Debuff Enemy 3 DefenseDown 20.0
+              , effect: [ To (EnemyType Male) Kill $ 100.0 ~ 150.0 
+                        , Chance 150 ∘ Debuff Enemy 3 DefenseDown $ Flat 20.0
                         ] 
-              , over:   [ Chance 100 $ Debuff (EnemyType Male) 1 Charm 0.0 ]
+              , over:   [ Chances 100 200 
+                          $ Debuff (EnemyType Male) 1 Charm Full ]
+              , first:  false
               }
-  , gen:      { starWeight: 104, starRate: 25.0, npPerHit: 2.26, npPerDefend: 4 }
-  , hits:     { a: 1, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 104, starRate: 25.0, npAtk: 2.26, npDef: 4 }
+  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    27.5
   , align:    Chaotic:Good
   , limited:  false
   }
 , { name:     "Fuuma Kotarou"
+  , id:       117
   , rarity:   3
   , class:    Assassin
   , attr:     Mankind
@@ -408,25 +419,24 @@ assassins = Servant <$>
               , max:   { atk: 7091, hp: 8844 }
               , grail: { atk: 9597, hp: 11991 }
               }
-  , ratings:  { damage:2, np:4, critical:5, utility:4, support:3, durability:3 }
   , actives:  [ { name:   "Sabotage B+"
                 , icon:   IconSwordDown
-                , cd:     5
-                , effect: [ Debuff Enemies 3 AttackDown 10.0 
-                          , Debuff Enemies 3 CritChance 20.0
+                , cd:     7
+                , effect: [ Debuff Enemies 3 AttackDown $ Flat 10.0 
+                          , Debuff Enemies 3 CritChance $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Ninjutsu A+++"
                 , icon:   IconDodge
-                , cd:     6
-                , effect: [ Grant Ally 1 Evasion 0.0 
-                          , Grant Ally 1 StarUp 50.0
+                , cd:     8
+                , effect: [ Grant Ally 1 Evasion Full
+                          , Grant Ally 1 StarUp $ 30.0 ~ 50.0
                           ]
                 }
               , { name:   "Suspicious Shadow C"
                 , icon:   IconHoodDown
-                , cd:     5
-                , effect: [ Debuff Enemies 1 DebuffVuln 100.0 ]
+                , cd:     7
+                , effect: [ Debuff Enemies 1 DebuffVuln $ 50.0 ~ 100.0 ]
                 }
               ]
   , passives: [presenceConcealment APlus]
@@ -436,17 +446,19 @@ assassins = Servant <$>
               , card:   Quick
               , kind:   "Anti-Army"
               , hits:   5
-              , effect: [ To Enemies Damage 1000.0 ]
-              , over:   [ Debuff Enemies 5 Disorder 30.0 ]
+              , effect: [ To Enemies Damage $ 600.0 ~ 1000.0 ]
+              , over:   [ Debuff Enemies 5 Disorder $ 30.0 ~ 70.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 100, starRate: 25.6, npPerHit: 0.54, npPerDefend: 4 }
-  , hits:     { a: 4, b: 1, q: 4, ex: 4 }
+  , gen:      { starWeight: 100, starRate: 25.6, npAtk: 0.54, npDef: 4 }
+  , hits:     { arts: 4, buster: 1, quick: 4, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    38.5
   , align:    Chaotic:Evil
   , limited:  false
   }
 , { name:     "Sasaki Kojiro"
+  , id:       39
   , rarity:   1
   , class:    Assassin
   , attr:     Mankind
@@ -455,26 +467,25 @@ assassins = Servant <$>
               , max:   { atk: 5735, hp: 6220 }
               , grail: { atk: 8912, hp: 9588 }
               }
-  , ratings:  { damage:3, np:3, critical:4, utility:4, support:2, durability:3 }
   , actives:  [ { name:   "Mind's Eye (Fake) A"
                 , icon:   IconDodge
-                , cd:     6
-                , effect: [ Grant Self 1 Evasion 0.0 
-                          , Grant Self 3 CritUp 40.0
+                , cd:     8
+                , effect: [ Grant Self 1 Evasion Full
+                          , Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Vitrify B+"
                 , icon:   IconBubbles
-                , cd:     4
-                , effect: [ To Self RemoveMental 0.0 
-                          , To Party GainStars 15.0
+                , cd:     6
+                , effect: [ To Self RemoveMental Full
+                          , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
               , { name:   "Knowledge of the Sowa B"
                 , icon:   IconBullseye
-                , cd:     5
-                , effect: [ Grant Self 3 SureHit 0.0 
-                          , Grant Self 3 StarUp 30.0
+                , cd:     7
+                , effect: [ Grant Self 3 SureHit Full
+                          , Grant Self 3 StarUp $ 10.0 ~ 30.0
                           ]
                 }
               ]
@@ -485,17 +496,19 @@ assassins = Servant <$>
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   3
-              , effect: [ To Enemy Damage 2000.0 ]
-              , over:   [ To Party GainStars 15.0 ]
+              , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 ]
+              , over:   [ To Party GainStars $ 15.0 ~ 35.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 102, starRate: 25.3, npPerHit: 1.05, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 102, starRate: 25.3, npAtk: 1.05, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    55.0
   , align:    Neutral:Evil
   , limited:  false
   }
 , { name:     "Hassan of the Cursed Arm"
+  , id:       40
   , rarity:   2
   , class:    Assassin
   , attr:     Mankind
@@ -504,43 +517,44 @@ assassins = Servant <$>
               , max:   { atk: 6280, hp: 7594 }
               , grail: { atk: 9100, hp: 10960 }
               }
-  , ratings:  { damage:3, np:4, critical:5, utility:2, support:2, durability:4 }
   , actives:  [ { name:   "Throw (Dagger) B"
                 , icon:   IconStar
-                , cd:     4
-                , effect: [ To Party GainStars 12.0 ]
+                , cd:     6
+                , effect: [ To Party GainStars $ 3.0 ~ 12.0 ]
                 }
               , { name:   "Self-Modification C"
                 , icon:   IconExclamationUp
-                , cd:     5
-                , effect: [ Grant Self 3 CritUp 50.0 ]
+                , cd:     7
+                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0 ]
                 }
               , { name:   "Protection Against the Wind A"
                 , icon:   IconDodge
-                , cd:     5
-                , effect: [ Grant Self 0 Evasion 3.0
-                          , Grant Self 3 StarUp 30.0
+                , cd:     7
+                , effect: [ Grant Self 0 Evasion $ Flat 3.0
+                          , Grant Self 3 StarUp $ 10.0 ~ 30.0
                           ]
                 }
               ]
   , passives: [presenceConcealment APlus]
   , phantasm: { name:   "Zabaniya"
               , desc:   "Delusiona Heartbeat"
-              , rank:   Unknown
+              , rank:   C
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage 2000.0 ]
-              , over:   [ To Enemy Kill 80.0 ]
+              , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 ]
+              , over:   [ To Enemy Kill $ 80.0 ~ 120.0 ]
+              , first:  true
               }
-  , gen:      { starWeight: 97, starRate: 25.2, npPerHit: 1.07, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 3, ex: 3 }
+  , gen:      { starWeight: 97, starRate: 25.2, npAtk: 1.07, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 3, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
   , limited:  false
   }
 , { name:     "Henry Jekyll & Hyde"
+  , id:       81
   , rarity:   3
   , class:    Assassin
   , attr:     Earth
@@ -549,30 +563,29 @@ assassins = Servant <$>
               , max:   { atk: 6320, hp: 9675 }
               , grail: { atk: 8553, hp: 13118 }
               }
-  , ratings:  { damage:4, np:2, critical:3, utility:3, support:1, durability:3 }
   , actives:  [ { name:   "Monstrous Strength B (Jekyll & Hyde)"
                 , icon:   IconSwordUp
-                , cd:     5
-                , effect: [ Grant Self 3 AttackUp 15.0 
+                , cd:     7
+                , effect: [ Grant Self 3 AttackUp $ 5.0 ~ 15.0 
                           , When "transformed into Hyde" 
-                            $ Grant Self 3 AttackUp 35.0
+                            ∘ Grant Self 3 AttackUp $ 25.0 ~ 35.0
                           ]
                 }
               , { name:   "Panicky Voice A"
                 , icon:   IconStun
-                , cd:     6
-                , effect: [ Grant Self 0 StunSuccess 25.0 
+                , cd:     8
+                , effect: [ Grant Self 0 StunSuccess $ 5.0  ~ 15.0 
                           , When "transformed into Hyde" 
-                            $ Grant Self 0 StunSuccess 135.0
-                          , Chance 10 $ Debuff Enemy 1 Stun 0.0
+                            ∘ Grant Self 0 StunSuccess $ 85.0 ~ 135.0
+                          , Chance 10 $ Debuff Enemy 1 Stun Full
                           ]
                 }
               , { name:   "Self-Modification D"
                 , icon:   IconExclamationUp
-                , cd:     5
-                , effect: [ Grant Self 3 CritUp 15.0 
+                , cd:     7
+                , effect: [ Grant Self 3 CritUp $ 5.0 ~ 15.0 
                           , When "transformed into Hyde" 
-                            $ Grant Self 3 CritUp 35.0
+                            ∘ Grant Self 3 CritUp $ 25.0 ~ 35.0
                           ]
                 }
               ]
@@ -583,20 +596,22 @@ assassins = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   0
-              , effect: [ To Self (ChangeClass Berserker) 0.0
-                        , Grant Self 0 MaxHP 6000.0
-                        , To Self HealToFull 0.0
+              , effect: [ To Self (ChangeClass Berserker) Full
+                        , Grant Self 0 MaxHP $ 3000.0 ~ 6000.0
+                        , To Self HealToFull Full
                         ]
-              , over:   [ Grant Self 0 BusterUp 40.0 ] 
+              , over:   [ Grant Self 0 BusterUp $ 40.0 ~ 80.0 ] 
+              , first:  false
               }
-  , gen:      { starWeight: 99, starRate: 25.6, npPerHit: 1.05, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
-  , traits:   [Male, EnumaElish, Brynhildr]
+  , gen:      { starWeight: 99, starRate: 25.6, npAtk: 1.05, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , traits:   [Male, EnumaElish, Brynhild]
   , death:    55.0
   , align:    Lawful:Good
   , limited:  false
   }
 , { name:     "Jing Ke"
+  , id:       42
   , rarity:   3
   , class:    Assassin
   , attr:     Mankind
@@ -605,24 +620,23 @@ assassins = Servant <$>
               , max:   { atk: 7207, hp: 8293 }
               , grail: { atk: 9754, hp: 11244 }
               }
-  , ratings:  { damage:3, np:4, critical:4, utility:2, support:2, durability:2 }
   , actives:  [ { name:   "Restrain A"
                 , icon:   IconStarUp
-                , cd:     5
-                , effect: [ Grant Self 3 StarAbsorb 200.0 
-                          , To Party GainStars 15.0
+                , cd:     7
+                , effect: [ Grant Self 3 StarAbsorb $ Flat 200.0 
+                          , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
               , { name:   "Planning B"
                 , icon:   IconStarHaloUp
-                , cd:     5
-                , effect: [ Grant Self 3 StarUp 30.0 ]
+                , cd:     7
+                , effect: [ Grant Self 3 StarUp $ 10.0 ~ 30.0 ]
                 }
               , { name:   "Insolent A"
                 , icon:   IconQuickUp
-                , cd:     5
-                , effect: [ Grant Self 1 QuickUp 30.0 
-                          , Grant Self 1 CritUp 50.0
+                , cd:     7
+                , effect: [ Grant Self 1 QuickUp $ 20.0 ~ 30.0 
+                          , Grant Self 1 CritUp $ 30.0 ~ 50.0
                           ]
                 }
               ]
@@ -633,46 +647,47 @@ assassins = Servant <$>
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage 2000.0 
-                        , To Self DemeritDamage 1000.0
+              , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 
+                        , To Self DemeritDamage $ Flat 1000.0
                         ]
-              , over:   [ To Enemy Kill 50.0 
-                        , To Party GainStars 15.0
+              , over:   [ To Enemy Kill $ 50.0 ~ 100.0
+                        , To Party GainStars $ 15.0 ~ 35.0
                         ]
+              , first:  true
               }
-  , gen:      { starWeight: 98, starRate: 25.2, npPerHit: 1.05, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 98, starRate: 25.2, npAtk: 1.05, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0
   , align:    Chaotic:Good
   , limited:  false
   }
 , { name:     "Charles-Henri Sanson"
+  , id:       43
   , rarity:   2
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
-  , stats:    { base:  { atk: 968,  hp: 1564 }
+  , stats:    { base:  { atk: 968,  hp: 1568 }
               , max:   { atk: 5456, hp: 8309 }
               , grail: { atk: 7906, hp: 11991 }
               }
-  , ratings:  { damage:3, np:4, critical:3, utility:4, support:3, durability:2 }
   , actives:  [ { name:   "Executioner A++"
                 , icon:   IconDamageUp
-                , cd:     5
-                , effect: [ Grant Self 3 (AlignAffinity Evil) 60.0 ]
+                , cd:     7
+                , effect: [ Grant Self 3 (AlignAffinity Evil) $ 40.0 ~ 60.0 ]
                 }
               , { name:   "Medicine A+"
                 , icon:   IconHeal
-                , cd:     5
-                , effect: [ To Ally Heal 3000.0 
-                          , To Ally RemoveDebuffs 0.0
+                , cd:     7
+                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0 
+                          , To Ally RemoveDebuffs Full
                           ]
                 }
               , { name:   "Human Study B"
                 , icon:   IconDamageUp
-                , cd:     5
-                , effect: [ Grant Self 3 (AttackUpVs Human) 60.0 ]
+                , cd:     7
+                , effect: [ Grant Self 3 (AttackUpVs Human) $ 40.0 ~ 60.0 ]
                 }
               ]
   , passives: [presenceConcealment D]
@@ -682,19 +697,21 @@ assassins = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage 1000.0 ]
-              , over:   [ To Enemy Kill 30.0 
-                        , Debuff Enemy 3 DefenseDown 20.0
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 ]
+              , over:   [ To Enemy Kill $ 30.0 ~ 80.0
+                        , Debuff Enemy 3 DefenseDown $ 20.0 ~ 40.0
                         ]
+              , first:  true
               }
-  , gen:      { starWeight: 102, starRate: 24.8, npPerHit: 1.06, npPerDefend: 4 }
-  , hits:     { a: 2, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 102, starRate: 24.8, npAtk: 1.06, npDef: 4 }
+  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    49.5
   , align:    Lawful:Evil
   , limited:  false
   }
 , { name:     "Hassan of the Hundred Personas"
+  , id:       110
   , rarity:   3
   , class:    Assassin
   , attr:     Mankind
@@ -703,28 +720,27 @@ assassins = Servant <$>
               , max:   { atk: 6686, hp: 9310 }
               , grail: { atk: 9049, hp: 12623 }
               }
-  , ratings:  { damage:0, np:0, critical:0, utility:0, support:0, durability:0 }
   , actives:  [ { name:   "Librarian of Knowledge C"
                 , icon:   IconNobleUp
-                , cd:     5
-                , effect: [ Grant Self 3 NPGen 20.0 
-                          , Grant Self 3 StarUp 40.0
+                , cd:     7
+                , effect: [ Grant Self 3 NPGen $ 10.0 ~ 20.0 
+                          , Grant Self 3 StarUp $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Wide Specialization A+"
                 , icon:   IconAllUp
-                , cd:     5
-                , effect: [ Chance 80 $ Grant Self 3 BusterUp 30.0 
-                          , Chance 80 $ Grant Self 3 QuickUp 30.0
-                          , Chance 80 $ Grant Self 3 ArtsUp 30.0
-                          , Grant Self 1 Evasion 0.0
-                          ]
+                , cd:     7
+                , effect: [ Chances 60 80 ∘ Grant Self 3 BusterUp $ Flat 30.0 
+                          , Chances 60 80 ∘ Grant Self 3 QuickUp $ Flat 30.0
+                          , Chances 60 80 ∘ Grant Self 3 ArtsUp $ Flat 30.0
+                          , Grant Self 1 Evasion Full
+                          ] -- TODO
                 }
               , { name:   "Battle Retreat B"
                 , icon:   IconHeal
-                , cd:     6
-                , effect: [ To Self Heal 4000.0 
-                          , To Self DemeritBuffs 0.0
+                , cd:     8
+                , effect: [ To Self Heal $ 2000.0 ~ 4000.0 
+                          , To Self DemeritBuffs Full
                           ]
                 }
               ]
@@ -735,17 +751,19 @@ assassins = Servant <$>
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   13
-              , effect: [ To Enemy Damage 1500.0 ]
-              , over:   [ Debuff Enemy 3 CritChance 10.0 ]
+              , effect: [ To Enemy Damage $ 900.0 ~ 1500.0 ]
+              , over:   [ Debuff Enemy 3 CritChance $ 10.0 ~ 50.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 97, starRate: 25.5, npPerHit: 0.38, npPerDefend: 4 }
-  , hits:     { a: 3, b: 1, q: 3, ex: 6 }
+  , gen:      { starWeight: 97, starRate: 25.5, npAtk: 0.38, npDef: 4 }
+  , hits:     { arts: 3, buster: 1, quick: 3, ex: 6 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
-  , align:    Chaotic:Evil
+  , align:    Lawful:Evil
   , limited:  false
   }
 , { name:     "Hassan of the Serenity"
+  , id:       124
   , rarity:   3
   , class:    Assassin
   , attr:     Mankind
@@ -754,24 +772,23 @@ assassins = Servant <$>
               , max:   { atk: 6636, hp: 9310 }
               , grail: { atk: 8981, hp: 12623 }
               }
-  , ratings:  { damage:2, np:3, critical:4, utility:4, support:3, durability:2 }
   , actives:  [ { name:   "Morph (Infiltration) C"
                 , icon:   IconExclamationDown
-                , cd:     7
-                , effect: [ Debuff Enemy 3 CritChance 20.0 
-                          , To Enemy GaugeDown 1.0
+                , cd:     9
+                , effect: [ Debuff Enemy 3 CritChance $ 10.0 ~ 20.0 
+                          , To Enemy GaugeDown $ Flat 1.0
                           ]
                 }
               , { name:   "Throw (Dagger) C"
                 , icon:   IconStar
-                , cd:     4
-                , effect: [ To Party GainStars 12.0 ]
+                , cd:     6
+                , effect: [ To Party GainStars $ 2.0 ~ 12.0 ]
                 }
               , { name:   "Dance of Silence B"
                 , icon:   IconReaperUp
-                , cd:     6
-                , effect: [ Grant Self 3 KillUp 50.0 
-                          , Grant Self 3 DebuffSuccess 50.0
+                , cd:     8
+                , effect: [ Grant Self 3 KillUp $ 20.0 ~ 50.0 
+                          , Grant Self 3 DebuffSuccess $ 20.0 ~ 50.0
                           ]
                 }
               ]
@@ -782,21 +799,23 @@ assassins = Servant <$>
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   1
-              , effect: [ Debuff Enemy 5 Poison 1000.0 
-                        , Chance 40 $ Debuff Enemy 1 SealSkills 0.0
-                        , Chance 40 $ Debuff Enemy 1 SealNP 0.0
-                        , To Enemy Damage 1500.0
+              , effect: [ Debuff Enemy 5 Poison $ Flat 1000.0 
+                        , Chance 40 $ Debuff Enemy 1 SealSkills Full
+                        , Chance 40 $ Debuff Enemy 1 SealNP Full
+                        , To Enemy Damage $ 900.0 ~ 1500.0
                         ]
-              , over:   [ To Enemy Kill 60.0 ]
+              , over:   [ To Enemy Kill $ 60.0 ~ 100.0 ]
+              , first:  true
               }
-  , gen:      { starWeight: 102, starRate: 25.6, npPerHit: 0.53, npPerDefend: 4 }
-  , hits:     { a: 3, b: 4, q: 3, ex: 5 }
+  , gen:      { starWeight: 102, starRate: 25.6, npAtk: 0.53, npDef: 4 }
+  , hits:     { arts: 3, buster: 4, quick: 3, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
   , limited:  false
   }
 , { name:     "Phantom of the Opera"
+  , id:       44
   , rarity:   2
   , class:    Assassin
   , attr:     Earth
@@ -805,24 +824,24 @@ assassins = Servant <$>
               , max:   { atk: 5654, hp: 8393 }
               , grail: { atk: 8193, hp: 12112 }
               }
-  , ratings:  { damage:2, np:3, critical:4, utility:3, support:3, durability:2 }
   , actives:  [ { name:   "Innocent Monster D"
                 , icon:   IconStarTurn
-                , cd:     5
-                , effect: [ Grant Self 3 StarsPerTurn 9.0 
-                          , Debuff Self 3 DefenseDown 14.0
+                , cd:     7
+                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0 
+                          , Debuff Self 3 DefenseDown $ Flat 14.0
                           ]
                 }
               , { name:   "Siren Song B"
                 , icon:   IconHeart
-                , cd:     7
-                , effect: [ Chance 90 $ Debuff (EnemyType Female) 1 Charm 0.0 ]
+                , cd:     9
+                , effect: [ Chances 60 90 
+                            $ Debuff (EnemyType Female) 1 Charm Full ]
                 }
               , { name:   "Mental Corruption A"
                 , icon:   IconStaffUp
-                , cd:     5
-                , effect: [ Grant Self 3 MentalSuccess 25.0 
-                          , Grant Self 3 MentalResist 100.0
+                , cd:     7
+                , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0 
+                          , Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           ]
                 }
               ]
@@ -833,17 +852,19 @@ assassins = Servant <$>
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ To Enemies DamageThruDef 900.0 ]
-              , over:   [ Debuff Enemies 6 DebuffVuln 50.0 ]
+              , effect: [ To Enemies DamageThruDef $ 600.0 ~ 900.0 ]
+              , over:   [ Debuff Enemies 6 DebuffVuln $ 50.0 ~ 100.0 ]
+              , first:  false
               }
-  , gen:      { starWeight: 98, starRate: 25.2, npPerHit: 0.71, npPerDefend: 4 }
-  , hits:     { a: 2, b: 2, q: 2, ex: 3 }
+  , gen:      { starWeight: 98, starRate: 25.2, npAtk: 0.71, npDef: 4 }
+  , hits:     { arts: 2, buster: 2, quick: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    49.5
   , align:    Chaotic:Evil
   , limited:  false
   }
 , { name:     "Mata Hari"
+  , id:       45
   , rarity:   1
   , class:    Assassin
   , attr:     Mankind
@@ -852,24 +873,24 @@ assassins = Servant <$>
               , max:   { atk: 5377, hp: 6565 }
               , grail: { atk: 8355, hp: 10120 }
               }
-  , ratings:  { damage:1, np:5, critical:4, utility:4, support:4, durability:2 }
   , actives:  [ { name:   "Espionage A++"
                 , icon:   IconStarHaloUp
-                , cd:     5
-                , effect: [ Grant Self 3 StarUp 30.0 ]
+                , cd:     7
+                , effect: [ Grant Self 3 StarUp $ 10.0 ~ 30.0 ]
                 }
               , { name:   "Pheromone B"
                 , icon:   IconHeart
-                , cd:     6
-                , effect: [ Chance 60 $ Debuff (EnemiesType Male) 1 Charm 0.0 
-                          , Debuff Enemies 3 DefenseDown 20.0
+                , cd:     8
+                , effect: [ Chances 30 60 
+                            $ Debuff (EnemiesType Male) 1 Charm Full
+                          , Debuff Enemies 3 DefenseDown $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Double-Cross B"
                 , icon:   IconCircuits
-                , cd:     6
-                , effect: [ Debuff Enemy 1 SealSkills 0.0 
-                          , Debuff Enemy 3 DefenseDown 20.0
+                , cd:     8
+                , effect: [ Debuff Enemy 1 SealSkills Full
+                          , Debuff Enemy 3 DefenseDown $ 10.0 ~ 20.0
                           ]
                 }
               ]
@@ -880,13 +901,14 @@ assassins = Servant <$>
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   0
-              , effect: [ Chance 60 $ Debuff Enemies 1 Charm 0.0 ]
-              , over:   [ Debuff Enemies 1 AttackDown 20.0 
-                        , Debuff Enemies 1 DefenseDown 20.0
+              , effect: [ Chances 40 60 $ Debuff Enemies 1 Charm Full ]
+              , over:   [ Debuff Enemies 1 AttackDown $ 20.0 ~ 40.0
+                        , Debuff Enemies 1 DefenseDown $ 20.0 ~ 40.0
                         ]
+              , first:  false
               }
-  , gen:      { starWeight: 98, starRate: 24.6, npPerHit: 2.1, npPerDefend: 4 }
-  , hits:     { a: 1, b: 1, q: 2, ex: 3 }
+  , gen:      { starWeight: 98, starRate: 24.6, npAtk: 2.1, npDef: 4 }
+  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0
   , align:    Chaotic:Balanced

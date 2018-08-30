@@ -1,4 +1,5 @@
 , { name:     ?_
+  , id:       ?_
   , rarity:   ?_
   , class:    ?_
   , attr:     ?_
@@ -7,7 +8,6 @@
               , max:   { atk: ?_, hp: ?_ }
               , grail: { atk: ?_, hp: ?_ }
               }
-  , ratings:  { damage:?_, np:?_, critical:?_, utility:?_, support:?_, durability:?_ }
   , actives:  [ { name:   ?_
                 , icon:   ?_
                 , cd:     ?_
@@ -33,11 +33,17 @@
               , hits:   ?_
               , effect: ?_
               , over:   ?_
+              , first:  ?_
               }
-  , gen:      { starWeight: ?_, starRate: ?_, npPerHit: ?_, npPerDefend: ?_ }
+  , gen:      { starWeight:  ?_
+              , starRate:    ?_
+              , npPerHit:    ?_
+              , npPerDefend: ?_ 
+              }
   , hits:     { a: ?_, b: ?_, q: ?_, ex: ?_ }
   , traits:   []
   , death:    ?_
   , align:    ?_
   , limited:  ?_
   }
+ 

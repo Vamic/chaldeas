@@ -20,6 +20,18 @@ outputNumber ∷ Number -> String
 outputNumber (-1.0) = "X"
 outputNumber x = toString x
 
+data Amount 
+    = Full
+    | Flat Number
+    | Range Number Number
+
+infix 1 Range as ~
+
+toNum ∷ Amount -> Number
+toNum Full = 0.0
+toNum (Flat x) = x
+toNum (Range a _) = a
+
 data Rank = Unknown | EX   
           | APlusPlus | APlus | A | AMinus
           | BPlusPlus | BPlus | B | BMinus 
@@ -113,6 +125,8 @@ data BuffEffect = AlignAffinity Alignment
                 | Evasion
                 | GaugePerTurn 
                 | Guts
+                | GutsTriple
+                | GutsUnlimited
                 | HealPerTurn
                 | HealingReceived
                 | HealUp
@@ -128,6 +142,7 @@ data BuffEffect = AlignAffinity Alignment
                 | NPUp
                 | NPFromDamage
                 | NPGen
+                | OffensiveResist
                 | Overcharge
                 | PoisonResist
                 | QuickUp
@@ -168,7 +183,9 @@ showBuff target amount buff = case buff of
                     ++ " enemies" ++ by
     Evasion          -> "Grant" ++ s ++ " Evasion" ++ times amount
     GaugePerTurn     -> "Charge" ++ p ++ " NP gauge" ++ by ++ " every turn"
-    Guts             -> "Grant" ++ s ++ " Guts" ++ times amount
+    Guts             -> "Grant" ++ s ++ " Guts (1 time) with " ++ n ++ " HP"
+    GutsTriple       -> "Grant" ++ s ++ " Guts (3 times) with " ++ n ++ " HP"
+    GutsUnlimited    -> "Grant" ++ s ++ " Guts with " ++ n ++ " HP"
     HealingReceived  -> "Increase" ++ p ++ " healing received" ++ by
     HealPerTurn      -> "Restore " ++ n ++ " health" ++ to ++ " every turn"
     HealUp           -> "Increase" ++ p ++ " healing power" ++ by
@@ -186,6 +203,7 @@ showBuff target amount buff = case buff of
     NPFromDamage     -> "Increase" ++ p 
                     ++ " NP generation rate when taking damage" ++ by
     NPGen            -> "Increase" ++ p ++ " NP generation rate" ++ by
+    OffensiveResist  -> "Increase" ++ p ++ " offensive debuff resistance" ++ by
     Overcharge       -> "Overcharge" ++ p ++ " NP by " ++ n ++ " stages"
     PoisonResist     -> "Increase" ++ p ++ " poison debuff resistance" ++ by
     QuickUp          -> "Increase" ++ p ++ " Quick performance" ++ by
@@ -264,11 +282,27 @@ showDebuff target amount debuff = case debuff of
     p:s = possessiveAndSubject target
     to  = if s == "" then "" else " to" ++ s
  
-data InstantEffect = ChangeClass Class
+mental ∷ DebuffEffect -> Boolean
+mental Charm = true
+mental Disorder = true
+mental Terror = true
+mental _ = false
+
+offensive ∷ DebuffEffect -> Boolean
+offensive AttackDown = true
+offensive CritDown   = true
+offensive NPDown     = true
+-- offensive DamageDown = true
+-- offensive QuickDown = true
+-- offensive ArtsDown = true
+-- offensive BusterDown = true
+offensive _ = false
+
+data InstantEffect = Avenge
+                   | ChangeClass Class
                    | Cooldowns
                    | Cure
                    | Damage
-                   | DamageRevenge
                    | DamageThruDef
                    | DemeritBuffs
                    | DemeritCharge
@@ -282,6 +316,8 @@ data InstantEffect = ChangeClass Class
                    | Heal
                    | HealToFull
                    | Kill
+                   | LastStand
+                   | OverChance
                    | RemoveBuffs
                    | RemoveDebuffs
                    | RemoveMental
@@ -290,13 +326,13 @@ instance _d_ ∷ Show InstantEffect where
 
 showInstant ∷ Target -> Number -> InstantEffect -> String
 showInstant target amount instant = case instant of
+    Avenge        -> "Wait 1 turn [Demerit], then deal " ++ n 
+                  ++ "% of damage taken during that turn" ++ to
     ChangeClass c -> "Change" ++ p ++ " class to " ++ show c
     Cooldowns     -> "Reduce" ++ p ++ " cooldowns by " ++ n
     Cure          -> "Remove" ++ p ++ " poison debuffs"
     Damage        -> "Deal " ++ n ++ "% damage" ++ to
     DamageThruDef -> "Deal " ++ n ++ "% damage" ++ to ++ ", ignoring defense"
-    DamageRevenge -> "Deal up to " ++ n ++ "% damage based on missing health" 
-                 ++ to
     DemeritBuffs  -> "Remove" ++ p ++ " buffs [Demerit]"
     DemeritCharge -> "Increase" ++ s ++ " NP gauge by " ++ n ++ " [Demerit]"
     DemeritGauge  -> "Decrease" ++ p ++ " NP gauge by " ++ n ++ "% [Demerit]"
@@ -308,10 +344,13 @@ showInstant target amount instant = case instant of
     GaugeUp       -> "Increase" ++ p ++ " NP gauge by " ++ n ++ "%"
     Heal          -> "Restore " ++ n ++ " health" ++ to
     HealToFull    -> "Heal" ++ s ++ " to full"
+    Kill          -> n ++ "% chance to Instant-Kill " ++ s
+    LastStand     -> "Deal up to " ++ n ++ "% damage based on missing health" 
+                  ++ to
+    OverChance    -> "Gain " ++ n ++ "% chance to apply Overcharge buffs"
     RemoveBuffs   -> "Remove" ++ p ++ " buffs"
     RemoveDebuffs -> "Remove" ++ p ++ " debuffs"
     RemoveMental  -> "Remove" ++ p ++ " mental debuffs"
-    Kill          -> n ++ "% chance to Instant-Kill " ++ s
     GainStars     -> "Gain " ++ n ++ " critical stars" ++ case target of
         Self -> " for yourself"
         _    -> ""
@@ -321,10 +360,11 @@ showInstant target amount instant = case instant of
     to  = if s == "" then "" else " to" ++ s
 
 -- | Int field is duration, Number field is amount
-data ActiveEffect = Grant Target Int BuffEffect Number
-                  | Debuff Target Int DebuffEffect Number
-                  | To Target InstantEffect Number
+data ActiveEffect = Grant Target Int BuffEffect Amount
+                  | Debuff Target Int DebuffEffect Amount
+                  | To Target InstantEffect Amount
                   | Chance Int ActiveEffect
+                  | Chances Int Int ActiveEffect
                   | When String ActiveEffect
 
 instance _01_ ∷ Eq ActiveEffect where
@@ -333,18 +373,21 @@ instance _01_ ∷ Eq ActiveEffect where
       Debuff ta _ a _, Debuff tb _ b _ -> eq a b && eq' ta tb
       To ta a _,       To tb b _       -> eq a b && eq' ta tb
       Chance _ a,      Chance _ b      -> eq a b 
+      Chances _ _ a,   Chances _ _ b   -> eq a b
       _,               _               -> false
     where 
       eq' ta tb = ta == tb || ta == Someone || tb == Someone
 
 instance _e_ ∷ Show ActiveEffect where
   show = case _ of
-      Grant t dur buff amt    -> showBuff t amt buff ++ turns dur
+      Grant t dur buff amt    -> showBuff t (toNum amt) buff ++ turns dur
                              ++ if not allied t then " [Demerit]." else "."
-      Debuff t dur debuff amt -> showDebuff t amt debuff ++ turns dur
+      Debuff t dur debuff amt -> showDebuff t (toNum amt) debuff ++ turns dur
                              ++ if allied t then " [Demerit]." else "."
-      To t instant amt        -> showInstant t amt instant ++ "."
+      To t instant amt        -> showInstant t (toNum amt) instant ++ "."
       Chance per ef           -> show per ++ "% chance to " ++ uncap (show ef)
+      Chances a b ef      -> show a ++ "~" ++ show b ++ "% chance to " ++
+                                 uncap (show ef)
       When cond ef            -> "If " ++ cond ++ ": " ++ uncap (show ef)
     where
       turns 0   = ""

@@ -35,7 +35,7 @@ classModifier _ = 1.0
 
 data Trait = Arthur 
            | Beast 
-           | Brynhildr
+           | Brynhild
            | DemiServant
            | Demon
            | Demonic
@@ -60,7 +60,7 @@ data Trait = Arthur
 
 instance _b_ ∷ Show Trait where
   show = case _ of
-    Brynhildr        -> "Brynhildr's Beloved"
+    Brynhild        -> "Brynhild's Beloved"
     DemiServant      -> "Demi-servant"
     HeavenOrEarth    -> "Heaven or Earth"
     GreekMyth        -> "Greek Mythology Males"

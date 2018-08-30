@@ -20,8 +20,8 @@ doIf ∷ ∀ a. Boolean -> (a -> a) -> (a -> a)
 doIf true  = identity
 doIf false = const identity
 
-advance ∷ ∀ a b c. Bind a => Applicative a => a c -> b -> a b
-advance a b = a >>= \_ -> pure b
+advance :: ∀ a b c. Bind a ⇒ a c → a b → a b
+advance a b = a >>= \_ -> b
 
 enumArray ∷ ∀ a. BoundedEnum a => Array a
 enumArray = enumFromTo bottom top

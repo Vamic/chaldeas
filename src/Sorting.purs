@@ -35,17 +35,17 @@ print ∷ Int -> String
 print = print' ∘ toNumber
 
 toSort ∷ SortBy -> Servant -> Number
-toSort Rarity (Servant {rarity}) = toNumber rarity
-toSort NPDamage serv = npDamage serv
-toSort NPGain (Servant {gen:{npPerHit}}) = npPerHit
-toSort ATK (Servant {stats:{max:{atk}}}) = toNumber atk
-toSort HP (Servant {stats:{max:{hp}}}) = toNumber hp
-toSort Hits (Servant {hits:{a,b,q,ex}}) = toNumber $ a + b + q + ex
-toSort StarRate (Servant {gen:{starRate}}) = starRate
+toSort Rarity {rarity}           = toNumber rarity
+toSort NPDamage s                = npDamage s
+toSort NPGain {gen:{npAtk}}      = npAtk
+toSort ATK {stats:{max:{atk}}}   = toNumber atk
+toSort HP {stats:{max:{hp}}}     = toNumber hp
+toSort StarRate {gen:{starRate}} = starRate
+toSort Hits {hits:{arts,buster,quick,ex}} 
+    = toNumber $ arts + buster + quick + ex
 
 doSort ∷ SortBy -> Array Servant -> Array (Tuple String Servant)
-doSort Rarity = map (Tuple "") ∘ sortWith 
-                \(Servant s) -> show (5 - s.rarity) ++ s.name
+doSort Rarity = map (Tuple "") ∘ sortWith \s -> show (5 - s.rarity) ++ s.name
 doSort a = map (uncurry Tuple ∘ showSort) ∘ sortWith sorter
   where
     sorter   = toSort a

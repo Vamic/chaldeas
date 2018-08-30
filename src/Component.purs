@@ -177,9 +177,9 @@ modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
     , H.article_ $
       [ portrait true artorify ascend $ Tuple "" s
       , _table ["", "ATK", "HP"]
-        [ H.tr_ [ _th "Base",  _td $ print base.atk,  _td $ print base.hp ]
-        , H.tr_ [ _th "Max",   _td $ print max.atk,   _td $ print max.hp ]
-        , H.tr_ [ _th "Grail", _td $ print grail.atk, _td $ print grail.hp ]
+        [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
+        , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]
+        , H.tr_ [ _th "Grail", _td $ print' grail.atk, _td $ print' grail.hp ]
         ]
       , _table ["", "Q", "A", "B", "EX", "NP"]
       
@@ -240,7 +240,10 @@ activeEl ∷ ∀ a b. Active -> HTML a b
 activeEl {name, icon, cd, effect} = H.section_ $
     [ _img $ "img/Skill/" ++ show icon ++ ".png"
     , _h 3 name
-    , _span $ "CD: " ++ show cd
+    , H.span_ 
+      [  H.strong_ [ H.text "CD: "]
+      , H.text $ show cd ++ "~" ++ show (cd - 2)
+      ]
     ] ++ (_p ∘ show <$> effect)
 
 passiveEl ∷ ∀ a b. Passive -> HTML a b

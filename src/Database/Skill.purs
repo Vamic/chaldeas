@@ -314,6 +314,7 @@ data InstantEffect = Avenge
                    | Cure
                    | Damage
                    | DamageThruDef
+                   | DamageVs Trait
                    | DemeritBuffs
                    | DemeritCharge
                    | DemeritDamage
@@ -343,6 +344,7 @@ showInstant target amount instant = case instant of
     Cure          -> "Remove" ++ p ++ " poison debuffs"
     Damage        -> "Deal " ++ n ++ "% damage" ++ to
     DamageThruDef -> "Deal " ++ n ++ "% damage" ++ to ++ ", ignoring defense"
+    DamageVs    t -> "Deal " ++ n ++ "% extra damage to " ++ show t 
     DemeritBuffs  -> "Remove" ++ p ++ " buffs [Demerit]"
     DemeritCharge -> "Increase" ++ s ++ " NP gauge by " ++ n ++ " [Demerit]"
     DemeritGauge  -> "Decrease" ++ p ++ " NP gauge by " ++ n ++ "% [Demerit]"

@@ -56,6 +56,7 @@ riders = [
   , death:    30.0
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Francis Drake"
   , id:       65
@@ -105,6 +106,7 @@ riders = [
   , death:    50.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Iskandar"
   , id:       108
@@ -151,6 +153,7 @@ riders = [
   , death:    40.0
   , align:    Neutral:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Queen Medb"
   , id:       99
@@ -190,7 +193,7 @@ riders = [
               , kind:   "Anti-Army"
               , hits:   5
               , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 ]
-              , over:   [ To (EnemyType Male) Damage $ 150.0 ~ 200.0
+              , over:   [ To Enemy (DamageVs Male) $ 150.0 ~ 200.0
                         , Debuff Enemy 3 MentalVuln $ 10.0 ~ 50.0
                         ]
               , first:  false
@@ -201,6 +204,7 @@ riders = [
   , death:    40.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Sakata Kintoki (Rider)"
   , id:       115
@@ -249,6 +253,7 @@ riders = [
   , death:    40.0
   , align:    Lawful:Good
   , limited:  true
+  , free:     true
   }
 , { name:     "Altria Pendragon (Santa Alter)"
   , id:       73
@@ -295,6 +300,7 @@ riders = [
   , death:    35.0
   , align:    Lawful:Good
   , limited:  true
+  , free:     true
   }
 , { name:     "Saint Martha"
   , id:       30
@@ -345,6 +351,7 @@ riders = [
   , death:    30.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Mordred (Rider)"
   , id:       132
@@ -393,6 +400,7 @@ riders = [
   , death:    35.0
   , align:    Chaotic:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Marie Antoinette"
   , id:       29
@@ -444,6 +452,7 @@ riders = [
   , death:    35.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Anne Bonny & Mary Read"
   , id:       66
@@ -490,6 +499,7 @@ riders = [
   , death:    50.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Astolfo"
   , id:       94
@@ -539,6 +549,7 @@ riders = [
   , death:    40.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Georgios"
   , id:       24
@@ -589,6 +600,7 @@ riders = [
   , death:    45.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Ushiwakamaru"
   , id:       27
@@ -635,6 +647,7 @@ riders = [
   , death:    35.0
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Medusa"
   , id:       23
@@ -683,6 +696,7 @@ riders = [
   , death:    35.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Edward Teach"
   , id:       25
@@ -737,6 +751,7 @@ riders = [
   , death:    45.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Alexander"
   , id:       28
@@ -782,6 +797,7 @@ riders = [
   , death:    40.0
   , align:    Neutral:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Boudica"
   , id:       26
@@ -826,5 +842,6 @@ riders = [
   , death:    45.0
   , align:    Neutral:Good
   , limited:  false
+  , free:     true
   }
 ]

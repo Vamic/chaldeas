@@ -52,6 +52,7 @@ extras = [
   , death:    21.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Amakusa Shirou"
   , id:       93
@@ -101,6 +102,7 @@ extras = [
   , death:    21.0
   , align:    Lawful:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Jeanne d'Arc (Alter)"
   , id:       106
@@ -154,6 +156,7 @@ extras = [
   , death:    5.7
   , align:    Chaotic:Evil
   , limited:  true
+  , free:     false
   }
 , { name:     "Edmond Dantes"
   , id:       96
@@ -206,6 +209,7 @@ extras = [
   , death:    7.0
   , align:    Chaotic:Evil
   , limited:  true
+  , free:     false
   }
 , { name:     "Saint Martha (Ruler)"
   , id:       135
@@ -258,6 +262,7 @@ extras = [
   , death:    21.0
   , align:    Lawful:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Mash Kyrielight"
   , id:       1
@@ -310,6 +315,7 @@ extras = [
   , death:    24.5
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Angra Mainyu"
   , id:       107
@@ -362,5 +368,6 @@ extras = [
   , death:    9.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 ]

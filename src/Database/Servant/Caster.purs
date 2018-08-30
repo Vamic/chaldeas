@@ -61,6 +61,7 @@ casters = [
   , death:    34.5
   , align:    Neutral:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Tamamo no Mae"
   , id:       62
@@ -111,6 +112,7 @@ casters = [
   , death:    36.0
   , align:    Neutral:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Xuanzang Sanzang"
   , id:       113
@@ -162,6 +164,7 @@ casters = [
   , death:    34.5
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Leonardo da Vinci"
   , id:       127
@@ -217,6 +220,7 @@ casters = [
   , death:    34.5
   , align:    Chaotic:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Illyasviel von Einzbern"
   , id:       136
@@ -269,6 +273,7 @@ casters = [
   , death:    42.0
   , align:    Neutral:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Medea (Lily)"
   , id:       67
@@ -317,6 +322,7 @@ casters = [
   , death:    36.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Elisabeth Bathory (Halloween)"
   , id:       61
@@ -367,6 +373,7 @@ casters = [
   , death:    42.0
   , align:    Chaotic:Evil
   , limited:  true
+  , free:     true
   }
 , { name:     "Nursery Rhyme"
   , id:       74
@@ -421,6 +428,7 @@ casters = [
   , death:    36.0
   , align:    Neutral:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Helena Blavatsky"
   , id:       100
@@ -473,6 +481,7 @@ casters = [
   , death:    36.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Nitocris"
   , id:       120
@@ -521,6 +530,7 @@ casters = [
   , death:    36.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Irisviel (Dress of Heaven)"
   , id:       111
@@ -567,6 +577,7 @@ casters = [
   , death:    34.5
   , align:    Lawful:Good
   , limited:  true
+  , free:     true
   }
 , { name:     "Marie Antoinette (Caster)"
   , id:       130
@@ -619,6 +630,7 @@ casters = [
   , death:    36.0
   , align:    Lawful:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Thomas Edison"
   , id:       103
@@ -670,6 +682,7 @@ casters = [
   , death:    60.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Hans Christian Andersen"
   , id:       33
@@ -720,6 +733,7 @@ casters = [
   , death:    30.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Medea"
   , id:       31
@@ -768,6 +782,7 @@ casters = [
   , death:    34.5
   , align:    Neutral:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "William Shakespeare"
   , id:       34
@@ -816,6 +831,7 @@ casters = [
   , death:    45.0
   , align:    Neutral:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Wolfgang Amadeus Mozart"
   , id:       36
@@ -863,6 +879,7 @@ casters = [
   , death:    40.5
   , align:    Neutral:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Charles Babbage"
   , id:       80
@@ -913,6 +930,7 @@ casters = [
   , death:    36.0
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Cu Chulainn (Caster)"
   , id:       38
@@ -965,6 +983,7 @@ casters = [
   , death:    42.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     true
   }
 , { name:     "Mephistopheles"
   , id:       35
@@ -1013,6 +1032,7 @@ casters = [
   , death:    36.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Paracelsus von Hohenheim"
   , id:       79
@@ -1057,6 +1077,7 @@ casters = [
   , death:    36.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Geronimo"
   , id:       104
@@ -1105,6 +1126,7 @@ casters = [
   , death:    40.5
   , align:    Neutral:Good
   , limited:  false
+  , free:     true
   }
 , { name:     "Gilles de Rais (Caster)"
   , id:       32
@@ -1151,6 +1173,7 @@ casters = [
   , death:    48.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 
 ]

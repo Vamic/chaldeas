@@ -53,6 +53,7 @@ assassins = [
   , death:    44.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Shuten-Douji"
   , id:       112
@@ -107,6 +108,7 @@ assassins = [
   , death:    31.6
   , align:    Chaotic:Evil
   , limited:  true
+  , free:     false
   }
 , { name:     "Mysterious Heroine X"
   , id:       86
@@ -144,7 +146,7 @@ assassins = [
               , kind:   "Anti-Unit"
               , hits:   12
               , effect: [ To Enemy Damage $ 1600.0 ~ 2400.0 ]
-              , over:   [ To (EnemyType Saberface) Damage $ 150.0 ~ 200.0 ]
+              , over:   [ To Enemy (DamageVs Saberface) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 25.6, npAtk: 0.81, npDef: 4 }
@@ -153,6 +155,7 @@ assassins = [
   , death:    38.5
   , align:    Chaotic:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Ryougi Shiki (Assassin)"
   , id:       92
@@ -204,6 +207,7 @@ assassins = [
   , death:    44.0
   , align:    Chaotic:Good
   , limited:  true
+  , free:     true
   }
 , { name:     "Carmilla"
   , id:       46
@@ -246,7 +250,7 @@ assassins = [
                         , To Self Heal $ Flat 2000.0
                         , Grant Self 3 AttackUp $ Flat 20.0
                         ]
-              , over:   [ To (EnemyType Female) Damage $ 120.0 ~ 170.0 ]
+              , over:   [ To Enemy (DamageVs Female) $ 120.0 ~ 170.0 ]
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 25.2, npAtk: 2.15, npDef: 4 }
@@ -255,6 +259,7 @@ assassins = [
   , death:    44.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "EMIYA (Assassin)"
   , id:       109
@@ -306,6 +311,7 @@ assassins = [
   , death:    44.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Scathach (Assassin)"
   , id:       133
@@ -356,6 +362,7 @@ assassins = [
   , death:    44.0
   , align:    Neutral:Good
   , limited:  true
+  , free:     true
   }
 , { name:     "Stheno"
   , id:       41
@@ -408,6 +415,7 @@ assassins = [
   , death:    27.5
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Fuuma Kotarou"
   , id:       117
@@ -456,6 +464,7 @@ assassins = [
   , death:    38.5
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Sasaki Kojiro"
   , id:       39
@@ -506,6 +515,7 @@ assassins = [
   , death:    55.0
   , align:    Neutral:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Hassan of the Cursed Arm"
   , id:       40
@@ -552,6 +562,7 @@ assassins = [
   , death:    44.0
   , align:    Lawful:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Henry Jekyll & Hyde"
   , id:       81
@@ -609,6 +620,7 @@ assassins = [
   , death:    55.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     true
   }
 , { name:     "Jing Ke"
   , id:       42
@@ -661,6 +673,7 @@ assassins = [
   , death:    55.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Charles-Henri Sanson"
   , id:       43
@@ -709,6 +722,7 @@ assassins = [
   , death:    49.5
   , align:    Lawful:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Hassan of the Hundred Personas"
   , id:       110
@@ -761,6 +775,7 @@ assassins = [
   , death:    44.0
   , align:    Lawful:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Hassan of the Serenity"
   , id:       124
@@ -813,6 +828,7 @@ assassins = [
   , death:    44.0
   , align:    Lawful:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Phantom of the Opera"
   , id:       44
@@ -862,6 +878,7 @@ assassins = [
   , death:    49.5
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Mata Hari"
   , id:       45
@@ -913,6 +930,6 @@ assassins = [
   , death:    55.0
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
-
 ]

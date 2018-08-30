@@ -51,6 +51,7 @@ sabers = [
   , death:    35.0
   , align:    Neutral:Balanced
   , limited:  true
+  , free:     false
   }
 , { name:     "Altera"
   , id:       8
@@ -99,6 +100,7 @@ sabers = [
   , death:    24.5
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Nero Claudius (Bride)"
   , id:       90
@@ -150,6 +152,7 @@ sabers = [
   , death:    35.0
   , align:    Chaotic:Bride
   , limited:  true
+  , free:     false
   }
 , { name:     "Mordred"
   , id:       76
@@ -199,6 +202,7 @@ sabers = [
   , death:    24.5
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Ryougi Shiki (Saber)"
   , id:       91
@@ -252,6 +256,7 @@ sabers = [
   , death:    24.5
   , align:    Neutral:Balanced
   , limited:  true
+  , free:     false
   }
 , { name:     "Altria Pendragon"
   , id:       2
@@ -296,6 +301,7 @@ sabers = [
   , death:    21.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Lancelot (Saber)"
   , id:       121
@@ -346,6 +352,7 @@ sabers = [
   , death:    28.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Altria Pendragon (Alter)"
   , id:       3
@@ -390,6 +397,7 @@ sabers = [
   , death:    19.2
   , align:    Lawful:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Rama"
   , id:       101
@@ -429,7 +437,7 @@ sabers = [
               , kind:   "Anti-Demon"
               , hits:   5
               , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 ]
-              , over:   [ To (EnemyType Demonic) Damage $ 150.0 ~ 200.0 ]
+              , over:   [ To Enemy (DamageVs Demonic) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 100, starRate: 10.2, npAtk: 0.84, npDef: 3 }
@@ -438,6 +446,7 @@ sabers = [
   , death:    24.5
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Nero Claudius"
   , id:       5
@@ -487,6 +496,7 @@ sabers = [
   , death:    24.5
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Chevalier d'Eon"
   , id:       10
@@ -539,6 +549,7 @@ sabers = [
   , death:    28.0
   , align:    Neutral:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Siegfried"
   , id:       6
@@ -587,6 +598,7 @@ sabers = [
   , death:    28.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Gawain"
   , id:       123
@@ -639,6 +651,7 @@ sabers = [
   , death:    21.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Altria Pendragon (Lily)"
   , id:       4
@@ -683,6 +696,7 @@ sabers = [
   , death:    21.0
   , align:    Lawful:Good
   , limited:  true
+  , free:     true
   }
 , { name:     "Gaius Julius Caesar"
   , id:       7
@@ -729,6 +743,7 @@ sabers = [
   , death:    31.5
   , align:    Neutral:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Fergus mac Roich"
   , id:       72
@@ -781,6 +796,7 @@ sabers = [
   , death:    35.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Bedivere"
   , id:       126
@@ -829,6 +845,7 @@ sabers = [
   , death:    28.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     true
   }
 , { name:     "Gilles de Rais"
   , id:       9
@@ -875,6 +892,7 @@ sabers = [
   , death:    31.5
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 
 ]

@@ -36,6 +36,7 @@ type Servant = { name     ∷ String
                , death    ∷ Number
                , align    ∷ Tuple Alignment Alignment
                , limited  ∷ Boolean
+               , free     ∷ Boolean
                }
 
 data Card = Arts | Buster | Quick
@@ -76,25 +77,41 @@ type Gen = { starWeight ∷ Int
            , npDef      ∷ Int
            }
 
+simplify ∷ ActiveEffect -> ActiveEffect
+simplify (Chances _ _ ef) = simplify ef
+simplify (Chance _ ef)    = simplify ef
+simplify (When _ ef)      = simplify ef
+simplify ef               = ef
+
 getEffects ∷ Servant -> Array ActiveEffect
 getEffects {phantasm:{effect, over}, actives}
     = simplify <$> effect ++ over ++ (actives >>= _.effect)
-  where
-    simplify (Chances _ _ ef) = simplify ef
-    simplify (Chance _ ef)    = simplify ef
-    simplify (When _ ef)      = simplify ef
-    simplify ef               = ef
 phantasmEffects ∷ NoblePhantasm -> Array ActiveEffect
 phantasmEffects {effect, over} = effect ++ over
 
 npDamage ∷ Servant -> Number
-npDamage s@{stats:{max:{atk}}, phantasm:{card, effect, over, first}}
-  | any (notEq 0.0 ∘ dmg toMin) $ effect ++ over 
-    = cardBonus * toNumber atk * classModifier s.class 
-    * (mapSum (dmg toMin) effect + mapSum (dmg toMax) over)
-    * mapSum (boost toMin) effect 
-    * mapSum (boost toMax) (guard first >> head over)
+npDamage s@{ phantasm:{card, effect, over, first}}
+  | not ∘ any (notEq 0.0 ∘ dmg Humanoid toMin ∘ simplify) $ effect ++ over = 0.0
+  | otherwise = fromMaybe 0.0 ∘ maximum $ npDamageVs s <$> enumArray
+
+npDamageVs ∷ Servant -> Trait -> Number
+npDamageVs s@{ phantasm:{card, effect, over, first}} t
+  | any (notEq 0.0 ∘ dmg t toMin ∘ simplify) $ effect ++ over 
+    = sum (flat toMax <$> overEfs ++ skillEfs)
+    + sum (flat npStrength <$> npEfs)
+    + cardBonus * toNumber s.stats.max.atk * classModifier s.class 
+    * (mapSum (dmg t npStrength) npEfs + mapSum (dmg t toMax) overEfs)
+    * mapSum (boost t npStrength) npEfs 
+    * mapSum (boost t toMax) (guard first >> head overEfs)
+    * mapSum (boost t toMax) skillEfs
   where
+    skillEfs 
+        = simplify <$> (s.actives >>= _.effect) ++ (s.passives >>= _.effect)
+    npEfs = simplify <$> effect
+    overEfs = simplify <$> over
+    npStrength
+      | s.free || s.rarity < 4 = toMax
+      | otherwise              = toMin
     cardBonus = case card of
         Arts -> 1.0
         Buster -> 1.5
@@ -104,35 +121,39 @@ npDamage s@{stats:{max:{atk}}, phantasm:{card, effect, over, first}}
 mapSum ∷ ∀ f a. Foldable f => Functor f => (a -> Number) -> f a -> Number
 mapSum f = max 1.0 ∘ sum ∘ map ((_ / 100.0) ∘ f)
 
-dmg ∷ (Amount -> Number) -> ActiveEffect -> Number
-dmg f (To Enemy Damage a) = f a
-dmg f (To Enemy DamageThruDef a) = f a
-dmg f (To Enemies Damage a) = f a
-dmg f (To Enemies DamageThruDef a) = f a
-dmg _ _ = 0.0
+flat ∷ (Amount -> Number) -> ActiveEffect -> Number
+flat f (Grant t _ DamageUp a)
+  | allied t = f a
+flat f (Debuff t _ DamageVuln a)
+  | not $ allied t = f a
+flat _ _ = 0.0
 
-boost ∷ (Amount -> Number) -> ActiveEffect -> Number
-boost f (To (EnemyType _) Damage a) = f a
-boost f (To (EnemyType _) DamageThruDef a) = f a
-boost f (To (EnemiesType _) Damage a) = f a
-boost f (To (EnemiesType _) DamageThruDef a) = f a
-boost f (Grant t _ buff a) 
-  | allied t = buffBoost buff
+dmg ∷ Trait -> (Amount -> Number) -> ActiveEffect -> Number
+dmg _ f (To Enemy Damage a) = f a
+dmg _ f (To Enemy DamageThruDef a) = f a
+dmg _ f (To Enemies Damage a) = f a
+dmg _ f (To Enemies DamageThruDef a) = f a
+dmg t f (To _ (DamageVs t1) a) | t == t1 = f a
+dmg _ _ _ = 0.0
+
+boost ∷ Trait -> (Amount -> Number) -> ActiveEffect -> Number
+boost t f (Grant targ _ buff a) 
+  | allied targ = buffBoost buff
   where
     buffBoost ArtsUp = f a
     buffBoost AttackUp = f a
-    buffBoost (AttackUpVs _) = f a
+    buffBoost (AttackUpVs t1) | t == t1 = f a
     buffBoost BusterUp = f a
     buffBoost (DamageAffinity _) = f a
     buffBoost NPUp = f a
     buffBoost QuickUp = f a
     buffBoost _ = 0.0
-boost f (Debuff t _ debuff a) 
-  | not $ allied t = debuffBoost debuff
+boost t f (Debuff targ _ debuff a) 
+  | not $ allied targ = debuffBoost debuff
   where
     debuffBoost DefenseDown = f a
     debuffBoost _ = 0.0
-boost _ _ = 0.0
+boost _ _ _ = 0.0
 
 data PhantasmType = SingleTarget | MultiTarget | Support
 instance _01_ ∷ Show PhantasmType where

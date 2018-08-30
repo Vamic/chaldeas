@@ -51,6 +51,7 @@ archers = [
   , death:    31.5
   , align:    Chaotic:Good
   , limited: true
+  , free:    false
   }
 , { name:     "Altria Pendragon (Archer)"
   , id:       129
@@ -103,6 +104,7 @@ archers = [
   , death:    25.8
   , align:    Lawful:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Nikola Tesla"
   , id:       77
@@ -156,6 +158,7 @@ archers = [
   , death:    31.5
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Orion"
   , id:       60
@@ -208,6 +211,7 @@ archers = [
   , death:    27.0
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Arjuna"
   , id:       84
@@ -260,6 +264,7 @@ archers = [
   , death:    31.5
   , align:    Lawful:Balanced   
   , limited:  false
+  , free:    false
   }
 , { name:     "Chloe von Einzbern"
   , id:       137
@@ -313,6 +318,7 @@ archers = [
   , death:    36.0
   , align:    Chaotic:Good
   , limited:  true
+  , free:     true
   }
 , { name:     "Oda Nobunaga"
   , id:       69
@@ -359,6 +365,7 @@ archers = [
   , death:    31.5
   , align:    Lawful:Balanced
   , limited:  true
+  , free:     true
   }
 , { name:     "Tristan"
   , id:       122
@@ -412,6 +419,7 @@ archers = [
   , death:    31.5
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "EMIYA"
   , id:       11
@@ -461,6 +469,7 @@ archers = [
   , death:    31.5
   , align:    Neutral:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Atalante"
   , id:       14
@@ -507,6 +516,7 @@ archers = [
   , death:    31.5
   , align:    Neutral:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Anne Bonny & Mary Read (Archer)"
   , id:       131
@@ -560,6 +570,7 @@ archers = [
   , death:    40.5
   , align:    Chaotic:Balanced
   , limited:  true
+  , free:     false
   }
 , { name:     "Robin Hood"
   , id:       13
@@ -600,7 +611,7 @@ archers = [
               , kind:   "Anti-Personnel"
               , hits:   1
               , effect: [ To Enemy Damage $ 900.0 ~ 1500.0 ]
-              , over:   [ To (EnemyType Poisoned) Damage $ 200.0 ~ 250.0 ]
+              , over:   [ To Enemy (DamageVs Poisoned) $ 200.0 ~ 250.0 ]
               , first:  false
               }
   , gen:      { starWeight: 150, starRate: 8.0, npAtk: 0.87, npDef: 3 }
@@ -609,6 +620,7 @@ archers = [
   , death:    31.5
   , align:    Neutral:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Euryale"
   , id:       15
@@ -647,7 +659,7 @@ archers = [
               , kind:   "Anti-Personnel"
               , hits:   1
               , effect: [ To Enemy Damage $ Flat 1200.0 
-                        , To (EnemyType Male) Damage $ 150.0 ~ 250.0
+                        , To Enemy (DamageVs Male) $ 150.0 ~ 250.0
                         , Chance 150 ∘ Debuff Enemy 3 AttackDown $ Flat 20.0
                         ]
               , over:   [ Chances 100 200 
@@ -660,6 +672,7 @@ archers = [
   , death:    22.5
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Arash"
   , id:       16
@@ -710,6 +723,7 @@ archers = [
   , death:    45.0
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "David"
   , id:       63
@@ -761,6 +775,7 @@ archers = [
   , death:    36.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     true
   }
 , { name:     "Kid Gilgamesh"
   , id:       95
@@ -809,6 +824,7 @@ archers = [
   , death:    36.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Billy the Kid"
   , id:       105
@@ -857,6 +873,7 @@ archers = [
   , death:    45.0
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Tawara Touta"
   , id:       125
@@ -905,6 +922,6 @@ archers = [
   , death:    36.0
   , align:    Neutral:Good
   , limited:  false
+  , free:     false
   }
-
 ]

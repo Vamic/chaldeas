@@ -56,6 +56,7 @@ lancers = [
   , death:    32.0
   , align:    Neutral:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Karna"
   , id:       85
@@ -107,6 +108,7 @@ lancers = [
   , death:    28.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Tamamo no Mae (Lancer)"
   , id:       128
@@ -155,7 +157,7 @@ lancers = [
               , kind:   "Anti-Unit"
               , hits:   4
               , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 ]
-              , over:   [ To (EnemyType Male) Damage $ 150.0 ~ 200.0 ]
+              , over:   [ To Enemy (DamageVs Male) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 91, starRate: 12.2, npAtk: 1.05, npDef: 4 }
@@ -164,6 +166,7 @@ lancers = [
   , death:    40.0
   , align:    Neutral:Summer
   , limited:  true
+  , free:     false
   }
 , { name:     "Brynhild"
   , id:       88
@@ -207,7 +210,7 @@ lancers = [
               , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
                         , Grant Allies 3 StarUp $ Flat 30.0
                         ]
-              , over:   [ To (EnemyType Brynhild) Damage $ 150.0 ~ 200.0 ]
+              , over:   [ To Enemy (DamageVs Brynhild) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 87, starRate: 12.2, npAtk: 1.07, npDef: 4 }
@@ -216,6 +219,7 @@ lancers = [
   , death:    32.0
   , align:    Neutral:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Altria Pendragon (Lancer)"
   , id:       119
@@ -264,6 +268,7 @@ lancers = [
   , death:    24.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Altria Pendragon (Lancer Alter)"
   , id:       78
@@ -313,6 +318,7 @@ lancers = [
   , death:    23.0
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Li Shuwen"
   , id:       102
@@ -365,6 +371,7 @@ lancers = [
   , death:    40.0
   , align:    Neutral:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Kiyohime (Lancer)"
   , id:       134
@@ -414,6 +421,7 @@ lancers = [
   , death:    40.0
   , align:    Chaotic:Evil
   , limited:  true
+  , free:     false
   }
 , { name:     "Elisabeth Bathory"
   , id:       18
@@ -458,6 +466,7 @@ lancers = [
   , death:    24.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Fionn mac Cumhaill"
   , id:       87
@@ -507,6 +516,7 @@ lancers = [
   , death:    32.0
   , align:    Neutral:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Cu Chulainn"
   , id:       17
@@ -557,6 +567,7 @@ lancers = [
   , death:    32.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Cu Chulainn (Prototype)"
   , id:       20
@@ -607,6 +618,7 @@ lancers = [
   , death:    28.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Leonidas"
   , id:       21
@@ -655,6 +667,7 @@ lancers = [
   , death:    32.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Romulus"
   , id:       22
@@ -706,6 +719,7 @@ lancers = [
   , death:    32.0
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Hektor"
   , id:       64
@@ -754,6 +768,7 @@ lancers = [
   , death:    28.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Musashibou Benkei"
   , id:       19
@@ -800,6 +815,7 @@ lancers = [
   , death:    36.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Diarmuid ua Duibhne"
   , id:       71
@@ -849,5 +865,6 @@ lancers = [
   , death:    36.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 ]

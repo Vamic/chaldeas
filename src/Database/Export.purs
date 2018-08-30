@@ -27,6 +27,7 @@ servants = \_ -> D.servants <#> \s@{align: alignA:alignB} ->
     , deathRate:     s.death
     , alignment:     [show alignA, show alignB]
     , limited:       s.limited
+    , free:          s.free
     }
   where
     exportAmount (Flat a)    = { from: a, to: a }

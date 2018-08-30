@@ -24,27 +24,29 @@ data SortBy = ID
             | StarRate
             | Hits
             | NPGain
+            | NPArts
             | GrailATK
             | GrailHP
             | NPDamage
 
 instance _a_ ∷ Show SortBy where
-  show StarRate = "Star Rate"
-  show NPDamage = "NP Damage"
-  show NPGain   = "NP Gain/Hit"
-  show GrailATK = "Grail ATK"
-  show GrailHP  = "Grail HP"
+  show StarRate   = "Star Rate"
+  show NPDamage   = "NP Damage"
+  show NPGain     = "NP Gain/Hit"
+  show NPArts     = "NP Gain/Arts card"
+  show GrailATK   = "Grail ATK"
+  show GrailHP    = "Grail HP"
   show a = genericShow a
 
-print' ∷ Number -> String
-print' = format $ Formatter { comma: true
-                            , before: 0
-                            , after: 0
-                            , abbreviations: false
-                            , sign: false
-                            } 
-print ∷ Int -> String
-print = print' ∘ toNumber
+print ∷ Int -> Number -> String
+print places = format $ Formatter { comma: true
+                                  , before: 0
+                                  , after: places
+                                  , abbreviations: false
+                                  , sign: false
+                                  }
+print' ∷ Int -> String
+print' = print 0 ∘ toNumber
 
 toSort ∷ SortBy -> Servant -> Number
 toSort ID {id} = -1.0 * toNumber id
@@ -56,6 +58,7 @@ toSort HP {stats:{max:{hp}}} = toNumber hp
 toSort GrailATK {stats:{grail:{atk}}} = toNumber atk
 toSort GrailHP {stats:{grail:{hp}}} = toNumber hp
 toSort StarRate {gen:{starRate}} = starRate
+toSort NPArts {gen:{npAtk}, hits:{arts}} = npAtk * toNumber arts
 toSort Hits {hits:{arts,buster,quick,ex}} 
     = toNumber $ arts + buster + quick + ex
 
@@ -66,9 +69,10 @@ doSort a = map (uncurry Tuple ∘ showSort) ∘ sortWith sorter
     sorter   = toSort a
     showSort = output ∘ abs ∘ sorter &&& identity
     output = case a of
-        NPGain   -> (_ ++ "%") ∘ show
-        StarRate -> (_ ++ "%") ∘ show
-        _        -> print'
+        NPGain   -> (_ ++ "%") ∘ print 2
+        StarRate -> (_ ++ "%") ∘ print 2
+        NPArts   -> (_ ++ "%") ∘ print 2
+        _        -> print 0
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

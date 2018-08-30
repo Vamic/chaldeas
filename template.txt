@@ -45,5 +45,6 @@
   , death:    ?_
   , align:    ?_
   , limited:  ?_
+  , free:     ?_
   }
  

@@ -36,6 +36,7 @@ extraFilters =
     ]
   , Filter FilterOther "Limited" $ const _.limited
   , Filter FilterOther "Non-Limited" ∘ const $ not ∘ _.limited
+  , Filter FilterOther "Free" $ const _.free
   ]
 data FilterTab = FilterEvent | FilterOther
                | FilterPhantasm | FilterCard 

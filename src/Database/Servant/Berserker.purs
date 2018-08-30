@@ -55,6 +55,7 @@ berserkers = [
   , death:    52.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Minamoto-no-Raikou"
   , id:       114
@@ -105,6 +106,7 @@ berserkers = [
   , death:    39.0
   , align:    Chaotic:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Sakata Kintoki"
   , id:       51
@@ -151,6 +153,7 @@ berserkers = [
   , death:    52.0
   , align:    Lawful:Good
   , limited:  true
+  , free:     false
   }
 , { name:     "Vlad III"
   , id:       52
@@ -195,6 +198,7 @@ berserkers = [
   , death:    45.5
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Nightingale"
   , id:       97
@@ -243,6 +247,7 @@ berserkers = [
   , death:    56.8
   , align:    Lawful:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Heracles"
   , id:       47
@@ -291,6 +296,7 @@ berserkers = [
   , death:    39.0
   , align:    Chaotic:Mad
   , limited:  false
+  , free:     false
   }
 , { name:     "Frankenstein"
   , id:       82
@@ -341,6 +347,7 @@ berserkers = [
   , death:    58.5
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Ibaraki-Douji"
   , id:       116
@@ -393,6 +400,7 @@ berserkers = [
   , death:    52.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Lancelot"
   , id:       48
@@ -439,6 +447,7 @@ berserkers = [
   , death:    52.0
   , align:    Lawful:Mad
   , limited:  false
+  , free:     false
   }
 , { name:     "Beowulf"
   , id:       89
@@ -487,6 +496,7 @@ berserkers = [
   , death:    58.5
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Tamamo Cat"
   , id:       58
@@ -533,6 +543,7 @@ berserkers = [
   , death:    39.0
   , align:    Chaotic:Good
   , limited:  false
+  , free:     false
   }
 , { name:     "Lu Bu Fengxian"
   , id:       49
@@ -584,6 +595,7 @@ berserkers = [
   , death:    50.3
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Spartacus"
   , id:       50
@@ -632,6 +644,7 @@ berserkers = [
   , death:    65.0
   , align:    Neutral:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Asterios"
   , id:       53
@@ -683,6 +696,7 @@ berserkers = [
   , death:    58.5
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 , { name:     "Kiyohime"
   , id:       56
@@ -733,6 +747,7 @@ berserkers = [
   , death:    65.0
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     true
   }
 , { name:     "Eric Bloodaxe"
   , id:       57
@@ -783,6 +798,7 @@ berserkers = [
   , death:    58.5
   , align:    Chaotic:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Darius III"
   , id:       55
@@ -831,6 +847,7 @@ berserkers = [
   , death:    65.0
   , align:    Lawful:Balanced
   , limited:  false
+  , free:     false
   }
 , { name:     "Caligula"
   , id:       54
@@ -882,5 +899,6 @@ berserkers = [
   , death:    56.8
   , align:    Chaotic:Evil
   , limited:  false
+  , free:     false
   }
 ]

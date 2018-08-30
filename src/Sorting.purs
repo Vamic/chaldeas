@@ -27,17 +27,17 @@ data SortBy = ID
             | Rarity
             | ATK
             | HP
-            | StarRate
             | Hits
-            | NPGain
-            | NPArts
             | GrailATK
             | GrailHP
+            | StarRate
+            | NPGain
+            | NPArts
             | NPDamage
             | SpecialNP
 
 instance _a_ ∷ Show SortBy where
-  show StarRate   = "Star Rate"
+  show StarRate   = "Star Drop"
   show NPDamage   = "NP Damage"
   show SpecialNP  = "NP Special Damage"
   show NPGain     = "NP Gain/Hit"
@@ -66,8 +66,21 @@ toSort ATK {stats:{max:{atk}}} = toNumber atk
 toSort HP {stats:{max:{hp}}} = toNumber hp
 toSort GrailATK {stats:{grail:{atk}}} = toNumber atk
 toSort GrailHP {stats:{grail:{hp}}} = toNumber hp
-toSort StarRate {gen:{starRate}} = starRate
-toSort NPArts {gen:{npAtk}, hits:{arts}} = 2.0 * npAtk * toNumber arts
+toSort StarRate {passives, gen:{starRate}} 
+    = starRate 
+    * (add 1.0 ∘ sum ∘ map quickUp $ passives >>= _.effect)
+    * (add 1.0 ∘ sum ∘ map starUp $ passives >>= _.effect)
+  where
+    quickUp (Grant _ _ QuickUp a) = toMax a / 100.0
+    quickUp _ = 0.0
+    starUp (Grant _ _ StarUp a) = toMax a / 100.0
+    starUp _ = 0.0
+toSort NPArts {passives, gen:{npAtk}, hits:{arts}} 
+    = 2.0 * npAtk * toNumber arts 
+    * (add 1.0 ∘ sum ∘ map artsUp $ passives >>= _.effect)
+  where
+    artsUp (Grant _ _ ArtsUp a) = toMax a / 100.0
+    artsUp _ = 0.0
 toSort Hits {hits:{arts,buster,quick,ex}} 
     = toNumber $ arts + buster + quick + ex
 

@@ -28535,8 +28535,8 @@ var PS = {};
           sign: false
       });
   };
-  var print$prime = function ($186) {
-      return print(0)(Data_Int.toNumber($186));
+  var print$prime = function ($209) {
+      return print(0)(Data_Int.toNumber($209));
   };
   var matchSum = function (dictEq) {
       return function (dictSemiring) {
@@ -28586,7 +28586,7 @@ var PS = {};
               if (Data_Boolean.otherwise) {
                   return [  ];
               };
-              throw new Error("Failed pattern match at Sorting line 144, column 5 - line 144, column 45: " + [  ]);
+              throw new Error("Failed pattern match at Sorting line 157, column 5 - line 157, column 45: " + [  ]);
           };
           var skillFs = Data_Functor.map(Data_Functor.functorArray)(Database_Servant.simplify)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Control_Bind.bind(Control_Bind.bindArray)(v.actives)(function (v1) {
               return v1.effect;
@@ -28610,7 +28610,7 @@ var PS = {};
               if (Data_Boolean.otherwise) {
                   return Database_Skill.toMin;
               };
-              throw new Error("Failed pattern match at Sorting line 148, column 5 - line 150, column 39: " + [  ]);
+              throw new Error("Failed pattern match at Sorting line 161, column 5 - line 163, column 39: " + [  ]);
           })();
           var npFs = Data_Functor.map(Data_Functor.functorArray)(Database_Servant.simplify)(v.phantasm.effect);
           var instants = (function () {
@@ -28631,8 +28631,8 @@ var PS = {};
         
           // FROM NP PROPERTIES
   var npDamageMultiplier = Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(matchSum(Database_Skill._15_)(Data_Semiring.semiringNumber)(instants))(Operators.doIf(special)(Data_Array.cons(Database_Skill.LastStand.value))([ Database_Skill.Damage.value, Database_Skill.DamageThruDef.value ])));
-          var superEffectiveModifier = 1.0 + (matchSum(Database_Skill._15_)(Data_Semiring.semiringNumber)(instants)(Database_Skill.DamagePoison.value) + Data_Maybe.fromMaybe(0.0)(Data_Foldable.maximum(Data_Ord.ordNumber)(Data_Foldable.foldableArray)(Data_Functor.map(Data_Functor.functorArray)(function ($187) {
-              return matchSum(Database_Skill._15_)(Data_Semiring.semiringNumber)(instants)(Database_Skill.DamageVs.create($187));
+          var superEffectiveModifier = 1.0 + (matchSum(Database_Skill._15_)(Data_Semiring.semiringNumber)(instants)(Database_Skill.DamagePoison.value) + Data_Maybe.fromMaybe(0.0)(Data_Foldable.maximum(Data_Ord.ordNumber)(Data_Foldable.foldableArray)(Data_Functor.map(Data_Functor.functorArray)(function ($210) {
+              return matchSum(Database_Skill._15_)(Data_Semiring.semiringNumber)(instants)(Database_Skill.DamageVs.create($210));
           })(specials(Database_Trait._5_)))));
           var firstFs = Data_Array.fromFoldable(Data_Foldable.foldableMaybe)(Operators.advance(Data_Maybe.bindMaybe)(Control_MonadZero.guard(Data_Maybe.monadZeroMaybe)(v.phantasm.first))(Data_Array.head(overFs)));
         
@@ -28665,7 +28665,7 @@ var PS = {};
               if (v.phantasm.card instanceof Database_Servant.Quick) {
                   return 0.8;
               };
-              throw new Error("Failed pattern match at Sorting line 188, column 23 - line 192, column 5: " + [ v.phantasm.card.constructor.name ]);
+              throw new Error("Failed pattern match at Sorting line 201, column 23 - line 205, column 5: " + [ v.phantasm.card.constructor.name ]);
           })();
           var buffs = (function () {
               var goNP = function (v1) {
@@ -28694,18 +28694,18 @@ var PS = {};
               if (v.phantasm.card instanceof Database_Servant.Quick) {
                   return Database_Skill.QuickUp.value;
               };
-              throw new Error("Failed pattern match at Sorting line 205, column 32 - line 208, column 26: " + [ v.phantasm.card.constructor.name ]);
+              throw new Error("Failed pattern match at Sorting line 218, column 32 - line 221, column 26: " + [ v.phantasm.card.constructor.name ]);
           })());
           var dmgPlusAdd = 100.0 * (matchSum(Database_Skill._1_)(Data_Semiring.semiringNumber)(buffs)(Database_Skill.DamageUp.value) + matchSum(Database_Skill._9_)(Data_Semiring.semiringNumber)(debuffs)(Database_Skill.DamageVuln.value));
           var npDamageMod = matchSum(Database_Skill._1_)(Data_Semiring.semiringNumber)(buffs)(Database_Skill.NPUp.value);
-          var triangleModifier = 1.0 + Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(function ($188) {
-              return matchSum(Database_Skill._1_)(Data_Semiring.semiringNumber)(buffs)(Database_Skill.DamageAffinity.create($188));
+          var triangleModifier = 1.0 + Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(function ($211) {
+              return matchSum(Database_Skill._1_)(Data_Semiring.semiringNumber)(buffs)(Database_Skill.DamageAffinity.create($211));
           })(specials(Database_Trait._19_)));
-          var atkMod = matchSum(Database_Skill._1_)(Data_Semiring.semiringNumber)(buffs)(Database_Skill.AttackUp.value) + Data_Maybe.fromMaybe(0.0)(Data_Foldable.maximum(Data_Ord.ordNumber)(Data_Foldable.foldableArray)(Data_Functor.map(Data_Functor.functorArray)(function ($189) {
-              return matchSum(Database_Skill._1_)(Data_Semiring.semiringNumber)(buffs)(Database_Skill.AttackUpVs.create($189));
+          var atkMod = matchSum(Database_Skill._1_)(Data_Semiring.semiringNumber)(buffs)(Database_Skill.AttackUp.value) + Data_Maybe.fromMaybe(0.0)(Data_Foldable.maximum(Data_Ord.ordNumber)(Data_Foldable.foldableArray)(Data_Functor.map(Data_Functor.functorArray)(function ($212) {
+              return matchSum(Database_Skill._1_)(Data_Semiring.semiringNumber)(buffs)(Database_Skill.AttackUpVs.create($212));
           })(specials(Database_Trait._5_))));
-          var $64 = npDamageMultiplier === 0.0;
-          if ($64) {
+          var $70 = npDamageMultiplier === 0.0;
+          if ($70) {
               return 0.0;
           };
           return servantAtk * npDamageMultiplier * (firstCardBonus + cardDamageValue * (1.0 + cardMod)) * classAtkBonus * triangleModifier * 1.0 * randomModifier * 0.23 * ((1.0 + atkMod) - defMod) * 1.0 * 1.0 * (1.0 - 0.0) * (1.0 + 0.0 + selfDamageMod + 0.0 * 0.0 + npDamageMod * 1.0) * (1.0 + (superEffectiveModifier - 1.0) * 1.0) + dmgPlusAdd + 0.0 + servantAtk * 0.0;
@@ -28741,10 +28741,34 @@ var PS = {};
               return Data_Int.toNumber(v1.stats.grail.hp);
           };
           if (v instanceof StarRate) {
-              return v1.gen.starRate;
+              var starUp = function (v2) {
+                  if (v2 instanceof Database_Skill.Grant && v2.value2 instanceof Database_Skill.StarUp) {
+                      return Database_Skill.toMax(v2.value3) / 100.0;
+                  };
+                  return 0.0;
+              };
+              var quickUp = function (v2) {
+                  if (v2 instanceof Database_Skill.Grant && v2.value2 instanceof Database_Skill.QuickUp) {
+                      return Database_Skill.toMax(v2.value3) / 100.0;
+                  };
+                  return 0.0;
+              };
+              return v1.gen.starRate * (1.0 + Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(quickUp)(Control_Bind.bind(Control_Bind.bindArray)(v1.passives)(function (v2) {
+                  return v2.effect;
+              })))) * (1.0 + Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(starUp)(Control_Bind.bind(Control_Bind.bindArray)(v1.passives)(function (v2) {
+                  return v2.effect;
+              }))));
           };
           if (v instanceof NPArts) {
-              return 2.0 * v1.gen.npAtk * Data_Int.toNumber(v1.hits.arts);
+              var artsUp = function (v2) {
+                  if (v2 instanceof Database_Skill.Grant && v2.value2 instanceof Database_Skill.ArtsUp) {
+                      return Database_Skill.toMax(v2.value3) / 100.0;
+                  };
+                  return 0.0;
+              };
+              return 2.0 * v1.gen.npAtk * Data_Int.toNumber(v1.hits.arts) * (1.0 + Data_Foldable.sum(Data_Foldable.foldableArray)(Data_Semiring.semiringNumber)(Data_Functor.map(Data_Functor.functorArray)(artsUp)(Control_Bind.bind(Control_Bind.bindArray)(v1.passives)(function (v2) {
+                  return v2.effect;
+              }))));
           };
           if (v instanceof Hits) {
               return Data_Int.toNumber(((v1.hits.arts + v1.hits.buster | 0) + v1.hits.quick | 0) + v1.hits.ex | 0);
@@ -28899,38 +28923,38 @@ var PS = {};
           if (x instanceof SpecialNP && y instanceof SpecialNP) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Sorting line 228, column 8 - line 228, column 33: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Sorting line 241, column 8 - line 241, column 33: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var doSort = function (v) {
       if (v instanceof Rarity) {
-          return function ($190) {
+          return function ($213) {
               return Data_Functor.map(Data_Functor.functorArray)(Data_Tuple.Tuple.create(""))(Data_Array.sortWith(Data_Ord.ordString)(function (s) {
                   return Data_Show.show(Data_Show.showInt)(5 - s.rarity | 0) + s.name;
-              })($190));
+              })($213));
           };
       };
       var sorter = toSort(v);
       var output = (function () {
           if (v instanceof NPGain) {
-              return function ($191) {
+              return function ($214) {
                   return (function (v1) {
                       return v1 + "%";
-                  })(print(2)($191));
+                  })(print(2)($214));
               };
           };
           if (v instanceof StarRate) {
-              return function ($192) {
+              return function ($215) {
                   return (function (v1) {
                       return v1 + "%";
-                  })(print(2)($192));
+                  })(print(2)($215));
               };
           };
           if (v instanceof NPArts) {
-              return function ($193) {
+              return function ($216) {
                   return (function (v1) {
                       return v1 + "%";
-                  })(print(2)($193));
+                  })(print(2)($216));
               };
           };
           return print(0);
@@ -28939,8 +28963,8 @@ var PS = {};
           if (Data_Eq.eq(_8_)(v)(SpecialNP.value) || Data_Eq.eq(_8_)(v)(NPDamage.value)) {
               return function (s) {
                   return Data_Function.flip(Data_Tuple.Tuple.create)(s)((function () {
-                      var $105 = s.free || s.rarity < 4;
-                      if ($105) {
+                      var $128 = s.free || s.rarity < 4;
+                      if ($128) {
                           return "NP5: ";
                       };
                       return "NP1: ";
@@ -28948,16 +28972,16 @@ var PS = {};
               };
           };
           if (Data_Boolean.otherwise) {
-              return function ($194) {
-                  return Data_Tuple.uncurry(Data_Tuple.Tuple.create)(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(function ($195) {
-                      return output(Data_Ord.abs(Data_Ord.ordNumber)(Data_Ring.ringNumber)(sorter($195)));
-                  })(Control_Category.identity(Control_Category.categoryFn))($194));
+              return function ($217) {
+                  return Data_Tuple.uncurry(Data_Tuple.Tuple.create)(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(function ($218) {
+                      return output(Data_Ord.abs(Data_Ord.ordNumber)(Data_Ring.ringNumber)(sorter($218)));
+                  })(Control_Category.identity(Control_Category.categoryFn))($217));
               };
           };
-          throw new Error("Failed pattern match at Sorting line 79, column 5 - line 83, column 73: " + [  ]);
+          throw new Error("Failed pattern match at Sorting line 92, column 5 - line 96, column 73: " + [  ]);
       })();
-      return function ($196) {
-          return Data_Functor.map(Data_Functor.functorArray)(showSort)(Data_Array.sortWith(Data_Ord.ordNumber)(sorter)($196));
+      return function ($219) {
+          return Data_Functor.map(Data_Functor.functorArray)(showSort)(Data_Array.sortWith(Data_Ord.ordNumber)(sorter)($219));
       };
   };
   var _7_ = new Data_Generic_Rep.Generic(function (x) {
@@ -28997,7 +29021,7 @@ var PS = {};
       if (x instanceof SpecialNP) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value)))))))))));
       };
-      throw new Error("Failed pattern match at Sorting line 226, column 8 - line 226, column 39: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Sorting line 239, column 8 - line 239, column 39: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return ID.value;
@@ -29035,7 +29059,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr)))))))))) {
           return SpecialNP.value;
       };
-      throw new Error("Failed pattern match at Sorting line 226, column 8 - line 226, column 39: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Sorting line 239, column 8 - line 239, column 39: " + [ x.constructor.name ]);
   });
   var _a_ = new Data_Show.Show(function (v) {
       if (v instanceof StarRate) {

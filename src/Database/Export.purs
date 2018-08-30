@@ -29,9 +29,10 @@ servants = \_ -> D.servants <#> \s@{align: alignA:alignB} ->
     , limited:       s.limited
     }
   where
-    exportAmount Full     = { from: 0.0, to: 0.0 }
-    exportAmount (Flat a) = { from: a, to: a }
-    exportAmount (a ~ b)  = { from: a, to: b }
+    exportAmount (Flat a)    = { from: a, to: a }
+    exportAmount (a ~ b)     = { from: a, to: b }
+    exportAmount Full        = { from: 0.0, to: 0.0 }
+    exportAmount Placeholder = { from: 0.0, to: 0.0 }
     exportActive {name, icon, cd, effect} =
         { name
         , icon: show icon

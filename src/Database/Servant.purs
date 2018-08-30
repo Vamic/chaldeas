@@ -12,7 +12,7 @@ import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum      
 import Data.Generic.Rep.Show 
 import Data.Maybe              
-import Data.Int                
+import Data.Int       
 import Data.String.CodeUnits   
 import Data.Tuple             
  
@@ -89,28 +89,50 @@ phantasmEffects {effect, over} = effect ++ over
 
 npDamage ∷ Servant -> Number
 npDamage s@{stats:{max:{atk}}, phantasm:{card, effect, over, first}}
+  | any (notEq 0.0 ∘ dmg toMin) $ effect ++ over 
     = cardBonus * toNumber atk * classModifier s.class 
-    * mapSum dmg effect * mapSum boost effect 
-    * mapSum dmg overFirst * mapSum boost overFirst
+    * (mapSum (dmg toMin) effect + mapSum (dmg toMax) over)
+    * mapSum (boost toMin) effect 
+    * mapSum (boost toMax) (guard first >> head over)
   where
-    overFirst = guard first >> head over
-    mapSum ∷ ∀ f a. Foldable f => Functor f => (a -> Number) -> f a -> Number
-    mapSum f = min 1.0 ∘ sum ∘ map ((_ / 100.0) ∘ f)
-    dmg (To Enemy Damage a) = toNum a
-    dmg (To Enemy DamageThruDef a) = toNum a
-    dmg (To (EnemyType _) Damage a) = toNum a
-    dmg (To (EnemyType _) DamageThruDef a) = toNum a
-    dmg (To Enemies Damage a) = 3.0 * toNum a
-    dmg (To Enemies DamageThruDef a) = 3.0 * toNum a
-    dmg (To (EnemiesType _) Damage a) = 3.0 * toNum a
-    dmg (To (EnemiesType _) DamageThruDef a) = 3.0 * toNum a
-    dmg _ = 0.0
-    boost (Grant _ _ ArtsUp a) = toNum a
-    boost _ = 0.0
     cardBonus = case card of
         Arts -> 1.0
         Buster -> 1.5
         Quick -> 0.8
+  | otherwise = 0.0
+    
+mapSum ∷ ∀ f a. Foldable f => Functor f => (a -> Number) -> f a -> Number
+mapSum f = max 1.0 ∘ sum ∘ map ((_ / 100.0) ∘ f)
+
+dmg ∷ (Amount -> Number) -> ActiveEffect -> Number
+dmg f (To Enemy Damage a) = f a
+dmg f (To Enemy DamageThruDef a) = f a
+dmg f (To Enemies Damage a) = f a
+dmg f (To Enemies DamageThruDef a) = f a
+dmg _ _ = 0.0
+
+boost ∷ (Amount -> Number) -> ActiveEffect -> Number
+boost f (To (EnemyType _) Damage a) = f a
+boost f (To (EnemyType _) DamageThruDef a) = f a
+boost f (To (EnemiesType _) Damage a) = f a
+boost f (To (EnemiesType _) DamageThruDef a) = f a
+boost f (Grant t _ buff a) 
+  | allied t = buffBoost buff
+  where
+    buffBoost ArtsUp = f a
+    buffBoost AttackUp = f a
+    buffBoost (AttackUpVs _) = f a
+    buffBoost BusterUp = f a
+    buffBoost (DamageAffinity _) = f a
+    buffBoost NPUp = f a
+    buffBoost QuickUp = f a
+    buffBoost _ = 0.0
+boost f (Debuff t _ debuff a) 
+  | not $ allied t = debuffBoost debuff
+  where
+    debuffBoost DefenseDown = f a
+    debuffBoost _ = 0.0
+boost _ _ = 0.0
 
 data PhantasmType = SingleTarget | MultiTarget | Support
 instance _01_ ∷ Show PhantasmType where

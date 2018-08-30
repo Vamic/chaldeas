@@ -16,21 +16,31 @@ import Data.Tuple
 import Database.Icon
 import Database.Trait
 
-outputNumber ∷ Number -> String
-outputNumber (-1.0) = "X"
-outputNumber x = toString x
-
 data Amount 
-    = Full
+    = Placeholder
+    | Full
     | Flat Number
     | Range Number Number
 
 infix 1 Range as ~
 
-toNum ∷ Amount -> Number
-toNum Full = 0.0
-toNum (Flat x) = x
-toNum (Range a _) = a
+instance _a_ ∷ Show Amount where
+  show Placeholder = "X"
+  show Full = ""
+  show (Flat x) = toString x
+  show (Range a b) = toString a ++ "~" ++ toString b
+
+toMin ∷ Amount -> Number
+toMin Placeholder = 0.0
+toMin Full = 0.0
+toMin (Flat x) = x
+toMin (Range a _) = a
+
+toMax ∷ Amount -> Number
+toMax Placeholder = 0.0
+toMax Full = 0.0
+toMax (Flat x) = x
+toMax (Range _ b) = b
 
 data Rank = Unknown | EX   
           | APlusPlus | APlus | A | AMinus
@@ -38,7 +48,7 @@ data Rank = Unknown | EX
           | CPlusPlus | CPlus | C | CMinus
                       | DPlus | D 
                       | EPlus | E | EMinus
-instance _a_ ∷ Show Rank where
+instance _b_ ∷ Show Rank where
   show = case _ of
     Unknown   -> "--"
     EX        -> "EX"
@@ -99,11 +109,11 @@ possessiveAndSubject = case _ of
     EnemiesType t -> " all " ++ show t ++ " enemy" 
                   : " all " ++ show t ++ " enemies"
     
-times ∷ Number -> String
-times (-1.0) = ""
-times   0.0  = ""
-times   1.0  = " (1 time)"
-times amt    = " (" ++ outputNumber amt ++ " times)"
+times ∷ Amount -> String
+times Placeholder = ""
+times Full = ""
+times (Flat 1.0)  = " (1 time)"
+times amt = " (" ++ show amt ++ " times)"
 
 data BuffEffect = AlignAffinity Alignment
                 | ArtsUp
@@ -154,10 +164,10 @@ data BuffEffect = AlignAffinity Alignment
                 | StunSuccess
                 | SureHit
                 | Taunt
-instance _b_ ∷ Show BuffEffect where
-    show = showBuff Someone (-1.0)
+instance _c_ ∷ Show BuffEffect where
+    show = showBuff Someone Placeholder
 
-showBuff ∷ Target -> Number -> BuffEffect -> String
+showBuff ∷ Target -> Amount -> BuffEffect -> String
 showBuff target amount buff = case buff of
     ArtsUp           -> "Increase" ++ p ++ " Arts performance" ++ by
     AttackUp         -> "Increase" ++ p ++ " attack" ++ by
@@ -219,7 +229,7 @@ showBuff target amount buff = case buff of
     SureHit          -> "Grant" ++ s ++ " Sure Hit" ++ times amount
     Taunt            -> "Draw attention of all enemies" ++ to
   where 
-    n   = outputNumber amount
+    n   = show amount
     p:s = possessiveAndSubject target
     to  = if s == "" then "" else " to" ++ s
     by  = " by " ++ n ++ "%"
@@ -247,10 +257,10 @@ data DebuffEffect = ApplyTrait Trait
                   | Stun
                   | StunBomb
                   | Terror
-instance _c_ ∷ Show DebuffEffect where
-    show = showDebuff Someone (-1.0)
+instance _d_ ∷ Show DebuffEffect where
+    show = showDebuff Someone Placeholder
 
-showDebuff ∷ Target -> Number -> DebuffEffect -> String
+showDebuff ∷ Target -> Amount -> DebuffEffect -> String
 showDebuff target amount debuff = case debuff of
     ApplyTrait t -> "Apply the " ++ show t ++ " trait" ++ to
     AttackDown   -> "Reduce" ++ p ++ " attack by " ++ n ++ "%"
@@ -278,7 +288,7 @@ showDebuff target amount debuff = case debuff of
     Terror       -> "Inflict Terror status" ++ to ++ ", causing " ++ n 
                  ++ "% chance to be Stunned every turn"
   where  
-    n   = outputNumber amount
+    n   = show amount
     p:s = possessiveAndSubject target
     to  = if s == "" then "" else " to" ++ s
  
@@ -321,10 +331,10 @@ data InstantEffect = Avenge
                    | RemoveBuffs
                    | RemoveDebuffs
                    | RemoveMental
-instance _d_ ∷ Show InstantEffect where
-    show = showInstant Someone (-1.0)
+instance _e_ ∷ Show InstantEffect where
+    show = showInstant Someone Placeholder
 
-showInstant ∷ Target -> Number -> InstantEffect -> String
+showInstant ∷ Target -> Amount -> InstantEffect -> String
 showInstant target amount instant = case instant of
     Avenge        -> "Wait 1 turn [Demerit], then deal " ++ n 
                   ++ "% of damage taken during that turn" ++ to
@@ -355,7 +365,7 @@ showInstant target amount instant = case instant of
         Self -> " for yourself"
         _    -> ""
   where
-    n   = outputNumber amount
+    n   = show amount
     p:s = possessiveAndSubject target
     to  = if s == "" then "" else " to" ++ s
 
@@ -378,13 +388,13 @@ instance _01_ ∷ Eq ActiveEffect where
     where 
       eq' ta tb = ta == tb || ta == Someone || tb == Someone
 
-instance _e_ ∷ Show ActiveEffect where
+instance _f_ ∷ Show ActiveEffect where
   show = case _ of
-      Grant t dur buff amt    -> showBuff t (toNum amt) buff ++ turns dur
+      Grant t dur buff amt    -> showBuff t amt buff ++ turns dur
                              ++ if not allied t then " [Demerit]." else "."
-      Debuff t dur debuff amt -> showDebuff t (toNum amt) debuff ++ turns dur
+      Debuff t dur debuff amt -> showDebuff t amt debuff ++ turns dur
                              ++ if allied t then " [Demerit]." else "."
-      To t instant amt        -> showInstant t (toNum amt) instant ++ "."
+      To t instant amt        -> showInstant t amt instant ++ "."
       Chance per ef           -> show per ++ "% chance to " ++ uncap (show ef)
       Chances a b ef      -> show a ++ "~" ++ show b ++ "% chance to " ++
                                  uncap (show ef)

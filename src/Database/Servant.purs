@@ -3,16 +3,13 @@ module Database.Servant where
 import Prelude
 import Operators
 
-import Control.MonadZero
-import Data.Array (head)
 import Data.Enum              
 import Data.Foldable     
 import Data.Generic.Rep
 import Data.Generic.Rep.Bounded    
 import Data.Generic.Rep.Enum      
 import Data.Generic.Rep.Show 
-import Data.Maybe              
-import Data.Int       
+import Data.Maybe       
 import Data.String.CodeUnits   
 import Data.Tuple             
  
@@ -89,72 +86,6 @@ getEffects {phantasm:{effect, over}, actives}
 phantasmEffects ∷ NoblePhantasm -> Array ActiveEffect
 phantasmEffects {effect, over} = effect ++ over
 
-npDamage ∷ Servant -> Number
-npDamage s@{ phantasm:{card, effect, over, first}}
-  | not ∘ any (notEq 0.0 ∘ dmg Humanoid toMin ∘ simplify) $ effect ++ over = 0.0
-  | otherwise = fromMaybe 0.0 ∘ maximum $ npDamageVs s <$> enumArray
-
-npDamageVs ∷ Servant -> Trait -> Number
-npDamageVs s@{ phantasm:{card, effect, over, first}} t
-  | any (notEq 0.0 ∘ dmg t toMin ∘ simplify) $ effect ++ over 
-    = sum (flat toMax <$> overEfs ++ skillEfs)
-    + sum (flat npStrength <$> npEfs)
-    + cardBonus * toNumber s.stats.max.atk * classModifier s.class 
-    * (mapSum (dmg t npStrength) npEfs + mapSum (dmg t toMax) overEfs)
-    * mapSum (boost t npStrength) npEfs 
-    * mapSum (boost t toMax) (guard first >> head overEfs)
-    * mapSum (boost t toMax) skillEfs
-  where
-    skillEfs 
-        = simplify <$> (s.actives >>= _.effect) ++ (s.passives >>= _.effect)
-    npEfs = simplify <$> effect
-    overEfs = simplify <$> over
-    npStrength
-      | s.free || s.rarity < 4 = toMax
-      | otherwise              = toMin
-    cardBonus = case card of
-        Arts -> 1.0
-        Buster -> 1.5
-        Quick -> 0.8
-  | otherwise = 0.0
-    
-mapSum ∷ ∀ f a. Foldable f => Functor f => (a -> Number) -> f a -> Number
-mapSum f = max 1.0 ∘ sum ∘ map ((_ / 100.0) ∘ f)
-
-flat ∷ (Amount -> Number) -> ActiveEffect -> Number
-flat f (Grant t _ DamageUp a)
-  | allied t = f a
-flat f (Debuff t _ DamageVuln a)
-  | not $ allied t = f a
-flat _ _ = 0.0
-
-dmg ∷ Trait -> (Amount -> Number) -> ActiveEffect -> Number
-dmg _ f (To Enemy Damage a) = f a
-dmg _ f (To Enemy DamageThruDef a) = f a
-dmg _ f (To Enemies Damage a) = f a
-dmg _ f (To Enemies DamageThruDef a) = f a
-dmg t f (To _ (DamageVs t1) a) | t == t1 = f a
-dmg _ _ _ = 0.0
-
-boost ∷ Trait -> (Amount -> Number) -> ActiveEffect -> Number
-boost t f (Grant targ _ buff a) 
-  | allied targ = buffBoost buff
-  where
-    buffBoost ArtsUp = f a
-    buffBoost AttackUp = f a
-    buffBoost (AttackUpVs t1) | t == t1 = f a
-    buffBoost BusterUp = f a
-    buffBoost (DamageAffinity _) = f a
-    buffBoost NPUp = f a
-    buffBoost QuickUp = f a
-    buffBoost _ = 0.0
-boost t f (Debuff targ _ debuff a) 
-  | not $ allied targ = debuffBoost debuff
-  where
-    debuffBoost DefenseDown = f a
-    debuffBoost _ = 0.0
-boost _ _ _ = 0.0
-
 data PhantasmType = SingleTarget | MultiTarget | Support
 instance _01_ ∷ Show PhantasmType where
   show = case _ of
@@ -192,15 +123,11 @@ instance _f_ ∷ MatchServant PhantasmType where
       where 
         match (To Enemy Damage _) = true
         match (To Enemy DamageThruDef _) = true
-        match (To (EnemyType _) Damage _) = true
-        match (To (EnemyType _) DamageThruDef _) = true
         match _ = false
     has MultiTarget _ {phantasm} = any match $ phantasmEffects phantasm
       where 
         match (To Enemies Damage _) = true
         match (To Enemies DamageThruDef _) = true
-        match (To (EnemiesType _) Damage _) = true
-        match (To (EnemiesType _) DamageThruDef _) = true
         match _ = false
     has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
 instance _g_ ∷ MatchServant Class where

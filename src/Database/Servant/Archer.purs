@@ -42,7 +42,7 @@ archers = [
               , effect: [ Grant Self 1 NPUp $ Flat 30.0
                         , To Enemies Damage $ 400.0 ~ 600.0 
                         ]
-              , over:   [ To (EnemiesType EnumaElish) Damage $ 150.0 ~ 200.0 ]
+              , over:   [ To Enemies (DamageVs EnumaElish) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 7.9, npAtk: 0.34, npDef: 3 }
@@ -149,7 +149,7 @@ archers = [
                         , Chance 40 $ Debuff Enemies 1 Stun Full
                         , To Self DemeritDamage $ Flat 500.0
                         ]
-              , over:   [ To (EnemiesType HeavenOrEarth) Damage$ 150.0 ~ 200.0 ]
+              , over:   [ To Enemies (DamageVs HeavenOrEarth) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 147, starRate: 7.9, npAtk: 0.87, npDef: 3 }
@@ -356,7 +356,7 @@ archers = [
               , kind:   "Anti-Army"
               , hits:   10
               , effect: [ To Enemies Damage $ 100.0 ~ 500.0 ]
-              , over:   [ To (EnemiesType Riding) Damage $ 150.0 ~ 200.0 ]
+              , over:   [ To Enemies (DamageVs Riding) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 150, starRate: 7.9, npAtk: 0.43, npDef: 3 }
@@ -611,7 +611,7 @@ archers = [
               , kind:   "Anti-Personnel"
               , hits:   1
               , effect: [ To Enemy Damage $ 900.0 ~ 1500.0 ]
-              , over:   [ To Enemy (DamageVs Poisoned) $ 200.0 ~ 250.0 ]
+              , over:   [ To Enemy DamagePoison $ 200.0 ~ 250.0 ]
               , first:  false
               }
   , gen:      { starWeight: 150, starRate: 8.0, npAtk: 0.87, npDef: 3 }

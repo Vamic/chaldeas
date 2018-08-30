@@ -99,7 +99,7 @@ lancers = [
               , kind:   "Anti-Divine"
               , hits:   5
               , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
-              , over:   [ To (EnemiesType Divine) Damage $ 150.0 ~ 200.0 ]
+              , over:   [ To Enemies (DamageVs Divine) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 88, starRate: 12.2, npAtk: 0.72, npDef: 4 }

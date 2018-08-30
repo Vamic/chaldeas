@@ -191,7 +191,7 @@ sabers = [
               , kind:   "Anti-Army"
               , hits:   5
               , effect: [ To Enemies Damage $ 400.0 ~ 600.0 ]
-              , over:   [ To (EnemiesType Arthur) Damage $ 180.0 ~ 220.0
+              , over:   [ To Enemies (DamageVs Arthur) $ 180.0 ~ 220.0
                         , To Self GaugeUp $ 20.0 ~ 40.0
                         ]
               , first:  false
@@ -589,7 +589,7 @@ sabers = [
               , kind:   "Anti-Army"
               , hits:   1
               , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
-              , over:   [ To (EnemiesType Dragon) Damage $ 150.0 ~ 200.0 ]
+              , over:   [ To Enemies (DamageVs Dragon) $ 150.0 ~ 200.0 ]
               , first:  false
               }
   , gen:      { starWeight: 97, starRate: 10.0, npAtk: 0.83, npDef: 3 }

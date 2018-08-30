@@ -13,7 +13,7 @@ import Data.Array hiding (take)
 import Data.Map (Map)
 import Data.Maybe
 import Data.String hiding (null, singleton)
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple(..), snd, uncurry)
 import Effect.Class
 import Halogen (Component, ComponentDSL, ComponentHTML, liftEffect, modify_)
 import Halogen.HTML
@@ -90,8 +90,11 @@ component initialHash initialPrefs = Halogen.component
                 $ "ⓧ " ++ show tab ++ ": " ++ show filt 
         , H.section [_i "servants"] 
           ∘ (if sortBy == Rarity then identity else reverse)
-          $ portrait false artorify baseAscend <$> doSort sortBy 
-            (not (null filters) ? filter (match excludeSelf) $ servants)
+          $ portrait false artorify baseAscend 
+            <$> ( not (null filters) 
+                ? filter (match excludeSelf ∘ snd) 
+                $ getSort sortBy
+                )
         , H.aside [_i "filters"] ∘ cons
           (_h 1 "Filters") ∘ concat 
           $ enumArray <#> \tab
@@ -199,7 +202,6 @@ modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
         , _tr "NP Type"     ∘ show ∘ fromMaybe Support 
                             $ find (\t -> has t false s) 
                               [SingleTarget, MultiTarget]
-        --, _tr "NP Damage"   ∘ print' $ npDamage s
         , _tr "Alignment"   $ showAlignment s.align
         , _tr "Attribute"   $ show s.attr
         , _tr "Star Weight" $ show gen.starWeight
@@ -222,9 +224,8 @@ modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
         , _tr "Rank" $ show phantasm.rank
         , _tr "Card" $ show phantasm.card
         , _tr "Class" $ phantasm.kind
-        --, _tr "Damage" ∘ print' $ npDamage s
         , H.tr_ [_th "Effects", H.td_ $ _p ∘ show <$> phantasm.effect]
-        , H.tr_ [_th "Overcharge", H.td_ $ _p ∘ show <$> phantasm.over]
+        , H.tr_ [_th "Overcharge", H.td_ $ _p ∘ uncurry showOver <$> overs ]
         ]
       , _h 2 "Active Skills"] ++ (activeEl <$> s.actives) ++
       [ _h 2 "Passive Skills"] ++ (passiveEl <$> s.passives) ++
@@ -235,6 +236,9 @@ modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
   where 
     rate label n = H.tr_ [_th label, H.td [_c "rating"] ∘ _txt ∘ joinWith " " 
                  $ replicate n "⬛︎" ]
+    overs = zip phantasm.over ∘ cons phantasm.first $ replicate 10 false
+    showOver eff true = show eff ++ " [Activates first.]"
+    showOver eff false = show eff
 
 activeEl ∷ ∀ a b. Active -> HTML a b
 activeEl {name, icon, cd, effect} = H.section_ $

@@ -47,4 +47,4 @@ getAll = (_ $ unit) ∘ memoize $ \_ -> sortWith show $ filter exists enumArray
     exists eff = any (has eff false) servants 
 
 getPassives ∷ Array String
-getPassives = sort ∘ nub ∘ concat $ (map _.name ∘ _.passives) <$> servants
+getPassives = sort ∘ nub ∘ join $ (map _.name ∘ _.passives) <$> servants

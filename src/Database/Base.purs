@@ -1,7 +1,8 @@
-module Database.Trait 
+module Database.Base 
   ( Alignment(..), showAlignment
   , Attribute(..)
   , Class(..)
+  , Stat(..), showStat
   , Trait(..)
   ) where
 
@@ -27,6 +28,10 @@ data Attribute = Mankind | Earth | Heaven | Star
 
 data Class = Saber | Archer | Lancer | Caster | Rider | Assassin | Berserker
            | Shielder | Ruler | Avenger | MoonCancer | AlterEgo
+
+type Stat = { atk ∷ Int, hp ∷ Int }
+showStat ∷ Stat -> String
+showStat {atk, hp} = "ATK: " <> show atk <> ", HP: " <> show hp
 
 data Trait = Arthur 
            | Beast 

@@ -2,8 +2,6 @@ module Database.Servant
   ( Servant
   , Card(..)
   , Deck(..)
-  , Stat
-  , Stats
   , NoblePhantasm
   , Gen
   , Hits
@@ -11,22 +9,20 @@ module Database.Servant
   , class MatchServant, has
   ) where
 
-import Prelude
-import Operators
-
-import Data.Enum              
-import Data.Foldable     
+import Data.Enum
+import Data.Foldable
 import Data.Generic.Rep
-import Data.Generic.Rep.Bounded    
-import Data.Generic.Rep.Enum      
-import Data.Generic.Rep.Show 
-import Data.Maybe       
-import Data.String.CodeUnits   
-import Data.Tuple             
- 
-import Database.Skill
+import Data.Generic.Rep.Bounded
+import Data.Generic.Rep.Enum
+import Data.Generic.Rep.Show
+import Data.Maybe
+import Data.String.CodeUnits
+import Data.Tuple
+import Database.Base
 import Database.Passive
-import Database.Trait
+import Database.Skill
+import Operators
+import Prelude
 
 type Servant = { name     ∷ String
                , id       ∷ Int
@@ -34,7 +30,7 @@ type Servant = { name     ∷ String
                , class    ∷ Class
                , attr     ∷ Attribute
                , deck     ∷ Deck
-               , stats    ∷ Stats
+               , stats    ∷ { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
                , actives  ∷ Array Active
                , passives ∷ Array Passive
                , phantasm ∷ NoblePhantasm
@@ -49,11 +45,6 @@ type Servant = { name     ∷ String
 
 data Card = Arts | Buster | Quick
 data Deck = Deck Card Card Card Card Card
-
-type Stat = { atk ∷ Int, hp ∷ Int }
-type Stats = { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
-showStat ∷ Stat -> String
-showStat {atk, hp} = "ATK: " <> show atk <> ", HP: " <> show hp
 
 type Ratings = { damage     ∷ Int
                , np         ∷ Int
@@ -100,22 +91,22 @@ instance _01_ ∷ Show PhantasmType where
 class (BoundedEnum a, Show a) <= MatchServant a where
     has ∷ a -> Boolean -> Servant -> Boolean
 instance _a_ ∷ MatchServant BuffEffect where 
-    has a exclude = any match ∘ getEffects where 
-        match (Grant t _ b _) = a == b && allied t && (not exclude || t /= Self)
+    has a noSelf = any match ∘ getEffects where 
+        match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
         match _ = false
 instance _b_ ∷ MatchServant DebuffEffect where 
     has a _ = any match ∘ getEffects where 
         match (Debuff t _ b _) = a == b && not (allied t)
         match _ = false
-instance _c_ ∷ MatchServant InstantEffect where 
+instance _c_ ∷ MatchServant InstantEffect where
     has DemeritBuffs  _ = const false
     has DemeritCharge _ = const false
     has DemeritDamage _ = const false
     has DemeritGauge  _ = const false
     has DemeritHealth _ = const false
     has DemeritKill   _ = const false
-    has a exclude       = any match ∘ getEffects where 
-        match (To t b _) = a == b && (not exclude || t /= Self)
+    has a noSelf        = any match ∘ getEffects where 
+        match (To t b _) = a == b && (not noSelf || t /= Self)
         match _ = false
 instance _d_ ∷ MatchServant Trait where 
     has a = const $ elem a ∘ _.traits

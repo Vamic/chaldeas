@@ -4,7 +4,7 @@ import Prelude
 import Operators
 import Data.Maybe
 import Data.Tuple
-import Database.Trait
+import Database.Base
 import Database.Icon 
 import Database.Skill
 

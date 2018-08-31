@@ -31,15 +31,16 @@ import Printing
 type Input = Unit
 type Message = Void
 data Query a = Focus (Maybe Servant) a
-             | AddFilter Filter a
-             | UnFilter  Filter a
+             | ClearAll  a
              | OneFilter Filter a
+             | Toggle    Filter a
              | MatchAny  Boolean a
              | SetSort   SortBy a
              | SetPref   Preference Boolean a
              | Ascend    Int a
 
 type State = { filters  ∷ Array Filter
+             , exclude  ∷ Array Filter
              , matchAny ∷ Boolean
              , focus    ∷ Maybe Servant
              , sortBy   ∷ SortBy
@@ -62,6 +63,7 @@ siteComponent initialHash initialPrefs = component
  
   initialState ∷ Input -> State
   initialState = const { filters:  []
+                       , exclude:  []
                        , matchAny: true
                        , focus:    find ((_ == initialHash) ∘ urlName) servants
                        , sortBy:   Rarity
@@ -70,9 +72,9 @@ siteComponent initialHash initialPrefs = component
                        }
  
   render ∷ State -> ComponentHTML Query
-  render {ascend, filters, focus, matchAny, prefs, sortBy} 
+  render {ascend, exclude, filters, focus, matchAny, prefs, sortBy} 
       = modal (pref ShowTables) artorify ascend focus
-        [ H.aside [_i "active"] ∘ append
+        [ H.aside_ $
           [ _h 1 "Settings"
           , H.form_ $ M.toUnfoldable prefs <#> \(Tuple k v)
              -> H.p [_click ∘ SetPref k $ not v]
@@ -82,48 +84,50 @@ siteComponent initialHash initialPrefs = component
              -> H.p [_click $ SetSort sort] 
                 $ _radio (show sort) (sortBy == sort)
           
-          , _h 1 "Active filters"
-          , H.form_ ∘ singleton ∘ H.table_ ∘ singleton $ H.tr_ 
-            [ _th "Match"
-            , H.td [_click $ MatchAny false] $ _radio "All" (not matchAny)
-            , H.td [_click $ MatchAny true]  $ _radio "Any"      matchAny
-            ] 
-          ] $ reverse filters <#> \filt@(Filter tab _ _)
-             -> H.p [_click $ UnFilter filt, _c "unselected"] ∘ _txt 
-                $ "ⓧ " <> show tab <> ": " <> show filt 
+          , _h 1 "Include"
+          ] <> (filter exclusive enumArray >>= filterSection)
         , H.section [_i "servants"] 
           ∘ (if sortBy == Rarity then identity else reverse)
           $ portrait false artorify baseAscend 
-            <$> ( not (null filters) 
-                ? filter (match excludeSelf ∘ snd) 
-                $ getSort sortBy
-                )
-        , H.aside [_i "filters"] ∘ cons
-          (_h 1 "Filters") ∘ concat 
-          $ enumArray <#> \tab
-           -> [ _h 3 $ show tab 
-              , H.ul_ $ getFilters tab <#> \filt
-               -> H.li (meta filt) ∘ _txt $ show filt
-              ]
+            <$> (filter (match ∘ snd) $ getSort sortBy)
+        , H.aside_ $
+          [ _h 1 "Filter"
+          , H.form_ 
+            [ H.table_ ∘ singleton $ H.tr_
+              [ _th "Match"
+              , H.td [_click $ MatchAny false] $ _radio "All" (not matchAny)
+              , H.td [_click $ MatchAny true]  $ _radio "Any"      matchAny
+              ] 
+            , H.button clearAll $ _txt "Clear All"
+            ]
+          ] <> (filter (not exclusive) enumArray >>= filterSection)
         ]
     where 
-      pref = getPreference prefs
-      artorify    = pref Artorify
-      excludeSelf = pref ExcludeSelf
+      pref     = getPreference prefs
+      artorify = pref Artorify
+      noSelf   = pref ExcludeSelf
       baseAscend 
         | pref MaxAscension = 4
         | otherwise         = 1
-      match s  = (if matchAny then any else all) 
-                 (\(Filter _ _ f) -> f s) filters
-      meta filt 
-        | filt `elem` filters = [_c "selected", _click $ UnFilter filt]
-        | otherwise           = [_c "unselected", _click $ AddFilter filt]
-
+      clearAll
+        | null filters = [ P.enabled false ]
+        | otherwise    = [ P.enabled true, _click ClearAll ]
+      matchFilter s (Filter _ _ f) = f noSelf s
+      match s  = (null exclude || all (matchFilter s) exclude)
+              && (null filters || (if matchAny then any else all) 
+                                  (matchFilter s) filters)
+      filterSection tab = [ _h 3 $ show tab
+                          , H.form_ $ getFilters tab <#> \filt
+                             -> H.p [_click $ Toggle filt ] 
+                                ∘ _checkbox (show filt) 
+                                $ if exclusive tab then filt `notElem` exclude
+                                  else filt `elem` filters
+                           ]
+      
   eval ∷ Query ~> ComponentDSL State Query Message m
   eval = case _ of
-      AddFilter filt     a -> a <$ modFilters (cons filt)
-      UnFilter  filt     a -> a <$ modFilters (delete filt)
-      OneFilter filt     a -> a <$ modFilters (const $ singleton filt)
+      ClearAll           a -> a <$ modify_ _{ filters = [] }
+      OneFilter filt     a -> a <$ modify_ _{ filters = [filt] }
       SetSort   sortBy   a -> a <$ modify_ _{ sortBy = sortBy }
       Ascend    ascend   a -> a <$ modify_ _{ ascend = ascend }
       MatchAny  matchAny a -> a <$ modify_ _{ matchAny = matchAny }
@@ -132,10 +136,17 @@ siteComponent initialHash initialPrefs = component
           modify_ _{ focus = focus, ascend = 1 } 
       SetPref   k v      a -> a <$ do
           liftEffect $ setPreference k v
-          modPrefs $ M.insert k v
+          modify_ (modPrefs $ M.insert k v)
+      Toggle filt@(Filter tab _ _) a 
+        | exclusive tab -> a <$ modify_ (modExclude $ toggleIn filt)
+        | otherwise     -> a <$ modify_ (modFilters $ toggleIn filt)
     where
-      modFilters f = modify_ \state@{filters} -> state{ filters = f filters }
-      modPrefs   f = modify_ \state@{prefs}   -> state{ prefs   = f prefs }
+      modFilters f state@{filters} = state{ filters = f filters }
+      modPrefs   f state@{prefs}   = state{ prefs   = f prefs }
+      modExclude f state@{exclude} = state{ exclude = f exclude }
+      toggleIn x xs
+        | x `elem` xs = delete x xs
+        | otherwise   = cons x xs
       hash Nothing = setHash ""
       hash (Just s) = setHash $ urlName s
 

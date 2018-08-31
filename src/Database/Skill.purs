@@ -29,8 +29,8 @@ import Data.String
 import Data.String.CodeUnits (toCharArray)           
 import Data.Tuple             
 
+import Database.Base
 import Database.Icon
-import Database.Trait
 
 data Amount 
     = Placeholder

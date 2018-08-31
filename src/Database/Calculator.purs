@@ -55,8 +55,8 @@ starsPerQuick s
     overkillAdd      = 0.0
     buffs            = passiveBuffs s
 
-npDamage ∷ Boolean -> Servant -> Number
-npDamage special s@{phantasm:{card, effect, over, first}}
+npDamage ∷ Boolean -> Boolean -> Servant -> Number
+npDamage special maxOver s@{phantasm:{card, effect, over, first}}
     = if npDamageMultiplier == 0.0 then 0.0 else 
       servantAtk 
     * npDamageMultiplier 
@@ -144,35 +144,35 @@ npDamage special s@{phantasm:{card, effect, over, first}}
     npStrength
       | s.free || s.rarity < 4 = toMax
       | otherwise              = toMin
+    overStrength
+      | maxOver   = toMax
+      | otherwise = toMin
     skillFs = simplify <$> (s.actives >>= _.effect) 
-                         <> (s.passives >>= _.effect)
+                        <> (s.passives >>= _.effect)
     npFs    = simplify <$> effect
     overFs  = simplify <$> over
     firstFs = fromFoldable $ guard first *> head overFs
-    buffs = ((skillFs <> firstFs) >>= go) <> (npFs >>= goNP)
+    buffs = (skillFs >>= go toMax) 
+         <> (npFs >>= go npStrength)
+         <> (firstFs >>= go overStrength)
       where
-        go (Grant t _ buff a) 
-          | selfable t = [ Tuple buff $ toMax a / 100.0 ]
-        go _ = []
-        goNP (Grant t _ buff a)
-          | selfable t = [ Tuple buff $ npStrength a / 100.0 ]
-        goNP _ = []
-    debuffs = ((skillFs <> firstFs) >>= go) <> (npFs >>= goNP)
+        go f (Grant t _ buff a) 
+          | selfable t = [ Tuple buff $ f a / 100.0 ]
+        go _ _ = []
+    debuffs = (skillFs >>= go toMax) 
+           <> (npFs >>= go npStrength)
+           <> (firstFs >>= go overStrength)
       where
-        go (Debuff t _ debuff a) 
-          | not $ allied t = [ Tuple debuff $ toMax a / 100.0 ]
-        go _ = []
-        goNP (Debuff t _ debuff a)
-          | not $ allied t = [ Tuple debuff $ npStrength a / 100.0 ]
-        goNP _ = []
-    instants = ((skillFs <> overFs) >>= go) <> (npFs >>= goNP)
+        go f (Debuff t _ debuff a) 
+          | not $ allied t = [ Tuple debuff $ f a / 100.0 ]
+        go _ _ = []
+    instants = (skillFs >>= go toMax) 
+            <> (npFs    >>= go npStrength) 
+            <> (overFs  >>= go overStrength)
       where
-        go (To t instant a) 
-          | not $ allied t = [ Tuple instant $ toMax a / 100.0 ]
-        go _ = []
-        goNP (To t instant a)
-          | not $ allied t = [ Tuple instant $ npStrength a / 100.0 ]
-        goNP _ = []
+        go f (To t instant a) 
+          | not $ allied t = [ Tuple instant $ f a / 100.0 ]
+        go _ _ = []
 
 passiveBuffs ∷ Servant -> Array (Tuple BuffEffect Number)
 passiveBuffs {passives} = passives >>= _.effect >>= go ∘ simplify

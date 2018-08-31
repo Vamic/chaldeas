@@ -34,33 +34,39 @@ data SortBy = Rarity
             | StarRate
             | NPArts
             | StarQuick
-            | NPDamage
-            | SpecialNP
+            | NPDmg
+            | NPDmgOver
+            | NPSpec
+            | NPSpecOver
 
 instance _a_ ∷ Show SortBy where
-  show StarRate   = "Star Rate"
-  show NPDamage   = "NP Damage"
-  show SpecialNP  = "NP Special Damage"
   show NPGain     = "NP Gain/Hit"
+  show StarRate   = "Star Rate"
   show NPArts     = "NP Gain/Arts card"
   show StarQuick  = "Stars/Quick card"
   show GrailATK   = "Grail ATK"
   show GrailHP    = "Grail HP"
+  show NPDmg      = "NP Damage"
+  show NPDmgOver  = "NP Damage + Overcharge"
+  show NPSpec     = "NP Special Damage"
+  show NPSpecOver = "NP Special + Overcharge"
   show a = genericShow a
 
 toSort ∷ SortBy -> Servant -> Number
-toSort ID        = (-1.0 * _) ∘ toNumber ∘ _.id
-toSort Rarity    = toNumber ∘ _.rarity
-toSort NPDamage  = npDamage false 
-toSort SpecialNP = npDamage true
-toSort ATK       = toNumber ∘ _.stats.max.atk
-toSort HP        = toNumber ∘ _.stats.max.hp
-toSort GrailATK  = toNumber ∘ _.stats.grail.atk
-toSort GrailHP   = toNumber ∘ _.stats.grail.hp
-toSort NPGain    = _.gen.npAtk
-toSort StarRate  = _.gen.starRate 
-toSort NPArts    = npPerArts 
-toSort StarQuick = starsPerQuick
+toSort ID         = (-1.0 * _) ∘ toNumber ∘ _.id
+toSort Rarity     = toNumber ∘ _.rarity
+toSort ATK        = toNumber ∘ _.stats.max.atk
+toSort HP         = toNumber ∘ _.stats.max.hp
+toSort GrailATK   = toNumber ∘ _.stats.grail.atk
+toSort GrailHP    = toNumber ∘ _.stats.grail.hp
+toSort NPGain     = _.gen.npAtk
+toSort StarRate   = _.gen.starRate 
+toSort NPArts     = npPerArts 
+toSort StarQuick  = starsPerQuick
+toSort NPDmg      = npDamage false false
+toSort NPDmgOver  = npDamage false true 
+toSort NPSpec     = npDamage true false
+toSort NPSpecOver = npDamage true true
 
 doSort ∷ SortBy -> Array Servant -> Array (Tuple String Servant)
 doSort Rarity = map (Tuple "") ∘ sortWith \s -> show (5 - s.rarity) <> s.name
@@ -68,7 +74,7 @@ doSort a = map showSort ∘ sortWith sorter
   where
     sorter   = toSort a
     showSort 
-      | a == SpecialNP || a == NPDamage = \s -> (flip Tuple) s 
+      | a `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \s -> (flip Tuple) s 
           $ (if s.free || s.rarity < 4 then "NP5: " else "NP1: ") 
          <> (output ∘ abs $ sorter s)
       | otherwise = uncurry Tuple ∘ (output ∘ abs ∘ sorter &&& identity)

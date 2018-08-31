@@ -5,21 +5,28 @@ module Database.Skill
   , BuffEffect(..)
   , DebuffEffect(..)
   , InstantEffect(..)
-  , ActiveEffect(..), simplify
+  , ActiveEffect(..), simplify, ranges
   , Active
+  , RangeInfo(..)
   ) where
 
 import Prelude
 import Operators
 
-import Data.Enum          
+import Control.Alternative
+import Control.Bind
+import Control.Plus
+import Data.Enum       
+import Data.Foldable
 import Data.Number.Format      
 import Data.Generic.Rep    
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum 
 import Data.Generic.Rep.Show 
+import Data.Int
 import Data.Maybe
-import Data.String            
+import Data.String
+import Data.String.CodeUnits (toCharArray)           
 import Data.Tuple             
 
 import Database.Icon
@@ -37,7 +44,7 @@ instance _a_ ∷ Show Amount where
   show Placeholder = "X"
   show Full = ""
   show (Flat x) = toString x
-  show (Range a b) = toString a ++ "~" ++ toString b
+  show (Range a b) = toString a <> "~" <> toString b
 
 toMin ∷ Amount -> Number
 toMin Placeholder = 0.0
@@ -111,18 +118,18 @@ possessiveAndSubject = case _ of
                   : " all enemies"
     Others        -> " allies' (excluding self)" 
                   : " allies (excluding self)"
-    AlliesType t  -> " " ++ show t ++ " allies'" 
-                  : " " ++ show t ++ " allies"
-    EnemyType t   -> " one " ++ show t ++ " enemy's" 
-                  : " one " ++ show t ++ " enemy"
-    EnemiesType t -> " all " ++ show t ++ " enemy" 
-                  : " all " ++ show t ++ " enemies"
+    AlliesType t  -> " " <> show t <> " allies'" 
+                  : " " <> show t <> " allies"
+    EnemyType t   -> " one " <> show t <> " enemy's" 
+                  : " one " <> show t <> " enemy"
+    EnemiesType t -> " all " <> show t <> " enemy" 
+                  : " all " <> show t <> " enemies"
     
 times ∷ Amount -> String
 times Placeholder = ""
 times Full = ""
 times (Flat 1.0)  = " (1 time)"
-times amt = " (" ++ show amt ++ " times)"
+times amt = " (" <> show amt <> " times)"
 
 data BuffEffect = AlignAffinity Alignment
                 | ArtsUp
@@ -178,70 +185,70 @@ instance _c_ ∷ Show BuffEffect where
 
 showBuff ∷ Target -> Amount -> BuffEffect -> String
 showBuff target amount buff = case buff of
-    ArtsUp           -> "Increase" ++ p ++ " Arts performance" ++ by
-    AttackUp         -> "Increase" ++ p ++ " attack" ++ by
-    AttackUpVs    t  -> "Increase" ++ p ++ " attack against " ++ show t 
-                    ++ " enemies" ++ by
-    AlignAffinity a  -> "Increase" ++ p ++ " attack against " ++ show a
-                    ++ " enemies" ++ by
-    BuffUp           -> "Increase" ++ p ++ " buff success rate" ++ by
-    BurnImmunity     -> "Grant" ++ s ++ " Burn Immunity" ++ times amount
-    BusterUp         -> "Increase" ++ p ++ " Buster performance" ++ by
-    CharmResist      -> "Increase" ++ p ++ " Charm resistance" ++ by
-    CritUp           -> "Increase" ++ p ++ " critical damage" ++ by
-    DamageAffinity c -> "Increase" ++ p ++ " damage against " ++ show c 
-                    ++ " enemies" ++ by
-    DamageCut        -> "Reduce" ++ p ++ " damage taken by " ++ n 
-                    ++ " for 1 attack"
-    DamageUp         -> "Increase" ++ p ++ " damage by " ++ n
-    DebuffImmunity   -> "Grant" ++ s ++ " Debuff Immunity" ++ times amount
-    DebuffResist     -> "Increase" ++ p ++ " debuff resistance" ++ by
-    DebuffSuccess    -> "Increase" ++ p ++ " debuff success rate" ++ by
-    DefenseUp        -> "Increase" ++ p ++ " defense" ++ by
-    DefenseUpVs   t  -> "Increase" ++ p ++ " defense against " ++ show t 
-                    ++ " enemies" ++ by
-    Evasion          -> "Grant" ++ s ++ " Evasion" ++ times amount
-    GaugePerTurn     -> "Charge" ++ p ++ " NP gauge" ++ by ++ " every turn"
-    Guts             -> "Grant" ++ s ++ " Guts (1 time) with " ++ n ++ " HP"
-    GutsTriple       -> "Grant" ++ s ++ " Guts (3 times) with " ++ n ++ " HP"
-    GutsUnlimited    -> "Grant" ++ s ++ " Guts with " ++ n ++ " HP"
-    HealingReceived  -> "Increase" ++ p ++ " healing received" ++ by
-    HealPerTurn      -> "Restore " ++ n ++ " health" ++ to ++ " every turn"
-    HealUp           -> "Increase" ++ p ++ " healing power" ++ by
-    IgnoreInvinc     -> "Grant" ++ s ++ " Ignore Invincibility" ++ times amount
-    Invincibility    -> "Grant" ++ s ++ " Invincibility" ++ times amount
-    KillChance       -> "Grant" ++ s ++ " " ++ n
-                    ++ "% chance to Instant-Kill enemy with normal attacks"
-    KillImmunity     -> "Grant" ++ s ++ " Instant-Kill Immunity" ++ times amount
-    KillResist       -> "Increase" ++ p ++ " Instant-Kill resistance" ++ by
-    KillUp           -> "Increase" ++ p ++ " Instant-Kill success rate" ++ by
-    MaxHP            -> "Increase" ++ p ++ " Max HP by " ++ n
-    MentalResist     -> "Increase" ++ p ++ " mental debuff resistance" ++ by
-    MentalSuccess    -> "Increase" ++ p ++ " mental debuff success rate" ++ by
-    NPUp             -> "Increase" ++ p ++ " NP Damage" ++ by
-    NPFromDamage     -> "Increase" ++ p 
-                    ++ " NP generation rate when taking damage" ++ by
-    NPGen            -> "Increase" ++ p ++ " NP generation rate" ++ by
-    OffensiveResist  -> "Increase" ++ p ++ " offensive debuff resistance" ++ by
-    Overcharge       -> "Overcharge" ++ p ++ " NP by " ++ n ++ " stages"
-    PoisonResist     -> "Increase" ++ p ++ " poison debuff resistance" ++ by
-    QuickUp          -> "Increase" ++ p ++ " Quick performance" ++ by
-    ReduceDamage     -> "Reduce" ++ p ++ " damage taken by " ++ n
-    StarAbsorb       -> "Increase" ++ p ++ " critical star absorption" ++ by
-    StarAffinity   c -> "Increase" ++ p ++ " critical star generation against " 
-                    ++ show c ++ " enemies" ++ by
-    StarUp           -> "Increase" ++ p ++ " critical star generation rate" 
-                    ++ by
-    StarsPerTurn     -> "Gain " ++ n ++ " stars every turn"
-    StunSuccess      -> "Increase" ++ p ++ " Stun success rate" ++ by 
-                    ++ " (1 time)"
-    SureHit          -> "Grant" ++ s ++ " Sure Hit" ++ times amount
-    Taunt            -> "Draw attention of all enemies" ++ to
+    ArtsUp           -> "Increase" <> p <> " Arts performance" <> by
+    AttackUp         -> "Increase" <> p <> " attack" <> by
+    AttackUpVs    t  -> "Increase" <> p <> " attack against " <> show t 
+                    <> " enemies" <> by
+    AlignAffinity a  -> "Increase" <> p <> " attack against " <> show a
+                    <> " enemies" <> by
+    BuffUp           -> "Increase" <> p <> " buff success rate" <> by
+    BurnImmunity     -> "Grant" <> s <> " Burn Immunity" <> times amount
+    BusterUp         -> "Increase" <> p <> " Buster performance" <> by
+    CharmResist      -> "Increase" <> p <> " Charm resistance" <> by
+    CritUp           -> "Increase" <> p <> " critical damage" <> by
+    DamageAffinity c -> "Increase" <> p <> " damage against " <> show c 
+                    <> " enemies" <> by
+    DamageCut        -> "Reduce" <> p <> " damage taken by " <> n 
+                    <> " for 1 attack"
+    DamageUp         -> "Increase" <> p <> " damage by " <> n
+    DebuffImmunity   -> "Grant" <> s <> " Debuff Immunity" <> times amount
+    DebuffResist     -> "Increase" <> p <> " debuff resistance" <> by
+    DebuffSuccess    -> "Increase" <> p <> " debuff success rate" <> by
+    DefenseUp        -> "Increase" <> p <> " defense" <> by
+    DefenseUpVs   t  -> "Increase" <> p <> " defense against " <> show t 
+                    <> " enemies" <> by
+    Evasion          -> "Grant" <> s <> " Evasion" <> times amount
+    GaugePerTurn     -> "Charge" <> p <> " NP gauge" <> by <> " every turn"
+    Guts             -> "Grant" <> s <> " Guts (1 time) with " <> n <> " HP"
+    GutsTriple       -> "Grant" <> s <> " Guts (3 times) with " <> n <> " HP"
+    GutsUnlimited    -> "Grant" <> s <> " Guts with " <> n <> " HP"
+    HealingReceived  -> "Increase" <> p <> " healing received" <> by
+    HealPerTurn      -> "Restore " <> n <> " health" <> to <> " every turn"
+    HealUp           -> "Increase" <> p <> " healing power" <> by
+    IgnoreInvinc     -> "Grant" <> s <> " Ignore Invincibility" <> times amount
+    Invincibility    -> "Grant" <> s <> " Invincibility" <> times amount
+    KillChance       -> "Grant" <> s <> " " <> n
+                    <> "% chance to Instant-Kill enemy with normal attacks"
+    KillImmunity     -> "Grant" <> s <> " Instant-Kill Immunity" <> times amount
+    KillResist       -> "Increase" <> p <> " Instant-Kill resistance" <> by
+    KillUp           -> "Increase" <> p <> " Instant-Kill success rate" <> by
+    MaxHP            -> "Increase" <> p <> " Max HP by " <> n
+    MentalResist     -> "Increase" <> p <> " mental debuff resistance" <> by
+    MentalSuccess    -> "Increase" <> p <> " mental debuff success rate" <> by
+    NPUp             -> "Increase" <> p <> " NP Damage" <> by
+    NPFromDamage     -> "Increase" <> p 
+                    <> " NP generation rate when taking damage" <> by
+    NPGen            -> "Increase" <> p <> " NP generation rate" <> by
+    OffensiveResist  -> "Increase" <> p <> " offensive debuff resistance" <> by
+    Overcharge       -> "Overcharge" <> p <> " NP by " <> n <> " stages"
+    PoisonResist     -> "Increase" <> p <> " poison debuff resistance" <> by
+    QuickUp          -> "Increase" <> p <> " Quick performance" <> by
+    ReduceDamage     -> "Reduce" <> p <> " damage taken by " <> n
+    StarAbsorb       -> "Increase" <> p <> " critical star absorption" <> by
+    StarAffinity   c -> "Increase" <> p <> " critical star generation against " 
+                    <> show c <> " enemies" <> by
+    StarUp           -> "Increase" <> p <> " critical star generation rate" 
+                    <> by
+    StarsPerTurn     -> "Gain " <> n <> " stars every turn"
+    StunSuccess      -> "Increase" <> p <> " Stun success rate" <> by 
+                    <> " (1 time)"
+    SureHit          -> "Grant" <> s <> " Sure Hit" <> times amount
+    Taunt            -> "Draw attention of all enemies" <> to
   where 
     n   = show amount
     p:s = possessiveAndSubject target
-    to  = if s == "" then "" else " to" ++ s
-    by  = " by " ++ n ++ "%"
+    to  = if s == "" then "" else " to" <> s
+    by  = " by " <> n <> "%"
        
 data DebuffEffect = ApplyTrait Trait
                   | AttackDown
@@ -271,35 +278,35 @@ instance _d_ ∷ Show DebuffEffect where
 
 showDebuff ∷ Target -> Amount -> DebuffEffect -> String
 showDebuff target amount debuff = case debuff of
-    ApplyTrait t -> "Apply the " ++ show t ++ " trait" ++ to
-    AttackDown   -> "Reduce" ++ p ++ " attack by " ++ n ++ "%"
-    BuffBlock    -> "Inflict Buff Block status" ++ to ++ times amount
-    BuffFail     -> "Reduce" ++ p ++ " attack buff success rate by " ++ n ++ "%"
-    Burn         -> "Inflict " ++ n ++ " Burn damage" ++ to
-    Charm        -> "Charm" ++ s
-    CharmVuln    -> "Reduce" ++ p ++ " Charm resistance by " ++ n ++ "%"
-    CritChance   -> "Reduce" ++ p ++ " critical attack chance by " ++ n ++ "%"
-    CritDown     -> "Reduce" ++ p ++ " critical damage by " ++ n ++ " %"
-    Curse        -> "Inflict " ++ n ++ " Curse damage" ++ to
-    DamageVuln   -> "Increase" ++ s ++ " damage taken by " ++ n
-    DeathDown    -> "Reduce" ++ p ++ " Instant-Death resistance by " ++ n ++ "%"
-    DebuffVuln   -> "Reduce" ++ p ++ " debuff resistance by " ++ n ++ "%"
-    DefenseDown  -> "Reduce" ++ p ++  " defense by " ++ n ++ "%"
-    Disorder     -> "Inflict Disorder status" ++ to 
-                ++ ", causing " ++ n ++ "% chance to Seal skills every turn"
-    MentalVuln   -> "Reduce" ++ p ++ " mental debuff resistance by " ++ n ++ "%"
-    NPDown       -> "Decrease" ++ p ++ " Noble Phantasm damage by " ++ n ++ "%"
-    Poison       -> "Inflict " ++ n ++ " Poison damage" ++ to
-    SealNP       -> "Seal" ++ p ++ " NP"
-    SealSkills   -> "Seal" ++ p ++ " skills"
-    Stun         -> "Stun" ++ s
-    StunBomb     -> "Stun" ++ s ++ " after 1 turn"
-    Terror       -> "Inflict Terror status" ++ to ++ ", causing " ++ n 
-                 ++ "% chance to be Stunned every turn"
+    ApplyTrait t -> "Apply the " <> show t <> " trait" <> to
+    AttackDown   -> "Reduce" <> p <> " attack by " <> n <> "%"
+    BuffBlock    -> "Inflict Buff Block status" <> to <> times amount
+    BuffFail     -> "Reduce" <> p <> " attack buff success rate by " <> n <> "%"
+    Burn         -> "Inflict " <> n <> " Burn damage" <> to
+    Charm        -> "Charm" <> s
+    CharmVuln    -> "Reduce" <> p <> " Charm resistance by " <> n <> "%"
+    CritChance   -> "Reduce" <> p <> " critical attack chance by " <> n <> "%"
+    CritDown     -> "Reduce" <> p <> " critical damage by " <> n <> " %"
+    Curse        -> "Inflict " <> n <> " Curse damage" <> to
+    DamageVuln   -> "Increase" <> s <> " damage taken by " <> n
+    DeathDown    -> "Reduce" <> p <> " Instant-Death resistance by " <> n <> "%"
+    DebuffVuln   -> "Reduce" <> p <> " debuff resistance by " <> n <> "%"
+    DefenseDown  -> "Reduce" <> p <>  " defense by " <> n <> "%"
+    Disorder     -> "Inflict Disorder status" <> to 
+                <> ", causing " <> n <> "% chance to Seal skills every turn"
+    MentalVuln   -> "Reduce" <> p <> " mental debuff resistance by " <> n <> "%"
+    NPDown       -> "Decrease" <> p <> " Noble Phantasm damage by " <> n <> "%"
+    Poison       -> "Inflict " <> n <> " Poison damage" <> to
+    SealNP       -> "Seal" <> p <> " NP"
+    SealSkills   -> "Seal" <> p <> " skills"
+    Stun         -> "Stun" <> s
+    StunBomb     -> "Stun" <> s <> " after 1 turn"
+    Terror       -> "Inflict Terror status" <> to <> ", causing " <> n 
+                 <> "% chance to be Stunned every turn"
   where  
     n   = show amount
     p:s = possessiveAndSubject target
-    to  = if s == "" then "" else " to" ++ s
+    to  = if s == "" then "" else " to" <> s
  
 mental ∷ DebuffEffect -> Boolean
 mental Charm = true
@@ -347,40 +354,40 @@ instance _e_ ∷ Show InstantEffect where
 
 showInstant ∷ Target -> Amount -> InstantEffect -> String
 showInstant target amount instant = case instant of
-    Avenge        -> "Wait 1 turn [Demerit], then deal " ++ n 
-                  ++ "% of damage taken during that turn" ++ to
-    ChangeClass c -> "Change" ++ p ++ " class to " ++ show c
-    Cooldowns     -> "Reduce" ++ p ++ " cooldowns by " ++ n
-    Cure          -> "Remove" ++ p ++ " poison debuffs"
-    Damage        -> "Deal " ++ n ++ "% damage" ++ to
-    DamageThruDef -> "Deal " ++ n ++ "% damage" ++ to ++ ", ignoring defense"
-    DamageVs    t -> "Deal " ++ n ++ "% extra damage to " ++ show t 
-    DamagePoison  -> "Deal " ++ n ++ "% extra damage to Poison"
-    DemeritBuffs  -> "Remove" ++ p ++ " buffs [Demerit]"
-    DemeritCharge -> "Increase" ++ s ++ " NP gauge by " ++ n ++ " [Demerit]"
-    DemeritGauge  -> "Decrease" ++ p ++ " NP gauge by " ++ n ++ "% [Demerit]"
-    DemeritDamage -> "Deal " ++ n ++ " damage" ++ to ++ " [Demerit]"
-    DemeritKill   -> "Sacrifice" ++ s ++ " (can trigger Guts) [Demerit]"
-    DemeritHealth -> "Deal " ++ n ++ " damage" ++ to 
-                 ++ " down to a minimum of 1 [Demerit]"
-    GaugeDown     -> "Reduce" ++ p ++ " NP gauge by " ++ n
-    GaugeUp       -> "Increase" ++ p ++ " NP gauge by " ++ n ++ "%"
-    Heal          -> "Restore " ++ n ++ " health" ++ to
-    HealToFull    -> "Heal" ++ s ++ " to full"
-    Kill          -> n ++ "% chance to Instant-Kill " ++ s
-    LastStand     -> "Deal up to " ++ n ++ "% damage based on missing health" 
-                  ++ to
-    OverChance    -> "Gain " ++ n ++ "% chance to apply Overcharge buffs"
-    RemoveBuffs   -> "Remove" ++ p ++ " buffs"
-    RemoveDebuffs -> "Remove" ++ p ++ " debuffs"
-    RemoveMental  -> "Remove" ++ p ++ " mental debuffs"
-    GainStars     -> "Gain " ++ n ++ " critical stars" ++ case target of
+    Avenge        -> "Wait 1 turn [Demerit], then deal " <> n 
+                  <> "% of damage taken during that turn" <> to
+    ChangeClass c -> "Change" <> p <> " class to " <> show c
+    Cooldowns     -> "Reduce" <> p <> " cooldowns by " <> n
+    Cure          -> "Remove" <> p <> " poison debuffs"
+    Damage        -> "Deal " <> n <> "% damage" <> to
+    DamageThruDef -> "Deal " <> n <> "% damage" <> to <> ", ignoring defense"
+    DamageVs    t -> "Deal " <> n <> "% extra damage to " <> show t 
+    DamagePoison  -> "Deal " <> n <> "% extra damage to Poison"
+    DemeritBuffs  -> "Remove" <> p <> " buffs [Demerit]"
+    DemeritCharge -> "Increase" <> s <> " NP gauge by " <> n <> " [Demerit]"
+    DemeritGauge  -> "Decrease" <> p <> " NP gauge by " <> n <> "% [Demerit]"
+    DemeritDamage -> "Deal " <> n <> " damage" <> to <> " [Demerit]"
+    DemeritKill   -> "Sacrifice" <> s <> " (can trigger Guts) [Demerit]"
+    DemeritHealth -> "Deal " <> n <> " damage" <> to 
+                 <> " down to a minimum of 1 [Demerit]"
+    GaugeDown     -> "Reduce" <> p <> " NP gauge by " <> n
+    GaugeUp       -> "Increase" <> p <> " NP gauge by " <> n <> "%"
+    Heal          -> "Restore " <> n <> " health" <> to
+    HealToFull    -> "Heal" <> s <> " to full"
+    Kill          -> n <> "% chance to Instant-Kill " <> s
+    LastStand     -> "Deal up to " <> n <> "% damage based on missing health" 
+                  <> to
+    OverChance    -> "Gain " <> n <> "% chance to apply Overcharge buffs"
+    RemoveBuffs   -> "Remove" <> p <> " buffs"
+    RemoveDebuffs -> "Remove" <> p <> " debuffs"
+    RemoveMental  -> "Remove" <> p <> " mental debuffs"
+    GainStars     -> "Gain " <> n <> " critical stars" <> case target of
         Self -> " for yourself"
         _    -> ""
   where
     n   = show amount
     p:s = possessiveAndSubject target
-    to  = if s == "" then "" else " to" ++ s
+    to  = if s == "" then "" else " to" <> s
 
 -- | Int field is duration, Number field is amount
 data ActiveEffect = Grant Target Int BuffEffect Amount
@@ -396,6 +403,22 @@ simplify (Chance _ ef)    = simplify ef
 simplify (When _ ef)      = simplify ef
 simplify ef               = ef
 
+data RangeInfo = RangeInfo Boolean Number Number
+
+ranges ∷ ∀ f. Alternative f => Bind f => f ActiveEffect -> f RangeInfo
+ranges = bindFlipped toInfo
+  where
+    toInfo eff = uncurry (RangeInfo $ isPercent eff) <$> acc eff
+    isPercent = elem '%' ∘ toCharArray ∘ show
+    acc (Grant _ _ _ a) = go a
+    acc (Debuff _ _ _ a) = go a
+    acc (To _ _ a) = go a
+    acc (Chance _ ef) = acc ef
+    acc (Chances a b ef) = pure (Tuple (toNumber a) (toNumber b)) <|> acc ef
+    acc (When _ ef) = acc ef
+    go (a ~ b) = pure $ Tuple a b
+    go _ = empty
+
 instance _01_ ∷ Eq ActiveEffect where
   eq activeA activeB = case activeA, activeB of
       Grant ta _ a _,  Grant tb _ b _  -> eq a b && eq' ta tb
@@ -409,24 +432,24 @@ instance _01_ ∷ Eq ActiveEffect where
 
 instance _f_ ∷ Show ActiveEffect where
   show = case _ of
-      Grant t dur buff amt    -> showBuff t amt buff ++ turns dur
-                             ++ if not allied t then " [Demerit]." else "."
-      Debuff t dur debuff amt -> showDebuff t amt debuff ++ turns dur
-                             ++ if allied t then " [Demerit]." else "."
-      To t instant amt        -> showInstant t amt instant ++ "."
-      Chance per ef           -> show per ++ "% chance to " ++ uncap (show ef)
-      Chances a b ef      -> show a ++ "~" ++ show b ++ "% chance to " ++
+      Grant t dur buff amt    -> showBuff t amt buff <> turns dur
+                             <> if not allied t then " [Demerit]." else "."
+      Debuff t dur debuff amt -> showDebuff t amt debuff <> turns dur
+                             <> if allied t then " [Demerit]." else "."
+      To t instant amt        -> showInstant t amt instant <> "."
+      Chance per ef           -> show per <> "% chance to " <> uncap (show ef)
+      Chances a b ef      -> show a <> "~" <> show b <> "% chance to " <>
                                  uncap (show ef)
-      When cond ef            -> "If " ++ cond ++ ": " ++ uncap (show ef)
+      When cond ef            -> "If " <> cond <> ": " <> uncap (show ef)
     where
       turns 0   = ""
       turns 1   = " for 1 turn"
-      turns dur = " for " ++ show dur ++ " turns"
+      turns dur = " for " <> show dur <> " turns"
 
 uncap ∷ String -> String
 uncap s = case uncons s of
     Nothing                  -> s
-    Just {head: x, tail: xs} -> toLower (singleton x) ++ xs
+    Just {head: x, tail: xs} -> toLower (singleton x) <> xs
 
 type Active = { name   ∷ String 
               , icon   ∷ Icon
@@ -486,3 +509,6 @@ instance _19_ ∷ BoundedEnum InstantEffect where
 derive instance _20_ ∷ Generic Target _
 instance _21_ ∷ Show Target where
   show = genericShow
+
+derive instance _22_ ∷ Eq RangeInfo
+derive instance _23_ ∷ Ord RangeInfo

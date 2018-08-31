@@ -90,7 +90,7 @@ npDamage special s@{phantasm:{card, effect, over, first}}
         Caster    -> 0.90
         Assassin  -> 0.90
         _         -> 1.0
-    triangleModifier = add 1.0 ∘ sum 
+    triangleModifier = (_ + 1.0) ∘ sum 
                      $ matchSum buffs ∘ DamageAffinity <$> specials
     attributeModifier = 1.0
     -------------
@@ -113,7 +113,7 @@ npDamage special s@{phantasm:{card, effect, over, first}}
     ---------------------
     npDamageMultiplier = sum $ matchSum instants 
                      <$> (special ? cons LastStand $ [Damage, DamageThruDef])
-    superEffectiveModifier = add 1.0 ∘ add (matchSum instants DamagePoison)
+    superEffectiveModifier = (_ + 1.0 + matchSum instants DamagePoison)
                            ∘ fromMaybe 0.0 ∘ maximum 
                            $ matchSum instants ∘ DamageVs <$> specials
     isSuperEffective = 1.0
@@ -124,7 +124,7 @@ npDamage special s@{phantasm:{card, effect, over, first}}
         Arts   -> ArtsUp
         Buster -> BusterUp
         Quick  -> QuickUp
-    atkMod = add (matchSum buffs AttackUp) ∘ fromMaybe 0.0 ∘ maximum 
+    atkMod = (_ + matchSum buffs AttackUp) ∘ fromMaybe 0.0 ∘ maximum 
            $ matchSum buffs ∘ AttackUpVs <$> specials
     defMod = matchSum debuffs DefenseDown
     specialDefMod = 0.0
@@ -145,11 +145,11 @@ npDamage special s@{phantasm:{card, effect, over, first}}
       | s.free || s.rarity < 4 = toMax
       | otherwise              = toMin
     skillFs = simplify <$> (s.actives >>= _.effect) 
-                         ++ (s.passives >>= _.effect)
+                         <> (s.passives >>= _.effect)
     npFs    = simplify <$> effect
     overFs  = simplify <$> over
-    firstFs = fromFoldable $ guard first >> head overFs
-    buffs = ((skillFs ++ firstFs) >>= go) ++ (npFs >>= goNP)
+    firstFs = fromFoldable $ guard first *> head overFs
+    buffs = ((skillFs <> firstFs) >>= go) <> (npFs >>= goNP)
       where
         go (Grant t _ buff a) 
           | selfable t = [ Tuple buff $ toMax a / 100.0 ]
@@ -157,7 +157,7 @@ npDamage special s@{phantasm:{card, effect, over, first}}
         goNP (Grant t _ buff a)
           | selfable t = [ Tuple buff $ npStrength a / 100.0 ]
         goNP _ = []
-    debuffs = ((skillFs ++ firstFs) >>= go) ++ (npFs >>= goNP)
+    debuffs = ((skillFs <> firstFs) >>= go) <> (npFs >>= goNP)
       where
         go (Debuff t _ debuff a) 
           | not $ allied t = [ Tuple debuff $ toMax a / 100.0 ]
@@ -165,7 +165,7 @@ npDamage special s@{phantasm:{card, effect, over, first}}
         goNP (Debuff t _ debuff a)
           | not $ allied t = [ Tuple debuff $ npStrength a / 100.0 ]
         goNP _ = []
-    instants = ((skillFs ++ overFs) >>= go) ++ (npFs >>= goNP)
+    instants = ((skillFs <> overFs) >>= go) <> (npFs >>= goNP)
       where
         go (To t instant a) 
           | not $ allied t = [ Tuple instant $ toMax a / 100.0 ]
@@ -188,7 +188,8 @@ selfable Allies = true
 selfable Party  = true
 selfable _      = false
 
-matchSum ∷ ∀ a b. Eq a => Semiring b => Array (Tuple a b) -> a -> b
+matchSum ∷ ∀ a b f. Eq a => Semiring b => Foldable f => Functor f 
+           => f (Tuple a b) -> a -> b
 matchSum xs k = sum $ go <$> xs
   where
     go (Tuple k1 v) | k == k1 = v

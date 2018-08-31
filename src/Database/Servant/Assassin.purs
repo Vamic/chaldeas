@@ -434,7 +434,7 @@ assassins = [
                           , Debuff Enemies 3 CritChance $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Ninjutsu A+++"
+              , { name:   "Ninjutsu A<>+"
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Ally 1 Evasion Full

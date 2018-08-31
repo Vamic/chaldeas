@@ -1,4 +1,10 @@
-module Site.Preferences ( Preference(..), setPreference, getPreferences) where
+module Site.Preferences 
+    ( Preference(..)
+    , Preferences
+    , setPreference
+    , getPreference
+    , getPreferences
+    ) where
 
 import Data.Enum
 import Data.Generic.Rep
@@ -18,32 +24,34 @@ import Web.HTML (window)
 import Web.HTML.Window (localStorage)
 
 data Preference = Artorify
+                | ShowTables
                 | ExcludeSelf
                 | MaxAscension
 
 instance _a_ ∷ Show Preference where
   show ExcludeSelf = "Exclude self-applied effects"
   show MaxAscension = "Show all at max ascension"
+  show ShowTables = "Show skill and NP tables"
   show a = genericShow a
 
 setPreference ∷ Preference -> Boolean -> Effect Unit
 setPreference pref set = window >>= localStorage
-                     >>= setItem (show pref) (show set)
+                     >>= setItem (genericShow pref) (show set)
                  
-getPreferences ∷ Effect (Map Preference Boolean)
+type Preferences = Map Preference Boolean
+
+getPreference ∷ Preferences -> Preference -> Boolean
+getPreference prefs pref = fromMaybe false $ lookup pref prefs
+
+getPreferences ∷ Effect Preferences
 getPreferences = fromFoldable <$> traverse go enumArray 
   where
-    go k = do
-      v <- getPreference k
-      pure $ Tuple k v
-          
-getPreference ∷ Preference -> Effect Boolean
-getPreference pref = window >>= localStorage 
-                 >>= getItem (show pref) 
-                 >>= pure ∘ fromFlag
-  where 
     fromFlag (Just "true") = true
     fromFlag _             = false
+    go k = do
+        v <- window >>= localStorage >>= getItem (genericShow k) 
+                    >>= pure ∘ fromFlag
+        pure $ Tuple k v
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

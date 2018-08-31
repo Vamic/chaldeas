@@ -53,7 +53,7 @@ data Deck = Deck Card Card Card Card Card
 type Stat = { atk ∷ Int, hp ∷ Int }
 type Stats = { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
 showStat ∷ Stat -> String
-showStat {atk, hp} = "ATK: " ++ show atk ++ ", HP: " ++ show hp
+showStat {atk, hp} = "ATK: " <> show atk <> ", HP: " <> show hp
 
 type Ratings = { damage     ∷ Int
                , np         ∷ Int
@@ -84,10 +84,10 @@ type Gen = { starWeight ∷ Int
 
 getEffects ∷ Servant -> Array ActiveEffect
 getEffects {phantasm:{effect, over}, actives}
-    = simplify <$> effect ++ over ++ (actives >>= _.effect)
+    = simplify <$> effect <> over <> (actives >>= _.effect)
 
 phantasmEffects ∷ NoblePhantasm -> Array ActiveEffect
-phantasmEffects {effect, over} = effect ++ over
+phantasmEffects {effect, over} = effect <> over
 
 data PhantasmType = SingleTarget | MultiTarget | Support
 instance _01_ ∷ Show PhantasmType where

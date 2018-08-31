@@ -39,13 +39,15 @@
         { cursor: pointer }
       .selected:hover, .unselected:hover 
         { text-decoration: underline }
-      #layout > article table 
+      #layout > article > table 
         { width: 225px 
         ; margin-top: -1px
         ; margin-bottom: 12px
         }
       #layout > article table.phantasm
-        { width: 100% }
+        { width: 100% 
+        ; padding-right: 10px
+        }
       .phantasm th
         { width: 104px 
         ; vertical-align: text-top
@@ -195,7 +197,7 @@
         ; margin-right: 3px
         }
       article section
-        { padding: 0 20px }
+        { padding: 0 10px }
       article h2 
         { text-align: center }
       article section img
@@ -204,6 +206,24 @@
         ; margin-right: 10px
         ; margin-top: 5px
         }
+      #layout > article section table, table table
+        { table-layout: fixed
+        ; margin-top: 3px
+        ; background-color: #eeeeee
+        ; border: 1px solid #dddddd
+        ; border-spacing: 0
+        }
+      #layout > article section table
+        { width: 100% }
+      #layout > article section table col:nth-child(even),
+                          table table col:nth-child(even)
+        { background-color: #dddddd }
+      #layout > article section table td
+        { padding: 2px 0 }
+      #layout > article section table th, table table th
+        { border-bottom: 1px solid #cccccc }
+      article section td:first-child, table table td:first-child
+        { font-weight: inherit }
       .npheading
         { margin-top: -4px }
       article section:last-child

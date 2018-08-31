@@ -21,7 +21,7 @@ data Alignment = Lawful | Neutral | Chaotic | Good | Balanced | Evil
 showAlignment ∷ Tuple Alignment Alignment -> String
 showAlignment = case _ of
     Neutral:Balanced -> "True Neutral"
-    a:b             -> show a ++ " " ++ show b
+    a:b             -> show a <> " " <> show b
 
 data Attribute = Mankind | Earth | Heaven | Star
 

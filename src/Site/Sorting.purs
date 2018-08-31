@@ -10,7 +10,6 @@ import Data.Map as M
 
 import Data.Array
 import Data.Enum
-import Data.Formatter.Number
 import Data.Generic.Rep
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum
@@ -23,6 +22,7 @@ import Data.Profunctor.Strong
 import Data.Tuple
 
 import Database
+import Printing
 
 data SortBy = Rarity
             | ID
@@ -48,14 +48,6 @@ instance _a_ ∷ Show SortBy where
   show GrailHP    = "Grail HP"
   show a = genericShow a
 
-print ∷ Int -> Number -> String
-print places = format $ Formatter { comma: true
-                                  , before: 0
-                                  , after: places
-                                  , abbreviations: false
-                                  , sign: false
-                                  }
-
 toSort ∷ SortBy -> Servant -> Number
 toSort ID        = (-1.0 * _) ∘ toNumber ∘ _.id
 toSort Rarity    = toNumber ∘ _.rarity
@@ -67,23 +59,23 @@ toSort GrailATK  = toNumber ∘ _.stats.grail.atk
 toSort GrailHP   = toNumber ∘ _.stats.grail.hp
 toSort NPGain    = _.gen.npAtk
 toSort StarRate  = _.gen.starRate 
-toSort NPArts    = npPerArts
+toSort NPArts    = npPerArts 
 toSort StarQuick = starsPerQuick
 
 doSort ∷ SortBy -> Array Servant -> Array (Tuple String Servant)
-doSort Rarity = map (Tuple "") ∘ sortWith \s -> show (5 - s.rarity) ++ s.name
+doSort Rarity = map (Tuple "") ∘ sortWith \s -> show (5 - s.rarity) <> s.name
 doSort a = map showSort ∘ sortWith sorter
   where
     sorter   = toSort a
     showSort 
       | a == SpecialNP || a == NPDamage = \s -> (flip Tuple) s 
           $ (if s.free || s.rarity < 4 then "NP5: " else "NP1: ") 
-         ++ (output ∘ abs $ sorter s)
+         <> (output ∘ abs $ sorter s)
       | otherwise = uncurry Tuple ∘ (output ∘ abs ∘ sorter &&& identity)
     output = case a of
-        NPGain    -> (_ ++ "%") ∘ print 2
-        StarRate  -> (_ ++ "%") ∘ print 2
-        NPArts    -> (_ ++ "%") ∘ print 2
+        NPGain    -> (_ <> "%") ∘ print 2
+        StarRate  -> (_ <> "%") ∘ print 2
+        NPArts    -> (_ <> "%") ∘ print 2
         StarQuick -> print 2
         _         -> print 0
 

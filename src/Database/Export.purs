@@ -41,7 +41,7 @@ servants = \_ -> D.servants <#> \s@{align: alignA:alignB} ->
         , effect: exportEffect <$> effect
         }
     exportPassive {name, rank, icon, effect} =
-        { name: name ++ " " ++ show rank
+        { name: name <> " " <> show rank
         , icon: show icon
         , effect: exportEffect <$> effect
         }
@@ -81,5 +81,5 @@ servants = \_ -> D.servants <#> \s@{align: alignA:alignB} ->
     exportEffect (Chances a b activeEffect) = 
         (exportEffect activeEffect) { chance = {from: a, to: b} }  
     exportEffect (When condition activeEffect) =
-        baseEffect { effect = "If " ++ condition ++ ": " ++ baseEffect.effect }
+        baseEffect { effect = "If " <> condition <> ": " <> baseEffect.effect }
       where baseEffect = exportEffect activeEffect

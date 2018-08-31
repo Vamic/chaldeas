@@ -25,13 +25,13 @@ import Database.Servant.Saber
 servants ∷ Array Servant
 servants = addUniversal ∘ addHeavenOrEarth
        <$> archers
-        ++ assassins
-        ++ berserkers
-        ++ casters
-        ++ extras
-        ++ lancers
-        ++ riders
-        ++ sabers    
+        <> assassins
+        <> berserkers
+        <> casters
+        <> extras
+        <> lancers
+        <> riders
+        <> sabers    
   where
     addUniversal s@{traits, passives} 
         = s { traits   = sortWith show $ cons Humanoid traits 

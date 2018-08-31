@@ -30155,33 +30155,12 @@ var PS = {};
       HP.value = new HP();
       return HP;
   })();
-  var GrailATK = (function () {
-      function GrailATK() {
+  var StarWeight = (function () {
+      function StarWeight() {
 
       };
-      GrailATK.value = new GrailATK();
-      return GrailATK;
-  })();
-  var GrailHP = (function () {
-      function GrailHP() {
-
-      };
-      GrailHP.value = new GrailHP();
-      return GrailHP;
-  })();
-  var NPGain = (function () {
-      function NPGain() {
-
-      };
-      NPGain.value = new NPGain();
-      return NPGain;
-  })();
-  var StarRate = (function () {
-      function StarRate() {
-
-      };
-      StarRate.value = new StarRate();
-      return StarRate;
+      StarWeight.value = new StarWeight();
+      return StarWeight;
   })();
   var NPArts = (function () {
       function NPArts() {
@@ -30227,57 +30206,40 @@ var PS = {};
   })();
   var toSort = function (v) {
       if (v instanceof ID) {
-          return function ($135) {
+          return function ($91) {
               return (function (v1) {
                   return -1.0 * v1;
               })(Data_Int.toNumber((function (v1) {
                   return v1.id;
-              })($135)));
+              })($91)));
           };
       };
       if (v instanceof Rarity) {
-          return function ($136) {
+          return function ($92) {
               return Data_Int.toNumber((function (v1) {
                   return v1.rarity;
-              })($136));
+              })($92));
           };
       };
       if (v instanceof ATK) {
-          return function ($137) {
+          return function ($93) {
               return Data_Int.toNumber((function (v1) {
                   return v1.stats.max.atk;
-              })($137));
+              })($93));
           };
       };
       if (v instanceof HP) {
-          return function ($138) {
+          return function ($94) {
               return Data_Int.toNumber((function (v1) {
                   return v1.stats.max.hp;
-              })($138));
+              })($94));
           };
       };
-      if (v instanceof GrailATK) {
-          return function ($139) {
+      if (v instanceof StarWeight) {
+          return function ($95) {
               return Data_Int.toNumber((function (v1) {
-                  return v1.stats.grail.atk;
-              })($139));
-          };
-      };
-      if (v instanceof GrailHP) {
-          return function ($140) {
-              return Data_Int.toNumber((function (v1) {
-                  return v1.stats.grail.hp;
-              })($140));
-          };
-      };
-      if (v instanceof NPGain) {
-          return function (v1) {
-              return v1.gen.npAtk;
-          };
-      };
-      if (v instanceof StarRate) {
-          return function (v1) {
-              return v1.gen.starRate;
+                  return v1.gen.starWeight;
+              })($95));
           };
       };
       if (v instanceof NPArts) {
@@ -30298,7 +30260,7 @@ var PS = {};
       if (v instanceof NPSpecOver) {
           return Database_Calculator.npDamage(true)(true);
       };
-      throw new Error("Failed pattern match at Site.Sorting line 55, column 1 - line 55, column 37: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Site.Sorting line 57, column 1 - line 57, column 37: " + [ v.constructor.name ]);
   };
   var _8_ = new Data_Eq.Eq(function (x) {
       return function (y) {
@@ -30314,16 +30276,7 @@ var PS = {};
           if (x instanceof HP && y instanceof HP) {
               return true;
           };
-          if (x instanceof GrailATK && y instanceof GrailATK) {
-              return true;
-          };
-          if (x instanceof GrailHP && y instanceof GrailHP) {
-              return true;
-          };
-          if (x instanceof NPGain && y instanceof NPGain) {
-              return true;
-          };
-          if (x instanceof StarRate && y instanceof StarRate) {
+          if (x instanceof StarWeight && y instanceof StarWeight) {
               return true;
           };
           if (x instanceof NPArts && y instanceof NPArts) {
@@ -30387,40 +30340,13 @@ var PS = {};
           if (y instanceof HP) {
               return Data_Ordering.GT.value;
           };
-          if (x instanceof GrailATK && y instanceof GrailATK) {
+          if (x instanceof StarWeight && y instanceof StarWeight) {
               return Data_Ordering.EQ.value;
           };
-          if (x instanceof GrailATK) {
+          if (x instanceof StarWeight) {
               return Data_Ordering.LT.value;
           };
-          if (y instanceof GrailATK) {
-              return Data_Ordering.GT.value;
-          };
-          if (x instanceof GrailHP && y instanceof GrailHP) {
-              return Data_Ordering.EQ.value;
-          };
-          if (x instanceof GrailHP) {
-              return Data_Ordering.LT.value;
-          };
-          if (y instanceof GrailHP) {
-              return Data_Ordering.GT.value;
-          };
-          if (x instanceof NPGain && y instanceof NPGain) {
-              return Data_Ordering.EQ.value;
-          };
-          if (x instanceof NPGain) {
-              return Data_Ordering.LT.value;
-          };
-          if (y instanceof NPGain) {
-              return Data_Ordering.GT.value;
-          };
-          if (x instanceof StarRate && y instanceof StarRate) {
-              return Data_Ordering.EQ.value;
-          };
-          if (x instanceof StarRate) {
-              return Data_Ordering.LT.value;
-          };
-          if (y instanceof StarRate) {
+          if (y instanceof StarWeight) {
               return Data_Ordering.GT.value;
           };
           if (x instanceof NPArts && y instanceof NPArts) {
@@ -30471,38 +30397,24 @@ var PS = {};
           if (x instanceof NPSpecOver && y instanceof NPSpecOver) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Site.Sorting line 102, column 8 - line 102, column 33: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Site.Sorting line 105, column 8 - line 105, column 33: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var doSort = function (v) {
       if (v instanceof Rarity) {
-          return function ($141) {
+          return function ($96) {
               return Data_Functor.map(Data_Functor.functorArray)(Data_Tuple.Tuple.create(""))(Data_Array.sortWith(Data_Ord.ordString)(function (s) {
                   return Data_Show.show(Data_Show.showInt)(5 - s.rarity | 0) + s.name;
-              })($141));
+              })($96));
           };
       };
       var sorter = toSort(v);
       var output = (function () {
-          if (v instanceof NPGain) {
-              return function ($142) {
-                  return (function (v1) {
-                      return v1 + "%";
-                  })(Printing.print(2)($142));
-              };
-          };
-          if (v instanceof StarRate) {
-              return function ($143) {
-                  return (function (v1) {
-                      return v1 + "%";
-                  })(Printing.print(2)($143));
-              };
-          };
           if (v instanceof NPArts) {
-              return function ($144) {
+              return function ($97) {
                   return (function (v1) {
                       return v1 + "%";
-                  })(Printing.print(2)($144));
+                  })(Printing.print(2)($97));
               };
           };
           if (v instanceof StarQuick) {
@@ -30514,8 +30426,8 @@ var PS = {};
           if (Data_Foldable.elem(Data_Foldable.foldableArray)(_8_)(v)([ NPDmg.value, NPDmgOver.value, NPSpec.value, NPSpecOver.value ])) {
               return function (s) {
                   return Data_Function.flip(Data_Tuple.Tuple.create)(s)((function () {
-                      var $27 = s.free || s.rarity < 4;
-                      if ($27) {
+                      var $22 = s.free || s.rarity < 4;
+                      if ($22) {
                           return "NP5: ";
                       };
                       return "NP1: ";
@@ -30523,16 +30435,16 @@ var PS = {};
               };
           };
           if (Data_Boolean.otherwise) {
-              return function ($145) {
-                  return Data_Tuple.uncurry(Data_Tuple.Tuple.create)(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(function ($146) {
-                      return output(Data_Ord.abs(Data_Ord.ordNumber)(Data_Ring.ringNumber)(sorter($146)));
-                  })(Control_Category.identity(Control_Category.categoryFn))($145));
+              return function ($98) {
+                  return Data_Tuple.uncurry(Data_Tuple.Tuple.create)(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(function ($99) {
+                      return output(Data_Ord.abs(Data_Ord.ordNumber)(Data_Ring.ringNumber)(sorter($99)));
+                  })(Control_Category.identity(Control_Category.categoryFn))($98));
               };
           };
-          throw new Error("Failed pattern match at Site.Sorting line 76, column 5 - line 80, column 73: " + [  ]);
+          throw new Error("Failed pattern match at Site.Sorting line 79, column 5 - line 83, column 73: " + [  ]);
       })();
-      return function ($147) {
-          return Data_Functor.map(Data_Functor.functorArray)(showSort)(Data_Array.sortWith(Data_Ord.ordNumber)(sorter)($147));
+      return function ($100) {
+          return Data_Functor.map(Data_Functor.functorArray)(showSort)(Data_Array.sortWith(Data_Ord.ordNumber)(sorter)($100));
       };
   };
   var _7_ = new Data_Generic_Rep.Generic(function (x) {
@@ -30548,37 +30460,28 @@ var PS = {};
       if (x instanceof HP) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))));
       };
-      if (x instanceof GrailATK) {
+      if (x instanceof StarWeight) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))));
       };
-      if (x instanceof GrailHP) {
+      if (x instanceof NPArts) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))));
       };
-      if (x instanceof NPGain) {
+      if (x instanceof StarQuick) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))))));
       };
-      if (x instanceof StarRate) {
+      if (x instanceof NPDmg) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))))));
       };
-      if (x instanceof NPArts) {
+      if (x instanceof NPDmgOver) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))))))));
       };
-      if (x instanceof StarQuick) {
+      if (x instanceof NPSpec) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))))))));
       };
-      if (x instanceof NPDmg) {
-          return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))))))))));
-      };
-      if (x instanceof NPDmgOver) {
-          return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))))))))));
-      };
-      if (x instanceof NPSpec) {
-          return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value)))))))))))));
-      };
       if (x instanceof NPSpecOver) {
-          return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value)))))))))))));
+          return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value))))))))));
       };
-      throw new Error("Failed pattern match at Site.Sorting line 100, column 8 - line 100, column 39: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Site.Sorting line 103, column 8 - line 103, column 39: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return Rarity.value;
@@ -30593,55 +30496,37 @@ var PS = {};
           return HP.value;
       };
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))) {
-          return GrailATK.value;
+          return StarWeight.value;
       };
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))) {
-          return GrailHP.value;
-      };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))) {
-          return NPGain.value;
-      };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))) {
-          return StarRate.value;
-      };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))) {
           return NPArts.value;
       };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))))) {
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))) {
           return StarQuick.value;
       };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))))) {
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))) {
           return NPDmg.value;
       };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))))))) {
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))) {
           return NPDmgOver.value;
       };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))))))) {
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))))) {
           return NPSpec.value;
       };
-      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr)))))))))))) {
+      if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr))))))))) {
           return NPSpecOver.value;
       };
-      throw new Error("Failed pattern match at Site.Sorting line 100, column 8 - line 100, column 39: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Site.Sorting line 103, column 8 - line 103, column 39: " + [ x.constructor.name ]);
   });
   var _a_ = new Data_Show.Show(function (v) {
-      if (v instanceof NPGain) {
-          return "NP Gain/Hit";
-      };
-      if (v instanceof StarRate) {
-          return "Star Rate";
+      if (v instanceof StarWeight) {
+          return "Star Weight";
       };
       if (v instanceof NPArts) {
-          return "NP Gain/Arts card";
+          return "NP Gain per Arts card";
       };
       if (v instanceof StarQuick) {
-          return "Stars/Quick card";
-      };
-      if (v instanceof GrailATK) {
-          return "Grail ATK";
-      };
-      if (v instanceof GrailHP) {
-          return "Grail HP";
+          return "Stars per Quick card";
       };
       if (v instanceof NPDmg) {
           return "NP Damage";
@@ -30664,13 +30549,7 @@ var PS = {};
       })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "HP";
       })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
-          return "GrailATK";
-      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
-          return "GrailHP";
-      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
-          return "NPGain";
-      })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
-          return "StarRate";
+          return "StarWeight";
       })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "NPArts";
       })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
@@ -30683,19 +30562,19 @@ var PS = {};
           return "NPSpec";
       })))(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
           return "NPSpecOver";
-      }))))))))))))))))(v);
+      })))))))))))))(v);
   });
   var _12_ = new Data_Bounded.Bounded(function () {
       return _9_;
-  }, Data_Generic_Rep_Bounded.genericBottom(_7_)(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))), Data_Generic_Rep_Bounded.genericTop(_7_)(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))))))))))))))));
+  }, Data_Generic_Rep_Bounded.genericBottom(_7_)(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))), Data_Generic_Rep_Bounded.genericTop(_7_)(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopSum(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments)))))))))))));
   var _11_ = new Data_Enum.Enum(function () {
       return _9_;
-  }, Data_Generic_Rep_Enum.genericPred(_7_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))), Data_Generic_Rep_Enum.genericSucc(_7_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))));
+  }, Data_Generic_Rep_Enum.genericPred(_7_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))), Data_Generic_Rep_Enum.genericSucc(_7_)(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumSum(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericTopConstructor(Data_Generic_Rep_Bounded.genericTopNoArguments))(Data_Generic_Rep_Enum.genericEnumConstructor(Data_Generic_Rep_Enum.genericEnumNoArguments))(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments))))(Data_Generic_Rep_Bounded.genericBottomSum(Data_Generic_Rep_Bounded.genericBottomConstructor(Data_Generic_Rep_Bounded.genericBottomNoArguments)))));
   var _13_ = new Data_Enum.BoundedEnum(function () {
       return _12_;
   }, function () {
       return _11_;
-  }, Data_Generic_Rep_Enum.genericCardinality(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))))))))))), Data_Generic_Rep_Enum.genericFromEnum(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))))))))))), Data_Generic_Rep_Enum.genericToEnum(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))))))))))))))));
+  }, Data_Generic_Rep_Enum.genericCardinality(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)))))))))))), Data_Generic_Rep_Enum.genericFromEnum(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)))))))))))), Data_Generic_Rep_Enum.genericToEnum(_7_)(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumSum(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments))(Data_Generic_Rep_Enum.genericBoundedEnumConstructor(Data_Generic_Rep_Enum.genericBoundedEnumNoArguments)))))))))))));
   var sorted = (function () {
       var go = function (sorter) {
           return Data_Tuple.Tuple.create(sorter)(doSort(sorter)(Database.servants));
@@ -30709,10 +30588,7 @@ var PS = {};
   exports["ID"] = ID;
   exports["ATK"] = ATK;
   exports["HP"] = HP;
-  exports["GrailATK"] = GrailATK;
-  exports["GrailHP"] = GrailHP;
-  exports["NPGain"] = NPGain;
-  exports["StarRate"] = StarRate;
+  exports["StarWeight"] = StarWeight;
   exports["NPArts"] = NPArts;
   exports["StarQuick"] = StarQuick;
   exports["NPDmg"] = NPDmg;
@@ -30819,6 +30695,18 @@ var PS = {};
       };
       return UnFilter;
   })();
+  var OneFilter = (function () {
+      function OneFilter(value0, value1) {
+          this.value0 = value0;
+          this.value1 = value1;
+      };
+      OneFilter.create = function (value0) {
+          return function (value1) {
+              return new OneFilter(value0, value1);
+          };
+      };
+      return OneFilter;
+  })();
   var MatchAny = (function () {
       function MatchAny(value0, value1) {
           this.value0 = value0;
@@ -30870,13 +30758,13 @@ var PS = {};
       };
       return Ascend;
   })();
-  var urlName = function ($156) {
+  var urlName = function ($158) {
       return Data_String_Common.replaceAll(" ")("")((function (v) {
           return v.name;
-      })($156));
+      })($158));
   };
-  var print$prime = function ($157) {
-      return Printing.print(0)(Data_Int.toNumber($157));
+  var print$prime = function ($159) {
+      return Printing.print(0)(Data_Int.toNumber($159));
   };
   var noBreakName = (function () {
       var unBreak = function (v) {
@@ -30885,18 +30773,18 @@ var PS = {};
           };
           return Data_String_Common.joinWith("(")(v);
       };
-      return function ($158) {
-          return unBreak(Data_String_Common.split("(")($158));
+      return function ($160) {
+          return unBreak(Data_String_Common.split("(")($160));
       };
   })();
-  var _txt = function ($159) {
-      return Data_Function.flip(Data_Array.cons)([  ])(Halogen_HTML_Core.text($159));
+  var _txt = function ($161) {
+      return Data_Function.flip(Data_Array.cons)([  ])(Halogen_HTML_Core.text($161));
   };
-  var _th = function ($160) {
-      return Halogen_HTML_Elements.th_(_txt($160));
+  var _th = function ($162) {
+      return Halogen_HTML_Elements.th_(_txt($162));
   };
-  var _td = function ($161) {
-      return Halogen_HTML_Elements.td_(_txt($161));
+  var _td = function ($163) {
+      return Halogen_HTML_Elements.td_(_txt($163));
   };
   var _tr = function (a) {
       return function (b) {
@@ -30904,60 +30792,60 @@ var PS = {};
       };
   };
   var toCell = function (isPercent) {
-      return function ($162) {
+      return function ($164) {
           return _td(Operators.doIf(isPercent)(function (v) {
               return v + "%";
-          })(Data_Number_Format.toString(Printing.roundTo(2)($162))));
+          })(Data_Number_Format.toString(Printing.roundTo(2)($164))));
       };
   };
   var lvlRow = function (v) {
       var step = (v.value2 - v.value1) / 10.0;
-      return Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($163) {
-          return toCell(v.value0)((function (v1) {
-              return v1 + v.value1;
-          })((function (v1) {
-              return v1 * step;
-          })(Data_Int.toNumber($163))));
-      })(Data_Array.snoc(Data_Array.range(0)(8))(10)));
-  };
-  var npRow = function (v) {
-      var over = v.value2 - v.value1;
-      return Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($164) {
-          return toCell(v.value0)((function (v1) {
-              return v1 + v.value1;
-          })((function (v1) {
-              return v1 * over;
-          })($164)));
-      })([ 0.0, 0.5, 0.75, 0.825, 1.0 ]));
-  };
-  var overRow = function (v) {
-      var over = (v.value2 - v.value1) / 4.0;
       return Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($165) {
           return toCell(v.value0)((function (v1) {
               return v1 + v.value1;
           })((function (v1) {
-              return v1 * over;
+              return v1 * step;
           })(Data_Int.toNumber($165))));
+      })(Data_Array.snoc(Data_Array.range(0)(8))(10)));
+  };
+  var npRow = function (v) {
+      var over = v.value2 - v.value1;
+      return Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($166) {
+          return toCell(v.value0)((function (v1) {
+              return v1 + v.value1;
+          })((function (v1) {
+              return v1 * over;
+          })($166)));
+      })([ 0.0, 0.5, 0.75, 0.825, 1.0 ]));
+  };
+  var overRow = function (v) {
+      var over = (v.value2 - v.value1) / 4.0;
+      return Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($167) {
+          return toCell(v.value0)((function (v1) {
+              return v1 + v.value1;
+          })((function (v1) {
+              return v1 * over;
+          })(Data_Int.toNumber($167))));
       })(Data_Array.range(0)(4)));
   };
   var _table = function (headings) {
       return function (tbody) {
-          return Halogen_HTML_Elements.table_([ Halogen_HTML_Elements.colgroup_(Data_Functor.map(Data_Functor.functorArray)(Data_Function["const"](Halogen_HTML_Elements.col([  ])))(headings)), Halogen_HTML_Elements.thead_([ Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($166) {
-              return Halogen_HTML_Elements.th_(_txt($166));
+          return Halogen_HTML_Elements.table_([ Halogen_HTML_Elements.colgroup_(Data_Functor.map(Data_Functor.functorArray)(Data_Function["const"](Halogen_HTML_Elements.col([  ])))(headings)), Halogen_HTML_Elements.thead_([ Halogen_HTML_Elements.tr_(Data_Functor.map(Data_Functor.functorArray)(function ($168) {
+              return Halogen_HTML_Elements.th_(_txt($168));
           })(headings)) ]), Halogen_HTML_Elements.tbody_(tbody) ]);
       };
   };                                                 
   var _src = Halogen_HTML_Properties.src;
-  var _span = function ($167) {
-      return Halogen_HTML_Elements.span_(_txt($167));
+  var _span = function ($169) {
+      return Halogen_HTML_Elements.span_(_txt($169));
   };
   var _radio = function (label) {
       return function (checked) {
           return [ Halogen_HTML_Elements.input([ Halogen_HTML_Properties.type_(Halogen_HTML_Core.inputTypeIsProp)(DOM_HTML_Indexed_InputType.InputRadio.value), Halogen_HTML_Properties.checked(checked) ]), Halogen_HTML_Elements.label_(_txt(label)) ];
       };
   };
-  var _p = function ($168) {
-      return Halogen_HTML_Elements.p_(_txt($168));
+  var _p = function ($170) {
+      return Halogen_HTML_Elements.p_(_txt($170));
   };
   var _img = function (src) {
       return Halogen_HTML_Elements.img([ _src(src) ]);
@@ -30965,63 +30853,63 @@ var PS = {};
   var _i = Halogen_HTML_Properties.id_;
   var _h = function (v) {
       if (v === 1) {
-          return function ($169) {
-              return Halogen_HTML_Elements.h1_(_txt($169));
+          return function ($171) {
+              return Halogen_HTML_Elements.h1_(_txt($171));
           };
       };
       if (v === 2) {
-          return function ($170) {
-              return Halogen_HTML_Elements.h2_(_txt($170));
+          return function ($172) {
+              return Halogen_HTML_Elements.h2_(_txt($172));
           };
       };
       if (v === 3) {
-          return function ($171) {
-              return Halogen_HTML_Elements.h3_(_txt($171));
+          return function ($173) {
+              return Halogen_HTML_Elements.h3_(_txt($173));
           };
       };
       if (v === 4) {
-          return function ($172) {
-              return Halogen_HTML_Elements.h4_(_txt($172));
+          return function ($174) {
+              return Halogen_HTML_Elements.h4_(_txt($174));
           };
       };
       if (v === 5) {
-          return function ($173) {
-              return Halogen_HTML_Elements.h5_(_txt($173));
+          return function ($175) {
+              return Halogen_HTML_Elements.h5_(_txt($175));
           };
       };
-      return function ($174) {
-          return Halogen_HTML_Elements.h6_(_txt($174));
+      return function ($176) {
+          return Halogen_HTML_Elements.h6_(_txt($176));
       };
   };
   var activeEl = function (showTables) {
       return function (v) {
-          return Halogen_HTML_Elements.section_(Operators.doIf(showTables)(Data_Function.flip(Data_Array.snoc)(_table(Data_Functor.map(Data_Functor.functorArray)(Data_Show.show(Data_Show.showInt))(Data_Array.range(1)(10)))(Data_Functor.map(Data_Functor.functorArray)(lvlRow)(Data_Array.nub(Database_Skill._23_)(Database_Skill.ranges(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(v.effect))))))(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name), Halogen_HTML_Elements.span_([ Halogen_HTML_Elements.strong_([ Halogen_HTML_Core.text("CD: ") ]), Halogen_HTML_Core.text(Data_Show.show(Data_Show.showInt)(v.cd) + ("~" + Data_Show.show(Data_Show.showInt)(v.cd - 2 | 0))) ]) ])(Data_Functor.map(Data_Functor.functorArray)(function ($175) {
-              return _p(Data_Show.show(Database_Skill._f_)($175));
+          return Halogen_HTML_Elements.section_(Operators.doIf(showTables)(Data_Function.flip(Data_Array.snoc)(_table(Data_Functor.map(Data_Functor.functorArray)(Data_Show.show(Data_Show.showInt))(Data_Array.range(1)(10)))(Data_Functor.map(Data_Functor.functorArray)(lvlRow)(Data_Array.nub(Database_Skill._23_)(Database_Skill.ranges(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(v.effect))))))(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name), Halogen_HTML_Elements.span_([ Halogen_HTML_Elements.strong_([ Halogen_HTML_Core.text("CD: ") ]), Halogen_HTML_Core.text(Data_Show.show(Data_Show.showInt)(v.cd) + ("~" + Data_Show.show(Data_Show.showInt)(v.cd - 2 | 0))) ]) ])(Data_Functor.map(Data_Functor.functorArray)(function ($177) {
+              return _p(Data_Show.show(Database_Skill._f_)($177));
           })(v.effect))));
       };
   };
   var passiveEl = function (v) {
-      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name + (" " + Data_Show.show(Database_Skill._b_)(v.rank))) ])(Data_Functor.map(Data_Functor.functorArray)(function ($176) {
-          return _p(Data_Show.show(Database_Skill._f_)($176));
+      return Halogen_HTML_Elements.section_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _img("img/Skill/" + (Data_Show.show(Database_Icon._3_)(v.icon) + ".png")), _h(3)(v.name + (" " + Data_Show.show(Database_Skill._b_)(v.rank))) ])(Data_Functor.map(Data_Functor.functorArray)(function ($178) {
+          return _p(Data_Show.show(Database_Skill._f_)($178));
       })(v.effect)));
   };
-  var _click = function ($177) {
-      return Halogen_HTML_Events.onClick(Halogen_HTML_Events.input_($177));
+  var _click = function ($179) {
+      return Halogen_HTML_Events.onClick(Halogen_HTML_Events.input_($179));
   };
   var _checkbox = function (label) {
       return function (checked) {
           return [ Halogen_HTML_Elements.input([ Halogen_HTML_Properties.type_(Halogen_HTML_Core.inputTypeIsProp)(DOM_HTML_Indexed_InputType.InputCheckbox.value), Halogen_HTML_Properties.checked(checked) ]), Halogen_HTML_Elements.label_(_txt(label)) ];
       };
   };
-  var _c = function ($178) {
-      return Halogen_HTML_Properties.class_(Halogen_HTML_Core.ClassName($178));
+  var _c = function ($180) {
+      return Halogen_HTML_Properties.class_(Halogen_HTML_Core.ClassName($180));
   };
   var deck = function (v) {
       var card = function (x) {
           return Halogen_HTML_Elements.span([ _c(x) ])(_txt(Data_String_CodePoints.take(1)(x)));
       };
-      return Data_Functor.map(Data_Functor.functorArray)(function ($179) {
-          return card(Data_Show.show(Database_Servant._33_)($179));
+      return Data_Functor.map(Data_Functor.functorArray)(function ($181) {
+          return card(Data_Show.show(Database_Servant._33_)($181));
       })([ v.value0, v.value1, v.value2, v.value3, v.value4 ]);
   };
   var portrait = function (big) {
@@ -31039,7 +30927,7 @@ var PS = {};
                       if (Data_Boolean.otherwise) {
                           return " " + Data_Show.show(Data_Show.showInt)(ascension);
                       };
-                      throw new Error("Failed pattern match at Site.Component line 172, column 9 - line 174, column 51: " + [  ]);
+                      throw new Error("Failed pattern match at Site.Component line 174, column 9 - line 176, column 51: " + [  ]);
                   })();
                   return Halogen_HTML_Elements.div(meta)([ _img("img/Servant/" + (v.value1.name + (ascend + ".png"))), Halogen_HTML_Elements.div_([ _img("img/Class/" + (Data_Show.show(Database_Trait._16_)(v["value1"]["class"]) + ".png")) ]), Halogen_HTML_Elements.aside_(deck(v.value1.deck)), Halogen_HTML_Elements.header_(Operators.doIf(v.value0 !== "")(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _span(v.value0), Halogen_HTML_Elements.br_ ]))([ _span(noBreakName(Operators.doIf(artorify)(doArtorify)(v.value1.name))) ])), Halogen_HTML_Elements.footer_(Operators.doIf(big && ascension > 1)(Data_Array.cons(prevAscend))(Operators.doIf(big && ascension < 4)(function (v1) {
                       return Data_Array.snoc(v1)(nextAscend);
@@ -31056,8 +30944,8 @@ var PS = {};
           return function (v2) {
               return function (v3) {
                   if (v3 instanceof Data_Maybe.Nothing) {
-                      return function ($180) {
-                          return Halogen_HTML_Elements.div([ _i("layout") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_([  ]) ])($180));
+                      return function ($182) {
+                          return Halogen_HTML_Elements.div([ _i("layout") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_([  ]) ])($182));
                       };
                   };
                   if (v3 instanceof Data_Maybe.Just) {
@@ -31069,31 +30957,31 @@ var PS = {};
                               if (!v4) {
                                   return Data_Show.show(Database_Skill._f_)(eff);
                               };
-                              throw new Error("Failed pattern match at Site.Component line 249, column 5 - line 250, column 5: " + [ eff.constructor.name, v4.constructor.name ]);
+                              throw new Error("Failed pattern match at Site.Component line 251, column 5 - line 252, column 5: " + [ eff.constructor.name, v4.constructor.name ]);
                           };
                       };
                       var overs = Data_Array.zip(v3.value0.phantasm.over)(Data_Array.cons(v3.value0.phantasm.first)(Data_Array.replicate(10)(false)));
-                      return function ($181) {
+                      return function ($183) {
                           return Halogen_HTML_Elements.div([ _i("layout"), _c("fade") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ _i("cover"), _click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ portrait(true)(v1)(v2)(new Data_Tuple.Tuple("", v3.value0)), _table([ "", "ATK", "HP" ])([ Halogen_HTML_Elements.tr_([ _th("Base"), _td(print$prime(v3.value0.stats.base.atk)), _td(print$prime(v3.value0.stats.base.hp)) ]), Halogen_HTML_Elements.tr_([ _th("Max"), _td(print$prime(v3.value0.stats.max.atk)), _td(print$prime(v3.value0.stats.max.hp)) ]), Halogen_HTML_Elements.tr_([ _th("Grail"), _td(print$prime(v3.value0.stats.grail.atk)), _td(print$prime(v3.value0.stats.grail.hp)) ]) ]), _table([ "", "Q", "A", "B", "EX", "NP" ])([ Halogen_HTML_Elements.tr_([ _th("Hits"), _td(Data_Show.show(Data_Show.showInt)(v3.value0.hits.quick)), _td(Data_Show.show(Data_Show.showInt)(v3.value0.hits.arts)), _td(Data_Show.show(Data_Show.showInt)(v3.value0.hits.buster)), _td(Data_Show.show(Data_Show.showInt)(v3.value0.hits.ex)), _td(Data_Show.show(Data_Show.showInt)(v3.value0.phantasm.hits)) ]) ]), Halogen_HTML_Elements.table_([ _tr("Class")(Data_Show.show(Database_Trait._16_)(v3["value0"]["class"])), _tr("Deck")(Data_Show.show(Database_Servant._40_)(v3.value0.deck)), _tr("NP Type")(Data_Show.show(Database_Servant._01_)(Data_Maybe.fromMaybe(Database_Servant.Support.value)(Data_Foldable.find(Data_Foldable.foldableArray)(function (t) {
                               return Database_Servant.has(Database_Servant._f_)(t)(false)(v3.value0);
-                          })([ Database_Servant.SingleTarget.value, Database_Servant.MultiTarget.value ])))), _tr("Alignment")(Database_Trait.showAlignment(v3.value0.align)), _tr("Attribute")(Data_Show.show(Database_Trait._30_)(v3.value0.attr)), _tr("Star Weight")(Data_Show.show(Data_Show.showInt)(v3.value0.gen.starWeight)), _tr("Star Rate")(Data_Show.show(Data_Show.showNumber)(v3.value0.gen.starRate) + "%"), _tr("NP/Hit")(Data_Show.show(Data_Show.showNumber)(v3.value0.gen.npAtk) + "%"), _tr("NP/Defend")(Data_Show.show(Data_Show.showInt)(v3.value0.gen.npDef) + "%"), _tr("Death Rate")(Data_Show.show(Data_Show.showNumber)(v3.value0.death) + "%") ]), Halogen_HTML_Elements.h2([ _c("npheading") ])(_txt("Noble Phantasm")), Halogen_HTML_Elements.table([ _c("phantasm") ])([ _tr("Name")(v3.value0.phantasm.name), _tr("Rank")(Data_Show.show(Database_Skill._b_)(v3.value0.phantasm.rank)), _tr("Card")(Data_Show.show(Database_Servant._33_)(v3.value0.phantasm.card)), _tr("Class")(v3.value0.phantasm.kind), Halogen_HTML_Elements.tr_([ _th("Effects"), Halogen_HTML_Elements.td_(Operators.doIf(v)(Data_Function.flip(Data_Array.snoc)(_table(Data_Functor.map(Data_Functor.functorArray)(function ($182) {
+                          })([ Database_Servant.SingleTarget.value, Database_Servant.MultiTarget.value ])))), _tr("Alignment")(Database_Trait.showAlignment(v3.value0.align)), _tr("Attribute")(Data_Show.show(Database_Trait._30_)(v3.value0.attr)), _tr("Star Weight")(Data_Show.show(Data_Show.showInt)(v3.value0.gen.starWeight)), _tr("Star Rate")(Data_Show.show(Data_Show.showNumber)(v3.value0.gen.starRate) + "%"), _tr("NP/Hit")(Data_Show.show(Data_Show.showNumber)(v3.value0.gen.npAtk) + "%"), _tr("NP/Defend")(Data_Show.show(Data_Show.showInt)(v3.value0.gen.npDef) + "%"), _tr("Death Rate")(Data_Show.show(Data_Show.showNumber)(v3.value0.death) + "%") ]), Halogen_HTML_Elements.h2([ _c("npheading") ])(_txt("Noble Phantasm")), Halogen_HTML_Elements.table([ _c("phantasm") ])([ _tr("Name")(v3.value0.phantasm.name), _tr("Rank")(Data_Show.show(Database_Skill._b_)(v3.value0.phantasm.rank)), _tr("Card")(Data_Show.show(Database_Servant._33_)(v3.value0.phantasm.card)), _tr("Class")(v3.value0.phantasm.kind), Halogen_HTML_Elements.tr_([ _th("Effects"), Halogen_HTML_Elements.td_(Operators.doIf(v)(Data_Function.flip(Data_Array.snoc)(_table(Data_Functor.map(Data_Functor.functorArray)(function ($184) {
                               return (function (v4) {
                                   return "NP" + v4;
-                              })(Data_Show.show(Data_Show.showInt)($182));
-                          })(Data_Array.range(1)(5)))(Data_Functor.map(Data_Functor.functorArray)(npRow)(Data_Array.nub(Database_Skill._23_)(Database_Skill.ranges(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(v3.value0.phantasm.effect))))))(Data_Functor.map(Data_Functor.functorArray)(function ($183) {
-                              return _p(Data_Show.show(Database_Skill._f_)($183));
-                          })(v3.value0.phantasm.effect))) ]), Halogen_HTML_Elements.tr_([ _th("Overcharge"), Halogen_HTML_Elements.td_(Operators.doIf(v)(Data_Function.flip(Data_Array.snoc)(_table(Data_Functor.map(Data_Functor.functorArray)(function ($184) {
+                              })(Data_Show.show(Data_Show.showInt)($184));
+                          })(Data_Array.range(1)(5)))(Data_Functor.map(Data_Functor.functorArray)(npRow)(Data_Array.nub(Database_Skill._23_)(Database_Skill.ranges(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(v3.value0.phantasm.effect))))))(Data_Functor.map(Data_Functor.functorArray)(function ($185) {
+                              return _p(Data_Show.show(Database_Skill._f_)($185));
+                          })(v3.value0.phantasm.effect))) ]), Halogen_HTML_Elements.tr_([ _th("Overcharge"), Halogen_HTML_Elements.td_(Operators.doIf(v)(Data_Function.flip(Data_Array.snoc)(_table(Data_Functor.map(Data_Functor.functorArray)(function ($186) {
                               return (function (v4) {
                                   return v4 + "%";
                               })(Data_Show.show(Data_Show.showInt)((function (v4) {
                                   return v4 * 100 | 0;
-                              })($184)));
-                          })(Data_Array.range(1)(5)))(Data_Functor.map(Data_Functor.functorArray)(overRow)(Data_Array.nub(Database_Skill._23_)(Database_Skill.ranges(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(v3.value0.phantasm.over))))))(Data_Functor.map(Data_Functor.functorArray)(function ($185) {
-                              return _p(Data_Tuple.uncurry(showOver)($185));
-                          })(overs))) ]) ]), _h(2)("Active Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(activeEl(v))(v3.value0.actives))(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(2)("Passive Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(passiveEl)(v3.value0.passives))([ _h(2)("Traits"), Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(traitEl)(v3.value0.traits)) ]))))) ])($181));
+                              })($186)));
+                          })(Data_Array.range(1)(5)))(Data_Functor.map(Data_Functor.functorArray)(overRow)(Data_Array.nub(Database_Skill._23_)(Database_Skill.ranges(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(v3.value0.phantasm.over))))))(Data_Functor.map(Data_Functor.functorArray)(function ($187) {
+                              return _p(Data_Tuple.uncurry(showOver)($187));
+                          })(overs))) ]) ]), _h(2)("Active Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(activeEl(v))(v3.value0.actives))(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(2)("Passive Skills") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(passiveEl)(v3.value0.passives))([ _h(2)("Traits"), Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(traitEl)(v3.value0.traits)) ]))))) ])($183));
                       };
                   };
-                  throw new Error("Failed pattern match at Site.Component line 179, column 1 - line 180, column 62: " + [ v.constructor.name, v1.constructor.name, v2.constructor.name, v3.constructor.name ]);
+                  throw new Error("Failed pattern match at Site.Component line 181, column 1 - line 182, column 62: " + [ v.constructor.name, v1.constructor.name, v2.constructor.name, v3.constructor.name ]);
               };
           };
       };
@@ -31110,7 +30998,7 @@ var PS = {};
                       if (Data_Boolean.otherwise) {
                           return [ _c("unselected"), _click(AddFilter.create(filt)) ];
                       };
-                      throw new Error("Failed pattern match at Site.Component line 117, column 7 - line 119, column 75: " + [ filt.constructor.name ]);
+                      throw new Error("Failed pattern match at Site.Component line 118, column 7 - line 120, column 75: " + [ filt.constructor.name ]);
                   };
                   var match = function (s) {
                       return (function () {
@@ -31130,7 +31018,7 @@ var PS = {};
                       if (Data_Boolean.otherwise) {
                           return 1;
                       };
-                      throw new Error("Failed pattern match at Site.Component line 112, column 7 - line 115, column 7: " + [  ]);
+                      throw new Error("Failed pattern match at Site.Component line 113, column 7 - line 116, column 7: " + [  ]);
                   })();
                   var artorify = pref(Site_Preferences.Artorify.value);
                   return modal(pref(Site_Preferences.ShowTables.value))(artorify)(v.ascend)(v.focus)([ Halogen_HTML_Elements.aside([ _i("active") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ _h(1)("Settings"), Halogen_HTML_Elements.form_(Data_Functor.mapFlipped(Data_Functor.functorArray)(Data_Map_Internal.toUnfoldable(Data_Unfoldable.unfoldableArray)(v.prefs))(function (v1) {
@@ -31145,8 +31033,8 @@ var PS = {};
                           return Control_Category.identity(Control_Category.categoryFn);
                       };
                       return Data_Array.reverse;
-                  })()(Data_Functor.map(Data_Functor.functorArray)(portrait(false)(artorify)(baseAscend))(Operators.doIf(!Data_Array["null"](v.filters))(Data_Array.filter(function ($186) {
-                      return match(excludeSelf)(Data_Tuple.snd($186));
+                  })()(Data_Functor.map(Data_Functor.functorArray)(portrait(false)(artorify)(baseAscend))(Operators.doIf(!Data_Array["null"](v.filters))(Data_Array.filter(function ($188) {
+                      return match(excludeSelf)(Data_Tuple.snd($188));
                   }))(Site_Sorting.getSort(v.sortBy))))), Halogen_HTML_Elements.aside([ _i("filters") ])(Data_Array.cons(_h(1)("Filters"))(Data_Array.concat(Data_Functor.mapFlipped(Data_Functor.functorArray)(Operators.enumArray(Site_Filters._6_))(function (tab) {
                       return [ _h(3)(Data_Show.show(Site_Filters._a_)(tab)), Halogen_HTML_Elements.ul_(Data_Functor.mapFlipped(Data_Functor.functorArray)(Site_Filters.getFilters(tab))(function (filt) {
                           return Halogen_HTML_Elements.li(meta(filt))(_txt(Data_Show.show(Site_Filters._c_)(filt)));
@@ -31156,10 +31044,10 @@ var PS = {};
               var initialState = Data_Function["const"]({
                   filters: [  ],
                   matchAny: true,
-                  focus: Data_Foldable.find(Data_Foldable.foldableArray)(function ($187) {
+                  focus: Data_Foldable.find(Data_Foldable.foldableArray)(function ($189) {
                       return (function (v) {
                           return v === initialHash;
-                      })(urlName($187));
+                      })(urlName($189));
                   })(Database.servants),
                   sortBy: Site_Sorting.Rarity.value,
                   prefs: initialPrefs,
@@ -31197,7 +31085,7 @@ var PS = {};
                       if (v instanceof Data_Maybe.Just) {
                           return Routing_Hash.setHash(urlName(v.value0));
                       };
-                      throw new Error("Failed pattern match at Site.Component line 137, column 7 - line 138, column 7: " + [ v.constructor.name ]);
+                      throw new Error("Failed pattern match at Site.Component line 139, column 7 - line 140, column 7: " + [ v.constructor.name ]);
                   };
                   return function (v) {
                       if (v instanceof AddFilter) {
@@ -31206,54 +31094,57 @@ var PS = {};
                       if (v instanceof UnFilter) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(modFilters(Data_Array["delete"](Site_Filters._b_)(v.value0)));
                       };
+                      if (v instanceof OneFilter) {
+                          return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(modFilters(Data_Function["const"](Data_Array.singleton(v.value0))));
+                      };
                       if (v instanceof SetSort) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                              var $133 = {};
-                              for (var $134 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $134)) {
-                                      $133[$134] = v1[$134];
+                              var $135 = {};
+                              for (var $136 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $136)) {
+                                      $135[$136] = v1[$136];
                                   };
                               };
-                              $133.sortBy = v.value0;
-                              return $133;
+                              $135.sortBy = v.value0;
+                              return $135;
                           }));
                       };
                       if (v instanceof Ascend) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                              var $138 = {};
-                              for (var $139 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $139)) {
-                                      $138[$139] = v1[$139];
+                              var $140 = {};
+                              for (var $141 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $141)) {
+                                      $140[$141] = v1[$141];
                                   };
                               };
-                              $138.ascend = v.value0;
-                              return $138;
+                              $140.ascend = v.value0;
+                              return $140;
                           }));
                       };
                       if (v instanceof MatchAny) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                              var $143 = {};
-                              for (var $144 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $144)) {
-                                      $143[$144] = v1[$144];
+                              var $145 = {};
+                              for (var $146 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $146)) {
+                                      $145[$146] = v1[$146];
                                   };
                               };
-                              $143.matchAny = v.value0;
-                              return $143;
+                              $145.matchAny = v.value0;
+                              return $145;
                           }));
                       };
                       if (v instanceof Focus) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(Control_Bind.discard(Control_Bind.discardUnit)(Halogen_Query_HalogenM.bindHalogenM)(Effect_Class.liftEffect(Halogen_Query_HalogenM.monadEffectHalogenM(dictMonadEffect))(hash(v.value0)))(function () {
                               return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                                  var $148 = {};
-                                  for (var $149 in v1) {
-                                      if ({}.hasOwnProperty.call(v1, $149)) {
-                                          $148[$149] = v1[$149];
+                                  var $150 = {};
+                                  for (var $151 in v1) {
+                                      if ({}.hasOwnProperty.call(v1, $151)) {
+                                          $150[$151] = v1[$151];
                                       };
                                   };
-                                  $148.focus = v.value0;
-                                  $148.ascend = 1;
-                                  return $148;
+                                  $150.focus = v.value0;
+                                  $150.ascend = 1;
+                                  return $150;
                               });
                           }));
                       };
@@ -31262,7 +31153,7 @@ var PS = {};
                               return modPrefs(Data_Map_Internal.insert(Site_Preferences._2_)(v.value0)(v.value1));
                           }));
                       };
-                      throw new Error("Failed pattern match at Site.Component line 122, column 10 - line 133, column 34: " + [ v.constructor.name ]);
+                      throw new Error("Failed pattern match at Site.Component line 123, column 10 - line 135, column 34: " + [ v.constructor.name ]);
                   };
               })();
               return Halogen_Component.component(Halogen_HTML_Core.bifunctorHTML)({

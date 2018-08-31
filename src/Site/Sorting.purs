@@ -28,10 +28,11 @@ data SortBy = Rarity
             | ID
             | ATK
             | HP
-            | GrailATK
-            | GrailHP
-            | NPGain
-            | StarRate
+            -- | GrailATK
+            -- | GrailHP
+            -- | NPGain
+            | StarWeight
+            -- | StarRate
             | NPArts
             | StarQuick
             | NPDmg
@@ -40,12 +41,13 @@ data SortBy = Rarity
             | NPSpecOver
 
 instance _a_ ∷ Show SortBy where
-  show NPGain     = "NP Gain/Hit"
-  show StarRate   = "Star Rate"
-  show NPArts     = "NP Gain/Arts card"
-  show StarQuick  = "Stars/Quick card"
-  show GrailATK   = "Grail ATK"
-  show GrailHP    = "Grail HP"
+  -- show NPGain     = "NP Gain/Hit"
+  show StarWeight = "Star Weight"
+  -- show StarRate   = "Star Rate"
+  show NPArts     = "NP Gain per Arts card"
+  show StarQuick  = "Stars per Quick card"
+  -- show GrailATK   = "Grail ATK"
+  -- show GrailHP    = "Grail HP"
   show NPDmg      = "NP Damage"
   show NPDmgOver  = "NP Damage + Overcharge"
   show NPSpec     = "NP Special Damage"
@@ -57,10 +59,11 @@ toSort ID         = (-1.0 * _) ∘ toNumber ∘ _.id
 toSort Rarity     = toNumber ∘ _.rarity
 toSort ATK        = toNumber ∘ _.stats.max.atk
 toSort HP         = toNumber ∘ _.stats.max.hp
-toSort GrailATK   = toNumber ∘ _.stats.grail.atk
-toSort GrailHP    = toNumber ∘ _.stats.grail.hp
-toSort NPGain     = _.gen.npAtk
-toSort StarRate   = _.gen.starRate 
+-- toSort GrailATK   = toNumber ∘ _.stats.grail.atk
+-- toSort GrailHP    = toNumber ∘ _.stats.grail.hp
+-- toSort NPGain     = _.gen.npAtk
+toSort StarWeight = toNumber ∘ _.gen.starWeight
+-- toSort StarRate   = _.gen.starRate 
 toSort NPArts     = npPerArts 
 toSort StarQuick  = starsPerQuick
 toSort NPDmg      = npDamage false false
@@ -79,8 +82,8 @@ doSort a = map showSort ∘ sortWith sorter
          <> (output ∘ abs $ sorter s)
       | otherwise = uncurry Tuple ∘ (output ∘ abs ∘ sorter &&& identity)
     output = case a of
-        NPGain    -> (_ <> "%") ∘ print 2
-        StarRate  -> (_ <> "%") ∘ print 2
+        -- NPGain    -> (_ <> "%") ∘ print 2
+        -- StarRate  -> (_ <> "%") ∘ print 2
         NPArts    -> (_ <> "%") ∘ print 2
         StarQuick -> print 2
         _         -> print 0

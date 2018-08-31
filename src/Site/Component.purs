@@ -33,6 +33,7 @@ type Message = Void
 data Query a = Focus (Maybe Servant) a
              | AddFilter Filter a
              | UnFilter  Filter a
+             | OneFilter Filter a
              | MatchAny  Boolean a
              | SetSort   SortBy a
              | SetPref   Preference Boolean a
@@ -122,6 +123,7 @@ siteComponent initialHash initialPrefs = component
   eval = case _ of
       AddFilter filt     a -> a <$ modFilters (cons filt)
       UnFilter  filt     a -> a <$ modFilters (delete filt)
+      OneFilter filt     a -> a <$ modFilters (const $ singleton filt)
       SetSort   sortBy   a -> a <$ modify_ _{ sortBy = sortBy }
       Ascend    ascend   a -> a <$ modify_ _{ ascend = ascend }
       MatchAny  matchAny a -> a <$ modify_ _{ matchAny = matchAny }

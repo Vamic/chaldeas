@@ -1,4 +1,4 @@
-module Database.Servant.Extra where
+module Database.Servant.Extra (extras) where
 
 import Prelude
 import Operators
@@ -47,7 +47,7 @@ extras = [
               , first:  false
               }
   , gen:      { starWeight: 99, starRate: 10.1, npAtk: 0.76, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish, Saberface]
   , death:    21.0
   , align:    Lawful:Good
@@ -97,7 +97,7 @@ extras = [
               , first:  false
               }
   , gen:      { starWeight: 100, starRate: 10.0, npAtk: 0.86, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 7 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 7 }
   , traits:   [Male, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
@@ -151,7 +151,7 @@ extras = [
               , first:  false
               }
   , gen:      { starWeight: 29, starRate: 6.0, npAtk: 0.83, npDef: 5 }
-  , hits:     { arts: 2, buster: 4, quick: 3, ex: 7 }
+  , hits:     { quick: 3, arts: 2, buster: 4, ex: 7 }
   , traits:   [Female, EnumaElish, Saberface]
   , death:    5.7
   , align:    Chaotic:Evil
@@ -204,7 +204,7 @@ extras = [
               , first:  false
               }
   , gen:      { starWeight: 30, starRate: 5.9, npAtk: 0.62, npDef: 6 }
-  , hits:     { arts: 2, buster: 3, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 2, buster: 3, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    7.0
   , align:    Chaotic:Evil
@@ -257,7 +257,7 @@ extras = [
               , first:  true
               }
   , gen:      { starWeight: 102, starRate: 10.0, npAtk: 0.76, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 3, buster: 1, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
@@ -310,7 +310,7 @@ extras = [
               , first:  false
               }
   , gen:      { starWeight: 99, starRate: 9.9, npAtk: 0.84, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, EnumaElish]
   , death:    24.5
   , align:    Lawful:Good
@@ -363,7 +363,7 @@ extras = [
               , first:  false
               }
   , gen:      { starWeight: 29, starRate: 6.0, npAtk: 0.79, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 4, ex: 5 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    9.0
   , align:    Chaotic:Evil

@@ -1,4 +1,4 @@
-module Database.Servant.Rider where
+module Database.Servant.Rider (riders) where
 
 import Prelude
 import Operators
@@ -51,7 +51,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 205, starRate: 9.0, npAtk: 0.59, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 5, ex: 5 }
+  , hits:     { quick: 5, arts: 3, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, Divine, Riding, EnumaElish, King]
   , death:    30.0
   , align:    Chaotic:Balanced
@@ -101,7 +101,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 208, starRate: 9.0, npAtk: 0.42, npDef: 3 }
-  , hits:     { arts: 4, buster: 2, quick: 6, ex: 4 }
+  , hits:     { quick: 6, arts: 4, buster: 2, ex: 4 }
   , traits:   [Female, Riding]
   , death:    50.0
   , align:    Chaotic:Evil
@@ -148,7 +148,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 205, starRate: 8.8, npAtk: 0.66, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 6 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 6 }
   , traits:   [Male, Brynhild, Divine, GreekMyth, King, Riding, EnumaElish]
   , death:    40.0
   , align:    Neutral:Good
@@ -199,7 +199,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 208, starRate: 9.0, npAtk: 0.86, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 7 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 7 }
   , traits:   [Female, Riding, EnumaElish, King]
   , death:    40.0
   , align:    Chaotic:Evil
@@ -248,7 +248,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 198, starRate: 9.0, npAtk: 1.15, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 2, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, Divine, EnumaElish]
   , death:    40.0
   , align:    Lawful:Good
@@ -295,7 +295,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 204, starRate: 8.9, npAtk: 0.87, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Arthur, Dragon, Riding, Saberface, EnumaElish, King]
   , death:    35.0
   , align:    Lawful:Good
@@ -346,7 +346,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 205, starRate: 9.0, npAtk: 1.58, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    30.0
   , align:    Lawful:Good
@@ -395,7 +395,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 204, starRate: 9.2, npAtk: 0.71, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 4 }
   , traits:   [Female, Dragon, Saberface, EnumaElish]
   , death:    35.0
   , align:    Chaotic:Good
@@ -447,7 +447,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 201, starRate: 9.0, npAtk: 1.0, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, Riding, EnumaElish]
   , death:    35.0
   , align:    Lawful:Good
@@ -494,7 +494,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 200, starRate: 9.1, npAtk: 0.84, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    50.0
   , align:    Chaotic:Evil
@@ -544,7 +544,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 205, starRate: 9.0, npAtk: 0.66, npDef: 1 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
   , traits:   [Riding, EnumaElish]
   , death:    40.0
   , align:    Chaotic:Good
@@ -595,7 +595,7 @@ riders = [
               , first:  false
              }
   , gen:      { starWeight: 205, starRate: 8.9, npAtk: 0.85, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Brynhild, EnumaElish]
   , death:    45.0
   , align:    Lawful:Good
@@ -642,7 +642,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 204, starRate: 9.1, npAtk: 0.87, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Brynhild, EnumaElish]
   , death:    35.0
   , align:    Chaotic:Balanced
@@ -691,7 +691,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 194, starRate: 9.0, npAtk: 0.58, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Divine]
   , death:    35.0
   , align:    Chaotic:Good
@@ -746,7 +746,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 198, starRate: 8.8, npAtk: 0.56, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    45.0
   , align:    Chaotic:Evil
@@ -792,7 +792,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 205, starRate: 9.0, npAtk: 0.86, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Divine, EnumaElish, GreekMyth, King]
   , death:    40.0
   , align:    Neutral:Good
@@ -837,7 +837,7 @@ riders = [
               , first:  false
               }
   , gen:      { starWeight: 196, starRate: 8.9, npAtk: 0.85, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, EnumaElish, King]
   , death:    45.0
   , align:    Neutral:Good

@@ -1,4 +1,9 @@
-module Database.Trait where
+module Database.Trait 
+  ( Alignment(..), showAlignment
+  , Attribute(..)
+  , Class(..)
+  , Trait(..)
+  ) where
 
 import Prelude
 import Operators

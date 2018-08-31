@@ -1,10 +1,11 @@
-module Filters where
+module Site.Filters (FilterTab(..), Filter(..), getFilters) where
 
 import Prelude
 import Operators
 
-import Data.Array (elem, filter, notElem)
+import Data.Array (filter)
 import Data.Enum
+import Data.Foldable
 import Data.Profunctor.Strong
 import Data.Generic.Rep    
 import Data.Generic.Rep.Bounded
@@ -87,10 +88,12 @@ getFilters f@FilterDeck      = matchFilter f <$> getAll ∷ Array Deck
 getFilters f@FilterPhantasm  = matchFilter f <$> getAll ∷ Array PhantasmType
 getFilters f@FilterTrait     = matchFilter f <$> getAll ∷ Array Trait
 getFilters f@FilterNoClass   = unFilter    f <$> getAll ∷ Array Class
-getFilters f@FilterPassive   = uncurry (Filter f) 
-                             ∘ (identity &&& const ∘ hasPassive) <$> getPassives
 getFilters f@FilterEvent     = getExtraFilters f
 getFilters f@FilterOther     = getExtraFilters f
+getFilters f@FilterPassive   = uncurry (Filter f) 
+                             ∘ (identity &&& const ∘ hasPassive) <$> getPassives
+  where
+    hasPassive p = any (eq p) ∘ map (_.name) ∘ _.passives
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

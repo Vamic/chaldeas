@@ -1,4 +1,4 @@
-module Database.Servant.Caster where
+module Database.Servant.Caster (casters) where
 
 import Prelude
 import Operators
@@ -56,7 +56,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 1.64, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild, PseudoServant]
   , death:    34.5
   , align:    Neutral:Good
@@ -107,7 +107,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 49, starRate: 11.0, npAtk: 0.32, npDef: 3 }
-  , hits:     { arts: 5, buster: 1, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 5, buster: 1, ex: 4 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    36.0
   , align:    Neutral:Evil
@@ -159,7 +159,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 52, starRate: 11.0, npAtk: 0.82, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 6 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 6 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
   , align:    Lawful:Good
@@ -215,7 +215,7 @@ casters = [
               , first:  true
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 0.54, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 4, ex: 4 }
+  , hits:     { quick: 4, arts: 3, buster: 1, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    34.5
   , align:    Chaotic:Good
@@ -268,7 +268,7 @@ casters = [
               , first:  true
               }
   , gen:      { starWeight: 51, starRate: 10.7, npAtk: 0.32, npDef: 3 }
-  , hits:     { arts: 5, buster: 1, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 5, buster: 1, ex: 5 }
   , traits:   [Female, PseudoServant, EnumaElish]
   , death:    42.0
   , align:    Neutral:Good
@@ -317,7 +317,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 51, starRate: 10.7, npAtk: 0.4, npDef: 3 }
-  , hits:     { arts: 4, buster: 3, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 4, buster: 3, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Lawful:Good
@@ -368,7 +368,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 49, starRate: 10.8, npAtk: 1.6, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 4 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    42.0
   , align:    Chaotic:Evil
@@ -423,7 +423,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 0.54, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 3, ex: 3 }
+  , hits:     { quick: 3, arts: 3, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Neutral:Balanced
@@ -476,7 +476,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 51, starRate: 10.7, npAtk: 0.45, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 6, ex: 3 }
+  , hits:     { quick: 6, arts: 3, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Good
@@ -525,7 +525,7 @@ casters = [
               , first:  true
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 0.54, npDef: 3 }
-  , hits:     { arts: 3, buster: 3, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 3, buster: 3, ex: 5 }
   , traits:   [Female, Divine, King, EnumaElish]
   , death:    36.0
   , align:    Lawful:Good
@@ -572,7 +572,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 0.42, npDef: 3 }
-  , hits:     { arts: 3, buster: 3, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 3, buster: 3, ex: 4 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
   , align:    Lawful:Good
@@ -625,7 +625,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.9, npAtk: 0.32, npDef: 3 }
-  , hits:     { arts: 5, buster: 1, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 5, buster: 1, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
   , align:    Lawful:Good
@@ -677,7 +677,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 51, starRate: 10.6, npAtk: 0.51, npDef: 3 }
-  , hits:     { arts: 3, buster: 3, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 3, buster: 3, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    60.0
   , align:    Lawful:Balanced
@@ -728,7 +728,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 48, starRate: 10.8, npAtk: 1.66, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    30.0
   , align:    Lawful:Balanced
@@ -777,7 +777,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.9, npAtk: 1.64, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    34.5
   , align:    Neutral:Evil
@@ -826,7 +826,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 1.59, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    45.0
   , align:    Neutral:Balanced
@@ -874,7 +874,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 49, starRate: 11.0, npAtk: 1.6, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, Brynhild]
   , death:    40.5
   , align:    Neutral:Good
@@ -925,7 +925,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 48, starRate: 10.8, npAtk: 0.91, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Balanced
@@ -978,7 +978,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 49, starRate: 10.9, npAtk: 1.6, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    42.0
   , align:    Lawful:Balanced
@@ -1027,7 +1027,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 11.0, npAtk: 0.81, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Evil
@@ -1072,7 +1072,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 0.55, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0
   , align:    Chaotic:Good
@@ -1121,7 +1121,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 49, starRate: 11.0, npAtk: 0.9, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    40.5
   , align:    Neutral:Good
@@ -1168,7 +1168,7 @@ casters = [
               , first:  false
               }
   , gen:      { starWeight: 48, starRate: 10.8, npAtk: 1.58, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    48.0
   , align:    Chaotic:Evil

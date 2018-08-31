@@ -1,4 +1,4 @@
-module Database.Servant.Saber where
+module Database.Servant.Saber (sabers) where
 
 import Prelude
 import Operators
@@ -46,7 +46,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 10.2, npAtk: 1.09, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 5, ex: 3 }
+  , hits:     { quick: 5, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Saberface, EnumaElish]
   , death:    35.0
   , align:    Neutral:Balanced
@@ -95,7 +95,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 10.1, npAtk: 0.84, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Divine, EnumaElish, King]
   , death:    24.5
   , align:    Chaotic:Good
@@ -147,7 +147,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 10.1, npAtk: 0.7, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 3, buster: 1, ex: 5 }
   , traits:   [Female, Riding, Saberface, Roman, EnumaElish, King]
   , death:    35.0
   , align:    Chaotic:Bride
@@ -197,7 +197,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 10.0, npAtk: 0.56, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, EnumaElish]
   , death:    24.5
   , align:    Chaotic:Balanced
@@ -251,7 +251,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 9.9, npAtk: 0.84, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 4, ex: 4 }
+  , hits:     { quick: 4, arts: 2, buster: 1, ex: 4 }
   , traits:   [Female, EnumaElish, PseudoServant]
   , death:    24.5
   , align:    Neutral:Balanced
@@ -296,7 +296,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 10.0, npAtk: 0.86, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    21.0
   , align:    Lawful:Good
@@ -347,7 +347,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 100, starRate: 10.0, npAtk: 0.83, npDef: 3 }
-  , hits:     { arts: 2, buster: 4, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 2, buster: 4, ex: 5 }
   , traits:   [Male, Brynhild, Riding, EnumaElish]
   , death:    28.0
   , align:    Lawful:Balanced
@@ -392,7 +392,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 99, starRate: 9.9, npAtk: 0.86, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, King, Dragon, Saberface, Arthur, EnumaElish]
   , death:    19.2
   , align:    Lawful:Evil
@@ -441,7 +441,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 100, starRate: 10.2, npAtk: 0.84, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, Riding, Brynhild, Divine, EnumaElish, King]
   , death:    24.5
   , align:    Lawful:Good
@@ -491,7 +491,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 10.1, npAtk: 0.84, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 5 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, Riding, Roman, Saberface, EnumaElish, King]
   , death:    24.5
   , align:    Chaotic:Good
@@ -544,7 +544,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 10.0, npAtk: 0.83, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Riding, EnumaElish]
   , death:    28.0
   , align:    Neutral:Balanced
@@ -593,7 +593,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 97, starRate: 10.0, npAtk: 0.83, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Brynhild, Dragon, EnumaElish, King]
   , death:    28.0
   , align:    Chaotic:Good
@@ -646,7 +646,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 10.0, npAtk: 1.14, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 5 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, Riding, EnumaElish]
   , death:    21.0
   , align:    Lawful:Good
@@ -691,7 +691,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 10.0, npAtk: 0.86, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    21.0
   , align:    Lawful:Good
@@ -738,7 +738,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 99, starRate: 10.0, npAtk: 1.1, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, King, Riding, Brynhild, Roman, Divine, EnumaElish]
   , death:    31.5
   , align:    Neutral:Balanced
@@ -791,7 +791,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 99, starRate: 10.0, npAtk: 1.09, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Brynhild, EnumaElish, King]
   , death:    35.0
   , align:    Lawful:Balanced
@@ -840,7 +840,7 @@ sabers = [
               , first:  true
               }
   , gen:      { starWeight: 100, starRate: 10.2, npAtk: 1.11, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 5 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, Riding, EnumaElish]
   , death:    28.0
   , align:    Lawful:Good
@@ -887,7 +887,7 @@ sabers = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 9.9, npAtk: 0.82, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Brynhild, EnumaElish]
   , death:    31.5
   , align:    Lawful:Good

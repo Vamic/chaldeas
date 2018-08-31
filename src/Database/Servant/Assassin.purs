@@ -1,4 +1,4 @@
-module Database.Servant.Assassin where
+module Database.Servant.Assassin (assassins) where
 
 import Prelude
 import Operators
@@ -48,7 +48,7 @@ assassins = [
               , first:  true
               }
   , gen:      { starWeight: 97, starRate: 25.5, npAtk: 1.07, npDef: 4 }
-  , hits:     { arts: 2, buster: 2, quick: 5, ex: 4 }
+  , hits:     { quick: 5, arts: 2, buster: 2, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Evil
@@ -103,7 +103,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 25.0, npAtk: 0.55, npDef: 4 }
-  , hits:     { arts: 3, buster: 1, quick: 4, ex: 6 }
+  , hits:     { quick: 4, arts: 3, buster: 1, ex: 6 }
   , traits:   [Female, Demonic, EnumaElish, Divine, Dragon]
   , death:    31.6
   , align:    Chaotic:Evil
@@ -150,7 +150,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 25.6, npAtk: 0.81, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 4, ex: 4 }
+  , hits:     { quick: 4, arts: 2, buster: 1, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, King]
   , death:    38.5
   , align:    Chaotic:Good
@@ -202,7 +202,7 @@ assassins = [
               , first:  true
               }
   , gen:      { starWeight: 102, starRate: 25.6, npAtk: 0.8, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, EnumaElish, PseudoServant]
   , death:    44.0
   , align:    Chaotic:Good
@@ -254,7 +254,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 25.2, npAtk: 2.15, npDef: 4 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Evil
@@ -306,7 +306,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 97, starRate: 25.6, npAtk: 0.46, npDef: 4 }
-  , hits:     { arts: 2, buster: 6, quick: 4, ex: 8 }
+  , hits:     { quick: 4, arts: 2, buster: 6, ex: 8 }
   , traits:   [Male, Brynhild, EnumaElish]
   , death:    44.0
   , align:    Chaotic:Evil
@@ -357,7 +357,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 25.6, npAtk: 0.71, npDef: 4 }
-  , hits:     { arts: 3, buster: 3, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 3, buster: 3, ex: 5 }
   , traits:   [Female, King, EnumaElish]
   , death:    44.0
   , align:    Neutral:Good
@@ -410,7 +410,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 104, starRate: 25.0, npAtk: 2.26, npDef: 4 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    27.5
   , align:    Chaotic:Good
@@ -459,7 +459,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 100, starRate: 25.6, npAtk: 0.54, npDef: 4 }
-  , hits:     { arts: 4, buster: 1, quick: 4, ex: 4 }
+  , hits:     { quick: 4, arts: 4, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    38.5
   , align:    Chaotic:Evil
@@ -510,7 +510,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 25.3, npAtk: 1.05, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    55.0
   , align:    Neutral:Evil
@@ -557,7 +557,7 @@ assassins = [
               , first:  true
               }
   , gen:      { starWeight: 97, starRate: 25.2, npAtk: 1.07, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 3 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
@@ -615,7 +615,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 99, starRate: 25.6, npAtk: 1.05, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    55.0
   , align:    Lawful:Good
@@ -668,7 +668,7 @@ assassins = [
               , first:  true
               }
   , gen:      { starWeight: 98, starRate: 25.2, npAtk: 1.05, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0
   , align:    Chaotic:Good
@@ -717,7 +717,7 @@ assassins = [
               , first:  true
               }
   , gen:      { starWeight: 102, starRate: 24.8, npAtk: 1.06, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    49.5
   , align:    Lawful:Evil
@@ -770,7 +770,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 97, starRate: 25.5, npAtk: 0.38, npDef: 4 }
-  , hits:     { arts: 3, buster: 1, quick: 3, ex: 6 }
+  , hits:     { quick: 3, arts: 3, buster: 1, ex: 6 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
@@ -823,7 +823,7 @@ assassins = [
               , first:  true
               }
   , gen:      { starWeight: 102, starRate: 25.6, npAtk: 0.53, npDef: 4 }
-  , hits:     { arts: 3, buster: 4, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 3, buster: 4, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
   , align:    Lawful:Evil
@@ -873,7 +873,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 25.2, npAtk: 0.71, npDef: 4 }
-  , hits:     { arts: 2, buster: 2, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 3, buster: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    49.5
   , align:    Chaotic:Evil
@@ -925,7 +925,7 @@ assassins = [
               , first:  false
               }
   , gen:      { starWeight: 98, starRate: 24.6, npAtk: 2.1, npDef: 4 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0
   , align:    Chaotic:Balanced

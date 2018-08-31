@@ -1,4 +1,4 @@
-module Database.Servant.Archer where
+module Database.Servant.Archer (archers) where
 
 import Prelude
 import Operators
@@ -46,7 +46,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 7.9, npAtk: 0.34, npDef: 3 }
-  , hits:     { arts: 5, buster: 5, quick: 5, ex: 8 }
+  , hits:     { quick: 5, arts: 5, buster: 5, ex: 8 }
   , traits:   [Male, Divine, EnumaElish, King]
   , death:    31.5
   , align:    Chaotic:Good
@@ -99,7 +99,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 8.0, npAtk: 0.59, npDef: 3 }
-  , hits:     { arts: 3, buster: 3, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 3, buster: 3, ex: 5 }
   , traits:   [Female, EnumaElish, Arthur, Dragon, King, Saberface ]
   , death:    25.8
   , align:    Lawful:Good
@@ -153,7 +153,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 147, starRate: 7.9, npAtk: 0.87, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 3 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Brynhild]
   , death:    31.5
   , align:    Chaotic:Good
@@ -206,7 +206,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 8.0, npAtk: 1.0, npDef: 3 }
-  , hits:     { arts: 1, buster: 1, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 1, buster: 1, ex: 4 }
   , traits:   [Male, GreekMyth, EnumaElish]
   , death:    27.0
   , align:    Chaotic:Balanced
@@ -259,12 +259,12 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 154, starRate: 8.0, npAtk: 0.51, npDef: 3 }
-  , hits:     { arts: 3, buster: 3, quick: 2, ex: 5 }
+  , hits:     { quick: 2, arts: 3, buster: 3, ex: 5 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    31.5
   , align:    Lawful:Balanced   
   , limited:  false
-  , free:    false
+  , free:     false
   }
 , { name:     "Chloe von Einzbern"
   , id:       137
@@ -313,7 +313,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 148, starRate: 8.0, npAtk: 0.38, npDef: 3 }
-  , hits:     { arts: 6, buster: 2, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 6, buster: 2, ex: 4 }
   , traits:   [Female, PseudoServant, EnumaElish]
   , death:    36.0
   , align:    Chaotic:Good
@@ -360,7 +360,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 150, starRate: 7.9, npAtk: 0.43, npDef: 3 }
-  , hits:     { arts: 4, buster: 4, quick: 2, ex: 5 }
+  , hits:     { quick: 2, arts: 4, buster: 4, ex: 5 }
   , traits:   [Female, EnumaElish, King]
   , death:    31.5
   , align:    Lawful:Balanced
@@ -414,7 +414,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 145, starRate: 8.1, npAtk: 0.58, npDef: 3 }
-  , hits:     { arts: 3, buster: 5, quick: 4, ex: 6 }
+  , hits:     { quick: 4, arts: 3, buster: 5, ex: 6 }
   , traits:   [Male, EnumaElish]
   , death:    31.5
   , align:    Lawful:Good
@@ -464,7 +464,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 145, starRate: 7.9, npAtk: 0.51, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 5 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 5 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    31.5
   , align:    Neutral:Balanced
@@ -511,7 +511,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 148, starRate: 8.0, npAtk: 0.5, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 3 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    31.5
   , align:    Neutral:Evil
@@ -524,7 +524,7 @@ archers = [
   , class:    Archer
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
-  , stats:    { base:  { atk: 1574,  hp: 1843  }
+  , stats:    { base:  { atk: 1574,  hp: 1843 }
               , max:   { atk: 9446, hp: 11521 }
               , grail: { atk: 11437, hp: 13969 }
               }
@@ -565,7 +565,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 8.1, npAtk: 0.85, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    40.5
   , align:    Chaotic:Balanced
@@ -615,7 +615,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 150, starRate: 8.0, npAtk: 0.87, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 3 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    31.5
   , align:    Neutral:Good
@@ -667,7 +667,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 156, starRate: 7.9, npAtk: 0.9, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 3 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    22.5
   , align:    Chaotic:Good
@@ -718,7 +718,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 147, starRate: 8.0, npAtk: 0.84, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 3 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    45.0
   , align:    Chaotic:Balanced
@@ -770,7 +770,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 8.0, npAtk: 0.76, npDef: 3 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    36.0
   , align:    Lawful:Balanced
@@ -819,7 +819,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 7.9, npAtk: 0.62, npDef: 3 }
-  , hits:     { arts: 3, buster: 3, quick: 3, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, EnumaElish, King]
   , death:    36.0
   , align:    Chaotic:Good
@@ -868,7 +868,7 @@ archers = [
               , first:  false
               }
   , gen:      { starWeight: 150, starRate: 8.0, npAtk: 0.56, npDef: 3 }
-  , hits:     { arts: 3, buster: 4, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 3, buster: 4, ex: 4 }
   , traits:   [Male, Riding, EnumaElish]
   , death:    45.0
   , align:    Chaotic:Balanced
@@ -917,7 +917,7 @@ archers = [
               , first:  true
               }
   , gen:      { starWeight: 150, starRate: 7.8, npAtk: 0.57, npDef: 3 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, EnumaElish]
   , death:    36.0
   , align:    Neutral:Good

@@ -1,30 +1,30 @@
-module Component where
+module Site.Component (Query, siteComponent) where
 
 import Prelude
 import Operators
 
-import Halogen                 as Halogen
 import Halogen.HTML            as H
 import Halogen.HTML.Events     as E
 import Halogen.HTML.Properties as P
 import Data.Map                as M
+import Data.String             as S
 
-import Data.Array hiding (take)
-import Data.Map (Map)
+import Data.Array
+import Data.Formatter.Number
+import Data.Int
 import Data.Maybe
-import Data.String hiding (null, singleton)
 import Data.Tuple (Tuple(..), snd, uncurry)
 import Effect.Class
-import Halogen (Component, ComponentDSL, ComponentHTML, liftEffect, modify_)
+import Halogen (Component, ComponentDSL, ComponentHTML, component, liftEffect, modify_)
 import Halogen.HTML
 import Halogen.HTML.Properties
 import Routing.Hash
 import Web.UIEvent.MouseEvent
 
 import Database
-import Filters
-import Sorting
-import Preferences
+import Site.Filters
+import Site.Sorting
+import Site.Preferences
 
 type Input = Unit
 type Message = Void
@@ -40,16 +40,16 @@ type State = { filters  ∷ Array Filter
              , matchAny ∷ Boolean
              , focus    ∷ Maybe Servant
              , sortBy   ∷ SortBy
-             , prefs    ∷ Map Preference Boolean
+             , prefs    ∷ M.Map Preference Boolean
              , ascend   ∷ Int
              }
 
 urlName ∷ Servant -> String
-urlName = replaceAll (Pattern " ") (Replacement "") ∘ _.name
+urlName = S.replaceAll (S.Pattern " ") (S.Replacement "") ∘ _.name
 
-component ∷ ∀ m. MonadEffect m => String -> Map Preference Boolean
+siteComponent ∷ ∀ m. MonadEffect m => String -> M.Map Preference Boolean
             -> Component HTML Query Unit Message m
-component initialHash initialPrefs = Halogen.component
+siteComponent initialHash initialPrefs = component
     { initialState
     , render
     , eval
@@ -136,15 +136,16 @@ component initialHash initialPrefs = Halogen.component
       hash (Just s) = setHash $ urlName s
 
 noBreakName ∷ String -> String
-noBreakName = unBreak ∘ split (Pattern "(")
+noBreakName = unBreak ∘ S.split (S.Pattern "(")
   where
-    unBreak [a, b] = a ++ "(" ++ replaceAll (Pattern " ") (Replacement " ") b
-    unBreak xs = joinWith "(" xs
+    unBreak [a, b] = a ++ "(" 
+                       ++ S.replaceAll (S.Pattern " ") (S.Replacement " ") b
+    unBreak xs = S.joinWith "(" xs
 
 deck ∷ ∀ a b. Deck -> Array (HTML a b)
 deck (Deck a b c d e) = card ∘ show <$> [a, b, c, d, e]
   where 
-    card x = H.span [_c x] ∘ _txt $ take 1 x --_img $ "img/Card/" ++ show x ++ ".png"
+    card x = H.span [_c x] ∘ _txt $ S.take 1 x 
 
 portrait ∷ ∀ a. Boolean -> Boolean -> Int -> Tuple String Servant 
            -> HTML a (Query Unit)
@@ -159,16 +160,26 @@ portrait big artorify ascension (Tuple lab s)
       , H.footer_ 
         ∘ ((big && ascension > 1) ? cons prevAscend)
         ∘ ((big && ascension < 4) ? (_ `snoc` nextAscend))
-        ∘ singleton ∘ _span ∘ joinWith "  " $ replicate s.rarity "★" 
+        ∘ singleton ∘ _span ∘ S.joinWith "  " $ replicate s.rarity "★" 
       ]
   where meta       = not big ? (cons ∘ _click ∘ Focus $ Just s) 
                    $ [_c $ "servant stars" ++ show s.rarity]
-        doArtorify = replaceAll (Pattern "Altria") (Replacement "Artoria")
+        doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
         prevAscend = H.a [_click ∘ Ascend $ ascension - 1] $ _txt "<"
         nextAscend = H.a [_click ∘ Ascend $ ascension + 1] $ _txt ">"
         ascend
           | ascension <= 1 = ""
           | otherwise      = " " ++ show ascension
+
+print ∷ Int -> String
+print = format formatter ∘ toNumber
+  where
+    formatter = Formatter { comma: true
+                          , before: 0
+                          , after: 0
+                          , abbreviations: false
+                          , sign: false
+                          }
 
 modal ∷ ∀ a. Boolean -> Int -> Maybe Servant -> Array (HTML a (Query Unit)) 
         -> HTML a (Query Unit)
@@ -180,9 +191,9 @@ modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
     , H.article_ $
       [ portrait true artorify ascend $ Tuple "" s
       , _table ["", "ATK", "HP"]
-        [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
-        , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]
-        , H.tr_ [ _th "Grail", _td $ print' grail.atk, _td $ print' grail.hp ]
+        [ H.tr_ [ _th "Base",  _td $ print base.atk,  _td $ print base.hp ]
+        , H.tr_ [ _th "Max",   _td $ print max.atk,   _td $ print max.hp ]
+        , H.tr_ [ _th "Grail", _td $ print grail.atk, _td $ print grail.hp ]
         ]
       , _table ["", "Q", "A", "B", "EX", "NP"]
       
@@ -197,7 +208,6 @@ modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
         ] 
       , H.table_ 
         [ _tr "Class"       $ show s.class 
-        --, H.tr_ [_th "Deck", H.td_ $ show s.deck]
         , _tr "Deck"        $ show s.deck
         , _tr "NP Type"     ∘ show ∘ fromMaybe Support 
                             $ find (\t -> has t false s) 
@@ -209,14 +219,6 @@ modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
         , _tr "NP/Hit"      $ show gen.npAtk ++ "%"
         , _tr "NP/Defend"   $ show gen.npDef ++ "%"
         , _tr "Death Rate"  $ show s.death ++ "%"
-        {-
-        , rate "Damage"     ratings.damage
-        , rate "NP Gain"    ratings.np
-        , rate "Critical"   ratings.critical
-        , rate "Utility"    ratings.utility
-        , rate "Support"    ratings.support
-        , rate "Durability" ratings.durability
-        -}
         ]
       , H.h2 [_c "npheading"] $ _txt "Noble Phantasm"
       , H.table [_c "phantasm"]
@@ -234,8 +236,6 @@ modal artorify ascend (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
       ]
     ]
   where 
-    rate label n = H.tr_ [_th label, H.td [_c "rating"] ∘ _txt ∘ joinWith " " 
-                 $ replicate n "⬛︎" ]
     overs = zip phantasm.over ∘ cons phantasm.first $ replicate 10 false
     showOver eff true = show eff ++ " [Activates first.]"
     showOver eff false = show eff

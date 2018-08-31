@@ -1,4 +1,4 @@
-module Preferences where
+module Site.Preferences ( Preference(..), setPreference, getPreferences) where
 
 import Data.Enum
 import Data.Generic.Rep
@@ -29,7 +29,14 @@ instance _a_ ∷ Show Preference where
 setPreference ∷ Preference -> Boolean -> Effect Unit
 setPreference pref set = window >>= localStorage
                      >>= setItem (show pref) (show set)
-                     
+                 
+getPreferences ∷ Effect (Map Preference Boolean)
+getPreferences = fromFoldable <$> traverse go enumArray 
+  where
+    go k = do
+      v <- getPreference k
+      pure $ Tuple k v
+          
 getPreference ∷ Preference -> Effect Boolean
 getPreference pref = window >>= localStorage 
                  >>= getItem (show pref) 
@@ -37,14 +44,6 @@ getPreference pref = window >>= localStorage
   where 
     fromFlag (Just "true") = true
     fromFlag _             = false
-
-todo ∷ Preference -> Effect (Tuple Preference Boolean)
-todo k = do
-    v <- getPreference k
-    pure $ Tuple k v
-
-getPreferences ∷ Effect (Map Preference Boolean)
-getPreferences = fromFoldable <$> traverse todo enumArray 
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

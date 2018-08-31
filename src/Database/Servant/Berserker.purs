@@ -1,4 +1,4 @@
-module Database.Servant.Berserker where
+module Database.Servant.Berserker (berserkers) where
 
 import Prelude
 import Operators
@@ -50,7 +50,7 @@ berserkers = [
               , first:  true
               }
   , gen:      { starWeight: 9, starRate: 5.1, npAtk: 0.69, npDef: 5 }
-  , hits:     { arts: 3, buster: 3, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 3, buster: 3, ex: 5 }
   , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    52.0
   , align:    Chaotic:Evil
@@ -101,7 +101,7 @@ berserkers = [
               , first:  true
               }
   , gen:      { starWeight: 9, starRate: 4.9, npAtk: 0.46, npDef: 5 }
-  , hits:     { arts: 4, buster: 1, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 4, buster: 1, ex: 5 }
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    39.0
   , align:    Chaotic:Good
@@ -148,7 +148,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 9, starRate: 5.0, npAtk: 1.03, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    52.0
   , align:    Lawful:Good
@@ -193,7 +193,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 9, starRate: 4.9, npAtk: 0.5, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild, King]
   , death:    45.5
   , align:    Chaotic:Evil
@@ -242,7 +242,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 10, starRate: 5.0, npAtk: 0.77, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 6, ex: 5 }
+  , hits:     { quick: 6, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    56.8
   , align:    Lawful:Good
@@ -291,7 +291,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 10, starRate: 5.0, npAtk: 1.07, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, EnumaElish, GreekMyth]
   , death:    39.0
   , align:    Chaotic:Mad
@@ -342,7 +342,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 10, starRate: 4.9, npAtk: 0.83, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    58.5
   , align:    Chaotic:Balanced
@@ -395,7 +395,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 10, starRate: 4.9, npAtk: 1.03, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 4, ex: 5 }
+  , hits:     { quick: 4, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, Demonic, EnumaElish]
   , death:    52.0
   , align:    Chaotic:Evil
@@ -442,7 +442,7 @@ berserkers = [
               , first:  true
               }
   , gen:      { starWeight: 10, starRate: 5.0, npAtk: 0.5, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    52.0
   , align:    Lawful:Mad
@@ -491,7 +491,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 10, starRate: 4.9, npAtk: 0.68, npDef: 5 }
-  , hits:     { arts: 3, buster: 1, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 3, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhild, King]
   , death:    58.5
   , align:    Chaotic:Good
@@ -538,7 +538,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 10, starRate: 5.0, npAtk: 0.71, npDef: 5 }
-  , hits:     { arts: 3, buster: 2, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 3, buster: 2, ex: 3 }
   , traits:   [Female, Beast, EnumaElish]
   , death:    39.0
   , align:    Chaotic:Good
@@ -590,7 +590,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 9, starRate: 5.0, npAtk: 1.04, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    50.3
   , align:    Chaotic:Evil
@@ -639,7 +639,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 9, starRate: 4.9, npAtk: 1.01, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Roman, EnumaElish]
   , death:    65.0
   , align:    Neutral:Balanced
@@ -691,7 +691,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 9, starRate: 4.9, npAtk: 0.68, npDef: 5 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, GreekMyth]
   , death:    58.5
   , align:    Chaotic:Evil
@@ -742,7 +742,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 9, starRate: 4.9, npAtk: 2.03, npDef: 5 }
-  , hits:     { arts: 1, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    65.0
   , align:    Chaotic:Evil
@@ -793,7 +793,7 @@ berserkers = [
               , first:  true
               }
   , gen:      { starWeight: 9, starRate: 4.9, npAtk: 1.02, npDef: 5 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    58.5
   , align:    Chaotic:Balanced
@@ -842,7 +842,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 9, starRate: 5.0, npAtk: 0.67, npDef: 5 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    65.0
   , align:    Lawful:Balanced
@@ -894,7 +894,7 @@ berserkers = [
               , first:  false
               }
   , gen:      { starWeight: 9, starRate: 5.0, npAtk: 0.68, npDef: 5 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Male, Roman, EnumaElish, King]
   , death:    56.8
   , align:    Chaotic:Evil

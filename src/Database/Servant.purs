@@ -1,4 +1,15 @@
-module Database.Servant where
+module Database.Servant 
+  ( Servant
+  , Card(..)
+  , Deck(..)
+  , Stat
+  , Stats
+  , NoblePhantasm
+  , Gen
+  , Hits
+  , PhantasmType(..)
+  , class MatchServant, has
+  ) where
 
 import Prelude
 import Operators
@@ -44,9 +55,6 @@ type Stats = { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
 showStat ∷ Stat -> String
 showStat {atk, hp} = "ATK: " ++ show atk ++ ", HP: " ++ show hp
 
-hasPassive ∷ String -> Servant -> Boolean
-hasPassive p = any (eq p) ∘ map (_.name) ∘ _.passives
-
 type Ratings = { damage     ∷ Int
                , np         ∷ Int
                , critical   ∷ Int
@@ -74,15 +82,10 @@ type Gen = { starWeight ∷ Int
            , npDef      ∷ Int
            }
 
-simplify ∷ ActiveEffect -> ActiveEffect
-simplify (Chances _ _ ef) = simplify ef
-simplify (Chance _ ef)    = simplify ef
-simplify (When _ ef)      = simplify ef
-simplify ef               = ef
-
 getEffects ∷ Servant -> Array ActiveEffect
 getEffects {phantasm:{effect, over}, actives}
     = simplify <$> effect ++ over ++ (actives >>= _.effect)
+
 phantasmEffects ∷ NoblePhantasm -> Array ActiveEffect
 phantasmEffects {effect, over} = effect ++ over
 

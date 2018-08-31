@@ -1,5 +1,6 @@
 module Database
   ( module Database.Model
+  , module Database.Calculator
   , servants, getAll, getPassives
   )
   where
@@ -11,6 +12,7 @@ import Data.Array
 import Data.Function.Memoize
 
 import Database.Model
+import Database.Calculator
 import Database.Servant.Archer   
 import Database.Servant.Assassin  
 import Database.Servant.Berserker 

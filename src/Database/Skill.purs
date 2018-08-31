@@ -1,4 +1,13 @@
-module Database.Skill where
+module Database.Skill 
+  ( Amount(..), (~), toMin, toMax
+  , Rank(..)
+  , Target(..), allied
+  , BuffEffect(..)
+  , DebuffEffect(..)
+  , InstantEffect(..)
+  , ActiveEffect(..), simplify
+  , Active
+  ) where
 
 import Prelude
 import Operators
@@ -380,6 +389,12 @@ data ActiveEffect = Grant Target Int BuffEffect Amount
                   | Chance Int ActiveEffect
                   | Chances Int Int ActiveEffect
                   | When String ActiveEffect
+
+simplify ∷ ActiveEffect -> ActiveEffect
+simplify (Chances _ _ ef) = simplify ef
+simplify (Chance _ ef)    = simplify ef
+simplify (When _ ef)      = simplify ef
+simplify ef               = ef
 
 instance _01_ ∷ Eq ActiveEffect where
   eq activeA activeB = case activeA, activeB of

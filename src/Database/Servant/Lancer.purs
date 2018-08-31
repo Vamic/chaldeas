@@ -1,4 +1,4 @@
-module Database.Servant.Lancer where
+module Database.Servant.Lancer (lancers) where
 
 import Prelude
 import Operators
@@ -51,7 +51,7 @@ lancers = [
               , first:  true
               }
   , gen:      { starWeight: 88, starRate: 12.2, npAtk: 0.71, npDef: 4 }
-  , hits:     { arts: 3, buster: 6, quick: 2, ex: 7 }
+  , hits:     { quick: 2, arts: 3, buster: 6, ex: 7 }
   , traits:   [Female, EnumaElish, King]
   , death:    32.0
   , align:    Neutral:Good
@@ -103,7 +103,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 88, starRate: 12.2, npAtk: 0.72, npDef: 4 }
-  , hits:     { arts: 3, buster: 1, quick: 3, ex: 4 }
+  , hits:     { quick: 3, arts: 3, buster: 1, ex: 4 }
   , traits:   [Male, Riding, Brynhild, Divine, EnumaElish]
   , death:    28.0
   , align:    Lawful:Good
@@ -161,7 +161,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 91, starRate: 12.2, npAtk: 1.05, npDef: 4 }
-  , hits:     { arts: 2, buster: 3, quick: 4, ex: 4 }
+  , hits:     { quick: 4, arts: 2, buster: 3, ex: 4 }
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    40.0
   , align:    Neutral:Summer
@@ -214,7 +214,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 87, starRate: 12.2, npAtk: 1.07, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    32.0
   , align:    Neutral:Good
@@ -263,7 +263,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 89, starRate: 12.2, npAtk: 1.1, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, Arthur, Dragon, King, Riding, Saberface, EnumaElish]
   , death:    24.0
   , align:    Lawful:Good
@@ -313,7 +313,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 88, starRate: 11.8, npAtk: 0.74, npDef: 4 }
-  , hits:     { arts: 3, buster: 1, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 3, buster: 1, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    23.0
   , align:    Lawful:Good
@@ -366,7 +366,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 87, starRate: 12.2, npAtk: 0.52, npDef: 4 }
-  , hits:     { arts: 3, buster: 1, quick: 3, ex: 5 }
+  , hits:     { quick: 3, arts: 3, buster: 1, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    40.0
   , align:    Neutral:Evil
@@ -416,7 +416,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 92, starRate: 12.0, npAtk: 1.05, npDef: 4 }
-  , hits:     { arts: 2, buster: 6, quick: 2, ex: 5 }
+  , hits:     { quick: 2, arts: 2, buster: 6, ex: 5 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    40.0
   , align:    Chaotic:Evil
@@ -461,7 +461,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 90, starRate: 11.0, npAtk: 1.1, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    24.0
   , align:    Chaotic:Evil
@@ -511,7 +511,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 89, starRate: 12.3, npAtk: 0.55, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    32.0
   , align:    Neutral:Balanced
@@ -562,7 +562,7 @@ lancers = [
               , first:  true
               }
   , gen:      { starWeight: 87, starRate: 12.1, npAtk: 1.07, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    32.0
   , align:    Lawful:Balanced
@@ -613,7 +613,7 @@ lancers = [
               , first:  true
               }
   , gen:      { starWeight: 88, starRate: 12.1, npAtk: 1.08, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    28.0
   , align:    Lawful:Balanced
@@ -662,7 +662,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 89, starRate: 11.8, npAtk: 1.07, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    32.0
   , align:    Lawful:Balanced
@@ -714,7 +714,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 90, starRate: 12.1, npAtk: 1.07, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Roman, King]
   , death:    32.0
   , align:    Chaotic:Balanced
@@ -763,7 +763,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 90, starRate: 12.2, npAtk: 1.08, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, EnumaElish, GreekMyth]
   , death:    28.0
   , align:    Lawful:Balanced
@@ -810,7 +810,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 89, starRate: 11.9, npAtk: 0.79, npDef: 4 }
-  , hits:     { arts: 2, buster: 1, quick: 2, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0
   , align:    Chaotic:Good
@@ -860,7 +860,7 @@ lancers = [
               , first:  false
               }
   , gen:      { starWeight: 87, starRate: 12.3, npAtk: 0.78, npDef: 4 }
-  , hits:     { arts: 2, buster: 2, quick: 2, ex: 4 }
+  , hits:     { quick: 2, arts: 2, buster: 2, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0
   , align:    Lawful:Balanced

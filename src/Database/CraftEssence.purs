@@ -1,10 +1,9 @@
 module Database.CraftEssence (CraftEssence(..), craftEssences) where
 
 import Prelude
-import Operators
 
-import Database.Base
-import Database.Skill
+import Database.Base (Card(..), Class(..), Stat, Trait(..))
+import Database.Skill (ActiveEffect(..), Amount(..), BonusEffect(..), BuffEffect(..), DebuffEffect(..), InstantEffect(..), Target(..), (~))
 
 type CraftEssence = { name     ∷ String
                      , id       ∷ Int
@@ -713,7 +712,7 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
-  , effect:   [ Chance 50 ∘ Grant Self 0 Guts $ 500.0 ~ 1000.0 ]
+  , effect:   [ Chance 50 <<< Grant Self 0 Guts $ 500.0 ~ 1000.0 ]
   , limited:  false
   }
 , { name:     "Awakened Will"
@@ -722,7 +721,7 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 300 }
               , max:  { atk: 750, hp: 1125 }
               }
-  , effect:   [ Chance 60 ∘ Grant Self 0 GaugePerTurn $ 12.0 ~ 15.0
+  , effect:   [ Chance 60 <<< Grant Self 0 GaugePerTurn $ 12.0 ~ 15.0
               , Debuff Self 0 HealthLoss $ Flat 500.0
               ]
   , limited:  false
@@ -735,7 +734,7 @@ craftEssences = [
               }
   , effect:   [ When "defeated by an enemy" $ Debuff Enemy 2 SealNP Full
               , When "defeated by an enemy"
-                ∘ Debuff Enemy 10 Curse $ 1000.0 ~ 2000.0
+                <<< Debuff Enemy 10 Curse $ 1000.0 ~ 2000.0
               ]
   , limited:  false
   }
@@ -838,7 +837,7 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
-  , effect:   [ Chance 65 ∘ Grant Self 0 HealPerTurn $ 750.0 ~ 1000.0 ]
+  , effect:   [ Chance 65 <<< Grant Self 0 HealPerTurn $ 750.0 ~ 1000.0 ]
   , limited:  false
   }
 , { name:     "The Crimson Land of Shadows"
@@ -888,7 +887,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ When "equipped by a Berserker"
-                ∘ Grant Self 0 NPUp $ 15.0 ~ 25.0 ]
+                <<< Grant Self 0 NPUp $ 15.0 ~ 25.0 ]
   , limited:  false
   }
 , { name:     "Hermitage"
@@ -915,7 +914,7 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ When "defeated" ∘ To Allies Heal $ 800.0 ~ 1000.0 ]
+  , effect:   [ When "defeated" <<< To Allies Heal $ 800.0 ~ 1000.0 ]
   , limited:  false
   }
 , { name:     "Lugh's Halo"

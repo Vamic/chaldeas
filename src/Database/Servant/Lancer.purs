@@ -1,7 +1,7 @@
 module Database.Servant.Lancer (lancers) where
 
-import Prelude
-import Operators
+import Prelude (($), (<<<))
+import Operators ((:))
 import Database.Model
 
 lancers ∷ Array Servant
@@ -20,8 +20,9 @@ lancers = [
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Grant Self 1 Evasion Full
-                          , Chance 80 ∘ Grant Self 3 CritUp $ 30.0 ~ 50.0
-                          , Chance 80 ∘ Grant Self 3 StarWeight $ 300.0 ~ 500.0
+                          , Chance 80 <<< Grant Self 3 CritUp $ 30.0 ~ 50.0
+                          , Chance 80 
+                            <<< Grant Self 3 StarWeight $ 300.0 ~ 500.0
                           ]
                 }
               , { name:   "Primordial Rune"
@@ -397,7 +398,7 @@ lancers = [
                 , icon:   IconShieldDown
                 , cd:     7
                 , effect: [ Chance 500
-                            ∘ Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0
+                            <<< Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0
                           , Grant Enemy 3 AttackUp $ Flat 20.0
                           ]
                 }
@@ -690,8 +691,8 @@ lancers = [
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 1200.0 ~ 3400.0
-                          , Chance 60 ∘ Grant Self 3 AttackUp $ 22.0 ~ 44.0
-                          , Chance 60 ∘ Grant Self 3 DefenseUp $ 22.0 ~ 44.0
+                          , Chance 60 <<< Grant Self 3 AttackUp $ 22.0 ~ 44.0
+                          , Chance 60 <<< Grant Self 3 DefenseUp $ 22.0 ~ 44.0
                           ]
                 }
               , { name:   "Seven Hills A"
@@ -739,7 +740,7 @@ lancers = [
               , { name:   "Proof of Friendship C"
                 , icon:   IconDarkMagic
                 , cd:     7
-                , effect: [ Chances 60 80 ∘ To Enemy GaugeDown $ Flat 1.0
+                , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , Chances 60 80 $ Debuff Enemy 1 Stun Full
                           ]
                 }

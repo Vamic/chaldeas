@@ -1,7 +1,7 @@
 module Database.Servant.Archer (archers) where
 
-import Prelude
-import Operators
+import Prelude (($), (<<<))
+import Operators ((:))
 import Database.Model
 
 archers ∷ Array Servant
@@ -93,7 +93,7 @@ archers = [
               , kind:   "Anti-Unit"
               , hits:   10
               , effect: [ To Enemy Damage $ 900.0 ~ 1500.0
-                        , Chance 70 ∘ To Enemy GaugeDown $ Flat 1.0
+                        , Chance 70 <<< To Enemy GaugeDown $ Flat 1.0
                         ]
               , over:   [ To Self GaugeUp $ 20.0 ~ 40.0 ]
               , first:  false
@@ -125,8 +125,8 @@ archers = [
                 , icon:   IconKneel
                 , cd:     7
                 , effect: [ Grant Self 3 Guts $ 1000.0 ~ 3000.0
-                          , Chance 80 ∘ Grant Self 3 DefenseUp $ 20.0 ~ 30.0
-                          , Chance 80 ∘ Grant Self 1 NPUp $ 20.0 ~ 30.0
+                          , Chance 80 <<< Grant Self 3 DefenseUp $ 20.0 ~ 30.0
+                          , Chance 80 <<< Grant Self 1 NPUp $ 20.0 ~ 30.0
                           ]
                 }
               , { name:   "Pioneer of the Stars EX"
@@ -635,7 +635,7 @@ archers = [
   , actives:  [ { name:   "Vampirism C"
                 , icon:   IconDarkMagic
                 , cd:     8
-                , effect: [ Chances 60 80 ∘ To Enemy GaugeDown $ Flat 1.0
+                , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
                 }
@@ -660,7 +660,7 @@ archers = [
               , hits:   1
               , effect: [ To Enemy Damage $ Flat 1200.0
                         , To Enemy (DamageVs Male) $ 150.0 ~ 250.0
-                        , Chance 150 ∘ Debuff Enemy 3 AttackDown $ Flat 20.0
+                        , Chance 150 <<< Debuff Enemy 3 AttackDown $ Flat 20.0
                         ]
               , over:   [ Chances 100 200
                           $ Debuff (EnemyType Male) 1 Charm Full ]
@@ -680,7 +680,7 @@ archers = [
   , class:    Archer
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
-  , stats:    { base:  { atk: 1057,  hp: 1424 }
+  , stats:    { base:  { atk: 1057, hp: 1424 }
               , max:   { atk: 5816, hp: 7122 }
               , grail: { atk: 9037, hp: 10979 }
               }
@@ -732,7 +732,7 @@ archers = [
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Arts Buster
   , stats:    { base:  { atk: 1436,  hp: 1555 }
-              , max:   { atk: 7736, hp: 8643 }
+              , max:   { atk: 7736,  hp: 8643 }
               , grail: { atk: 10470, hp: 11719 }
               }
   , actives:  [ { name:   "Divine Protection A"

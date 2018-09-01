@@ -1,7 +1,7 @@
 module Database.Servant.Extra (extras) where
 
-import Prelude
-import Operators
+import Prelude (($), (<<<))
+import Operators ((:))
 import Database.Model
 
 extras ∷ Array Servant
@@ -226,7 +226,7 @@ extras = [
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
                           , When "on Waterside or Beach field"
-                            ∘ Grant Self 3 AttackUp $ 10.0 ~ 20.0
+                            <<< Grant Self 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Natural Body (Sea) A"

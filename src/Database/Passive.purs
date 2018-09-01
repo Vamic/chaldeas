@@ -1,12 +1,12 @@
 module Database.Passive where
 
 import Prelude
-import Operators
-import Data.Maybe
-import Data.Tuple
-import Database.Base
-import Database.Icon
-import Database.Skill
+import Operators ((:))
+import Data.Maybe (fromMaybe)
+import Data.Tuple (Tuple, lookup)
+import Database.Base (Card(..))
+import Database.Icon (Icon(..))
+import Database.Skill (ActiveEffect(..), Amount(..), BuffEffect(..), Rank(..), Target(..))
 
 avenger ∷ PassiveBase
 avenger = passiveBase "Avenger" IconAvenger
@@ -138,6 +138,6 @@ passiveBase name icon effects rank = { name
                                      }
   where
     activate (Give target buff ranks) = Grant target 0 buff
-                                      ∘ fromMaybe Placeholder
+                                      <<< fromMaybe Placeholder
                                       $ Flat <$> lookup rank ranks
 

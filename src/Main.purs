@@ -5,12 +5,12 @@ import Prelude
 
 import Halogen.Aff as HA
 
-import Effect
-import Halogen.VDom.Driver
-import Routing.Hash
+import Effect (Effect)
+import Halogen.VDom.Driver (runUI)
+import Routing.Hash (getHash)
 
-import Site.Component
-import Site.Preferences
+import Site.Component (siteComponent)
+import Site.Preferences (getPreferences)
 
 main ∷ Effect Unit
 main = do

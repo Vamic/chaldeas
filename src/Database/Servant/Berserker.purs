@@ -1,7 +1,7 @@
 module Database.Servant.Berserker (berserkers) where
 
-import Prelude
-import Operators
+import Prelude (($), (<<<))
+import Operators ((:))
 import Database.Model
 
 berserkers ∷ Array Servant
@@ -168,7 +168,7 @@ berserkers = [
   , actives:  [ { name:   "Vampirism A"
                 , icon:   IconDarkMagic
                 , cd:     8
-                , effect: [ Chances 80 100 ∘ To Enemy GaugeDown $ Flat 1.0 ]
+                , effect: [ Chances 80 100 <<< To Enemy GaugeDown $ Flat 1.0 ]
                 }
               , { name:   "Morph C"
                 , icon:   IconShieldUp
@@ -516,7 +516,7 @@ berserkers = [
               , { name:   "Curse E"
                 , icon:   IconDarkMagic
                 , cd:     7
-                , effect: [ Chances 40 60 ∘ To Enemy GaugeDown $ Flat 1.0 ]
+                , effect: [ Chances 40 60 <<< To Enemy GaugeDown $ Flat 1.0 ]
                 }
               , { name:   "Morph B"
                 , icon:   IconShieldUp
@@ -870,8 +870,8 @@ berserkers = [
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 1000.0 ~ 3000.0
-                          , Chance 60 ∘ Grant Self 3 AttackUp $ 20.0 ~ 40.0
-                          , Chance 60 ∘ Grant Self 3 DefenseUp $ 20.0 ~ 40.0
+                          , Chance 60 <<< Grant Self 3 AttackUp $ 20.0 ~ 40.0
+                          , Chance 60 <<< Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Glory of Past Days B"

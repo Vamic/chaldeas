@@ -1,7 +1,7 @@
 module Database.Servant.Saber (sabers) where
 
-import Prelude
-import Operators
+import Prelude (($), (<<<))
+import Operators ((:))
 import Database.Model
 
 sabers ∷ Array Servant
@@ -469,8 +469,8 @@ sabers = [
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 1200.0 ~ 3400.0
-                          , Chance 60 ∘ Grant Self 3 AttackUp $ 22.0 ~ 44.0
-                          , Chance 60 ∘ Grant Self 3 DefenseUp $ 22.0 ~ 44.0
+                          , Chance 60 <<< Grant Self 3 AttackUp $ 22.0 ~ 44.0
+                          , Chance 60 <<< Grant Self 3 DefenseUp $ 22.0 ~ 44.0
                           ]
                 }
               , { name:   "Invictus Spiritus A"
@@ -615,7 +615,7 @@ sabers = [
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ Flat 20.0
                           , When "on Open Field with Sunshine"
-                            ∘ Grant Self 3 (Boost Buster) $ 20.0 ~ 30.0
+                            <<< Grant Self 3 (Boost Buster) $ 20.0 ~ 30.0
                           ]
                 }
               , { name:   "Charisma E"

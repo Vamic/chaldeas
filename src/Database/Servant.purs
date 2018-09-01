@@ -8,19 +8,18 @@ module Database.Servant
   , class MatchServant, has
   ) where
 
-import Data.Enum
-import Data.Foldable
-import Data.Generic.Rep
-import Data.Generic.Rep.Bounded
-import Data.Generic.Rep.Enum
-import Data.Maybe
-import Data.String.CodeUnits
-import Data.Tuple
-import Database.Base
-import Database.Passive
-import Database.Skill
-import Operators
 import Prelude
+import Operators ((:))
+import Generic as G
+
+import Data.Foldable (any, elem)
+import Data.Maybe (fromMaybe)
+import Data.String.CodeUnits (charAt, fromCharArray)
+import Data.Tuple (Tuple)
+
+import Database.Base (Alignment, Attribute, Card, Class, Stat, Trait)
+import Database.Passive (Passive)
+import Database.Skill (Active, ActiveEffect(..), BuffEffect, DebuffEffect, InstantEffect(..), Rank, Target(..), allied, simplify)
 
 type Servant = { name     ∷ String
                , id       ∷ Int
@@ -85,14 +84,14 @@ instance _01_ ∷ Show PhantasmType where
     Support      -> "Support"
 
 
-class (BoundedEnum a, Show a) <= MatchServant a where
+class (G.BoundedEnum a, Show a) <= MatchServant a where
     has ∷ a -> Boolean -> Servant -> Boolean
 instance _a_ ∷ MatchServant BuffEffect where
-    has a noSelf = any match ∘ getEffects where
+    has a noSelf = any match <<< getEffects where
         match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
         match _ = false
 instance _b_ ∷ MatchServant DebuffEffect where
-    has a _ = any match ∘ getEffects where
+    has a _ = any match <<< getEffects where
         match (Debuff t _ b _) = a == b && not (allied t)
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where
@@ -102,11 +101,11 @@ instance _c_ ∷ MatchServant InstantEffect where
     has DemeritGauge  _ = const false
     has DemeritHealth _ = const false
     has DemeritKill   _ = const false
-    has a noSelf        = any match ∘ getEffects where
+    has a noSelf        = any match <<< getEffects where
         match (To t b _) = a == b && (not noSelf || t /= Self)
         match _ = false
 instance _d_ ∷ MatchServant Trait where
-    has a = const $ elem a ∘ _.traits
+    has a = const $ elem a <<< _.traits
 instance _e_ ∷ MatchServant Alignment where
     has a _ {align:(b:c)} = a == b || a == c
 instance _f_ ∷ MatchServant PhantasmType where
@@ -122,44 +121,44 @@ instance _f_ ∷ MatchServant PhantasmType where
         match _ = false
     has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
 instance _g_ ∷ MatchServant Class where
-    has a = const $ eq a ∘ _.class
+    has a = const $ eq a <<< _.class
 instance _h_ ∷ MatchServant Attribute where
-    has a = const $ eq a ∘ _.attr
+    has a = const $ eq a <<< _.attr
 instance _i_ ∷ MatchServant Deck where
-    has a = const $ eq a ∘ _.deck
+    has a = const $ eq a <<< _.deck
 instance _j_ ∷ MatchServant Card where
-    has a = const $ eq a ∘ _.phantasm.card
+    has a = const $ eq a <<< _.phantasm.card
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
 derive instance _7_ ∷ Eq PhantasmType
 derive instance _8_ ∷ Ord PhantasmType
-derive instance _9_ ∷ Generic PhantasmType _
-instance _10_ ∷ Enum PhantasmType where
-  succ = genericSucc
-  pred = genericPred
-instance _11_ ∷ Bounded PhantasmType where
-  top = genericTop
-  bottom = genericBottom
-instance _12_ ∷ BoundedEnum PhantasmType where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+derive instance _9_ ∷ G.Generic PhantasmType _
+instance _10_ ∷ G.Enum PhantasmType where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _11_ ∷ G.Bounded PhantasmType where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _12_ ∷ G.BoundedEnum PhantasmType where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
 derive instance _34_ ∷ Eq Deck
 derive instance _35_ ∷ Ord Deck
-derive instance _36_ ∷ Generic Deck _
-instance _37_ ∷ Enum Deck where
-  succ = genericSucc
-  pred = genericPred
-instance _38_ ∷ Bounded Deck where
-  top = genericTop
-  bottom = genericBottom
-instance _39_ ∷ BoundedEnum Deck where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+derive instance _36_ ∷ G.Generic Deck _
+instance _37_ ∷ G.Enum Deck where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _38_ ∷ G.Bounded Deck where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _39_ ∷ G.BoundedEnum Deck where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 instance _40_ ∷ Show Deck where
   show (Deck a b c d e) = fromCharArray
-                        $ (fromMaybe '?' ∘ charAt 0 ∘ show) <$> [a, b, c, d, e]
+                        $ (fromMaybe '?' <<< charAt 0 <<< show) <$> [a, b, c, d, e]

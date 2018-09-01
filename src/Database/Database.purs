@@ -1,29 +1,31 @@
 module Database
   ( module Database.Model
   , module Database.Calculator
+  , module Database.CraftEssence
   , servants, getAll, getPassives
   )
   where
 
-import Operators
 
-import Prelude
-import Data.Array
-import Data.Function.Memoize
+import Prelude (join, map, otherwise, show, unit, ($), (&&), (/=), (<$>), (<<<), (<>))
+import Operators (enumArray)
+import Data.Array (any, cons, filter, nub, sort, sortWith)
+import Data.Function.Memoize (memoize)
 
 import Database.Model
-import Database.Calculator
-import Database.Servant.Archer
-import Database.Servant.Assassin
-import Database.Servant.Berserker
-import Database.Servant.Caster
-import Database.Servant.Extra
-import Database.Servant.Lancer
-import Database.Servant.Rider
-import Database.Servant.Saber
+import Database.Calculator (npDamage, npPerArts, starsPerQuick)
+import Database.CraftEssence (CraftEssence, craftEssences)
+import Database.Servant.Archer (archers)
+import Database.Servant.Assassin (assassins)
+import Database.Servant.Berserker (berserkers)
+import Database.Servant.Caster (casters)
+import Database.Servant.Extra (extras)
+import Database.Servant.Lancer (lancers)
+import Database.Servant.Rider (riders)
+import Database.Servant.Saber (sabers)
 
 servants ∷ Array Servant
-servants = addUniversal ∘ addHeavenOrEarth
+servants = addUniversal <<< addHeavenOrEarth
        <$> archers
         <> assassins
         <> berserkers
@@ -42,9 +44,9 @@ servants = addUniversal ∘ addHeavenOrEarth
       | otherwise = s{traits = cons HeavenOrEarth traits}
 
 getAll ∷ ∀ a. MatchServant a => Array a
-getAll = (_ $ unit) ∘ memoize $ \_ -> sortWith show $ filter exists enumArray
+getAll = (_ $ unit) <<< memoize $ \_ -> sortWith show $ filter exists enumArray
   where
     exists eff = any (has eff false) servants
 
 getPassives ∷ Array String
-getPassives = sort ∘ nub ∘ join $ (map _.name ∘ _.passives) <$> servants
+getPassives = sort <<< nub <<< join $ (map _.name <<< _.passives) <$> servants

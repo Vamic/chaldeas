@@ -1,14 +1,7 @@
-module Database.Model
-  ( module Database.Base
-  , module Database.Icon
-  , module Database.Passive
-  , module Database.Servant
-  , module Database.Skill
-  )
-  where
+module Database.Model (module Export) where
 
-import Database.Base
-import Database.Icon
-import Database.Passive
-import Database.Servant
-import Database.Skill
+import Database.Base as Export
+import Database.Icon as Export
+import Database.Passive as Export
+import Database.Servant as Export
+import Database.Skill as Export

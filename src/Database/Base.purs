@@ -8,14 +8,11 @@ module Database.Base
   ) where
 
 import Prelude
-import Operators
+import Operators ((:))
+import Generic as G
 
-import Data.Enum
-import Data.Generic.Rep
-import Data.Generic.Rep.Bounded
-import Data.Generic.Rep.Enum
-import Data.Generic.Rep.Show
-import Data.Tuple
+import Data.Tuple (Tuple)
+
 
 data Alignment = Lawful | Neutral | Chaotic | Good | Balanced | Evil
                | Mad | Summer | Bride
@@ -70,86 +67,86 @@ instance _b_ ∷ Show Trait where
     PseudoServant    -> "Pseudo-Servant"
     ThreatToHumanity -> "Threat to Humanity"
     EnumaElish       -> "Weak to Enuma Elish"
-    a                -> genericShow a
+    a                -> G.genericShow a
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
-derive instance _0_ ∷ Generic Trait _
+derive instance _0_ ∷ G.Generic Trait _
 derive instance _1_ ∷ Eq Trait
 derive instance _2_ ∷ Ord Trait
-instance _3_ ∷ Enum Trait where
-  succ = genericSucc
-  pred = genericPred
-instance _4_ ∷ Bounded Trait where
-  top = genericTop
-  bottom = genericBottom
-instance _5_ ∷ BoundedEnum Trait where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+instance _3_ ∷ G.Enum Trait where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _4_ ∷ G.Bounded Trait where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _5_ ∷ G.BoundedEnum Trait where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
 derive instance _13_ ∷ Eq Class
 derive instance _14_ ∷ Ord Class
-derive instance _15_ ∷ Generic Class _
+derive instance _15_ ∷ G.Generic Class _
 instance _16_ ∷ Show Class where
-  show = genericShow
-instance _17_ ∷ Enum Class where
-  succ = genericSucc
-  pred = genericPred
-instance _18_ ∷ Bounded Class where
-  top = genericTop
-  bottom = genericBottom
-instance _19_ ∷ BoundedEnum Class where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+  show = G.genericShow
+instance _17_ ∷ G.Enum Class where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _18_ ∷ G.Bounded Class where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _19_ ∷ G.BoundedEnum Class where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
 derive instance _20_ ∷ Eq Alignment
 derive instance _21_ ∷ Ord Alignment
-derive instance _22_ ∷ Generic Alignment _
+derive instance _22_ ∷ G.Generic Alignment _
 instance _23_ ∷ Show Alignment where
-  show = genericShow
-instance _24_ ∷ Enum Alignment where
-  succ = genericSucc
-  pred = genericPred
-instance _25_ ∷ Bounded Alignment where
-  top = genericTop
-  bottom = genericBottom
-instance _26_ ∷ BoundedEnum Alignment where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+  show = G.genericShow
+instance _24_ ∷ G.Enum Alignment where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _25_ ∷ G.Bounded Alignment where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _26_ ∷ G.BoundedEnum Alignment where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
 derive instance _27_ ∷ Eq Attribute
 derive instance _28_ ∷ Ord Attribute
-derive instance _29_ ∷ Generic Attribute _
+derive instance _29_ ∷ G.Generic Attribute _
 instance _30_ ∷ Show Attribute where
-  show = genericShow
-instance _31_ ∷ Enum Attribute where
-  succ = genericSucc
-  pred = genericPred
-instance _32_ ∷ Bounded Attribute where
-  top = genericTop
-  bottom = genericBottom
-instance _33_ ∷ BoundedEnum Attribute where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+  show = G.genericShow
+instance _31_ ∷ G.Enum Attribute where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _32_ ∷ G.Bounded Attribute where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _33_ ∷ G.BoundedEnum Attribute where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
 derive instance _34_ ∷ Eq Card
 derive instance _35_ ∷ Ord Card
-derive instance _36_ ∷ Generic Card _
-instance _37_ ∷ Enum Card where
-  succ = genericSucc
-  pred = genericPred
-instance _38_ ∷ Bounded Card where
-  top = genericTop
-  bottom = genericBottom
-instance _39_ ∷ BoundedEnum Card where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+derive instance _36_ ∷ G.Generic Card _
+instance _37_ ∷ G.Enum Card where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _38_ ∷ G.Bounded Card where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _39_ ∷ G.BoundedEnum Card where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 instance _40_ ∷ Show Card where
-  show = genericShow
+  show = G.genericShow

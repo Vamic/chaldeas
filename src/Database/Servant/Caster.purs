@@ -1,7 +1,7 @@
 module Database.Servant.Caster (casters) where
 
-import Prelude
-import Operators
+import Prelude (($), (<<<))
+import Operators ((:))
 import Database.Model
 
 casters ∷ Array Servant
@@ -48,8 +48,8 @@ casters = [
               , kind:   "Anti-Army"
               , hits:   0
               , effect: [ Chance 150
-                          ∘ Debuff Enemies 3 DefenseDown $ 10.0 ~ 30.0
-                        , Chance 150 ∘ Debuff Enemies 3 Curse $ Flat 500.0
+                          <<< Debuff Enemies 3 DefenseDown $ 10.0 ~ 30.0
+                        , Chance 150 <<< Debuff Enemies 3 Curse $ Flat 500.0
                         , To Enemies GaugeDown $ Flat 1.0
                         ]
               , over:   [ Chances 50 80 $ Debuff Enemies 1 Stun Full ]
@@ -76,7 +76,7 @@ casters = [
   , actives:  [ { name:   "Curse EX"
                 , icon:   IconDarkMagic
                 , cd:     7
-                , effect: [ Chances 80 100 ∘ To Enemy GaugeDown $ Flat 1.0 ]
+                , effect: [ Chances 80 100 <<< To Enemy GaugeDown $ Flat 1.0 ]
                 }
               , { name:   "Morph A"
                 , icon:   IconShieldUp
@@ -180,8 +180,8 @@ casters = [
                 , icon:   IconKneel
                 , cd:     7
                 , effect: [ Grant Self 3 Guts $ 1000.0 ~ 3000.0
-                          , Chance 85 ∘ Grant Self 3 DefenseUp $ 20.0 ~ 30.0
-                          , Chance 85 ∘ Grant Self 3 NPUp $ 20.0 ~ 30.0
+                          , Chance 85 <<< Grant Self 3 DefenseUp $ 20.0 ~ 30.0
+                          , Chance 85 <<< Grant Self 3 NPUp $ 20.0 ~ 30.0
                           ]
                 }
               , { name:   "Golden Rule (Body) B"
@@ -249,7 +249,7 @@ casters = [
                 , cd:     8
                 , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
                           , Chance 70 $ Grant Self 1 DebuffImmunity Full
-                          , Chance 70 ∘ Grant Self 3 Guts $ Flat 1000.0
+                          , Chance 70 <<< Grant Self 3 Guts $ Flat 1000.0
                           ]
                 }
               ]
@@ -449,7 +449,7 @@ casters = [
                 , icon:   IconStarTurn
                 , cd:     10
                 , effect: [ Grant Self 5 StarsPerTurn $ Flat 5.0
-                          , Chances 60 80 ∘ Grant Self 1 NPUp $ Flat 50.0
+                          , Chances 60 80 <<< Grant Self 1 NPUp $ Flat 50.0
                           ]
                 }
               , { name:   "Search for the Unknown B"
@@ -720,9 +720,9 @@ casters = [
               , kind:   "Anti-Personnel"
               , hits:   0
               , effect: [ To Self OverChance $ 60.0 ~ 80.0 ]
-              , over:   [ Chance 0 ∘ Grant Party 3 AttackUp $ 20.0 ~ 40.0
-                        , Chance 0 ∘ Grant Party 3 DefenseUp $ 20.0 ~ 40.0
-                        , Chance 0 ∘ Grant Party 3 StarUp $ 20.0 ~ 40.0
+              , over:   [ Chance 0 <<< Grant Party 3 AttackUp $ 20.0 ~ 40.0
+                        , Chance 0 <<< Grant Party 3 DefenseUp $ 20.0 ~ 40.0
+                        , Chance 0 <<< Grant Party 3 StarUp $ 20.0 ~ 40.0
                         , To Party Heal $ 1000.0 ~ 3000.0
                         ]
               , first:  false
@@ -867,8 +867,10 @@ casters = [
               , kind:   "Anti-Army"
               , hits:   0
               , effect: [ To Self OverChance $ 60.0 ~ 80.0 ]
-              , over:   [ Chance 0 ∘ Debuff Enemies 3 AttackDown $ 20.0 ~ 40.0
-                        , Chance 0 ∘ Debuff Enemies 3 DefenseDown $ 20.0 ~ 40.0
+              , over:   [ Chance 0 
+                          <<< Debuff Enemies 3 AttackDown $ 20.0 ~ 40.0
+                        , Chance 0 
+                          <<< Debuff Enemies 3 DefenseDown $ 20.0 ~ 40.0
                         , Debuff Enemies 3 Curse $ 500.0 ~ 2500.0
                         ]
               , first:  false
@@ -998,7 +1000,7 @@ casters = [
   , actives:  [ { name:   "Curse A"
                 , icon:   IconDarkMagic
                 , cd:     7
-                , effect: [ Chances 60 80 ∘ To Enemy GaugeDown $ Flat 1.0 ]
+                , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0 ]
                 }
               , { name:   "Innocent Monster B"
                 , icon:   IconStarTurn

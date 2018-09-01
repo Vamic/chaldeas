@@ -6,20 +6,16 @@ module Site.Filters
   ) where
 
 import Prelude
-import Operators
+import Operators (unCamel)
+import Generic as G
 
 import Data.Array ((..), filter, replicate, reverse)
-import Data.Enum
-import Data.Foldable
-import Data.Profunctor.Strong
-import Data.Generic.Rep
-import Data.Generic.Rep.Bounded
-import Data.Generic.Rep.Enum
-import Data.Generic.Rep.Show
+import Data.Foldable (any, elem, notElem)
+import Data.Profunctor.Strong ((&&&))
 import Data.String (drop, joinWith)
-import Data.Tuple
+import Data.Tuple (uncurry)
 
-import Database
+import Database (class MatchServant, Alignment, Attribute, BuffEffect, Card, Class, DebuffEffect, Deck, InstantEffect, PhantasmType, Servant, Trait(..), getAll, getPassives, has)
 
 extraFilters ∷ Array Filter
 extraFilters = join
@@ -35,19 +31,19 @@ extraFilters = join
       , "Medea (Lily)"
       ]
     , Filter FilterEventBonus "+50% Kaleid CE"
-      ∘ const $ notElem Male ∘ _.traits
+      <<< const $ notElem Male <<< _.traits
     ]
   , [ servantBonus FilterAvailability "New"
       [ "Illyasviel von Einzbern"
       , "Chloe von Einzbern"
       ]
     , Filter FilterAvailability "Limited" $ const _.limited
-    , Filter FilterAvailability "Non-Limited" ∘ const $ not ∘ _.limited
+    , Filter FilterAvailability "Non-Limited" <<< const $ not <<< _.limited
     , Filter FilterAvailability "Free" $ const _.free
     ]
   , reverse (1..5) <#> \rarity
     -> Filter FilterRarity (joinWith "" $ replicate rarity "★")
-    ∘ const $ not ∘ eq rarity ∘ _.rarity
+    <<< const $ not <<< eq rarity <<< _.rarity
   ]
 data FilterTab
     = FilterEventBonus
@@ -69,7 +65,7 @@ exclusive = (_ >= FilterPhantasm)
 instance _a_ ∷ Show FilterTab where
   show FilterPhantasm = "NP Type"
   show FilterCard     = "NP Card"
-  show a              = unCamel ∘ drop 6 $ genericShow a
+  show a              = unCamel <<< drop 6 $ G.genericShow a
 
 data Filter = Filter FilterTab String (Boolean -> Servant -> Boolean)
 
@@ -80,12 +76,12 @@ instance _d_ ∷ Show Filter where
 
 matchFilter ∷ ∀ a. MatchServant a => FilterTab -> a -> Filter
 matchFilter tab
-  | exclusive tab = uncurry (Filter tab) ∘ (show &&& not ∘ has)
-  | otherwise     = uncurry (Filter tab) ∘ (show &&& has)
+  | exclusive tab = uncurry (Filter tab) <<< (show &&& not <<< has)
+  | otherwise     = uncurry (Filter tab) <<< (show &&& has)
 
 servantBonus ∷ FilterTab -> String -> Array String -> Filter
 servantBonus tab bonus servants
-    = Filter tab bonus ∘ const $ (_ `elem` servants) ∘ _.name
+    = Filter tab bonus <<< const $ (_ `elem` servants) <<< _.name
 
 getExtraFilters ∷ FilterTab -> Array Filter
 getExtraFilters tab = filter fromTab extraFilters
@@ -104,25 +100,25 @@ getFilters f@FilterDeck      = matchFilter f <$> getAll ∷ Array Deck
 getFilters f@FilterPhantasm  = matchFilter f <$> getAll ∷ Array PhantasmType
 getFilters f@FilterTrait     = matchFilter f <$> getAll ∷ Array Trait
 getFilters f@FilterPassiveSkill   = uncurry (Filter f)
-                             ∘ (identity &&& const ∘ hasPassive) <$> getPassives
+                             <<< (identity &&& const <<< hasPassive) <$> getPassives
   where
-    hasPassive p = any (eq p) ∘ map (_.name) ∘ _.passives
+    hasPassive p = any (eq p) <<< map (_.name) <<< _.passives
 getFilters f                 = getExtraFilters f
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
-derive instance _0_ ∷ Generic FilterTab _
+derive instance _0_ ∷ G.Generic FilterTab _
 derive instance _1_ ∷ Eq FilterTab
 derive instance _2_ ∷ Ord FilterTab
-instance _4_ ∷ Enum FilterTab where
-  succ = genericSucc
-  pred = genericPred
-instance _5_ ∷ Bounded FilterTab where
-  top = genericTop
-  bottom = genericBottom
-instance _6_ ∷ BoundedEnum FilterTab where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+instance _4_ ∷ G.Enum FilterTab where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _5_ ∷ G.Bounded FilterTab where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _6_ ∷ G.BoundedEnum FilterTab where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum

@@ -12,26 +12,22 @@ module Database.Skill
   ) where
 
 import Prelude
-import Operators
+import Operators ((:))
+import Generic as G
 
-import Control.Alternative
-import Control.Bind
-import Control.Plus
-import Data.Enum
-import Data.Foldable
-import Data.Number.Format
-import Data.Generic.Rep
-import Data.Generic.Rep.Bounded
-import Data.Generic.Rep.Enum
-import Data.Generic.Rep.Show
-import Data.Int
-import Data.Maybe
-import Data.String
+import Control.Alternative (class Alternative)
+import Control.Bind (bindFlipped)
+import Control.Plus (empty, (<|>))
+import Data.Foldable (elem)
+import Data.Number.Format (toString)
+import Data.Int (toNumber)
+import Data.Maybe (Maybe(..))
+import Data.String (singleton, toLower, uncons)
 import Data.String.CodeUnits (toCharArray)
-import Data.Tuple
+import Data.Tuple (Tuple(..), uncurry)
 
-import Database.Base
-import Database.Icon
+import Database.Base (Alignment, Card, Class, Trait)
+import Database.Icon (Icon)
 
 data Amount
     = Placeholder
@@ -218,7 +214,7 @@ showBuff target amount = case _ of
     OffensiveResist -> resist "offensive debuff"
     Overcharge      -> "Overcharge" <> p <> " NP by " <> n <> " stages"
     ReduceDamage    -> "Reduce" <> p <> " damage taken by " <> n
-    Resist debuff   -> resist $ genericShow debuff <> " debuff"
+    Resist debuff   -> resist $ G.genericShow debuff <> " debuff"
     StarWeight      -> increase "critical star absorption"
     StarAffinity c  -> increase $ "critical star generation" <> against c
     StarUp          -> increase "critical star generation rate"
@@ -430,7 +426,7 @@ ranges ∷ ∀ f. Alternative f => Bind f => f ActiveEffect -> f RangeInfo
 ranges = bindFlipped toInfo
   where
     toInfo eff = uncurry (RangeInfo $ isPercent eff) <$> acc eff
-    isPercent = elem '%' ∘ toCharArray ∘ show
+    isPercent = elem '%' <<< toCharArray <<< show
     acc (Grant _ _ _ a) = go a
     acc (Debuff _ _ _ a) = go a
     acc (To _ _ a) = go a
@@ -484,68 +480,68 @@ type Active = { name   ∷ String
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
-derive instance _0_ ∷ Generic BuffEffect _
+derive instance _0_ ∷ G.Generic BuffEffect _
 derive instance _1_ ∷ Eq BuffEffect
 derive instance _2_ ∷ Ord BuffEffect
-instance _3_ ∷ Enum BuffEffect where
-  succ = genericSucc
-  pred = genericPred
-instance _4_ ∷ Bounded BuffEffect where
-  top = genericTop
-  bottom = genericBottom
-instance _5_ ∷ BoundedEnum BuffEffect where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+instance _3_ ∷ G.Enum BuffEffect where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _4_ ∷ G.Bounded BuffEffect where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _5_ ∷ G.BoundedEnum BuffEffect where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
 derive instance _6_ ∷ Eq Rank
 derive instance _7_ ∷ Ord Rank
 
-derive instance _8_ ∷ Generic DebuffEffect _
+derive instance _8_ ∷ G.Generic DebuffEffect _
 derive instance _9_ ∷ Eq DebuffEffect
 derive instance _10_ ∷ Ord DebuffEffect
-instance _11_ ∷ Enum DebuffEffect where
-  succ = genericSucc
-  pred = genericPred
-instance _12_ ∷ Bounded DebuffEffect where
-  top = genericTop
-  bottom = genericBottom
-instance _13_ ∷ BoundedEnum DebuffEffect where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+instance _11_ ∷ G.Enum DebuffEffect where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _12_ ∷ G.Bounded DebuffEffect where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _13_ ∷ G.BoundedEnum DebuffEffect where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
-derive instance _14_ ∷ Generic InstantEffect _
+derive instance _14_ ∷ G.Generic InstantEffect _
 derive instance _15_ ∷ Eq InstantEffect
 derive instance _16_ ∷ Ord InstantEffect
-instance _17_ ∷ Enum InstantEffect where
-  succ = genericSucc
-  pred = genericPred
-instance _18_ ∷ Bounded InstantEffect where
-  top = genericTop
-  bottom = genericBottom
-instance _19_ ∷ BoundedEnum InstantEffect where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+instance _17_ ∷ G.Enum InstantEffect where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _18_ ∷ G.Bounded InstantEffect where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _19_ ∷ G.BoundedEnum InstantEffect where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
-derive instance _20_ ∷ Generic BonusEffect _
+derive instance _20_ ∷ G.Generic BonusEffect _
 derive instance _21_ ∷ Eq BonusEffect
 derive instance _22_ ∷ Ord BonusEffect
-instance _23_ ∷ Enum BonusEffect where
-  succ = genericSucc
-  pred = genericPred
-instance _24_ ∷ Bounded BonusEffect where
-  top = genericTop
-  bottom = genericBottom
-instance _25_ ∷ BoundedEnum BonusEffect where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
+instance _23_ ∷ G.Enum BonusEffect where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _24_ ∷ G.Bounded BonusEffect where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _25_ ∷ G.BoundedEnum BonusEffect where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
 
-derive instance _26_ ∷ Generic Target _
+derive instance _26_ ∷ G.Generic Target _
 instance _27_ ∷ Show Target where
-  show = genericShow
+  show = G.genericShow
 
 derive instance _28_ ∷ Eq RangeInfo
 derive instance _29_ ∷ Ord RangeInfo

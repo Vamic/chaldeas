@@ -1,7 +1,7 @@
 module Site.Component (Query, siteComponent) where
 
 import Prelude
-import Operators
+import Operators (enumArray, (?))
 
 import Halogen.HTML            as H
 import Halogen.HTML.Events     as E
@@ -10,23 +10,22 @@ import Data.Map                as M
 import Data.String             as S
 
 import Data.Tuple (Tuple(..), snd, uncurry)
-import Halogen    ( Component, ComponentDSL, ComponentHTML
-                  , component, liftEffect, modify_ )
-import Data.Array
-import Data.Int
-import Data.Maybe
-import Data.Number.Format
-import Effect.Class
-import Halogen.HTML
-import Halogen.HTML.Properties
-import Routing.Hash
-import Web.UIEvent.MouseEvent
+import Halogen (Component, ComponentDSL, ComponentHTML, component, liftEffect, modify_)
+import Data.Array (all, any, cons, delete, elem, filter, find, notElem, nub, null, replicate, reverse, singleton, snoc, zip, (..))
+import Data.Int (toNumber)
+import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Number.Format (toString)
+import Effect.Class (class MonadEffect)
+import Halogen.HTML (ClassName(..), HTML)
+import Halogen.HTML.Properties (IProp)
+import Routing.Hash (setHash)
+import Web.UIEvent.MouseEvent (MouseEvent)
 
-import Database
-import Site.Filters
-import Site.Sorting
-import Site.Preferences
-import Printing
+import Database (Active, Deck(..), Passive, PhantasmType(..), RangeInfo(..), Servant, Trait, has, ranges, servants, showAlignment)
+import Site.Filters (Filter(..), exclusive, getFilters)
+import Site.Sorting (SortBy(..), getSort)
+import Site.Preferences (Preference(..), Preferences, getPreference, setPreference)
+import Printing (print, roundTo)
 
 type Input = Unit
 type Message = Void
@@ -50,7 +49,7 @@ type State = { filters  ∷ Array Filter
              }
 
 urlName ∷ Servant -> String
-urlName = S.replaceAll (S.Pattern " ") (S.Replacement "") ∘ _.name
+urlName = S.replaceAll (S.Pattern " ") (S.Replacement "") <<< _.name
 
 siteComponent ∷ ∀ m. MonadEffect m => String -> Preferences
             -> Component HTML Query Unit Message m
@@ -66,7 +65,7 @@ siteComponent initialHash initialPrefs = component
   initialState = const { filters:  []
                        , exclude:  []
                        , matchAny: true
-                       , focus:    find ((_ == initialHash) ∘ urlName) servants
+                       , focus:    find ((_ == initialHash) <<< urlName) servants
                        , sortBy:   Rarity
                        , prefs:    initialPrefs
                        , ascend:   1
@@ -78,7 +77,7 @@ siteComponent initialHash initialPrefs = component
         [ H.aside_ $
           [ _h 1 "Settings"
           , H.form_ $ M.toUnfoldable prefs <#> \(Tuple k v)
-             -> H.p [_click ∘ SetPref k $ not v]
+             -> H.p [_click <<< SetPref k $ not v]
                 $ _checkbox (show k) v
           , _h 1 "Sort by"
           , H.form_ $ enumArray <#> \sort
@@ -88,13 +87,13 @@ siteComponent initialHash initialPrefs = component
           , _h 1 "Include"
           ] <> (filter exclusive enumArray >>= filterSection)
         , H.section [_i "servants"]
-          ∘ (if sortBy == Rarity then identity else reverse)
+          <<< (if sortBy == Rarity then identity else reverse)
           $ portrait false artorify baseAscend
-            <$> (filter (match ∘ snd) $ getSort sortBy)
+            <$> (filter (match <<< snd) $ getSort sortBy)
         , H.aside_ $
           [ _h 1 "Filter"
           , H.form_
-            [ H.table_ ∘ singleton $ H.tr_
+            [ H.table_ <<< singleton $ H.tr_
               [ _th "Match"
               , H.td [_click $ MatchAny false] $ _radio "All" (not matchAny)
               , H.td [_click $ MatchAny true]  $ _radio "Any"      matchAny
@@ -120,7 +119,7 @@ siteComponent initialHash initialPrefs = component
       filterSection tab = [ _h 3 $ show tab
                           , H.form_ $ getFilters tab <#> \filt
                              -> H.p [_click $ Toggle filt ]
-                                ∘ _checkbox (show filt)
+                                <<< _checkbox (show filt)
                                 $ if exclusive tab then filt `notElem` exclude
                                   else filt `elem` filters
                            ]
@@ -152,16 +151,16 @@ siteComponent initialHash initialPrefs = component
       hash (Just s) = setHash $ urlName s
 
 noBreakName ∷ String -> String
-noBreakName = unBreak ∘ S.split (S.Pattern "(")
+noBreakName = unBreak <<< S.split (S.Pattern "(")
   where
     unBreak [a, b] = a <> "("
                        <> S.replaceAll (S.Pattern " ") (S.Replacement " ") b
     unBreak xs = S.joinWith "(" xs
 
 deck ∷ ∀ a b. Deck -> Array (HTML a b)
-deck (Deck a b c d e) = card ∘ show <$> [a, b, c, d, e]
+deck (Deck a b c d e) = card <<< show <$> [a, b, c, d, e]
   where
-    card x = H.span [_c x] ∘ _txt $ S.take 1 x
+    card x = H.span [_c x] <<< _txt $ S.take 1 x
 
 portrait ∷ ∀ a. Boolean -> Boolean -> Int -> Tuple String Servant
            -> HTML a (Query Unit)
@@ -171,32 +170,32 @@ portrait big artorify ascension (Tuple lab s)
       , H.div_ [ _img $ "img/Class/" <> show s.class <> ".png"]
       , H.aside_ $ deck s.deck
       , H.header_
-        ∘ (lab /= "") ? append [_span lab, H.br_]
-        $ [ _span ∘ noBreakName ∘ artorify ? doArtorify $ s.name ]
+        <<< (lab /= "") ? append [_span lab, H.br_]
+        $ [ _span <<< noBreakName <<< artorify ? doArtorify $ s.name ]
       , H.footer_
-        ∘ ((big && ascension > 1) ? cons prevAscend)
-        ∘ ((big && ascension < 4) ? (_ `snoc` nextAscend))
-        ∘ singleton ∘ _span ∘ S.joinWith "  " $ replicate s.rarity "★"
+        <<< ((big && ascension > 1) ? cons prevAscend)
+        <<< ((big && ascension < 4) ? (_ `snoc` nextAscend))
+        <<< singleton <<< _span <<< S.joinWith "  " $ replicate s.rarity "★"
       ]
-  where meta       = not big ? (cons ∘ _click ∘ Focus $ Just s)
+  where meta       = not big ? (cons <<< _click <<< Focus $ Just s)
                    $ [_c $ "servant stars" <> show s.rarity]
         doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
-        prevAscend = H.a [_click ∘ Ascend $ ascension - 1] $ _txt "<"
-        nextAscend = H.a [_click ∘ Ascend $ ascension + 1] $ _txt ">"
+        prevAscend = H.a [_click <<< Ascend $ ascension - 1] $ _txt "<"
+        nextAscend = H.a [_click <<< Ascend $ ascension + 1] $ _txt ">"
         ascend
           | ascension <= 1 = ""
           | otherwise      = " " <> show ascension
 
 print' ∷ Int -> String
-print' = print 0 ∘ toNumber
+print' = print 0 <<< toNumber
 
 modal ∷ ∀ a. Boolean -> Boolean -> Int -> Maybe Servant
         -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
-modal _ _ _ Nothing = H.div [_i "layout"] ∘ append
+modal _ _ _ Nothing = H.div [_i "layout"] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
 modal showTables artorify ascend
 (Just s@{gen, hits, stats:{base, max, grail}, phantasm})
-  = H.div [_i "layout", _c "fade"] ∘ append
+  = H.div [_i "layout", _c "fade"] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
       [ portrait true artorify ascend $ Tuple "" s
@@ -219,7 +218,7 @@ modal showTables artorify ascend
       , H.table_
         [ _tr "Class"       $ show s.class
         , _tr "Deck"        $ show s.deck
-        , _tr "NP Type"     ∘ show ∘ fromMaybe Support
+        , _tr "NP Type"     <<< show <<< fromMaybe Support
                             $ find (\t -> has t false s)
                               [SingleTarget, MultiTarget]
         , _tr "Alignment"   $ showAlignment s.align
@@ -238,18 +237,18 @@ modal showTables artorify ascend
         , _tr "Class" $ phantasm.kind
         , H.tr_
           [ _th "Effects"
-          , H.td_ ∘ showTables ? (flip snoc)
-              ( _table (("NP" <> _) ∘ show <$> 1..5)
+          , H.td_ <<< showTables ? (flip snoc)
+              ( _table (("NP" <> _) <<< show <$> 1..5)
                 $ npRow <$> nub (ranges phantasm.effect)
-              ) $ _p ∘ show <$> phantasm.effect
+              ) $ _p <<< show <$> phantasm.effect
           ]
         , H.tr_
           [ _th "Overcharge"
-          , H.td_ ∘ showTables ? (flip snoc)
-              (_table ((_ <> "%") ∘ show ∘ (_ * 100) <$> 1..5)
+          , H.td_ <<< showTables ? (flip snoc)
+              (_table ((_ <> "%") <<< show <<< (_ * 100) <$> 1..5)
                 $ overRow <$> nub (ranges phantasm.over)
               )
-            $ _p ∘ uncurry showOver <$> overs
+            $ _p <<< uncurry showOver <$> overs
           ]
         ]
       , _h 2 "Active Skills"] <> (activeEl showTables <$> s.actives) <>
@@ -259,13 +258,13 @@ modal showTables artorify ascend
       ]
     ]
   where
-    overs = zip phantasm.over ∘ cons phantasm.first $ replicate 10 false
+    overs = zip phantasm.over <<< cons phantasm.first $ replicate 10 false
     showOver eff true = show eff <> " [Activates first.]"
     showOver eff false = show eff
 
 activeEl ∷ ∀ a b. Boolean -> Active -> HTML a b
 activeEl showTables {name, icon, cd, effect} = H.section_
-    ∘ showTables ? (flip snoc)
+    <<< showTables ? (flip snoc)
       (_table (show <$> 1..10) $ lvlRow <$> nub (ranges effect)) $
     [ _img $ "img/Skill/" <> show icon <> ".png"
     , _h 3 name
@@ -273,37 +272,37 @@ activeEl showTables {name, icon, cd, effect} = H.section_
       [  H.strong_ [ H.text "CD: "]
       , H.text $ show cd <> "~" <> show (cd - 2)
       ]
-    ] <> (_p ∘ show <$> effect)
+    ] <> (_p <<< show <$> effect)
 
 passiveEl ∷ ∀ a b. Passive -> HTML a b
 passiveEl {name, rank, icon, effect} = H.section_ $
     [ _img $ "img/Skill/" <> show icon <> ".png"
     , _h 3 $ name <> " " <> show rank
-    ] <> (_p ∘ show <$> effect)
+    ] <> (_p <<< show <$> effect)
 
 traitEl ∷ ∀ a b. Trait -> HTML a b
-traitEl trait = H.span [_c "trait"] ∘ _txt $ show trait
+traitEl trait = H.span [_c "trait"] <<< _txt $ show trait
 
 toCell ∷ ∀ a b. Boolean -> Number -> HTML a b
-toCell isPercent = _td ∘ (isPercent ? (_ <> "%")) ∘ toString ∘ roundTo 2
+toCell isPercent = _td <<< (isPercent ? (_ <> "%")) <<< toString <<< roundTo 2
 
 lvlRow ∷ ∀ a b. RangeInfo -> HTML a b
 lvlRow (RangeInfo isPercent a b) = H.tr_
-           $ toCell isPercent ∘ (_ + a) ∘ (_ * step) ∘ toNumber
+           $ toCell isPercent <<< (_ + a) <<< (_ * step) <<< toNumber
           <$> (0..8) `snoc` 10
   where
     step = (b - a) / 10.0
 
 npRow ∷ ∀ a b. RangeInfo -> HTML a b
 npRow (RangeInfo isPercent a b) = H.tr_
-          $ toCell isPercent ∘ (_ + a) ∘ (_ * over)
+          $ toCell isPercent <<< (_ + a) <<< (_ * over)
          <$> [0.0, 0.5, 0.75, 0.825, 1.0]
   where
     over = b - a
 
 overRow ∷ ∀ a b. RangeInfo -> HTML a b
 overRow (RangeInfo isPercent a b) = H.tr_
-          $ toCell isPercent ∘ (_ + a) ∘ (_ * over) ∘ toNumber
+          $ toCell isPercent <<< (_ + a) <<< (_ * over) <<< toNumber
          <$> 0..4
   where
     over = (b - a) / 4.0
@@ -315,28 +314,28 @@ overRow (RangeInfo isPercent a b) = H.tr_
 _i   ∷ ∀ a b. String -> IProp (id ∷ String | b) a
 _i   = P.id_
 _c   ∷ ∀ a b. String -> IProp (class ∷ String | b) a
-_c   = P.class_ ∘ ClassName
+_c   = P.class_ <<< ClassName
 _src ∷ ∀ a b. String -> IProp (src ∷ String | b) a
 _src = P.src
 _style ∷ ∀ a b. String -> IProp (style ∷ String | b) a
 _style = P.attr (H.AttrName "style")
 
 _txt ∷ ∀ a b. String -> Array (HTML a b)
-_txt = (flip cons) [] ∘ H.text
+_txt = (flip cons) [] <<< H.text
 
 _a ∷ ∀ a b. String -> String -> String -> String -> HTML a b
-_a id' class' href' = H.a [_i id', _c class', P.href href'] ∘ _txt
+_a id' class' href' = H.a [_i id', _c class', P.href href'] <<< _txt
 
 _img ∷ ∀ a b. String -> HTML a b
 _img src = H.img [_src src]
 
 _click ∷ ∀ a b. (Unit -> b Unit) -> IProp ( onClick ∷ MouseEvent | a ) (b Unit)
-_click = E.onClick ∘ E.input_
+_click = E.onClick <<< E.input_
 
 _table ∷ ∀ a b. Array String -> Array (HTML a b) -> HTML a b
 _table headings tbody = H.table_
   [ H.colgroup_ $ const (H.col []) <$> headings
-  , H.thead_ [ H.tr_ $ H.th_ ∘ _txt <$> headings ]
+  , H.thead_ [ H.tr_ $ H.th_ <<< _txt <$> headings ]
   , H.tbody_ tbody
   ]
 
@@ -356,19 +355,19 @@ _checkbox label checked
       ]
 
 _span ∷ ∀ a b. String -> HTML a b
-_span = H.span_ ∘ _txt
+_span = H.span_ <<< _txt
 _p ∷ ∀ a b. String -> HTML a b
-_p = H.p_ ∘ _txt
+_p = H.p_ <<< _txt
 _b ∷ ∀ a b. String -> HTML a b
-_b = H.b_ ∘ _txt
+_b = H.b_ <<< _txt
 _th ∷ ∀ a b. String -> HTML a b
-_th = H.th_ ∘ _txt
+_th = H.th_ <<< _txt
 _td ∷ ∀ a b. String -> HTML a b
-_td = H.td_ ∘ _txt
+_td = H.td_ <<< _txt
 _h ∷ ∀ a b. Int -> String -> HTML a b
-_h 1 = H.h1_ ∘ _txt
-_h 2 = H.h2_ ∘ _txt
-_h 3 = H.h3_ ∘ _txt
-_h 4 = H.h4_ ∘ _txt
-_h 5 = H.h5_ ∘ _txt
-_h _ = H.h6_ ∘ _txt
+_h 1 = H.h1_ <<< _txt
+_h 2 = H.h2_ <<< _txt
+_h 3 = H.h3_ <<< _txt
+_h 4 = H.h4_ <<< _txt
+_h 5 = H.h5_ <<< _txt
+_h _ = H.h6_ <<< _txt

@@ -1,11 +1,9 @@
 module Printing where
 
 import Prelude
-import Operators
-import Data.Formatter.Number
+import Data.Formatter.Number (Formatter(..), format)
 import Data.Int (pow, toNumber)
 import Math (round)
-
 
 print ∷ Int -> Number -> String
 print places = format $ Formatter { comma: true
@@ -16,5 +14,5 @@ print places = format $ Formatter { comma: true
                                   }
 
 roundTo ∷ Int -> Number -> Number
-roundTo places = (_ / zeroes) ∘ round ∘ (_ * zeroes)
+roundTo places = (_ / zeroes) <<< round <<< (_ * zeroes)
   where zeroes = toNumber $ pow 10 places

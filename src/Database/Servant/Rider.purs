@@ -1,7 +1,7 @@
 module Database.Servant.Rider (riders) where
 
-import Prelude
-import Operators
+import Prelude (($), (<<<))
+import Operators ((:))
 import Database.Model
 
 riders ∷ Array Servant
@@ -25,8 +25,8 @@ riders = [
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 100.0 ~ 3000.0
-                          , Chance 60 ∘ Grant Self 3 AttackUp $ 20.0 ~ 40.0
-                          , Chance 60 ∘ Grant Self 3 DefenseUp $ 20.0 ~ 40.0
+                          , Chance 60 <<< Grant Self 3 AttackUp $ 20.0 ~ 40.0
+                          , Chance 60 <<< Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Protection of the Sun God A"
@@ -391,7 +391,7 @@ riders = [
               , kind:   "Anti-Wave"
               , hits:   5
               , effect: [ To Enemies Damage $ 450.0 ~ 750.0 ]
-              , over:   [ Chances 50 90 ∘ To Enemies GaugeDown $ Flat 1.0 ]
+              , over:   [ Chances 50 90 <<< To Enemies GaugeDown $ Flat 1.0 ]
               , first:  false
               }
   , gen:      { starWeight: 204, starRate: 9.2, npAtk: 0.71, npDef: 3 }
@@ -524,9 +524,9 @@ riders = [
               , { name:   "Evaporation of Reason D"
                 , icon:   IconStarTurn
                 , cd:     10
-                , effect: [ Chance 65 ∘ Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0
-                          , Chance 65 ∘ Grant Self 3 StarUp $ 30.0 ~ 50.0
-                          , Chance 65 ∘ Grant Self 3 CritUp $ 20.0 ~ 40.0
+                , effect: [ Chance 65 <<< Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0
+                          , Chance 65 <<< Grant Self 3 StarUp $ 30.0 ~ 50.0
+                          , Chance 65 <<< Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
                 }
               ]
@@ -742,7 +742,7 @@ riders = [
               , effect: [ To Enemies Damage $ 300.0 ~ 500.0
                         , To Party GainStars $ Flat 5.0
                         ]
-              , over:   [ Chances 30 70 ∘ To Enemies GaugeDown $ Flat 1.0 ]
+              , over:   [ Chances 30 70 <<< To Enemies GaugeDown $ Flat 1.0 ]
               , first:  false
               }
   , gen:      { starWeight: 198, starRate: 8.8, npAtk: 0.56, npDef: 3 }

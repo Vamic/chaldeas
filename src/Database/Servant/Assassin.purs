@@ -1,7 +1,7 @@
 module Database.Servant.Assassin (assassins) where
 
-import Prelude
-import Operators
+import Prelude (($), (<<<))
+import Operators ((:))
 import Database.Model
 
 assassins ∷ Array Servant
@@ -222,7 +222,7 @@ assassins = [
   , actives:  [ { name:   "Vampirism C"
                 , icon:   IconDarkMagic
                 , cd:     8
-                , effect: [ Chances 60 80 ∘ To Enemy GaugeDown $ Flat 1.0
+                , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
                 }
@@ -377,7 +377,7 @@ assassins = [
   , actives:  [ { name:   "Vampirism C"
                 , icon:   IconDarkMagic
                 , cd:     9
-                , effect: [ Chances 60 80 ∘ To Enemy GaugeDown $ Flat 1.0
+                , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
                 }
@@ -403,7 +403,7 @@ assassins = [
               , kind:   "Anti-Personnel"
               , hits:   0
               , effect: [ To (EnemyType Male) Kill $ 100.0 ~ 150.0
-                        , Chance 150 ∘ Debuff Enemy 3 DefenseDown $ Flat 20.0
+                        , Chance 150 <<< Debuff Enemy 3 DefenseDown $ Flat 20.0
                         ]
               , over:   [ Chances 100 200
                           $ Debuff (EnemyType Male) 1 Charm Full ]
@@ -579,7 +579,7 @@ assassins = [
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 5.0 ~ 15.0
                           , When "transformed into Hyde"
-                            ∘ Grant Self 3 AttackUp $ 25.0 ~ 35.0
+                            <<< Grant Self 3 AttackUp $ 25.0 ~ 35.0
                           ]
                 }
               , { name:   "Panicky Voice A"
@@ -587,7 +587,7 @@ assassins = [
                 , cd:     8
                 , effect: [ Grant Self 0 StunSuccess $ 5.0  ~ 15.0
                           , When "transformed into Hyde"
-                            ∘ Grant Self 0 StunSuccess $ 85.0 ~ 135.0
+                            <<< Grant Self 0 StunSuccess $ 85.0 ~ 135.0
                           , Chance 10 $ Debuff Enemy 1 Stun Full
                           ]
                 }
@@ -596,7 +596,7 @@ assassins = [
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 5.0 ~ 15.0
                           , When "transformed into Hyde"
-                            ∘ Grant Self 3 CritUp $ 25.0 ~ 35.0
+                            <<< Grant Self 3 CritUp $ 25.0 ~ 35.0
                           ]
                 }
               ]
@@ -744,9 +744,12 @@ assassins = [
               , { name:   "Wide Specialization A+"
                 , icon:   IconAllUp
                 , cd:     7
-                , effect: [ Chances 60 80 ∘ Grant Self 3 (Boost Buster) $ Flat 30.0
-                          , Chances 60 80 ∘ Grant Self 3 (Boost Quick) $ Flat 30.0
-                          , Chances 60 80 ∘ Grant Self 3 (Boost Arts) $ Flat 30.0
+                , effect: [ Chances 60 80 
+                            <<< Grant Self 3 (Boost Buster) $ Flat 30.0
+                          , Chances 60 80 
+                            <<< Grant Self 3 (Boost Quick) $ Flat 30.0
+                          , Chances 60 80 
+                            <<< Grant Self 3 (Boost Arts) $ Flat 30.0
                           , Grant Self 1 Evasion Full
                           ] -- TODO
                 }

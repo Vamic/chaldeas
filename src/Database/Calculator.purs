@@ -1,17 +1,17 @@
 module Database.Calculator (npPerArts, starsPerQuick, npDamage) where
 
 import Prelude
-import Operators
+import Operators (enumArray, (?))
 
-import Control.MonadZero
-import Data.Array
-import Data.Enum
-import Data.Foldable
-import Data.Int
-import Data.Maybe
-import Data.Tuple
+import Control.MonadZero (guard)
+import Data.Array (cons, fromFoldable, head)
+import Data.Enum (class BoundedEnum)
+import Data.Foldable (class Foldable, maximum, sum)
+import Data.Int (toNumber)
+import Data.Maybe (fromMaybe)
+import Data.Tuple (Tuple(..))
 
-import Database.Model
+import Database.Model (ActiveEffect(..), BuffEffect(..), Card(..), Class(..), DebuffEffect(..), InstantEffect(..), Servant, Target(..), allied, simplify, toMax, toMin)
 
 npPerArts ∷ Servant -> Number
 npPerArts s
@@ -90,8 +90,8 @@ npDamage special maxOver s@{phantasm:{card, effect, over, first}}
         Caster    -> 0.90
         Assassin  -> 0.90
         _         -> 1.0
-    triangleModifier = (_ + 1.0) ∘ sum
-                     $ matchSum buffs ∘ ClassAffinity <$> specials
+    triangleModifier = (_ + 1.0) <<< sum
+                     $ matchSum buffs <<< ClassAffinity <$> specials
     attributeModifier = 1.0
     -------------
     -- FROM CARDS
@@ -114,8 +114,8 @@ npDamage special maxOver s@{phantasm:{card, effect, over, first}}
     npDamageMultiplier = sum $ matchSum instants
                      <$> (special ? cons LastStand $ [Damage, DamageThruDef])
     superEffectiveModifier = (_ + 1.0 + matchSum instants DamagePoison)
-                           ∘ fromMaybe 0.0 ∘ maximum
-                           $ matchSum instants ∘ DamageVs <$> specials
+                           <<< fromMaybe 0.0 <<< maximum
+                           $ matchSum instants <<< DamageVs <$> specials
     isSuperEffective = 1.0
     -------------
     -- FROM BUFFS
@@ -124,8 +124,8 @@ npDamage special maxOver s@{phantasm:{card, effect, over, first}}
         Arts   -> Boost Arts
         Buster -> Boost Buster
         Quick  -> Boost Quick
-    atkMod = (_ + matchSum buffs AttackUp) ∘ fromMaybe 0.0 ∘ maximum
-           $ matchSum buffs ∘ AttackUpVs <$> specials
+    atkMod = (_ + matchSum buffs AttackUp) <<< fromMaybe 0.0 <<< maximum
+           $ matchSum buffs <<< AttackUpVs <$> specials
     defMod = matchSum debuffs DefenseDown
     specialDefMod = 0.0
     powerMod = 0.0
@@ -175,7 +175,7 @@ npDamage special maxOver s@{phantasm:{card, effect, over, first}}
         go _ _ = []
 
 passiveBuffs ∷ Servant -> Array (Tuple BuffEffect Number)
-passiveBuffs {passives} = passives >>= _.effect >>= go ∘ simplify
+passiveBuffs {passives} = passives >>= _.effect >>= go <<< simplify
   where
     go (Grant t _ buff a)
       | selfable t = [ Tuple buff $ toMax a / 100.0 ]

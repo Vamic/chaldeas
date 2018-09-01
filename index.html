@@ -31,7 +31,7 @@
       label                { display: inline-block }
       form p               { margin-left: 20px }
       p input              { float: left; margin-left: -20px }
-      aside button         { width: 180px; margin-top: 5px }
+      aside button         { width: 180px; margin-top: 5px; max-width: 100% }
       footer a:first-child { left: 9px }
       footer a:last-child  { right: 9px }
       footer a
@@ -66,6 +66,7 @@
         { overflow: scroll
         ; padding: 0.75em 1.5em
         ; flex: 2 1 0
+        ; min-width: 155px
         }
       #layout > aside > nav span
         { display: block }
@@ -239,6 +240,11 @@
         { content: none }
     aside form
       { margin-bottom: 6px }
+    @media (max-width: 855px) 
+      { body { font-size: 12px }
+        #servants .servant > img { width: 100px }
+        #servants .servant header span { font-size: 9px }
+      }
     </style>
     <script type="text/javascript" src="js/chaldeas.js"></script>
   </head>

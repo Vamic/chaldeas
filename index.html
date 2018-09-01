@@ -240,10 +240,19 @@
         { content: none }
     aside form
       { margin-bottom: 6px }
+
     @media (max-width: 855px) 
-      { body { font-size: 12px }
-        #servants .servant > img { width: 100px }
+      { body { font-size: 8px }
+        aside td { display: block }
+        #servants .servant > img { width: 75px }
         #servants .servant header span { font-size: 9px }
+        form p { margin-left: 15px }
+        p input
+          { margin-left: -15px
+          ; position: relative
+          ; bottom: 3px
+          ; width: 11px
+          }
       }
     </style>
     <script type="text/javascript" src="js/chaldeas.js"></script>

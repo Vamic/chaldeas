@@ -22,7 +22,7 @@ casters = [
                 , effect: [ Grant Ally 3 CritUp $ 20.0 ~ 50.0
                           , To Ally GaugeUp $ Flat 30.0
                           ]
-                } 
+                }
               , { name:   "Tactician's Advice A+"
                 , icon:   IconShieldUp
                 , cd:     8
@@ -43,11 +43,11 @@ casters = [
   , passives: [itemConstruction B, territoryCreation A]
   , phantasm: { name:   "Unreturning Formation"
               , desc:   "Stone Sentinel Maze"
-              , rank:   CMinus 
+              , rank:   CMinus
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   0
-              , effect: [ Chance 150 
+              , effect: [ Chance 150
                           ∘ Debuff Enemies 3 DefenseDown $ 10.0 ~ 30.0
                         , Chance 150 ∘ Debuff Enemies 3 Curse $ Flat 500.0
                         , To Enemies GaugeDown $ Flat 1.0
@@ -81,14 +81,14 @@ casters = [
               , { name:   "Morph A"
                 , icon:   IconShieldUp
                 , cd:     7
-                , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0 
+                , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0
                           , Grant Self 1 DefenseUp $ Flat 30.0
                           ]
                 }
               , { name:   "Fox's Wedding EX"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Ally 3 ArtsUp $ 30.0 ~ 50.0
+                , effect: [ Grant Ally 3 (Boost Arts) $ 30.0 ~ 50.0
                           , To Ally Heal $ 1000.0 ~ 2500.0
                           ]
                 }
@@ -127,7 +127,7 @@ casters = [
   , actives:  [ { name:   "Rapid Sutra Chanting A"
                 , icon:   IconNoble
                 , cd:     9
-                , effect: [ To Self GaugeUp $ 50.0 ~ 80.0 
+                , effect: [ To Self GaugeUp $ 50.0 ~ 80.0
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
@@ -141,7 +141,7 @@ casters = [
               , { name:   "Sanzang's Teaching A"
                 , icon:   IconNobleUp
                 , cd:     7
-                , effect: [ Grant Party 3 NPGen $ 10.0 ~ 30.0 
+                , effect: [ Grant Party 3 NPGen $ 10.0 ~ 30.0
                           , Grant Party 3 StarUp $ 10.0 ~ 30.0
                           , Grant Party 1 DebuffImmunity Full
                           ]
@@ -195,7 +195,7 @@ casters = [
               , { name:   "Pioneer of the Stars EX"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 
+                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
                           , Grant Self 3 IgnoreInvinc Full
                           , To Party GainStars $ Flat 10.0
                           ]
@@ -208,7 +208,7 @@ casters = [
               , card:   Arts
               , kind:   "Anti-Unit/Anti-Army"
               , hits:   1
-              , effect: [ To Enemies DamageThruDef $ 450.0 ~ 750.0 
+              , effect: [ To Enemies DamageThruDef $ 450.0 ~ 750.0
                         , Debuff Enemies 3 CritChance $ Flat 10.0
                         ]
               , over:   [ Grant Self 1 NPUp $ 30.0 ~ 70.0 ]
@@ -235,7 +235,7 @@ casters = [
   , actives:  [ { name:   "Happiness Mystic Code A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Child of Nature B"
                 , icon:   IconShield
@@ -247,7 +247,7 @@ casters = [
               , { name:   "Suspicious Medicine A"
                 , icon:   IconHeal
                 , cd:     8
-                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0 
+                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
                           , Chance 70 $ Grant Self 1 DebuffImmunity Full
                           , Chance 70 ∘ Grant Self 3 Guts $ Flat 1000.0
                           ]
@@ -264,7 +264,7 @@ casters = [
                         , Debuff Self 3 AttackDown $ Flat 10.0
                         , Debuff Self 3 DefenseDown $ Flat 10.0
                         ]
-              , over:   [ Grant Self 1 BusterUp $ 20.0 ~ 80.0 ]
+              , over:   [ Grant Self 1 (Boost Buster) $ 20.0 ~ 80.0 ]
               , first:  true
               }
   , gen:      { starWeight: 51, starRate: 10.7, npAtk: 0.32, npDef: 3 }
@@ -337,14 +337,14 @@ casters = [
   , actives:  [ { name:   "Innocent Monster EX"
                 , icon:   IconStarTurn
                 , cd:     7
-                , effect: [ Grant Self 3 StarsPerTurn $ 6.0 ~ 12.0 
+                , effect: [ Grant Self 3 StarsPerTurn $ 6.0 ~ 12.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
               , { name:   "Mana Burst (Pumpkin) A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 25.0 ~ 45.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 25.0 ~ 45.0
                           , Debuff Enemies 10 Burn $ Flat 300.0
                           ]
                 }
@@ -388,14 +388,14 @@ casters = [
   , actives:  [ { name:   "Self-Modification A"
                 , icon:   IconExclamationUp
                 , cd:     7
-                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0 
-                          , Grant Self 3 StarAbsorb $ 300.0 ~ 600.0
+                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
+                          , Grant Self 3 StarWeight $ 300.0 ~ 600.0
                           ]
                 }
               , { name:   "Morph A+"
                 , icon:   IconShieldUp
                 , cd:     7
-                , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0 
+                , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0
                           , Grant Self 1 DefenseUp $ Flat 30.0
                           , Grant Self 3 DebuffResist $ 20.0 ~ 40.0
                           ]
@@ -403,7 +403,7 @@ casters = [
               , { name:   "Meanwhile A"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 20.0 ~ 40.0 
+                , effect: [ To Self GaugeUp $ 20.0 ~ 40.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           , To Self RemoveDebuffs Full
                           ]
@@ -416,7 +416,7 @@ casters = [
               , card:   Arts
               , kind:   "Anti-Personnel"
               , hits:   3
-              , effect: [ To Enemies Damage $ 600.0 ~ 900.0 
+              , effect: [ To Enemies Damage $ 600.0 ~ 900.0
                         , Debuff Enemies 3 DefenseDown $ Flat 20.0
                         ]
               , over:   [ Chances 60 100 $ To Enemies GaugeDown Full ]
@@ -448,16 +448,16 @@ casters = [
               , { name:   "Mahatma A"
                 , icon:   IconStarTurn
                 , cd:     10
-                , effect: [ Grant Self 5 StarsPerTurn $ Flat 5.0 
+                , effect: [ Grant Self 5 StarsPerTurn $ Flat 5.0
                           , Chances 60 80 ∘ Grant Self 1 NPUp $ Flat 50.0
                           ]
                 }
               , { name:   "Search for the Unknown B"
                 , icon:   IconAllUp
                 , cd:     9
-                , effect: [ Grant Party 3 QuickUp $ 15.0 ~ 20.0 
-                          , Grant Party 3 ArtsUp $ 15.0 ~ 20.0
-                          , Grant Party 3 BusterUp $ 15.0 ~ 20.0
+                , effect: [ Grant Party 3 (Boost Quick) $ 15.0 ~ 20.0
+                          , Grant Party 3 (Boost Arts) $ 15.0 ~ 20.0
+                          , Grant Party 3 (Boost Buster) $ 15.0 ~ 20.0
                           ]
                 }
               ]
@@ -583,7 +583,7 @@ casters = [
   , id:       130
   , rarity:   4
   , class:    Caster
-  , attr:     Mankind 
+  , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
   , stats:    { base:  { atk: 1510,  hp: 1824 }
               , max:   { atk: 9060, hp: 11404 }
@@ -592,21 +592,21 @@ casters = [
   , actives:  [ { name:   "Beach Flower A+"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Party 3 AttackUp $ 9.5 ~ 19.5 
+                , effect: [ Grant Party 3 AttackUp $ 9.5 ~ 19.5
                           , Grant (AlliesType Male) 3 StarUp $ 21.0 ~ 41.0
                           ]
                 }
               , { name:   "Sparkling Sunflower A"
                 , icon:   IconStarTurn
                 , cd:     9
-                , effect: [ Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0 
+                , effect: [ Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0
                           , Grant Self 3 HealPerTurn $ 500.0 ~ 1000.0
                           ]
                 }
               , { name:   "Beautiful Princess (Sea) A"
                 , icon:   IconShield
                 , cd:     8
-                , effect: [ Grant Self 0 Invincibility $ Flat 3.0 
+                , effect: [ Grant Self 0 Invincibility $ Flat 3.0
                           , Grant Self 3 DebuffResist $ 30.0 ~ 50.0
                           ]
                 }
@@ -618,7 +618,7 @@ casters = [
               , card:   Arts
               , kind:   "Anti-Army/Anti-Populace"
               , hits:   3
-              , effect: [ To Enemies Damage $ 450.0 ~ 750.0 
+              , effect: [ To Enemies Damage $ 450.0 ~ 750.0
                         , Debuff Enemies 3 CritChance $ Flat 20.0
                         ]
               , over:   [ Grant Party 3 CritUp $ 20.0 ~ 40.0 ]
@@ -650,14 +650,14 @@ casters = [
               , { name:   "Mass Production A"
                 , icon:   IconStarTurn
                 , cd:     12
-                , effect: [ Grant Self 5 StarsPerTurn $ 5.0 ~ 10.0 
+                , effect: [ Grant Self 5 StarsPerTurn $ 5.0 ~ 10.0
                           , Grant Self 5 GaugePerTurn $ 5.0 ~ 10.0
                           ]
                 }
               , { name:   "Concept Improvement A+"
                 , icon:   IconSunUp
                 , cd:     8
-                , effect: [ Grant Ally 1 Overcharge $ Flat 2.0 
+                , effect: [ Grant Ally 1 Overcharge $ Flat 2.0
                           , Grant Ally 1 StarUp $ 10.0 ~ 30.0
                           ]
                 }
@@ -669,7 +669,7 @@ casters = [
               , card:   Arts
               , kind:   "Anti-Populace"
               , hits:   1
-              , effect: [ To Enemies Damage $ 450.0 ~ 750.0 
+              , effect: [ To Enemies Damage $ 450.0 ~ 750.0
                         , Debuff Enemies 1 SealSkills Full
                         , Debuff Enemies 1 SealNP Full
                         ]
@@ -688,7 +688,7 @@ casters = [
   , id:       33
   , rarity:   2
   , class:    Caster
-  , attr:     Mankind 
+  , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
   , stats:    { base:  { atk: 1021,  hp: 1597 }
               , max:   { atk: 5758, hp: 8484 }
@@ -707,7 +707,7 @@ casters = [
               , { name:   "Innocent Monster D"
                 , icon:   IconStarTurn
                 , cd:     7
-                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0 
+                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0
                           , Debuff Self 3 DefenseDown $ Flat 14.0
                           ]
                 }
@@ -770,7 +770,7 @@ casters = [
               , card:   Arts
               , kind:   "Anti-Thaumaturgy"
               , hits:   1
-              , effect: [ To Enemy Damage $ 600.0 ~ 900.0 
+              , effect: [ To Enemy Damage $ 600.0 ~ 900.0
                         , To Enemy RemoveBuffs Full
                         ]
               , over:   [ To Self GaugeUp $ 20.0 ~ 100.0 ]
@@ -797,7 +797,7 @@ casters = [
   , actives:  [ { name:   "Enchant A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Party 1 BusterUp $ 20.0 ~ 40.0 ]
+                , effect: [ Grant Party 1 (Boost Buster) $ 20.0 ~ 40.0 ]
                 }
               , { name:   "Self-Preservation B"
                 , icon:   IconShield
@@ -809,7 +809,7 @@ casters = [
               , { name:   "King's Men C"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Ally GaugeUp $ Flat 20.0 
+                , effect: [ To Ally GaugeUp $ Flat 20.0
                           , Grant Ally 1 StarUp $ 50.0 ~ 100.0
                           ]
                 }
@@ -817,8 +817,8 @@ casters = [
   , passives: [territoryCreation C]
   , phantasm: { name:   "First Folio"
               , desc:   "When the Curtain Rises, There Will be Thunderous Applause"
-              , rank: B  
-              , card:  Buster 
+              , rank: B
+              , card:  Buster
               , kind:   "Anti-Personnel"
               , hits:   4
               , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
@@ -846,7 +846,7 @@ casters = [
   , actives:  [ { name:   "Protection of Muse (Fake) EX"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Party 1 ArtsUp $ 22.0 ~ 44.0 ]
+                , effect: [ Grant Party 1 (Boost Arts) $ 22.0 ~ 44.0 ]
                 }
               , { name:   "Aesthetic Appreciation B"
                 , icon:   IconBeamDown
@@ -894,21 +894,21 @@ casters = [
   , actives:  [ { name:   "Concentration C"
                 , icon:   IconNobleUp
                 , cd:     8
-                , effect: [ Grant Self 3 NPGen $ 20.0 ~ 30.0 
-                          , Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0
+                , effect: [ Grant Self 3 NPGen $ 20.0 ~ 30.0
+                          , Grant Self 1 StarWeight $ 500.0 ~ 1000.0
                           ]
                 }
               , { name:   "Mechanized Armor EX"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 1 AttackUp $ 15.0 ~ 25.0 
+                , effect: [ Grant Self 1 AttackUp $ 15.0 ~ 25.0
                           , Grant Self 1 Invincibility Full
                           ]
                 }
               , { name:   "Overload D"
                 , icon:   IconBeamUp
                 , cd:     7
-                , effect: [ Grant Self 1 NPUp $ 15.0 ~ 25.0 
+                , effect: [ Grant Self 1 NPUp $ 15.0 ~ 25.0
                           , Debuff Self 5 Burn $ Flat 300.0
                           ]
                 }
@@ -945,21 +945,21 @@ casters = [
   , actives:  [ { name:   "Rune Spell A"
                 , icon:   IconExclamationUp
                 , cd:     7
-                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0 
+                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
                           , Grant Self 3 DebuffResist $ 20.0 ~ 50.0
                           ]
                 }
               , { name:   "Divine Protection from Arrows A"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 3.0 
+                , effect: [ Grant Self 0 Evasion $ Flat 3.0
                           , Grant Self 3 DefenseUp $ 9.0 ~ 18.0
                           ]
                 }
               , { name:   "Disengage C"
                 , icon:   IconBubbles
                 , cd:     7
-                , effect: [ To Self RemoveDebuffs Full 
+                , effect: [ To Self RemoveDebuffs Full
                           , To Self Heal $ 500.0 ~ 1500.0
                           ]
                 }
@@ -1003,14 +1003,14 @@ casters = [
               , { name:   "Innocent Monster B"
                 , icon:   IconStarTurn
                 , cd:     7
-                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0 
+                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0
                           , Debuff Self 3 DefenseDown $ Flat 18.0
                           ]
                 }
               , { name:   "Clown's Laughter A+"
                 , icon:   IconHoodX
                 , cd:     8
-                , effect: [ Debuff Enemy 0 BuffBlock $ Flat 3.0 
+                , effect: [ Debuff Enemy 0 BuffBlock $ Flat 3.0
                           , Debuff Enemy 5 Curse $ 500.0 ~ 1000.0
                           ]
                 }
@@ -1052,7 +1052,7 @@ casters = [
               , { name:   "Elemental A+"
                 , icon:   IconArtsUp
                 , cd:     9
-                , effect: [ Grant Party 3 ArtsUp $ 10.0 ~ 20.0 ]
+                , effect: [ Grant Party 3 (Boost Arts) $ 10.0 ~ 20.0 ]
                 }
               , { name:   "Philosopher's Stone A"
                 , icon:   IconKneel
@@ -1092,17 +1092,17 @@ casters = [
   , actives:  [ { name:   "Bloody Devil B"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Shamanism B"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 1 ArtsUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Arts) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Guardian Beast B"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Self 1 QuickUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Quick) $ 30.0 ~ 50.0 ]
                 }
               ]
   , passives: [territoryCreation B, itemConstruction C]
@@ -1112,7 +1112,7 @@ casters = [
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ To Enemies Damage $ 400.0 ~ 700.0 
+              , effect: [ To Enemies Damage $ 400.0 ~ 700.0
                         , Debuff Enemies 3 CritChance $ Flat 20.0
                         ]
               , over:   [ To Party Heal $ 1000.0 ~ 2000.0
@@ -1141,8 +1141,8 @@ casters = [
   , actives:  [ { name:   "Mental Corruption A"
                 , icon:   IconStaffUp
                 , cd:     7
-                , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0 
-                          , Grant Self 3 MentalResist $ 50.0 ~ 100.0 
+                , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0
+                          , Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           ]
                 }
               , { name:   "Aesthetic Appreciation E-"

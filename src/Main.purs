@@ -5,8 +5,8 @@ import Prelude
 
 import Halogen.Aff as HA
 
-import Effect              
-import Halogen.VDom.Driver 
+import Effect
+import Halogen.VDom.Driver
 import Routing.Hash
 
 import Site.Component
@@ -16,5 +16,5 @@ main ∷ Effect Unit
 main = do
     hash <- getHash
     prefs <- getPreferences
-    HA.runHalogenAff $ 
+    HA.runHalogenAff $
     HA.awaitBody >>= runUI (siteComponent hash prefs) unit

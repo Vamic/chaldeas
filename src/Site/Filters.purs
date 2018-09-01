@@ -1,4 +1,4 @@
-module Site.Filters 
+module Site.Filters
   ( FilterTab(..)
   , Filter(..)
   , getFilters
@@ -12,65 +12,64 @@ import Data.Array ((..), filter, replicate, reverse)
 import Data.Enum
 import Data.Foldable
 import Data.Profunctor.Strong
-import Data.Generic.Rep    
+import Data.Generic.Rep
 import Data.Generic.Rep.Bounded
-import Data.Generic.Rep.Enum 
-import Data.Generic.Rep.Show 
+import Data.Generic.Rep.Enum
+import Data.Generic.Rep.Show
 import Data.String (drop, joinWith)
-import Data.Tuple  
+import Data.Tuple
 
 import Database
 
 extraFilters ∷ Array Filter
 extraFilters = join
-  [ [ servantBonus FilterEvent "+100% Attack" 
+  [ [ servantBonus FilterEventBonus "+100% Attack"
       [ "Illyasviel von Einzbern"
       , "Chloe von Einzbern"
       ,  "Mash Kyrielight"
       ]
-    , servantBonus FilterEvent "+50% Attack"
+    , servantBonus FilterEventBonus "+50% Attack"
       [ "Queen Medb"
       , "Nursery Rhyme"
       , "Helena Blavatsky"
       , "Medea (Lily)"
       ]
-    , Filter FilterEvent "+50% Kaleid CE" 
+    , Filter FilterEventBonus "+50% Kaleid CE"
       ∘ const $ notElem Male ∘ _.traits
     ]
-  , [ servantBonus FilterAvailability "New" 
-      [ "Illyasviel von Einzbern" 
+  , [ servantBonus FilterAvailability "New"
+      [ "Illyasviel von Einzbern"
       , "Chloe von Einzbern"
       ]
     , Filter FilterAvailability "Limited" $ const _.limited
     , Filter FilterAvailability "Non-Limited" ∘ const $ not ∘ _.limited
     , Filter FilterAvailability "Free" $ const _.free
     ]
-  , reverse (1..5) <#> \rarity 
-    -> Filter FilterRarity (joinWith "" $ replicate rarity "★") 
+  , reverse (1..5) <#> \rarity
+    -> Filter FilterRarity (joinWith "" $ replicate rarity "★")
     ∘ const $ not ∘ eq rarity ∘ _.rarity
   ]
-data FilterTab = FilterEvent | FilterAvailability
-               | FilterAlignment | FilterTrait | FilterPassive
-               | FilterAction | FilterBuff | FilterDebuff 
-               | FilterPhantasm | FilterCard 
-               | FilterClass | FilterDeck | FilterAttribute
-               | FilterRarity
+data FilterTab
+    = FilterEventBonus
+    | FilterAvailability
+    | FilterAlignment
+    | FilterTrait
+    | FilterPassiveSkill
+    | FilterAction | FilterBuff | FilterDebuff
+    -- Exclusive
+    | FilterPhantasm | FilterCard
+    | FilterClass
+    | FilterDeck
+    | FilterAttribute
+    | FilterRarity
 
 exclusive ∷ FilterTab -> Boolean
-exclusive FilterPhantasm = true
-exclusive FilterCard = true
-exclusive FilterClass = true
-exclusive FilterDeck = true
-exclusive FilterAttribute = true
-exclusive FilterRarity = true
-exclusive _ = false
+exclusive = (_ >= FilterPhantasm)
 
 instance _a_ ∷ Show FilterTab where
-  show FilterEvent    = "Event Bonus"
   show FilterPhantasm = "NP Type"
   show FilterCard     = "NP Card"
-  show FilterPassive  = "Passive Skill"
-  show a              = drop 6 $ genericShow a
+  show a              = unCamel ∘ drop 6 $ genericShow a
 
 data Filter = Filter FilterTab String (Boolean -> Servant -> Boolean)
 
@@ -80,12 +79,12 @@ instance _d_ ∷ Show Filter where
   show (Filter tab a _) = a
 
 matchFilter ∷ ∀ a. MatchServant a => FilterTab -> a -> Filter
-matchFilter tab 
+matchFilter tab
   | exclusive tab = uncurry (Filter tab) ∘ (show &&& not ∘ has)
   | otherwise     = uncurry (Filter tab) ∘ (show &&& has)
-  
+
 servantBonus ∷ FilterTab -> String -> Array String -> Filter
-servantBonus tab bonus servants 
+servantBonus tab bonus servants
     = Filter tab bonus ∘ const $ (_ `elem` servants) ∘ _.name
 
 getExtraFilters ∷ FilterTab -> Array Filter
@@ -104,7 +103,7 @@ getFilters f@FilterDebuff    = matchFilter f <$> getAll ∷ Array DebuffEffect
 getFilters f@FilterDeck      = matchFilter f <$> getAll ∷ Array Deck
 getFilters f@FilterPhantasm  = matchFilter f <$> getAll ∷ Array PhantasmType
 getFilters f@FilterTrait     = matchFilter f <$> getAll ∷ Array Trait
-getFilters f@FilterPassive   = uncurry (Filter f) 
+getFilters f@FilterPassiveSkill   = uncurry (Filter f)
                              ∘ (identity &&& const ∘ hasPassive) <$> getPassives
   where
     hasPassive p = any (eq p) ∘ map (_.name) ∘ _.passives

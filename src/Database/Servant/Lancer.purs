@@ -21,20 +21,20 @@ lancers = [
                 , cd:     7
                 , effect: [ Grant Self 1 Evasion Full
                           , Chance 80 ∘ Grant Self 3 CritUp $ 30.0 ~ 50.0
-                          , Chance 80 ∘ Grant Self 3 StarAbsorb $ 300.0 ~ 500.0
+                          , Chance 80 ∘ Grant Self 3 StarWeight $ 300.0 ~ 500.0
                           ]
                 }
               , { name:   "Primordial Rune"
                 , icon:   IconQuickUp
                 , cd:     8
-                , effect: [ Grant Ally 1 QuickUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Ally 1 (Boost Quick) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "God-Slayer B"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 1 (AttackUpVs Divine) $ 50.0 ~ 100.0 
+                , effect: [ Grant Self 1 (AttackUpVs Divine) $ 50.0 ~ 100.0
                           , Grant Self 1 (AttackUpVs Undead) $ 50.0 ~ 100.0
-                          ] 
+                          ]
                 }
               ]
   , passives: [magicResistance A]
@@ -45,7 +45,7 @@ lancers = [
               , kind:   "Anti-Personnel"
               , hits:   1
               , effect: [ Chance 500 $ Debuff Enemy 1 Stun Full
-                        , To Enemy Damage $ 1600.0 ~ 2400.0  
+                        , To Enemy Damage $ 1600.0 ~ 2400.0
                         ]
               , over:   [ To Enemy Kill $ 60.0 ~ 100.0 ]
               , first:  true
@@ -78,14 +78,14 @@ lancers = [
               , { name:   "Mana Burst (Flame) A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Uncrowned Arms Mastery"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ Flat 25.0 
+                , effect: [ To Self GaugeUp $ Flat 25.0
                           , Grant Self 3 StarUp $ 30.0 ~ 50.0
                           , Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
@@ -181,21 +181,21 @@ lancers = [
   , actives:  [ { name:   "Mana Burst (Flame) B"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 15.0 ~ 25.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 15.0 ~ 25.0
                           , Grant Self 1 NPUp $ 8.0 ~ 15.0
                           ]
                 }
               , { name:   "Primordial Rune"
                 , icon:   IconExclamationDown
                 , cd:     8
-                , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0 
+                , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0
                           , Debuff Enemy 1 NPDown $ 15.0 ~ 30.0
                           ]
                 }
               , { name:   "Hero's Assistant C"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Ally 3 StarAbsorb $ 300.0 ~ 600.0 
+                , effect: [ Grant Ally 3 StarWeight $ 300.0 ~ 600.0
                           , To Ally Heal $ 1000.0 ~ 3000.0
                           ]
                 }
@@ -234,7 +234,7 @@ lancers = [
   , actives:  [ { name:   "Mana Burst A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Charisma B"
                 , icon:   IconSwordUp
@@ -244,7 +244,7 @@ lancers = [
               , { name:   "Protection of World's End EX"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 
+                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
                           , To Self RemoveDebuffs Full
                           ]
                 }
@@ -283,12 +283,12 @@ lancers = [
   , actives:  [ { name:   "Mana Burst A+"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 35.0 ~ 55.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 35.0 ~ 55.0 ]
                 }
               , { name:   "Protection of World's End A"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0 
+                , effect: [ Grant Self 1 StarWeight $ 500.0 ~ 1000.0
                           , Grant Self 1 CritUp $ 30.0 ~ 50.0
                           , To Party GainStars $ 5.0 ~ 10.0
                           ]
@@ -306,7 +306,7 @@ lancers = [
               , card:   Buster
               , kind:   "Anti-Fortress"
               , hits:   4
-              , effect: [ To Enemies DamageThruDef $ 400.0 ~ 600.0 
+              , effect: [ To Enemies DamageThruDef $ 400.0 ~ 600.0
                         , Chance 60 $ Debuff Enemies 1 SealNP Full
                         ]
               , over:   [ Debuff Enemies 5 Curse $ 1000.0 ~ 3000.0 ]
@@ -341,14 +341,14 @@ lancers = [
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
-                          , Grant Self 1 StarAbsorb $ 300.0 ~ 500.0
+                          , Grant Self 1 StarWeight $ 300.0 ~ 500.0
                           ]
                 }
               , { name:   "Juezhao B"
                 , icon:   IconShieldBreak
                 , cd:     8
                 , effect: [ Grant Self 1 IgnoreInvinc Full
-                          , Grant Self 1 ArtsUp $ 30.0 ~ 50.0
+                          , Grant Self 1 (Boost Arts) $ 30.0 ~ 50.0
                           ]
                 }
               ]
@@ -359,7 +359,7 @@ lancers = [
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   3
-              , effect: [ To Enemy DamageThruDef $ 900.0 ~ 1500.0 
+              , effect: [ To Enemy DamageThruDef $ 900.0 ~ 1500.0
                         , Debuff Enemy 3 DefenseDown $ Flat 20.0
                         ]
               , over:   [ To Enemy Kill $ 40.0 ~ 80.0 ]
@@ -377,7 +377,7 @@ lancers = [
   , id:       134
   , rarity:   4
   , class:    Lancer
-  , attr:     Earth 
+  , attr:     Earth
   , deck:     Deck Quick Quick Arts Buster Buster
   , stats:    { base:  { atk: 1489,  hp: 1899 }
               , max:   { atk: 8936, hp: 11870 }
@@ -391,13 +391,13 @@ lancers = [
               , { name:   "Bath Transformation A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 3 BusterUp $ 20.0 ~ 30.0 ]
+                , effect: [ Grant Self 3 (Boost Buster) $ 20.0 ~ 30.0 ]
                 }
               , { name:   "Pursuer of Love A"
                 , icon:   IconShieldDown
                 , cd:     7
-                , effect: [ Chance 500 
-                            ∘ Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0 
+                , effect: [ Chance 500
+                            ∘ Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0
                           , Grant Enemy 3 AttackUp $ Flat 20.0
                           ]
                 }
@@ -409,7 +409,7 @@ lancers = [
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   6
-              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
                         , Chance 150 $ Debuff Enemy 1 SealSkills Full
                         ]
               , over:   [ Debuff Enemy 5 Burn $ 500.0 ~ 2500.0 ]
@@ -494,7 +494,7 @@ lancers = [
               , { name:   "Magecraft B"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 1 ArtsUp $ 24.0 ~ 40.0 ]
+                , effect: [ Grant Self 1 (Boost Arts) $ 24.0 ~ 40.0 ]
                 }
               ]
   , passives: [magicResistance B, divinity D]
@@ -504,7 +504,7 @@ lancers = [
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   3
-              , effect: [ To Enemies Damage $ 600.0 ~ 900.0 
+              , effect: [ To Enemies Damage $ 600.0 ~ 900.0
                         , Grant Self 3 DebuffImmunity Full
                         ]
               , over:   [ Debuff Enemies 3 AttackDown $ 10.0 ~ 30.0 ]
@@ -536,7 +536,7 @@ lancers = [
               , { name:   "Protection from Arrows B"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 3.0 
+                , effect: [ Grant Self 0 Evasion $ Flat 3.0
                           , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
@@ -582,14 +582,14 @@ lancers = [
   , actives:  [ { name:   "Rune Spell B"
                 , icon:   IconExclamationUp
                 , cd:     7
-                , effect: [ Grant Self 3 CritUp $ 18.0 ~ 45.0 
+                , effect: [ Grant Self 3 CritUp $ 18.0 ~ 45.0
                           , Grant Self 3 DebuffResist $ 18.0 ~ 45.0
                           ]
                 }
               , { name:   "Protection from Arrows B"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 3.0 
+                , effect: [ Grant Self 0 Evasion $ Flat 3.0
                           , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
@@ -645,7 +645,7 @@ lancers = [
               , { name:   "Warrior's War Cry B"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Party 3 BusterUp $ 15.0 ~ 25.0 ]
+                , effect: [ Grant Party 3 (Boost Buster) $ 15.0 ~ 25.0 ]
                 }
               ]
   , passives: [magicResistance C]
@@ -682,7 +682,7 @@ lancers = [
   , actives:  [ { name:   "Natural Body C"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0 
+                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
@@ -690,15 +690,15 @@ lancers = [
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 1200.0 ~ 3400.0
-                          , Chance 60 ∘ Grant Self 3 AttackUp $ 22.0 ~ 44.0 
+                          , Chance 60 ∘ Grant Self 3 AttackUp $ 22.0 ~ 44.0
                           , Chance 60 ∘ Grant Self 3 DefenseUp $ 22.0 ~ 44.0
                           ]
                 }
               , { name:   "Seven Hills A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Ally 1 Guts $ Flat 1000.0 
-                          , Grant Ally 1 BusterUp $ 10.0 ~ 30.0  
+                , effect: [ Grant Ally 1 Guts $ Flat 1000.0
+                          , Grant Ally 1 (Boost Buster) $ 10.0 ~ 30.0
                           ]
                 }
               ]
@@ -837,7 +837,7 @@ lancers = [
               , { name:   "Love Spot C"
                 , icon:   IconSwordDown
                 , cd:     7
-                , effect: [ Debuff (EnemiesType Female) 1 AttackDown 
+                , effect: [ Debuff (EnemiesType Female) 1 AttackDown
                             $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Knight's Strategy B"
@@ -853,7 +853,7 @@ lancers = [
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   2
-              , effect: [ To Enemy Damage $ 1600.0 ~ 2400.0 
+              , effect: [ To Enemy Damage $ 1600.0 ~ 2400.0
                         , To Enemy RemoveDebuffs Full
                         ]
               , over:   [ Debuff Enemy 5 Curse $ 500.0 ~ 1500.0 ]

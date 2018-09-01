@@ -1,4 +1,4 @@
-module Site.Preferences 
+module Site.Preferences
     ( Preference(..)
     , Preferences
     , setPreference
@@ -11,7 +11,7 @@ import Data.Generic.Rep
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum
 import Data.Generic.Rep.Show
-import Data.Map 
+import Data.Map
 import Data.Maybe
 import Data.Traversable
 import Data.Tuple (Tuple(..))
@@ -23,10 +23,11 @@ import Web.Storage.Storage
 import Web.HTML (window)
 import Web.HTML.Window (localStorage)
 
-data Preference = Artorify
-                | ShowTables
-                | ExcludeSelf
-                | MaxAscension
+data Preference
+    = Artorify
+    | ShowTables
+    | ExcludeSelf
+    | MaxAscension
 
 instance _a_ ∷ Show Preference where
   show ExcludeSelf = "Exclude self-applied effects"
@@ -37,19 +38,19 @@ instance _a_ ∷ Show Preference where
 setPreference ∷ Preference -> Boolean -> Effect Unit
 setPreference pref set = window >>= localStorage
                      >>= setItem (genericShow pref) (show set)
-                 
+
 type Preferences = Map Preference Boolean
 
 getPreference ∷ Preferences -> Preference -> Boolean
 getPreference prefs pref = fromMaybe false $ lookup pref prefs
 
 getPreferences ∷ Effect Preferences
-getPreferences = fromFoldable <$> traverse go enumArray 
+getPreferences = fromFoldable <$> traverse go enumArray
   where
     fromFlag (Just "true") = true
     fromFlag _             = false
     go k = do
-        v <- window >>= localStorage >>= getItem (genericShow k) 
+        v <- window >>= localStorage >>= getItem (genericShow k)
                     >>= pure ∘ fromFlag
         pure $ Tuple k v
 

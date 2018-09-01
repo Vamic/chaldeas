@@ -1,4 +1,4 @@
-module Site.Sorting 
+module Site.Sorting
   ( SortBy(..)
   , getSort
   )where
@@ -24,25 +24,25 @@ import Data.Tuple
 import Database
 import Printing
 
-data SortBy = Rarity
-            | ID
-            | ATK
-            | HP
-            -- | GrailATK
-            -- | GrailHP
-            -- | NPGain
-            | StarWeight
-            -- | StarRate
-            | NPArts
-            | StarQuick
-            | NPDmg
-            | NPDmgOver
-            | NPSpec
-            | NPSpecOver
+data SortBy
+    = Rarity
+    | ID
+    | ATK
+    | HP
+    -- | GrailATK
+    -- | GrailHP
+    -- | NPGain
+    | StarWeight
+    -- | StarRate
+    | NPArts
+    | StarQuick
+    | NPDmg
+    | NPDmgOver
+    | NPSpec
+    | NPSpecOver
 
 instance _a_ ∷ Show SortBy where
   -- show NPGain     = "NP Gain/Hit"
-  show StarWeight = "Star Weight"
   -- show StarRate   = "Star Rate"
   show NPArts     = "NP Gain per Arts card"
   show StarQuick  = "Stars per Quick card"
@@ -52,7 +52,7 @@ instance _a_ ∷ Show SortBy where
   show NPDmgOver  = "NP Damage + Overcharge"
   show NPSpec     = "NP Special Damage"
   show NPSpecOver = "NP Special + Overcharge"
-  show a = genericShow a
+  show a = unCamel $ genericShow a
 
 toSort ∷ SortBy -> Servant -> Number
 toSort ID         = (-1.0 * _) ∘ toNumber ∘ _.id
@@ -63,11 +63,11 @@ toSort HP         = toNumber ∘ _.stats.max.hp
 -- toSort GrailHP    = toNumber ∘ _.stats.grail.hp
 -- toSort NPGain     = _.gen.npAtk
 toSort StarWeight = toNumber ∘ _.gen.starWeight
--- toSort StarRate   = _.gen.starRate 
-toSort NPArts     = npPerArts 
+-- toSort StarRate   = _.gen.starRate
+toSort NPArts     = npPerArts
 toSort StarQuick  = starsPerQuick
 toSort NPDmg      = npDamage false false
-toSort NPDmgOver  = npDamage false true 
+toSort NPDmgOver  = npDamage false true
 toSort NPSpec     = npDamage true false
 toSort NPSpecOver = npDamage true true
 
@@ -76,9 +76,9 @@ doSort Rarity = map (Tuple "") ∘ sortWith \s -> show (5 - s.rarity) <> s.name
 doSort a = map showSort ∘ sortWith sorter
   where
     sorter   = toSort a
-    showSort 
-      | a `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \s -> (flip Tuple) s 
-          $ (if s.free || s.rarity < 4 then "NP5: " else "NP1: ") 
+    showSort
+      | a `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \s -> (flip Tuple) s
+          $ (if s.free || s.rarity < 4 then "NP5: " else "NP1: ")
          <> (output ∘ abs $ sorter s)
       | otherwise = uncurry Tuple ∘ (output ∘ abs ∘ sorter &&& identity)
     output = case a of

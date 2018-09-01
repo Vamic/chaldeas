@@ -13,14 +13,14 @@ import Data.Function.Memoize
 
 import Database.Model
 import Database.Calculator
-import Database.Servant.Archer   
-import Database.Servant.Assassin  
-import Database.Servant.Berserker 
-import Database.Servant.Caster    
-import Database.Servant.Extra     
-import Database.Servant.Lancer    
-import Database.Servant.Rider     
-import Database.Servant.Saber     
+import Database.Servant.Archer
+import Database.Servant.Assassin
+import Database.Servant.Berserker
+import Database.Servant.Caster
+import Database.Servant.Extra
+import Database.Servant.Lancer
+import Database.Servant.Rider
+import Database.Servant.Saber
 
 servants ∷ Array Servant
 servants = addUniversal ∘ addHeavenOrEarth
@@ -31,10 +31,10 @@ servants = addUniversal ∘ addHeavenOrEarth
         <> extras
         <> lancers
         <> riders
-        <> sabers    
+        <> sabers
   where
-    addUniversal s@{traits, passives} 
-        = s { traits   = sortWith show $ cons Humanoid traits 
+    addUniversal s@{traits, passives}
+        = s { traits   = sortWith show $ cons Humanoid traits
             , passives = sortWith show passives
             }
     addHeavenOrEarth s@{attr, traits}
@@ -44,7 +44,7 @@ servants = addUniversal ∘ addHeavenOrEarth
 getAll ∷ ∀ a. MatchServant a => Array a
 getAll = (_ $ unit) ∘ memoize $ \_ -> sortWith show $ filter exists enumArray
   where
-    exists eff = any (has eff false) servants 
+    exists eff = any (has eff false) servants
 
 getPassives ∷ Array String
 getPassives = sort ∘ nub ∘ join $ (map _.name ∘ _.passives) <$> servants

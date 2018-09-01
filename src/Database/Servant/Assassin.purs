@@ -20,7 +20,7 @@ assassins = [
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
-                          , Grant Self 1 QuickUp $ 30.0 ~ 50.0
+                          , Grant Self 1 (Boost Quick) $ 30.0 ~ 50.0
                           ]
                 }
               , { name:   "Information Erasure B"
@@ -75,7 +75,7 @@ assassins = [
               , { name:   "Demonic Nature of Oni A"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0 
+                , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
                           , Grant Self 3 NPUp $ 20.0 ~ 30.0
                           ]
                 }
@@ -92,7 +92,7 @@ assassins = [
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ To Enemies Damage $ 450.0 ~ 750.0 
+              , effect: [ To Enemies Damage $ 450.0 ~ 750.0
                         , Debuff Enemies 3 DebuffVuln $ Flat 10.0
                         , Debuff Enemies 3 AttackDown $ Flat 10.0
                         , Debuff Enemies 3 NPDown $ Flat 10.0
@@ -133,7 +133,7 @@ assassins = [
               , { name:   "Galactic Meteor Sword C"
                 , icon:   IconStarHaloUp
                 , cd:     8
-                , effect: [ Grant Self 3 (DamageAffinity Saber) $ 30.0 ~ 50.0 
+                , effect: [ Grant Self 3 (ClassAffinity Saber) $ 30.0 ~ 50.0
                           , Grant Self 3 (StarAffinity Saber) $ 50.0 ~ 100.0
                           ]
                 }
@@ -171,7 +171,7 @@ assassins = [
                 , icon:   IconMystic
                 , cd:     7
                 , effect: [ Grant Self 1 IgnoreInvinc Full
-                          , Grant Self 1 ArtsUp $ 30.0 ~ 50.0
+                          , Grant Self 1 (Boost Arts) $ 30.0 ~ 50.0
                           , Debuff Enemy 1 DeathDown $ 80.0 ~ 100.0
                           ]
                 }
@@ -185,7 +185,7 @@ assassins = [
               , { name:   "Yin-Yang B"
                 , icon:   IconYinYang
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 20.0 ~ 30.0 
+                , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
                           , To Self DemeritHealth $ Flat 1000.0
                           ]
                 }
@@ -246,7 +246,7 @@ assassins = [
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
                         , To Self Heal $ Flat 2000.0
                         , Grant Self 3 AttackUp $ Flat 20.0
                         ]
@@ -274,7 +274,7 @@ assassins = [
   , actives:  [ { name:   "Magecraft B"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 1 ArtsUp $ 24.0 ~ 40.0 ]
+                , effect: [ Grant Self 1 (Boost Arts) $ 24.0 ~ 40.0 ]
                 }
               , { name:   "Affection of the Holy Grail A+"
                 , icon:   IconShieldBreak
@@ -299,7 +299,7 @@ assassins = [
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   15
-              , effect: [ To Enemy Damage $ 900.0 ~ 1500.0 
+              , effect: [ To Enemy Damage $ 900.0 ~ 1500.0
                         , To Enemy GaugeDown Full
                         ]
               , over:   [ Debuff Enemy 3 CritChance $ 10.0 ~ 50.0 ]
@@ -333,15 +333,15 @@ assassins = [
               , { name:   "Primordial Rune (Sea) A"
                 , icon:   IconHeal
                 , cd:     8
-                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0 
+                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
                           , Grant Ally 1 ReduceDamage $ 500.0 ~ 1000.0
                           ]
                 }
               , { name:   "Midsummer Mistake C"
                 , icon:   IconShieldBreak
                 , cd:     8
-                , effect: [ Grant Self 1 IgnoreInvinc Full 
-                          , Grant Self 1 QuickUp $ 30.0 ~ 50.0
+                , effect: [ Grant Self 1 IgnoreInvinc Full
+                          , Grant Self 1 (Boost Quick) $ 30.0 ~ 50.0
                           ]
                 }
               ]
@@ -384,13 +384,13 @@ assassins = [
               , { name:   "Siren Song A"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 70 100 
-                            $ Debuff (EnemyType Male) 1 Charm Full ] 
+                , effect: [ Chances 70 100
+                            $ Debuff (EnemyType Male) 1 Charm Full ]
                 }
               , { name:   "Whim of the Goddess A"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0 
+                , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
                           , Grant (AlliesType Divine) 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }
@@ -402,10 +402,10 @@ assassins = [
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   0
-              , effect: [ To (EnemyType Male) Kill $ 100.0 ~ 150.0 
+              , effect: [ To (EnemyType Male) Kill $ 100.0 ~ 150.0
                         , Chance 150 ∘ Debuff Enemy 3 DefenseDown $ Flat 20.0
-                        ] 
-              , over:   [ Chances 100 200 
+                        ]
+              , over:   [ Chances 100 200
                           $ Debuff (EnemyType Male) 1 Charm Full ]
               , first:  false
               }
@@ -430,7 +430,7 @@ assassins = [
   , actives:  [ { name:   "Sabotage B+"
                 , icon:   IconSwordDown
                 , cd:     7
-                , effect: [ Debuff Enemies 3 AttackDown $ Flat 10.0 
+                , effect: [ Debuff Enemies 3 AttackDown $ Flat 10.0
                           , Debuff Enemies 3 CritChance $ 10.0 ~ 20.0
                           ]
                 }
@@ -577,16 +577,16 @@ assassins = [
   , actives:  [ { name:   "Monstrous Strength B (Jekyll & Hyde)"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ 5.0 ~ 15.0 
-                          , When "transformed into Hyde" 
+                , effect: [ Grant Self 3 AttackUp $ 5.0 ~ 15.0
+                          , When "transformed into Hyde"
                             ∘ Grant Self 3 AttackUp $ 25.0 ~ 35.0
                           ]
                 }
               , { name:   "Panicky Voice A"
                 , icon:   IconStun
                 , cd:     8
-                , effect: [ Grant Self 0 StunSuccess $ 5.0  ~ 15.0 
-                          , When "transformed into Hyde" 
+                , effect: [ Grant Self 0 StunSuccess $ 5.0  ~ 15.0
+                          , When "transformed into Hyde"
                             ∘ Grant Self 0 StunSuccess $ 85.0 ~ 135.0
                           , Chance 10 $ Debuff Enemy 1 Stun Full
                           ]
@@ -594,8 +594,8 @@ assassins = [
               , { name:   "Self-Modification D"
                 , icon:   IconExclamationUp
                 , cd:     7
-                , effect: [ Grant Self 3 CritUp $ 5.0 ~ 15.0 
-                          , When "transformed into Hyde" 
+                , effect: [ Grant Self 3 CritUp $ 5.0 ~ 15.0
+                          , When "transformed into Hyde"
                             ∘ Grant Self 3 CritUp $ 25.0 ~ 35.0
                           ]
                 }
@@ -609,9 +609,9 @@ assassins = [
               , hits:   0
               , effect: [ To Self (ChangeClass Berserker) Full
                         , Grant Self 0 MaxHP $ 3000.0 ~ 6000.0
-                        , To Self HealToFull Full
+                        , To Self Heal Full
                         ]
-              , over:   [ Grant Self 0 BusterUp $ 40.0 ~ 80.0 ] 
+              , over:   [ Grant Self 0 (Boost Buster) $ 40.0 ~ 80.0 ]
               , first:  false
               }
   , gen:      { starWeight: 99, starRate: 25.6, npAtk: 1.05, npDef: 4 }
@@ -635,7 +635,7 @@ assassins = [
   , actives:  [ { name:   "Restrain A"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 3 StarAbsorb $ Flat 200.0 
+                , effect: [ Grant Self 3 StarWeight $ Flat 200.0
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
@@ -647,7 +647,7 @@ assassins = [
               , { name:   "Insolent A"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Self 1 QuickUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 1 (Boost Quick) $ 20.0 ~ 30.0
                           , Grant Self 1 CritUp $ 30.0 ~ 50.0
                           ]
                 }
@@ -659,7 +659,7 @@ assassins = [
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 
+              , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0
                         , To Self DemeritDamage $ Flat 1000.0
                         ]
               , over:   [ To Enemy Kill $ 50.0 ~ 100.0
@@ -693,7 +693,7 @@ assassins = [
               , { name:   "Medicine A+"
                 , icon:   IconHeal
                 , cd:     7
-                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0 
+                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
                           , To Ally RemoveDebuffs Full
                           ]
                 }
@@ -737,23 +737,23 @@ assassins = [
   , actives:  [ { name:   "Librarian of Knowledge C"
                 , icon:   IconNobleUp
                 , cd:     7
-                , effect: [ Grant Self 3 NPGen $ 10.0 ~ 20.0 
+                , effect: [ Grant Self 3 NPGen $ 10.0 ~ 20.0
                           , Grant Self 3 StarUp $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Wide Specialization A+"
                 , icon:   IconAllUp
                 , cd:     7
-                , effect: [ Chances 60 80 ∘ Grant Self 3 BusterUp $ Flat 30.0 
-                          , Chances 60 80 ∘ Grant Self 3 QuickUp $ Flat 30.0
-                          , Chances 60 80 ∘ Grant Self 3 ArtsUp $ Flat 30.0
+                , effect: [ Chances 60 80 ∘ Grant Self 3 (Boost Buster) $ Flat 30.0
+                          , Chances 60 80 ∘ Grant Self 3 (Boost Quick) $ Flat 30.0
+                          , Chances 60 80 ∘ Grant Self 3 (Boost Arts) $ Flat 30.0
                           , Grant Self 1 Evasion Full
                           ] -- TODO
                 }
               , { name:   "Battle Retreat B"
                 , icon:   IconHeal
                 , cd:     8
-                , effect: [ To Self Heal $ 2000.0 ~ 4000.0 
+                , effect: [ To Self Heal $ 2000.0 ~ 4000.0
                           , To Self DemeritBuffs Full
                           ]
                 }
@@ -790,7 +790,7 @@ assassins = [
   , actives:  [ { name:   "Morph (Infiltration) C"
                 , icon:   IconExclamationDown
                 , cd:     9
-                , effect: [ Debuff Enemy 3 CritChance $ 10.0 ~ 20.0 
+                , effect: [ Debuff Enemy 3 CritChance $ 10.0 ~ 20.0
                           , To Enemy GaugeDown $ Flat 1.0
                           ]
                 }
@@ -802,7 +802,7 @@ assassins = [
               , { name:   "Dance of Silence B"
                 , icon:   IconReaperUp
                 , cd:     8
-                , effect: [ Grant Self 3 KillUp $ 20.0 ~ 50.0 
+                , effect: [ Grant Self 3 KillUp $ 20.0 ~ 50.0
                           , Grant Self 3 DebuffSuccess $ 20.0 ~ 50.0
                           ]
                 }
@@ -814,7 +814,7 @@ assassins = [
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   1
-              , effect: [ Debuff Enemy 5 Poison $ Flat 1000.0 
+              , effect: [ Debuff Enemy 5 Poison $ Flat 1000.0
                         , Chance 40 $ Debuff Enemy 1 SealSkills Full
                         , Chance 40 $ Debuff Enemy 1 SealNP Full
                         , To Enemy Damage $ 900.0 ~ 1500.0
@@ -843,20 +843,20 @@ assassins = [
   , actives:  [ { name:   "Innocent Monster D"
                 , icon:   IconStarTurn
                 , cd:     7
-                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0 
+                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0
                           , Debuff Self 3 DefenseDown $ Flat 14.0
                           ]
                 }
               , { name:   "Siren Song B"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 60 90 
+                , effect: [ Chances 60 90
                             $ Debuff (EnemyType Female) 1 Charm Full ]
                 }
               , { name:   "Mental Corruption A"
                 , icon:   IconStaffUp
                 , cd:     7
-                , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0 
+                , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0
                           , Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           ]
                 }
@@ -898,7 +898,7 @@ assassins = [
               , { name:   "Pheromone B"
                 , icon:   IconHeart
                 , cd:     8
-                , effect: [ Chances 30 60 
+                , effect: [ Chances 30 60
                             $ Debuff (EnemiesType Male) 1 Charm Full
                           , Debuff Enemies 3 DefenseDown $ 10.0 ~ 20.0
                           ]

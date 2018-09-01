@@ -1,6 +1,5 @@
-module Database.Servant 
+module Database.Servant
   ( Servant
-  , Card(..)
   , Deck(..)
   , NoblePhantasm
   , Gen
@@ -14,7 +13,6 @@ import Data.Foldable
 import Data.Generic.Rep
 import Data.Generic.Rep.Bounded
 import Data.Generic.Rep.Enum
-import Data.Generic.Rep.Show
 import Data.Maybe
 import Data.String.CodeUnits
 import Data.Tuple
@@ -43,7 +41,6 @@ type Servant = { name     ∷ String
                , free     ∷ Boolean
                }
 
-data Card = Arts | Buster | Quick
 data Deck = Deck Card Card Card Card Card
 
 type Ratings = { damage     ∷ Int
@@ -54,7 +51,7 @@ type Ratings = { damage     ∷ Int
                , durability ∷ Int
                }
 
-type NoblePhantasm = { name   ∷ String 
+type NoblePhantasm = { name   ∷ String
                      , desc   ∷ String
                      , rank   ∷ Rank
                      , card   ∷ Card
@@ -90,12 +87,12 @@ instance _01_ ∷ Show PhantasmType where
 
 class (BoundedEnum a, Show a) <= MatchServant a where
     has ∷ a -> Boolean -> Servant -> Boolean
-instance _a_ ∷ MatchServant BuffEffect where 
-    has a noSelf = any match ∘ getEffects where 
+instance _a_ ∷ MatchServant BuffEffect where
+    has a noSelf = any match ∘ getEffects where
         match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
         match _ = false
-instance _b_ ∷ MatchServant DebuffEffect where 
-    has a _ = any match ∘ getEffects where 
+instance _b_ ∷ MatchServant DebuffEffect where
+    has a _ = any match ∘ getEffects where
         match (Debuff t _ b _) = a == b && not (allied t)
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where
@@ -105,21 +102,21 @@ instance _c_ ∷ MatchServant InstantEffect where
     has DemeritGauge  _ = const false
     has DemeritHealth _ = const false
     has DemeritKill   _ = const false
-    has a noSelf        = any match ∘ getEffects where 
+    has a noSelf        = any match ∘ getEffects where
         match (To t b _) = a == b && (not noSelf || t /= Self)
         match _ = false
-instance _d_ ∷ MatchServant Trait where 
+instance _d_ ∷ MatchServant Trait where
     has a = const $ elem a ∘ _.traits
 instance _e_ ∷ MatchServant Alignment where
     has a _ {align:(b:c)} = a == b || a == c
 instance _f_ ∷ MatchServant PhantasmType where
     has SingleTarget _ {phantasm} = any match $ phantasmEffects phantasm
-      where 
+      where
         match (To Enemy Damage _) = true
         match (To Enemy DamageThruDef _) = true
         match _ = false
     has MultiTarget _ {phantasm} = any match $ phantasmEffects phantasm
-      where 
+      where
         match (To Enemies Damage _) = true
         match (To Enemies DamageThruDef _) = true
         match _ = false
@@ -150,22 +147,6 @@ instance _12_ ∷ BoundedEnum PhantasmType where
   toEnum = genericToEnum
   fromEnum = genericFromEnum
 
-derive instance _27_ ∷ Eq Card
-derive instance _28_ ∷ Ord Card
-derive instance _29_ ∷ Generic Card _
-instance _30_ ∷ Enum Card where
-  succ = genericSucc
-  pred = genericPred
-instance _31_ ∷ Bounded Card where
-  top = genericTop
-  bottom = genericBottom
-instance _32_ ∷ BoundedEnum Card where
-  cardinality = genericCardinality
-  toEnum = genericToEnum
-  fromEnum = genericFromEnum
-instance _33_ ∷ Show Card where
-  show = genericShow
-
 derive instance _34_ ∷ Eq Deck
 derive instance _35_ ∷ Ord Deck
 derive instance _36_ ∷ Generic Deck _
@@ -180,5 +161,5 @@ instance _39_ ∷ BoundedEnum Deck where
   toEnum = genericToEnum
   fromEnum = genericFromEnum
 instance _40_ ∷ Show Deck where
-  show (Deck a b c d e) = fromCharArray 
+  show (Deck a b c d e) = fromCharArray
                         $ (fromMaybe '?' ∘ charAt 0 ∘ show) <$> [a, b, c, d, e]

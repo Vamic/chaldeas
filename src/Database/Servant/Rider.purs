@@ -32,7 +32,7 @@ riders = [
               , { name:   "Protection of the Sun God A"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Party GaugeUp $ Flat 20.0 
+                , effect: [ To Party GaugeUp $ Flat 20.0
                           , Grant Party 1 BuffUp $ 20.0 ~ 40.0
                           ]
                 }
@@ -42,9 +42,9 @@ riders = [
               , desc:   "The Shining Great Temple Complex"
               , rank:   EX
               , card:   Buster
-              , kind:   "Anti-Fortress" 
+              , kind:   "Anti-Fortress"
               , hits:   5
-              , effect: [ To Enemy Damage $ 600.0 ~  1000.0 
+              , effect: [ To Enemy Damage $ 600.0 ~  1000.0
                         , Debuff Enemy 1 SealNP Full
                         ]
               , over:   [ Debuff Enemy 3 DefenseDown $ 20.0 ~ 60.0 ]
@@ -83,7 +83,7 @@ riders = [
               , { name:   "Pioneer of the Stars EX"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 
+                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
                           , Grant Self 3 IgnoreInvinc Full
                           , To Party GainStars $ Flat 10.0
                           ]
@@ -131,7 +131,7 @@ riders = [
               , { name:   "Lightning Conqueror EX"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0
                           , Grant Self 1 StarUp $ Flat 50.0
                           ]
                 }
@@ -181,7 +181,7 @@ riders = [
               , { name:   "Siren Song C"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 50 80 
+                , effect: [ Chances 50 80
                             $ Debuff (EnemyType Male) 1 Charm Full ]
                 }
               ]
@@ -219,7 +219,7 @@ riders = [
   , actives:  [ { name:   "Long-Distance Dash A"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Self 3 QuickUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 3 (Boost Quick) $ 20.0 ~ 30.0
                           , Grant Self 3 StarUp $ 30.0 ~ 50.0
                           ]
                 }
@@ -231,7 +231,7 @@ riders = [
               , { name:   "Natural Body A"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 60.0 ~ 120.0 
+                , effect: [ Grant Self 3 DebuffResist $ 60.0 ~ 120.0
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
@@ -244,7 +244,7 @@ riders = [
               , kind:   "Anti-Army"
               , hits:   4
               , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 ]
-              , over:   [ Grant Self 1 QuickUp $ 10.0 ~ 90.0 ]
+              , over:   [ Grant Self 1 (Boost Quick) $ 10.0 ~ 90.0 ]
               , first:  false
               }
   , gen:      { starWeight: 198, starRate: 9.0, npAtk: 1.15, npDef: 3 }
@@ -268,7 +268,7 @@ riders = [
   , actives:  [ { name:   "Saint's Gift EX"
                 , icon:   IconHeal
                 , cd:     7
-                , effect: [ To Ally Heal $ 1500.0 ~ 3500.0 
+                , effect: [ To Ally Heal $ 1500.0 ~ 3500.0
                           , Grant Ally 3 StarUp $ Flat 30.0
                           ]
                 }
@@ -280,7 +280,7 @@ riders = [
               , { name:   "Mana Burst A-"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 25.0 ~ 45.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 25.0 ~ 45.0 ]
                 }
               ]
   , passives: [magicResistance A, riding A]
@@ -315,21 +315,21 @@ riders = [
   , actives:  [ { name:   "Protection of the Faith A"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0 
+                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
               , { name:   "Miracle D+"
                 , icon:   IconHeal
                 , cd:     8
-                , effect: [ To Party Heal $ 1000.0 ~ 2000.0 
+                , effect: [ To Party Heal $ 1000.0 ~ 2000.0
                           , To Party RemoveDebuffs Full
                           ]
                 }
               , { name:   "Oath of the Holy Maiden C"
                 , icon:   IconShieldDown
                 , cd:     7
-                , effect: [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 30.0 
+                , effect: [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 30.0
                           , To Enemy RemoveBuffs Full
                           ]
                 }
@@ -366,7 +366,7 @@ riders = [
   , actives:  [ { name:   "Cerulean Ride A"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 3 ArtsUp $ 20.0 ~ 30.0 ]
+                , effect: [ Grant Self 3 (Boost Arts) $ 20.0 ~ 30.0 ]
                 }
               , { name:   "Rodeo Flip A+"
                 , icon:   IconDodge
@@ -378,7 +378,7 @@ riders = [
               , { name:   "Endless Summer B"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 3 Guts $ Flat 1000.0 
+                , effect: [ Grant Self 3 Guts $ Flat 1000.0
                           , To Self GaugeUp $ 20.0 ~ 30.0
                           ]
                 }
@@ -415,21 +415,21 @@ riders = [
   , actives:  [ { name:   "Siren Song C"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 50 80 
+                , effect: [ Chances 50 80
                             $ Debuff (EnemyType Male) 1 Charm Full ]
                 }
               , { name:   "Beautiful Princess A"
                 , icon:   IconShield
                 , cd:     8
-                , effect: [ Grant Self 0 Invincibility $ Flat 3.0 
+                , effect: [ Grant Self 0 Invincibility $ Flat 3.0
                           , Grant Self 5 HealPerTurn $ 200.0 ~ 600.0
                           ]
                 }
               , { name:   "God's Grace B"
                 , icon:   IconStaffUp
                 , cd:     7
-                , effect: [ Grant Self 3 MentalSuccess $ 10.0 ~ 30.0 
-                          , To Self Heal $ 1000.0 ~ 2500.0  
+                , effect: [ Grant Self 3 MentalSuccess $ 10.0 ~ 30.0
+                          , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
               ]
@@ -440,7 +440,7 @@ riders = [
               , card:   Quick
               , kind:   "Anti-Army"
               , hits:   5
-              , effect: [ To Enemies Damage $ 600.0 ~ 1000.0 
+              , effect: [ To Enemies Damage $ 600.0 ~ 1000.0
                         , To Party RemoveDebuffs Full
                         ]
               , over:   [ To Party Heal $ 500.0 ~ 2500.0 ]
@@ -477,7 +477,7 @@ riders = [
               , { name:   "Combination C"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 600.0 
+                , effect: [ Grant Self 1 StarWeight $ 300.0 ~ 600.0
                           , Grant Self 1 AttackUp $ 20.0 ~ 30.0
                           ]
                 }
@@ -524,7 +524,7 @@ riders = [
               , { name:   "Evaporation of Reason D"
                 , icon:   IconStarTurn
                 , cd:     10
-                , effect: [ Chance 65 ∘ Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0 
+                , effect: [ Chance 65 ∘ Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0
                           , Chance 65 ∘ Grant Self 3 StarUp $ 30.0 ~ 50.0
                           , Chance 65 ∘ Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
@@ -537,7 +537,7 @@ riders = [
               , card:   Quick
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ To Enemies DamageThruDef $ 600.0 ~ 1000.0 
+              , effect: [ To Enemies DamageThruDef $ 600.0 ~ 1000.0
                         , Grant Self 0 Evasion $ Flat 3.0
                         ]
               , over:   [ To Party GainStars $ 5.0 ~ 25.0 ]
@@ -571,7 +571,7 @@ riders = [
               , { name:   "Martyr's Soul B+"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0 
+                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
                           , To Self Heal $ 750.0 ~ 2000.0
                           ]
                 }
@@ -589,7 +589,7 @@ riders = [
               , kind:   "Anti-Personnel"
               , hits:   4
               , effect: [ Debuff Enemy 3 (ApplyTrait Dragon) Full
-                        , To Enemy Damage $ 900.0 ~ 1500.0 
+                        , To Enemy Damage $ 900.0 ~ 1500.0
                         ]
               , over:   [ Grant Self 1 DefenseUp $ 20.0 ~ 40.0 ]
               , first:  false
@@ -625,7 +625,7 @@ riders = [
               , { name:   "Art of the Swallow B"
                 , icon:   IconDodge
                 , cd:     8
-                , effect: [ Grant Self 1 Evasion $ Flat 1.0 
+                , effect: [ Grant Self 1 Evasion $ Flat 1.0
                           , Grant Self 1 StarUp $ 50.0 ~ 100.0
                           ]
                 }
@@ -672,7 +672,7 @@ riders = [
               , { name:   "Blood Fort Andromeda B"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ Flat 20.0 
+                , effect: [ To Self GaugeUp $ Flat 20.0
                           , Grant Self 3 NPGen $ 20.0 ~ 30.0
                           ]
                 }
@@ -711,7 +711,7 @@ riders = [
   , actives:  [ { name:   "Voyager of the Storm A"
                 , icon:   IconBeamUp
                 , cd:     7
-                , effect: [ Grant Party 1 NPUp $ 8.0 ~ 16.0 
+                , effect: [ Grant Party 1 NPUp $ 8.0 ~ 16.0
                           , Grant Party 1 AttackUp $ 8.0 ~ 16.0
                           ]
                 }
@@ -726,8 +726,8 @@ riders = [
               , { name:   "Gentlemanly Love C"
                 , icon:   IconHeal
                 , cd:     8
-                , effect: [ To Party Heal $ 1000.0 ~ 2000.0 
-                          , To (AlliesType Female) Heal $ 1000.0 ~ 2000.0 
+                , effect: [ To Party Heal $ 1000.0 ~ 2000.0
+                          , To (AlliesType Female) Heal $ 1000.0 ~ 2000.0
                             -- TODO also genderfluid
                           ]
                 }
@@ -739,7 +739,7 @@ riders = [
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   5
-              , effect: [ To Enemies Damage $ 300.0 ~ 500.0 
+              , effect: [ To Enemies Damage $ 300.0 ~ 500.0
                         , To Party GainStars $ Flat 5.0
                         ]
               , over:   [ Chances 30 70 ∘ To Enemies GaugeDown $ Flat 1.0 ]
@@ -771,13 +771,13 @@ riders = [
               , { name:   "Fair Youth B"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 50 80 
-                            $ Debuff (EnemyType Humanoid) 1 Charm Full ] 
+                , effect: [ Chances 50 80
+                            $ Debuff (EnemyType Humanoid) 1 Charm Full ]
                 }
               , { name:   "Omen of the Conqueror A"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Party 3 QuickUp $ 10.0 ~ 20.0 ]
+                , effect: [ Grant Party 3 (Boost Quick) $ 10.0 ~ 20.0 ]
                 }
               ]
   , passives: [magicResistance D, divinity E, riding APlus]
@@ -822,7 +822,7 @@ riders = [
               , { name:   "Andraste's Protection A"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Party 3 ArtsUp $ 10.0 ~ 20.0 ]
+                , effect: [ Grant Party 3 (Boost Arts) $ 10.0 ~ 20.0 ]
                 }
               ]
   , passives: [magicResistance D, riding A]

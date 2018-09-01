@@ -2,74 +2,74 @@ module Database.Icon (Icon(..)) where
 
 import Prelude
 import Operators
-import Data.Enum         
-import Data.Generic.Rep         
+import Data.Enum
+import Data.Generic.Rep
 import Data.Generic.Rep.Bounded
-import Data.Generic.Rep.Enum 
-import Data.Generic.Rep.Show   
+import Data.Generic.Rep.Enum
+import Data.Generic.Rep.Show
 import Data.String
 
-data Icon 
-  = IconAllUp
-  | IconArtsUp
-  | IconAvenger
-  | IconBeamUp
-  | IconBeamDown
-  | IconBubbles
-  | IconBullseye
-  | IconBusterUp
-  | IconCircuits
-  | IconDamageUp
-  | IconDarkMagic
-  | IconDash
-  | IconDiamonds
-  | IconDodge
-  | IconEclipse
-  | IconExclamationUp
-  | IconExclamationDown
-  | IconFace
-  | IconFire
-  | IconFlex
-  | IconGoddess
-  | IconHeal
-  | IconHealTurn
-  | IconHealUp
-  | IconHeart
-  | IconHoodUp
-  | IconHoodDown
-  | IconHoodX
-  | IconHorse
-  | IconHPUp
-  | IconKneel
-  | IconMagicCircle
-  | IconMask
-  | IconMissing
-  | IconMystic
-  | IconNiffin
-  | IconNoble
-  | IconNobleTurn
-  | IconNobleUp 
-  | IconPotion
-  | IconQuickUp
-  | IconReaperUp
-  | IconShield
-  | IconShieldBreak
-  | IconShieldDown
-  | IconShieldUp
-  | IconSpotlight
-  | IconStaffUp
-  | IconStar
-  | IconStarHaloUp
-  | IconStarTurn
-  | IconStarUp
-  | IconStun
-  | IconSwordDown
-  | IconSun
-  | IconSunUp
-  | IconSwordUp
-  | IconCrosshairUp
-  | IconTeeth
-  | IconYinYang
+data Icon
+    = IconAllUp
+    | IconArtsUp
+    | IconAvenger
+    | IconBeamUp
+    | IconBeamDown
+    | IconBubbles
+    | IconBullseye
+    | IconBusterUp
+    | IconCircuits
+    | IconDamageUp
+    | IconDarkMagic
+    | IconDash
+    | IconDiamonds
+    | IconDodge
+    | IconEclipse
+    | IconExclamationUp
+    | IconExclamationDown
+    | IconFace
+    | IconFire
+    | IconFlex
+    | IconGoddess
+    | IconHeal
+    | IconHealTurn
+    | IconHealUp
+    | IconHeart
+    | IconHoodUp
+    | IconHoodDown
+    | IconHoodX
+    | IconHorse
+    | IconHPUp
+    | IconKneel
+    | IconMagicCircle
+    | IconMask
+    | IconMissing
+    | IconMystic
+    | IconNiffin
+    | IconNoble
+    | IconNobleTurn
+    | IconNobleUp
+    | IconPotion
+    | IconQuickUp
+    | IconReaperUp
+    | IconShield
+    | IconShieldBreak
+    | IconShieldDown
+    | IconShieldUp
+    | IconSpotlight
+    | IconStaffUp
+    | IconStar
+    | IconStarHaloUp
+    | IconStarTurn
+    | IconStarUp
+    | IconStun
+    | IconSwordDown
+    | IconSun
+    | IconSunUp
+    | IconSwordUp
+    | IconCrosshairUp
+    | IconTeeth
+    | IconYinYang
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

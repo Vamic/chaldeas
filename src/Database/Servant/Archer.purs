@@ -29,7 +29,7 @@ archers = [
               , { name:   "Collector EX"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 3 StarAbsorb $ 300.0 ~ 600.0 ]
+                , effect: [ Grant Self 3 StarWeight $ 300.0 ~ 600.0 ]
                 }
               ]
   , passives: [magicResistance E, independentAction APlus, divinity B]
@@ -40,7 +40,7 @@ archers = [
               , kind:   "Anti-World"
               , hits:   1
               , effect: [ Grant Self 1 NPUp $ Flat 30.0
-                        , To Enemies Damage $ 400.0 ~ 600.0 
+                        , To Enemies Damage $ 400.0 ~ 600.0
                         ]
               , over:   [ To Enemies (DamageVs EnumaElish) $ 150.0 ~ 200.0 ]
               , first:  false
@@ -66,21 +66,21 @@ archers = [
   , actives:  [ { name:   "Summer Splash! A+"
                 , icon:   IconArtsUp
                 , cd:     8
-                , effect: [ Grant Self 3 ArtsUp  $ 20.0 ~ 30.0 
-                          , Grant Party 3 DefenseUp $ 10.0 ~ 20.0 
+                , effect: [ Grant Self 3 (Boost Arts)  $ 20.0 ~ 30.0
+                          , Grant Party 3 DefenseUp $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Beach House Protection EX"
                 , icon:   IconHeal
                 , cd:     6
-                , effect: [ To Self Heal $ 2000.0 ~ 5000.0 
+                , effect: [ To Self Heal $ 2000.0 ~ 5000.0
                           , To Self DemeritGauge $ Flat 10.0
                           ]
                 }
               , { name:   "Beach Flower B"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Party 3 AttackUp $ 8.0 ~ 18.0 
+                , effect: [ Grant Party 3 AttackUp $ 8.0 ~ 18.0
                           , Grant (AlliesType Male) 3 StarUp $ 18.0 ~ 38.0
                           ]
                 }
@@ -92,7 +92,7 @@ archers = [
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   10
-              , effect: [ To Enemy Damage $ 900.0 ~ 1500.0 
+              , effect: [ To Enemy Damage $ 900.0 ~ 1500.0
                         , Chance 70 ∘ To Enemy GaugeDown $ Flat 1.0
                         ]
               , over:   [ To Self GaugeUp $ 20.0 ~ 40.0 ]
@@ -145,7 +145,7 @@ archers = [
               , card:   Buster
               , kind:   "Anti-Fortress"
               , hits:   3
-              , effect: [ To Enemies Damage $ 400.0 ~ 600.0 
+              , effect: [ To Enemies Damage $ 400.0 ~ 600.0
                         , Chance 40 $ Debuff Enemies 1 Stun Full
                         , To Self DemeritDamage $ Flat 500.0
                         ]
@@ -173,7 +173,7 @@ archers = [
   , actives:  [ { name:   "Grace of the Goddess EX"
                 , icon:   IconShieldUp
                 , cd:     9
-                , effect: [ Grant Self 1 DefenseUp $ 30.0 ~ 50.0 
+                , effect: [ Grant Self 1 DefenseUp $ 30.0 ~ 50.0
                           , Grant Self 3 AttackUp $ Flat 20.0
                           , Grant Self 3 DebuffResist $ Flat 50.0
                           ]
@@ -198,7 +198,7 @@ archers = [
               , card:   Arts
               , kind:   "Anti-Personnel"
               , hits:   5
-              , effect: [ To Enemy Damage $ 1200.0 ~ 1800.0 
+              , effect: [ To Enemy Damage $ 1200.0 ~ 1800.0
                         , Debuff Enemy 3 AttackDown $ Flat 20.0
                         , To Enemy GaugeDown $ Flat 1.0
                         ]
@@ -231,7 +231,7 @@ archers = [
               , { name:   "Hero of the Endowed A"
                 , icon:   IconNoble
                 , cd:     10
-                , effect: [ To Self GaugeUp $ Flat 25.0 
+                , effect: [ To Self GaugeUp $ Flat 25.0
                           , Grant Self 5 HealPerTurn $ 1000.0 ~ 2000.0
                           , Grant Self 5 StarsPerTurn $ 4.0 ~ 8.0
                           ]
@@ -239,7 +239,7 @@ archers = [
               , { name:   "Mana Burst (Flame) A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
@@ -251,7 +251,7 @@ archers = [
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ To Enemies Damage $ 400.0 ~ 600.0 
+              , effect: [ To Enemies Damage $ 400.0 ~ 600.0
                         , To Enemies Kill $ Flat 50.0
                         , To (EnemiesType Divine) Kill $ Flat 80.0
                         ]
@@ -262,7 +262,7 @@ archers = [
   , hits:     { quick: 2, arts: 3, buster: 3, ex: 5 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    31.5
-  , align:    Lawful:Balanced   
+  , align:    Lawful:Balanced
   , limited:  false
   , free:     false
   }
@@ -286,15 +286,15 @@ archers = [
               , { name:   "Projection B"
                 , icon:   IconAllUp
                 , cd:     7
-                , effect: [ Grant Self 1 ArtsUp $ 20.0 ~ 35.0 
-                          , Grant Self 1 QuickUp $ 20.0 ~ 35.0
-                          , Grant Self 1 BusterUp $ 20.0 ~ 35.0
+                , effect: [ Grant Self 1 (Boost Arts) $ 20.0 ~ 35.0
+                          , Grant Self 1 (Boost Quick) $ 20.0 ~ 35.0
+                          , Grant Self 1 (Boost Buster) $ 20.0 ~ 35.0
                           ]
                 }
               , { name:   "Kiss Demon B"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 
+                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
                           , Grant Self 3 StarUp $ 50.0 ~ 100.0
                           ]
                 }
@@ -343,9 +343,9 @@ archers = [
               , { name:   "The Demonic King A"
                 , icon:   IconExclamationUp
                 , cd:     7
-                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0 
-                          , Grant Self 3 StarAbsorb $ 300.0 ~ 600.0
-                          ] 
+                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
+                          , Grant Self 3 StarWeight $ 300.0 ~ 600.0
+                          ]
                 }
               ]
   , passives: [magicResistance B, independentAction B]
@@ -380,7 +380,7 @@ archers = [
   , actives:  [ { name:   "Harp of Healing C"
                 , icon:   IconBubbles
                 , cd:     8
-                , effect: [ To Party RemoveMental Full 
+                , effect: [ To Party RemoveMental Full
                           , Grant Party 0 Evasion Full
                           , To Party Heal $ 200.0 ~ 600.0
                           ]
@@ -388,7 +388,7 @@ archers = [
               , { name:   "Unblessed Birth B"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 
+                , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
                           , Debuff Self 1 SealNP Full
                           ]
                 }
@@ -446,9 +446,9 @@ archers = [
               , { name:   "Projection A"
                 , icon:   IconAllUp
                 , cd:     7
-                , effect: [ Grant Self 1 ArtsUp $ 25.0 ~ 40.0 
-                          , Grant Self 1 QuickUp $ 25.0 ~ 40.0
-                          , Grant Self 1 BusterUp $ 25.0 ~ 40.0
+                , effect: [ Grant Self 1 (Boost Arts) $ 25.0 ~ 40.0
+                          , Grant Self 1 (Boost Quick) $ 25.0 ~ 40.0
+                          , Grant Self 1 (Boost Buster) $ 25.0 ~ 40.0
                           ]
                 }
               ]
@@ -484,12 +484,12 @@ archers = [
   , actives:  [ { name:   "Beyond Arcadia A"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Party 1 QuickUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Party 1 (Boost Quick) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Hunter's Aesthetic C"
                 , icon:   IconStarUp
                 , cd:     6
-                , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0 ]
+                , effect: [ Grant Self 1 StarWeight $ 500.0 ~ 1000.0 ]
                 }
               , { name:   "Calydonian Hunt A"
                 , icon:   IconDodge
@@ -531,21 +531,21 @@ archers = [
   , actives:  [ { name:   "Beach Flower A+"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Party 3 AttackUp $ 9.5 ~ 19.5 
+                , effect: [ Grant Party 3 AttackUp $ 9.5 ~ 19.5
                           , Grant (AlliesType Male) 3 StarUp $ 21.0 ~ 41.0
                           ]
                 }
               , { name:   "Treasure Hunt (Sea) C"
                 , icon:   IconStarHaloUp
                 , cd:     8
-                , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 600.0 
+                , effect: [ Grant Self 1 StarWeight $ 300.0 ~ 600.0
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
               , { name:   "Pirate's Honor C+"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ 8.5 ~ 25.5 
+                , effect: [ Grant Self 3 AttackUp $ 8.5 ~ 25.5
                           , Grant Self 0 Guts $ Flat 1.0
                           , Debuff Self 3 DebuffVuln $ Flat 50.0
                           ]
@@ -558,9 +558,9 @@ archers = [
               , card:   Buster
               , kind:   "Anti-Unit"
               , hits:   9
-              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
                         , To Enemy LastStand $ Flat 600.0
-                        ] 
+                        ]
               , over:   [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 30.0 ]
               , first:  false
               }
@@ -585,7 +585,7 @@ archers = [
   , actives:  [ { name:   "Sabotage A"
                 , icon:   IconSwordDown
                 , cd:     7
-                , effect: [ Debuff Enemies 3 AttackDown $ 5.0 ~ 15.0 
+                , effect: [ Debuff Enemies 3 AttackDown $ 5.0 ~ 15.0
                           , Debuff Enemies 5 Poison $ Flat 500.0
                           ]
                 }
@@ -642,13 +642,13 @@ archers = [
               , { name:   "Siren Song A"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 70 100 
+                , effect: [ Chances 70 100
                             $ Debuff (EnemyType Male) 1 Charm Full ]
                 }
               , { name:   "Whim of the Goddess A (Euryale)"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 3 ArtsUp $ 20.0 ~ 30.0 ]
+                , effect: [ Grant Self 3 (Boost Arts) $ 20.0 ~ 30.0 ]
                 }
               ]
   , passives: [magicResistance A, independentAction APlus, coreOfGoddess EX]
@@ -658,11 +658,11 @@ archers = [
               , card:   Arts
               , kind:   "Anti-Personnel"
               , hits:   1
-              , effect: [ To Enemy Damage $ Flat 1200.0 
+              , effect: [ To Enemy Damage $ Flat 1200.0
                         , To Enemy (DamageVs Male) $ 150.0 ~ 250.0
                         , Chance 150 ∘ Debuff Enemy 3 AttackDown $ Flat 20.0
                         ]
-              , over:   [ Chances 100 200 
+              , over:   [ Chances 100 200
                           $ Debuff (EnemyType Male) 1 Charm Full ]
               , first:  false
               }
@@ -687,8 +687,8 @@ archers = [
   , actives:  [ { name:   "Toughness EX"
                 , icon:   IconShieldUp
                 , cd:     7
-                , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 20.0 
-                          , Grant Self 3 PoisonResist $ 80.0 ~ 160.0
+                , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 20.0
+                          , Grant Self 3 (Resist Poison) $ 80.0 ~ 160.0
                           ]
                 }
               , { name:   "Clairvoyance A"
@@ -699,7 +699,7 @@ archers = [
               , { name:   "Arrow Construction A"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 20.0 ~ 30.0 
+                , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
@@ -711,7 +711,7 @@ archers = [
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   2
-              , effect: [ To Enemies Damage $ 800.0 ~ 1200.0 
+              , effect: [ To Enemies Damage $ 800.0 ~ 1200.0
                         , To Self DemeritKill Full
                         ]
               , over:   [ To Enemies Damage $ 0.0 ~ 800.0 ]
@@ -738,7 +738,7 @@ archers = [
   , actives:  [ { name:   "Divine Protection A"
                 , icon:   IconShieldUp
                 , cd:     7
-                , effect: [ Grant Self 1 DefenseUp $ Flat 50.0 
+                , effect: [ Grant Self 1 DefenseUp $ Flat 50.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
@@ -795,7 +795,7 @@ archers = [
               , { name:   "Fair Youth C"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 45 75 
+                , effect: [ Chances 45 75
                             $ Debuff (EnemyType Humanoid) 1 Charm Full ]
                 }
               , { name:   "Golden Rule A"
@@ -888,14 +888,14 @@ archers = [
   , actives:  [ { name:   "Protection of the Dragon King C"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 3 BusterUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 3 (Boost Buster) $ 20.0 ~ 30.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
               , { name:   "Protection from Arrows C"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 2.0 
+                , effect: [ Grant Self 0 Evasion $ Flat 2.0
                           , Grant Self 3 DefenseUp $ 7.0 ~ 14.0
                           ]
                 }

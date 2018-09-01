@@ -1,14 +1,14 @@
 module Export (servants) where
 
 import Prelude
-import Operators
 import Data.String.CodeUnits (toCharArray)
+import Data.Tuple            (Tuple(..))
 
 import Database  hiding (servants)
 import Database  as D
 
 servants ∷ Unit -> Array _
-servants = \_ -> D.servants <#> \s@{align: alignA:alignB} -> 
+servants = \_ -> D.servants <#> \s@{align: Tuple alignA alignB} ->
     { name:          s.name
     , rarity:        s.rarity
     , class:         show s.class
@@ -18,7 +18,7 @@ servants = \_ -> D.servants <#> \s@{align: alignA:alignB} ->
     , activeSkills:  exportActive <$> s.actives
     , passiveSkills: exportPassive <$> s.passives
     , noblePhantasm: exportPhantasm s.phantasm
-    , starWeight:    s.gen.starWeight 
+    , starWeight:    s.gen.starWeight
     , starRate:      s.gen.starRate
     , npAtk:         s.gen.npAtk
     , npDef:         s.gen.npDef
@@ -37,7 +37,7 @@ servants = \_ -> D.servants <#> \s@{align: alignA:alignB} ->
     exportActive {name, icon, cd, effect} =
         { name
         , icon: show icon
-        , cd 
+        , cd
         , effect: exportEffect <$> effect
         }
     exportPassive {name, rank, icon, effect} =
@@ -76,10 +76,17 @@ servants = \_ -> D.servants <#> \s@{align: alignA:alignB} ->
         , amount: exportAmount amount
         , chance: {from: 100, to: 100}
         }
-    exportEffect (Chance chance activeEffect) = 
-        (exportEffect activeEffect) { chance = {from: chance, to: chance} }  
-    exportEffect (Chances a b activeEffect) = 
-        (exportEffect activeEffect) { chance = {from: a, to: b} }  
+    exportEffect (Bonus bonus amount) =
+        { target: show Self
+        , duration: 0
+        , effect: show bonus
+        , amount: exportAmount amount
+        , chance: {from: 100, to: 100}
+        }
+    exportEffect (Chance chance activeEffect) =
+        (exportEffect activeEffect) { chance = {from: chance, to: chance} }
+    exportEffect (Chances a b activeEffect) =
+        (exportEffect activeEffect) { chance = {from: a, to: b} }
     exportEffect (When condition activeEffect) =
         baseEffect { effect = "If " <> condition <> ": " <> baseEffect.effect }
       where baseEffect = exportEffect activeEffect

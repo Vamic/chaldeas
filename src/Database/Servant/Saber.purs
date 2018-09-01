@@ -19,12 +19,12 @@ sabers = [
   , actives:  [ { name:   "Shukuchi B"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Self 1 QuickUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Quick) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Weak Constitution A"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0 ]
+                , effect: [ Grant Self 1 StarWeight $ 500.0 ~ 1000.0 ]
                 }
               , { name:   "Mind's Eye (Fake) A"
                 , icon:   IconDodge
@@ -38,7 +38,7 @@ sabers = [
   , phantasm: { name:   "Mumyou Sandanzuki"
               , desc:   "Three-Stage Thrust"
               , rank:   Unknown
-              , card:   Quick 
+              , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   3
               , effect: [ To Enemy DamageThruDef $ 1200.0 ~ 2000.0 ]
@@ -71,14 +71,14 @@ sabers = [
               , { name:   "Natural Body D"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 OffensiveResist $ 40.0 ~ 80.0 
+                , effect: [ Grant Self 3 OffensiveResist $ 40.0 ~ 80.0
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
               , { name:   "Crest of the Star EX"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0 
+                , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
@@ -120,14 +120,14 @@ sabers = [
               , { name:   "Flowers for the Earth A"
                 , icon:   IconSwordUp
                 , cd:     8
-                , effect: [ Grant Ally 3 AttackUp $ 30.0 ~ 40.0 
+                , effect: [ Grant Ally 3 AttackUp $ 30.0 ~ 40.0
                           , Grant Ally 3 StarUp $ 30.0 ~ 50.0
                           ]
                 }
               , { name:   "Love for the People A"
                 , icon:   IconHeal
                 , cd:     7
-                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0 
+                , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
                           , Grant Ally 3 DefenseUp $ 10.0 ~ 20.0
                           ]
                 }
@@ -167,7 +167,7 @@ sabers = [
   , actives:  [ { name:   "Mana Burst A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Intuition B"
                 , icon:   IconStar
@@ -177,7 +177,7 @@ sabers = [
               , { name:   "Secret of Pedigree EX"
                 , icon:   IconShieldUp
                 , cd:     8
-                , effect: [ Grant Self 1 DefenseUp $ 30.0 ~ 50.0 
+                , effect: [ Grant Self 1 DefenseUp $ 30.0 ~ 50.0
                           , To Self RemoveDebuffs Full
                           , To Self GaugeUp $ 10.0 ~ 30.0
                           ]
@@ -218,21 +218,21 @@ sabers = [
                 , icon:   IconMystic
                 , cd:     7
                 , effect: [ Grant Self 1 IgnoreInvinc Full
-                          , Grant Self 1 ArtsUp $ 25.0 ~ 40.0
+                          , Grant Self 1 (Boost Arts) $ 25.0 ~ 40.0
                           , Debuff Enemies 1 DeathDown $ 60.0 ~ 80.0
                           ]
                 }
               , { name:   "Unyou B"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ 15.0 ~ 25.0 
+                , effect: [ Grant Self 3 AttackUp $ 15.0 ~ 25.0
                           , Grant Self 3 DebuffResist $ 18.0 ~ 36.0
                           ]
                 }
               , { name:   "Yin-Yang A"
                 , icon:   IconYinYang
                 , cd:     6
-                , effect: [ To Self Heal $ 2000.0 ~ 5000.0 
+                , effect: [ To Self Heal $ 2000.0 ~ 5000.0
                           , To Self DemeritGauge $ Flat 10.0
                           ]
                 }
@@ -244,7 +244,7 @@ sabers = [
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   1
-              , effect: [ To Enemies DamageThruDef $ 450.0 ~ 750.0 
+              , effect: [ To Enemies DamageThruDef $ 450.0 ~ 750.0
                         , To Party RemoveDebuffs Full
                         ]
               , over:   [ To Enemies Kill $ 60.0 ~ 100.0 ]
@@ -276,7 +276,7 @@ sabers = [
               , { name:   "Mana Burst A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Intuition A"
                 , icon:   IconStar
@@ -316,19 +316,19 @@ sabers = [
   , actives:  [ { name:   "Knight of the Lake A"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ Flat 30.0 
+                , effect: [ To Self GaugeUp $ Flat 30.0
                           , To Party GainStars $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Eternal Arms Mastery A+"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
+                , effect: [ Grant Self 3 StarWeight $ 3000.0 ~ 6000.0 ]
                 }
               , { name:   "Knight of Owner A++"
                 , icon:   IconStarTurn
                 , cd:     8
-                , effect: [ Grant Self 3 StarsPerTurn $ 5.0 ~ 15.0 
+                , effect: [ Grant Self 3 StarsPerTurn $ 5.0 ~ 15.0
                           , Grant Self 3 CritUp $ 30.0 ~ 50.0
                           ]
                 }
@@ -340,7 +340,7 @@ sabers = [
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ Grant Self 1 ArtsUp $ Flat 30.0 
+              , effect: [ Grant Self 1 (Boost Arts) $ Flat 30.0
                         , To Enemy Damage $ 900.0 ~ 1500.0
                         ]
               , over:   [ Debuff Enemy 5 DamageVuln $ 1000.0 ~ 3000.0 ]
@@ -367,7 +367,7 @@ sabers = [
   , actives:  [ { name:   "Mana Burst A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Intuition B"
                 , icon:   IconStar
@@ -412,7 +412,7 @@ sabers = [
   , actives:  [ { name:   "Blessing of Martial Arts A"
                 , icon:   IconStarUp
                 , cd:     6
-                , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 500.0 
+                , effect: [ Grant Self 1 StarWeight $ 300.0 ~ 500.0
                           , Grant Self 1 CritUp $ 50.0 ~ 100.0
                           ]
                 }
@@ -424,7 +424,7 @@ sabers = [
               , { name:   "Curse of Separation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 3 Guts $ Flat 1000.0 
+                , effect: [ Grant Self 3 Guts $ Flat 1000.0
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
@@ -461,14 +461,14 @@ sabers = [
   , actives:  [ { name:   "Migraine B"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0 
+                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
                           , To Self Heal $ 500.0 ~ 2000.0
                           ]
                 }
               , { name:   "Imperial Privilege EX"
                 , icon:   IconHeal
                 , cd:     7
-                , effect: [ To Self Heal $ 1200.0 ~ 3400.0 
+                , effect: [ To Self Heal $ 1200.0 ~ 3400.0
                           , Chance 60 ∘ Grant Self 3 AttackUp $ 22.0 ~ 44.0
                           , Chance 60 ∘ Grant Self 3 DefenseUp $ 22.0 ~ 44.0
                           ]
@@ -537,7 +537,7 @@ sabers = [
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   0
-              , effect: [ Debuff Enemies 2 AttackDown $ 10.0 ~ 30.0 
+              , effect: [ Debuff Enemies 2 AttackDown $ 10.0 ~ 30.0
                         , Debuff Enemies 2 DefenseDown $ 10.0 ~ 30.0
                         ]
               , over:   [ Chances 10 50 $ Debuff Enemies 1 Charm Full ]
@@ -576,13 +576,13 @@ sabers = [
               , { name:   "Dragon-Slayer A"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 3 (AttackUpVs Dragon) $ 50.0 ~ 80.0 
+                , effect: [ Grant Self 3 (AttackUpVs Dragon) $ 50.0 ~ 80.0
                           , Grant Self 3 (DefenseUpVs Dragon) $ Flat 30.0
                           ]
                 }
               ]
   , passives: [riding B]
-  , phantasm: { name:  "Balmung" 
+  , phantasm: { name:  "Balmung"
               , desc:   "Phantasmal Greatsword, Felling of the Sky Demon"
               , rank:   APlus
               , card:   Buster
@@ -613,9 +613,9 @@ sabers = [
   , actives:  [ { name:   "Numeral of the Saint EX"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ Flat 20.0 
-                          , When "on Open Field with Sunshine" 
-                            ∘ Grant Self 3 BusterUp $ 20.0 ~ 30.0
+                , effect: [ Grant Self 3 AttackUp $ Flat 20.0
+                          , When "on Open Field with Sunshine"
+                            ∘ Grant Self 3 (Boost Buster) $ 20.0 ~ 30.0
                           ]
                 }
               , { name:   "Charisma E"
@@ -626,7 +626,7 @@ sabers = [
               , { name:   "Belt of Bertilak EX"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ Flat 20.0 
+                , effect: [ To Self GaugeUp $ Flat 20.0
                           , To Party GainStars $ 5.0 ~ 10.0
                           , Grant Self 1 Guts $ 1000.0 ~ 2000.0
                           ]
@@ -639,7 +639,7 @@ sabers = [
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   4
-              , effect: [ To Enemies Damage $ 300.0 ~ 500.0 
+              , effect: [ To Enemies Damage $ 300.0 ~ 500.0
                         , Debuff Enemies 1 SealSkills Full
                         ]
               , over:   [ Debuff Enemies 5 Burn $ 1000.0 ~ 5000.0 ]
@@ -671,7 +671,7 @@ sabers = [
               , { name:   "Mana Burst A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Journey of the Flowers EX"
                 , icon:   IconNobleUp
@@ -758,14 +758,14 @@ sabers = [
   , actives:  [ { name:   "Valor A"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0  
+                , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0
                           , Grant Self 3 DebuffResist $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Defiant B"
                 , icon:   IconShieldUp
                 , cd:     6
-                , effect: [ Grant Self 3 DefenseUp $ 15.0 ~ 25.0 
+                , effect: [ Grant Self 3 DefenseUp $ 15.0 ~ 25.0
                           , Debuff Self 3 BuffFail $ Flat 50.0
                           ]
                 }
@@ -784,7 +784,7 @@ sabers = [
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   5
-              , effect: [ To Enemies Damage $ 400.0 ~ 600.0 
+              , effect: [ To Enemies Damage $ 400.0 ~ 600.0
                         , Debuff Enemies 3 DefenseDown $ Flat 20.0
                         ]
               , over:   [ Debuff Enemies 3 DebuffVuln $ 20.0 ~ 60.0 ]
@@ -823,7 +823,7 @@ sabers = [
               , { name:   "Oath of Protection B"
                 , icon:   IconShieldUp
                 , cd:     8
-                , effect: [ Grant Party 1 DefenseUp $ Flat 30.0 
+                , effect: [ Grant Party 1 DefenseUp $ Flat 30.0
                           , Grant Self 1 DebuffResist $ 30.0 ~ 50.0
                           ]
                 }
@@ -836,7 +836,7 @@ sabers = [
               , kind:   "Anti-Unit"
               , hits:   2
               , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 ]
-              , over:   [ Grant Self 1 BusterUp $ 30.0 ~ 70.0 ]
+              , over:   [ Grant Self 1 (Boost Buster) $ 30.0 ~ 70.0 ]
               , first:  true
               }
   , gen:      { starWeight: 100, starRate: 10.2, npAtk: 1.11, npDef: 3 }
@@ -870,7 +870,7 @@ sabers = [
               , { name:   "Prelati's Encouragement B"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 5 BusterUp $ 20.0 ~ 40.0 ]
+                , effect: [ Grant Self 5 (Boost Buster) $ 20.0 ~ 40.0 ]
                 }
               ]
   , passives: [magicResistance B, riding B, madness EX]
@@ -880,7 +880,7 @@ sabers = [
               , card:   Arts
               , kind:   "Anti-Personnel"
               , hits:   0
-              , effect: [ Grant Self 2 AttackUp $ 50.0 ~ 100.0 
+              , effect: [ Grant Self 2 AttackUp $ 50.0 ~ 100.0
                         , Debuff Self 3 DefenseDown $ Flat 50.0
                         ]
               , over:   [ To Party GainStars $ 5.0 ~ 25.0 ]

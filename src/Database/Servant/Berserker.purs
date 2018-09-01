@@ -19,14 +19,14 @@ berserkers = [
   , actives:  [ { name:   "Madness of the Spirits A"
                 , icon:   IconExclamationDown
                 , cd:     8
-                , effect: [ Debuff Enemies 3 AttackDown $ 10.0 ~ 20.0 
+                , effect: [ Debuff Enemies 3 AttackDown $ 10.0 ~ 20.0
                           , Debuff Enemies 3 CritChance $ 30.0 ~ 50.0
                           ]
                 }
               , { name:   "Protection from Arrows C"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 2.0 
+                , effect: [ Grant Self 0 Evasion $ Flat 2.0
                           , Grant Self 3 DefenseUp $ 7.0 ~ 14.0
                           ]
                 }
@@ -70,21 +70,21 @@ berserkers = [
   , actives:  [ { name:   "Eternal Arms Mastery A+"
                 , icon:   IconStarUp
                 , cd:     8
-                , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
+                , effect: [ Grant Self 3 StarWeight $ 3000.0 ~ 6000.0 ]
                 }
               , { name:   "Mana Burst (Lightning) A"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 1 BusterUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
                           , Grant Self 1 Evasion Full
                           ]
                 }
               , { name:   "Mystic Slayer A"
                 , icon:   IconDamageUp
                 , cd:     8
-                , effect: [ Grant Self 3 (AttackUpVs Demonic) 
-                            $ 30.0 ~ 50.0 
-                          , Grant Self 3 (AttackUpVs HeavenOrEarth) 
+                , effect: [ Grant Self 3 (AttackUpVs Demonic)
+                            $ 30.0 ~ 50.0
+                          , Grant Self 3 (AttackUpVs HeavenOrEarth)
                             $ 30.0 ~ 50.0
                           ]
                 }
@@ -131,7 +131,7 @@ berserkers = [
               , { name:   "Natural Body A"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 60.0 ~ 120.0 
+                , effect: [ Grant Self 3 DebuffResist $ 60.0 ~ 120.0
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
@@ -218,14 +218,14 @@ berserkers = [
               , { name:   "Understanding of the Human Body A"
                 , icon:   IconDamageUp
                 , cd:     8
-                , effect: [ Grant Self 3 (AttackUpVs Humanoid) $ 30.0 ~ 50.0 
+                , effect: [ Grant Self 3 (AttackUpVs Humanoid) $ 30.0 ~ 50.0
                           , Grant Self 3 (DefenseUpVs Humanoid) $ 15.0 ~ 25.0
                           ]
                 }
               , { name:   "Angel's Cry EX"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Ally 3 BusterUp $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Ally 3 (Boost Buster) $ 30.0 ~ 50.0 ]
                 }
               ]
   , passives: [madness EX]
@@ -262,7 +262,7 @@ berserkers = [
   , actives:  [ { name:   "Valor A+"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ 10.5 ~ 31.0 
+                , effect: [ Grant Self 3 AttackUp $ 10.5 ~ 31.0
                           , Grant Self 3 DebuffResist $ 21.0 ~ 42.0
                           ]
                 }
@@ -316,14 +316,14 @@ berserkers = [
               , { name:   "Wail of the Living Dead C"
                 , icon:   IconStun
                 , cd:     8
-                , effect: [ Chance 60 $ Debuff Enemy 1 Stun Full 
+                , effect: [ Chance 60 $ Debuff Enemy 1 Stun Full
                           , Debuff Enemy 1 DefenseDown $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Overload C"
                 , icon:   IconBeamUp
                 , cd:     7
-                , effect: [ Grant Self 1 NPUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 1 NPUp $ 20.0 ~ 30.0
                           , Debuff Self 5 Burn $ Flat 300.0
                           ]
                 }
@@ -335,7 +335,7 @@ berserkers = [
               , card:   Quick
               , kind:   "Anti-Army"
               , hits:   5
-              , effect: [ To Enemies Damage $ 900.0 ~ 1300.0 
+              , effect: [ To Enemies Damage $ 900.0 ~ 1300.0
                         , Chance 500 $ Debuff Self 2 Stun Full
                         ]
               , over:   [ Debuff Enemies 3 CritChance $ 20.0 ~ 40.0 ]
@@ -376,7 +376,7 @@ berserkers = [
               , { name:   "Morph A"
                 , icon:   IconShieldUp
                 , cd:     7
-                , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0 
+                , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0
                           , Grant Self 1 DefenseUp $ Flat 30.0
                           ]
                 }
@@ -388,7 +388,7 @@ berserkers = [
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   1
-              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
                         , To Enemy RemoveBuffs Full
                         ]
               , over:   [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 30.0 ]
@@ -415,7 +415,7 @@ berserkers = [
   , actives:  [ { name:   "Eternal Arms Mastery A+"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
+                , effect: [ Grant Self 3 StarWeight $ 3000.0 ~ 6000.0 ]
                 }
               , { name:   "Protection of the Spirits A"
                 , icon:   IconStarHaloUp
@@ -425,7 +425,7 @@ berserkers = [
               , { name:   "Mana Reversal A"
                 , icon:   IconNobleUp
                 , cd:     7
-                , effect: [ Grant Self 1 NPGen $ 50.0 ~ 100.0 
+                , effect: [ Grant Self 1 NPGen $ 50.0 ~ 100.0
                           , Grant Self 3 CritUp $ 30.0 ~ 50.0
                           ]
                 }
@@ -462,7 +462,7 @@ berserkers = [
   , actives:  [ { name:   "Berserk A"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 1 AttackUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 1 AttackUp $ 20.0 ~ 30.0
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
@@ -485,7 +485,7 @@ berserkers = [
               , kind:   "Anti-Personnel"
               , hits:   12
               , effect: [ Grant Self 1 SureHit Full
-                        , To Enemy Damage $ 700.0 ~ 1100.0 
+                        , To Enemy Damage $ 700.0 ~ 1100.0
                         ]
               , over:   [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0 ]
               , first:  false
@@ -526,12 +526,12 @@ berserkers = [
               ]
   , passives: [madness C]
   , phantasm: { name:   "Napping in the Dazzling Sunshine and Feasting"
-              , desc:   "Sansan Nikkou Hiruyasumi Shuchi Nikurin"  
+              , desc:   "Sansan Nikkou Hiruyasumi Shuchi Nikurin"
               , rank:   D
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   5
-              , effect: [ To Enemies Damage $ 600.0 ~ 1000.0 
+              , effect: [ To Enemies Damage $ 600.0 ~ 1000.0
                         , Chance 500 $ Debuff Self 2 Stun Full
                         ]
               , over:   [ Grant Self 3 HealPerTurn $ 2000.0 ~ 6000.0 ]
@@ -558,22 +558,22 @@ berserkers = [
   , actives:  [ { name:   "Valor B"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ 9.0 ~ 27.0 
+                , effect: [ Grant Self 3 AttackUp $ 9.0 ~ 27.0
                           , Grant Self 3 MentalResist $ 18.0 ~ 36.0
                           ]
                 }
               , { name:   "Defiant B"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 DefenseUp $ 15.0 ~ 25.0 
+                , effect: [ Grant Self 3 DefenseUp $ 15.0 ~ 25.0
                           , Debuff Self 3 BuffFail $ Flat 50.0
                           ]
                 }
               , { name:   "Chaotic Villain A"
                 , icon:   IconBeamUp
                 , cd:     8
-                , effect: [ Grant Self 1 NPUp $ 20.0 ~ 30.0 
-                          , Grant Self 1 StarAbsorb $ Flat 3000.0
+                , effect: [ Grant Self 1 NPUp $ 20.0 ~ 30.0
+                          , Grant Self 1 StarWeight $ Flat 3000.0
                           , Debuff Others 1 DefenseDown $ Flat 20.0
                           ]
                 }
@@ -615,14 +615,14 @@ berserkers = [
               , { name:   "Unyielding Will A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ Flat 1.0 
+                , effect: [ Grant Self 5 Guts $ Flat 1.0
                           , To Self GaugeUp $ 10.0 ~ 30.0
                           ]
                 }
               , { name:   "Triumphant Return of the Sword B"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 1 BusterUp $ 20.0 ~ 40.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 40.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
@@ -664,15 +664,15 @@ berserkers = [
               , { name:   "Natural Demon A++"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0 
+                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
                           , Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Labrys of the Abyss C"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 1 StarAbsorb $ 3000.0 ~ 6000.0
-                          , Grant Self 1 BusterUp $ 20.0 ~ 30.0
+                , effect: [ Grant Self 1 StarWeight $ 3000.0 ~ 6000.0
+                          , Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
                           ]
                 }
               ]
@@ -683,7 +683,7 @@ berserkers = [
               , card:   Arts
               , kind:   "Maze"
               , hits:   0
-              , effect: [ Debuff Enemies 6 AttackDown $ 10.0 ~ 20.0 
+              , effect: [ Debuff Enemies 6 AttackDown $ 10.0 ~ 20.0
                         , Debuff Enemies 1 AttackDown $ Flat 40.0
                         , Debuff Enemies 1 DefenseDown $ Flat 40.0
                         ]
@@ -716,14 +716,14 @@ berserkers = [
               , { name:   "Stalking B"
                 , icon:   IconShieldDown
                 , cd:     7
-                , effect: [ Debuff Enemy 4 DefenseDown $ 12.0 ~ 24.0 
+                , effect: [ Debuff Enemy 4 DefenseDown $ 12.0 ~ 24.0
                           , Grant Enemy 3 AttackUp $ Flat 20.0
                           ]
                 }
               , { name:   "Flame-Colored Kiss A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 BusterUp $ 20.0 ~ 30.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
                           , To Self RemoveDebuffs Full
                           ]
                 }
@@ -736,7 +736,7 @@ berserkers = [
               , kind:   "Anti-Personnel"
               , hits:   3
               , effect: [ To Enemies Damage $ 100.0 ~ 500.0 ]
-              , over:   [ Chances 50 80 $ Debuff Enemies 1 Stun Full 
+              , over:   [ Chances 50 80 $ Debuff Enemies 1 Stun Full
                         , Debuff Enemies 10 Burn $ 500.0 ~ 900.0
                         ]
               , first:  false
@@ -762,7 +762,7 @@ berserkers = [
   , actives:  [ { name:   "Supporting Curse C+"
                 , icon:   IconSwordDown
                 , cd:     7
-                , effect: [ Debuff Enemy 2 AttackDown $ 5.0 ~ 15.0 
+                , effect: [ Debuff Enemy 2 AttackDown $ 5.0 ~ 15.0
                           , Debuff Enemy 2 DefenseDown $ 10.0 ~ 30.0
                           ]
                 }
@@ -786,7 +786,7 @@ berserkers = [
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   5
-              , effect: [ To Enemies Damage $ 300.0 ~ 500.0 
+              , effect: [ To Enemies Damage $ 300.0 ~ 500.0
                         , To Self DemeritDamage $ Flat 1000.0
                         ]
               , over:   [ Grant Self 1 AttackUp $ 30.0 ~ 50.0 ]
@@ -862,14 +862,14 @@ berserkers = [
   , actives:  [ { name:   "Sadistic Streak A"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0 
+                , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0
                           , Debuff Self 3 DefenseDown $ Flat 10.0
                           ]
                 }
               , { name:   "Imperial Privilege A"
                 , icon:   IconHeal
                 , cd:     7
-                , effect: [ To Self Heal $ 1000.0 ~ 3000.0 
+                , effect: [ To Self Heal $ 1000.0 ~ 3000.0
                           , Chance 60 ∘ Grant Self 3 AttackUp $ 20.0 ~ 40.0
                           , Chance 60 ∘ Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
@@ -877,7 +877,7 @@ berserkers = [
               , { name:   "Glory of Past Days B"
                 , icon:   IconBusterUp
                 , cd:     5
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0 
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0
                           , To Self DemeritHealth $ Flat 500.0
                           ]
                 }

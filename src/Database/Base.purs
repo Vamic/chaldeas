@@ -1,6 +1,7 @@
-module Database.Base 
+module Database.Base
   ( Alignment(..), showAlignment
   , Attribute(..)
+  , Card(..)
   , Class(..)
   , Stat(..), showStat
   , Trait(..)
@@ -9,14 +10,14 @@ module Database.Base
 import Prelude
 import Operators
 
-import Data.Enum           
-import Data.Generic.Rep    
+import Data.Enum
+import Data.Generic.Rep
 import Data.Generic.Rep.Bounded
-import Data.Generic.Rep.Enum 
-import Data.Generic.Rep.Show 
+import Data.Generic.Rep.Enum
+import Data.Generic.Rep.Show
 import Data.Tuple
 
-data Alignment = Lawful | Neutral | Chaotic | Good | Balanced | Evil 
+data Alignment = Lawful | Neutral | Chaotic | Good | Balanced | Evil
                | Mad | Summer | Bride
 
 showAlignment ∷ Tuple Alignment Alignment -> String
@@ -26,6 +27,8 @@ showAlignment = case _ of
 
 data Attribute = Mankind | Earth | Heaven | Star
 
+data Card = Arts | Buster | Quick
+
 data Class = Saber | Archer | Lancer | Caster | Rider | Assassin | Berserker
            | Shielder | Ruler | Avenger | MoonCancer | AlterEgo
 
@@ -33,29 +36,30 @@ type Stat = { atk ∷ Int, hp ∷ Int }
 showStat ∷ Stat -> String
 showStat {atk, hp} = "ATK: " <> show atk <> ", HP: " <> show hp
 
-data Trait = Arthur 
-           | Beast 
-           | Brynhild
-           | DemiServant
-           | Demon
-           | Demonic
-           | Divine
-           | Dragon
-           | HeavenOrEarth
-           | Female
-           | GreekMyth
-           | Humanoid
-           | Human
-           | King
-           | Male
-           | Mecha
-           | PseudoServant
-           | Riding
-           | Roman
-           | Saberface
-           | ThreatToHumanity
-           | Undead
-           | EnumaElish
+data Trait
+    = Arthur
+    | Beast
+    | Brynhild
+    | DemiServant
+    | Demon
+    | Demonic
+    | Divine
+    | Dragon
+    | HeavenOrEarth
+    | Female
+    | GreekMyth
+    | Humanoid
+    | Human
+    | King
+    | Male
+    | Mecha
+    | PseudoServant
+    | Riding
+    | Roman
+    | Saberface
+    | ThreatToHumanity
+    | Undead
+    | EnumaElish
 
 instance _b_ ∷ Show Trait where
   show = case _ of
@@ -133,3 +137,19 @@ instance _33_ ∷ BoundedEnum Attribute where
   cardinality = genericCardinality
   toEnum = genericToEnum
   fromEnum = genericFromEnum
+
+derive instance _34_ ∷ Eq Card
+derive instance _35_ ∷ Ord Card
+derive instance _36_ ∷ Generic Card _
+instance _37_ ∷ Enum Card where
+  succ = genericSucc
+  pred = genericPred
+instance _38_ ∷ Bounded Card where
+  top = genericTop
+  bottom = genericBottom
+instance _39_ ∷ BoundedEnum Card where
+  cardinality = genericCardinality
+  toEnum = genericToEnum
+  fromEnum = genericFromEnum
+instance _40_ ∷ Show Card where
+  show = genericShow

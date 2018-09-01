@@ -39,7 +39,7 @@ extras = [
               , card:   Arts
               , kind:   "Barrier"
               , hits:   0
-              , effect: [ Grant Party 3 DefenseUp $ 5.0 ~ 25.0 
+              , effect: [ Grant Party 3 DefenseUp $ 5.0 ~ 25.0
                         , Grant Party 1 Invincibility Full
                         , Debuff Self 2 Stun Full
                         ]
@@ -72,7 +72,7 @@ extras = [
               , { name:   "Baptism Rite B+"
                 , icon:   IconNobleTurn
                 , cd:     12
-                , effect: [ Grant Self 5 GaugePerTurn $ 10.0 ~ 20.0 
+                , effect: [ Grant Self 5 GaugePerTurn $ 10.0 ~ 20.0
                           , To (EnemyType Undead) GaugeDown $ Flat 1.0
                           , To (EnemyType Demon) GaugeDown $ Flat 1.0
                           ]
@@ -117,21 +117,21 @@ extras = [
   , actives:  [ { name:   "Self-Modification EX"
                 , icon:   IconExclamationUp
                 , cd:     7
-                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0 
-                          , Grant Self 3 StarAbsorb $ 400.0 ~ 800.0
+                , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
+                          , Grant Self 3 StarWeight $ 400.0 ~ 800.0
                           ]
                 }
               , { name:   "Dragon Witch EX"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Allies 3 AttackUp $ 10.0 ~ 20.0 
+                , effect: [ Grant Allies 3 AttackUp $ 10.0 ~ 20.0
                           , Grant (AlliesType Dragon) 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Ephemeral Dream A"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 1 BusterUp $ 30.0 ~ 50.0
+                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0
                           , Grant Self 1 Invincibility Full
                           , To Self DemeritHealth $ Flat 1000.0
                           ]
@@ -144,7 +144,7 @@ extras = [
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   10
-              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
                         , Debuff Enemy 0 BuffBlock $ Flat 1.0
                         ]
               , over:   [ Debuff Enemy 5 Curse $ 500.0 ~ 2500.0 ]
@@ -184,7 +184,7 @@ extras = [
               , { name:   "Wisdom of Crisis A"
                 , icon:   IconDarkMagic
                 , cd:     8
-                , effect: [ To Enemy GaugeDown $ Flat 1.0 
+                , effect: [ To Enemy GaugeDown $ Flat 1.0
                           , To Self RemoveDebuffs Full
                           , To Party GainStars $ 10.0 ~ 20.0
                           ]
@@ -224,12 +224,12 @@ extras = [
   , actives:  [ { name:   "Saint of the Shore B+"
                 , icon:   IconNoble
                 , cd:     8
-                , effect: [ To Self GaugeUp $ 20.0 ~ 30.0 
-                          , When "on Waterside or Beach field" 
+                , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
+                          , When "on Waterside or Beach field"
                             ∘ Grant Self 3 AttackUp $ 10.0 ~ 20.0
-                          ] 
+                          ]
                 }
-              , { name:   "Natural Body (Sea) A"  
+              , { name:   "Natural Body (Sea) A"
                 , icon:   IconFlex
                 , cd:     7
                 , effect: [ Grant Self 0 DebuffImmunity Full
@@ -277,7 +277,7 @@ extras = [
   , actives:  [ { name:   "Honorable Wall of Snowflakes"
                 , icon:   IconShieldUp
                 , cd:     7
-                , effect: [ Grant Party 3 DefenseUp $ 15.0 ~ 20.0 
+                , effect: [ Grant Party 3 DefenseUp $ 15.0 ~ 20.0
                           , Grant Party 0 DamageCut $ Flat 2000.0
                           ]
                 }
@@ -303,7 +303,7 @@ extras = [
               , card:   Arts
               , kind:   "Anti-Evil"
               , hits:   0
-              , effect: [ Grant Party 3 ReduceDamage $ 100.0 ~ 1000.0 
+              , effect: [ Grant Party 3 ReduceDamage $ 100.0 ~ 1000.0
                         , Grant Others 3 AttackUp $ Flat 30.0
                         ]
               , over:   [ Grant Party 3 DefenseUp $ 30.0 ~ 50.0 ]
@@ -335,20 +335,20 @@ extras = [
               , { name:   "Zarich C"
                 , icon:   IconDarkMagic
                 , cd:     8
-                , effect: [ To Enemy GaugeDown $ Flat 1.0 
+                , effect: [ To Enemy GaugeDown $ Flat 1.0
                           , Debuff Enemy 3 AttackDown $ 10.0 ~ 30.0
                           ]
                 }
               , { name:   "Annihilation Wish A"
                 , icon:   IconQuickUp
                 , cd:     10
-                , effect: [ When "turn 1" $ Grant Self 1 QuickUp $ 20.0 ~ 40.0 
-                          , When "turn 2" $ Grant Self 1 QuickUp $ 40.0 ~ 80.0
-                          , When "turn 3" $ Grant Self 1 QuickUp $ 60.0 ~ 120.0
-                          , When "turn 4" $ Grant Self 1 QuickUp $ 80.0 ~ 160.0
-                          , When "turn 5" $ Grant Self 1 QuickUp $ 100.0 ~ 200.0
+                , effect: [ When "turn 1" $ Grant Self 1 (Boost Quick) $ 20.0 ~ 40.0
+                          , When "turn 2" $ Grant Self 1 (Boost Quick) $ 40.0 ~ 80.0
+                          , When "turn 3" $ Grant Self 1 (Boost Quick) $ 60.0 ~ 120.0
+                          , When "turn 4" $ Grant Self 1 (Boost Quick) $ 80.0 ~ 160.0
+                          , When "turn 5" $ Grant Self 1 (Boost Quick) $ 100.0 ~ 200.0
                           , When "turn 6" $ To Self DemeritKill Full
-                          ] 
+                          ]
                 }
               ]
   , passives: [avenger A, oblivionCorrection A, selfRestoreMagic E]
@@ -357,7 +357,7 @@ extras = [
               , rank:   CMinus
               , card:   Arts
               , kind:   "Anti-Unit"
-              , hits:   1 
+              , hits:   1
               , effect: [ To Enemy Avenge $ 200.0 ~ 300.0 ]
               , over:   [ To Self Heal $ 1000.0 ~ 5000.0 ]
               , first:  false

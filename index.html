@@ -241,18 +241,36 @@
     aside form
       { margin-bottom: 6px }
 
-    @media (max-width: 855px) 
-      { body { font-size: 8px }
-        aside td { display: block }
-        #servants .servant > img { width: 75px }
-        #servants .servant header span { font-size: 9px }
-        form p { margin-left: 15px }
+    @media (max-width: 800px) 
+      { body                             { font-size: 8px }
+        aside td                         { display: block }
+        #servants .servant > img         { width: 75px }
+        #servants .servant header span   { font-size: 9px }
+        article .servant > img           { width: 130px }
+        form p                           { margin-left: 15px }
+        article .servant header span     { font-size: 11px }
+        #layout > article table.phantasm { width: auto }
+        .phantasm th                     { width: initial }
         p input
           { margin-left: -15px
           ; position: relative
           ; bottom: 3px
           ; max-height: 1em
           ; margin-bottom: -1em
+          }
+        article > table:nth-child(2), article > table:nth-child(3)
+          { float: left
+          ; max-width: 36% 
+          }
+        article > table:nth-child(4) 
+          { max-width: 33% }
+        article section
+          { max-width: 35em
+          ; margin: auto
+          }
+        article section img
+          { width: 20px
+          ; margin-top: 2px
           }
       }
     </style>

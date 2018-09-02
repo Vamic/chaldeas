@@ -26,14 +26,14 @@ berserkers = [
               , { name:   "Protection from Arrows C"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 2.0
+                , effect: [ Times 2 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 7.0 ~ 14.0
                           ]
                 }
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ Flat 1.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ Flat 1.0 ]
                 }
               ]
   , passives: [madness C, divinity C]
@@ -75,16 +75,16 @@ berserkers = [
               , { name:   "Mana Burst (Lightning) A"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
                           , Grant Self 1 Evasion Full
                           ]
                 }
               , { name:   "Mystic Slayer A"
                 , icon:   IconDamageUp
                 , cd:     8
-                , effect: [ Grant Self 3 (AttackUpVs Demonic)
+                , effect: [ Grant Self 3 (AttackVs Demonic)
                             $ 30.0 ~ 50.0
-                          , Grant Self 3 (AttackUpVs HeavenOrEarth)
+                          , Grant Self 3 (AttackVs HeavenOrEarth)
                             $ 30.0 ~ 50.0
                           ]
                 }
@@ -178,7 +178,7 @@ berserkers = [
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               ]
   , passives: [madness EX]
@@ -218,14 +218,14 @@ berserkers = [
               , { name:   "Understanding of the Human Body A"
                 , icon:   IconDamageUp
                 , cd:     8
-                , effect: [ Grant Self 3 (AttackUpVs Humanoid) $ 30.0 ~ 50.0
-                          , Grant Self 3 (DefenseUpVs Humanoid) $ 15.0 ~ 25.0
+                , effect: [ Grant Self 3 (AttackVs Humanoid) $ 30.0 ~ 50.0
+                          , Grant Self 3 (DefenseVs Humanoid) $ 15.0 ~ 25.0
                           ]
                 }
               , { name:   "Angel's Cry EX"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Ally 3 (Boost Buster) $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Ally 3 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
               ]
   , passives: [madness EX]
@@ -276,7 +276,7 @@ berserkers = [
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               ]
   , passives: [madness B, divinity A]
@@ -474,7 +474,7 @@ berserkers = [
               , { name:   "Battle Continuation B"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
+                , effect: [ Times 1 <<< Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
                 }
               ]
   , passives: [madness EMinus]
@@ -615,14 +615,14 @@ berserkers = [
               , { name:   "Unyielding Will A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ Flat 1.0
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ Flat 1.0
                           , To Self GaugeUp $ 10.0 ~ 30.0
                           ]
                 }
               , { name:   "Triumphant Return of the Sword B"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 40.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 40.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
@@ -672,7 +672,7 @@ berserkers = [
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 1 StarWeight $ 3000.0 ~ 6000.0
-                          , Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
+                          , Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
                           ]
                 }
               ]
@@ -723,7 +723,7 @@ berserkers = [
               , { name:   "Flame-Colored Kiss A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
                           , To Self RemoveDebuffs Full
                           ]
                 }
@@ -769,7 +769,7 @@ berserkers = [
               , { name:   "Battle Continuation B"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
+                , effect: [ Times 1 <<< Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
                 }
               , { name:   "Half-Dead Bloodaxe A+"
                 , icon:   IconBubbles
@@ -825,7 +825,7 @@ berserkers = [
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               ]
   , passives: [madness B]
@@ -877,7 +877,7 @@ berserkers = [
               , { name:   "Glory of Past Days B"
                 , icon:   IconBusterUp
                 , cd:     5
-                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0
                           , To Self DemeritHealth $ Flat 500.0
                           ]
                 }

@@ -131,7 +131,7 @@ riders = [
               , { name:   "Lightning Conqueror EX"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0
                           , Grant Self 1 StarUp $ Flat 50.0
                           ]
                 }
@@ -168,7 +168,7 @@ riders = [
   , actives:  [ { name:   "Golden Rule (Body) A"
                 , icon:   IconHealTurn
                 , cd:     8
-                , effect: [ Grant Self 3 DebuffImmunity Full
+                , effect: [ Grant Self 3 DebuffResist Full
                           , Grant Self 3 HealPerTurn $ 500.0 ~ 1000.0
                           , Grant Self 3 GaugePerTurn $ Flat 10.0
                           ]
@@ -219,7 +219,7 @@ riders = [
   , actives:  [ { name:   "Long-Distance Dash A"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Self 3 (Boost Quick) $ 20.0 ~ 30.0
+                , effect: [ Grant Self 3 (Performance Quick) $ 20.0 ~ 30.0
                           , Grant Self 3 StarUp $ 30.0 ~ 50.0
                           ]
                 }
@@ -244,7 +244,7 @@ riders = [
               , kind:   "Anti-Army"
               , hits:   4
               , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 ]
-              , over:   [ Grant Self 1 (Boost Quick) $ 10.0 ~ 90.0 ]
+              , over:   [ Grant Self 1 (Performance Quick) $ 10.0 ~ 90.0 ]
               , first:  false
               }
   , gen:      { starWeight: 198, starRate: 9.0, npAtk: 1.15, npDef: 3 }
@@ -280,7 +280,7 @@ riders = [
               , { name:   "Mana Burst A-"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 25.0 ~ 45.0 ]
+                , effect: [ Grant Self 1 (Performance Buster) $ 25.0 ~ 45.0 ]
                 }
               ]
   , passives: [magicResistance A, riding A]
@@ -366,7 +366,7 @@ riders = [
   , actives:  [ { name:   "Cerulean Ride A"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 3 (Boost Arts) $ 20.0 ~ 30.0 ]
+                , effect: [ Grant Self 3 (Performance Arts) $ 20.0 ~ 30.0 ]
                 }
               , { name:   "Rodeo Flip A+"
                 , icon:   IconDodge
@@ -378,7 +378,7 @@ riders = [
               , { name:   "Endless Summer B"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 3 Guts $ Flat 1000.0
+                , effect: [ Times 1 <<< Grant Self 3 Guts $ Flat 1000.0
                           , To Self GaugeUp $ 20.0 ~ 30.0
                           ]
                 }
@@ -421,7 +421,7 @@ riders = [
               , { name:   "Beautiful Princess A"
                 , icon:   IconShield
                 , cd:     8
-                , effect: [ Grant Self 0 Invincibility $ Flat 3.0
+                , effect: [ Times 3 $ Grant Self 0 Invincibility Full
                           , Grant Self 5 HealPerTurn $ 200.0 ~ 600.0
                           ]
                 }
@@ -524,7 +524,7 @@ riders = [
               , { name:   "Evaporation of Reason D"
                 , icon:   IconStarTurn
                 , cd:     10
-                , effect: [ Chance 65 <<< Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0
+                , effect: [ Chance 65 <<< Grant Party 3 StarsPerTurn $ 5.0 ~ 10.0
                           , Chance 65 <<< Grant Self 3 StarUp $ 30.0 ~ 50.0
                           , Chance 65 <<< Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
@@ -538,7 +538,7 @@ riders = [
               , kind:   "Anti-Army"
               , hits:   1
               , effect: [ To Enemies DamageThruDef $ 600.0 ~ 1000.0
-                        , Grant Self 0 Evasion $ Flat 3.0
+                        , Times 3 $ Grant Self 0 Evasion Full
                         ]
               , over:   [ To Party GainStars $ 5.0 ~ 25.0 ]
               , first:  false
@@ -578,7 +578,7 @@ riders = [
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               ]
   , passives: [magicResistance A, riding B]
@@ -625,7 +625,7 @@ riders = [
               , { name:   "Art of the Swallow B"
                 , icon:   IconDodge
                 , cd:     8
-                , effect: [ Grant Self 1 Evasion $ Flat 1.0
+                , effect: [ Times 1 $ Grant Self 1 Evasion Full
                           , Grant Self 1 StarUp $ 50.0 ~ 100.0
                           ]
                 }
@@ -719,7 +719,7 @@ riders = [
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 9.0 ~ 27.0
-                          , Grant Self 0 Guts $ Flat 1.0
+                          , Times 1 <<< Grant Self 0 Guts $ Flat 1.0
                           , Debuff Self 3 DebuffVuln $ Flat 50.0
                           ]
                 }
@@ -777,7 +777,7 @@ riders = [
               , { name:   "Omen of the Conqueror A"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Party 3 (Boost Quick) $ 10.0 ~ 20.0 ]
+                , effect: [ Grant Party 3 (Performance Quick) $ 10.0 ~ 20.0 ]
                 }
               ]
   , passives: [magicResistance D, divinity E, riding APlus]
@@ -812,17 +812,17 @@ riders = [
   , actives:  [ { name:   "Vow to the Goddess B"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 3 (AttackUpVs Roman) $ 40.0 ~ 60.0 ]
+                , effect: [ Grant Self 3 (AttackVs Roman) $ 40.0 ~ 60.0 ]
                 }
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               , { name:   "Andraste's Protection A"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Party 3 (Boost Arts) $ 10.0 ~ 20.0 ]
+                , effect: [ Grant Party 3 (Performance Arts) $ 10.0 ~ 20.0 ]
                 }
               ]
   , passives: [magicResistance D, riding A]

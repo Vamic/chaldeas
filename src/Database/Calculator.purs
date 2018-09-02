@@ -26,7 +26,7 @@ npPerArts s
     offensiveNPRate  = s.gen.npAtk
     firstCardBonus   = 0.0
     cardNpValue      = 3.0
-    cardMod          = matchSum buffs $ Boost Arts
+    cardMod          = matchSum buffs $ Performance Arts
     enemyServerMod   = 1.0
     npChargeRateMod  = matchSum buffs NPGen
     criticalModifier = 1.0
@@ -46,7 +46,7 @@ starsPerQuick s
     baseStarRate     = s.gen.starRate / 100.0
     firstCardBonus   = 0.0
     cardStarValue    = 0.8
-    cardMod          = matchSum buffs $ Boost Quick
+    cardMod          = matchSum buffs $ Performance Quick
     serverRate       = 0.0
     starDropMod      = matchSum buffs StarUp
     enemyStarDropMod = 0.0
@@ -121,11 +121,11 @@ npDamage special maxOver s@{phantasm:{card, effect, over, first}}
     -- FROM BUFFS
     -------------
     cardMod = matchSum buffs $ case card of
-        Arts   -> Boost Arts
-        Buster -> Boost Buster
-        Quick  -> Boost Quick
+        Arts   -> Performance Arts
+        Buster -> Performance Buster
+        Quick  -> Performance Quick
     atkMod = (_ + matchSum buffs AttackUp) <<< fromMaybe 0.0 <<< maximum
-           $ matchSum buffs <<< AttackUpVs <$> specials
+           $ matchSum buffs <<< AttackVs <$> specials
     defMod = matchSum debuffs DefenseDown
     specialDefMod = 0.0
     powerMod = 0.0
@@ -184,7 +184,6 @@ passiveBuffs {passives} = passives >>= _.effect >>= go <<< simplify
 selfable ∷ Target -> Boolean
 selfable Self   = true
 selfable Ally   = true
-selfable Allies = true
 selfable Party  = true
 selfable _      = false
 

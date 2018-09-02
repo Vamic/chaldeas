@@ -19,7 +19,7 @@ extras = [
   , actives:  [ { name:   "Revelation A"
                 , icon:   IconStarTurn
                 , cd:     8
-                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0 ]
+                , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0 ]
                 }
               , { name:   "True Name Revelation B"
                 , icon:   IconBeamDown
@@ -67,7 +67,7 @@ extras = [
   , actives:  [ { name:   "Revelation A"
                 , icon:   IconStarTurn
                 , cd:     8
-                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0 ]
+                , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0 ]
                 }
               , { name:   "Baptism Rite B+"
                 , icon:   IconNobleTurn
@@ -124,14 +124,14 @@ extras = [
               , { name:   "Dragon Witch EX"
                 , icon:   IconSwordUp
                 , cd:     7
-                , effect: [ Grant Allies 3 AttackUp $ 10.0 ~ 20.0
+                , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
                           , Grant (AlliesType Dragon) 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Ephemeral Dream A"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0
                           , Grant Self 1 Invincibility Full
                           , To Self DemeritHealth $ Flat 1000.0
                           ]
@@ -145,7 +145,7 @@ extras = [
               , kind:   "Anti-Army"
               , hits:   10
               , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
-                        , Debuff Enemy 0 BuffBlock $ Flat 1.0
+                        , Times 1 $ Debuff Enemy 0 BuffBlock Full
                         ]
               , over:   [ Debuff Enemy 5 Curse $ 500.0 ~ 2500.0 ]
               , first:  false
@@ -232,16 +232,16 @@ extras = [
               , { name:   "Natural Body (Sea) A"
                 , icon:   IconFlex
                 , cd:     7
-                , effect: [ Grant Self 0 DebuffImmunity Full
+                , effect: [ Grant Self 0 DebuffResist Full
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
               , { name:   "Jacob's Limbs B"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 1 (AttackUpVs Demon) $ 50.0 ~ 100.0
-                          , Grant Self 1 (AttackUpVs Divine) $ 50.0 ~ 100.0
-                          , Grant Self 1 (AttackUpVs Undead) $ 50.0 ~ 100.0
+                , effect: [ Grant Self 1 (AttackVs Demon) $ 50.0 ~ 100.0
+                          , Grant Self 1 (AttackVs Divine) $ 50.0 ~ 100.0
+                          , Grant Self 1 (AttackVs Undead) $ 50.0 ~ 100.0
                           ]
                 }
               ]
@@ -278,7 +278,7 @@ extras = [
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Party 3 DefenseUp $ 15.0 ~ 20.0
-                          , Grant Party 0 DamageCut $ Flat 2000.0
+                          , Times 1 <<< Grant Party 0 DamageCut $ Flat 2000.0
                           ]
                 }
               , { name:   "Obscurant Wall of Chalk"
@@ -342,11 +342,16 @@ extras = [
               , { name:   "Annihilation Wish A"
                 , icon:   IconQuickUp
                 , cd:     10
-                , effect: [ When "turn 1" $ Grant Self 1 (Boost Quick) $ 20.0 ~ 40.0
-                          , When "turn 2" $ Grant Self 1 (Boost Quick) $ 40.0 ~ 80.0
-                          , When "turn 3" $ Grant Self 1 (Boost Quick) $ 60.0 ~ 120.0
-                          , When "turn 4" $ Grant Self 1 (Boost Quick) $ 80.0 ~ 160.0
-                          , When "turn 5" $ Grant Self 1 (Boost Quick) $ 100.0 ~ 200.0
+                , effect: [ When "turn 1" $ Grant Self 1 (Performance Quick) 
+                            $ 20.0 ~ 40.0
+                          , When "turn 2" $ Grant Self 1 (Performance Quick) 
+                            $ 40.0 ~ 80.0
+                          , When "turn 3" $ Grant Self 1 (Performance Quick) 
+                            $ 60.0 ~ 120.0
+                          , When "turn 4" $ Grant Self 1 (Performance Quick) 
+                            $ 80.0 ~ 160.0
+                          , When "turn 5" $ Grant Self 1 (Performance Quick) 
+                            $ 100.0 ~ 200.0
                           , When "turn 6" $ To Self DemeritKill Full
                           ]
                 }

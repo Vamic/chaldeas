@@ -66,7 +66,7 @@ archers = [
   , actives:  [ { name:   "Summer Splash! A+"
                 , icon:   IconArtsUp
                 , cd:     8
-                , effect: [ Grant Self 3 (Boost Arts)  $ 20.0 ~ 30.0
+                , effect: [ Grant Self 3 (Performance Arts)  $ 20.0 ~ 30.0
                           , Grant Party 3 DefenseUp $ 10.0 ~ 20.0
                           ]
                 }
@@ -124,7 +124,7 @@ archers = [
               , { name:   "Inherent Wisdom A"
                 , icon:   IconKneel
                 , cd:     7
-                , effect: [ Grant Self 3 Guts $ 1000.0 ~ 3000.0
+                , effect: [ Times 1 <<< Grant Self 3 Guts $ 1000.0 ~ 3000.0
                           , Chance 80 <<< Grant Self 3 DefenseUp $ 20.0 ~ 30.0
                           , Chance 80 <<< Grant Self 1 NPUp $ 20.0 ~ 30.0
                           ]
@@ -181,7 +181,7 @@ archers = [
               , { name:   "Punish the Unfaithful A+"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 1 (AttackUpVs Male) $ 50.0 ~ 100.0 ]
+                , effect: [ Grant Self 1 (AttackVs Male) $ 50.0 ~ 100.0 ]
                 }
               , { name:   "Mind's Eye (Fake) B-"
                 , icon:   IconDodge
@@ -233,13 +233,13 @@ archers = [
                 , cd:     10
                 , effect: [ To Self GaugeUp $ Flat 25.0
                           , Grant Self 5 HealPerTurn $ 1000.0 ~ 2000.0
-                          , Grant Self 5 StarsPerTurn $ 4.0 ~ 8.0
+                          , Grant Party 5 StarsPerTurn $ 4.0 ~ 8.0
                           ]
                 }
               , { name:   "Mana Burst (Flame) A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
@@ -286,9 +286,9 @@ archers = [
               , { name:   "Projection B"
                 , icon:   IconAllUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Arts) $ 20.0 ~ 35.0
-                          , Grant Self 1 (Boost Quick) $ 20.0 ~ 35.0
-                          , Grant Self 1 (Boost Buster) $ 20.0 ~ 35.0
+                , effect: [ Grant Self 1 (Performance Arts) $ 20.0 ~ 35.0
+                          , Grant Self 1 (Performance Quick) $ 20.0 ~ 35.0
+                          , Grant Self 1 (Performance Buster) $ 20.0 ~ 35.0
                           ]
                 }
               , { name:   "Kiss Demon B"
@@ -338,7 +338,7 @@ archers = [
               , { name:   "Unifying the Nation by Force A"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 1 (AttackUpVs Divine) $ 50.0 ~ 100.0 ]
+                , effect: [ Grant Self 1 (AttackVs Divine) $ 50.0 ~ 100.0 ]
                 }
               , { name:   "The Demonic King A"
                 , icon:   IconExclamationUp
@@ -446,9 +446,9 @@ archers = [
               , { name:   "Projection A"
                 , icon:   IconAllUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Arts) $ 25.0 ~ 40.0
-                          , Grant Self 1 (Boost Quick) $ 25.0 ~ 40.0
-                          , Grant Self 1 (Boost Buster) $ 25.0 ~ 40.0
+                , effect: [ Grant Self 1 (Performance Arts) $ 25.0 ~ 40.0
+                          , Grant Self 1 (Performance Quick) $ 25.0 ~ 40.0
+                          , Grant Self 1 (Performance Buster) $ 25.0 ~ 40.0
                           ]
                 }
               ]
@@ -484,7 +484,7 @@ archers = [
   , actives:  [ { name:   "Beyond Arcadia A"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Party 1 (Boost Quick) $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Party 1 (Performance Quick) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Hunter's Aesthetic C"
                 , icon:   IconStarUp
@@ -546,7 +546,7 @@ archers = [
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 8.5 ~ 25.5
-                          , Grant Self 0 Guts $ Flat 1.0
+                          , Times 1 <<< Grant Self 0 Guts $ Flat 1.0
                           , Debuff Self 3 DebuffVuln $ Flat 50.0
                           ]
                 }
@@ -648,7 +648,7 @@ archers = [
               , { name:   "Whim of the Goddess A (Euryale)"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 3 (Boost Arts) $ 20.0 ~ 30.0 ]
+                , effect: [ Grant Self 3 (Performance Arts) $ 20.0 ~ 30.0 ]
                 }
               ]
   , passives: [magicResistance A, independentAction APlus, coreOfGoddess EX]
@@ -746,7 +746,7 @@ archers = [
                 , icon:   IconBubbles
                 , cd:     8
                 , effect: [ To Party RemoveMental Full
-                          , Grant Party 0 Evasion $ Flat 1.0
+                          , Times 1 $ Grant Party 0 Evasion Full
                           , To Party Heal $ 300.0 ~ 800.0
                           ]
                 }
@@ -888,14 +888,14 @@ archers = [
   , actives:  [ { name:   "Protection of the Dragon King C"
                 , icon:   IconBusterUp
                 , cd:     8
-                , effect: [ Grant Self 3 (Boost Buster) $ 20.0 ~ 30.0
+                , effect: [ Grant Self 3 (Performance Buster) $ 20.0 ~ 30.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
               , { name:   "Protection from Arrows C"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 2.0
+                , effect: [ Times 2 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 7.0 ~ 14.0
                           ]
                 }
@@ -913,7 +913,7 @@ archers = [
               , kind:   "Anti-Army"
               , hits:   3
               , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
-              , over:   [ Grant Self 1 (AttackUpVs Demonic) $ 50.0 ~ 100.0 ]
+              , over:   [ Grant Self 1 (AttackVs Demonic) $ 50.0 ~ 100.0 ]
               , first:  true
               }
   , gen:      { starWeight: 150, starRate: 7.8, npAtk: 0.57, npDef: 3 }

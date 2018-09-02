@@ -16,9 +16,9 @@ avenger = passiveBase "Avenger" IconAvenger
 
 connectionRoot ∷ PassiveBase
 connectionRoot = passiveBase "Connection to the Root" IconDamageUp
-  [ Give Self (Boost Quick)  [ A:6.0, C:4.0 ]
-  , Give Self (Boost Arts)   [ A:6.0, C:4.0 ]
-  , Give Self (Boost Buster) [ A:6.0, C:4.0 ]
+  [ Give Self (Performance Quick)  [ A:6.0, C:4.0 ]
+  , Give Self (Performance Arts)   [ A:6.0, C:4.0 ]
+  , Give Self (Performance Buster) [ A:6.0, C:4.0 ]
   ]
 
 coreOfGoddess ∷ PassiveBase
@@ -62,7 +62,7 @@ itemConstructionFalse = passiveBase "Item Construction (False)" IconPotion
 
 madness ∷ PassiveBase
 madness = passiveBase "Madness Enhancement" IconTeeth
-  [ Give Self (Boost Buster)
+  [ Give Self (Performance Buster)
     [ EX:12.0, APlus:11.0, A:10.0, B:8.0, C:6.0, DPlus:5.0, D:4.0, EPlus:3.0
     , E:2.0, EMinus:1.0
     ]
@@ -88,7 +88,7 @@ presenceConcealment = passiveBase "Presence Concealment" IconMask
 
 riding ∷ PassiveBase
 riding = passiveBase "Riding" IconHorse
-  [ Give Self (Boost Quick)
+  [ Give Self (Performance Quick)
     [ EX:12.0, APlusPlus:11.5, APlus:11.0, A:10.0, B:8.0, CPlus:7.0, C:6.0
     , E:2.0
     ]
@@ -100,13 +100,13 @@ selfRestoreMagic = passiveBase "Self-Restoration (Magical Energy)" IconNiffin
 
 surfing ∷ PassiveBase
 surfing = passiveBase "Surfing" IconArtsUp
-  [ Give Self (Boost Arts) [ A:5.0 ]
+  [ Give Self (Performance Arts) [ A:5.0 ]
   , Give Self StarUp [ A:5.0 ]
   ]
 
 territoryCreation ∷ PassiveBase
 territoryCreation = passiveBase "Territory Creation" IconMagicCircle
-  [ Give Self (Boost Arts)
+  [ Give Self (Performance Arts)
     [ EX:12.0, APlusPlus:11.5, APlus:11.0, A:10.0, B:8.0, CPlus:7.0, C:6.0
     , D:4.0
     ]

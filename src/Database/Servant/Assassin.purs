@@ -20,7 +20,7 @@ assassins = [
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
-                          , Grant Self 1 (Boost Quick) $ 30.0 ~ 50.0
+                          , Grant Self 1 (Performance Quick) $ 30.0 ~ 50.0
                           ]
                 }
               , { name:   "Information Erasure B"
@@ -44,7 +44,7 @@ assassins = [
               , kind:   "Anti-Personnel"
               , hits:   4
               , effect: [ To Enemy DamageThruDef $ 1400.0 ~ 2200.0 ]
-              , over:   [ Grant Self 1 (AttackUpVs Female) $ 50.0 ~ 100.0 ]
+              , over:   [ Grant Self 1 (AttackVs Female) $ 50.0 ~ 100.0 ]
               , first:  true
               }
   , gen:      { starWeight: 97, starRate: 25.5, npAtk: 1.07, npDef: 4 }
@@ -82,7 +82,7 @@ assassins = [
               , { name:   "Battle Continuation A+"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1200.0 ~ 2700.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1200.0 ~ 2700.0 ]
                 }
               ]
   , passives: [presenceConcealment C, divinity C]
@@ -171,7 +171,7 @@ assassins = [
                 , icon:   IconMystic
                 , cd:     7
                 , effect: [ Grant Self 1 IgnoreInvinc Full
-                          , Grant Self 1 (Boost Arts) $ 30.0 ~ 50.0
+                          , Grant Self 1 (Performance Arts) $ 30.0 ~ 50.0
                           , Debuff Enemy 1 DeathDown $ 80.0 ~ 100.0
                           ]
                 }
@@ -235,7 +235,7 @@ assassins = [
                 , icon:   IconExclamationDown
                 , cd:     8
                 , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0
-                          , Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0
+                          , Grant Party 3 StarsPerTurn $ 5.0 ~ 10.0
                           ]
                 }
               ]
@@ -274,7 +274,7 @@ assassins = [
   , actives:  [ { name:   "Magecraft B"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Arts) $ 24.0 ~ 40.0 ]
+                , effect: [ Grant Self 1 (Performance Arts) $ 24.0 ~ 40.0 ]
                 }
               , { name:   "Affection of the Holy Grail A+"
                 , icon:   IconShieldBreak
@@ -341,7 +341,7 @@ assassins = [
                 , icon:   IconShieldBreak
                 , cd:     8
                 , effect: [ Grant Self 1 IgnoreInvinc Full
-                          , Grant Self 1 (Boost Quick) $ 30.0 ~ 50.0
+                          , Grant Self 1 (Performance Quick) $ 30.0 ~ 50.0
                           ]
                 }
               ]
@@ -540,7 +540,7 @@ assassins = [
               , { name:   "Protection Against the Wind A"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 3.0
+                , effect: [ Times 3 $ Grant Self 0 Evasion Full
                           , Grant Self 3 StarUp $ 10.0 ~ 30.0
                           ]
                 }
@@ -585,9 +585,10 @@ assassins = [
               , { name:   "Panicky Voice A"
                 , icon:   IconStun
                 , cd:     8
-                , effect: [ Grant Self 0 StunSuccess $ 5.0  ~ 15.0
-                          , When "transformed into Hyde"
-                            <<< Grant Self 0 StunSuccess $ 85.0 ~ 135.0
+                , effect: [ Times 1 
+                            <<< Grant Self 0 (Success Stun) $ 5.0  ~ 15.0
+                          , When "transformed into Hyde" <<< Times 1 
+                            <<< Grant Self 0 (Success Stun) $ 85.0 ~ 135.0
                           , Chance 10 $ Debuff Enemy 1 Stun Full
                           ]
                 }
@@ -611,7 +612,7 @@ assassins = [
                         , Grant Self 0 MaxHP $ 3000.0 ~ 6000.0
                         , To Self Heal Full
                         ]
-              , over:   [ Grant Self 0 (Boost Buster) $ 40.0 ~ 80.0 ]
+              , over:   [ Grant Self 0 (Performance Buster) $ 40.0 ~ 80.0 ]
               , first:  false
               }
   , gen:      { starWeight: 99, starRate: 25.6, npAtk: 1.05, npDef: 4 }
@@ -647,7 +648,7 @@ assassins = [
               , { name:   "Insolent A"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Quick) $ 20.0 ~ 30.0
+                , effect: [ Grant Self 1 (Performance Quick) $ 20.0 ~ 30.0
                           , Grant Self 1 CritUp $ 30.0 ~ 50.0
                           ]
                 }
@@ -700,7 +701,7 @@ assassins = [
               , { name:   "Human Study B"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 3 (AttackUpVs Human) $ 40.0 ~ 60.0 ]
+                , effect: [ Grant Self 3 (AttackVs Human) $ 40.0 ~ 60.0 ]
                 }
               ]
   , passives: [presenceConcealment D]
@@ -745,11 +746,11 @@ assassins = [
                 , icon:   IconAllUp
                 , cd:     7
                 , effect: [ Chances 60 80 
-                            <<< Grant Self 3 (Boost Buster) $ Flat 30.0
+                            <<< Grant Self 3 (Performance Buster) $ Flat 30.0
                           , Chances 60 80 
-                            <<< Grant Self 3 (Boost Quick) $ Flat 30.0
+                            <<< Grant Self 3 (Performance Quick) $ Flat 30.0
                           , Chances 60 80 
-                            <<< Grant Self 3 (Boost Arts) $ Flat 30.0
+                            <<< Grant Self 3 (Performance Arts) $ Flat 30.0
                           , Grant Self 1 Evasion Full
                           ] -- TODO
                 }
@@ -846,7 +847,7 @@ assassins = [
   , actives:  [ { name:   "Innocent Monster D"
                 , icon:   IconStarTurn
                 , cd:     7
-                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0
+                , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0
                           , Debuff Self 3 DefenseDown $ Flat 14.0
                           ]
                 }

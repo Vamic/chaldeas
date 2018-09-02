@@ -88,7 +88,7 @@ casters = [
               , { name:   "Fox's Wedding EX"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Ally 3 (Boost Arts) $ 30.0 ~ 50.0
+                , effect: [ Grant Ally 3 (Performance Arts) $ 30.0 ~ 50.0
                           , To Ally Heal $ 1000.0 ~ 2500.0
                           ]
                 }
@@ -100,10 +100,10 @@ casters = [
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   0
-              , effect: [ To Allies Cooldowns $ Flat 1.0
-                        , To Allies Heal $ 2000.0 ~ 3000.0
+              , effect: [ To Party Cooldowns $ Flat 1.0
+                        , To Party Heal $ 2000.0 ~ 3000.0
                         ]
-              , over:   [ To Allies GaugeUp $ 25.0 ~ 50.0 ]
+              , over:   [ To Party GaugeUp $ 25.0 ~ 50.0 ]
               , first:  false
               }
   , gen:      { starWeight: 49, starRate: 11.0, npAtk: 0.32, npDef: 3 }
@@ -143,7 +143,7 @@ casters = [
                 , cd:     7
                 , effect: [ Grant Party 3 NPGen $ 10.0 ~ 30.0
                           , Grant Party 3 StarUp $ 10.0 ~ 30.0
-                          , Grant Party 1 DebuffImmunity Full
+                          , Grant Party 1 DebuffResist Full
                           ]
                 }
               ]
@@ -179,7 +179,7 @@ casters = [
   , actives:  [ { name:   "Inherent Wisdom EX"
                 , icon:   IconKneel
                 , cd:     7
-                , effect: [ Grant Self 3 Guts $ 1000.0 ~ 3000.0
+                , effect: [ Times 1 <<< Grant Self 3 Guts $ 1000.0 ~ 3000.0
                           , Chance 85 <<< Grant Self 3 DefenseUp $ 20.0 ~ 30.0
                           , Chance 85 <<< Grant Self 3 NPUp $ 20.0 ~ 30.0
                           ]
@@ -187,7 +187,7 @@ casters = [
               , { name:   "Golden Rule (Body) B"
                 , icon:   IconHealTurn
                 , cd:     8
-                , effect: [ Grant Self 2 DebuffImmunity Full
+                , effect: [ Grant Self 2 DebuffResist Full
                           , Grant Self 3 HealPerTurn $ 500.0 ~ 1000.0
                           , Grant Self 3 GaugePerTurn $ Flat 10.0
                           ]
@@ -235,7 +235,7 @@ casters = [
   , actives:  [ { name:   "Happiness Mystic Code A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Child of Nature B"
                 , icon:   IconShield
@@ -248,8 +248,9 @@ casters = [
                 , icon:   IconHeal
                 , cd:     8
                 , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
-                          , Chance 70 $ Grant Self 1 DebuffImmunity Full
-                          , Chance 70 <<< Grant Self 3 Guts $ Flat 1000.0
+                          , Chance 70 $ Grant Self 1 DebuffResist Full
+                          , Chance 70 <<< Times 1 
+                            <<< Grant Self 3 Guts $ Flat 1000.0
                           ]
                 }
               ]
@@ -264,7 +265,7 @@ casters = [
                         , Debuff Self 3 AttackDown $ Flat 10.0
                         , Debuff Self 3 DefenseDown $ Flat 10.0
                         ]
-              , over:   [ Grant Self 1 (Boost Buster) $ 20.0 ~ 80.0 ]
+              , over:   [ Grant Self 1 (Performance Buster) $ 20.0 ~ 80.0 ]
               , first:  true
               }
   , gen:      { starWeight: 51, starRate: 10.7, npAtk: 0.32, npDef: 3 }
@@ -310,7 +311,7 @@ casters = [
               , card:   Arts
               , kind:   "Anti-Magic"
               , hits:   0
-              , effect: [ To Allies RemoveDebuffs Full
+              , effect: [ To Party RemoveDebuffs Full
                         , To Party Heal $ 4000.0 ~ 6000.0
                         ]
               , over:   [ Grant Party 3 DebuffResist $ 40.0 ~ 120.0 ]
@@ -337,21 +338,21 @@ casters = [
   , actives:  [ { name:   "Innocent Monster EX"
                 , icon:   IconStarTurn
                 , cd:     7
-                , effect: [ Grant Self 3 StarsPerTurn $ 6.0 ~ 12.0
+                , effect: [ Grant Party 3 StarsPerTurn $ 6.0 ~ 12.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
               , { name:   "Mana Burst (Pumpkin) A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 25.0 ~ 45.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 25.0 ~ 45.0
                           , Debuff Enemies 10 Burn $ Flat 300.0
                           ]
                 }
               , { name:   "Performance Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0
                           , To Party GainStars $ Flat 8.0
                           ]
                 }
@@ -448,16 +449,16 @@ casters = [
               , { name:   "Mahatma A"
                 , icon:   IconStarTurn
                 , cd:     10
-                , effect: [ Grant Self 5 StarsPerTurn $ Flat 5.0
+                , effect: [ Grant Party 5 StarsPerTurn $ Flat 5.0
                           , Chances 60 80 <<< Grant Self 1 NPUp $ Flat 50.0
                           ]
                 }
               , { name:   "Search for the Unknown B"
                 , icon:   IconAllUp
                 , cd:     9
-                , effect: [ Grant Party 3 (Boost Quick) $ 15.0 ~ 20.0
-                          , Grant Party 3 (Boost Arts) $ 15.0 ~ 20.0
-                          , Grant Party 3 (Boost Buster) $ 15.0 ~ 20.0
+                , effect: [ Grant Party 3 (Performance Quick) $ 15.0 ~ 20.0
+                          , Grant Party 3 (Performance Arts) $ 15.0 ~ 20.0
+                          , Grant Party 3 (Performance Buster) $ 15.0 ~ 20.0
                           ]
                 }
               ]
@@ -508,7 +509,7 @@ casters = [
               , { name:   "Affection of the Sky God B"
                 , icon:   IconKneel
                 , cd:     7
-                , effect: [ Grant Self 3 Guts $ 1000.0 ~ 2000.0
+                , effect: [ Times 1 <<< Grant Self 3 Guts $ 1000.0 ~ 2000.0
                           , To Self RemoveDebuffs Full
                           ]
                 }
@@ -568,7 +569,7 @@ casters = [
               , kind:   "Magecraft"
               , hits:   0
               , effect: [ To Party Heal $ 2000.0 ~ 3000.0 ]
-              , over:   [ Grant Party 3 GutsUnlimited $ 1000.0 ~ 3000.0 ]
+              , over:   [ Grant Party 3 Guts $ 1000.0 ~ 3000.0 ]
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 0.42, npDef: 3 }
@@ -599,14 +600,14 @@ casters = [
               , { name:   "Sparkling Sunflower A"
                 , icon:   IconStarTurn
                 , cd:     9
-                , effect: [ Grant Self 3 StarsPerTurn $ 5.0 ~ 10.0
+                , effect: [ Grant Party 3 StarsPerTurn $ 5.0 ~ 10.0
                           , Grant Self 3 HealPerTurn $ 500.0 ~ 1000.0
                           ]
                 }
               , { name:   "Beautiful Princess (Sea) A"
                 , icon:   IconShield
                 , cd:     8
-                , effect: [ Grant Self 0 Invincibility $ Flat 3.0
+                , effect: [ Times 3 $ Grant Self 0 Invincibility Full
                           , Grant Self 3 DebuffResist $ 30.0 ~ 50.0
                           ]
                 }
@@ -650,7 +651,7 @@ casters = [
               , { name:   "Mass Production A"
                 , icon:   IconStarTurn
                 , cd:     12
-                , effect: [ Grant Self 5 StarsPerTurn $ 5.0 ~ 10.0
+                , effect: [ Grant Party 5 StarsPerTurn $ 5.0 ~ 10.0
                           , Grant Self 5 GaugePerTurn $ 5.0 ~ 10.0
                           ]
                 }
@@ -707,7 +708,7 @@ casters = [
               , { name:   "Innocent Monster D"
                 , icon:   IconStarTurn
                 , cd:     7
-                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0
+                , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0
                           , Debuff Self 3 DefenseDown $ Flat 14.0
                           ]
                 }
@@ -797,7 +798,7 @@ casters = [
   , actives:  [ { name:   "Enchant A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Party 1 (Boost Buster) $ 20.0 ~ 40.0 ]
+                , effect: [ Grant Party 1 (Performance Buster) $ 20.0 ~ 40.0 ]
                 }
               , { name:   "Self-Preservation B"
                 , icon:   IconShield
@@ -846,7 +847,7 @@ casters = [
   , actives:  [ { name:   "Protection of Muse (Fake) EX"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Party 1 (Boost Arts) $ 22.0 ~ 44.0 ]
+                , effect: [ Grant Party 1 (Performance Arts) $ 22.0 ~ 44.0 ]
                 }
               , { name:   "Aesthetic Appreciation B"
                 , icon:   IconBeamDown
@@ -954,7 +955,7 @@ casters = [
               , { name:   "Divine Protection from Arrows A"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 3.0
+                , effect: [ Times 3 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 9.0 ~ 18.0
                           ]
                 }
@@ -1005,14 +1006,14 @@ casters = [
               , { name:   "Innocent Monster B"
                 , icon:   IconStarTurn
                 , cd:     7
-                , effect: [ Grant Self 3 StarsPerTurn $ 3.0 ~ 9.0
+                , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0
                           , Debuff Self 3 DefenseDown $ Flat 18.0
                           ]
                 }
               , { name:   "Clown's Laughter A+"
                 , icon:   IconHoodX
                 , cd:     8
-                , effect: [ Debuff Enemy 0 BuffBlock $ Flat 3.0
+                , effect: [ Times 3 $ Debuff Enemy 0 BuffBlock Full
                           , Debuff Enemy 5 Curse $ 500.0 ~ 1000.0
                           ]
                 }
@@ -1054,12 +1055,12 @@ casters = [
               , { name:   "Elemental A+"
                 , icon:   IconArtsUp
                 , cd:     9
-                , effect: [ Grant Party 3 (Boost Arts) $ 10.0 ~ 20.0 ]
+                , effect: [ Grant Party 3 (Performance Arts) $ 10.0 ~ 20.0 ]
                 }
               , { name:   "Philosopher's Stone A"
                 , icon:   IconKneel
                 , cd:     10
-                , effect: [ Grant Ally 3 Guts $ 1000.0 ~ 3000.0 ]
+                , effect: [ Times 1 <<< Grant Ally 3 Guts $ 1000.0 ~ 3000.0 ]
                 }
               ]
   , passives: [territoryCreation A, itemConstruction EX]
@@ -1094,17 +1095,17 @@ casters = [
   , actives:  [ { name:   "Bloody Devil B"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Shamanism B"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Arts) $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Performance Arts) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Guardian Beast B"
                 , icon:   IconQuickUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Quick) $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Performance Quick) $ 30.0 ~ 50.0 ]
                 }
               ]
   , passives: [territoryCreation B, itemConstruction C]

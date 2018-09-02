@@ -29,126 +29,23 @@ import Data.Tuple (Tuple(..), uncurry)
 import Database.Base (Alignment, Card, Class, Trait)
 import Database.Icon (Icon)
 
-data Amount
-    = Placeholder
-    | Full
-    | Flat Number
-    | Range Number Number
-
-infix 1 Range as ~
-
-instance _a_ ∷ Show Amount where
-  show Placeholder = "X"
-  show Full = ""
-  show (Flat x) = toString x
-  show (Range a b) = toString a <> "~" <> toString b
-
-toMin ∷ Amount -> Number
-toMin Placeholder = 0.0
-toMin Full = 0.0
-toMin (Flat x) = x
-toMin (Range a _) = a
-
-toMax ∷ Amount -> Number
-toMax Placeholder = 0.0
-toMax Full = 0.0
-toMax (Flat x) = x
-toMax (Range _ b) = b
-
-data Rank = Unknown | EX
-          | APlusPlus | APlus | A | AMinus
-          | BPlusPlus | BPlus | B | BMinus
-          | CPlusPlus | CPlus | C | CMinus
-                      | DPlus | D
-                      | EPlus | E | EMinus
-instance _b_ ∷ Show Rank where
-  show = case _ of
-    Unknown   -> "--"
-    EX        -> "EX"
-    APlusPlus -> "A++"
-    APlus     -> "A+"
-    A         -> "A"
-    AMinus    -> "A-"
-    BPlusPlus -> "B++"
-    BPlus     -> "B+"
-    B         -> "B"
-    BMinus    -> "B-"
-    CPlusPlus -> "C++"
-    CPlus     -> "C+"
-    C         -> "C"
-    CMinus    -> "C-"
-    DPlus     -> "D+"
-    D         -> "D"
-    EPlus     -> "E+"
-    E         -> "E"
-    EMinus    -> "E-"
-
-data Target = Someone
-            | Self | Ally | Allies | Party | Enemy | Enemies | Others
-            | AlliesType Trait | EnemyType Trait | EnemiesType Trait
-derive instance _00_ ∷ Eq Target
-
-allied ∷ Target -> Boolean
-allied Self = true
-allied Ally = true
-allied Allies = true
-allied Party = true
-allied Others = true
-allied (AlliesType _) = true
-allied _ = false
-
-possessiveAndSubject ∷ Target -> Tuple String String
-possessiveAndSubject = case _ of
-    Someone       -> ""
-                  : ""
-    Self          -> " own"
-                  : " self"
-    Ally          -> " one ally's"
-                  : " one ally"
-    Allies        -> " all allies'"
-                  : " allies"
-    Party         -> " party's"
-                  : " party"
-    Enemy         -> " one enemy's"
-                  : " one enemy"
-    Enemies       -> " all enemy"
-                  : " all enemies"
-    Others        -> " allies' (excluding self)"
-                  : " allies (excluding self)"
-    AlliesType t  -> " " <> show t <> " allies'"
-                  : " " <> show t <> " allies"
-    EnemyType t   -> " one " <> show t <> " enemy's"
-                  : " one " <> show t <> " enemy"
-    EnemiesType t -> " all " <> show t <> " enemy"
-                  : " all " <> show t <> " enemies"
-
-times ∷ Amount -> String
-times Placeholder = ""
-times Full = ""
-times (Flat 1.0)  = " (1 time)"
-times amt = " (" <> show amt <> " times)"
-
 data BuffEffect
     = AlignAffinity Alignment
     | AttackUp
-    | AttackUpVs Trait
-    | Boost Card
+    | AttackVs Trait
+    | Performance Card
     | BuffUp
-    | CharmSuccess
     | CritUp
     | ClassAffinity Class
     | DamageCut
     | DamageUp
-    | DebuffImmunity
     | DebuffResist
     | DebuffSuccess
     | DefenseUp
-    | DefenseUpVs Trait
+    | DefenseVs Trait
     | Evasion
     | GaugePerTurn
     | Guts
-    | GutsTriple
-    | GutsUnlimited
     | HealPerTurn
     | HealingReceived
     | HealUp
@@ -170,7 +67,7 @@ data BuffEffect
     | StarAffinity Class
     | StarUp
     | StarsPerTurn
-    | StunSuccess
+    | Success DebuffEffect
     | SureHit
     | Taunt
 instance _c_ ∷ Show BuffEffect where
@@ -179,25 +76,21 @@ instance _c_ ∷ Show BuffEffect where
 showBuff ∷ Target -> Amount -> BuffEffect -> String
 showBuff target amount = case _ of
     AttackUp        -> increase "attack"
-    AttackUpVs t    -> increase $ "attack" <> against t
+    AttackVs t    -> increase $ "attack" <> against t
     AlignAffinity a -> increase $ "attack" <> against a
-    Boost card      -> increase $ show card <> " performance"
+    Performance c   -> increase $ show c <> " performance"
     BuffUp          -> success "buff"
-    CharmSuccess    -> success "Charm" 
     CritUp          -> increase "critical damage"
     ClassAffinity c -> increase $ "damage" <> against c
-    DamageCut       -> "Reduce" <> p <> " damage taken by " <> n <> " (1 time)"
+    DamageCut       -> "Reduce" <> p <> " damage taken by " <> n
     DamageUp        -> "Increase" <> p <> " damage by " <> n
-    DebuffImmunity  -> grant "Debuff Immunity"
     DebuffResist    -> resist "debuff"
     DebuffSuccess   -> success "debuff"
     DefenseUp       -> increase "defense"
-    DefenseUpVs t   -> increase $ "defense" <> against t
+    DefenseVs t   -> increase $ "defense" <> against t
     Evasion         -> grant "Evasion"
     GaugePerTurn    -> "Charge" <> p <> " NP gauge" <> by <> " every turn"
-    Guts            -> "Grant" <> s <> " Guts (1 time) with " <> n <> " HP"
-    GutsTriple      -> "Grant" <> s <> " Guts (3 times) with " <> n <> " HP"
-    GutsUnlimited   -> "Grant" <> s <> " Guts with " <> n <> " HP"
+    Guts            -> "Grant" <> s <> " Guts with " <> n <> " HP"
     HealingReceived -> increase "healing received"
     HealPerTurn     -> "Restore " <> n <> " health" <> to <> " every turn"
     HealUp          -> increase "healing power"
@@ -218,16 +111,18 @@ showBuff target amount = case _ of
     StarWeight      -> increase "critical star absorption"
     StarAffinity c  -> increase $ "critical star generation" <> against c
     StarUp          -> increase "critical star generation rate"
-    StarsPerTurn    -> "Gain " <> n <> " stars every turn"
-    StunSuccess     -> success "Stun" <> " (1 time)"
+    Success debuff  -> success $ G.genericShow debuff
     SureHit         -> grant "Sure Hit"
     Taunt           -> "Draw attention of all enemies" <> to
+    StarsPerTurn    -> "Gain " <> n <> " stars every turn" <> case target of
+        Self -> " for yourself"
+        _    -> ""
   where
     n   = show amount
     p:s = possessiveAndSubject target
     to  = if s == "" then "" else " to" <> s
     by  = " by " <> n <> "%"
-    grant    x = "Grant" <> s <> " " <> x <> times amount
+    grant    x = "Grant" <> s <> " " <> x
     increase x = "Increase" <> p <> " " <> x <> by
     success  x = increase $ x <> " success rate"
     resist   x
@@ -268,7 +163,7 @@ showDebuff ∷ Target -> Amount -> DebuffEffect -> String
 showDebuff target amount = case _ of
     ApplyTrait t -> "Apply the " <> show t <> " trait" <> to
     AttackDown   -> reduce "attack"
-    BuffBlock    -> "Inflict Buff Block status" <> to <> times amount
+    BuffBlock    -> "Inflict Buff Block status" <> to
     BuffFail     -> reduce "attack buff success rate"
     Burn         -> damage "Burn"
     Charm        -> "Charm" <> s
@@ -390,6 +285,8 @@ data BonusEffect
     = FriendPoints
     | QuestQuartz
     | QPGain
+    | EXP
+    | MysticCode
 instance _f_ ∷ Show BonusEffect where
   show = showBonus Placeholder
 
@@ -401,6 +298,10 @@ showBonus amount = case _ of
       -> "Increase the amount of QP earned by " <> n <> " for completing quests"
     QPGain
       -> "Increase QP Gain by " <> n <> "%"
+    EXP
+      -> "Increase Master EXP gained by " <> n <> "%"
+    MysticCode
+      -> "Increase Mystic Code EXP gained by " <> n <> "% when a quest is cleared"
   where
     n = show amount
 
@@ -413,11 +314,130 @@ data ActiveEffect
     | Chance Int ActiveEffect
     | Chances Int Int ActiveEffect
     | When String ActiveEffect
+    | Times Int ActiveEffect
+
+instance _g_ ∷ Show ActiveEffect where
+  show = case _ of
+      Grant t dur buff amt    -> showBuff t amt buff <> turns dur
+                                 <> if not allied t then " [Demerit]." else "."
+      Debuff t dur debuff amt -> showDebuff t amt debuff <> turns dur
+                                 <> if allied t then " [Demerit]." else "."
+      To t instant amt        -> showInstant t amt instant <> "."
+      Bonus bonus amt         -> showBonus amt bonus <> "."
+      Chance per ef           -> show per <> "% chance to " <> uncap (show ef)
+      Chances a b ef          -> show a <> "~" <> show b <> "% chance to "
+                                 <> uncap (show ef)
+      When cond ef            -> "If " <> cond <> ": " <> uncap (show ef)
+      Times 1 ef              -> show ef <> " (1 time)"
+      Times times ef          -> show ef <> " (" <> show times <> " times)"
+    where
+      turns 0   = ""
+      turns 1   = " for 1 turn"
+      turns dur = " for " <> show dur <> " turns"
+
+uncap ∷ String -> String
+uncap s = case uncons s of
+    Nothing                  -> s
+    Just {head: x, tail: xs} -> toLower (singleton x) <> xs
+
+data Amount
+    = Placeholder
+    | Full
+    | Flat Number
+    | Range Number Number
+
+infix 1 Range as ~
+
+instance _a_ ∷ Show Amount where
+  show Placeholder = "X"
+  show Full = ""
+  show (Flat x) = toString x
+  show (Range a b) = toString a <> "~" <> toString b
+
+toMin ∷ Amount -> Number
+toMin Placeholder = 0.0
+toMin Full = 0.0
+toMin (Flat x) = x
+toMin (Range a _) = a
+
+toMax ∷ Amount -> Number
+toMax Placeholder = 0.0
+toMax Full = 0.0
+toMax (Flat x) = x
+toMax (Range _ b) = b
+
+data Rank = Unknown | EX
+          | APlusPlus | APlus | A | AMinus
+          | BPlusPlus | BPlus | B | BMinus
+          | CPlusPlus | CPlus | C | CMinus
+                      | DPlus | D
+                      | EPlus | E | EMinus
+instance _b_ ∷ Show Rank where
+  show = case _ of
+    Unknown   -> "--"
+    EX        -> "EX"
+    APlusPlus -> "A++"
+    APlus     -> "A+"
+    A         -> "A"
+    AMinus    -> "A-"
+    BPlusPlus -> "B++"
+    BPlus     -> "B+"
+    B         -> "B"
+    BMinus    -> "B-"
+    CPlusPlus -> "C++"
+    CPlus     -> "C+"
+    C         -> "C"
+    CMinus    -> "C-"
+    DPlus     -> "D+"
+    D         -> "D"
+    EPlus     -> "E+"
+    E         -> "E"
+    EMinus    -> "E-"
+
+data Target = Someone
+            | Self | Ally | Party | Enemy | Enemies | Others
+            | AlliesType Trait | EnemyType Trait | EnemiesType Trait
+            | Killer
+derive instance _00_ ∷ Eq Target
+
+allied ∷ Target -> Boolean
+allied Self = true
+allied Ally = true
+allied Party = true
+allied Others = true
+allied (AlliesType _) = true
+allied _ = false
+
+possessiveAndSubject ∷ Target -> Tuple String String
+possessiveAndSubject = case _ of
+    Someone       -> ""
+                  : ""
+    Self          -> " own"
+                  : " self"
+    Ally          -> " one ally's"
+                  : " one ally"
+    Party         -> " party's"
+                  : " party"
+    Enemy         -> " one enemy's"
+                  : " one enemy"
+    Enemies       -> " all enemy"
+                  : " all enemies"
+    Others        -> " allies' (excluding self)"
+                  : " allies (excluding self)"
+    AlliesType t  -> " " <> show t <> " allies'"
+                  : " " <> show t <> " allies"
+    EnemyType t   -> " one " <> show t <> " enemy's"
+                  : " one " <> show t <> " enemy"
+    EnemiesType t -> " all " <> show t <> " enemy"
+                  : " all " <> show t <> " enemies"
+    Killer        -> " killer's"
+                   : " killer"
 
 simplify ∷ ActiveEffect -> ActiveEffect
-simplify (Chances _ _ ef) = simplify ef
 simplify (Chance _ ef)    = simplify ef
+simplify (Chances _ _ ef) = simplify ef
 simplify (When _ ef)      = simplify ef
+simplify (Times _ ef)    = simplify ef
 simplify ef               = ef
 
 data RangeInfo = RangeInfo Boolean Number Number
@@ -434,41 +454,26 @@ ranges = bindFlipped toInfo
     acc (Chance _ ef) = acc ef
     acc (Chances a b ef) = pure (Tuple (toNumber a) (toNumber b)) <|> acc ef
     acc (When _ ef) = acc ef
+    acc (Times _ ef) = acc ef
     go (a ~ b) = pure $ Tuple a b
     go _ = empty
 
 instance _01_ ∷ Eq ActiveEffect where
   eq activeA activeB = case activeA, activeB of
-      Grant ta _ a _,  Grant tb _ b _  -> eq a b && eq' ta tb
-      Debuff ta _ a _, Debuff tb _ b _ -> eq a b && eq' ta tb
-      To ta a _,       To tb b _       -> eq a b && eq' ta tb
+      Grant ta _ a _,  Grant tb _ b _  -> eq a b && tEq ta tb
+      Debuff ta _ a _, Debuff tb _ b _ -> eq a b && tEq ta tb
+      To ta a _,       To tb b _       -> eq a b && tEq ta tb
+      Bonus a _,       Bonus b _       -> eq a b 
       Chance _ a,      Chance _ b      -> eq a b
       Chances _ _ a,   Chances _ _ b   -> eq a b
       _,               _               -> false
     where
-      eq' ta tb = ta == tb || ta == Someone || tb == Someone
-
-instance _g_ ∷ Show ActiveEffect where
-  show = case _ of
-      Grant t dur buff amt    -> showBuff t amt buff <> turns dur
-                                 <> if not allied t then " [Demerit]." else "."
-      Debuff t dur debuff amt -> showDebuff t amt debuff <> turns dur
-                                 <> if allied t then " [Demerit]." else "."
-      To t instant amt        -> showInstant t amt instant <> "."
-      Bonus bonus amt         -> showBonus amt bonus <> "."
-      Chance per ef           -> show per <> "% chance to " <> uncap (show ef)
-      Chances a b ef          -> show a <> "~" <> show b <> "% chance to "
-                                 <> uncap (show ef)
-      When cond ef            -> "If " <> cond <> ": " <> uncap (show ef)
-    where
-      turns 0   = ""
-      turns 1   = " for 1 turn"
-      turns dur = " for " <> show dur <> " turns"
-
-uncap ∷ String -> String
-uncap s = case uncons s of
-    Nothing                  -> s
-    Just {head: x, tail: xs} -> toLower (singleton x) <> xs
+      tEq Someone _ = true
+      tEq _ Someone = true
+      tEq ta tb = eq ta tb
+      nEq Placeholder _ = true
+      nEq _ Placeholder = true
+      nEq na nb = eq na nb
 
 type Active = { name   ∷ String
               , icon   ∷ Icon

@@ -28,13 +28,13 @@ lancers = [
               , { name:   "Primordial Rune"
                 , icon:   IconQuickUp
                 , cd:     8
-                , effect: [ Grant Ally 1 (Boost Quick) $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Ally 1 (Performance Quick) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "God-Slayer B"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 1 (AttackUpVs Divine) $ 50.0 ~ 100.0
-                          , Grant Self 1 (AttackUpVs Undead) $ 50.0 ~ 100.0
+                , effect: [ Grant Self 1 (AttackVs Divine) $ 50.0 ~ 100.0
+                          , Grant Self 1 (AttackVs Undead) $ 50.0 ~ 100.0
                           ]
                 }
               ]
@@ -79,7 +79,7 @@ lancers = [
               , { name:   "Mana Burst (Flame) A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 20.0 ~ 30.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
@@ -182,7 +182,7 @@ lancers = [
   , actives:  [ { name:   "Mana Burst (Flame) B"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 15.0 ~ 25.0
+                , effect: [ Grant Self 1 (Performance Buster) $ 15.0 ~ 25.0
                           , Grant Self 1 NPUp $ 8.0 ~ 15.0
                           ]
                 }
@@ -209,7 +209,7 @@ lancers = [
               , kind:   "Anti-Personnel"
               , hits:   5
               , effect: [ To Enemy Damage $ 600.0 ~ 1000.0
-                        , Grant Allies 3 StarUp $ Flat 30.0
+                        , Grant Party 3 StarUp $ Flat 30.0
                         ]
               , over:   [ To Enemy (DamageVs Brynhild) $ 150.0 ~ 200.0 ]
               , first:  false
@@ -235,7 +235,7 @@ lancers = [
   , actives:  [ { name:   "Mana Burst A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 30.0 ~ 50.0 ]
+                , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
               , { name:   "Charisma B"
                 , icon:   IconSwordUp
@@ -284,7 +284,7 @@ lancers = [
   , actives:  [ { name:   "Mana Burst A+"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Buster) $ 35.0 ~ 55.0 ]
+                , effect: [ Grant Self 1 (Performance Buster) $ 35.0 ~ 55.0 ]
                 }
               , { name:   "Protection of World's End A"
                 , icon:   IconStarUp
@@ -349,7 +349,7 @@ lancers = [
                 , icon:   IconShieldBreak
                 , cd:     8
                 , effect: [ Grant Self 1 IgnoreInvinc Full
-                          , Grant Self 1 (Boost Arts) $ 30.0 ~ 50.0
+                          , Grant Self 1 (Performance Arts) $ 30.0 ~ 50.0
                           ]
                 }
               ]
@@ -392,7 +392,7 @@ lancers = [
               , { name:   "Bath Transformation A"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Self 3 (Boost Buster) $ 20.0 ~ 30.0 ]
+                , effect: [ Grant Self 3 (Performance Buster) $ 20.0 ~ 30.0 ]
                 }
               , { name:   "Pursuer of Love A"
                 , icon:   IconShieldDown
@@ -447,7 +447,7 @@ lancers = [
               , { name:   "Battle Continuation B"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
+                , effect: [ Times 1 <<< Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
                 }
               ]
   , passives: [magicResistance A, territoryCreation B]
@@ -495,7 +495,7 @@ lancers = [
               , { name:   "Magecraft B"
                 , icon:   IconArtsUp
                 , cd:     7
-                , effect: [ Grant Self 1 (Boost Arts) $ 24.0 ~ 40.0 ]
+                , effect: [ Grant Self 1 (Performance Arts) $ 24.0 ~ 40.0 ]
                 }
               ]
   , passives: [magicResistance B, divinity D]
@@ -506,7 +506,7 @@ lancers = [
               , kind:   "Anti-Army"
               , hits:   3
               , effect: [ To Enemies Damage $ 600.0 ~ 900.0
-                        , Grant Self 3 DebuffImmunity Full
+                        , Grant Self 3 DebuffResist Full
                         ]
               , over:   [ Debuff Enemies 3 AttackDown $ 10.0 ~ 30.0 ]
               , first:  false
@@ -532,12 +532,12 @@ lancers = [
   , actives:  [ { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               , { name:   "Protection from Arrows B"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 3.0
+                , effect: [ Times 3 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
@@ -590,14 +590,14 @@ lancers = [
               , { name:   "Protection from Arrows B"
                 , icon:   IconDodge
                 , cd:     7
-                , effect: [ Grant Self 0 Evasion $ Flat 3.0
+                , effect: [ Times 3 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
               , { name:   "Beast-Slayer B+"
                 , icon:   IconDamageUp
                 , cd:     7
-                , effect: [ Grant Self 3 (AttackUpVs Beast) $ 40.0 ~ 60.0 ]
+                , effect: [ Grant Self 3 (AttackVs Beast) $ 40.0 ~ 60.0 ]
                 }
               ]
   , passives: [magicResistance C, divinity B]
@@ -641,12 +641,12 @@ lancers = [
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               , { name:   "Warrior's War Cry B"
                 , icon:   IconBusterUp
                 , cd:     7
-                , effect: [ Grant Party 3 (Boost Buster) $ 15.0 ~ 25.0 ]
+                , effect: [ Grant Party 3 (Performance Buster) $ 15.0 ~ 25.0 ]
                 }
               ]
   , passives: [magicResistance C]
@@ -698,8 +698,8 @@ lancers = [
               , { name:   "Seven Hills A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Grant Ally 1 Guts $ Flat 1000.0
-                          , Grant Ally 1 (Boost Buster) $ 10.0 ~ 30.0
+                , effect: [ Times 1 <<< Grant Ally 1 Guts $ Flat 1000.0
+                          , Grant Ally 1 (Performance Buster) $ 10.0 ~ 30.0
                           ]
                 }
               ]

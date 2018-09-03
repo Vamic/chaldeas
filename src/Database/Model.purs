@@ -5,3 +5,4 @@ import Database.Icon as Export
 import Database.Passive as Export
 import Database.Servant as Export
 import Database.Skill as Export
+import Database.CraftEssence as Export

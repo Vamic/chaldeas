@@ -1,34 +1,30 @@
-module Site.Sorting
+module Site.Servants.Sorting
   ( SortBy(..)
   , getSort
   )where
 
 import Prelude
-import Operators (enumArray, unCamel)
+import Operators
 import Generic as G
 import Data.Map as M
 
-import Data.Array (elem, sortWith)
-import Data.Int (toNumber)
-import Data.Maybe (fromMaybe)
+import Data.Array
+import Data.Int
+import Data.Maybe
 import Data.Map (Map)
-import Data.Ord (abs)
-import Data.Profunctor.Strong ((&&&))
+import Data.Ord
+import Data.Profunctor.Strong
 import Data.Tuple (Tuple(..), uncurry)
 
-import Database (Servant, npDamage, npPerArts, servants, starsPerQuick)
-import Printing (print)
+import Database
+import Printing
 
 data SortBy
     = Rarity
     | ID
     | ATK
     | HP
-    -- | GrailATK
-    -- | GrailHP
-    -- | NPGain
     | StarWeight
-    -- | StarRate
     | NPArts
     | StarQuick
     | NPDmg
@@ -37,12 +33,8 @@ data SortBy
     | NPSpecOver
 
 instance _a_ ∷ Show SortBy where
-  -- show NPGain     = "NP Gain/Hit"
-  -- show StarRate   = "Star Rate"
   show NPArts     = "NP Gain per Arts card"
   show StarQuick  = "Stars per Quick card"
-  -- show GrailATK   = "Grail ATK"
-  -- show GrailHP    = "Grail HP"
   show NPDmg      = "NP Damage"
   show NPDmgOver  = "NP Damage + Overcharge"
   show NPSpec     = "NP Special Damage"
@@ -50,31 +42,29 @@ instance _a_ ∷ Show SortBy where
   show a = unCamel $ G.genericShow a
 
 toSort ∷ SortBy -> Servant -> Number
-toSort ID         = (-1.0 * _) <<< toNumber <<< _.id
-toSort Rarity     = toNumber <<< _.rarity
-toSort ATK        = toNumber <<< _.stats.max.atk
-toSort HP         = toNumber <<< _.stats.max.hp
--- toSort GrailATK   = toNumber <<< _.stats.grail.atk
--- toSort GrailHP    = toNumber <<< _.stats.grail.hp
--- toSort NPGain     = _.gen.npAtk
-toSort StarWeight = toNumber <<< _.gen.starWeight
--- toSort StarRate   = _.gen.starRate
-toSort NPArts     = npPerArts
-toSort StarQuick  = starsPerQuick
-toSort NPDmg      = npDamage false false
-toSort NPDmgOver  = npDamage false true
-toSort NPSpec     = npDamage true false
-toSort NPSpecOver = npDamage true true
+toSort ID         (Servant s) = negate $ toNumber s.id
+toSort Rarity     (Servant s) = toNumber s.rarity
+toSort ATK        (Servant s) = toNumber s.stats.max.atk
+toSort HP         (Servant s) = toNumber s.stats.max.hp
+toSort StarWeight (Servant s) = toNumber s.gen.starWeight
+toSort NPArts              s  = npPerArts s
+toSort StarQuick           s  = starsPerQuick s
+toSort NPDmg               s  = npDamage false false s
+toSort NPDmgOver           s  = npDamage false true s
+toSort NPSpec              s  = npDamage true false s
+toSort NPSpecOver          s  = npDamage true true s
 
 doSort ∷ SortBy -> Array Servant -> Array (Tuple String Servant)
-doSort Rarity = map (Tuple "") <<< sortWith \s -> show (5 - s.rarity) <> s.name
+doSort Rarity = map (Tuple "")
+    <<< sortWith \(Servant s) -> show (5 - s.rarity) <> s.name
 doSort a = map showSort <<< sortWith sorter
   where
     sorter   = toSort a
     showSort
-      | a `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \s -> (flip Tuple) s
+      | a `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver]
+          = \s'@(Servant s) -> (flip Tuple) s'
           $ (if s.free || s.rarity < 4 then "NP5: " else "NP1: ")
-         <> (output <<< abs $ sorter s)
+         <> (output <<< abs $ sorter s')
       | otherwise = uncurry Tuple <<< (output <<< abs <<< sorter &&& identity)
     output = case a of
         -- NPGain    -> (_ <> "%") <<< print 2

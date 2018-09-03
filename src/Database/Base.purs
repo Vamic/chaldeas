@@ -8,11 +8,10 @@ module Database.Base
   ) where
 
 import Prelude
-import Operators ((:))
+import Operators
 import Generic as G
 
-import Data.Tuple (Tuple)
-
+import Data.Tuple
 
 data Alignment = Lawful | Neutral | Chaotic | Good | Balanced | Evil
                | Mad | Summer | Bride

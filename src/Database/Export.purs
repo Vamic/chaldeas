@@ -1,14 +1,14 @@
 module Export (craftEssences, servants) where
 
 import Prelude
-import Data.String.CodeUnits (toCharArray)
-import Data.Tuple (Tuple(..))
+import Data.String.CodeUnits
+import Data.Tuple
 
 import Database as D
-import Database (Active, ActiveEffect(..), Amount(..), NoblePhantasm, Passive, Target(..), (~))
+import Database
 
 servants ∷ Unit -> Array _
-servants = \_ -> D.servants <#> \s@{align: Tuple alignA alignB} ->
+servants = \_ -> D.servants <#> \(Servant s@{align: Tuple alignA alignB}) ->
     { name:          s.name
     , rarity:        s.rarity
     , class:         show s.class
@@ -31,7 +31,7 @@ servants = \_ -> D.servants <#> \s@{align: Tuple alignA alignB} ->
     }
 
 craftEssences ∷ Unit -> Array _
-craftEssences = \_ -> D.craftEssences <#> \ce ->
+craftEssences = \_ -> D.craftEssences <#> \(CraftEssence ce )->
     { name:    ce.name
     , id:      ce.id
     , rarity:  ce.rarity

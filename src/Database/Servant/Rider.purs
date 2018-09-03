@@ -1,12 +1,12 @@
 module Database.Servant.Rider (riders) where
 
-import Prelude (($), (<<<))
-import Operators ((:))
+import Prelude
+import Operators
 import Database.Model
 
 riders ∷ Array Servant
-riders = [
-  { name:     "Ozymandias"
+riders = Servant <$>
+[ { name:     "Ozymandias"
   , id:       118
   , rarity:   5
   , class:    Rider
@@ -477,7 +477,7 @@ riders = [
               , { name:   "Combination C"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 1 StarWeight $ 300.0 ~ 600.0
+                , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 600.0
                           , Grant Self 1 AttackUp $ 20.0 ~ 30.0
                           ]
                 }

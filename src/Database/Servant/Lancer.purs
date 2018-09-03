@@ -1,12 +1,12 @@
 module Database.Servant.Lancer (lancers) where
 
-import Prelude (($), (<<<))
-import Operators ((:))
+import Prelude
+import Operators
 import Database.Model
 
 lancers ∷ Array Servant
-lancers = [
-  { name:     "Scathach"
+lancers = Servant <$>
+[ { name:     "Scathach"
   , id:       70
   , rarity:   5
   , class:    Lancer
@@ -21,8 +21,8 @@ lancers = [
                 , cd:     7
                 , effect: [ Grant Self 1 Evasion Full
                           , Chance 80 <<< Grant Self 3 CritUp $ 30.0 ~ 50.0
-                          , Chance 80 
-                            <<< Grant Self 3 StarWeight $ 300.0 ~ 500.0
+                          , Chance 80
+                            <<< Grant Self 3 StarAbsorb $ 300.0 ~ 500.0
                           ]
                 }
               , { name:   "Primordial Rune"
@@ -196,7 +196,7 @@ lancers = [
               , { name:   "Hero's Assistant C"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Ally 3 StarWeight $ 300.0 ~ 600.0
+                , effect: [ Grant Ally 3 StarAbsorb $ 300.0 ~ 600.0
                           , To Ally Heal $ 1000.0 ~ 3000.0
                           ]
                 }
@@ -289,7 +289,7 @@ lancers = [
               , { name:   "Protection of World's End A"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 1 StarWeight $ 500.0 ~ 1000.0
+                , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0
                           , Grant Self 1 CritUp $ 30.0 ~ 50.0
                           , To Party GainStars $ 5.0 ~ 10.0
                           ]
@@ -342,7 +342,7 @@ lancers = [
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
-                          , Grant Self 1 StarWeight $ 300.0 ~ 500.0
+                          , Grant Self 1 StarAbsorb $ 300.0 ~ 500.0
                           ]
                 }
               , { name:   "Juezhao B"

@@ -13,33 +13,42 @@
         ; font-size: 15px
         ; line-height: 0
         }
-      span, p, table, br, h1, h2, h3, h4, h5, ul, ol
-        { line-height: 1.31em }
-      h1, h2, h3           { margin: 0.5em 0 0 0 }
-      h2                   { font-size: 1.4em }
-      p, h4                { margin: 0 }
-      thead th, tbody      { text-align: center }
-      th                   { text-align: right }
-      th, td               { padding: 0 5px }
-      th::after            { content: ":" }
-      thead th::after      { content: "" }
-      td.rating            { color: #777777 }
-      h1, h2, aside h3     { text-transform: uppercase }
-      .selected            { font-weight: bold }
-      ul:last-child        { margin-bottom: 0.5em }
-      ul                   { padding: 0; margin: 0 }
-      label                { display: inline-block }
-      form p               { margin-left: 20px }
-      p input              { float: left; margin-left: -20px }
-      aside button         { width: 180px; margin-top: 5px; max-width: 100% }
-      footer a:first-child { left: 9px }
-      footer a:last-child  { right: 9px }
+      span, p, table, br, h1, h2, h3, h4, h5, ul, ol, a
+        { line-height: 1.31em
+        ; z-index: 100
+        }
+      .link
+        { color: #5656BF
+        ; cursor: pointer
+        }
+      h1, h2, h3            { margin: 0.5em 0 0 0 }
+      h2                    { font-size: 1.4em }
+      p, h4                 { margin: 0 }
+      thead th, tbody       { text-align: center }
+      th                    { text-align: right }
+      th, td                { padding: 0 5px }
+      th::after             { content: ":" }
+      thead th::after       { content: "" }
+      td.rating             { color: #777777 }
+      h1, h2, aside h3      { text-transform: uppercase }
+      .selected             { font-weight: bold }
+      ul:last-child         { margin-bottom: 0.5em }
+      ul                    { padding: 0; margin: 0 }
+      label                 { display: inline-block }
+      form p                { margin-left: 20px }
+      p input               { float: left; margin-left: -20px }
+      aside button          { width: 180px; margin-top: 5px; max-width: 100% }
+      article .portrait img { width: 248px }
+      footer a:first-child  { left: 14px }
+      footer a:last-child   { right: 14px }
       footer a
         { position: absolute 
         ; cursor: pointer
         ; font-size: 16px
-        ; bottom: 9px
+        ; bottom: -3px
         }
+      aside a
+        { display: block }
       .selected, .unselected 
         { cursor: pointer }
       .selected:hover, .unselected:hover 
@@ -48,6 +57,8 @@
         { width: 225px 
         ; margin-top: -1px
         ; margin-bottom: 12px
+        ; position: relative
+        ; left: -10px
         }
       #layout > article table.phantasm
         { width: 100% 
@@ -70,40 +81,40 @@
         }
       #layout > aside > nav span
         { display: block }
-      #servants 
+      #layout > section
         { overflow: scroll 
         ; flex: 7 1 0
         ; text-align: center
         }
-      .servant
+      .portrait
         { position: relative 
         ; display: inline-block
         }
-      .servant > img 
+      .portrait > img 
         { border-style: solid }
-      .servant.stars5 img, .servant.stars5 header span
+      .portrait.stars5 img, .portrait.stars5 header span
         { border-color: #ba8d00; color: #ba8d00 }
-      .servant.stars4 img, .servant.stars4 header span
+      .portrait.stars4 img, .portrait.stars4 header span
         { border-color: #d4802f; color: #d4802f }
-      .servant.stars3 img, .servant.stars3 header span
+      .portrait.stars3 img, .portrait.stars3 header span
         { border-color: #7a7777; color: #7a7777 }
-      .servant.stars2 img, .servant.stars2 header span
+      .portrait.stars2 img, .portrait.stars2 header span
         { border-color: #9d6e47; color: #9d6e47 }
-      .servant.stars1 img, .servant.stars1 header span
+      .portrait.stars1 img, .portrait.stars1 header span
         { border-color: #9f8f3f; color: #9f8f3f }
-      .servant.stars0 img, .servant.stars0 header span
+      .portrait.stars0 img, .portrait.stars0 header span
         { border-color: #0e0d0d; color: #555555 }
-      .servant header, .servant footer
+      .portrait header, .portrait footer
         { position: absolute
         ; left:0;right:0
         ; text-align: center
         ; color: #ffffff
         }
-      article .servant footer
-        { bottom: 0px }
-      #servants .servant footer
+      article .portrait footer
+        { bottom: -3px }
+      section .portrait footer
         { bottom: 1px }
-      .servant header span
+      .portrait header span
         { border-radius: 20px
         ; border-style: solid
         ; border-width: 2px
@@ -111,57 +122,57 @@
         ; display: inline-block
         ; margin: -4px 6px 0px 6px
         }
-      .servant div
+      .portrait div
         { position: absolute }
-      .servant aside
+      .portrait aside
         { display: none /*flex*/
         ; flex-direction: column
         ; position: absolute
         ; top:0;right:0
         }
-      .servant aside img
+      .portrait aside img
         { width: 15px }
-      #servants .servant header
+      section .portrait header
         { bottom: 20px }
-      #servants .servant footer
+      section .portrait footer
         { font-size: 7px }
-      #servants .servant header span
+      section .portrait header span
         { font-size: 11.5px
         ; padding: 1px 4px 2px 4px
         }
-      #servants .servant div
+      section .portrait div
         { top:-2px;left:-2px }
-      #servants .servant div img
+      section .portrait div img
         { width: 25px }
-      article .servant div
+      article .portrait div
         { top:-10px;left:-4px; display: none }
-      article .servant div img
+      article .portrait div img
         { width: 50px }
-      article .servant
+      article .portrait
         { float: left }
-      article .servant header
-        { bottom: 25px }
-      article .servant footer
+      article .portrait header
+        { bottom: 21px }
+      article .portrait footer
         { font-size: 10px }
-      article .servant header span
+      article .portrait header span
         { font-size: 16px
         ; padding: 1px 6px 3px 6px
         }
-      article .servant > img
+      article .portrait > img
         { border-width: 6px
         ; border-bottom-width: 16px
-        ; margin: -5px 0 -1px 0
+        ; margin: -5px 10px -5px 0
         }
-      #servants .servant
+      section .portrait
         { margin: 3px }
-      #servants .servant > img
+      section .portrait > img
         { width: 150px 
         ; border-width: 3px
         ; border-bottom-width: 12px
         }
-      #servants .servant:hover
+      section .portrait:hover
         { cursor: pointer }
-      #servants .servant:hover footer, #servants .servant:hover header span
+      section .portrait:hover footer, section .portrait:hover header span
         { color: #222222 }
       #cover
         { position: absolute 
@@ -180,7 +191,8 @@
         }
       #layout > article
         { position: absolute
-        ; top:30px;left:0;bottom:30px;right:0
+        ; top:4%;left:0;right:0
+        ; max-height: 92%
         ; overflow: scroll
         ; margin: auto
         ; max-width: 504px
@@ -240,15 +252,20 @@
         { content: none }
     aside form
       { margin-bottom: 6px }
-
+    .activates p:first-child::after { content: " [Activates first]" }
+    .demerit::after                 { content: " [Demerit]" }
+    .activates p:first-child::after, .demerit::after
+      { color: #585858
+      ; font-style: italic
+      }
     @media (max-device-width: 800px) 
       { body                             { font-size: 8px }
         aside td                         { display: block }
-        #servants .servant > img         { width: 75px }
-        #servants .servant header span   { font-size: 9px }
-        article .servant > img           { width: 130px }
+        section .portrait > img           { width: 75px }
+        section .portrait header span     { font-size: 9px }
+        article .portrait > img           { width: 130px }
         form p                           { margin-left: 15px }
-        article .servant header span     { font-size: 11px }
+        article .portrait header span     { font-size: 11px }
         #layout > article table.phantasm { width: auto }
         .phantasm th                     { width: initial }
         p input

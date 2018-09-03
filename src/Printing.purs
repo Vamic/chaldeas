@@ -1,7 +1,7 @@
 module Printing where
 
 import Prelude
-import Data.Formatter.Number (Formatter(..), format)
+import Data.Formatter.Number
 import Data.Int (pow, toNumber)
 import Math (round)
 

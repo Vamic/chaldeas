@@ -1,5 +1,5 @@
 module Database.Servant
-  ( Servant
+  ( Servant(..)
   , Deck(..)
   , NoblePhantasm
   , Gen
@@ -9,46 +9,48 @@ module Database.Servant
   ) where
 
 import Prelude
-import Operators ((:))
 import Generic as G
 
-import Data.Foldable (any, elem)
-import Data.Maybe (fromMaybe)
-import Data.String.CodeUnits (charAt, fromCharArray)
-import Data.Tuple (Tuple)
+import Data.Array
+import Data.Maybe
+import Data.String.CodeUnits
+import Data.Tuple
 
-import Database.Base (Alignment, Attribute, Card, Class, Stat, Trait)
-import Database.Passive (Passive)
-import Database.Skill (Active, ActiveEffect(..), BuffEffect, DebuffEffect, InstantEffect(..), Rank, Target(..), allied, simplify)
+import Database.Base
+import Database.Passive
+import Database.Skill
 
-type Servant = { name     ∷ String
-               , id       ∷ Int
-               , rarity   ∷ Int
-               , class    ∷ Class
-               , attr     ∷ Attribute
-               , deck     ∷ Deck
-               , stats    ∷ { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
-               , actives  ∷ Array Active
-               , passives ∷ Array Passive
-               , phantasm ∷ NoblePhantasm
-               , gen      ∷ Gen
-               , hits     ∷ Hits
-               , traits   ∷ Array Trait
-               , death    ∷ Number
-               , align    ∷ Tuple Alignment Alignment
-               , limited  ∷ Boolean
-               , free     ∷ Boolean
-               }
+newtype Servant = Servant { name     ∷ String
+                          , id       ∷ Int
+                          , rarity   ∷ Int
+                          , class    ∷ Class
+                          , attr     ∷ Attribute
+                          , deck     ∷ Deck
+                          , stats    ∷ { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
+                          , actives  ∷ Array Active
+                          , passives ∷ Array Passive
+                          , phantasm ∷ NoblePhantasm
+                          , gen      ∷ Gen
+                          , hits     ∷ Hits
+                          , traits   ∷ Array Trait
+                          , death    ∷ Number
+                          , align    ∷ Tuple Alignment Alignment
+                          , limited  ∷ Boolean
+                          , free     ∷ Boolean
+                          }
+
+instance _0_ ∷ Show Servant where
+  show (Servant s) = s.name
 
 data Deck = Deck Card Card Card Card Card
 
-type Ratings = { damage     ∷ Int
-               , np         ∷ Int
-               , critical   ∷ Int
-               , utility    ∷ Int
-               , support    ∷ Int
-               , durability ∷ Int
-               }
+data Ratings = Ratings { damage     ∷ Int
+                        , np         ∷ Int
+                        , critical   ∷ Int
+                        , utility    ∷ Int
+                        , support    ∷ Int
+                        , durability ∷ Int
+                        }
 
 type NoblePhantasm = { name   ∷ String
                      , desc   ∷ String
@@ -70,8 +72,9 @@ type Gen = { starWeight ∷ Int
            }
 
 getEffects ∷ Servant -> Array ActiveEffect
-getEffects {phantasm:{effect, over}, actives}
-    = simplify <$> effect <> over <> (actives >>= _.effect)
+getEffects (Servant {phantasm:{effect, over}, actives})
+    = filter (not <<< demerit)
+    $ simplify <$> effect <> over <> (actives >>= _.effect)
 
 phantasmEffects ∷ NoblePhantasm -> Array ActiveEffect
 phantasmEffects {effect, over} = effect <> over
@@ -88,46 +91,40 @@ class (G.BoundedEnum a, Show a) <= MatchServant a where
     has ∷ a -> Boolean -> Servant -> Boolean
 instance _a_ ∷ MatchServant BuffEffect where
     has a noSelf = any match <<< getEffects where
-        match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
+        match (Grant t _ b _) = a == b && (not noSelf || t /= Self)
         match _ = false
 instance _b_ ∷ MatchServant DebuffEffect where
     has a _ = any match <<< getEffects where
-        match (Debuff t _ b _) = a == b && not (allied t)
+        match (Debuff t _ b _) = a == b
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where
-    has DemeritBuffs  _ = const false
-    has DemeritCharge _ = const false
-    has DemeritDamage _ = const false
-    has DemeritGauge  _ = const false
-    has DemeritHealth _ = const false
-    has DemeritKill   _ = const false
     has a noSelf        = any match <<< getEffects where
         match (To t b _) = a == b && (not noSelf || t /= Self)
         match _ = false
 instance _d_ ∷ MatchServant Trait where
-    has a = const $ elem a <<< _.traits
+    has a _ (Servant s) = a `elem` s.traits
 instance _e_ ∷ MatchServant Alignment where
-    has a _ {align:(b:c)} = a == b || a == c
+    has a _ (Servant {align:Tuple b c}) = a == b || a == c
 instance _f_ ∷ MatchServant PhantasmType where
-    has SingleTarget _ {phantasm} = any match $ phantasmEffects phantasm
+    has SingleTarget _ (Servant s) = any match $ phantasmEffects s.phantasm
       where
         match (To Enemy Damage _) = true
         match (To Enemy DamageThruDef _) = true
         match _ = false
-    has MultiTarget _ {phantasm} = any match $ phantasmEffects phantasm
+    has MultiTarget _ (Servant s) = any match $ phantasmEffects s.phantasm
       where
         match (To Enemies Damage _) = true
         match (To Enemies DamageThruDef _) = true
         match _ = false
     has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
 instance _g_ ∷ MatchServant Class where
-    has a = const $ eq a <<< _.class
+    has a _ (Servant s) = a == s.class
 instance _h_ ∷ MatchServant Attribute where
-    has a = const $ eq a <<< _.attr
+    has a _ (Servant s) = a == s.attr
 instance _i_ ∷ MatchServant Deck where
-    has a = const $ eq a <<< _.deck
+    has a _ (Servant s) = a == s.deck
 instance _j_ ∷ MatchServant Card where
-    has a = const $ eq a <<< _.phantasm.card
+    has a _ (Servant s) = a == s.phantasm.card
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------

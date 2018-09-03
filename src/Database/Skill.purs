@@ -6,28 +6,28 @@ module Database.Skill
   , DebuffEffect(..)
   , InstantEffect(..)
   , BonusEffect(..)
-  , ActiveEffect(..), simplify, ranges
+  , ActiveEffect(..), demerit, simplify, ranges
   , Active
   , RangeInfo(..)
   ) where
 
 import Prelude
-import Operators ((:))
+import Operators
 import Generic as G
 
-import Control.Alternative (class Alternative)
-import Control.Bind (bindFlipped)
-import Control.Plus (empty, (<|>))
-import Data.Foldable (elem)
-import Data.Number.Format (toString)
-import Data.Int (toNumber)
-import Data.Maybe (Maybe(..))
-import Data.String (singleton, toLower, uncons)
+import Control.Alternative
+import Control.Bind
+import Control.Plus
+import Data.Foldable
+import Data.Number.Format
+import Data.Int
+import Data.Maybe
+import Data.String
 import Data.String.CodeUnits (toCharArray)
-import Data.Tuple (Tuple(..), uncurry)
+import Data.Tuple
 
-import Database.Base (Alignment, Card, Class, Trait)
-import Database.Icon (Icon)
+import Database.Base
+import Database.Icon
 
 data BuffEffect
     = AlignAffinity Alignment
@@ -63,7 +63,7 @@ data BuffEffect
     | Overcharge
     | ReduceDamage
     | Resist DebuffEffect
-    | StarWeight
+    | StarAbsorb
     | StarAffinity Class
     | StarUp
     | StarsPerTurn
@@ -108,7 +108,7 @@ showBuff target amount = case _ of
     Overcharge      -> "Overcharge" <> p <> " NP by " <> n <> " stages"
     ReduceDamage    -> "Reduce" <> p <> " damage taken by " <> n
     Resist debuff   -> resist $ G.genericShow debuff <> " debuff"
-    StarWeight      -> increase "critical star absorption"
+    StarAbsorb      -> increase "critical star absorption"
     StarAffinity c  -> increase $ "critical star generation" <> against c
     StarUp          -> increase "critical star generation rate"
     Success debuff  -> success $ G.genericShow debuff
@@ -226,7 +226,7 @@ instance _e_ ∷ Show InstantEffect where
 showInstant ∷ Target -> Amount -> InstantEffect -> String
 showInstant target amount = case _ of
     Avenge
-      -> "Wait 1 turn [Demerit], then deal " <> n 
+      -> "Wait 1 turn, then deal " <> n
       <> "% of damage taken during that turn" <> to
     ChangeClass c
       -> "Change" <> p <> " class to " <> show c
@@ -243,25 +243,23 @@ showInstant target amount = case _ of
     DamagePoison
       -> "Deal " <> n <> "% extra damage to Poison"
     DemeritBuffs
-      -> "Remove" <> p <> " buffs [Demerit]"
+      -> "Remove" <> p <> " buffs"
     DemeritCharge
-      -> "Increase" <> s <> " NP gauge by " <> n <> " [Demerit]"
+      -> "Increase" <> s <> " NP gauge by " <> n
     DemeritGauge
-      -> "Decrease" <> p <> " NP gauge by " <> n <> "% [Demerit]"
+      -> "Decrease" <> p <> " NP gauge by " <> n <> "%"
     DemeritDamage
-      -> "Deal " <> n <> " damage" <> to <> " [Demerit]"
+      -> "Deal " <> n <> " damage" <> to
     DemeritKill
-      -> "Sacrifice" <> s <> " (can trigger Guts) [Demerit]"
+      -> "Sacrifice" <> s <> " (can trigger Guts)"
     DemeritHealth
-      -> "Deal " <> n <> " damage" <> to <> " down to a minimum of 1 [Demerit]"
+      -> "Deal " <> n <> " damage" <> to <> " down to a minimum of 1"
     GaugeDown
       -> "Reduce" <> p <> " NP gauge by " <> n
     GaugeUp
       -> "Increase" <> p <> " NP gauge by " <> n <> "%"
     Heal
       -> "Restore " <> if amount == Full then "all" else n <> " health" <> to
-    Kill
-      -> n <> "% chance to Instant-Kill " <> s
     LastStand
       -> "Deal up to " <> n <> "% damage based on missing health" <> to
     OverChance
@@ -272,6 +270,9 @@ showInstant target amount = case _ of
       -> "Remove" <> p <> " debuffs"
     RemoveMental
       -> "Remove" <> p <> " mental debuffs"
+    Kill
+      | amount == Full -> n <> "% chance to Instant-Kill " <> s
+      | otherwise      -> "Instant-Kill " <> s
     GainStars
       -> "Gain " <> n <> " critical stars" <> case target of
           Self -> " for yourself"
@@ -287,6 +288,7 @@ data BonusEffect
     | QPGain
     | EXP
     | MysticCode
+    | Bond
 instance _f_ ∷ Show BonusEffect where
   show = showBonus Placeholder
 
@@ -302,6 +304,8 @@ showBonus amount = case _ of
       -> "Increase Master EXP gained by " <> n <> "%"
     MysticCode
       -> "Increase Mystic Code EXP gained by " <> n <> "% when a quest is cleared"
+    Bond
+      -> "Increase Bond Points gained by " <> n
   where
     n = show amount
 
@@ -316,21 +320,37 @@ data ActiveEffect
     | When String ActiveEffect
     | Times Int ActiveEffect
 
+demerit ∷ ActiveEffect -> Boolean
+demerit (Grant t _ _ _) = not $ allied t
+demerit (Debuff t _ _ _) = allied t
+demerit (To _ DemeritBuffs _) = true
+demerit (To _ DemeritCharge _) = true
+demerit (To _ DemeritDamage _) = true
+demerit (To _ DemeritGauge _) = true
+demerit (To _ DemeritHealth _) = true
+demerit (To _ DemeritKill _) = true
+demerit (To _ _ _) = false
+demerit (Bonus _ _) = false
+demerit (Chance _ ef) = demerit ef
+demerit (Chances _ _ ef) = demerit ef
+demerit (When _ ef) = demerit ef
+demerit (Times _ ef) = demerit ef
+
 instance _g_ ∷ Show ActiveEffect where
-  show = case _ of
-      Grant t dur buff amt    -> showBuff t amt buff <> turns dur
-                                 <> if not allied t then " [Demerit]." else "."
-      Debuff t dur debuff amt -> showDebuff t amt debuff <> turns dur
-                                 <> if allied t then " [Demerit]." else "."
-      To t instant amt        -> showInstant t amt instant <> "."
-      Bonus bonus amt         -> showBonus amt bonus <> "."
-      Chance per ef           -> show per <> "% chance to " <> uncap (show ef)
-      Chances a b ef          -> show a <> "~" <> show b <> "% chance to "
-                                 <> uncap (show ef)
-      When cond ef            -> "If " <> cond <> ": " <> uncap (show ef)
-      Times 1 ef              -> show ef <> " (1 time)"
-      Times times ef          -> show ef <> " (" <> show times <> " times)"
+  show = (_ <> ".") <<< go
     where
+      go = case _ of
+          Grant t dur buff amt    -> showBuff t amt buff <> turns dur
+          Debuff t dur debuff amt -> showDebuff t amt debuff <> turns dur
+          To t instant amt        -> showInstant t amt instant
+          Bonus bonus amt         -> showBonus amt bonus
+          Chance per ef           -> show per <> "% chance to " <> uncap (go ef)
+          Chances a b ef          -> show a <> "~" <> show b <> "% chance to "
+                                     <> uncap (go ef)
+          When "attacking" ef     -> go ef <> " when attacking"
+          When cond ef            -> "If " <> cond <> ": " <> uncap (go ef)
+          Times 1 ef              -> go ef <> " (1 time)"
+          Times times ef          -> go ef <> " (" <> show times <> " times)"
       turns 0   = ""
       turns 1   = " for 1 turn"
       turns dur = " for " <> show dur <> " turns"
@@ -397,7 +417,7 @@ instance _b_ ∷ Show Rank where
 data Target = Someone
             | Self | Ally | Party | Enemy | Enemies | Others
             | AlliesType Trait | EnemyType Trait | EnemiesType Trait
-            | Killer
+            | Killer | Target
 derive instance _00_ ∷ Eq Target
 
 allied ∷ Target -> Boolean
@@ -411,28 +431,29 @@ allied _ = false
 possessiveAndSubject ∷ Target -> Tuple String String
 possessiveAndSubject = case _ of
     Someone       -> ""
-                  : ""
+                   : ""
     Self          -> " own"
-                  : " self"
+                   : " self"
     Ally          -> " one ally's"
-                  : " one ally"
+                   : " one ally"
     Party         -> " party's"
-                  : " party"
+                   : " party"
     Enemy         -> " one enemy's"
-                  : " one enemy"
+                   : " one enemy"
     Enemies       -> " all enemy"
-                  : " all enemies"
+                   : " all enemies"
     Others        -> " allies' (excluding self)"
-                  : " allies (excluding self)"
+                   : " allies (excluding self)"
     AlliesType t  -> " " <> show t <> " allies'"
-                  : " " <> show t <> " allies"
+                   : " " <> show t <> " allies"
     EnemyType t   -> " one " <> show t <> " enemy's"
-                  : " one " <> show t <> " enemy"
+                   : " one " <> show t <> " enemy"
     EnemiesType t -> " all " <> show t <> " enemy"
-                  : " all " <> show t <> " enemies"
+                   : " all " <> show t <> " enemies"
     Killer        -> " killer's"
                    : " killer"
-
+    Target        -> " target's"
+                   : " target"
 simplify ∷ ActiveEffect -> ActiveEffect
 simplify (Chance _ ef)    = simplify ef
 simplify (Chances _ _ ef) = simplify ef
@@ -463,7 +484,7 @@ instance _01_ ∷ Eq ActiveEffect where
       Grant ta _ a _,  Grant tb _ b _  -> eq a b && tEq ta tb
       Debuff ta _ a _, Debuff tb _ b _ -> eq a b && tEq ta tb
       To ta a _,       To tb b _       -> eq a b && tEq ta tb
-      Bonus a _,       Bonus b _       -> eq a b 
+      Bonus a _,       Bonus b _       -> eq a b
       Chance _ a,      Chance _ b      -> eq a b
       Chances _ _ a,   Chances _ _ b   -> eq a b
       _,               _               -> false

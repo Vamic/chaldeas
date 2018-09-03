@@ -1,12 +1,12 @@
 module Database.Servant.Assassin (assassins) where
 
-import Prelude (($), (<<<))
-import Operators ((:))
+import Prelude
+import Operators
 import Database.Model
 
 assassins ∷ Array Servant
-assassins = [
-  { name:     "Jack the Ripper"
+assassins = Servant <$>
+[ { name:     "Jack the Ripper"
   , id:       75
   , rarity:   5
   , class:    Assassin
@@ -585,9 +585,9 @@ assassins = [
               , { name:   "Panicky Voice A"
                 , icon:   IconStun
                 , cd:     8
-                , effect: [ Times 1 
+                , effect: [ Times 1
                             <<< Grant Self 0 (Success Stun) $ 5.0  ~ 15.0
-                          , When "transformed into Hyde" <<< Times 1 
+                          , When "transformed into Hyde" <<< Times 1
                             <<< Grant Self 0 (Success Stun) $ 85.0 ~ 135.0
                           , Chance 10 $ Debuff Enemy 1 Stun Full
                           ]
@@ -636,7 +636,7 @@ assassins = [
   , actives:  [ { name:   "Restrain A"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 3 StarWeight $ Flat 200.0
+                , effect: [ Grant Self 3 StarAbsorb $ Flat 200.0
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
@@ -745,11 +745,11 @@ assassins = [
               , { name:   "Wide Specialization A+"
                 , icon:   IconAllUp
                 , cd:     7
-                , effect: [ Chances 60 80 
+                , effect: [ Chances 60 80
                             <<< Grant Self 3 (Performance Buster) $ Flat 30.0
-                          , Chances 60 80 
+                          , Chances 60 80
                             <<< Grant Self 3 (Performance Quick) $ Flat 30.0
-                          , Chances 60 80 
+                          , Chances 60 80
                             <<< Grant Self 3 (Performance Arts) $ Flat 30.0
                           , Grant Self 1 Evasion Full
                           ] -- TODO

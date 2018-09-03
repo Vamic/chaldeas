@@ -1,12 +1,12 @@
 module Database.Servant.Caster (casters) where
 
-import Prelude (($), (<<<))
-import Operators ((:))
+import Prelude
+import Operators
 import Database.Model
 
 casters ∷ Array Servant
-casters = [
-  { name:     "Zhuge Liang (El-Melloi II)"
+casters = Servant <$>
+[ { name:     "Zhuge Liang (El-Melloi II)"
   , id:       37
   , rarity:   5
   , class:    Caster
@@ -249,7 +249,7 @@ casters = [
                 , cd:     8
                 , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
                           , Chance 70 $ Grant Self 1 DebuffResist Full
-                          , Chance 70 <<< Times 1 
+                          , Chance 70 <<< Times 1
                             <<< Grant Self 3 Guts $ Flat 1000.0
                           ]
                 }
@@ -390,7 +390,7 @@ casters = [
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
-                          , Grant Self 3 StarWeight $ 300.0 ~ 600.0
+                          , Grant Self 3 StarAbsorb $ 300.0 ~ 600.0
                           ]
                 }
               , { name:   "Morph A+"
@@ -868,9 +868,9 @@ casters = [
               , kind:   "Anti-Army"
               , hits:   0
               , effect: [ To Self OverChance $ 60.0 ~ 80.0 ]
-              , over:   [ Chance 0 
+              , over:   [ Chance 0
                           <<< Debuff Enemies 3 AttackDown $ 20.0 ~ 40.0
-                        , Chance 0 
+                        , Chance 0
                           <<< Debuff Enemies 3 DefenseDown $ 20.0 ~ 40.0
                         , Debuff Enemies 3 Curse $ 500.0 ~ 2500.0
                         ]
@@ -898,7 +898,7 @@ casters = [
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 20.0 ~ 30.0
-                          , Grant Self 1 StarWeight $ 500.0 ~ 1000.0
+                          , Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0
                           ]
                 }
               , { name:   "Mechanized Armor EX"

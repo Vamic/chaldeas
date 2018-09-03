@@ -1,12 +1,12 @@
 module Database.Servant.Berserker (berserkers) where
 
-import Prelude (($), (<<<))
-import Operators ((:))
+import Prelude
+import Operators
 import Database.Model
 
 berserkers ∷ Array Servant
-berserkers = [
-  { name:     "Cu Chulainn (Alter)"
+berserkers = Servant <$>
+[ { name:     "Cu Chulainn (Alter)"
   , id:       98
   , rarity:   5
   , class:    Berserker
@@ -70,7 +70,7 @@ berserkers = [
   , actives:  [ { name:   "Eternal Arms Mastery A+"
                 , icon:   IconStarUp
                 , cd:     8
-                , effect: [ Grant Self 3 StarWeight $ 3000.0 ~ 6000.0 ]
+                , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
                 }
               , { name:   "Mana Burst (Lightning) A"
                 , icon:   IconBusterUp
@@ -415,7 +415,7 @@ berserkers = [
   , actives:  [ { name:   "Eternal Arms Mastery A+"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 3 StarWeight $ 3000.0 ~ 6000.0 ]
+                , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
                 }
               , { name:   "Protection of the Spirits A"
                 , icon:   IconStarHaloUp
@@ -573,7 +573,7 @@ berserkers = [
                 , icon:   IconBeamUp
                 , cd:     8
                 , effect: [ Grant Self 1 NPUp $ 20.0 ~ 30.0
-                          , Grant Self 1 StarWeight $ Flat 3000.0
+                          , Grant Self 1 StarAbsorb $ Flat 3000.0
                           , Debuff Others 1 DefenseDown $ Flat 20.0
                           ]
                 }
@@ -671,7 +671,7 @@ berserkers = [
               , { name:   "Labrys of the Abyss C"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 1 StarWeight $ 3000.0 ~ 6000.0
+                , effect: [ Grant Self 1 StarAbsorb $ 3000.0 ~ 6000.0
                           , Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
                           ]
                 }

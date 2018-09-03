@@ -1,20 +1,20 @@
 module Database.Calculator (npPerArts, starsPerQuick, npDamage) where
 
 import Prelude
-import Operators (enumArray, (?))
+import Operators
 
-import Control.MonadZero (guard)
-import Data.Array (cons, fromFoldable, head)
-import Data.Enum (class BoundedEnum)
-import Data.Foldable (class Foldable, maximum, sum)
-import Data.Int (toNumber)
-import Data.Maybe (fromMaybe)
-import Data.Tuple (Tuple(..))
+import Control.MonadZero
+import Data.Array
+import Data.Enum
+import Data.Foldable
+import Data.Int
+import Data.Maybe
+import Data.Tuple
 
-import Database.Model (ActiveEffect(..), BuffEffect(..), Card(..), Class(..), DebuffEffect(..), InstantEffect(..), Servant, Target(..), allied, simplify, toMax, toMin)
+import Database.Model (ActiveEffect(..), BuffEffect(..), Card(..), Class(..), DebuffEffect(..), InstantEffect(..), Servant(..), Target(..), allied, simplify, toMax, toMin)
 
 npPerArts ∷ Servant -> Number
-npPerArts s
+npPerArts s'@(Servant s)
     = toNumber s.hits.arts
     * offensiveNPRate
     * (firstCardBonus + (cardNpValue * (1.0 + cardMod)))
@@ -31,10 +31,10 @@ npPerArts s
     npChargeRateMod  = matchSum buffs NPGen
     criticalModifier = 1.0
     overkillModifier = 1.0
-    buffs            = passiveBuffs s
+    buffs            = passiveBuffs s'
 
 starsPerQuick ∷ Servant -> Number
-starsPerQuick s
+starsPerQuick s'@(Servant s)
     = toNumber s.hits.quick
     * min 3.0
         ( baseStarRate + firstCardBonus + (cardStarValue * (1.0 + cardMod))
@@ -53,10 +53,10 @@ starsPerQuick s
     criticalModifier = 0.0
     overkillModifier = 1.0
     overkillAdd      = 0.0
-    buffs            = passiveBuffs s
+    buffs            = passiveBuffs s'
 
 npDamage ∷ Boolean -> Boolean -> Servant -> Number
-npDamage special maxOver s@{phantasm:{card, effect, over, first}}
+npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
     = if npDamageMultiplier == 0.0 then 0.0 else
       servantAtk
     * npDamageMultiplier
@@ -175,7 +175,7 @@ npDamage special maxOver s@{phantasm:{card, effect, over, first}}
         go _ _ = []
 
 passiveBuffs ∷ Servant -> Array (Tuple BuffEffect Number)
-passiveBuffs {passives} = passives >>= _.effect >>= go <<< simplify
+passiveBuffs (Servant {passives}) = passives >>= _.effect >>= go <<< simplify
   where
     go (Grant t _ buff a)
       | selfable t = [ Tuple buff $ toMax a / 100.0 ]

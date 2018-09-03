@@ -1783,13 +1783,6 @@ var PS = {};
   var foldr = function (dict) {
       return dict.foldr;
   };
-  var $$null = function (dictFoldable) {
-      return foldr(dictFoldable)(function (v) {
-          return function (v1) {
-              return false;
-          };
-      })(true);
-  };
   var traverse_ = function (dictApplicative) {
       return function (dictFoldable) {
           return function (f) {
@@ -1980,7 +1973,6 @@ var PS = {};
   exports["find"] = find;
   exports["maximum"] = maximum;
   exports["maximumBy"] = maximumBy;
-  exports["null"] = $$null;
   exports["foldableArray"] = foldableArray;
   exports["foldableMaybe"] = foldableMaybe;
 })(PS["Data.Foldable"] = PS["Data.Foldable"] || {});
@@ -12967,12 +12959,12 @@ var PS = {};
       };
       return Resist;
   })();
-  var StarWeight = (function () {
-      function StarWeight() {
+  var StarAbsorb = (function () {
+      function StarAbsorb() {
 
       };
-      StarWeight.value = new StarWeight();
-      return StarWeight;
+      StarAbsorb.value = new StarAbsorb();
+      return StarAbsorb;
   })();
   var StarAffinity = (function () {
       function StarAffinity(value0) {
@@ -14110,7 +14102,7 @@ var PS = {};
                       return "Terror";
                   }))))))))))))))))))))))))))(v1.value0) + " debuff");
               };
-              if (v1 instanceof StarWeight) {
+              if (v1 instanceof StarAbsorb) {
                   return increase("critical star absorption");
               };
               if (v1 instanceof StarAffinity) {
@@ -14489,7 +14481,32 @@ var PS = {};
           return Target.value;
       };
       throw new Error("Failed pattern match at Database.Skill line 568, column 8 - line 568, column 42: " + [ x.constructor.name ]);
-  });              
+  });
+  var _27_ = new Data_Show.Show(Data_Generic_Rep_Show.genericShow(_26_)(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Someone";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Self";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Ally";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Party";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Enemy";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Enemies";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Others";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsArgument(Database_Base._b_))(new Data_Symbol.IsSymbol(function () {
+      return "AlliesType";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsArgument(Database_Base._b_))(new Data_Symbol.IsSymbol(function () {
+      return "EnemyType";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsArgument(Database_Base._b_))(new Data_Symbol.IsSymbol(function () {
+      return "EnemiesType";
+  })))(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Killer";
+  })))(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
+      return "Target";
+  })))))))))))))));
   var _21_ = new Data_Eq.Eq(function (x) {
       return function (y) {
           if (x instanceof FriendPoints && y instanceof FriendPoints) {
@@ -14721,7 +14738,7 @@ var PS = {};
           if (x instanceof Resist && y instanceof Resist) {
               return Data_Eq.eq(_9_)(x.value0)(y.value0);
           };
-          if (x instanceof StarWeight && y instanceof StarWeight) {
+          if (x instanceof StarAbsorb && y instanceof StarAbsorb) {
               return true;
           };
           if (x instanceof StarAffinity && y instanceof StarAffinity) {
@@ -15728,13 +15745,13 @@ var PS = {};
           if (y instanceof Resist) {
               return Data_Ordering.GT.value;
           };
-          if (x instanceof StarWeight && y instanceof StarWeight) {
+          if (x instanceof StarAbsorb && y instanceof StarAbsorb) {
               return Data_Ordering.EQ.value;
           };
-          if (x instanceof StarWeight) {
+          if (x instanceof StarAbsorb) {
               return Data_Ordering.LT.value;
           };
-          if (y instanceof StarWeight) {
+          if (y instanceof StarAbsorb) {
               return Data_Ordering.GT.value;
           };
           if (x instanceof StarAffinity && y instanceof StarAffinity) {
@@ -15888,7 +15905,7 @@ var PS = {};
       if (x instanceof Resist) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(x.value0)))))))))))))))))))))))))))))))));
       };
-      if (x instanceof StarWeight) {
+      if (x instanceof StarAbsorb) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inl(Data_Generic_Rep.NoArguments.value))))))))))))))))))))))))))))))))));
       };
       if (x instanceof StarAffinity) {
@@ -16011,7 +16028,7 @@ var PS = {};
           return new Resist(x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0);
       };
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl))))))))))))))))))))))))))))))))) {
-          return StarWeight.value;
+          return StarAbsorb.value;
       };
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inl)))))))))))))))))))))))))))))))))) {
           return new StarAffinity(x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0);
@@ -16156,7 +16173,7 @@ var PS = {};
   exports["Overcharge"] = Overcharge;
   exports["ReduceDamage"] = ReduceDamage;
   exports["Resist"] = Resist;
-  exports["StarWeight"] = StarWeight;
+  exports["StarAbsorb"] = StarAbsorb;
   exports["StarAffinity"] = StarAffinity;
   exports["StarUp"] = StarUp;
   exports["StarsPerTurn"] = StarsPerTurn;
@@ -16263,6 +16280,7 @@ var PS = {};
   exports["_24_"] = _24_;
   exports["_25_"] = _25_;
   exports["_26_"] = _26_;
+  exports["_27_"] = _27_;
   exports["_28_"] = _28_;
   exports["_29_"] = _29_;
   exports["_30_"] = _30_;
@@ -16353,7 +16371,8 @@ var PS = {};
   exports["passiveBase"] = passiveBase;
 })(PS["Database.Passive"] = PS["Database.Passive"] || {});
 (function(exports) {
-    "use strict";
+  // Generated by purs version 0.12.0
+  "use strict";
   var Control_Bind = PS["Control.Bind"];
   var Control_Semigroupoid = PS["Control.Semigroupoid"];
   var Data_Array = PS["Data.Array"];
@@ -16558,7 +16577,7 @@ var PS = {};
       if (x instanceof Support) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value));
       };
-      throw new Error("Failed pattern match at Database.Servant line 135, column 8 - line 135, column 47: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 134, column 8 - line 134, column 47: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return SingleTarget.value;
@@ -16569,7 +16588,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && x.value0 instanceof Data_Generic_Rep.Inr) {
           return Support.value;
       };
-      throw new Error("Failed pattern match at Database.Servant line 135, column 8 - line 135, column 47: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 134, column 8 - line 134, column 47: " + [ x.constructor.name ]);
   });
   var _7_ = new Data_Eq.Eq(function (x) {
       return function (y) {
@@ -16610,7 +16629,7 @@ var PS = {};
           if (x instanceof Support && y instanceof Support) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Servant line 134, column 8 - line 134, column 39: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Servant line 133, column 8 - line 133, column 39: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _40_ = new Data_Show.Show(function (v) {
@@ -16709,7 +16728,7 @@ var PS = {};
       if (v instanceof Support) {
           return "Support";
       };
-      throw new Error("Failed pattern match at Database.Servant line 85, column 10 - line 91, column 1: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Servant line 84, column 10 - line 90, column 1: " + [ v.constructor.name ]);
   });
   var _f_ = new MatchServant(function () {
       return _12_;
@@ -16745,7 +16764,7 @@ var PS = {};
               if (v instanceof Support) {
                   return !has(_f_)(SingleTarget.value)(v1)(v2) && !has(_f_)(MultiTarget.value)(v1)(v2);
               };
-              throw new Error("Failed pattern match at Database.Servant line 109, column 1 - line 109, column 41: " + [ v.constructor.name, v1.constructor.name, v2.constructor.name ]);
+              throw new Error("Failed pattern match at Database.Servant line 108, column 1 - line 108, column 41: " + [ v.constructor.name, v1.constructor.name, v2.constructor.name ]);
           };
       };
   });
@@ -18099,7 +18118,7 @@ var PS = {};
                   hp: 750
               }
           },
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(0)(new Database_Skill.Performance(Database_Base.Quick.value))(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(new Database_Skill.Performance(Database_Base.Arts.value))(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(new Database_Skill.Performance(Database_Base.Buster.value))(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarUp.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarWeight.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.NPGen.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.NPUp.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.DebuffSuccess.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.DebuffResist.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.HealingReceived.value)(new Database_Skill.Range(1.0, 2.0)) ],
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(0)(new Database_Skill.Performance(Database_Base.Quick.value))(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(new Database_Skill.Performance(Database_Base.Arts.value))(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(new Database_Skill.Performance(Database_Base.Buster.value))(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarUp.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.NPGen.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.NPUp.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.DebuffSuccess.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.DebuffResist.value)(new Database_Skill.Range(1.0, 2.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.HealingReceived.value)(new Database_Skill.Range(1.0, 2.0)) ],
           bond: Data_Maybe.Nothing.value,
           limited: true
       }, {
@@ -19068,7 +19087,7 @@ var PS = {};
                   hp: 1200
               }
           },
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 400.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.DebuffResist.value)(new Database_Skill.Range(15.0, 20.0)) ],
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 400.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.DebuffResist.value)(new Database_Skill.Range(15.0, 20.0)) ],
           bond: Data_Maybe.Nothing.value,
           limited: true
       }, {
@@ -19136,7 +19155,7 @@ var PS = {};
                   hp: 3000
               }
           },
-          effect: [ Database_Skill.To.create(Database_Skill.Self.value)(Database_Skill.GaugeUp.value)(new Database_Skill.Range(5.0, 60.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 400.0)) ],
+          effect: [ Database_Skill.To.create(Database_Skill.Self.value)(Database_Skill.GaugeUp.value)(new Database_Skill.Range(5.0, 60.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 400.0)) ],
           bond: Data_Maybe.Nothing.value,
           limited: true
       }, {
@@ -19646,7 +19665,7 @@ var PS = {};
                   hp: 0
               }
           },
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarWeight.value)(new Database_Skill.Range(100.0, 200.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.CritUp.value)(new Database_Skill.Range(5.0, 10.0)) ],
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(100.0, 200.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.CritUp.value)(new Database_Skill.Range(5.0, 10.0)) ],
           bond: Data_Maybe.Nothing.value,
           limited: true
       }, bond(230)("Tri-Star Belt")("Orion")([ Database_Skill.Grant.create(Database_Skill.Party.value)(0)(Database_Skill.CritUp.value)(new Database_Skill.Flat(25.0)) ]), {
@@ -20499,7 +20518,7 @@ var PS = {};
           name: "Collector EX",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 600.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 600.0)) ]
       } ],
       passives: [ Database_Passive.magicResistance(Database_Skill.E.value), Database_Passive.independentAction(Database_Skill.APlus.value), Database_Passive.divinity(Database_Skill.B.value) ],
       phantasm: {
@@ -20895,7 +20914,7 @@ var PS = {};
           name: "The Demonic King A",
           icon: Database_Icon.IconExclamationUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.CritUp.value)(new Database_Skill.Range(20.0, 50.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 600.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.CritUp.value)(new Database_Skill.Range(20.0, 50.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 600.0)) ]
       } ],
       passives: [ Database_Passive.magicResistance(Database_Skill.B.value), Database_Passive.independentAction(Database_Skill.B.value) ],
       phantasm: {
@@ -21088,7 +21107,7 @@ var PS = {};
           name: "Hunter's Aesthetic C",
           icon: Database_Icon.IconStarUp.value,
           cd: 6,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(500.0, 1000.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(500.0, 1000.0)) ]
       }, {
           name: "Calydonian Hunt A",
           icon: Database_Icon.IconDodge.value,
@@ -21154,7 +21173,7 @@ var PS = {};
           name: "Treasure Hunt (Sea) C",
           icon: Database_Icon.IconStarHaloUp.value,
           cd: 8,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 600.0)), Database_Skill.To.create(Database_Skill.Party.value)(Database_Skill.GainStars.value)(new Database_Skill.Range(5.0, 15.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 600.0)), Database_Skill.To.create(Database_Skill.Party.value)(Database_Skill.GainStars.value)(new Database_Skill.Range(5.0, 15.0)) ]
       }, {
           name: "Pirate's Honor C+",
           icon: Database_Icon.IconSwordUp.value,
@@ -22487,7 +22506,7 @@ var PS = {};
           name: "Restrain A",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Flat(200.0)), Database_Skill.To.create(Database_Skill.Party.value)(Database_Skill.GainStars.value)(new Database_Skill.Range(5.0, 15.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Flat(200.0)), Database_Skill.To.create(Database_Skill.Party.value)(Database_Skill.GainStars.value)(new Database_Skill.Range(5.0, 15.0)) ]
       }, {
           name: "Planning B",
           icon: Database_Icon.IconStarHaloUp.value,
@@ -22967,7 +22986,7 @@ var PS = {};
           name: "Eternal Arms Mastery A+",
           icon: Database_Icon.IconStarUp.value,
           cd: 8,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(3000.0, 6000.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(3000.0, 6000.0)) ]
       }, {
           name: "Mana Burst (Lightning) A",
           icon: Database_Icon.IconBusterUp.value,
@@ -23429,7 +23448,7 @@ var PS = {};
           name: "Eternal Arms Mastery A+",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(3000.0, 6000.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(3000.0, 6000.0)) ]
       }, {
           name: "Protection of the Spirits A",
           icon: Database_Icon.IconStarHaloUp.value,
@@ -23637,7 +23656,7 @@ var PS = {};
           name: "Chaotic Villain A",
           icon: Database_Icon.IconBeamUp.value,
           cd: 8,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.NPUp.value)(new Database_Skill.Range(20.0, 30.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Flat(3000.0)), Database_Skill.Debuff.create(Database_Skill.Others.value)(1)(Database_Skill.DefenseDown.value)(new Database_Skill.Flat(20.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.NPUp.value)(new Database_Skill.Range(20.0, 30.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Flat(3000.0)), Database_Skill.Debuff.create(Database_Skill.Others.value)(1)(Database_Skill.DefenseDown.value)(new Database_Skill.Flat(20.0)) ]
       } ],
       passives: [ Database_Passive.madness(Database_Skill.A.value) ],
       phantasm: {
@@ -23769,7 +23788,7 @@ var PS = {};
           name: "Labrys of the Abyss C",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(3000.0, 6000.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(new Database_Skill.Performance(Database_Base.Buster.value))(new Database_Skill.Range(20.0, 30.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(3000.0, 6000.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(new Database_Skill.Performance(Database_Base.Buster.value))(new Database_Skill.Range(20.0, 30.0)) ]
       } ],
       passives: [ Database_Passive.madness(Database_Skill.B.value) ],
       phantasm: {
@@ -24569,7 +24588,7 @@ var PS = {};
           name: "Self-Modification A",
           icon: Database_Icon.IconExclamationUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.CritUp.value)(new Database_Skill.Range(20.0, 50.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 600.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.CritUp.value)(new Database_Skill.Range(20.0, 50.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 600.0)) ]
       }, {
           name: "Morph A+",
           icon: Database_Icon.IconShieldUp.value,
@@ -25229,7 +25248,7 @@ var PS = {};
           name: "Concentration C",
           icon: Database_Icon.IconNobleUp.value,
           cd: 8,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.NPGen.value)(new Database_Skill.Range(20.0, 30.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(500.0, 1000.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.NPGen.value)(new Database_Skill.Range(20.0, 30.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(500.0, 1000.0)) ]
       }, {
           name: "Mechanized Armor EX",
           icon: Database_Icon.IconSwordUp.value,
@@ -25775,7 +25794,7 @@ var PS = {};
           name: "Self-Modification EX",
           icon: Database_Icon.IconExclamationUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.CritUp.value)(new Database_Skill.Range(20.0, 50.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(400.0, 800.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.CritUp.value)(new Database_Skill.Range(20.0, 50.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(400.0, 800.0)) ]
       }, {
           name: "Dragon Witch EX",
           icon: Database_Icon.IconSwordUp.value,
@@ -26123,7 +26142,7 @@ var PS = {};
           name: "Wisdom of Dun Scaith A+",
           icon: Database_Icon.IconDodge.value,
           cd: 7,
-          effect: [ new Database_Skill.Grant(Database_Skill.Self.value, 1, Database_Skill.Evasion.value, Database_Skill.Full.value), Database_Skill.Chance.create(80)(Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.CritUp.value)(new Database_Skill.Range(30.0, 50.0))), Database_Skill.Chance.create(80)(Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 500.0))) ]
+          effect: [ new Database_Skill.Grant(Database_Skill.Self.value, 1, Database_Skill.Evasion.value, Database_Skill.Full.value), Database_Skill.Chance.create(80)(Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.CritUp.value)(new Database_Skill.Range(30.0, 50.0))), Database_Skill.Chance.create(80)(Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 500.0))) ]
       }, {
           name: "Primordial Rune",
           icon: Database_Icon.IconQuickUp.value,
@@ -26331,7 +26350,7 @@ var PS = {};
           name: "Hero's Assistant C",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Ally.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 600.0)), Database_Skill.To.create(Database_Skill.Ally.value)(Database_Skill.Heal.value)(new Database_Skill.Range(1000.0, 3000.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Ally.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 600.0)), Database_Skill.To.create(Database_Skill.Ally.value)(Database_Skill.Heal.value)(new Database_Skill.Range(1000.0, 3000.0)) ]
       } ],
       passives: [ Database_Passive.magicResistance(Database_Skill.B.value), Database_Passive.riding(Database_Skill.A.value), Database_Passive.divinity(Database_Skill.E.value) ],
       phantasm: {
@@ -26458,7 +26477,7 @@ var PS = {};
           name: "Protection of World's End A",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(500.0, 1000.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.CritUp.value)(new Database_Skill.Range(30.0, 50.0)), Database_Skill.To.create(Database_Skill.Party.value)(Database_Skill.GainStars.value)(new Database_Skill.Range(5.0, 10.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(500.0, 1000.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.CritUp.value)(new Database_Skill.Range(30.0, 50.0)), Database_Skill.To.create(Database_Skill.Party.value)(Database_Skill.GainStars.value)(new Database_Skill.Range(5.0, 10.0)) ]
       }, {
           name: "Charisma E",
           icon: Database_Icon.IconSwordUp.value,
@@ -26524,7 +26543,7 @@ var PS = {};
           name: "Sphere Boundary B",
           icon: Database_Icon.IconDodge.value,
           cd: 8,
-          effect: [ new Database_Skill.Grant(Database_Skill.Self.value, 1, Database_Skill.Evasion.value, Database_Skill.Full.value), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 500.0)) ]
+          effect: [ new Database_Skill.Grant(Database_Skill.Self.value, 1, Database_Skill.Evasion.value, Database_Skill.Full.value), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 500.0)) ]
       }, {
           name: "Juezhao B",
           icon: Database_Icon.IconShieldBreak.value,
@@ -27867,7 +27886,7 @@ var PS = {};
           name: "Combination C",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 600.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.AttackUp.value)(new Database_Skill.Range(20.0, 30.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 600.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.AttackUp.value)(new Database_Skill.Range(20.0, 30.0)) ]
       } ],
       passives: [ Database_Passive.magicResistance(Database_Skill.D.value) ],
       phantasm: {
@@ -28408,7 +28427,7 @@ var PS = {};
           name: "Weak Constitution A",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(500.0, 1000.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(500.0, 1000.0)) ]
       }, {
           name: "Mind's Eye (Fake) A",
           icon: Database_Icon.IconDodge.value,
@@ -28804,7 +28823,7 @@ var PS = {};
           name: "Eternal Arms Mastery A+",
           icon: Database_Icon.IconStarUp.value,
           cd: 7,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarWeight.value)(new Database_Skill.Range(3000.0, 6000.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(3)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(3000.0, 6000.0)) ]
       }, {
           name: "Knight of Owner A++",
           icon: Database_Icon.IconStarTurn.value,
@@ -28931,7 +28950,7 @@ var PS = {};
           name: "Blessing of Martial Arts A",
           icon: Database_Icon.IconStarUp.value,
           cd: 6,
-          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarWeight.value)(new Database_Skill.Range(300.0, 500.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.CritUp.value)(new Database_Skill.Range(50.0, 100.0)) ]
+          effect: [ Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.StarAbsorb.value)(new Database_Skill.Range(300.0, 500.0)), Database_Skill.Grant.create(Database_Skill.Self.value)(1)(Database_Skill.CritUp.value)(new Database_Skill.Range(50.0, 100.0)) ]
       }, {
           name: "Charisma B",
           icon: Database_Icon.IconSwordUp.value,
@@ -30073,6 +30092,224 @@ var PS = {};
   var Effect = PS["Effect"];
   exports["warn"] = $foreign.warn;
 })(PS["Effect.Console"] = PS["Effect.Console"] || {});
+(function(exports) {
+  // Generated by purs version 0.12.0
+  "use strict";
+  var Data_Function = PS["Data.Function"];
+  var Data_Functor = PS["Data.Functor"];
+  var Data_Ring = PS["Data.Ring"];
+  var Data_Semigroup = PS["Data.Semigroup"];
+  var Data_Show = PS["Data.Show"];
+  var Data_String_CodeUnits = PS["Data.String.CodeUnits"];
+  var Data_Tuple = PS["Data.Tuple"];
+  var Database = PS["Database"];
+  var Database_Base = PS["Database.Base"];
+  var Database_CraftEssence = PS["Database.CraftEssence"];
+  var Database_Icon = PS["Database.Icon"];
+  var Database_Servant = PS["Database.Servant"];
+  var Database_Skill = PS["Database.Skill"];
+  var Prelude = PS["Prelude"];                 
+  var exportAmount = function (v) {
+      if (v instanceof Database_Skill.Flat) {
+          return {
+              from: v.value0,
+              to: v.value0
+          };
+      };
+      if (v instanceof Database_Skill.Range) {
+          return {
+              from: v.value0,
+              to: v.value1
+          };
+      };
+      if (v instanceof Database_Skill.Full) {
+          return {
+              from: 0.0,
+              to: 0.0
+          };
+      };
+      if (v instanceof Database_Skill.Placeholder) {
+          return {
+              from: 0.0,
+              to: 0.0
+          };
+      };
+      throw new Error("Failed pattern match at Export line 43, column 1 - line 43, column 27: " + [ v.constructor.name ]);
+  };
+  var exportEffect = function (v) {
+      if (v instanceof Database_Skill.Grant) {
+          return {
+              target: Data_Show.show(Database_Skill._27_)(v.value0),
+              duration: v.value1,
+              effect: Data_Show.show(Database_Skill._c_)(v.value2),
+              amount: exportAmount(v.value3),
+              chance: {
+                  from: 100,
+                  to: 100
+              }
+          };
+      };
+      if (v instanceof Database_Skill.Debuff) {
+          return {
+              target: Data_Show.show(Database_Skill._27_)(v.value0),
+              duration: v.value1,
+              effect: Data_Show.show(Database_Skill._d_)(v.value2),
+              amount: exportAmount(v.value3),
+              chance: {
+                  from: 100,
+                  to: 100
+              }
+          };
+      };
+      if (v instanceof Database_Skill.To) {
+          return {
+              target: Data_Show.show(Database_Skill._27_)(v.value0),
+              duration: -1 | 0,
+              effect: Data_Show.show(Database_Skill._e_)(v.value1),
+              amount: exportAmount(v.value2),
+              chance: {
+                  from: 100,
+                  to: 100
+              }
+          };
+      };
+      if (v instanceof Database_Skill.Bonus) {
+          return {
+              target: Data_Show.show(Database_Skill._27_)(Database_Skill.Self.value),
+              duration: 0,
+              effect: Data_Show.show(Database_Skill._f_)(v.value0),
+              amount: exportAmount(v.value1),
+              chance: {
+                  from: 100,
+                  to: 100
+              }
+          };
+      };
+      if (v instanceof Database_Skill.Chance) {
+          var v1 = exportEffect(v.value1);
+          return {
+              chance: {
+                  from: v.value0,
+                  to: v.value0
+              },
+              amount: v1.amount,
+              duration: v1.duration,
+              effect: v1.effect,
+              target: v1.target
+          };
+      };
+      if (v instanceof Database_Skill.Chances) {
+          var v1 = exportEffect(v.value2);
+          return {
+              chance: {
+                  from: v.value0,
+                  to: v.value1
+              },
+              amount: v1.amount,
+              duration: v1.duration,
+              effect: v1.effect,
+              target: v1.target
+          };
+      };
+      if (v instanceof Database_Skill.When) {
+          var baseEffect = exportEffect(v.value1);
+          return {
+              effect: "If " + (v.value0 + (": " + baseEffect.effect)),
+              amount: baseEffect.amount,
+              chance: baseEffect.chance,
+              duration: baseEffect.duration,
+              target: baseEffect.target
+          };
+      };
+      if (v instanceof Database_Skill.Times && v.value0 === 1) {
+          var baseEffect = exportEffect(v.value1);
+          return {
+              effect: baseEffect.effect + " (1 time)",
+              amount: baseEffect.amount,
+              chance: baseEffect.chance,
+              duration: baseEffect.duration,
+              target: baseEffect.target
+          };
+      };
+      if (v instanceof Database_Skill.Times) {
+          var baseEffect = exportEffect(v.value1);
+          return {
+              effect: baseEffect.effect + (" (" + (Data_Show.show(Data_Show.showInt)(v.value0) + " times)")),
+              amount: baseEffect.amount,
+              chance: baseEffect.chance,
+              duration: baseEffect.duration,
+              target: baseEffect.target
+          };
+      };
+      throw new Error("Failed pattern match at Export line 76, column 1 - line 76, column 33: " + [ v.constructor.name ]);
+  };
+  var exportPassive = function (v) {
+      return {
+          name: v.name + (" " + Data_Show.show(Database_Skill._b_)(v.rank)),
+          icon: Data_Show.show(Database_Icon._3_)(v.icon),
+          effect: Data_Functor.map(Data_Functor.functorArray)(exportEffect)(v.effect)
+      };
+  };
+  var exportPhantasm = function (v) {
+      return {
+          name: v.name,
+          desc: v.desc,
+          rank: Data_Show.show(Database_Skill._b_)(v.rank),
+          card: Data_Show.show(Database_Base._40_)(v.card),
+          classification: v.kind,
+          hits: v.hits,
+          effect: Data_Functor.map(Data_Functor.functorArray)(exportEffect)(v.effect),
+          over: Data_Functor.map(Data_Functor.functorArray)(exportEffect)(v.over)
+      };
+  };
+  var exportActive = function (v) {
+      return {
+          name: v.name,
+          icon: Data_Show.show(Database_Icon._3_)(v.icon),
+          cd: v.cd,
+          effect: Data_Functor.map(Data_Functor.functorArray)(exportEffect)(v.effect)
+      };
+  };
+  var servants = function (v) {
+      return Data_Functor.mapFlipped(Data_Functor.functorArray)(Database.servants)(function (v1) {
+          return {
+              name: v1.name,
+              rarity: v1.rarity,
+              "class": Data_Show.show(Database_Base._16_)(v1["class"]),
+              attribute: Data_Show.show(Database_Base._30_)(v1.attr),
+              deck: Data_String_CodeUnits.toCharArray(Data_Show.show(Database_Servant._40_)(v1.deck)),
+              stats: v1.stats,
+              activeSkills: Data_Functor.map(Data_Functor.functorArray)(exportActive)(v1.actives),
+              passiveSkills: Data_Functor.map(Data_Functor.functorArray)(exportPassive)(v1.passives),
+              noblePhantasm: exportPhantasm(v1.phantasm),
+              starWeight: v1.gen.starWeight,
+              starRate: v1.gen.starRate,
+              npAtk: v1.gen.npAtk,
+              npDef: v1.gen.npDef,
+              hits: v1.hits,
+              traits: Data_Functor.map(Data_Functor.functorArray)(Data_Show.show(Database_Base._b_))(v1.traits),
+              deathRate: v1.death,
+              alignment: [ Data_Show.show(Database_Base._23_)(v1.align.value0), Data_Show.show(Database_Base._23_)(v1.align.value1) ],
+              limited: v1.limited,
+              free: v1.free
+          };
+      });
+  };
+  var craftEssences = function (v) {
+      return Data_Functor.mapFlipped(Data_Functor.functorArray)(Database_CraftEssence.craftEssences)(function (v1) {
+          return {
+              name: v1.name,
+              id: v1.id,
+              rarity: v1.rarity,
+              stats: v1.stats,
+              effect: Data_Functor.map(Data_Functor.functorArray)(exportEffect)(v1.effect),
+              limited: v1.limited
+          };
+      });
+  };
+  exports["craftEssences"] = craftEssences;
+  exports["servants"] = servants;
+})(PS["Export"] = PS["Export"] || {});
 (function(exports) {
     "use strict";
 
@@ -33725,8 +33962,7 @@ var PS = {};
   exports["_h"] = _h;
 })(PS["Site.Common"] = PS["Site.Common"] || {});
 (function(exports) {
-  // Generated by purs version 0.12.0
-  "use strict";
+    "use strict";
   var Control_Applicative = PS["Control.Applicative"];
   var Control_Bind = PS["Control.Bind"];
   var Control_Semigroupoid = PS["Control.Semigroupoid"];
@@ -34110,7 +34346,7 @@ var PS = {};
           };
       };
       var match = function (x) {
-          return (Data_Foldable["null"](Data_Foldable.foldableArray)(v.exclude) || Data_Foldable.all(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(matchFilter(x))(v.exclude)) && (Data_Foldable["null"](Data_Foldable.foldableArray)(v.filters) || (function () {
+          return (Data_Array["null"](v.exclude) || Data_Foldable.all(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(matchFilter(x))(v.exclude)) && (Data_Array["null"](v.filters) || (function () {
               if (v.matchAny) {
                   return Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean);
               };
@@ -34314,7 +34550,7 @@ var PS = {};
           if (x instanceof FilterRarity && y instanceof FilterRarity) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Site.Filtering line 77, column 8 - line 77, column 36: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Site.Filtering line 76, column 8 - line 76, column 36: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var exclusive = function (v) {
@@ -34374,7 +34610,7 @@ var PS = {};
       if (x instanceof FilterRarity) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value))))))))))))));
       };
-      throw new Error("Failed pattern match at Site.Filtering line 75, column 8 - line 75, column 44: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Site.Filtering line 74, column 8 - line 74, column 44: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return FilterEventBonus.value;
@@ -34421,7 +34657,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr))))))))))))) {
           return FilterRarity.value;
       };
-      throw new Error("Failed pattern match at Site.Filtering line 75, column 8 - line 75, column 44: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Site.Filtering line 74, column 8 - line 74, column 44: " + [ x.constructor.name ]);
   });
   var _4_ = new Data_Enum.Enum(function () {
       return _2_;
@@ -35344,13 +35580,13 @@ var PS = {};
   var Site_Filtering = PS["Site.Filtering"];                 
   var plural = function (dictMatchServant) {
       return function (a) {
-          if (Data_Foldable["null"](Data_Foldable.foldableArray)(Data_Array.drop(1)(Data_Array.filter(Database_Servant.has(dictMatchServant)(a)(false))(Database.servants)))) {
+          if (Data_Array["null"](Data_Array.drop(1)(Data_Array.filter(Database_Servant.has(dictMatchServant)(a)(false))(Database.servants)))) {
               return Data_Maybe.Nothing.value;
           };
           if (Data_Boolean.otherwise) {
               return new Data_Maybe.Just(a);
           };
-          throw new Error("Failed pattern match at Site.Servants.Filters line 93, column 1 - line 93, column 45: " + [ a.constructor.name ]);
+          throw new Error("Failed pattern match at Site.Servants.Filters line 91, column 1 - line 91, column 45: " + [ a.constructor.name ]);
       };
   };
   var passiveFilter = (function () {
@@ -35392,7 +35628,7 @@ var PS = {};
                   return Data_Tuple.uncurry(Site_Filtering.Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Data_Show.show(dictMatchServant.Show1()))(Database_Servant.has(dictMatchServant))($64));
               };
           };
-          throw new Error("Failed pattern match at Site.Servants.Filters line 54, column 1 - line 54, column 70: " + [ tab.constructor.name ]);
+          throw new Error("Failed pattern match at Site.Servants.Filters line 52, column 1 - line 52, column 70: " + [ tab.constructor.name ]);
       };
   };
   var singleFilter = function (dictMatchServant) {
@@ -35404,7 +35640,7 @@ var PS = {};
               if (Data_Boolean.otherwise) {
                   return [ matchFilter(dictMatchServant)(tab)(a) ];
               };
-              throw new Error("Failed pattern match at Site.Servants.Filters line 59, column 1 - line 59, column 79: " + [ tab.constructor.name, a.constructor.name ]);
+              throw new Error("Failed pattern match at Site.Servants.Filters line 57, column 1 - line 57, column 79: " + [ tab.constructor.name, a.constructor.name ]);
           };
       };
   };
@@ -35509,7 +35745,7 @@ var PS = {};
               $copy_v = v.value1;
               return;
           };
-          throw new Error("Failed pattern match at Site.Servants.Filters line 98, column 1 - line 98, column 54: " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Site.Servants.Filters line 96, column 1 - line 96, column 54: " + [ v.constructor.name ]);
       };
       while (!$tco_done) {
           $tco_result = $tco_loop($copy_v);
@@ -36014,7 +36250,8 @@ var PS = {};
   exports["_13_"] = _13_;
 })(PS["Site.Servants.Sorting"] = PS["Site.Servants.Sorting"] || {});
 (function(exports) {
-    "use strict";
+  // Generated by purs version 0.12.0
+  "use strict";
   var Control_Alternative = PS["Control.Alternative"];
   var Control_Bind = PS["Control.Bind"];
   var Control_Category = PS["Control.Category"];

@@ -7,17 +7,17 @@ module Site.Preferences
     ) where
 
 import Prelude
-import Operators (enumArray)
+import Operators
 import Generic as G
 
 import Data.Map (Map, fromFoldable, lookup)
-import Data.Maybe (Maybe(..), fromMaybe)
-import Data.Traversable (traverse)
+import Data.Maybe
+import Data.Traversable
 import Data.Tuple (Tuple(..))
-import Effect (Effect)
-import Web.Storage.Storage (getItem, setItem)
-import Web.HTML (window)
-import Web.HTML.Window (localStorage)
+import Effect
+import Web.Storage.Storage
+import Web.HTML
+import Web.HTML.Window
 
 data Preference
     = Artorify

@@ -1,28 +1,24 @@
 module Database
   ( module Database.Model
   , module Database.Calculator
-  , module Database.CraftEssence
-  , servants, getAll, getPassives
-  )
-  where
+  , servants, getAll, ceGetAll, getPassives
+  ) where
 
-
-import Prelude (join, map, otherwise, show, unit, ($), (&&), (/=), (<$>), (<<<), (<>))
-import Operators (enumArray)
-import Data.Array (any, cons, filter, nub, sort, sortWith)
-import Data.Function.Memoize (memoize)
+import Prelude
+import Operators
+import Data.Array
+import Data.Function.Memoize
 
 import Database.Model
-import Database.Calculator (npDamage, npPerArts, starsPerQuick)
-import Database.CraftEssence (CraftEssence, craftEssences)
-import Database.Servant.Archer (archers)
-import Database.Servant.Assassin (assassins)
-import Database.Servant.Berserker (berserkers)
-import Database.Servant.Caster (casters)
-import Database.Servant.Extra (extras)
-import Database.Servant.Lancer (lancers)
-import Database.Servant.Rider (riders)
-import Database.Servant.Saber (sabers)
+import Database.Calculator
+import Database.Servant.Archer
+import Database.Servant.Assassin
+import Database.Servant.Berserker
+import Database.Servant.Caster
+import Database.Servant.Extra
+import Database.Servant.Lancer
+import Database.Servant.Rider
+import Database.Servant.Saber
 
 servants ∷ Array Servant
 servants = addUniversal <<< addHeavenOrEarth
@@ -35,18 +31,24 @@ servants = addUniversal <<< addHeavenOrEarth
         <> riders
         <> sabers
   where
-    addUniversal s@{traits, passives}
-        = s { traits   = sortWith show $ cons Humanoid traits
-            , passives = sortWith show passives
-            }
-    addHeavenOrEarth s@{attr, traits}
-      | attr /= Earth && attr /= Heaven = s
-      | otherwise = s{traits = cons HeavenOrEarth traits}
+    addUniversal (Servant s@{traits, passives})
+        = Servant s { traits   = sortWith show $ cons Humanoid traits
+                    , passives = sortWith show passives
+                    }
+    addHeavenOrEarth s'@(Servant s@{attr, traits})
+      | attr /= Earth && attr /= Heaven = s'
+      | otherwise = Servant s {traits = cons HeavenOrEarth traits}
 
 getAll ∷ ∀ a. MatchServant a => Array a
 getAll = (_ $ unit) <<< memoize $ \_ -> sortWith show $ filter exists enumArray
   where
     exists eff = any (has eff false) servants
 
+ceGetAll ∷ ∀ a. MatchCraftEssence a => Array a
+ceGetAll = (_ $ unit) <<< memoize
+         $ \_ -> sortWith show $ filter exists enumArray
+  where
+    exists eff = any (ceHas eff false) craftEssences
+
 getPassives ∷ Array String
-getPassives = sort <<< nub <<< join $ (map _.name <<< _.passives) <$> servants
+getPassives = sort <<< nub $ servants >>= \(Servant s) -> _.name <$> s.passives

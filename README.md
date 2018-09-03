@@ -8,7 +8,9 @@ Bringing order to Fate/Grand Order
 BSD 3-Clause, see [LICENSE](https://github.com/jnbooth/chaldeas/blob/master/LICENSE).
 
 ## Getting Started
-The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [PureScript IDE](https://marketplace.visualstudio.com/items?itemName=nwolverson.ide-purescript) extension. Once you have [Pulp](https://github.com/purescript-contrib/pulp#installation) (PureScript's build tool) installed, run 
+The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [PureScript IDE](https://marketplace.visualstudio.com/items?itemName=nwolverson.ide-purescript) extension. [Pulp](https://github.com/purescript-contrib/pulp#installation), PureScript's build tool, is also required. The reporting frontend [purescript-pulp](https://github.com/natefaubion/purescript-psa) is recommended. Once these prerequisites are installed, `./build.sh` will build CHALDEAS.
+
+In 
 
 ~~~~ bower install ~~~~
 

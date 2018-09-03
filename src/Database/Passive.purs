@@ -1,12 +1,12 @@
 module Database.Passive where
 
 import Prelude
-import Operators ((:))
-import Data.Maybe (fromMaybe)
-import Data.Tuple (Tuple, lookup)
-import Database.Base (Card(..))
-import Database.Icon (Icon(..))
-import Database.Skill (ActiveEffect(..), Amount(..), BuffEffect(..), Rank(..), Target(..))
+import Operators
+import Data.Maybe
+import Data.Tuple
+import Database.Base
+import Database.Icon
+import Database.Skill
 
 avenger ∷ PassiveBase
 avenger = passiveBase "Avenger" IconAvenger

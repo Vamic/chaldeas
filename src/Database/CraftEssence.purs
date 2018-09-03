@@ -1,20 +1,53 @@
-module Database.CraftEssence (CraftEssence(..), craftEssences) where
+module Database.CraftEssence
+  ( class MatchCraftEssence, ceHas
+  , CraftEssence(..)
+  , craftEssences
+  ) where
 
 import Prelude
+import Generic as G
 
-import Database.Base (Card(..), Class(..), Stat, Trait(..))
-import Database.Skill (ActiveEffect(..), Amount(..), BonusEffect(..), BuffEffect(..), DebuffEffect(..), InstantEffect(..), Target(..), (~))
+import Data.Array
+import Database.Base
+import Data.Maybe
+import Database.Skill
 
-type CraftEssence = { name     ∷ String
-                     , id       ∷ Int
-                     , rarity   ∷ Int
-                     , stats    ∷ { base ∷ Stat, max ∷ Stat }
-                     , effect   ∷ Array ActiveEffect
-                     , limited  ∷ Boolean
-                     }
+newtype CraftEssence = CraftEssence { name     ∷ String
+                                    , id       ∷ Int
+                                    , rarity   ∷ Int
+                                    , stats    ∷ { base ∷ Stat, max ∷ Stat }
+                                    , effect   ∷ Array ActiveEffect
+                                    , bond     ∷ Maybe String
+                                    , limited  ∷ Boolean
+                                    }
+
+instance _0_ ∷ Show CraftEssence where
+  show (CraftEssence ce) = ce.name
+
+getEffects ∷ CraftEssence -> Array ActiveEffect
+getEffects (CraftEssence ce) = filter (not <<< demerit) $ simplify <$> ce.effect
+
+class (G.BoundedEnum a, Show a) <= MatchCraftEssence a where
+    ceHas ∷ a -> Boolean -> CraftEssence -> Boolean
+instance _b_ ∷ MatchCraftEssence BuffEffect where
+    ceHas a noSelf = any match <<< getEffects where
+        match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
+        match _ = false
+instance _c_ ∷ MatchCraftEssence DebuffEffect where
+    ceHas a _ = any match <<< getEffects where
+        match (Debuff t _ b _) = a == b && not (allied t)
+        match _ = false
+instance _d_ ∷ MatchCraftEssence InstantEffect where
+    ceHas a noSelf = any match <<< getEffects where
+        match (To t b _) = a == b && (not noSelf || t /= Self)
+        match _ = false
+instance _e_ ∷ MatchCraftEssence BonusEffect where
+    ceHas a _ = any match <<< getEffects where
+        match (Bonus b _) = a == b
+        match _ = false
 
 equipped ∷ Class -> ActiveEffect -> ActiveEffect
-equipped = When <<< ("equipped by a " <> _) <<< show
+equipped = When <<< append "equipped by a " <<< show
 
 {-
 TEMPLATE BELOW
@@ -26,19 +59,21 @@ TEMPLATE BELOW
               , max:  { atk: ?_, hp: ?_ }
               }
   , effect:   ?_
+  , bond:     Nothing
   , limited:  false
   }
 -}
 
 craftEssences ∷ Array CraftEssence
-craftEssences = [
-  { name:     "Tenacity"
+craftEssences = CraftEssence <$>
+[ { name:     "Tenacity"
   , id:       1
   , rarity:   1
-  , stats:    { base: { atk: 0, hp: 300 }
+  , stats:    { base: { atk: 0, hp: 100 }
               , max:  { atk: 0, hp: 300 }
               }
   , effect:   [ Grant Self 0 DefenseUp $ 3.0 ~ 5.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Meditation"
@@ -48,6 +83,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 450 }
               }
   , effect:   [ Grant Self 0 DebuffResist $ 5.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Technique"
@@ -57,6 +93,7 @@ craftEssences = [
               , max:  { atk: 300, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Arts) $ 3.0 ~ 5.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Preemption"
@@ -66,6 +103,7 @@ craftEssences = [
               , max:  { atk: 300, hp: 0 }
               }
   , effect:   [Grant Self 0 (Performance Quick) $ 3.0 ~ 5.0]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Destruction"
@@ -75,6 +113,7 @@ craftEssences = [
               , max:  { atk: 300, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Buster) $ 3.0 ~ 5.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Flash"
@@ -84,6 +123,7 @@ craftEssences = [
               , max:  { atk: 500, hp: 0 }
               }
   , effect:   [ Grant Self 0 CritUp $ 5.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Opportunity"
@@ -93,6 +133,7 @@ craftEssences = [
               , max:  { atk: 250, hp: 375 }
               }
   , effect:   [ Grant Self 0 StarUp $ 5.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Fruitful"
@@ -102,6 +143,7 @@ craftEssences = [
               , max:  { atk: 250, hp: 375 }
               }
   , effect:   [ To Self GaugeUp $ 10.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Concentration"
@@ -111,6 +153,7 @@ craftEssences = [
               , max:  { atk: 250, hp: 375 }
               }
   , effect:   [ Grant Self 0 NPGen $ 5.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Divine Oracle"
@@ -120,6 +163,7 @@ craftEssences = [
               , max:  { atk: 500, hp: 0 }
               }
   , effect:   [ Grant Self 0 NPUp $ 5.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Azoth Blade"
@@ -129,6 +173,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 1000 }
               }
   , effect:   [ Grant Self 0 DefenseUp $ 8.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "False Attendant's Writings"
@@ -138,6 +183,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Grant Self 0 DebuffResist $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "The Azure Black Keys"
@@ -147,6 +193,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "The Verdant Black Keys"
@@ -156,6 +203,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Quick) $ 8.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "The Crimson Black Keys"
@@ -165,6 +213,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Buster) $ 8.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Rin's Pendant"
@@ -174,6 +223,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 CritUp $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Spell Tome"
@@ -183,6 +233,7 @@ craftEssences = [
               , max:  { atk: 500, hp: 750 }
               }
   , effect:   [ Grant Self 0 StarUp $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Dragon's Meridian"
@@ -192,6 +243,7 @@ craftEssences = [
               , max:  { atk: 500, hp: 750 }
               }
   , effect:   [ To Self GaugeUp $ 30.0 ~ 50.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Sorcery Ore"
@@ -201,6 +253,7 @@ craftEssences = [
               , max:  { atk: 500, hp: 750 }
               }
   , effect:   [ Grant Self 0 NPGen $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Dragonkin"
@@ -210,6 +263,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 NPUp $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Iron-Willed Training"
@@ -219,6 +273,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Grant Self 0 DefenseUp $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Primeval Curse"
@@ -228,6 +283,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 2250 }
               }
   , effect:   [ Grant Self 0 DebuffResist $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Projection"
@@ -237,6 +293,7 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Arts) $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Gandr"
@@ -246,6 +303,7 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Quick) $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Verdant Sound of Destruction"
@@ -255,15 +313,17 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Buster) $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
-, { name:     "Gem Magecraft:  Antumbra"
+, { name:     "Gem Magecraft: Antumbra"
   , id:       26
   , rarity:   4
   , stats:    { base: { atk: 0, hp: 1500 }
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Grant Self 0 CritUp $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Be Elegant"
@@ -273,6 +333,7 @@ craftEssences = [
               , max:  { atk: 750, hp: 1125 }
               }
   , effect:   [ Grant Self 0 StarUp $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "The Imaginary Element"
@@ -282,6 +343,7 @@ craftEssences = [
               , max:  { atk: 750, hp: 1125 }
               }
   , effect:   [ To Self GaugeUp $ 60.0 ~ 75.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Divine Banquet"
@@ -291,6 +353,7 @@ craftEssences = [
               , max:  { atk: 750, hp: 1125 }
               }
   , effect:   [ Grant Self 0 NPGen $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Angel's Song"
@@ -300,6 +363,7 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 NPUp $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Formal Craft"
@@ -309,6 +373,7 @@ craftEssences = [
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Arts) $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Imaginary Around"
@@ -318,6 +383,7 @@ craftEssences = [
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Quick) $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Limited/Zero Over"
@@ -327,6 +393,7 @@ craftEssences = [
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Buster) $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Kaleidoscope"
@@ -336,6 +403,7 @@ craftEssences = [
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ To Self GaugeUp $ 80.0 ~ 100.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Heaven's Feel"
@@ -345,6 +413,7 @@ craftEssences = [
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ Grant Self 0 NPUp $ 40.0 ~ 50.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Beginning of the Journey"
@@ -354,6 +423,7 @@ craftEssences = [
               , max:  { atk: 50, hp: 50 }
               }
   , effect:   [ Bonus FriendPoints $ Flat 75.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Parted Sea"
@@ -364,7 +434,8 @@ craftEssences = [
               }
   , effect:   [ Times 1 $ Grant Self 0 Evasion Full
               , Grant Self 0 DebuffResist $ 5.0 ~ 10.0
-             ]
+              ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Seal Designation Enforcer"
@@ -374,6 +445,7 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 StarUp $ 600.0 ~ 800.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Holy Shroud of Magdalene"
@@ -383,6 +455,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Grant Self 0 (DefenseVs Male) $ 25.0 ~ 35.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Prisma Cosmos"
@@ -392,6 +465,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 1500 }
               }
   , effect:   [ Grant Self 0 GaugePerTurn $ 8.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Nightless Rose"
@@ -401,15 +475,17 @@ craftEssences = [
               , max:  { atk: 500, hp: 2000 }
               }
   , effect:   [ Times 1 <<< Grant Self 0 Guts $ 500.0 ~ 1000.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Mooncell Automaton"
   , id:       42
   , rarity:   3
   , stats:    { base: { atk: 200,  hp: 0 }
-              , max:  { atk: 1000, hp: 0 } 
+              , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Times 1 <<< Grant Self 0 Guts $ 500.0 ~ 1000.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Moony Jewel"
@@ -419,6 +495,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 2250 }
               }
   , effect:   [ Grant Self 0 (Resist Charm) $ 80.0 ~ 100.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Moon Goddess' Bath"
@@ -428,6 +505,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 2000 }
               }
   , effect:   [ Grant Self 0 HealPerTurn $ 500.0 ~ 750.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Moonlight Fest"
@@ -439,6 +517,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 StarUp $ 15.0 ~ 20.0
               , Grant Self 0 CritUp $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Runestones"
@@ -450,6 +529,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 DebuffResist $ 5.0 ~ 10.0
               , Grant Self 0 StarUp $ 100.0 ~ 200.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "With One Strike"
@@ -461,6 +541,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 SureHit Full
               , Grant Self 0 (Performance Quick) $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "The Black Grail"
@@ -472,6 +553,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 NPUp $ 60.0 ~ 80.0
               , Debuff Self 0 HealthLoss $ Flat 500.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Jack-o'-lantern"
@@ -481,6 +563,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 DamageUp $ 100.0 ~ 200.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Trick or Treat"
@@ -490,6 +573,7 @@ craftEssences = [
               , max:  { atk: 500, hp: 750 }
               }
   , effect:   [ Grant Self 0 DebuffSuccess $ 10.0 ~ 12.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Halloween Arrangement"
@@ -501,6 +585,7 @@ craftEssences = [
   , effect:   [ Grant Self 1 Taunt Full
               , Grant Self 1 DefenseUp $ 60.0 ~ 80.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Halloween Princess"
@@ -512,6 +597,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 NPUp $ 15.0 ~ 20.0
               , To Self GaugeUp $ 30.0 ~ 50.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Little Halloween Devil"
@@ -523,6 +609,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 NPUp $ 20.0 ~ 25.0
               , To Self GaugeUp $ 50.0 ~ 60.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Maid in Halloween"
@@ -533,6 +620,7 @@ craftEssences = [
               }
   -- TODO "Increase HP Recovery"
   , effect:   [ Grant Self 0 HealingReceived $ 60.0 ~ 75.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Anchors Aweigh"
@@ -542,6 +630,7 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 HealPerTurn $ 100.0 ~ 200.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Code Cast"
@@ -553,6 +642,7 @@ craftEssences = [
   , effect:   [ Grant Self 3 AttackUp $ 25.0 ~ 30.0
               , Grant Self 3 DefenseUp $ 25.0 ~ 30.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Victor of the Moon"
@@ -564,6 +654,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0
               , Grant Self 0 CritUp $ 20.0 ~ 25.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Another Ending"
@@ -575,6 +666,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 (Performance Arts) $ 10.0 ~ 15.0
               , Grant Self 0 CritUp $ 20.0 ~ 25.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Fate GUDAGUDA Order"
@@ -587,13 +679,14 @@ craftEssences = [
               , Grant Self 0 (Performance Arts) $ 1.0 ~ 2.0
               , Grant Self 0 (Performance Buster) $ 1.0 ~ 2.0
               , Grant Self 0 StarUp $ 1.0 ~ 2.0
-              , Grant Self 0 StarWeight $ 1.0 ~ 2.0
+              , Grant Self 0 StarAbsorb $ 1.0 ~ 2.0
               , Grant Self 0 NPGen $ 1.0 ~ 2.0
               , Grant Self 0 NPUp $ 1.0 ~ 2.0
               , Grant Self 0 DebuffSuccess $ 1.0 ~ 2.0
               , Grant Self 0 DebuffResist $ 1.0 ~ 2.0
               , Grant Self 0 HealingReceived $ 1.0 ~ 2.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "After-Party Order!"
@@ -605,6 +698,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0
               , Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Guda-O"
@@ -616,6 +710,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 CritUp $ 15.0 ~ 20.0
               , Grant Self 0 NPUp $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "GUDAGUDA Poster Girl"
@@ -627,6 +722,7 @@ craftEssences = [
   , effect:   [ Grant Self 3 Taunt Full
               , Grant Self 3 AttackUp $ 60.0 ~ 80.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Demonic Boar"
@@ -636,6 +732,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 (Performance Quick) $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Knight's Dignity"
@@ -647,6 +744,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 CritUp $ 40.0 ~ 50.0
               , Debuff Self 0 DefenseDown $ Flat 20.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "A Fragment of 2030"
@@ -656,6 +754,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 3000 }
               }
   , effect:   [ Grant Party 0 StarsPerTurn $ 8.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Lightning Reindeer"
@@ -665,6 +764,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 3 (Performance Buster) $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "March of the Saint"
@@ -676,6 +776,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 HealPerTurn $ 200.0 ~ 300.0
               , Grant Self 0 GaugePerTurn $ 3.0 ~ 4.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Present for My Master"
@@ -687,6 +788,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 StarUp $ 100.0 ~ 200.0
               , Grant Self 0 HealingReceived $ 40.0 ~ 50.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Holy Night Sign"
@@ -698,6 +800,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 (Performance Quick) $ 8.0 ~ 10.0
               , Grant Self 0 CritUp $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Clock Tower"
@@ -707,6 +810,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Grant Self 0 GaugePerTurn $ 2.0 ~ 3.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Necromancy"
@@ -716,6 +820,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 2250 }
               }
   , effect:   [ Chance 50 <<< Times 1 <<< Grant Self 0 Guts $ 500.0 ~ 1000.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Awakened Will"
@@ -727,6 +832,7 @@ craftEssences = [
   , effect:   [ Chance 60 <<< Grant Self 0 GaugePerTurn $ 12.0 ~ 15.0
               , Debuff Self 0 HealthLoss $ Flat 500.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "500-Year Obsession"
@@ -739,6 +845,7 @@ craftEssences = [
               , When "defeated by an enemy"
                 <<< Debuff Killer 10 Curse $ 1000.0 ~ 2000.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Peacefulness of 2018"
@@ -750,6 +857,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 HealPerTurn $ 200.0 ~ 300.0
               , Debuff Self 0 AttackDown $ Flat 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Heroic New Year"
@@ -761,6 +869,7 @@ craftEssences = [
   , effect:   [ Times 1 $ Grant Self 0 DebuffResist Full
               , Grant Self 0 DefenseUp $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Law of the Jungle"
@@ -770,6 +879,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Bonus QuestQuartz $ 2017.0 ~ 2018.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Grand New Year"
@@ -782,6 +892,7 @@ craftEssences = [
               , Grant Self 1 Invincibility Full
               , Grant Self 0 DebuffResist $ 10.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Mona Lisa"
@@ -791,6 +902,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 1600 }
               }
   , effect:   [ Bonus QPGain $ 2.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Happy x3 Order"
@@ -800,6 +912,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 2016 }
               }
   , effect:   [ Grant Party 0 StarsPerTurn $ 0.0 ~ 1.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Purely Bloom"
@@ -810,6 +923,7 @@ craftEssences = [
               }
   , effect:   [ -- TODO  +5% NP damage per turn (40~50% cap)
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Star of Altria"
@@ -821,6 +935,7 @@ craftEssences = [
   , effect:   [ Times 1 <<< Grant Self 0 Guts $ Flat 1.0
               , Grant Self 0 DebuffResist $ 5.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Trueshot"
@@ -832,6 +947,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 SureHit Full
               , Grant Self 0 CritUp $ 3.0 ~ 5.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Mikotto! Bride Training"
@@ -841,6 +957,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 2250 }
               }
   , effect:   [ Chance 65 <<< Grant Self 0 HealPerTurn $ 750.0 ~ 1000.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "The Crimson Land of Shadows"
@@ -852,6 +969,7 @@ craftEssences = [
   , effect:   [ -- TODO Add 100 Damage per turn (max 1000~1200)
 
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Ryudoji Temple"
@@ -863,6 +981,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 NPUp $ 10.0 ~ 15.0
               , To Self GaugeUp $ 20.0 ~ 30.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Mana Gauge"
@@ -872,6 +991,7 @@ craftEssences = [
               , max:  { atk: 1200, hp: 0  }
               }
   , effect:   [ Grant Self 0 (ClassAffinity Caster) $ 8.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Elixir of Love"
@@ -881,6 +1001,7 @@ craftEssences = [
               , max:  { atk: 500, hp: 800 }
               }
   , effect:   [ Grant Self 0 (Success Charm) $ 12.0 ~ 15.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Storch Ritter"
@@ -890,6 +1011,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ equipped Berserker <<< Grant Self 0 NPUp $ 15.0 ~ 25.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Hermitage"
@@ -899,6 +1021,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 3 (Performance Arts) $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Motored Cuirassier"
@@ -908,6 +1031,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 (ClassAffinity Rider) $ 8.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Stuffed Lion"
@@ -917,6 +1041,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ When "defeated" <<< To Party Heal $ 800.0 ~ 1000.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Lugh's Halo"
@@ -926,6 +1051,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Grant Self 0 (Resist Stun) $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Vessel of the Saint"
@@ -937,6 +1063,7 @@ craftEssences = [
   , effect:   [ Times 3 $ Grant Self 0 DebuffResist Full
               , Grant Self 0 NPGen $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Golden Millennium Tree"
@@ -947,7 +1074,108 @@ craftEssences = [
               }
   , effect:   [ -- Increase max HP by 200~300 per turn (Max: 3000)
               ]
+  , bond:     Nothing
   , limited:  false
+  }
+, { name:     "Heroic Spirit Portrait: Mash Kyrielight"
+  , id:       99
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Altria Pendragon"
+  , id:       100
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Jeanne d'Arc"
+  , id:       101
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Altera"
+  , id:       102
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Arjuna"
+  , id:       103
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Scathach"
+  , id:       104
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Ushiwakamaru"
+  , id:       105
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Henry Jekyll & Hyde"
+  , id:       106
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Mephistopheles"
+  , id:       107
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Heroic Spirit Portrait: Darius III"
+  , id:       108
+  , rarity:   4
+  , stats:    { base: { atk: 500, hp: 500 }
+              , max:  { atk: 500, hp: 500 }
+              }
+  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , bond:     Nothing
+  , limited:  true
   }
 , { name:     "Valentine Dojo of Tears"
   , id:       109
@@ -955,10 +1183,11 @@ craftEssences = [
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 SureHit Full 
+  , effect:   [ Grant Self 0 SureHit Full
               , Grant Self 0 GaugePerTurn $ 3.0 ~ 5.0
               , Debuff Self 0 CharmVuln $ Flat 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Kitchen☆Patissiere"
@@ -967,9 +1196,10 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Grant Self 0 StarUp $ 15.0 ~ 20.0 
+  , effect:   [ Grant Self 0 StarUp $ 15.0 ~ 20.0
               , Grant Self 0 NPGen $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Street Choco-Maid"
@@ -978,10 +1208,11 @@ craftEssences = [
   , stats:    { base: { atk: 250, hp: 1000 }
               , max:  { atk: 400, hp: 1600 }
               }
-  , effect:   [ Grant Self 0 (Performance Arts) $ 10.0 ~ 15.0 
-              , Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0 
+  , effect:   [ Grant Self 0 (Performance Arts) $ 10.0 ~ 15.0
+              , Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0
               , Grant Self 0 HealingReceived $ 20.0 ~ 30.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Melty Sweetheart"
@@ -991,8 +1222,9 @@ craftEssences = [
               , max:  { atk: 0, hp: 3000 }
               }
   , effect:   [ Times 3 <<< Grant Self 0 (DefenseVs Male) $ Flat 100.0
-              , Grant Self 0 StarUp $ 10.0 ~ 20.0 
+              , Grant Self 0 StarUp $ 10.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Decapitating Bunny 2018"
@@ -1001,9 +1233,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 IgnoreInvinc Full 
+  , effect:   [ Grant Self 0 IgnoreInvinc Full
               , Grant Self 0 (Performance Quick) $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Mature Gentleman"
@@ -1013,6 +1246,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 3000 }
               }
   , effect:   [ Grant Self 0 KillResist $ 60.0 ~ 80.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Grand Puppeteer"
@@ -1021,9 +1255,10 @@ craftEssences = [
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ To Self GaugeUp $ 50.0 ~ 60.0 
+  , effect:   [ To Self GaugeUp $ 50.0 ~ 60.0
               , Grant Self 3 (Performance Arts) $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Threefold Barrier"
@@ -1033,6 +1268,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 3000 }
               }
   , effect:   [ Times 3 <<< Grant Self 0 DamageCut $ 1000.0 ~ 1200.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Vivid Dance of Fists"
@@ -1042,6 +1278,7 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 DamageUp $ 800.0 ~ 1000.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Mystic Eyes of Distortion"
@@ -1050,9 +1287,10 @@ craftEssences = [
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (Performance Buster) $ 20.0 ~ 25.0 
+  , effect:   [ Grant Self 0 (Performance Buster) $ 20.0 ~ 25.0
               , Debuff Self 0 DefenseDown $ Flat 15.0
               ]
+  , bond:     Nothing
   , limited :  true
   }
 , { name:     "Summer's Futuresight"
@@ -1061,9 +1299,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
-  , effect:   [ Times 1 $ Grant Self 0 Evasion Full 
-              , Grant Self 0 StarUp $ 15.0 ~ 20.0 
+  , effect:   [ Times 1 $ Grant Self 0 Evasion Full
+              , Grant Self 0 StarUp $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Refrain"
@@ -1072,9 +1311,10 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Grant Self 0 StarWeight $ 300.0 ~ 400.0 
+  , effect:   [ Grant Self 0 StarAbsorb $ 300.0 ~ 400.0
               , Grant Self 3 DebuffResist $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Sprinter"
@@ -1083,9 +1323,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ Grant Self 0 (Performance Quick) $ 5.0 ~ 8.0 
-              , Grant Self 0 DebuffResist $ 10.0 ~ 15.0 
+  , effect:   [ Grant Self 0 (Performance Quick) $ 5.0 ~ 8.0
+              , Grant Self 0 DebuffResist $ 10.0 ~ 15.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Repeat Magic"
@@ -1094,9 +1335,10 @@ craftEssences = [
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
-  , effect:   [ To Self GaugeUp $ 20.0 ~ 30.0 
+  , effect:   [ To Self GaugeUp $ 20.0 ~ 30.0
               , Grant Self 0 NPGen $ 10.0 ~ 15.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Kiss Your Hand"
@@ -1105,10 +1347,11 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (Performance Arts) $ 10.0 ~ 12.0 
-              , Grant Self 0 (Performance Buster) $ 10.0 ~ 12.0 
-              , Grant Self 0 (Performance Quick) $ 10.0 ~ 12.0 
+  , effect:   [ Grant Self 0 (Performance Arts) $ 10.0 ~ 12.0
+              , Grant Self 0 (Performance Buster) $ 10.0 ~ 12.0
+              , Grant Self 0 (Performance Quick) $ 10.0 ~ 12.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Teacher and I"
@@ -1117,9 +1360,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
-  , effect:   [ To Self GaugeUp $ 5.0 ~ 60.0 
-              , Grant Self 0 StarWeight $ 300.0 ~ 400.0
+  , effect:   [ To Self GaugeUp $ 5.0 ~ 60.0
+              , Grant Self 0 StarAbsorb $ 300.0 ~ 400.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Versus"
@@ -1128,9 +1372,10 @@ craftEssences = [
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Grant Self 3 (AttackVs Divine) $ 80.0 ~ 100.0 
+  , effect:   [ Grant Self 3 (AttackVs Divine) $ 80.0 ~ 100.0
               , Grant Self 3 (DefenseVs Divine) $ 40.0 ~ 50.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Beasts Under the Moon"
@@ -1139,10 +1384,11 @@ craftEssences = [
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
-  , effect:   [ Grant Self 0 NPGen $ 12.0 ~ 15.0 
+  , effect:   [ Grant Self 0 NPGen $ 12.0 ~ 15.0
               , Grant Self 0 StarUp $ 12.0 ~ 15.0
               , Grant Self 0 HealPerTurn $ 200.0 ~ 300.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Glass Full Sweet Time"
@@ -1151,10 +1397,11 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Grant Self 0 SureHit Full 
+  , effect:   [ Grant Self 0 SureHit Full
               , Grant Self 0 DamageUp $ 400.0 ~ 600.0
               , Grant Self 0 DamageCut $ 200.0 ~ 300.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Salon de Marie"
@@ -1163,10 +1410,11 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ Times 1 $ Grant Self 0 Evasion Full 
+  , effect:   [ Times 1 $ Grant Self 0 Evasion Full
               , Grant Self 0 HealingReceived $ 5.0 ~ 10.0
               , Grant Self 0 DebuffSuccess $ 3.0 ~ 5.0
-              ] 
+              ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Prince of Slayer"
@@ -1175,9 +1423,10 @@ craftEssences = [
   , stats:    { base: { atk: 100, hp: 160 }
               , max:  { atk: 500, hp: 800 }
               }
-  , effect:   [ Grant Party 0 StarsPerTurn $ 1.0 ~ 2.0 
+  , effect:   [ Grant Party 0 StarsPerTurn $ 1.0 ~ 2.0
               , Grant Self 0 (AttackVs Dragon) $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Noisy Obsession"
@@ -1186,10 +1435,11 @@ craftEssences = [
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
-  , effect:   [ Grant Self 0 CritUp $ 15.0 ~ 20.0 
+  , effect:   [ Grant Self 0 CritUp $ 15.0 ~ 20.0
               , Grant Self 0 NPUp $ 15.0 ~ 20.0
               , Grant Self 0 (Success Charm) $ 12.0 ~ 15.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Ideal Holy King"
@@ -1199,6 +1449,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 1600 }
               }
   , effect:   [ Grant Party 0 MaxHP $ 1000.0 ~ 1200.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Record Holder"
@@ -1208,6 +1459,7 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 DebuffSuccess $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Beast of Billows"
@@ -1216,7 +1468,8 @@ craftEssences = [
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
-  , effect:   [ equipped Lancer <<< Grant Self 0 NPUp $ 15.0 ~ 25.0  ]
+  , effect:   [ equipped Lancer <<< Grant Self 0 NPUp $ 15.0 ~ 25.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Personal Training"
@@ -1226,6 +1479,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 1600 }
               }
   , effect:   [ Bonus EXP $ 2.0 ~ 10.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "The Scholars of Chaldea"
@@ -1234,9 +1488,10 @@ craftEssences = [
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ To Self GaugeUp $ 30.0 ~ 50.0 
+  , effect:   [ To Self GaugeUp $ 30.0 ~ 50.0
               , Grant Self 0 HealingReceived $ 20.0 ~ 30.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Maiden Leading Chaldea"
@@ -1245,9 +1500,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0 
+  , effect:   [ Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0
               , Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "The Merciless One"
@@ -1256,9 +1512,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ When "defeated" <<< To Party GaugeUp $ 15.0 ~ 20.0 
+  , effect:   [ When "defeated" <<< To Party GaugeUp $ 15.0 ~ 20.0
               , Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Art of the Poisonous Snake"
@@ -1268,6 +1525,7 @@ craftEssences = [
               , max:  { atk: 750, hp: 1200 }
               }
   , effect:   [ Grant Self 3 (Performance Arts) $ 30.0 ~ 40.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Art of Death"
@@ -1277,6 +1535,7 @@ craftEssences = [
               , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 (AttackVs Humanoid) $ 25.0 ~ 30.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Gentle Affection"
@@ -1286,6 +1545,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 2250 }
               }
   , effect:   [ Grant Self 0 HealUp $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Volumen Hydrargyrum"
@@ -1295,6 +1555,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 3000 }
               }
   , effect:   [ Times 3 $ Grant Self 0 Invincibility Full ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Innocent Maiden"
@@ -1303,9 +1564,10 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Grant Self 0 GaugePerTurn $ 4.0 ~ 5.0 
+  , effect:   [ Grant Self 0 GaugePerTurn $ 4.0 ~ 5.0
               , Grant Self 0 (Performance Quick) $ 10.0 ~ 12.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Self Geas Scroll"
@@ -1315,6 +1577,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Grant Self 0 (Success Stun) $ 12.0 ~ 15.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Before Awakening"
@@ -1323,10 +1586,11 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0 
-              , Grant Self 0 (Performance Buster) $ 8.0 ~ 10.0 
-              , Grant Self 0 (Performance Quick) $ 8.0 ~ 10.0 
+  , effect:   [ Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0
+              , Grant Self 0 (Performance Buster) $ 8.0 ~ 10.0
+              , Grant Self 0 (Performance Quick) $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "His Rightful Place"
@@ -1335,21 +1599,77 @@ craftEssences = [
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0 
+  , effect:   [ Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0
               , To Self GaugeUp $ 30.0 ~ 50.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
+, bond 191 "Crown of the Stars" "Altria Pendragon"
+  [ Grant Party 0 AttackUp $ Flat 15.0 ]
+, bond 192 "Relic of The King" "Zhuge Liang (El-Melloi II)"
+  [ Grant Party 0 (Performance Buster) $ Flat 15.0 ]
+, bond 193 "Triumph of the Impaling Lord" "Vlad III"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 30 <<< To Self GaugeUp $ Flat 5.0
+  ]
+, bond 194 "Revelation from Heaven" "Jeanne d'Arc"
+  [ Grant Party 0 (Performance Buster) $ Flat 15.0 ]
+, bond 195 "Memories of the Dragon" "Altria Pendragon (Alter)"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 30 <<< Debuff Target 3 DefenseDown $ Flat 5.0
+  ]
+, bond 196 "Hunter of the Red Plains" "EMIYA"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 30 <<< To Party GainStars $ Flat 5.0
+  ]
+, bond 197 "Castle of Snow" "Heracles"
+  [ Times 3 <<< Grant Self 0 Guts $ Flat 500.0 ]
+, bond 198 "Yggdrasil Tree" "Cu Chulainn (Caster)"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 30 <<< To Self Heal $ Flat 500.0
+  ]
+, bond 199 "Embrace of the Scorching Heat" "Kiyohime"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 30 <<< Debuff Target 5 Burn $ Flat 500.0
+  ]
+, bond 200 "Worthless Jewels" "Mata Hari"
+  [ Grant Party 0 NPGen $ Flat 15.0 ]
+, bond 201 "Eternal Solitude" "Altera"
+  [ Grant Party 0 AttackUp $ Flat 15.0 ]
+, bond 202 "Gift from the Queen" "Chevalier d'Eon"
+  [ Grant Party 0 (Performance Arts) $ Flat 15.0 ]
+, bond 203 "Elixir" "Elisabeth Bathory"
+  [ Grant Party 0 HealPerTurn $ Flat 500.0 ]
+, bond 204 "My Necklace" "Marie Antoinette"
+  [ Grant Party 0 StarUp $ Flat 20.0 ]
+, bond 205 "The Staff He Gave me" "Saint Martha"
+  [ Grant Party 0 HealingReceived $ Flat 30.0 ]
+, bond 206 "Iron Maiden" "Carmilla"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 10 $ Debuff Target 1 SealNP Full
+  ]
+, bond 207 "Cat Apron" "Tamamo Cat"
+  [ Grant Party 0 MaxHP $ Flat 2000.0 ]
+, bond 208 "Thirst for Victory" "Boudica"
+  [ Grant Party 0 StarUp $ Flat 20.0 ]
+, bond 209 "To My Dear Friend" "Hans Christian Andersen"
+  [ Grant Party 0 DebuffResist $ Flat 30.0 ]
+, bond 210 "Sacred Devotion" "Arash"
+  [ When "defeated" $ To Party RemoveDebuffs Full
+  , When "defeated" $ To Party Heal $ Flat 5000.0
+  ]
 , { name:     "The Wandering Tales of Shana-oh"
   , id:       211
   , rarity:   5
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0 
-              , When "defeated" 
+  , effect:   [ Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0
+              , When "defeated"
                 <<< Grant Party 1 (Performance Quick) $ 20.0 ~ 30.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Golden Captures the Carp"
@@ -1358,9 +1678,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ To Self GaugeUp $ 30.0 ~ 50.0 
+  , effect:   [ To Self GaugeUp $ 30.0 ~ 50.0
               , To Party GainStars $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "A Fox Night's Dream"
@@ -1369,9 +1690,10 @@ craftEssences = [
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Grant Self 0 NPGen $ 20.0 ~ 25.0 
+  , effect:   [ Grant Self 0 NPGen $ 20.0 ~ 25.0
               , Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Burning Tale of Love"
@@ -1380,9 +1702,10 @@ craftEssences = [
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (AttackVs Male) $ 25.0 ~ 30.0 
+  , effect:   [ Grant Self 0 (AttackVs Male) $ 25.0 ~ 30.0
               , Grant Self 0 DebuffSuccess $ 12.0 ~ 15.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Reciting the Subscription List"
@@ -1392,17 +1715,48 @@ craftEssences = [
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Times 1 $ Grant Self 0 DebuffResist Full ]
+  , bond:     Nothing
   , limited:  true
   }
+, bond 216 "Key of the King's Law" "Gilgamesh"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 30 <<< Grant Self 3 CritUp $ Flat 10.0
+  ]
+, bond 217 "Golden Glass" "Sakata Kintoki"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 30 <<< To Self GaugeUp $ Flat 5.0
+  ]
+, bond 218 "Thunderous Applause" "Nero Claudius"
+  [ Grant Party 0 (Performance Arts) $ Flat 15.0 ]
+, bond 219 "Das Rheingold" "Siegfried"
+  [ Grant Party 0 NPGen $ Flat 15.0 ]
+, bond 220 "Radiance of the Goddess" "Stheno"
+  [ Grant Party 0 (Performance Quick) $ Flat 15.0 ]
+, bond 221 "Voyage of the Flowers" "Altria Pendragon (Lily)"
+  [ Grant Party 0 AttackUp $ Flat 10.0
+  , Grant Party 0 StarUp $ Flat 10.0
+  ]
+, bond 222 "Ark of the Covenant" "David"
+  [ Grant Self 0 NPUp $ Flat 30.0
+  , atkChance 10 $ To Target Kill Full
+  ]
+, bond 223 "Door to Babylon" "Darius III"
+  [ Grant Party 0 (Performance Buster) $ Flat 15.0 ]
+, bond 224 "Blood-Thirsting Axe" "Eric Bloodaxe"
+  [ Grant Party 0 CritUp $ Flat 25.0 ]
+, bond 225 "Insurrection" "Spartacus"
+  [ -- TODO Guts (1 time) with 50% HP
+  ]
 , { name:     "GO WEST!!"
   , id:       226
   , rarity:   5
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Grant Self 0 NPUp $ 20.0 ~ 25.0 
+  , effect:   [ Grant Self 0 NPUp $ 20.0 ~ 25.0
               , Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "The Classic Three Great Heroes"
@@ -1411,10 +1765,11 @@ craftEssences = [
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Grant Self 0 NPUp $ 15.0 ~ 20.0 
+  , effect:   [ Grant Self 0 NPUp $ 15.0 ~ 20.0
               , Grant Self 0 StarUp $ 15.0 ~ 20.0
-              , To Self GaugeUp $ 25.0 ~ 40.0  
+              , To Self GaugeUp $ 25.0 ~ 40.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "True Samadhi Fire"
@@ -1423,9 +1778,10 @@ craftEssences = [
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
-  , effect:   [ Grant Self 0 NPUp $ 15.0 ~ 20.0 
+  , effect:   [ Grant Self 0 NPUp $ 15.0 ~ 20.0
               , Grant Self 0 (Performance Buster) $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "All Three Together"
@@ -1434,11 +1790,16 @@ craftEssences = [
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 StarWeight $ 100.0 ~ 200.0 
+  , effect:   [ Grant Self 0 StarAbsorb $ 100.0 ~ 200.0
               , Grant Self 0 CritUp $ 5.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
+, bond 230 "Tri-Star Belt" "Orion"
+  [ Grant Party 0 CritUp $ Flat 25.0 ]
+--, bond 231 "Golden Rudder" "Francis Drake"
+  --[ Grant Party 0 ]
 , { name:     "Divine Princess of the Storm"
   , id:       240
   , rarity:   5
@@ -1446,6 +1807,7 @@ craftEssences = [
               , max:  { atk: 0, hp: 3000 }
               }
   , effect:   [ When "defeated" <<< Grant Party 3 DefenseUp $ 20.0 ~ 25.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Ox-Demon King"
@@ -1455,6 +1817,7 @@ craftEssences = [
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ Grant Party 3 (Performance Buster) $ 10.0 ~ 15.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Personal Lesson"
@@ -1464,6 +1827,7 @@ craftEssences = [
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ Bonus MysticCode $ Flat 2.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Bronze-Link Manipulator"
@@ -1473,6 +1837,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 3 AttackUp $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Ath nGabla"
@@ -1481,9 +1846,10 @@ craftEssences = [
   , stats:    { base: { atk: 100, hp: 160 }
               , max:  { atk: 500, hp: 800 }
               }
-  , effect:   [ Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0 
+  , effect:   [ Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0
               , Debuff Self 0 DefenseDown $ Flat 10.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Bygone Dreams"
@@ -1493,6 +1859,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ equipped Assassin <<< Grant Self 0 NPUp $ 15.0 ~ 25.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Extremely Spicy Mapo Tofu"
@@ -1502,7 +1869,20 @@ craftEssences = [
               , max:  { atk: 1000, hp: 0 }
               }
   , effect:   [ Grant Self 0 HealingReceived $ 10.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  false
+  }
+, { name:     "Jeweled Sword Zelretch"
+  , id:       247
+  , rarity:   3
+  , stats:    { base: { atk: 100, hp: 160 }
+              , max:  { atk: 500, hp: 180 }
+              }
+  , effect:   [ Grant Self 0 NPGen $ 5.0 ~ 10.0
+              , To Self GaugeUp $ 25.0 ~ 40.0
+              ]
+  , bond:     Nothing
+  , limited:  true
   }
 , { name:     "Dumplings Over Flowers"
   , id:       258
@@ -1511,6 +1891,7 @@ craftEssences = [
               , max:  { atk: 1000, hp: 1600 }
               }
   , effect:   [ Grant Self 0 (Performance Quick) $ 15.0 ~ 20.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Faithful Companions"
@@ -1519,9 +1900,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
-  , effect:   [ Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0 
+  , effect:   [ Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0
               , Grant Self 0 NPGen $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Hidden Sword: Pheasant Reversal"
@@ -1530,9 +1912,10 @@ craftEssences = [
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (Performance Quick) $ 3.0 ~ 5.0 
+  , effect:   [ Grant Self 0 (Performance Quick) $ 3.0 ~ 5.0
               , Grant Self 0 CritUp $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Golden Sumo: Boulder Tournament"
@@ -1541,9 +1924,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 AttackUp $ 10.0 ~ 15.0 
+  , effect:   [ Grant Self 0 AttackUp $ 10.0 ~ 15.0
               , To Self GaugeUp $ 30.0 ~ 50.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Hot Spring Under the Moon"
@@ -1552,9 +1936,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 CritUp $ 20.0 ~ 25.0 
+  , effect:   [ Grant Self 0 CritUp $ 20.0 ~ 25.0
               , Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Origin Bullet"
@@ -1563,9 +1948,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 IgnoreInvinc Full 
+  , effect:   [ Grant Self 0 IgnoreInvinc Full
               , Grant Self 0 (ClassAffinity Caster) $ 35.0 ~ 40.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Covering Fire"
@@ -1574,9 +1960,10 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Grant Self 0 DamageUp $ 400.0 ~ 600.0 
+  , effect:   [ Grant Self 0 DamageUp $ 400.0 ~ 600.0
               , Grant Self 0 CritUp $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Battle of Camlann"
@@ -1586,6 +1973,7 @@ craftEssences = [
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ When "defeated" <<< To Party GaugeUp $ 10.0 ~ 15.0 ]
+  , bond:     Nothing
   , limited:  false
   }
 , { name:     "Anniversary Heroines"
@@ -1594,9 +1982,10 @@ craftEssences = [
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
-  , effect:   [ Grant Self 0 AttackUp $ Flat 10.0 
+  , effect:   [ Grant Self 0 AttackUp $ Flat 10.0
               , Grant Self 0 StarsPerTurn $ Flat 3.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Leisure Stroll"
@@ -1605,9 +1994,10 @@ craftEssences = [
   , stats:    { base: { atk: 400,  hp: 250 }
               , max:  { atk: 1600, hp: 1000 }
               }
-  , effect:   [ Grant Self 0 StarUp $ 400.0 ~ 600.0 
+  , effect:   [ Grant Self 0 StarUp $ 400.0 ~ 600.0
               , Grant Self 0 (Performance Arts) $ 10.0 ~ 15.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Partake with the King"
@@ -1616,9 +2006,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0  
+  , effect:   [ Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0
               , To Self GaugeUp $ 50.0 ~ 60.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Goldfish Scooping"
@@ -1627,9 +2018,10 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Grant Self 0 SureHit Full 
+  , effect:   [ Grant Self 0 SureHit Full
               , Grant Self 0 (Performance Buster) $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Fire Flower"
@@ -1638,9 +2030,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ Grant Self 0 StarUp $ 5.0 ~ 10.0 
+  , effect:   [ Grant Self 0 StarUp $ 5.0 ~ 10.0
               , Grant Self 0 CritUp $ 5.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Pirates Party!"
@@ -1649,9 +2042,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 IgnoreInvinc Full 
+  , effect:   [ Grant Self 0 IgnoreInvinc Full
               , Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Summertime Mistress"
@@ -1660,9 +2054,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 CritUp $ 15.0 ~ 20.0 
+  , effect:   [ Grant Self 0 CritUp $ 15.0 ~ 20.0
               , To Self GaugeUp $ 30.0 ~ 50.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Twilight Memory"
@@ -1671,9 +2066,10 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Times 1 $ Grant Self 0 Evasion Full 
+  , effect:   [ Times 1 $ Grant Self 0 Evasion Full
               , Grant Self 0 (Performance Quick) $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Shiny Goddess"
@@ -1682,9 +2078,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ Grant Self 0 DefenseUp $ 3.0 ~ 5.0 
+  , effect:   [ Grant Self 0 DefenseUp $ 3.0 ~ 5.0
               , Grant Self 0 (Performance Arts) $ 3.0 ~ 5.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Knights of Marines"
@@ -1693,9 +2090,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0 
+  , effect:   [ Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0
               , To Self GaugeUp $ 50.0 ~ 60.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Chaldea Lifesavers"
@@ -1704,9 +2102,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
-  , effect:   [ Times 1 <<< Grant Self 0 Guts $ Flat 1.0 
+  , effect:   [ Times 1 <<< Grant Self 0 Guts $ Flat 1.0
               , Grant Self 0 NPGen $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Meat Wars"
@@ -1715,9 +2114,10 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Grant Self 0 HealPerTurn $ 200.0 ~ 300.0 
+  , effect:   [ Grant Self 0 HealPerTurn $ 200.0 ~ 300.0
               , Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Shaved Ice (Void's Dust Flavor)"
@@ -1726,9 +2126,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ Grant Self 0 DamageCut $ 100.0 ~ 200.0 
+  , effect:   [ Grant Self 0 DamageCut $ 100.0 ~ 200.0
               , Grant Self 0 DebuffResist $ 5.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Magical Girl of Sapphire"
@@ -1737,9 +2138,10 @@ craftEssences = [
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 NPGen $ 25.0 ~ 30.0 
+  , effect:   [ Grant Self 0 NPGen $ 25.0 ~ 30.0
               , To Self GaugeUp $ 40.0 ~ 50.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Kill on Sight"
@@ -1748,9 +2150,10 @@ craftEssences = [
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
-  , effect:   [ Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0 
+  , effect:   [ Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0
               , Grant Self 0 NPUp $ 15.0 ~ 20.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Zunga Zunga!"
@@ -1759,9 +2162,10 @@ craftEssences = [
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ Grant Self 0 DamageCut $ 100.0 ~ 200.0 
+  , effect:   [ Grant Self 0 DamageCut $ 100.0 ~ 200.0
               , Grant Self 0 HealingReceived $ 5.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Kaleid Ruby"
@@ -1770,9 +2174,10 @@ craftEssences = [
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0 
+  , effect:   [ Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0
               , Grant Self 0 NPUp $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Kaleid Sapphire"
@@ -1781,9 +2186,10 @@ craftEssences = [
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
-  , effect:   [ Grant Self 0 (Performance Arts) $ 10.0 ~ 15.0 
+  , effect:   [ Grant Self 0 (Performance Arts) $ 10.0 ~ 15.0
               , Grant Self 0 NPUp $ 8.0 ~ 10.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Fate/Extella"
@@ -1795,6 +2201,7 @@ craftEssences = [
   , effect:   [ Grant Self 0 CritUp $ Flat 15.0
               , Grant Party 0 StarsPerTurn $ Flat 3.0
               ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Spiritron Portrait: Nero Claudius"
@@ -1804,6 +2211,7 @@ craftEssences = [
               , max:  { atk: 100, hp: 100 }
               }
   , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Spiritron Portrait: Nameless"
@@ -1813,6 +2221,7 @@ craftEssences = [
               , max:  { atk: 100, hp: 100 }
               }
   , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Spiritron Portrait: Tamamo no Mae"
@@ -1822,6 +2231,7 @@ craftEssences = [
               , max:  { atk: 100, hp: 100 }
               }
   , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Spiritron Portrait: Karna"
@@ -1831,6 +2241,7 @@ craftEssences = [
               , max:  { atk: 100, hp: 100 }
               }
   , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Spiritron Portrait: Altera"
@@ -1840,6 +2251,7 @@ craftEssences = [
               , max:  { atk: 100, hp: 100 }
               }
   , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "Spiritron Portrait: Gilgamesh"
@@ -1849,6 +2261,7 @@ craftEssences = [
               , max:  { atk: 100, hp: 100 }
               }
   , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 , { name:     "First Order"
@@ -1858,6 +2271,20 @@ craftEssences = [
               , max:  { atk: 100, hp: 100 }
               }
   , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , bond:     Nothing
   , limited:  true
   }
 ]
+  where
+    atkChance chance = When "attacking" <<< Chance chance
+    bond id name servant effect
+        = { name
+          , id
+          , rarity:   4
+          , stats:    { base: { atk: 100, hp: 100 }
+                      , max:  { atk: 100, hp: 100 }
+                      }
+          , effect:   When ("equipped by " <> servant) <$> effect
+          , bond:     Just servant
+          , limited:  false
+          }

@@ -3,7 +3,7 @@ module Database.Icon (Icon(..)) where
 import Prelude
 import Generic as G
 
-import Data.String (drop)
+import Data.String
 
 data Icon
     = IconAllUp

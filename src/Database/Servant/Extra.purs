@@ -1,12 +1,12 @@
 module Database.Servant.Extra (extras) where
 
-import Prelude (($), (<<<))
-import Operators ((:))
+import Prelude
+import Operators
 import Database.Model
 
 extras ∷ Array Servant
-extras = [
-  { name:     "Jeanne d'Arc"
+extras = Servant <$>
+[ { name:     "Jeanne d'Arc"
   , id:       59
   , rarity:   5
   , class:    Ruler
@@ -118,7 +118,7 @@ extras = [
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
-                          , Grant Self 3 StarWeight $ 400.0 ~ 800.0
+                          , Grant Self 3 StarAbsorb $ 400.0 ~ 800.0
                           ]
                 }
               , { name:   "Dragon Witch EX"
@@ -342,15 +342,15 @@ extras = [
               , { name:   "Annihilation Wish A"
                 , icon:   IconQuickUp
                 , cd:     10
-                , effect: [ When "turn 1" $ Grant Self 1 (Performance Quick) 
+                , effect: [ When "turn 1" $ Grant Self 1 (Performance Quick)
                             $ 20.0 ~ 40.0
-                          , When "turn 2" $ Grant Self 1 (Performance Quick) 
+                          , When "turn 2" $ Grant Self 1 (Performance Quick)
                             $ 40.0 ~ 80.0
-                          , When "turn 3" $ Grant Self 1 (Performance Quick) 
+                          , When "turn 3" $ Grant Self 1 (Performance Quick)
                             $ 60.0 ~ 120.0
-                          , When "turn 4" $ Grant Self 1 (Performance Quick) 
+                          , When "turn 4" $ Grant Self 1 (Performance Quick)
                             $ 80.0 ~ 160.0
-                          , When "turn 5" $ Grant Self 1 (Performance Quick) 
+                          , When "turn 5" $ Grant Self 1 (Performance Quick)
                             $ 100.0 ~ 200.0
                           , When "turn 6" $ To Self DemeritKill Full
                           ]

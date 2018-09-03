@@ -1,12 +1,12 @@
 module Database.Servant.Archer (archers) where
 
-import Prelude (($), (<<<))
-import Operators ((:))
+import Prelude
+import Operators
 import Database.Model
 
 archers ∷ Array Servant
-archers = [
-  { name:     "Gilgamesh"
+archers = Servant <$>
+[ { name:     "Gilgamesh"
   , id:       12
   , rarity:   5
   , class:    Archer
@@ -29,7 +29,7 @@ archers = [
               , { name:   "Collector EX"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 3 StarWeight $ 300.0 ~ 600.0 ]
+                , effect: [ Grant Self 3 StarAbsorb $ 300.0 ~ 600.0 ]
                 }
               ]
   , passives: [magicResistance E, independentAction APlus, divinity B]
@@ -344,7 +344,7 @@ archers = [
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
-                          , Grant Self 3 StarWeight $ 300.0 ~ 600.0
+                          , Grant Self 3 StarAbsorb $ 300.0 ~ 600.0
                           ]
                 }
               ]
@@ -489,7 +489,7 @@ archers = [
               , { name:   "Hunter's Aesthetic C"
                 , icon:   IconStarUp
                 , cd:     6
-                , effect: [ Grant Self 1 StarWeight $ 500.0 ~ 1000.0 ]
+                , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0 ]
                 }
               , { name:   "Calydonian Hunt A"
                 , icon:   IconDodge
@@ -538,7 +538,7 @@ archers = [
               , { name:   "Treasure Hunt (Sea) C"
                 , icon:   IconStarHaloUp
                 , cd:     8
-                , effect: [ Grant Self 1 StarWeight $ 300.0 ~ 600.0
+                , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 600.0
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }

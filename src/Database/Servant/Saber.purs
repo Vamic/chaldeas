@@ -1,12 +1,12 @@
 module Database.Servant.Saber (sabers) where
 
-import Prelude (($), (<<<))
-import Operators ((:))
+import Prelude
+import Operators
 import Database.Model
 
 sabers ∷ Array Servant
-sabers = [
-  { name:     "Okita Souji"
+sabers = Servant <$>
+[ { name:     "Okita Souji"
   , id:       68
   , rarity:   5
   , class:    Saber
@@ -24,7 +24,7 @@ sabers = [
               , { name:   "Weak Constitution A"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 1 StarWeight $ 500.0 ~ 1000.0 ]
+                , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0 ]
                 }
               , { name:   "Mind's Eye (Fake) A"
                 , icon:   IconDodge
@@ -323,7 +323,7 @@ sabers = [
               , { name:   "Eternal Arms Mastery A+"
                 , icon:   IconStarUp
                 , cd:     7
-                , effect: [ Grant Self 3 StarWeight $ 3000.0 ~ 6000.0 ]
+                , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
                 }
               , { name:   "Knight of Owner A++"
                 , icon:   IconStarTurn
@@ -412,7 +412,7 @@ sabers = [
   , actives:  [ { name:   "Blessing of Martial Arts A"
                 , icon:   IconStarUp
                 , cd:     6
-                , effect: [ Grant Self 1 StarWeight $ 300.0 ~ 500.0
+                , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 500.0
                           , Grant Self 1 CritUp $ 50.0 ~ 100.0
                           ]
                 }

@@ -40,6 +40,7 @@ fileName = fromCharArray <<< filter legal <<< toCharArray
   where
     legal ':' = false
     legal '/' = false
+    legal '?' = false
     legal _   = true
 
 print' ∷ Int -> String

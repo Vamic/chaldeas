@@ -28,11 +28,6 @@ extraFilters = join
   , namedBonus FilterEventBonus "+Expensive Pudding"
       [ "Zunga Zunga!" ]
   ]
-  , [ Filter FilterAvailability "Limited"
-      \_ (CraftEssence ce) -> ce.limited
-    , Filter FilterAvailability "Non-Limited"
-      \_ (CraftEssence ce) -> not ce.limited
-    ]
   , [ Filter FilterSource "Limited"
       \_ (CraftEssence s) -> s.limited && isNothing s.bond
     , Filter FilterSource "Non-Limited"

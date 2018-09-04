@@ -225,7 +225,7 @@ modal prefs ascend
         , _tr "Star Rate"   <<< _txt $ show s.gen.starRate <> "%"
         , _tr "NP/Hit"      <<< _txt $ show s.gen.npAtk <> "%"
         , _tr "NP/Defend"   <<< _txt $ show s.gen.npDef <> "%"
-        , _tr "Death Rate"  <<< _txt $ show s.death <> "%"
+        , _tr "Bond CE"     bondCe
         ]
       , H.h2 [_c "npheading"] $ _txt "Noble Phantasm"
       , H.table [_c "phantasm"]
@@ -257,6 +257,11 @@ modal prefs ascend
     ]
   where
     showTables = getPreference prefs ShowTables
+    gotBond = getBond s'
+    bondCe = case gotBond of
+        Just (CraftEssence ce) -> 
+            [ H.span [_c "link", _click $ Switch gotBond] $ _txt ce.name ]
+        Nothing -> [ _span "N/A" ]
     overMeta
       | s.phantasm.first = [_c "activates"]
       | otherwise        = []

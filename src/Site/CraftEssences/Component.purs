@@ -184,6 +184,7 @@ modal showTables artorify
         [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
         , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]
         ]
+      , _img $ "img/Skill/" <> show ce.icon <> ".png"
       , _h 2 "Effects"
       ] <> (if base == max then [] else
       [ H.section_ $ effectEl <$> flatten toMin ce.effect

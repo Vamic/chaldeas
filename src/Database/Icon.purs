@@ -7,12 +7,14 @@ import Data.String
 
 data Icon
     = IconAllUp
+    | IconArtsQuickUp
     | IconArtsUp
     | IconAvenger
     | IconBeamUp
     | IconBeamDown
     | IconBubbles
     | IconBullseye
+    | IconBusterArtsUp
     | IconBusterUp
     | IconCircuits
     | IconDamageUp
@@ -43,11 +45,16 @@ data Icon
     | IconMystic
     | IconNiffin
     | IconNoble
+    | IconNobleRedUp
     | IconNobleTurn
     | IconNobleUp
     | IconPotion
+    | IconQuartz
+    | IconQuickBusterUp
     | IconQuickUp
+    | IconRainbow
     | IconReaperUp
+    | IconRoad
     | IconShield
     | IconShieldBreak
     | IconShieldDown

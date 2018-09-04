@@ -37,6 +37,7 @@ craftEssences = \_ -> D.craftEssences <#> \(CraftEssence ce) ->
     { name:    ce.name
     , id:      ce.id
     , rarity:  ce.rarity
+    , icon:    show ce.icon
     , stats:   ce.stats
     , effect:  exportEffect <$> ce.effect
     , limited: ce.limited

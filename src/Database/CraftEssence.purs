@@ -13,6 +13,7 @@ import Data.Function.Memoize
 import Data.Maybe
 import Data.Int
 
+import Database.Icon
 import Database.Base
 import Database.Skill
 import Database.Servant
@@ -22,6 +23,7 @@ craftEssences = CraftEssence <$>
 [ { name:     "Tenacity"
   , id:       1
   , rarity:   1
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 100 }
               , max:  { atk: 0, hp: 300 }
               }
@@ -32,6 +34,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Meditation"
   , id:       2
   , rarity:   1
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 0, hp: 150 }
               , max:  { atk: 0, hp: 450 }
               }
@@ -42,6 +45,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Technique"
   , id:       3
   , rarity:   1
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 100, hp: 0 }
               , max:  { atk: 300, hp: 0 }
               }
@@ -52,6 +56,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Preemption"
   , id:       4
   , rarity:   1
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 100, hp: 0 }
               , max:  { atk: 300, hp: 0 }
               }
@@ -62,6 +67,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Destruction"
   , id:       5
   , rarity:   1
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 100, hp: 0 }
               , max:  { atk: 300, hp: 0 }
               }
@@ -72,6 +78,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Flash"
   , id:       6
   , rarity:   2
+  , icon:     IconExclamationUp
   , stats:    { base: { atk: 150, hp: 0 }
               , max:  { atk: 500, hp: 0 }
               }
@@ -82,6 +89,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Opportunity"
   , id:       7
   , rarity:   2
+  , icon:     IconStarHaloUp
   , stats:    { base: { atk: 75,  hp: 112 }
               , max:  { atk: 250, hp: 375 }
               }
@@ -92,6 +100,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Fruitful"
   , id:       8
   , rarity:   2
+  , icon:     IconNoble
   , stats:    { base: { atk: 75,  hp: 112 }
               , max:  { atk: 250, hp: 375 }
               }
@@ -102,6 +111,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Concentration"
   , id:       9
   , rarity:   2
+  , icon:     IconNobleUp
   , stats:    { base: { atk: 75,  hp: 112 }
               , max:  { atk: 250, hp: 375 }
               }
@@ -112,6 +122,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Divine Oracle"
   , id:       10
   , rarity:   2
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 150, hp: 0 }
               , max:  { atk: 500, hp: 0 }
               }
@@ -122,6 +133,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Azoth Blade"
   , id:       11
   , rarity:   3
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 200 }
               , max:  { atk: 0, hp: 1000 }
               }
@@ -132,6 +144,7 @@ craftEssences = CraftEssence <$>
 , { name:     "False Attendant's Writings"
   , id:       12
   , rarity:   3
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -142,6 +155,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Azure Black Keys"
   , id:       13
   , rarity:   3
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 200, hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -152,6 +166,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Verdant Black Keys"
   , id:       14
   , rarity:   3
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -162,6 +177,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Crimson Black Keys"
   , id:       15
   , rarity:   3
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -172,6 +188,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Rin's Pendant"
   , id:       16
   , rarity:   3
+  , icon:     IconExclamationUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -182,6 +199,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Spell Tome"
   , id:       17
   , rarity:   3
+  , icon:     IconStarHaloUp
   , stats:    { base: { atk: 100, hp: 150 }
               , max:  { atk: 500, hp: 750 }
               }
@@ -192,6 +210,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Dragon's Meridian"
   , id:       18
   , rarity:   3
+  , icon:     IconNoble
   , stats:    { base: { atk: 100, hp: 150 }
               , max:  { atk: 500, hp: 750 }
               }
@@ -202,6 +221,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Sorcery Ore"
   , id:       19
   , rarity:   3
+  , icon:     IconNobleUp
   , stats:    { base: { atk: 100, hp: 150 }
               , max:  { atk: 500, hp: 750 }
               }
@@ -212,6 +232,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Dragonkin"
   , id:       20
   , rarity:   3
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -222,6 +243,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Iron-Willed Training"
   , id:       21
   , rarity:   4
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 400 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -232,6 +254,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Primeval Curse"
   , id:       22
   , rarity:   4
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -242,6 +265,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Projection"
   , id:       23
   , rarity:   4
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 400, hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -252,6 +276,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Gandr"
   , id:       24
   , rarity:   4
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 400, hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -262,6 +287,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Verdant Sound of Destruction"
   , id:       25
   , rarity:   4
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -272,6 +298,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Gem Magecraft: Antumbra"
   , id:       26
   , rarity:   4
+  , icon:     IconExclamationUp
   , stats:    { base: { atk: 0, hp: 400 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -282,6 +309,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Be Elegant"
   , id:       27
   , rarity:   4
+  , icon:     IconStarHaloUp
   , stats:    { base: { atk: 200, hp: 300 }
               , max:  { atk: 750, hp: 1125 }
               }
@@ -292,6 +320,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Imaginary Element"
   , id:       28
   , rarity:   4
+  , icon:     IconNoble
   , stats:    { base: { atk: 200, hp: 300 }
               , max:  { atk: 750, hp: 1125 }
               }
@@ -302,6 +331,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Divine Banquet"
   , id:       29
   , rarity:   4
+  , icon:     IconNobleUp
   , stats:    { base: { atk: 200, hp: 300 }
               , max:  { atk: 750, hp: 1125 }
               }
@@ -312,6 +342,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Angel's Song"
   , id:       30
   , rarity:   4
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -322,6 +353,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Formal Craft"
   , id:       31
   , rarity:   5
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -332,6 +364,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Imaginary Around"
   , id:       32
   , rarity:   5
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -342,6 +375,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Limited/Zero Over"
   , id:       33
   , rarity:   5
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -352,6 +386,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Kaleidoscope"
   , id:       34
   , rarity:   5
+  , icon:     IconNoble
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -362,6 +397,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heaven's Feel"
   , id:       35
   , rarity:   5
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -372,6 +408,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Beginning of the Journey"
   , id:       36
   , rarity:   4
+  , icon:     IconRoad
   , stats:    { base: { atk: 50,  hp: 50 }
               , max:  { atk: 50, hp: 50 }
               }
@@ -382,6 +419,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Parted Sea"
   , id:       37
   , rarity:   3
+  , icon:     IconDodge
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -394,6 +432,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Seal Designation Enforcer"
   , id:       38
   , rarity:   4
+  , icon:     IconStarUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -404,6 +443,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Holy Shroud of Magdalene"
   , id:       39
   , rarity:   4
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 400 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -414,6 +454,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Prisma Cosmos"
   , id:       40
   , rarity:   5
+  , icon:     IconNobleTurn
   , stats:    { base: { atk: 250,  hp: 375 }
               , max:  { atk: 1000, hp: 1500 }
               }
@@ -424,6 +465,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Nightless Rose"
   , id:       41
   , rarity:   5
+  , icon:     IconKneel
   , stats:    { base: { atk: 0,   hp: 0 }
               , max:  { atk: 500, hp: 2000 }
               }
@@ -434,6 +476,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Mooncell Automaton"
   , id:       42
   , rarity:   3
+  , icon:     IconAllUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -444,6 +487,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Moony Jewel"
   , id:       43
   , rarity:   4
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -454,6 +498,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Moon Goddess' Bath"
   , id:       44
   , rarity:   5
+  , icon:     IconHealTurn
   , stats:    { base: { atk: 0, hp: 500 }
               , max:  { atk: 0, hp: 2000 }
               }
@@ -464,6 +509,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Moonlight Fest"
   , id:       45
   , rarity:   5
+  , icon:     IconStarHaloUp
   , stats:    { base: { atk: 250,  hp: 375 }
               , max:  { atk: 1000, hp: 1500 }
               }
@@ -476,6 +522,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Runestone"
   , id:       46
   , rarity:   3
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 100, hp: 150 }
               , max:  { atk: 500, hp: 750 }
               }
@@ -488,6 +535,7 @@ craftEssences = CraftEssence <$>
 , { name:     "With One Strike"
   , id:       47
   , rarity:   4
+  , icon:     IconBullseye
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -500,6 +548,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Black Grail"
   , id:       48
   , rarity:   5
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 600,  hp: 0 }
               , max:  { atk: 2400, hp: 0 }
               }
@@ -512,6 +561,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Jack-o'-Lantern"
   , id:       49
   , rarity:   3
+  , icon:     IconSwordUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -522,6 +572,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Trick or Treat"
   , id:       50
   , rarity:   3
+  , icon:     IconStaffUp
   , stats:    { base: { atk: 100, hp: 150 }
               , max:  { atk: 500, hp: 750 }
               }
@@ -532,6 +583,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Halloween Arrangement"
   , id:       51
   , rarity:   4
+  , icon:     IconCrosshairUp
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -544,6 +596,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Halloween Princess"
   , id:       52
   , rarity:   5
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 250,  hp: 375 }
               , max:  { atk: 1000, hp: 1500 }
               }
@@ -556,6 +609,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Little Halloween Devil"
   , id:       53
   , rarity:   5
+  , icon:     IconNoble
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -568,6 +622,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Maid in Halloween"
   , id:       54
   , rarity:   5
+  , icon:     IconHealUp
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -578,6 +633,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Anchors Aweigh"
   , id:       55
   , rarity:   3
+  , icon:     IconHealTurn
   , stats:    { base: { atk: 300,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -588,6 +644,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Code Cast"
   , id:       56
   , rarity:   4
+  , icon:     IconSwordUp
   , stats:    { base: { atk: 200, hp: 300 }
               , max:  { atk: 750, hp: 1125 }
               }
@@ -600,6 +657,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Victor of the Moon"
   , id:       57
   , rarity:   5
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 600,  hp: 0 }
               , max:  { atk: 2400, hp: 0 }
               }
@@ -612,6 +670,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Another Ending"
   , id:       58
   , rarity:   5
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 600,  hp: 0 }
               , max:  { atk: 2400, hp: 0 }
               }
@@ -624,6 +683,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Fate GUDAGUDA Order"
   , id:       59
   , rarity:   3
+  , icon:     IconAllUp
   , stats:    { base: { atk: 100, hp: 150 }
               , max:  { atk: 500, hp: 750 }
               }
@@ -644,6 +704,7 @@ craftEssences = CraftEssence <$>
 , { name:     "After-Party Order!"
   , id:       60
   , rarity:   4
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -656,6 +717,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Guda-o"
   , id:       61
   , rarity:   5
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -668,6 +730,7 @@ craftEssences = CraftEssence <$>
 , { name:     "GUDAGUDA Poster Girl"
   , id:       62
   , rarity:   5
+  , icon:     IconCrosshairUp
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -680,6 +743,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Demon Boar"
   , id:       65
   , rarity:   3
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -690,6 +754,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Knight's Dignity"
   , id:       66
   , rarity:   4
+  , icon:     IconExclamationUp
   , stats:    { base: { atk: 200, hp: 300 }
               , max:  { atk: 750, hp: 1125 }
               }
@@ -702,6 +767,7 @@ craftEssences = CraftEssence <$>
 , { name:     "A Fragment of 2030"
   , id:       67
   , rarity:   5
+  , icon:     IconStarTurn
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -712,6 +778,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Lightning Reindeer"
   , id:       68
   , rarity:   3
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -722,6 +789,7 @@ craftEssences = CraftEssence <$>
 , { name:     "March of the Saint"
   , id:       69
   , rarity:   4
+  , icon:     IconHealTurn
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -734,6 +802,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Present For My Master"
   , id:       70
   , rarity:   5
+  , icon:     IconStarUp
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -746,6 +815,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Holy Night Sign"
   , id:       71
   , rarity:   5
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 250,  hp: 375 }
               , max:  { atk: 1000, hp: 1500 }
               }
@@ -758,6 +828,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Clock Tower"
   , id:       72
   , rarity:   3
+  , icon:     IconNobleTurn
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -768,6 +839,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Necromancy"
   , id:       73
   , rarity:   4
+  , icon:     IconKneel
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2400 }
               }
@@ -778,6 +850,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Awakened Will"
   , id:       74
   , rarity:   4
+  , icon:     IconNobleTurn
   , stats:    { base: { atk: 200, hp: 300 }
               , max:  { atk: 750, hp: 1125 }
               }
@@ -790,6 +863,7 @@ craftEssences = CraftEssence <$>
 , { name:     "500-Year Obsession"
   , id:       75
   , rarity:   5
+  , icon:     IconCircuits
   , stats:    { base: { atk: 600,  hp: 0 }
               , max:  { atk: 2400, hp: 0 }
               }
@@ -803,6 +877,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Peacefulness of 2018"
   , id:       76
   , rarity:   3
+  , icon:     IconHealTurn
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -815,6 +890,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic New Year"
   , id:       77
   , rarity:   4
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -827,6 +903,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Law of the Jungle"
   , id:       78
   , rarity:   3
+  , icon:     IconQuartz
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -837,6 +914,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Grand New Year"
   , id:       79
   , rarity:   5
+  , icon:     IconCrosshairUp
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -850,6 +928,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Mona Lisa"
   , id:       80
   , rarity:   5
+  , icon:     IconQuartz
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -860,6 +939,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Happy x3 Order"
   , id:       81
   , rarity:   4
+  , icon:     IconStarTurn
   , stats:    { base: { atk: 0, hp: 2018 }
               , max:  { atk: 0, hp: 2018 }
               }
@@ -870,6 +950,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Purely Bloom"
   , id:       82
   , rarity:   5
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -880,6 +961,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Star of Altria"
   , id:       83
   , rarity:   5
+  , icon:     IconKneel
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -892,6 +974,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Trueshot"
   , id:       84
   , rarity:   3
+  , icon:     IconBullseye
   , stats:    { base: { atk: 200, hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -904,6 +987,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Mikotto! Bride Training"
   , id:       85
   , rarity:   4
+  , icon:     IconHealTurn
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -914,6 +998,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Crimson Land of Shadows"
   , id:       86
   , rarity:   5
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -924,6 +1009,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Ryudoji Temple"
   , id:       89
   , rarity:   3
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 100, hp: 160 }
               , max:  { atk: 500, hp: 800 }
               }
@@ -936,6 +1022,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Mana Gauge"
   , id:       90
   , rarity:   3
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0  }
               }
@@ -946,6 +1033,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Elixir of Love"
   , id:       91
   , rarity:   3
+  , icon:     IconHeart
   , stats:    { base: { atk: 100, hp: 160 }
               , max:  { atk: 500, hp: 800 }
               }
@@ -956,6 +1044,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Storch Ritter"
   , id:       92
   , rarity:   3
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -966,6 +1055,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Hermitage"
   , id:       93
   , rarity:   3
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -976,6 +1066,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Motored Cuirassier"
   , id:       94
   , rarity:   3
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -986,6 +1077,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Stuffed Lion"
   , id:       95
   , rarity:   3
+  , icon:     IconHeal
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -996,6 +1088,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Lugh's Halo"
   , id:       96
   , rarity:   3
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -1006,6 +1099,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Vessel of the Saint"
   , id:       97
   , rarity:   5
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1018,6 +1112,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Golden Millennium Tree"
   , id:       98
   , rarity:   4
+  , icon:     IconHPUp
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -1028,6 +1123,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Mash Kyrielight"
   , id:       99
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1038,6 +1134,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Altria Pendragon"
   , id:       100
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1048,6 +1145,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Jeanne d'Arc"
   , id:       101
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1058,6 +1156,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Altera"
   , id:       102
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1068,6 +1167,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Arjuna"
   , id:       103
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1078,6 +1178,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Scathach"
   , id:       104
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1088,6 +1189,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Ushiwakamaru"
   , id:       105
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1098,6 +1200,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Henry Jekyll & Hyde"
   , id:       106
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1108,6 +1211,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Mephistopheles"
   , id:       107
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1118,6 +1222,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Heroic Portrait: Darius III"
   , id:       108
   , rarity:   4
+  , icon:     IconRainbow
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
@@ -1128,6 +1233,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Valentine Dojo of Tears"
   , id:       109
   , rarity:   3
+  , icon:     IconBullseye
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1141,6 +1247,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Kitchen ☆ Patissiere"
   , id:       110
   , rarity:   4
+  , icon:     IconStarHaloUp
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -1153,6 +1260,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Street Choco-Maid"
   , id:       111
   , rarity:   5
+  , icon:     IconAllUp
   , stats:    { base: { atk: 250, hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1166,6 +1274,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Melty Sweetheart"
   , id:       112
   , rarity:   5
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -1178,6 +1287,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Decapitating Bunny 2018"
   , id:       154
   , rarity:   5
+  , icon:     IconShieldBreak
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1190,6 +1300,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Mature Gentleman"
   , id:       155
   , rarity:   5
+  , icon:     IconFire
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -1200,6 +1311,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Grand Puppeteer"
   , id:       156
   , rarity:   5
+  , icon:     IconNoble
   , stats:    { base: { atk: 400,  hp: 250 }
               , max:  { atk: 1600, hp: 1000 }
               }
@@ -1212,6 +1324,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Threefold Barrier"
   , id:       157
   , rarity:   5
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -1222,6 +1335,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Vivid Dance of Fists"
   , id:       158
   , rarity:   4
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1232,6 +1346,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Mystic Eyes of Distortion"
   , id:       159
   , rarity:   4
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1244,6 +1359,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Summer's Futuresight"
   , id:       160
   , rarity:   4
+  , icon:     IconDodge
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -1256,6 +1372,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Chorus"
   , id:       161
   , rarity:   4
+  , icon:     IconStarUp
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -1268,6 +1385,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Sprinter"
   , id:       162
   , rarity:   3
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -1280,6 +1398,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Repeat Magic"
   , id:       163
   , rarity:   3
+  , icon:     IconNoble
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1292,6 +1411,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Kiss Your Hand"
   , id:       165
   , rarity:   5
+  , icon:     IconAllUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1305,6 +1425,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Teacher and I"
   , id:       166
   , rarity:   5
+  , icon:     IconNoble
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -1317,6 +1438,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Versus"
   , id:       167
   , rarity:   5
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1329,6 +1451,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Beasts Under the Moon"
   , id:       168
   , rarity:   4
+  , icon:     IconNobleUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1342,6 +1465,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Glass Full Sweet Time"
   , id:       169
   , rarity:   4
+  , icon:     IconBullseye
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -1355,6 +1479,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Salon de Marie"
   , id:       170
   , rarity:   3
+  , icon:     IconDodge
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -1368,6 +1493,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Prince of Slayer"
   , id:       171
   , rarity:   3
+  , icon:     IconStarTurn
   , stats:    { base: { atk: 100, hp: 160 }
               , max:  { atk: 500, hp: 800 }
               }
@@ -1380,6 +1506,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Noisy Obsession"
   , id:       172
   , rarity:   4
+  , icon:     IconExclamationUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1393,6 +1520,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Ideal Holy King"
   , id:       175
   , rarity:   5
+  , icon:     IconHPUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1403,6 +1531,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Record Holder"
   , id:       176
   , rarity:   4
+  , icon:     IconStaffUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1413,6 +1542,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Beast of Billows"
   , id:       177
   , rarity:   3
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1423,6 +1553,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Personal Training"
   , id:       178
   , rarity:   5
+  , icon:     IconRoad
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1433,6 +1564,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Scholars of Chaldea"
   , id:       179
   , rarity:   5
+  , icon:     IconNoble
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1445,6 +1577,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Maiden Leading Chaldea"
   , id:       180
   , rarity:   5
+  , icon:     IconStarTurn
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1457,6 +1590,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Merciless One"
   , id:       181
   , rarity:   5
+  , icon:     IconNoble
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1469,6 +1603,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Art of the Poisonous Snake"
   , id:       182
   , rarity:   4
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -1479,6 +1614,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Art of Death"
   , id:       183
   , rarity:   4
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1489,6 +1625,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Gentle Affection"
   , id:       184
   , rarity:   4
+  , icon:     IconHealUp
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -1499,6 +1636,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Volumen Hydrargyrum"
   , id:       185
   , rarity:   5
+  , icon:     IconShield
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -1511,6 +1649,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Innocent Maiden"
   , id:       186
   , rarity:   4
+  , icon:     IconNobleTurn
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -1523,6 +1662,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Self Geas Scroll"
   , id:       187
   , rarity:   3
+  , icon:     IconStaffUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -1533,6 +1673,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Before Awakening"
   , id:       188
   , rarity:   5
+  , icon:     IconAllUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1546,6 +1687,7 @@ craftEssences = CraftEssence <$>
 , { name:     "His Rightful Place"
   , id:       189
   , rarity:   5
+  , icon:     IconStarTurn
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1555,51 +1697,52 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 191 "Crown of the Star" "Altria Pendragon"
+, bond 191 "Crown of the Star" "Altria Pendragon" IconSwordUp
   [ party AttackUp 15 ]
-, bond 192 "Relic of the King" "Zhuge Liang (El-Melloi II)"
+, bond 192 "Relic of the King" "Zhuge Liang (El-Melloi II)" IconBusterUp
   [ party' Buster 15 ]
-, bond 193 "Triumph of the Lord Impaler" "Vlad III"
+, bond 193 "Triumph of the Lord Impaler" "Vlad III" IconBeamUp
   [ np30, atkChance 30 <<< To Self GaugeUp $ Flat 5.0 ]
-, bond 194 "Revelation from Heaven" "Jeanne d'Arc"
+, bond 194 "Revelation from Heaven" "Jeanne d'Arc" IconBusterUp
   [ party' Buster 15 ]
-, bond 195 "Memories of the Dragon" "Altria Pendragon (Alter)"
+, bond 195 "Memories of the Dragon" "Altria Pendragon (Alter)" IconBeamUp
   [ np30, atkChance 30 <<< Debuff Target 3 DefenseDown $ Flat 5.0 ]
-, bond 196 "Hunter of the Red Plains" "EMIYA"
+, bond 196 "Hunter of the Red Plains" "EMIYA" IconBeamUp
   [ np30, atkChance 30 <<< To Party GainStars $ Flat 5.0 ]
-, bond 197 "Castle of Snow" "Heracles"
+, bond 197 "Castle of Snow" "Heracles" IconKneel
   [ Times 3 <<< Grant Self 0 Guts $ Flat 500.0 ]
-, bond 198 "Yggdrasil Tree" "Cu Chulainn (Caster)"
+, bond 198 "Yggdrasil Tree" "Cu Chulainn (Caster)" IconBeamUp
   [ np30, atkChance 30 <<< To Self Heal $ Flat 500.0 ]
-, bond 199 "Scorching Embrace" "Kiyohime"
+, bond 199 "Scorching Embrace" "Kiyohime" IconBeamUp
   [ np30, atkChance 30 <<< Debuff Target 5 Burn $ Flat 500.0 ]
-, bond 200 "Worthless Jewel" "Mata Hari"
+, bond 200 "Worthless Jewel" "Mata Hari" IconNobleUp
   [ party NPGen 15 ]
-, bond 201 "Eternal Solitude" "Altera"
+, bond 201 "Eternal Solitude" "Altera" IconSwordUp
   [ party AttackUp 15 ]
-, bond 202 "Queen's Present" "Chevalier d'Eon"
+, bond 202 "Queen's Present" "Chevalier d'Eon" IconArtsUp
   [ party' Arts 15 ]
-, bond 203 "Elixir" "Elisabeth Bathory"
+, bond 203 "Elixir" "Elisabeth Bathory" IconHealTurn
   [ party HealPerTurn 500 ]
-, bond 204 "My Necklace" "Marie Antoinette"
+, bond 204 "My Necklace" "Marie Antoinette" IconStarHaloUp
   [ party StarUp 20 ]
-, bond 205 "Staff He Gave Me" "Saint Martha"
+, bond 205 "Staff He Gave Me" "Saint Martha" IconBeamUp
   [ party HealingReceived 30 ]
-, bond 206 "Iron Maiden" "Carmilla"
+, bond 206 "Iron Maiden" "Carmilla" IconBeamUp
   [ np30, atkChance 10 $ Debuff Target 1 SealNP Full ]
-, bond 207 "Cat Apron" "Tamamo Cat"
+, bond 207 "Cat Apron" "Tamamo Cat" IconHeal
   [ party MaxHP 2000 ]
-, bond 208 "Thirst for Victory" "Boudica"
+, bond 208 "Thirst for Victory" "Boudica" IconStarHaloUp
   [ party StarUp 20 ]
-, bond 209 "To My Dear Friend" "Hans Christian Andersen"
+, bond 209 "To My Dear Friend" "Hans Christian Andersen" IconHoodUp
   [ party DebuffResist 30 ]
-, bond 210 "Sacred Devotion" "Arash"
+, bond 210 "Sacred Devotion" "Arash" IconHeal
   [ When "defeated" $ To Party RemoveDebuffs Full
   , When "defeated" $ To Party Heal $ Flat 5000.0
   ]
 , { name:     "The Wandering Tales of Shana-oh"
   , id:       211
   , rarity:   5
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1613,6 +1756,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Golden Captures the Carp"
   , id:       212
   , rarity:   5
+  , icon:     IconNoble
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1625,6 +1769,7 @@ craftEssences = CraftEssence <$>
 , { name:     "A Fox Night's Dream"
   , id:       213
   , rarity:   5
+  , icon:     IconNobleUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1637,6 +1782,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Burning Tale of Love"
   , id:       214
   , rarity:   4
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1649,6 +1795,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Reciting the Subscription List"
   , id:       215
   , rarity:   3
+  , icon:     IconHoodUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -1656,29 +1803,30 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 216 "Key of the King's Law" "Gilgamesh"
+, bond 216 "Key of the King's Law" "Gilgamesh" IconDamageUp
   [ np30, atkChance 30 <<< Grant Self 3 CritUp $ Flat 10.0 ]
-, bond 217 "Golden Glass" "Sakata Kintoki"
+, bond 217 "Golden Glass" "Sakata Kintoki" IconBeamUp
   [ np30, atkChance 30 <<< To Self GaugeUp $ Flat 5.0 ]
-, bond 218 "Thunderous Applause" "Nero Claudius"
+, bond 218 "Thunderous Applause" "Nero Claudius" IconArtsUp
   [ party' Arts 15 ]
-, bond 219 "Das Rheingold" "Siegfried"
+, bond 219 "Das Rheingold" "Siegfried" IconNobleUp
   [ party NPGen 15 ]
-, bond 220 "Radiance of the Goddess" "Stheno"
+, bond 220 "Radiance of the Goddess" "Stheno" IconQuickUp
   [ party' Quick 15 ]
-, bond 221 "Voyage of the Flowers" "Altria Pendragon (Lily)"
+, bond 221 "Voyage of the Flowers" "Altria Pendragon (Lily)" IconSwordUp
   [ party AttackUp 10, party StarUp 10 ]
-, bond 222 "Ark of the Covenant" "David"
+, bond 222 "Ark of the Covenant" "David" IconBeamUp
   [ np30, atkChance 10 $ To Target Kill Full ]
-, bond 223 "Door to Babylon" "Darius III"
+, bond 223 "Door to Babylon" "Darius III" IconBusterUp
   [ party' Buster 15 ]
-, bond 224 "Blood-Thirsting Axe" "Eric Bloodaxe"
+, bond 224 "Blood-Thirsting Axe" "Eric Bloodaxe" IconExclamationUp
   [ party CritUp 25 ]
-, bond 225 "Insurrection" "Spartacus"
+, bond 225 "Insurrection" "Spartacus" IconKneel
   [ gutsPercent 50 ]
 , { name:     "GO WEST!!"
   , id:       226
   , rarity:   5
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1691,6 +1839,7 @@ craftEssences = CraftEssence <$>
 , { name:     "The Classic Three Great Heroes"
   , id:       227
   , rarity:   5
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1704,6 +1853,7 @@ craftEssences = CraftEssence <$>
 , { name:     "True Samadhi Fire"
   , id:       228
   , rarity:   4
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1716,6 +1866,7 @@ craftEssences = CraftEssence <$>
 , { name:     "All Three Together"
   , id:       229
   , rarity:   3
+  , icon:     IconStarUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1725,29 +1876,30 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 230 "Tristar Belt" "Orion"
+, bond 230 "Tristar Belt" "Orion" IconExclamationUp
   [ party CritUp 25 ]
-, bond 231 "Golden Helm" "Francis Drake"
+, bond 231 "Golden Helm" "Francis Drake" IconBeamUp
   [ party NPUp 20 ]
-, bond 232 "Black Knight's Helmet" "Lancelot"
+, bond 232 "Black Knight's Helmet" "Lancelot" IconBeamUp
   [ np30, atkChance 30 <<< Debuff Target 3 CritChance $ Flat 30.0 ]
-, bond 233 "Golden Apple" "Atalante"
+, bond 233 "Golden Apple" "Atalante" IconQuickUp
   [ party' Quick 15 ]
-, bond 234 "Holy Pumpkin Grail" "Elisabeth Bathory (Halloween)"
+, bond 234 "Holy Pumpkin Grail" "Elisabeth Bathory (Halloween)" IconHoodUp
   [ party DebuffResist 30 ]
-, bond 235 "Rotary Matchlock" "Oda Nobunaga"
+, bond 235 "Rotary Matchlock" "Oda Nobunaga" IconExclamationUp
   [ party CritUp 25 ]
-, bond 236 "Llamrei Unit II" "Altria Pendragon (Santa Alter)"
+, bond 236 "Llamrei Unit II" "Altria Pendragon (Santa Alter)" IconStarHaloUp
   [ party StarUp 20 ]
-, bond 237 "Things to Calm the Heart" "Henry Jekyll & Hyde"
+, bond 237 "Things to Calm the Heart" "Henry Jekyll & Hyde" IconBusterUp
   [ party' Buster 15 ]
-, bond 238 "Glory of the Past Days" "Edward Teach"
+, bond 238 "Glory of the Past Days" "Edward Teach" IconBusterUp
   [ party' Buster 15 ]
-, bond 239 "Heaven Among the Mountains" "Sasaki Kojiro"
+, bond 239 "Heaven Among the Mountains" "Sasaki Kojiro" IconQuickUp
   [ party' Quick 15 ]
 , { name:     "Divine Princess of the Storm"
   , id:       240
   , rarity:   5
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -1758,6 +1910,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Ox-Demon King"
   , id:       241
   , rarity:   5
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1768,6 +1921,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Personal Lesson"
   , id:       242
   , rarity:   5
+  , icon:     IconRoad
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1778,6 +1932,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Bronze-Link Manipulator"
   , id:       243
   , rarity:   3
+  , icon:     IconSwordUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1788,6 +1943,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Ath nGabla"
   , id:       244
   , rarity:   3
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 100, hp: 160 }
               , max:  { atk: 500, hp: 800 }
               }
@@ -1800,6 +1956,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Bygone Dream"
   , id:       245
   , rarity:   3
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1810,6 +1967,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Extremely Spicy Mapo Tofu"
   , id:       246
   , rarity:   3
+  , icon:     IconHealUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1820,6 +1978,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Jeweled Sword Zelretch"
   , id:       247
   , rarity:   3
+  , icon:     IconNobleUp
   , stats:    { base: { atk: 100, hp: 160 }
               , max:  { atk: 500, hp: 180 }
               }
@@ -1829,29 +1988,30 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 248 "Tamamo's Club" "Tamamo no Mae"
+, bond 248 "Tamamo's Club" "Tamamo no Mae" IconArtsUp
   [ party' Arts 15 ]
-, bond 249 "Headband of Resolve" "Okita Souji"
+, bond 249 "Headband of Resolve" "Okita Souji" IconExclamationUp
   [ party CritUp 25 ]
-, bond 250 "Calico Jack" "Anne Bonny & Mary Read"
+, bond 250 "Calico Jack" "Anne Bonny & Mary Read" IconExclamationUp
   [ party CritUp 25 ]
-, bond 251 "Gazing Upon Dun Scaith" "Scathach"
+, bond 251 "Gazing Upon Dun Scaith" "Scathach" IconQuickUp
   [ party' Quick 15 ]
-, bond 252 "Star of Prophecy" "Cu Chulainn"
+, bond 252 "Star of Prophecy" "Cu Chulainn" IconBeamUp
   [ np30, atkChance 30 <<< Grant Self 3 CritUp $ Flat 10.0 ]
-, bond 253 "Hekate's Staff" "Medea"
+, bond 253 "Hekate's Staff" "Medea" IconArtsUp
   [ party' Arts 15 ]
-, bond 254 "Formless Island" "Medusa"
+, bond 254 "Formless Island" "Medusa" IconNobleUp
   [ party NPGen 15 ]
-, bond 255 "Cask of the Wise" "Alexander"
+, bond 255 "Cask of the Wise" "Alexander" IconExclamationUp
   [ party' Quick 15 ]
-, bond 256 "Shaytan's Arm" "Hassan of the Cursed Arm"
+, bond 256 "Shaytan's Arm" "Hassan of the Cursed Arm" IconReaperUp
   [ party KillUp 20 ]
-, bond 257 "Ariadne's Thread" "Asterios"
+, bond 257 "Ariadne's Thread" "Asterios" IconQuickUp
   [ party' Quick 15 ]
 , { name:     "Dumplings Over Flowers"
   , id:       258
   , rarity:   5
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1862,6 +2022,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Faithful Companions"
   , id:       259
   , rarity:   4
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
@@ -1874,6 +2035,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Hidden Sword: Pheasant Reversal"
   , id:       260
   , rarity:   3
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1886,6 +2048,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Golden Sumo: Boulder Tournament"
   , id:       261
   , rarity:   5
+  , icon:     IconSwordUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1898,6 +2061,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Hot Spring Under the Moon"
   , id:       262
   , rarity:   5
+  , icon:     IconExclamationUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1910,6 +2074,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Origin Bullet"
   , id:       263
   , rarity:   5
+  , icon:     IconShieldBreak
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -1922,6 +2087,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Covering Fire"
   , id:       264
   , rarity:   4
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -1934,6 +2100,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Battle of Camlann"
   , id:       265
   , rarity:   3
+  , icon:     IconNoble
   , stats:    { base: { atk: 300,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -1941,31 +2108,32 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  false
   }
-, bond 266 "Who Am I?" "Mordred"
+, bond 266 "Who Am I?" "Mordred" IconBeamUp
   [ party NPUp 20 ]
-, bond 267 "The Misty Night of London" "Jack the Ripper"
+, bond 267 "The Misty Night of London" "Jack the Ripper" IconExclamationUp
   [ party CritUp 25 ]
-, bond 268 "Wonderland" "Nursery Rhyme"
+, bond 268 "Wonderland" "Nursery Rhyme" IconExclamationUp
   [ party CritUp 15, party HealingReceived 10 ]
-, bond 269 "Faceless King" "Robin Hood"
+, bond 269 "Faceless King" "Robin Hood" IconArtsUp
   [ party' Arts 15 ]
-, bond 270 "Usumidori" "Ushiwakamaru"
+, bond 270 "Usumidori" "Ushiwakamaru" IconQuickUp
   [ party' Quick 15 ]
-, bond 271 "Etiquette of Nine Guests" "Jing Ke"
+, bond 271 "Etiquette of Nine Guests" "Jing Ke" IconBeamUp
   [ np30, atkChance 30 <<< Grant Self 3 KillUp $ Flat 30.0 ]
-, bond 272 "Heaven Scorcher Halberd" "Lu Bu Fengxian"
+, bond 272 "Heaven Scorcher Halberd" "Lu Bu Fengxian" IconBusterUp
   [ party' Buster 15 ]
-, bond 273 "What can be Left Behind" "Georgios"
+, bond 273 "What can be Left Behind" "Georgios" IconShield
   [ When "defeated" <<< Times 1 $ Grant Party 0 Invincibility Full 
   , When "defeated" <<< Grant Party 3 DamageCut $ Flat 1000.0
   ]
-, bond 274 "Thermopylae" "Leonidas"
+, bond 274 "Thermopylae" "Leonidas" IconBusterUp
   [ party' Buster 15 ]
-, bond 275 "Haydn Quartets" "Wolfgang Amadeus Mozart"
+, bond 275 "Haydn Quartets" "Wolfgang Amadeus Mozart" IconBeamUp
   [ party NPUp 20 ]
 , { name:     "Anniversary Heroines"
   , id:       276
   , rarity:   4
+  , icon:     IconSwordUp
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -1978,6 +2146,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Leisure Stroll"
   , id:       277
   , rarity:   5
+  , icon:     IconStarUp
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1990,6 +2159,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Partake with the King"
   , id:       278
   , rarity:   5
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -2002,6 +2172,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Goldfish Scooping"
   , id:       279
   , rarity:   4
+  , icon:     IconBullseye
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -2014,6 +2185,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Fire Flower"
   , id:       280
   , rarity:   3
+  , icon:     IconStarHaloUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -2023,29 +2195,30 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 281 "Arm of Raiden" "Nikola Tesla"
+, bond 281 "Arm of Raiden" "Nikola Tesla" IconBeamUp
   [ party NPUp 20 ]
-, bond 282 "Endowed Hero" "Arjuna"
+, bond 282 "Endowed Hero" "Arjuna" IconBeamUp
   [ np30, Grant Self 0 StarAbsorb $ Flat 1000.0 ]
-, bond 283 "Lamp of the Unfortunate" "Karna"
+, bond 283 "Lamp of the Unfortunate" "Karna" IconAllUp
   [ party' Quick 8, party' Arts 8, party' Buster 8 ]
-, bond 284 "Procedure to Humanity" "Frankenstein"
+, bond 284 "Procedure to Humanity" "Frankenstein" IconQuickUp
   [ party' Quick 15 ]
-, bond 285 "Black Helmet" "Altria Pendragon (Lancer Alter)"
+, bond 285 "Black Helmet" "Altria Pendragon (Lancer Alter)" IconNobleUp
   [ party NPGen 15 ]
-, bond 286 "Legend of the Gallic War" "Gaius Julius Caesar"
+, bond 286 "Legend of the Gallic War" "Gaius Julius Caesar" IconQuickUp
   [ party' Quick 15 ]
-, bond 287 "Rome" "Romulus"
+, bond 287 "Rome" "Romulus" IconBeamUp
   [ party NPUp 20 ]
-, bond 288 "Encounter at Gojou Bridge" "Musashibou Benkei"
+, bond 288 "Encounter at Gojou Bridge" "Musashibou Benkei" IconNobleRedUp
   [ party NPFromDamage 20 ]
-, bond 289 "Impure Death Mask" "Phantom of the Opera"
+, bond 289 "Impure Death Mask" "Phantom of the Opera" IconQuickUp
   [ party' Quick 15 ]
-, bond 290 "Really Convenient" "William Shakespeare"
+, bond 290 "Really Convenient" "William Shakespeare" IconNobleUp
   [ party NPGen 15 ]
 , { name:     "Pirates Party!"
   , id:       291
   , rarity:   5
+  , icon:     IconShieldBreak
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -2058,6 +2231,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Summertime Mistress"
   , id:       292
   , rarity:   5
+  , icon:     IconExclamationUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -2070,6 +2244,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Twilight Memory"
   , id:       293
   , rarity:   4
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -2082,6 +2257,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Shiny Goddess"
   , id:       294
   , rarity:   3
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -2094,6 +2270,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Knights of Marines"
   , id:       295
   , rarity:   5
+  , icon:     IconQuickUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -2106,6 +2283,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Chaldea Lifesavers"
   , id:       296
   , rarity:   5
+  , icon:     IconKneel
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -2118,6 +2296,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Meat Wars"
   , id:       297
   , rarity:   4
+  , icon:     IconHealTurn
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -2130,6 +2309,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Shaved Ice (Void's Dust Flavor)"
   , id:       298
   , rarity:   3
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -2139,29 +2319,30 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 299 "Annihilation List" "Mysterious Heroine X"
+, bond 299 "Annihilation List" "Mysterious Heroine X" IconDamageUp
   [ party (ClassAffinity Saber) 20 ]
-, bond 300 "Imperishable Flames" "Brynhild"
+, bond 300 "Imperishable Flames" "Brynhild" IconBusterUp
   [ party' Buster 10, party NPGen 10 ]
-, bond 301 "Ring of Bay Laurel" "Nero Claudius (Bride)"
+, bond 301 "Ring of Bay Laurel" "Nero Claudius (Bride)" IconArtsUp
   [ party' Arts 15 ]
-, bond 302 "Final Battle" "Beowulf"
+, bond 302 "Final Battle" "Beowulf" IconDamageUp
   [ party (AttackVs Dragon) 20 ]
-, bond 303 "Bratan of Wisdom" "Fionn mac Cumhaill"
+, bond 303 "Bratan of Wisdom" "Fionn mac Cumhaill" IconArtsUp
   [ party' Arts 10, party NPUp 10 ]
-, bond 304 "Prelati's Spellbook" "Gilles de Rais"
+, bond 304 "Prelati's Spellbook" "Gilles de Rais" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DebuffVuln $ Flat 20.0 ]
-, bond 305 "Parasitic Bomb" "Mephistopheles"
+, bond 305 "Parasitic Bomb" "Mephistopheles" IconBeamUp
   [ party NPUp 20 ]
-, bond 306 "Seethe of a Warrior" "Fergus mac Roich"
+, bond 306 "Seethe of a Warrior" "Fergus mac Roich" IconBusterUp
   [ party' Buster 10, party NPUp 10 ]
-, bond 307 "My Loathsome Life" "Charles-Henri Sanson"
+, bond 307 "My Loathsome Life" "Charles-Henri Sanson" IconReaperUp
   [ party KillUp 10, party NPGen 10 ]
-, bond 308 "There is No Love Here" "Caligula"
+, bond 308 "There is No Love Here" "Caligula" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
 , { name:     "Magical Girl of Sapphire"
   , id:       309
   , rarity:   5
+  , icon:     IconNobleUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -2174,6 +2355,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Kill on Sight"
   , id:       310
   , rarity:   4
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 200, hp: 320 }
               , max:  { atk: 750, hp: 1200 }
               }
@@ -2186,6 +2368,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Zunga Zunga!"
   , id:       311
   , rarity:   3
+  , icon:     IconShieldUp
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
@@ -2198,6 +2381,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Kaleid Ruby"
   , id:       312
   , rarity:   4
+  , icon:     IconBusterUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -2210,6 +2394,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Kaleid Sapphire"
   , id:       313
   , rarity:   4
+  , icon:     IconArtsUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -2219,66 +2404,66 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 315 "Mugashiki—Shinkuu Myou" "Ryougi Shiki (Saber)"
+, bond 315 "Mugashiki—Shinkuu Myou" "Ryougi Shiki (Saber)" IconArtsUp
   [ party' Arts 15 ]
-, bond 317 "Château d'If" "Edmond Dantes"
+, bond 317 "Château d'If" "Edmond Dantes" IconQuickUp
   [ party' Quick 15 ]
-, bond 318 "Unlimited Pancakes" "Medea (Lily)"
+, bond 318 "Unlimited Pancakes" "Medea (Lily)" IconHeal
   [ party HealingReceived 30 ]
-, bond 319 "Red Leather Jacket" "Ryougi Shiki (Assassin)"
+, bond 319 "Red Leather Jacket" "Ryougi Shiki (Assassin)" IconReaperUp
   [ party KillUp 30 ]
-, bond 321 "Letter From a Friend" "Gilles de Rais (Caster)"
+, bond 321 "Letter From a Friend" "Gilles de Rais (Caster)" IconBusterUp
   [ party' Buster 20, Debuff Party 0 StarDown $ Flat 20.0 ]
-, bond 322 "Hound of Culann" "Cu Chulainn (Prototype)"
+, bond 322 "Hound of Culann" "Cu Chulainn (Prototype)" IconDamageUp
   [ party (AttackVs Beast) 20 ]
-, bond 323 "Radiance of the Goddess (Euryale)" "Euryale"
+, bond 323 "Radiance of the Goddess (Euryale)" "Euryale" IconArtsUp
   [ party' Arts 15 ]
-, bond 324 "Hero's Arms" "Hektor"
+, bond 324 "Hero's Arms" "Hektor" IconBeamUp
   [ party NPUp 20 ]
-, bond 334 "Indomitableness" "Nightingale"
+, bond 334 "Indomitableness" "Nightingale" IconBusterUp
   [ party' Buster 10, party HealingReceived 20 ]
-, bond 335 "One-Man War" "Cu Chulainn (Alter)"
-  [ np30, gutsPercent 20
-  ]
-, bond 336 "Sacred Spring" "Queen Medb"
+, bond 335 "One-Man War" "Cu Chulainn (Alter)" IconKneel
+  [ np30, gutsPercent 20 ]
+, bond 336 "Sacred Spring" "Queen Medb" IconNobleUp
   [ party NPGen 15 ]
-, bond 337 "Indestructible Blade" "Rama"
+, bond 337 "Indestructible Blade" "Rama" IconExclamationUp
   [ party CritUp 25 ]
-, bond 338 "Concealed Goddess" "Helena Blavatsky"
+, bond 338 "Concealed Goddess" "Helena Blavatsky" IconSwordUp
   [ party (ClassAffinity Assassin) 20 ]
-, bond 339 "Lights of Civilization" "Thomas Edison"
+, bond 339 "Lights of Civilization" "Thomas Edison" IconNobleUp
   [ party NPGen 15 ]
-, bond 340 "Reaching the Zenith of My Skill" "Li Shuwen"
+, bond 340 "Reaching the Zenith of My Skill" "Li Shuwen" IconArtsUp
   [ party' Arts 15 ]
-, bond 341 "Knight's Oath" "Diarmuid ua Duibhne"
+, bond 341 "Knight's Oath" "Diarmuid ua Duibhne" IconArtsQuickUp
   [ party' Quick 10, party' Arts 10 ]
-, bond 342 "Elemental" "Paracelsus von Hohenheim"
+, bond 342 "Elemental" "Paracelsus von Hohenheim" IconArtsUp
   [ party' Arts 10, party NPUp 10 ]
-, bond 343 "NEO Difference Engine" "Charles Babbage"
+, bond 343 "NEO Difference Engine" "Charles Babbage" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
-, bond 350 "Hell of Blazing Penalty" "Jeanne d'Arc (Alter)"
+, bond 350 "Hell of Blazing Penalty" "Jeanne d'Arc (Alter)" IconBusterUp
   [ party' Buster 15 ]
-, bond 351 "Gordian Knot" "Iskandar"
+, bond 351 "Gordian Knot" "Iskandar" IconSwordUp
   [ party AttackUp 15 ]
-, bond 352 "Bai Long" "Xuanzang Sanzang"
+, bond 352 "Bai Long" "Xuanzang Sanzang" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
-, bond 353 "Where the Sun Cannot Reach" "EMIYA (Assassin)"
+, bond 353 "Where the Sun Cannot Reach" "EMIYA (Assassin)" IconArtsQuickUp
   [ party' Quick 10, party' Arts 10 ]
-, bond 354 "Dress of Heaven" "Irisviel (Dress of Heaven)"
+, bond 354 "Dress of Heaven" "Irisviel (Dress of Heaven)" IconHealUp
   [ party HealingReceived 30 ]
-, bond 355 "Manifestation of The Golden Rule" "Kid Gilgamesh"
+, bond 355 "Manifestation of The Golden Rule" "Kid Gilgamesh" IconNobleUp
   [ party NPGen 15 ]
-, bond 356 "Spirit of The Vast Land" "Geronimo"
+, bond 356 "Spirit of The Vast Land" "Geronimo" IconNobleUp
   [ party NPGen 15 ]
-, bond 357 "Extolling The Revolver" "Billy the Kid"
+, bond 357 "Extolling The Revolver" "Billy the Kid" IconExclamationUp
   [ party CritUp 25 ]
-, bond 358 "Library of Hundred Men" "Hassan of the Hundred Personas"
+, bond 358 "Library of Hundred Men" "Hassan of the Hundred Personas" IconAllUp
   [ party' Buster 8, party' Quick 8, party' Arts 8 ]
-, bond 359 "Last Splinter" "Angra Mainyu"
+, bond 359 "Last Splinter" "Angra Mainyu" IconDamageUp
   [ Grant Self 0 (AttackVs Beast) $ Flat 200.0, gutsPercent 20 ]
 , { name:     "Fate/Extella"
   , id:       360
   , rarity:   4
+  , icon:     IconExclamationUp
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -2291,6 +2476,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Spiritron Portrait: Nero Claudius"
   , id:       361
   , rarity:   4
+  , icon:     IconRoad
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -2301,6 +2487,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Spiritron Portrait: Nameless"
   , id:       362
   , rarity:   4
+  , icon:     IconRoad
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -2311,6 +2498,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Spiritron Portrait: Tamamo no Mae"
   , id:       363
   , rarity:   4
+  , icon:     IconRoad
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -2321,6 +2509,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Spiritron Portrait: Karna"
   , id:       364
   , rarity:   4
+  , icon:     IconRoad
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -2331,6 +2520,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Spiritron Portrait: Altera"
   , id:       365
   , rarity:   4
+  , icon:     IconRoad
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -2341,6 +2531,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Spiritron Portrait: Gilgamesh"
   , id:       366
   , rarity:   4
+  , icon:     IconRoad
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -2348,60 +2539,62 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 367 "Divine Oni-Poison Sake" "Shuten-Douji"
+, bond 367 "Divine Oni-Poison Sake" "Shuten-Douji" IconArtsQuickUp
   [ party' Quick 10, party' Arts 10 ]
-, bond 368 "Doujigiri Yasutsuna" "Minamoto-no-Raikou"
+, bond 368 "Doujigiri Yasutsuna" "Minamoto-no-Raikou" IconBusterUp
   [ party' Buster 10, party CritUp 15 ]
-, bond 369 "Ramesseum" "Ozymandias"
+, bond 369 "Ramesseum" "Ozymandias" IconBusterArtsUp
   [ party' Arts 10, party' Buster 10 ]
-, bond 370 "Bone Sword (Nameless)" "Ibaraki-Douji"
+, bond 370 "Bone Sword (Nameless)" "Ibaraki-Douji" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
-, bond 371 "Unit Golden Bear" "Sakata Kintoki (Rider)"
+, bond 371 "Unit Golden Bear" "Sakata Kintoki (Rider)" IconStarHaloUp
   [ party StarUp 20 ]
-, bond 372 "Gringolet" "Gawain"
+, bond 372 "Gringolet" "Gawain" IconBusterUp
   [ party' Buster 15 ]
-, bond 373 "But I Lied Once" "Tristan"
+, bond 373 "But I Lied Once" "Tristan" IconExclamationUp
   [ party CritUp 25 ]
-, bond 374 "Exercising the Royal Authority" "Nitocris"
+, bond 374 "Exercising the Royal Authority" "Nitocris" IconNobleUp
   [ party NPGen 10, party NPUp 10 ]
-, bond 375 "Mask of A Demon" "Fuuma Kotarou"
+, bond 375 "Mask of A Demon" "Fuuma Kotarou" IconQuickUp
   [ party' Quick 15 ]
-, bond 376 "Cook Despite Exhaustion" "Tawara Touta"
+, bond 376 "Cook Despite Exhaustion" "Tawara Touta" IconHealTurn
   [ party HealPerTurn 500 ]
-, bond 377 "King's Horse" "Altria Pendragon (Lancer)"
+, bond 377 "King's Horse" "Altria Pendragon (Lancer)" IconSwordUp
   [ party AttackUp 10, party NPUp 10 ]
-, bond 378 "All-Encompassing Wisdom" "Leonardo da Vinci"
+, bond 378 "All-Encompassing Wisdom" "Leonardo da Vinci" IconBeamUp
   [ party NPUp 20 ]
-, bond 379 "Sunset Beach" "Tamamo no Mae (Lancer)"
+, bond 379 "Sunset Beach" "Tamamo no Mae (Lancer)" IconQuickBusterUp
   [ party' Quick 10, party' Buster 10 ]
-, bond 380 "Lady of the Lake" "Lancelot (Saber)"
+, bond 380 "Lady of the Lake" "Lancelot (Saber)" IconNobleUp
   [ party NPGen 10, party CritUp 10 ]
-, bond 381 "Reminiscence of the Summer" "Marie Antoinette (Caster)"
+, bond 381 "Reminiscence of the Summer" 
+           "Marie Antoinette (Caster)" IconExclamationUp
   [ party CritUp 25 ]
 , bond 382 "Currently In The Middle Of A Shower" 
-           "Anne Bonny & Mary Read (Archer)"
+           "Anne Bonny & Mary Read (Archer)" IconBusterArtsUp
   [ party' Buster 10, party' Arts 10 ]
-, bond 383 "Prydwen" "Mordred (Rider)"
+, bond 383 "Prydwen" "Mordred (Rider)" IconBeamUp
   [ party NPUp 20 ]
-, bond 384 "Beach Love Letter (Terror)" "Kiyohime (Lancer)"
+, bond 384 "Beach Love Letter (Terror)" "Kiyohime (Lancer)" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
-, bond 385 "My Long Lost Right Arm" "Bedivere"
+, bond 385 "My Long Lost Right Arm" "Bedivere" IconBusterUp
   [ party' Buster 10, party NPGen 10 ]
-, bond 386 "Proof of Existence" "Hassan of the Serenity"
+, bond 386 "Proof of Existence" "Hassan of the Serenity" IconQuickUp
   [ party' Quick 15 ]
-, bond 391 "Champion Cup" "Altria Pendragon (Archer)"
+, bond 391 "Champion Cup" "Altria Pendragon (Archer)" IconSwordUp
   [ party AttackUp 15 ]
-, bond 392 "Phantasmal Summoning (Install)" "Illyasviel von Einzbern"
+, bond 392 "Phantasmal Summoning (Install)" "Illyasviel von Einzbern" IconAllUp
   [ party' Buster 8, party' Quick 8, party' Arts 8 ]
-, bond 394 "Holy Knuckle" "Saint Martha (Ruler)"
+, bond 394 "Holy Knuckle" "Saint Martha (Ruler)" IconBusterUp
   [ party' Buster 15 ]
-, bond 395 "Minimal Prudence" "Scathach (Assassin)"
+, bond 395 "Minimal Prudence" "Scathach (Assassin)" IconQuickUp
   [ party' Quick 15 ]
-, bond 396 "Sharing of Pain" "Chloe von Einzbern"
+, bond 396 "Sharing of Pain" "Chloe von Einzbern" IconExclamationUp
   [ party CritUp 30, Debuff Party 0 HealthLoss $ Flat 200.0 ]
 , { name:     "First Order"
   , id:       399
   , rarity:   4
+  , icon:     IconRoad
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
@@ -2416,10 +2609,11 @@ craftEssences = CraftEssence <$>
     party buff = Grant Party 0 buff <<< Flat <<< toNumber
     party' card = party (Performance card)
     atkChance chance = When "attacking" <<< Chance chance
-    bond id name servant effect
+    bond id name servant icon effect
         = { name
           , id
           , rarity:   4
+          , icon
           , stats:    { base: { atk: 100, hp: 100 }
                       , max:  { atk: 100, hp: 100 }
                       }
@@ -2438,6 +2632,7 @@ getBond (Servant s) = go s.name
 newtype CraftEssence = CraftEssence { name     ∷ String
                                     , id       ∷ Int
                                     , rarity   ∷ Int
+                                    , icon     ∷ Icon
                                     , stats    ∷ { base ∷ Stat, max ∷ Stat }
                                     , effect   ∷ Array ActiveEffect
                                     , bond     ∷ Maybe String

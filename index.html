@@ -29,13 +29,12 @@
         { line-height: 1.31em
         ; z-index: 100
         }
-      .light .link, .dark .link
-        { color: #5656BF
-        ; cursor: pointer
-        }
       .light section p.link, .dark section p.link, .phantasm p.link
         { color: inherit }
       .link:hover           { text-decoration: underline }
+      .link                 { cursor: pointer }
+      .light .link          { color: #5656BF }
+      .dark .link           { color: #D5A55F }
       h1, h2, h3            { margin: 0.5em 0 0 0 }
       h2                    { font-size: 1.4em }
       p, h4                 { margin: 0 }
@@ -224,7 +223,7 @@
         { background-color: #ffffff
         ; border: 1px solid #aaaaaa
         ; border-top-color: #bbbbbb
-        ; box-shadow: 0 0px 10px rgba(0,0,0,0.25)
+        ; box-shadow: 0 0px 10px rgba(0,0,0,0.2)
         }
       #layout.dark > article
         { background-color: #060606

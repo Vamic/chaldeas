@@ -13501,6 +13501,20 @@ var PS = {};
       };
       return Times;
   })();
+
+  // | Int field is duration, Number field is amount
+  var ToMax = (function () {
+      function ToMax(value0, value1) {
+          this.value0 = value0;
+          this.value1 = value1;
+      };
+      ToMax.create = function (value0) {
+          return function (value1) {
+              return new ToMax(value0, value1);
+          };
+      };
+      return ToMax;
+  })();
   var uncap = function (s) {
       var v = Data_String_CodePoints.uncons(s);
       if (v instanceof Data_Maybe.Nothing) {
@@ -13509,7 +13523,7 @@ var PS = {};
       if (v instanceof Data_Maybe.Just) {
           return Data_String_Common.toLower(Data_String_CodePoints.singleton(v.value0.head)) + v.value0.tail;
       };
-      throw new Error("Failed pattern match at Database.Skill line 366, column 11 - line 368, column 60: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 377, column 11 - line 379, column 60: " + [ v.constructor.name ]);
   };
   var toMin = function (v) {
       if (v instanceof Placeholder) {
@@ -13524,7 +13538,7 @@ var PS = {};
       if (v instanceof Range) {
           return v.value0;
       };
-      throw new Error("Failed pattern match at Database.Skill line 384, column 1 - line 384, column 25: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 395, column 1 - line 395, column 25: " + [ v.constructor.name ]);
   };
   var toMax = function (v) {
       if (v instanceof Placeholder) {
@@ -13539,7 +13553,7 @@ var PS = {};
       if (v instanceof Range) {
           return v.value1;
       };
-      throw new Error("Failed pattern match at Database.Skill line 390, column 1 - line 390, column 25: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 401, column 1 - line 401, column 25: " + [ v.constructor.name ]);
   };
   var simplify = function ($copy_v) {
       var $tco_done = false;
@@ -13558,6 +13572,10 @@ var PS = {};
               return;
           };
           if (v instanceof Times) {
+              $copy_v = v.value1;
+              return;
+          };
+          if (v instanceof ToMax) {
               $copy_v = v.value1;
               return;
           };
@@ -13606,7 +13624,7 @@ var PS = {};
       if (v instanceof Target) {
           return new Data_Tuple.Tuple(" target's", " target");
       };
-      throw new Error("Failed pattern match at Database.Skill line 439, column 24 - line 464, column 1: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 450, column 24 - line 476, column 1: " + [ v.constructor.name ]);
   };
   var allied = function (v) {
       if (v instanceof Self) {
@@ -13686,7 +13704,11 @@ var PS = {};
               $copy_v = v.value1;
               return;
           };
-          throw new Error("Failed pattern match at Database.Skill line 330, column 1 - line 330, column 34: " + [ v.constructor.name ]);
+          if (v instanceof ToMax) {
+              $copy_v = v.value1;
+              return;
+          };
+          throw new Error("Failed pattern match at Database.Skill line 339, column 1 - line 339, column 34: " + [ v.constructor.name ]);
       };
       while (!$tco_done) {
           $tco_result = $tco_loop($copy_v);
@@ -13751,7 +13773,7 @@ var PS = {};
       if (v instanceof EMinus) {
           return "E-";
       };
-      throw new Error("Failed pattern match at Database.Skill line 403, column 10 - line 424, column 1: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 414, column 10 - line 435, column 1: " + [ v.constructor.name ]);
   });
   var _a_ = new Data_Show.Show(function (v) {
       if (v instanceof Placeholder) {
@@ -13766,7 +13788,7 @@ var PS = {};
       if (v instanceof Range) {
           return Data_Number_Format.toString(v.value0) + ("~" + Data_Number_Format.toString(v.value1));
       };
-      throw new Error("Failed pattern match at Database.Skill line 378, column 1 - line 378, column 27: " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 389, column 1 - line 389, column 27: " + [ v.constructor.name ]);
   });
   var showBonus = function (amount) {
       var n = Data_Show.show(_a_)(amount);
@@ -13801,8 +13823,8 @@ var PS = {};
           var n = Data_Show.show(_a_)(amount);
           var v = possessiveAndSubject(target);
           var to = (function () {
-              var $223 = v.value1 === "";
-              if ($223) {
+              var $227 = v.value1 === "";
+              if ($227) {
                   return "";
               };
               return " to" + v.value1;
@@ -14058,7 +14080,7 @@ var PS = {};
       if (x instanceof Terror) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value))))))))))))))))))))))));
       };
-      throw new Error("Failed pattern match at Database.Skill line 533, column 8 - line 533, column 47: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 539, column 8 - line 539, column 47: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return new ApplyTrait(x.value0);
@@ -14135,7 +14157,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr))))))))))))))))))))))) {
           return Terror.value;
       };
-      throw new Error("Failed pattern match at Database.Skill line 533, column 8 - line 533, column 47: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 539, column 8 - line 539, column 47: " + [ x.constructor.name ]);
   });
   var _6_ = new Data_Eq.Eq(function (x) {
       return function (y) {
@@ -14221,8 +14243,8 @@ var PS = {};
           var n = Data_Show.show(_a_)(amount);
           var v = possessiveAndSubject(target);
           var to = (function () {
-              var $572 = v.value1 === "";
-              if ($572) {
+              var $576 = v.value1 === "";
+              if ($576) {
                   return "";
               };
               return " to" + v.value1;
@@ -14490,8 +14512,8 @@ var PS = {};
           var n = Data_Show.show(_a_)(amount);
           var v = possessiveAndSubject(target);
           var to = (function () {
-              var $587 = v.value1 === "";
-              if ($587) {
+              var $591 = v.value1 === "";
+              if ($591) {
                   return "";
               };
               return " to" + v.value1;
@@ -14626,18 +14648,21 @@ var PS = {};
           if (v instanceof Times) {
               return go(v.value1) + (" (" + (Data_Show.show(Data_Show.showInt)(v.value0) + " times)"));
           };
-          throw new Error("Failed pattern match at Database.Skill line 349, column 12 - line 361, column 7: " + [ v.constructor.name ]);
+          if (v instanceof ToMax) {
+              return go(v.value1) + (" every turn (max " + (Data_Show.show(_a_)(v.value0) + ")"));
+          };
+          throw new Error("Failed pattern match at Database.Skill line 359, column 12 - line 372, column 7: " + [ v.constructor.name ]);
       };
-      return function ($2079) {
+      return function ($2087) {
           return (function (v) {
               return v + ".";
-          })(go($2079));
+          })(go($2087));
       };
   })());
   var ranges = function (dictAlternative) {
       return function (dictBind) {
-          var isPercent = function ($2080) {
-              return Data_Foldable.elem(Data_Foldable.foldableArray)(Data_Eq.eqChar)("%")(Data_String_CodeUnits.toCharArray(Data_Show.show(_g_)($2080)));
+          var isPercent = function ($2088) {
+              return Data_Foldable.elem(Data_Foldable.foldableArray)(Data_Eq.eqChar)("%")(Data_String_CodeUnits.toCharArray(Data_Show.show(_g_)($2088)));
           };
           var go = function (v) {
               if (v instanceof Range) {
@@ -14670,7 +14695,10 @@ var PS = {};
               if (v instanceof Times) {
                   return acc(v.value1);
               };
-              throw new Error("Failed pattern match at Database.Skill line 478, column 5 - line 478, column 31: " + [ v.constructor.name ]);
+              if (v instanceof ToMax) {
+                  return acc(v.value1);
+              };
+              throw new Error("Failed pattern match at Database.Skill line 483, column 5 - line 483, column 31: " + [ v.constructor.name ]);
           };
           var toInfo = function (eff) {
               return Data_Functor.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Data_Tuple.uncurry(RangeInfo.create(isPercent(eff))))(acc(eff));
@@ -14741,7 +14769,7 @@ var PS = {};
       if (x instanceof Target) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value)))))))))));
       };
-      throw new Error("Failed pattern match at Database.Skill line 575, column 8 - line 575, column 42: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 581, column 8 - line 581, column 42: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return Someone.value;
@@ -14779,7 +14807,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr)))))))))) {
           return Target.value;
       };
-      throw new Error("Failed pattern match at Database.Skill line 575, column 8 - line 575, column 42: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 581, column 8 - line 581, column 42: " + [ x.constructor.name ]);
   });
   var _27_ = new Data_Show.Show(Data_Generic_Rep_Show.genericShow(_26_)(Data_Generic_Rep_Show.genericShowSum(Data_Generic_Rep_Show.genericShowConstructor(Data_Generic_Rep_Show.genericShowArgsNoArguments)(new Data_Symbol.IsSymbol(function () {
       return "Someone";
@@ -14893,7 +14921,7 @@ var PS = {};
           if (x instanceof Bond && y instanceof Bond) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Skill line 563, column 8 - line 563, column 39: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Skill line 569, column 8 - line 569, column 39: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _20_ = new Data_Generic_Rep.Generic(function (x) {
@@ -14918,7 +14946,7 @@ var PS = {};
       if (x instanceof Bond) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value))))));
       };
-      throw new Error("Failed pattern match at Database.Skill line 561, column 8 - line 561, column 47: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 567, column 8 - line 567, column 47: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return FriendPoints.value;
@@ -14941,7 +14969,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr))))) {
           return Bond.value;
       };
-      throw new Error("Failed pattern match at Database.Skill line 561, column 8 - line 561, column 47: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 567, column 8 - line 567, column 47: " + [ x.constructor.name ]);
   });
   var _23_ = new Data_Enum.Enum(function () {
       return _22_;
@@ -15373,7 +15401,7 @@ var PS = {};
           if (x instanceof RemoveMental && y instanceof RemoveMental) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Skill line 549, column 8 - line 549, column 41: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Skill line 555, column 8 - line 555, column 41: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _14_ = new Data_Generic_Rep.Generic(function (x) {
@@ -15449,7 +15477,7 @@ var PS = {};
       if (x instanceof RemoveMental) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value)))))))))))))))))))))));
       };
-      throw new Error("Failed pattern match at Database.Skill line 547, column 8 - line 547, column 49: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 553, column 8 - line 553, column 49: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return Avenge.value;
@@ -15523,7 +15551,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr)))))))))))))))))))))) {
           return RemoveMental.value;
       };
-      throw new Error("Failed pattern match at Database.Skill line 547, column 8 - line 547, column 49: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 553, column 8 - line 553, column 49: " + [ x.constructor.name ]);
   });
   var _17_ = new Data_Enum.Enum(function () {
       return _16_;
@@ -15759,7 +15787,7 @@ var PS = {};
           if (x instanceof Terror && y instanceof Terror) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Skill line 535, column 8 - line 535, column 40: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Skill line 541, column 8 - line 541, column 40: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _11_ = new Data_Enum.Enum(function () {
@@ -16140,7 +16168,7 @@ var PS = {};
           if (x instanceof Taunt && y instanceof Taunt) {
               return Data_Ordering.EQ.value;
           };
-          throw new Error("Failed pattern match at Database.Skill line 518, column 8 - line 518, column 37: " + [ x.constructor.name, y.constructor.name ]);
+          throw new Error("Failed pattern match at Database.Skill line 524, column 8 - line 524, column 37: " + [ x.constructor.name, y.constructor.name ]);
       };
   });
   var _0_ = new Data_Generic_Rep.Generic(function (x) {
@@ -16267,7 +16295,7 @@ var PS = {};
       if (x instanceof Taunt) {
           return new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(new Data_Generic_Rep.Inr(Data_Generic_Rep.NoArguments.value))))))))))))))))))))))))))))))))))))))));
       };
-      throw new Error("Failed pattern match at Database.Skill line 516, column 8 - line 516, column 45: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 522, column 8 - line 522, column 45: " + [ x.constructor.name ]);
   }, function (x) {
       if (x instanceof Data_Generic_Rep.Inl) {
           return new AlignAffinity(x.value0);
@@ -16392,7 +16420,7 @@ var PS = {};
       if (x instanceof Data_Generic_Rep.Inr && (x.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && (x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr && x.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0.value0 instanceof Data_Generic_Rep.Inr))))))))))))))))))))))))))))))))))))))) {
           return Taunt.value;
       };
-      throw new Error("Failed pattern match at Database.Skill line 516, column 8 - line 516, column 45: " + [ x.constructor.name ]);
+      throw new Error("Failed pattern match at Database.Skill line 522, column 8 - line 522, column 45: " + [ x.constructor.name ]);
   });
   var _3_ = new Data_Enum.Enum(function () {
       return _2_;
@@ -16589,6 +16617,7 @@ var PS = {};
   exports["Chances"] = Chances;
   exports["When"] = When;
   exports["Times"] = Times;
+  exports["ToMax"] = ToMax;
   exports["demerit"] = demerit;
   exports["simplify"] = simplify;
   exports["ranges"] = ranges;
@@ -18822,7 +18851,7 @@ var PS = {};
                   hp: 0
               }
           },
-          effect: [  ],
+          effect: [ Database_Skill.ToMax.create(new Database_Skill.Range(40.0, 50.0))(Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.NPUp.value)(new Database_Skill.Flat(5.0))) ],
           bond: Data_Maybe.Nothing.value,
           limited: true
       }, {
@@ -18890,7 +18919,7 @@ var PS = {};
                   hp: 1600
               }
           },
-          effect: [  ],
+          effect: [ Database_Skill.ToMax.create(new Database_Skill.Range(1000.0, 1200.0))(Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.DamageUp.value)(new Database_Skill.Flat(100.0))) ],
           bond: Data_Maybe.Nothing.value,
           limited: true
       }, {
@@ -19060,7 +19089,7 @@ var PS = {};
                   hp: 2250
               }
           },
-          effect: [  ],
+          effect: [ Database_Skill.ToMax.create(new Database_Skill.Flat(3000.0))(Database_Skill.Grant.create(Database_Skill.Self.value)(0)(Database_Skill.MaxHP.value)(new Database_Skill.Range(200.0, 300.0))) ],
           bond: Data_Maybe.Nothing.value,
           limited: false
       }, {
@@ -30569,6 +30598,16 @@ var PS = {};
               target: v1.target
           };
       };
+      if (v instanceof Database_Skill.ToMax) {
+          var baseEffect = exportEffect(v.value1);
+          return {
+              effect: baseEffect.effect + (" every turn up to " + Data_Show.show(Database_Skill._a_)(v.value0)),
+              amount: baseEffect.amount,
+              chance: baseEffect.chance,
+              duration: baseEffect.duration,
+              target: baseEffect.target
+          };
+      };
       if (v instanceof Database_Skill.When) {
           var baseEffect = exportEffect(v.value1);
           return {
@@ -35135,7 +35174,6 @@ var PS = {};
   var Control_Category = PS["Control.Category"];
   var Control_Semigroupoid = PS["Control.Semigroupoid"];
   var Data_Array = PS["Data.Array"];
-  var Data_Boolean = PS["Data.Boolean"];
   var Data_Eq = PS["Data.Eq"];
   var Data_Foldable = PS["Data.Foldable"];
   var Data_Function = PS["Data.Function"];
@@ -35165,8 +35203,8 @@ var PS = {};
   };
   var matchFilter = function (dictMatchCraftEssence) {
       return function (tab) {
-          return function ($54) {
-              return Data_Tuple.uncurry(Site_Filtering.Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Data_Show.show(dictMatchCraftEssence.Show1()))(Database_CraftEssence.ceHas(dictMatchCraftEssence))($54));
+          return function ($55) {
+              return Data_Tuple.uncurry(Site_Filtering.Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Data_Show.show(dictMatchCraftEssence.Show1()))(Database_CraftEssence.ceHas(dictMatchCraftEssence))($55));
           };
       };
   };
@@ -35218,41 +35256,52 @@ var PS = {};
       };
       return getExtraFilters(v);
   };
-  var activeFilter = function (ef) {
-      if (Database_Skill.demerit(ef)) {
-          return Data_Maybe.Nothing.value;
-      };
-      if (Data_Boolean.otherwise) {
-          var go = function (v) {
-              if (v instanceof Database_Skill.Grant) {
-                  return Data_Maybe.Just.create(matchFilter(Database_CraftEssence._b_)(Site_Filtering.FilterBuff.value)(v.value2));
-              };
-              if (v instanceof Database_Skill.Debuff) {
-                  return Data_Maybe.Just.create(matchFilter(Database_CraftEssence._c_)(Site_Filtering.FilterDebuff.value)(v.value2));
-              };
-              if (v instanceof Database_Skill.To) {
-                  return Data_Maybe.Just.create(matchFilter(Database_CraftEssence._d_)(Site_Filtering.FilterAction.value)(v.value1));
-              };
-              if (v instanceof Database_Skill.Bonus) {
-                  return Data_Maybe.Just.create(matchFilter(Database_CraftEssence._e_)(Site_Filtering.FilterBonus.value)(v.value0));
-              };
-              if (v instanceof Database_Skill.Chance) {
-                  return activeFilter(v.value1);
-              };
-              if (v instanceof Database_Skill.Chances) {
-                  return activeFilter(v.value2);
-              };
-              if (v instanceof Database_Skill.When) {
-                  return activeFilter(v.value1);
-              };
-              if (v instanceof Database_Skill.Times) {
-                  return activeFilter(v.value1);
-              };
-              throw new Error("Failed pattern match at Site.CraftEssences.Filters line 72, column 5 - line 72, column 63: " + [ v.constructor.name ]);
+  var activeFilter = function ($copy_v) {
+      var $tco_done = false;
+      var $tco_result;
+      function $tco_loop(v) {
+          if (v instanceof Database_Skill.Grant) {
+              $tco_done = true;
+              return Data_Maybe.Just.create(matchFilter(Database_CraftEssence._b_)(Site_Filtering.FilterBuff.value)(v.value2));
           };
-          return go(ef);
+          if (v instanceof Database_Skill.Debuff) {
+              $tco_done = true;
+              return Data_Maybe.Just.create(matchFilter(Database_CraftEssence._c_)(Site_Filtering.FilterDebuff.value)(v.value2));
+          };
+          if (v instanceof Database_Skill.To) {
+              $tco_done = true;
+              return Data_Maybe.Just.create(matchFilter(Database_CraftEssence._d_)(Site_Filtering.FilterAction.value)(v.value1));
+          };
+          if (v instanceof Database_Skill.Bonus) {
+              $tco_done = true;
+              return Data_Maybe.Just.create(matchFilter(Database_CraftEssence._e_)(Site_Filtering.FilterBonus.value)(v.value0));
+          };
+          if (v instanceof Database_Skill.Chance) {
+              $copy_v = v.value1;
+              return;
+          };
+          if (v instanceof Database_Skill.Chances) {
+              $copy_v = v.value2;
+              return;
+          };
+          if (v instanceof Database_Skill.When) {
+              $copy_v = v.value1;
+              return;
+          };
+          if (v instanceof Database_Skill.Times) {
+              $copy_v = v.value1;
+              return;
+          };
+          if (v instanceof Database_Skill.ToMax) {
+              $copy_v = v.value1;
+              return;
+          };
+          throw new Error("Failed pattern match at Site.CraftEssences.Filters line 67, column 1 - line 67, column 59: " + [ v.constructor.name ]);
       };
-      throw new Error("Failed pattern match at Site.CraftEssences.Filters line 67, column 1 - line 67, column 59: " + [ ef.constructor.name ]);
+      while (!$tco_done) {
+          $tco_result = $tco_loop($copy_v);
+      };
+      return $tco_result;
   };
   exports["activeFilter"] = activeFilter;
   exports["getFilters"] = getFilters;
@@ -35673,6 +35722,9 @@ var PS = {};
                   if (v instanceof Database_Skill.Times) {
                       return Data_Functor.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Database_Skill.Times.create(v.value0))(go(v.value1));
                   };
+                  if (v instanceof Database_Skill.ToMax) {
+                      return Data_Functor.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Database_Skill.ToMax.create(Database_Skill.Flat.create(f(v.value0))))(go(v.value1));
+                  };
                   throw new Error("Failed pattern match at Site.CraftEssences.Component line 208, column 5 - line 208, column 46: " + [ v.constructor.name ]);
               };
               return Control_Bind.bindFlipped(dictBind)(go);
@@ -35695,23 +35747,23 @@ var PS = {};
       return function (v1) {
           return function (v2) {
               if (v2 instanceof Data_Maybe.Nothing) {
-                  return function ($134) {
-                      return Halogen_HTML_Elements.div([ Site_Common._i("layout") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ Site_Common._i("cover"), Site_Common._click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_([  ]) ])($134));
+                  return function ($136) {
+                      return Halogen_HTML_Elements.div([ Site_Common._i("layout") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ Site_Common._i("cover"), Site_Common._click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_([  ]) ])($136));
                   };
               };
               if (v2 instanceof Data_Maybe.Just) {
-                  return function ($135) {
+                  return function ($137) {
                       return Halogen_HTML_Elements.div([ Site_Common._i("layout"), Site_Common._c("fade") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Halogen_HTML_Elements.div([ Site_Common._i("cover"), Site_Common._click(Focus.create(Data_Maybe.Nothing.value)) ])([  ]), Halogen_HTML_Elements.article_(Data_Semigroup.append(Data_Semigroup.semigroupArray)([ portrait(true)(v1)(new Data_Tuple.Tuple("", v2.value0)), Site_Common._table([ "", "ATK", "HP" ])([ Halogen_HTML_Elements.tr_([ Site_Common._th("Base"), Site_Common._td(Site_Common["print'"](v2.value0.stats.base.atk)), Site_Common._td(Site_Common["print'"](v2.value0.stats.base.hp)) ]), Halogen_HTML_Elements.tr_([ Site_Common._th("Max"), Site_Common._td(Site_Common["print'"](v2.value0.stats.max.atk)), Site_Common._td(Site_Common["print'"](v2.value0.stats.max.hp)) ]) ]), Site_Common._h(2)("Effects") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)((function () {
-                          var $58 = Data_Eq.eq(Data_Eq.eqRec()(Data_Eq.eqRowCons(Data_Eq.eqRowCons(Data_Eq.eqRowNil)()(new Data_Symbol.IsSymbol(function () {
+                          var $60 = Data_Eq.eq(Data_Eq.eqRec()(Data_Eq.eqRowCons(Data_Eq.eqRowCons(Data_Eq.eqRowNil)()(new Data_Symbol.IsSymbol(function () {
                               return "hp";
                           }))(Data_Eq.eqInt))()(new Data_Symbol.IsSymbol(function () {
                               return "atk";
                           }))(Data_Eq.eqInt)))(v2.value0.stats.base)(v2.value0.stats.max);
-                          if ($58) {
+                          if ($60) {
                               return [  ];
                           };
                           return [ Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(effectEl)(flatten(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(Database_Skill.toMin)(v2.value0.effect))), Site_Common._h(2)("Max Limit Break") ];
-                      })())([ Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(effectEl)(flatten(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(Database_Skill.toMax)(v2.value0.effect))) ]))) ])($135));
+                      })())([ Halogen_HTML_Elements.section_(Data_Functor.map(Data_Functor.functorArray)(effectEl)(flatten(Control_Alternative.alternativeArray)(Control_Bind.bindArray)(Database_Skill.toMax)(v2.value0.effect))) ]))) ])($137));
                   };
               };
               throw new Error("Failed pattern match at Site.CraftEssences.Component line 173, column 1 - line 174, column 62: " + [ v.constructor.name, v1.constructor.name, v2.constructor.name ]);
@@ -35731,8 +35783,8 @@ var PS = {};
                       };
                       return [ Site_Common._h(3)(Data_Show.show(Site_Filtering._a_)(tab)), Halogen_HTML_Elements.form_(Data_Functor.mapFlipped(Data_Functor.functorArray)(v1)(function (filt) {
                           return Halogen_HTML_Elements.p([ Site_Common._click(Toggle.create(filt)) ])(Site_Common._checkbox(Data_Show.show(Site_Filtering._d_)(filt))((function () {
-                              var $65 = Site_Filtering.exclusive(tab);
-                              if ($65) {
+                              var $67 = Site_Filtering.exclusive(tab);
+                              if ($67) {
                                   return Data_Foldable.notElem(Data_Foldable.foldableArray)(Site_Filtering._c_)(filt)(v.exclude);
                               };
                               return Data_Foldable.elem(Data_Foldable.foldableArray)(Site_Filtering._c_)(filt)(v.filters);
@@ -35754,8 +35806,8 @@ var PS = {};
                   })), Site_Common._h(1)("Sort by"), Halogen_HTML_Elements.form_(Data_Functor.mapFlipped(Data_Functor.functorArray)(Operators.enumArray(Site_CraftEssences_Sorting._13_))(function (sort) {
                       return Halogen_HTML_Elements.p([ Site_Common._click(SetSort.create(sort)) ])(Site_Common._radio(Data_Show.show(Site_CraftEssences_Sorting._a_)(sort))(Data_Eq.eq(Site_CraftEssences_Sorting._8_)(v.sortBy)(sort)));
                   })), Site_Common._h(1)("Include") ])(Control_Bind.bind(Control_Bind.bindArray)(Data_Array.filter(Site_Filtering.exclusive)(Operators.enumArray(Site_Filtering._6_)))(filterSection))), Halogen_HTML_Elements.section_((function () {
-                      var $69 = Data_Eq.eq(Site_CraftEssences_Sorting._8_)(v.sortBy)(Site_CraftEssences_Sorting.Rarity.value);
-                      if ($69) {
+                      var $71 = Data_Eq.eq(Site_CraftEssences_Sorting._8_)(v.sortBy)(Site_CraftEssences_Sorting.Rarity.value);
+                      if ($71) {
                           return Control_Category.identity(Control_Category.categoryFn);
                       };
                       return Data_Array.reverse;
@@ -35786,45 +35838,45 @@ var PS = {};
                           throw new Error("Failed pattern match at Site.CraftEssences.Component line 152, column 7 - line 154, column 34: " + [ x.constructor.name, xs.constructor.name ]);
                       };
                   };
-                  var modif = function ($136) {
-                      return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function ($137) {
-                          return Site_Filtering.updateListing($136($137));
+                  var modif = function ($138) {
+                      return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function ($139) {
+                          return Site_Filtering.updateListing($138($139));
                       });
                   };
                   var modPrefs = function (f) {
                       return function (v) {
-                          var $81 = {};
-                          for (var $82 in v) {
-                              if ({}.hasOwnProperty.call(v, $82)) {
-                                  $81[$82] = v[$82];
+                          var $83 = {};
+                          for (var $84 in v) {
+                              if ({}.hasOwnProperty.call(v, $84)) {
+                                  $83[$84] = v[$84];
                               };
                           };
-                          $81.prefs = f(v.prefs);
-                          return $81;
+                          $83.prefs = f(v.prefs);
+                          return $83;
                       };
                   };
                   var modFilters = function (f) {
                       return function (v) {
-                          var $87 = {};
-                          for (var $88 in v) {
-                              if ({}.hasOwnProperty.call(v, $88)) {
-                                  $87[$88] = v[$88];
+                          var $89 = {};
+                          for (var $90 in v) {
+                              if ({}.hasOwnProperty.call(v, $90)) {
+                                  $89[$90] = v[$90];
                               };
                           };
-                          $87.filters = f(v.filters);
-                          return $87;
+                          $89.filters = f(v.filters);
+                          return $89;
                       };
                   };
                   var modExclude = function (f) {
                       return function (v) {
-                          var $93 = {};
-                          for (var $94 in v) {
-                              if ({}.hasOwnProperty.call(v, $94)) {
-                                  $93[$94] = v[$94];
+                          var $95 = {};
+                          for (var $96 in v) {
+                              if ({}.hasOwnProperty.call(v, $96)) {
+                                  $95[$96] = v[$96];
                               };
                           };
-                          $93.exclude = f(v.exclude);
-                          return $93;
+                          $95.exclude = f(v.exclude);
+                          return $95;
                       };
                   };
                   var hash = function (v) {
@@ -35842,53 +35894,53 @@ var PS = {};
                       };
                       if (v instanceof ClearAll) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value0)(modif(function (v1) {
-                              var $102 = {};
-                              for (var $103 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $103)) {
-                                      $102[$103] = v1[$103];
+                              var $104 = {};
+                              for (var $105 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $105)) {
+                                      $104[$105] = v1[$105];
                                   };
                               };
-                              $102.filters = [  ];
-                              $102.exclude = [  ];
-                              return $102;
+                              $104.filters = [  ];
+                              $104.exclude = [  ];
+                              return $104;
                           }));
                       };
                       if (v instanceof SetSort) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(modif(function (v1) {
-                              var $106 = {};
-                              for (var $107 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $107)) {
-                                      $106[$107] = v1[$107];
+                              var $108 = {};
+                              for (var $109 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $109)) {
+                                      $108[$109] = v1[$109];
                                   };
                               };
-                              $106.sortBy = v.value0;
-                              $106.sorted = Site_CraftEssences_Sorting.getSort(v.value0);
-                              return $106;
+                              $108.sortBy = v.value0;
+                              $108.sorted = Site_CraftEssences_Sorting.getSort(v.value0);
+                              return $108;
                           }));
                       };
                       if (v instanceof MatchAny) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(modif(function (v1) {
-                              var $111 = {};
-                              for (var $112 in v1) {
-                                  if ({}.hasOwnProperty.call(v1, $112)) {
-                                      $111[$112] = v1[$112];
+                              var $113 = {};
+                              for (var $114 in v1) {
+                                  if ({}.hasOwnProperty.call(v1, $114)) {
+                                      $113[$114] = v1[$114];
                                   };
                               };
-                              $111.matchAny = v.value0;
-                              return $111;
+                              $113.matchAny = v.value0;
+                              return $113;
                           }));
                       };
                       if (v instanceof Focus) {
                           return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(Control_Bind.discard(Control_Bind.discardUnit)(Halogen_Query_HalogenM.bindHalogenM)(Effect_Class.liftEffect(Halogen_Query_HalogenM.monadEffectHalogenM(dictMonadEffect))(hash(v.value0)))(function () {
                               return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(function (v1) {
-                                  var $116 = {};
-                                  for (var $117 in v1) {
-                                      if ({}.hasOwnProperty.call(v1, $117)) {
-                                          $116[$117] = v1[$117];
+                                  var $118 = {};
+                                  for (var $119 in v1) {
+                                      if ({}.hasOwnProperty.call(v1, $119)) {
+                                          $118[$119] = v1[$119];
                                       };
                                   };
-                                  $116.focus = v.value0;
-                                  return $116;
+                                  $118.focus = v.value0;
+                                  return $118;
                               });
                           }));
                       };
@@ -35908,30 +35960,30 @@ var PS = {};
                       if (v instanceof FilterBy) {
                           if (Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(Site_Filtering.excludes)(v.value0)) {
                               return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(modif(function (v1) {
-                                  var $126 = {};
-                                  for (var $127 in v1) {
-                                      if ({}.hasOwnProperty.call(v1, $127)) {
-                                          $126[$127] = v1[$127];
+                                  var $128 = {};
+                                  for (var $129 in v1) {
+                                      if ({}.hasOwnProperty.call(v1, $129)) {
+                                          $128[$129] = v1[$129];
                                       };
                                   };
-                                  $126.exclude = v.value0;
-                                  $126.filters = [  ];
-                                  $126.focus = Data_Maybe.Nothing.value;
-                                  return $126;
+                                  $128.exclude = v.value0;
+                                  $128.filters = [  ];
+                                  $128.focus = Data_Maybe.Nothing.value;
+                                  return $128;
                               }));
                           };
                           if (Data_Boolean.otherwise) {
                               return Data_Functor.voidRight(Halogen_Query_HalogenM.functorHalogenM)(v.value1)(modif(function (v1) {
-                                  var $129 = {};
-                                  for (var $130 in v1) {
-                                      if ({}.hasOwnProperty.call(v1, $130)) {
-                                          $129[$130] = v1[$130];
+                                  var $131 = {};
+                                  for (var $132 in v1) {
+                                      if ({}.hasOwnProperty.call(v1, $132)) {
+                                          $131[$132] = v1[$132];
                                       };
                                   };
-                                  $129.exclude = [  ];
-                                  $129.filters = v.value0;
-                                  $129.focus = Data_Maybe.Nothing.value;
-                                  return $129;
+                                  $131.exclude = [  ];
+                                  $131.filters = v.value0;
+                                  $131.focus = Data_Maybe.Nothing.value;
+                                  return $131;
                               }));
                           };
                       };
@@ -35993,10 +36045,10 @@ var PS = {};
               })(v.passives));
           };
       };
-      return function ($59) {
-          return Data_Tuple.uncurry(Site_Filtering.Filter.create(Site_Filtering.FilterPassiveSkill.value))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Control_Category.identity(Control_Category.categoryFn))(function ($60) {
-              return Data_Function["const"](hasPassive($60));
-          })($59));
+      return function ($61) {
+          return Data_Tuple.uncurry(Site_Filtering.Filter.create(Site_Filtering.FilterPassiveSkill.value))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Control_Category.identity(Control_Category.categoryFn))(function ($62) {
+              return Data_Function["const"](hasPassive($62));
+          })($61));
       };
   })();
   var namedBonus = function (tab) {
@@ -36012,8 +36064,8 @@ var PS = {};
   };
   var matchFilter = function (dictMatchServant) {
       return function (tab) {
-          return function ($61) {
-              return Data_Tuple.uncurry(Site_Filtering.Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Data_Show.show(dictMatchServant.Show1()))(Database_Servant.has(dictMatchServant))($61));
+          return function ($63) {
+              return Data_Tuple.uncurry(Site_Filtering.Filter.create(tab))(Data_Profunctor_Strong.fanout(Control_Category.categoryFn)(Data_Profunctor_Strong.strongFn)(Data_Show.show(dictMatchServant.Show1()))(Database_Servant.has(dictMatchServant))($63));
           };
       };
   };
@@ -36128,6 +36180,10 @@ var PS = {};
               return;
           };
           if (v instanceof Database_Skill.Times) {
+              $copy_v = v.value1;
+              return;
+          };
+          if (v instanceof Database_Skill.ToMax) {
               $copy_v = v.value1;
               return;
           };

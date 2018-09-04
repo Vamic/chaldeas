@@ -873,8 +873,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ -- TODO  +5% NP damage per turn (40~50% cap)
-              ]
+  , effect:   [ ToMax (40.0 ~ 50.0) <<< Grant Self 0 NPUp $ Flat 5.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -918,9 +917,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ -- TODO Add 100 Damage per turn (max 1000~1200)
-
-              ]
+  , effect:   [ ToMax (1000.0 ~ 1200.0) <<< Grant Self 0 DamageUp $ Flat 100.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1024,8 +1021,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 0, hp: 600 }
               , max:  { atk: 0, hp: 2250 }
               }
-  , effect:   [ -- Increase max HP by 200~300 per turn (Max: 3000)
-              ]
+  , effect:   [ ToMax (Flat 3000.0) <<< Grant Self 0 MaxHP $ 200.0 ~ 300.0 ]
   , bond:     Nothing
   , limited:  false
   }

@@ -326,6 +326,15 @@ data ActiveEffect
     | Chances Int Int ActiveEffect
     | When String ActiveEffect
     | Times Int ActiveEffect
+    | ToMax Amount ActiveEffect
+
+simplify ∷ ActiveEffect -> ActiveEffect
+simplify (Chance _ ef)    = simplify ef
+simplify (Chances _ _ ef) = simplify ef
+simplify (When _ ef)      = simplify ef
+simplify (Times _ ef)     = simplify ef
+simplify (ToMax _ ef)   = simplify ef
+simplify ef               = ef
 
 demerit ∷ ActiveEffect -> Boolean
 demerit (Grant t _ _ _) = not $ allied t
@@ -342,22 +351,24 @@ demerit (Chance _ ef) = demerit ef
 demerit (Chances _ _ ef) = demerit ef
 demerit (When _ ef) = demerit ef
 demerit (Times _ ef) = demerit ef
+demerit (ToMax _ ef) = demerit ef
 
 instance _g_ ∷ Show ActiveEffect where
   show = (_ <> ".") <<< go
     where
       go = case _ of
-          Grant t dur buff amt    -> showBuff t amt buff <> turns dur
-          Debuff t dur debuff amt -> showDebuff t amt debuff <> turns dur
-          To t instant amt        -> showInstant t amt instant
-          Bonus bonus amt         -> showBonus amt bonus
-          Chance per ef           -> show per <> "% chance to " <> uncap (go ef)
-          Chances a b ef          -> show a <> "~" <> show b <> "% chance to "
-                                     <> uncap (go ef)
-          When "attacking" ef     -> go ef <> " when attacking"
-          When cond ef            -> "If " <> cond <> ": " <> uncap (go ef)
-          Times 1 ef              -> go ef <> " (1 time)"
-          Times times ef          -> go ef <> " (" <> show times <> " times)"
+          Grant t dur buff amt -> showBuff t amt buff <> turns dur
+          Debuff t dur deb amt -> showDebuff t amt deb <> turns dur
+          To t instant amt     -> showInstant t amt instant
+          Bonus bonus amt      -> showBonus amt bonus
+          Chance per ef        -> show per <> "% chance to " <> uncap (go ef)
+          Chances a b ef       -> show a <> "~" <> show b <> "% chance to "
+                                  <> uncap (go ef)
+          When "attacking" ef  -> go ef <> " when attacking"
+          When cond ef         -> "If " <> cond <> ": " <> uncap (go ef)
+          Times 1 ef           -> go ef <> " (1 time)"
+          Times times ef       -> go ef <> " (" <> show times <> " times)"
+          ToMax amount ef -> go ef <> " every turn (max " <> show amount <> ")"
       turns 0   = ""
       turns 1   = " for 1 turn"
       turns dur = " for " <> show dur <> " turns"
@@ -461,12 +472,6 @@ possessiveAndSubject = case _ of
                    : " killer"
     Target        -> " target's"
                    : " target"
-simplify ∷ ActiveEffect -> ActiveEffect
-simplify (Chance _ ef)    = simplify ef
-simplify (Chances _ _ ef) = simplify ef
-simplify (When _ ef)      = simplify ef
-simplify (Times _ ef)    = simplify ef
-simplify ef               = ef
 
 data RangeInfo = RangeInfo Boolean Number Number
 
@@ -483,6 +488,7 @@ ranges = bindFlipped toInfo
     acc (Chances a b ef) = pure (Tuple (toNumber a) (toNumber b)) <|> acc ef
     acc (When _ ef) = acc ef
     acc (Times _ ef) = acc ef
+    acc (ToMax _ ef) = acc ef
     go (a ~ b) = pure $ Tuple a b
     go _ = empty
 

@@ -65,15 +65,12 @@ getFilters f@FilterDebuff = matchFilter f <$> ceGetAll ∷ Array DebuffEffect
 getFilters f              = getExtraFilters f
 
 activeFilter ∷ ActiveEffect -> Maybe (Filter CraftEssence)
-activeFilter ef
-  | demerit ef = Nothing
-  | otherwise  = go ef
-  where
-    go (Grant _ _ buff _) = Just $ matchFilter FilterBuff buff
-    go (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
-    go (To _ action _) = Just $ matchFilter FilterAction action
-    go (Bonus bonus _) = Just $ matchFilter FilterBonus bonus
-    go (Chance _ ef') = activeFilter ef'
-    go (Chances _ _ ef') = activeFilter ef'
-    go (When _ ef') = activeFilter ef'
-    go (Times _ ef') = activeFilter ef'
+activeFilter (Grant _ _ buff _) = Just $ matchFilter FilterBuff buff
+activeFilter (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
+activeFilter (To _ action _) = Just $ matchFilter FilterAction action
+activeFilter (Bonus bonus _) = Just $ matchFilter FilterBonus bonus
+activeFilter (Chance _ ef') = activeFilter ef'
+activeFilter (Chances _ _ ef') = activeFilter ef'
+activeFilter (When _ ef') = activeFilter ef'
+activeFilter (Times _ ef') = activeFilter ef'
+activeFilter (ToMax _ ef') = activeFilter ef'

@@ -213,3 +213,4 @@ flatten f = bindFlipped go
     go (Chances a b c) = Chances a b <$> go c
     go (When a b) = When a <$> go b
     go (Times a b) = Times a <$> go b
+    go (ToMax a b) = ToMax (Flat $ f a) <$> go b

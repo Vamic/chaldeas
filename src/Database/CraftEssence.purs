@@ -2016,7 +2016,9 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Grant Self 0 (Performance Quick) $ 15.0 ~ 20.0 ]
+  , effect:   [ Grant Self 0 (Performance Quick) $ 15.0 ~ 20.0 
+              , Grant Self 0 NPUp $ 15.0 ~ 20.0
+              ]
   , bond:     Nothing
   , limited:  true
   }

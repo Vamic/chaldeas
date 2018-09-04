@@ -71,7 +71,7 @@ comp initialFocus initialPrefs = component
 
   render ∷ State -> ComponentHTML Query
   render {exclude, filters, focus, listing, matchAny, prefs, sortBy}
-      = modal (pref ShowTables) artorify focus
+      = modal prefs focus
         [ H.aside_ $
           [ _h 1 "Settings"
           , H.form_ $ M.toUnfoldable prefs <#> \(Tuple k v)
@@ -102,9 +102,8 @@ comp initialFocus initialPrefs = component
           ] <> (filter (not exclusive) enumArray >>= filterSection)
         ]
     where
-      pref     = getPreference prefs
-      artorify = pref Artorify
-      noSelf   = pref ExcludeSelf
+      artorify = getPreference prefs Artorify
+      noSelf   = getPreference prefs ExcludeSelf
       clearAll
         | null filters && null exclude = [ P.enabled false ]
         | otherwise                    = [ P.enabled true, _click ClearAll ]
@@ -170,16 +169,16 @@ portrait big artorify (Tuple lab ce'@(CraftEssence ce))
                    $ [_c $ "portrait stars" <> show ce.rarity]
         doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
 
-modal ∷ ∀ a. Boolean -> Boolean -> Maybe CraftEssence
+modal ∷ ∀ a. Preferences -> Maybe CraftEssence
         -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
-modal _ _ Nothing = H.div [_i "layout"] <<< append
+modal prefs Nothing = H.div [ _i "layout", _c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal showTables artorify
+modal prefs
 (Just ce'@(CraftEssence ce@{stats:{base, max}}))
-  = H.div [_i "layout", _c "fade"] <<< append
+  = H.div [_i "layout", _c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true artorify $ Tuple "" ce'
+      [ portrait true (getPreference prefs Artorify) $ Tuple "" ce'
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
         , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]

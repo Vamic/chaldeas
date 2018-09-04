@@ -21,6 +21,7 @@ import Web.HTML.Window
 
 data Preference
     = Artorify
+    | NightMode
     | ShowTables
     | ExcludeSelf
     | MaxAscension
@@ -29,7 +30,7 @@ instance _a_ ∷ Show Preference where
   show ExcludeSelf = "Exclude self-applied effects"
   show MaxAscension = "Show all at max ascension"
   show ShowTables = "Show skill and NP tables"
-  show a = G.genericShow a
+  show a = unCamel $ G.genericShow a
 
 setPreference ∷ Preference -> Boolean -> Effect Unit
 setPreference pref set = window >>= localStorage

@@ -73,7 +73,7 @@ comp initialFocus initialPrefs = component
 
   render ∷ State -> ComponentHTML Query
   render {ascend, exclude, filters, focus, listing, matchAny, prefs, sortBy}
-      = modal (pref ShowTables) artorify ascend focus
+      = modal prefs ascend focus
         [ H.aside_ $
           [ _h 1 "Settings"
           , H.form_ $ M.toUnfoldable prefs <#> \(Tuple k v)
@@ -104,12 +104,11 @@ comp initialFocus initialPrefs = component
           ] <> (filter (not exclusive) enumArray >>= filterSection)
         ]
     where
-      pref     = getPreference prefs
-      artorify = pref Artorify
-      noSelf   = pref ExcludeSelf
+      artorify = getPreference prefs Artorify
+      noSelf   = getPreference prefs ExcludeSelf
       baseAscend
-        | pref MaxAscension = 4
-        | otherwise         = 1
+        | getPreference prefs MaxAscension = 4
+        | otherwise                        = 1
       clearAll
         | null filters && null exclude = [ P.enabled false ]
         | otherwise                    = [ P.enabled true, _click ClearAll ]
@@ -184,16 +183,16 @@ portrait big artorify ascension (Tuple lab s'@(Servant s))
           | ascension <= 1 = ""
           | otherwise      = " " <> show ascension
 
-modal ∷ ∀ a. Boolean -> Boolean -> Int -> Maybe Servant
+modal ∷ ∀ a. Preferences -> Int -> Maybe Servant
         -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
-modal _ _ _ Nothing = H.div [_i "layout"] <<< append
+modal prefs _ Nothing = H.div [_i "layout", _c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal showTables artorify ascend
+modal prefs ascend
 (Just s'@(Servant s@{align: Tuple alignA alignB, stats:{base, max, grail}}))
-  = H.div [_i "layout", _c "fade"] <<< append
+  = H.div [_i "layout", _c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true artorify ascend $ Tuple "" s'
+      [ portrait true (getPreference prefs Artorify) ascend $ Tuple "" s'
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
         , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]
@@ -257,6 +256,7 @@ modal showTables artorify ascend
       ]
     ]
   where
+    showTables = getPreference prefs ShowTables
     overMeta
       | s.phantasm.first = [_c "activates"]
       | otherwise        = []

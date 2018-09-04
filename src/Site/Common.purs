@@ -18,6 +18,7 @@ import Web.UIEvent.MouseEvent
 
 import Printing
 import Database
+import Site.Preferences
 
 lvlRow ∷ ∀ a b. RangeInfo -> HTML a b
 lvlRow (RangeInfo isPercent a b) = H.tr_
@@ -42,6 +43,11 @@ fileName = fromCharArray <<< filter legal <<< toCharArray
     legal '/' = false
     legal '?' = false
     legal _   = true
+
+mode ∷ Preferences -> String
+mode prefs
+  | getPreference prefs NightMode = "dark"
+  | otherwise = "light"
 
 print' ∷ Int -> String
 print' = print 0 <<< toNumber

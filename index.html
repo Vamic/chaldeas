@@ -7,21 +7,34 @@
     <style>
       body
         { margin: 0; padding: 0
-        ; background-color: #e6e6e6 
-        ; color: #585858
         ; font-family: "Helvetica Neue",Helvetica,"Roboto",Arial,sans-serif
         ; font-size: 15px
         ; line-height: 0
         }
+      .light
+        { background-color: #e6e6e6 
+        ; color: #585858
+        }
+      .dark
+        { background-color: #111111 
+        ; color: #c0c0c0
+        }
+      .light .activates p:first-child::after, .light .demerit::after
+        { color: #585858 }
+      .dark .activates p:first-child::after, .dark .demerit::after
+        { color: #c0c0c0 }
+      .activates p:first-child::after, .demerit::after
+        { font-style: italic }
       span, p, table, br, h1, h2, h3, h4, h5, ul, ol, a
         { line-height: 1.31em
         ; z-index: 100
         }
-      .link
+      .light .link, .dark .link
         { color: #5656BF
         ; cursor: pointer
         }
-      section .link         { color: inherit }
+      section .link, .phantasm p.link
+        { color: inherit }
       .link:hover           { text-decoration: underline }
       h1, h2, h3            { margin: 0.5em 0 0 0 }
       h2                    { font-size: 1.4em }
@@ -205,12 +218,19 @@
         ; max-width: 504px
         ; box-sizing: border-box
         ; z-index: 10
-        ; background-color: #ffffff
+        ; padding: 5px 0
+        }
+      #layout.light > article
+        { background-color: #ffffff
         ; border: 1px solid #aaaaaa
-        ; border-top-color: rgb(170, 170, 170)
         ; border-top-color: #bbbbbb
         ; box-shadow: 0 0px 10px rgba(0,0,0,0.25)
-        ; padding: 5px 0
+        }
+      #layout.dark > article
+        { background-color: #060606
+        ; border: 1px solid #333333
+        ; border-top-color: #444444
+        ; box-shadow: 0 0px 10px rgba(0,0,0,0.5)
         }
       td:first-child 
         { padding-right: 0.5em
@@ -234,19 +254,30 @@
       #layout > article section table, table table
         { table-layout: fixed
         ; margin-top: 3px
-        ; background-color: #eeeeee
-        ; border: 1px solid #dddddd
         ; border-spacing: 0
+        }
+      #layout.light > article section table, .light table table
+        { background-color: #eeeeee
+        ; border: 1px solid #dddddd
+        }
+      #layout.dark > article section table, .dark table table
+        { background-color: #111111
+        ; border: 1px solid #181818
         }
       #layout > article section table
         { width: 100% }
-      #layout > article section table col:nth-child(even),
-                          table table col:nth-child(even)
+      #layout.light > article section table col:nth-child(even),
+                         .light table table col:nth-child(even)
         { background-color: #dddddd }
+      #layout.dark > article section table col:nth-child(even),
+                         .dark table table col:nth-child(even)
+        { background-color: #181818 }
       #layout > article section table td
         { padding: 2px 0 }
-      #layout > article section table th, table table th
+      #layout.light > article section table th, .light table table th
         { border-bottom: 1px solid #cccccc }
+      #layout.dark > article section table th, .dark table table th
+        { border-bottom: 1px solid #222222 }
       article section td:first-child, table table td:first-child
         { font-weight: inherit }
       .npheading
@@ -259,10 +290,6 @@
       { margin-bottom: 6px }
     .activates p:first-child::after { content: " [Activates first]" }
     .demerit::after                 { content: " [Demerit]" }
-    .activates p:first-child::after, .demerit::after
-      { color: #585858
-      ; font-style: italic
-      }
     @media (max-device-width: 800px) 
       { body                             { font-size: 8px }
         aside td                         { display: block }

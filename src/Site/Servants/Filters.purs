@@ -37,22 +37,21 @@ extraFilters = join
       [ "Illyasviel von Einzbern"
       , "Chloe von Einzbern"
       ]
-    , Filter FilterAvailability "Limited"
-      \_ (Servant s) -> s.limited
-    , Filter FilterAvailability "Non-Limited"
-      \_ (Servant s) -> not s.limited
     , Filter FilterAvailability "Free"
       \_ (Servant s) -> s.free
     ]
+  , [ Filter FilterSource "Limited"
+      \_ (Servant s) -> s.limited
+    , Filter FilterSource "Non-Limited"
+      \_ (Servant s) -> not s.limited
+  ]
   , reverse (1..5) <#> \rarity
     -> Filter FilterRarity (S.joinWith "" $ replicate rarity "★")
     \_ (Servant s) -> rarity == s.rarity
   ]
 
 matchFilter ∷ ∀ a. MatchServant a => FilterTab -> a -> Filter Servant
-matchFilter tab
-  | exclusive tab = uncurry (Filter tab) <<< (show &&& not <<< has)
-  | otherwise     = uncurry (Filter tab) <<< (show &&& has)
+matchFilter tab = uncurry (Filter tab) <<< (show &&& has)
 
 singleFilter ∷ ∀ a. MatchServant a => FilterTab -> a -> Array (Filter Servant)
 singleFilter tab a

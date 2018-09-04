@@ -161,7 +161,7 @@ portrait big artorify (Tuple lab ce'@(CraftEssence ce))
     = H.div meta
       [ _img $ "img/CraftEssence/" <> fileName ce.name <> ".png"
       , H.header_
-        <<< (lab /= "") ? append [_span lab, H.br_]
+        <<< (lab /= "") ? append [_span $ noBreakName lab, H.br_]
         $ [ _span <<< noBreakName <<< artorify ? doArtorify $ ce.name ]
       , H.footer_
         <<< singleton <<< _span <<< S.joinWith "  " $ replicate ce.rarity "★"
@@ -184,10 +184,10 @@ modal showTables artorify
         [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
         , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]
         ]
-      , _h 3 "Effects"
+      , _h 2 "Effects"
       ] <> (if base == max then [] else
       [ H.section_ $ effectEl <$> flatten toMin ce.effect
-      , _h 3 "Max Limit Break"
+      , _h 2 "Max Limit Break"
       ]) <>
       [ H.section_ $ effectEl <$> flatten toMax ce.effect ]
     ]
@@ -203,7 +203,7 @@ flatten ∷ ∀ f. Alternative f => Bind f => (Amount -> Number) -> f ActiveEffe
 flatten f = bindFlipped go
   where
     f' a
-      | f a == 0.0 = empty
+      | a /= Full && f a == 0.0 = empty
       | otherwise = pure <<< Flat $ f a
     go (Grant a b c d) = Grant a b c <$> f' d
     go (Debuff a b c d) = Debuff a b c <$> f' d

@@ -518,7 +518,7 @@ archers = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Anne Bonny & Mary Read (Archer)"
+, { name:     "Anne Bonny & Mary Read (Archer)"
   , id:       131
   , rarity:   4
   , class:    Archer

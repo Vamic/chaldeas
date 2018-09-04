@@ -33,15 +33,20 @@ extraFilters = join
     , Filter FilterAvailability "Non-Limited"
       \_ (CraftEssence ce) -> not ce.limited
     ]
+  , [ Filter FilterSource "Limited"
+      \_ (CraftEssence s) -> s.limited && isNothing s.bond
+    , Filter FilterSource "Non-Limited"
+      \_ (CraftEssence s) -> not s.limited && isNothing s.bond
+    , Filter FilterSource "Bond"
+      \_ (CraftEssence s) -> isJust s.bond
+    ]
   , reverse (1..5) <#> \rarity
     -> Filter FilterRarity (S.joinWith "" $ replicate rarity "★")
-    \_ (CraftEssence ce) -> rarity /= ce.rarity
+    \_ (CraftEssence ce) -> rarity == ce.rarity
   ]
 
 matchFilter ∷ ∀ a. MatchCraftEssence a => FilterTab -> a -> Filter CraftEssence
-matchFilter tab
-  | exclusive tab = uncurry (Filter tab) <<< (show &&& not <<< ceHas)
-  | otherwise     = uncurry (Filter tab) <<< (show &&& ceHas)
+matchFilter tab = uncurry (Filter tab) <<< (show &&& ceHas)
 
 namedBonus ∷ FilterTab -> String -> Array String -> Filter CraftEssence
 namedBonus tab bonus craftEssences

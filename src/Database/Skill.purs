@@ -46,6 +46,7 @@ data BuffEffect
     | Evasion
     | GaugePerTurn
     | Guts
+    | GutsPercent
     | HealPerTurn
     | HealingReceived
     | HealUp
@@ -91,8 +92,9 @@ showBuff target amount = case _ of
     Evasion         -> grant "Evasion"
     GaugePerTurn    -> "Charge" <> p <> " NP gauge" <> by <> " every turn"
     Guts            -> "Grant" <> s <> " Guts with " <> n <> " HP"
+    GutsPercent     -> "Grant" <> s <> " Guts with " <> n <> "% HP"
     HealingReceived -> increase "healing received"
-    HealPerTurn     -> "Restore " <> n <> " health" <> to <> " every turn"
+    HealPerTurn     -> "Heal" <> s <> " " <> n <> " HP every turn"
     HealUp          -> increase "healing power"
     IgnoreInvinc    -> grant "Ignore Invincibility"
     Invincibility   -> grant "Invincibility"
@@ -110,7 +112,7 @@ showBuff target amount = case _ of
     Resist debuff   -> resist $ G.genericShow debuff <> " debuff"
     StarAbsorb      -> increase "critical star absorption"
     StarAffinity c  -> increase $ "critical star generation" <> against c
-    StarUp          -> increase "critical star generation rate"
+    StarUp          -> increase "critical star drop rate"
     Success debuff  -> success $ G.genericShow debuff
     SureHit         -> grant "Sure Hit"
     Taunt           -> "Draw attention of all enemies" <> to
@@ -127,7 +129,7 @@ showBuff target amount = case _ of
     success  x = increase $ x <> " success rate"
     resist   x
       | amount == Full = "Grant" <> s <> " " <> x <> " immunity"
-      | otherwise = "Increase" <> p <> " " <> x <> " resistance" <> by
+      | otherwise      = "Increase" <> p <> " " <> x <> " resistance" <> by
     against ∷ ∀ a. Show a => a -> String
     against x = " against " <> show x <> " enemies"
 
@@ -153,6 +155,7 @@ data DebuffEffect
     | Poison
     | SealNP
     | SealSkills
+    | StarDown
     | Stun
     | StunBomb
     | Terror
@@ -182,6 +185,7 @@ showDebuff target amount = case _ of
     Poison       -> damage "Poison"
     SealNP       -> "Seal" <> p <> " NP"
     SealSkills   -> "Seal" <> p <> " skills"
+    StarDown     -> reduce "critical star drop rate"
     Stun         -> "Stun" <> s
     StunBomb     -> "Stun" <> s <> " after 1 turn"
     Terror       -> eachTurn "Terror" "be Stunned"
@@ -259,7 +263,7 @@ showInstant target amount = case _ of
     GaugeUp
       -> "Increase" <> p <> " NP gauge by " <> n <> "%"
     Heal
-      -> "Restore " <> if amount == Full then "all" else n <> " health" <> to
+      -> "Heal" <> s <> " " <> if full then "to full" else (n <> " HP")
     LastStand
       -> "Deal up to " <> n <> "% damage based on missing health" <> to
     OverChance
@@ -271,22 +275,23 @@ showInstant target amount = case _ of
     RemoveMental
       -> "Remove" <> p <> " mental debuffs"
     Kill
-      | amount == Full -> n <> "% chance to Instant-Kill " <> s
-      | otherwise      -> "Instant-Kill " <> s
+      -> not full ? append (n <> "% chance to ") $ "Instant-Kill " <> s
     GainStars
       -> "Gain " <> n <> " critical stars" <> case target of
           Self -> " for yourself"
           _    -> ""
   where
-    n   = show amount
-    p:s = possessiveAndSubject target
-    to  = if s == "" then "" else " to" <> s
+    n    = show amount
+    p:s  = possessiveAndSubject target
+    to   = if s == "" then "" else " to" <> s
+    full = amount == Full
 
 data BonusEffect
     = FriendPoints
     | QuestQuartz
     | QPGain
     | EXP
+    | EXPPerc
     | MysticCode
     | Bond
 instance _f_ ∷ Show BonusEffect where
@@ -297,13 +302,15 @@ showBonus amount = case _ of
     FriendPoints
       -> "Friend Points obtained from support becomes +" <> n
     QuestQuartz
-      -> "Increase the amount of QP earned by " <> n <> " for completing quests"
+      -> "Increase the amount of QP earned for completing quests by " <> n
     QPGain
-      -> "Increase QP Gain by " <> n <> "%"
+      -> "Increase QP from enemy drops by " <> n <> "%"
     EXP
+      -> "Increase Master EXP gained by " <> n
+    EXPPerc
       -> "Increase Master EXP gained by " <> n <> "%"
     MysticCode
-      -> "Increase Mystic Code EXP gained by " <> n <> "% when a quest is cleared"
+      -> "Increase Mystic Code EXP gained by " <> n
     Bond
       -> "Increase Bond Points gained by " <> n
   where

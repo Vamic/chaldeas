@@ -23,6 +23,7 @@ data FilterTab
     | FilterPassiveSkill
     | FilterBonus | FilterAction | FilterBuff | FilterDebuff
     -- Exclusive
+    | FilterSource
     | FilterPhantasm | FilterCard
     | FilterClass
     | FilterDeck
@@ -30,7 +31,7 @@ data FilterTab
     | FilterRarity
 
 exclusive ∷ FilterTab -> Boolean
-exclusive = (_ >= FilterPhantasm)
+exclusive = (_ > FilterDebuff)
 
 instance _a_ ∷ Show FilterTab where
   show FilterPhantasm = "NP Type"
@@ -62,7 +63,7 @@ updateListing st@{exclude, filters, matchAny, prefs, sorted}
   where
     noSelf = getPreference prefs ExcludeSelf
     matchFilter x (Filter _ _ f) = f noSelf x
-    match x = (null exclude || all (matchFilter x) exclude)
+    match x = (null exclude || all (not <<< matchFilter x) exclude)
            && (null filters || (if matchAny then any else all)
                                (matchFilter x) filters)
 

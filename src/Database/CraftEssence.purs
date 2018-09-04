@@ -2,15 +2,26 @@ module Database.CraftEssence
   ( class MatchCraftEssence, ceHas
   , CraftEssence(..)
   , craftEssences
+  , getBond
   ) where
 
 import Prelude
 import Generic as G
 
 import Data.Array
-import Database.Base
+import Data.Function.Memoize
 import Data.Maybe
+import Data.Int
+
+import Database.Base
 import Database.Skill
+import Database.Servant
+
+getBond ∷ Servant -> Maybe CraftEssence
+getBond (Servant s) = go s.name
+  where
+    go = memoize \name -> let match (CraftEssence ce) = ce.bond == Just name 
+                          in find match craftEssences
 
 newtype CraftEssence = CraftEssence { name     ∷ String
                                     , id       ∷ Int
@@ -319,7 +330,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Gem Magecraft: Antumbra"
   , id:       26
   , rarity:   4
-  , stats:    { base: { atk: 0, hp: 1500 }
+  , stats:    { base: { atk: 0, hp: 400 }
               , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ Grant Self 0 CritUp $ 25.0 ~ 30.0 ]
@@ -377,7 +388,7 @@ craftEssences = CraftEssence <$>
   , limited:  false
   }
 , { name:     "Imaginary Around"
-  , id:       12
+  , id:       32
   , rarity:   5
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
@@ -520,7 +531,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Runestones"
+, { name:     "Runestone"
   , id:       46
   , rarity:   3
   , stats:    { base: { atk: 100, hp: 150 }
@@ -556,7 +567,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  false
   }
-, { name:     "Jack-o'-lantern"
+, { name:     "Jack-o'-Lantern"
   , id:       49
   , rarity:   3
   , stats:    { base: { atk: 200,  hp: 0 }
@@ -618,7 +629,6 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
-  -- TODO "Increase HP Recovery"
   , effect:   [ Grant Self 0 HealingReceived $ 60.0 ~ 75.0 ]
   , bond:     Nothing
   , limited:  true
@@ -672,7 +682,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Fate GUDAGUDA Order"
   , id:       59
   , rarity:   3
-  , stats:    { base: { atk: 100, hp: 100 }
+  , stats:    { base: { atk: 100, hp: 150 }
               , max:  { atk: 500, hp: 750 }
               }
   , effect:   [ Grant Self 0 (Performance Quick) $ 1.0 ~ 2.0
@@ -701,7 +711,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Guda-O"
+, { name:     "Guda-o"
   , id:       61
   , rarity:   5
   , stats:    { base: { atk: 500,  hp: 0 }
@@ -716,8 +726,8 @@ craftEssences = CraftEssence <$>
 , { name:     "GUDAGUDA Poster Girl"
   , id:       62
   , rarity:   5
-  , stats:    { base: { atk: 0,   hp: 0 }
-              , max:  { atk: 750, hp: 3000 }
+  , stats:    { base: { atk: 0, hp: 750 }
+              , max:  { atk: 0, hp: 3000 }
               }
   , effect:   [ Grant Self 3 Taunt Full
               , Grant Self 3 AttackUp $ 60.0 ~ 80.0
@@ -725,7 +735,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Demonic Boar"
+, { name:     "Demon Boar"
   , id:       65
   , rarity:   3
   , stats:    { base: { atk: 200,  hp: 0 }
@@ -779,7 +789,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Present for My Master"
+, { name:     "Present For My Master"
   , id:       70
   , rarity:   5
   , stats:    { base: { atk: 0, hp: 750 }
@@ -817,7 +827,7 @@ craftEssences = CraftEssence <$>
   , id:       73
   , rarity:   4
   , stats:    { base: { atk: 0, hp: 600 }
-              , max:  { atk: 0, hp: 2250 }
+              , max:  { atk: 0, hp: 2400 }
               }
   , effect:   [ Chance 50 <<< Times 1 <<< Grant Self 0 Guts $ 500.0 ~ 1000.0 ]
   , bond:     Nothing
@@ -908,8 +918,8 @@ craftEssences = CraftEssence <$>
 , { name:     "Happy x3 Order"
   , id:       81
   , rarity:   4
-  , stats:    { base: { atk: 0, hp: 2016 }
-              , max:  { atk: 0, hp: 2016 }
+  , stats:    { base: { atk: 0, hp: 2018 }
+              , max:  { atk: 0, hp: 2018 }
               }
   , effect:   [ Grant Party 0 StarsPerTurn $ 0.0 ~ 1.0 ]
   , bond:     Nothing
@@ -988,7 +998,7 @@ craftEssences = CraftEssence <$>
   , id:       90
   , rarity:   3
   , stats:    { base: { atk: 200,  hp: 0 }
-              , max:  { atk: 1200, hp: 0  }
+              , max:  { atk: 1000, hp: 0  }
               }
   , effect:   [ Grant Self 0 (ClassAffinity Caster) $ 8.0 ~ 10.0 ]
   , bond:     Nothing
@@ -1077,7 +1087,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  false
   }
-, { name:     "Heroic Spirit Portrait: Mash Kyrielight"
+, { name:     "Heroic Portrait: Mash Kyrielight"
   , id:       99
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1087,7 +1097,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Altria Pendragon"
+, { name:     "Heroic Portrait: Altria Pendragon"
   , id:       100
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1097,7 +1107,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Jeanne d'Arc"
+, { name:     "Heroic Portrait: Jeanne d'Arc"
   , id:       101
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1107,7 +1117,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Altera"
+, { name:     "Heroic Portrait: Altera"
   , id:       102
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1117,7 +1127,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Arjuna"
+, { name:     "Heroic Portrait: Arjuna"
   , id:       103
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1127,7 +1137,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Scathach"
+, { name:     "Heroic Portrait: Scathach"
   , id:       104
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1137,7 +1147,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Ushiwakamaru"
+, { name:     "Heroic Portrait: Ushiwakamaru"
   , id:       105
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1147,7 +1157,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Henry Jekyll & Hyde"
+, { name:     "Heroic Portrait: Henry Jekyll & Hyde"
   , id:       106
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1157,7 +1167,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Mephistopheles"
+, { name:     "Heroic Portrait: Mephistopheles"
   , id:       107
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1167,7 +1177,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Heroic Spirit Portrait: Darius III"
+, { name:     "Heroic Portrait: Darius III"
   , id:       108
   , rarity:   4
   , stats:    { base: { atk: 500, hp: 500 }
@@ -1190,7 +1200,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Kitchen☆Patissiere"
+, { name:     "Kitchen ☆ Patissiere"
   , id:       110
   , rarity:   4
   , stats:    { base: { atk: 200, hp: 320 }
@@ -1205,8 +1215,8 @@ craftEssences = CraftEssence <$>
 , { name:     "Street Choco-Maid"
   , id:       111
   , rarity:   5
-  , stats:    { base: { atk: 250, hp: 1000 }
-              , max:  { atk: 400, hp: 1600 }
+  , stats:    { base: { atk: 250, hp: 400 }
+              , max:  { atk: 1000, hp: 1600 }
               }
   , effect:   [ Grant Self 0 (Performance Arts) $ 10.0 ~ 15.0
               , Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0
@@ -1252,8 +1262,8 @@ craftEssences = CraftEssence <$>
 , { name:     "Grand Puppeteer"
   , id:       156
   , rarity:   5
-  , stats:    { base: { atk: 250,  hp: 400 }
-              , max:  { atk: 1000, hp: 1600 }
+  , stats:    { base: { atk: 400,  hp: 250 }
+              , max:  { atk: 1600, hp: 1000 }
               }
   , effect:   [ To Self GaugeUp $ 50.0 ~ 60.0
               , Grant Self 3 (Performance Arts) $ 15.0 ~ 20.0
@@ -1305,7 +1315,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Refrain"
+, { name:     "Chorus"
   , id:       161
   , rarity:   4
   , stats:    { base: { atk: 200, hp: 320 }
@@ -1478,12 +1488,12 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Bonus EXP $ 2.0 ~ 10.0 ]
+  , effect:   [ Bonus EXPPerc $ 2.0 ~ 10.0 ]
   , bond:     Nothing
   , limited:  true
   }
 , { name:     "The Scholars of Chaldea"
-  , id:       15
+  , id:       179
   , rarity:   5
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
@@ -1554,7 +1564,9 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
-  , effect:   [ Times 3 $ Grant Self 0 Invincibility Full ]
+  , effect:   [ Times 3 $ Grant Self 0 Invincibility Full 
+              , Grant Self 0 DamageUp $ 200.0 ~ 500.0
+              ]
   , bond:     Nothing
   , limited:  false
   }
@@ -1605,56 +1617,44 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 191 "Crown of the Stars" "Altria Pendragon"
-  [ Grant Party 0 AttackUp $ Flat 15.0 ]
-, bond 192 "Relic of The King" "Zhuge Liang (El-Melloi II)"
-  [ Grant Party 0 (Performance Buster) $ Flat 15.0 ]
-, bond 193 "Triumph of the Impaling Lord" "Vlad III"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 30 <<< To Self GaugeUp $ Flat 5.0
-  ]
+, bond 191 "Crown of the Star" "Altria Pendragon"
+  [ party AttackUp 15 ]
+, bond 192 "Relic of the King" "Zhuge Liang (El-Melloi II)"
+  [ party' Buster 15 ]
+, bond 193 "Triumph of the Lord Impaler" "Vlad III"
+  [ np30, atkChance 30 <<< To Self GaugeUp $ Flat 5.0 ]
 , bond 194 "Revelation from Heaven" "Jeanne d'Arc"
-  [ Grant Party 0 (Performance Buster) $ Flat 15.0 ]
+  [ party' Buster 15 ]
 , bond 195 "Memories of the Dragon" "Altria Pendragon (Alter)"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 30 <<< Debuff Target 3 DefenseDown $ Flat 5.0
-  ]
+  [ np30, atkChance 30 <<< Debuff Target 3 DefenseDown $ Flat 5.0 ]
 , bond 196 "Hunter of the Red Plains" "EMIYA"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 30 <<< To Party GainStars $ Flat 5.0
-  ]
+  [ np30, atkChance 30 <<< To Party GainStars $ Flat 5.0 ]
 , bond 197 "Castle of Snow" "Heracles"
   [ Times 3 <<< Grant Self 0 Guts $ Flat 500.0 ]
 , bond 198 "Yggdrasil Tree" "Cu Chulainn (Caster)"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 30 <<< To Self Heal $ Flat 500.0
-  ]
-, bond 199 "Embrace of the Scorching Heat" "Kiyohime"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 30 <<< Debuff Target 5 Burn $ Flat 500.0
-  ]
-, bond 200 "Worthless Jewels" "Mata Hari"
-  [ Grant Party 0 NPGen $ Flat 15.0 ]
+  [ np30, atkChance 30 <<< To Self Heal $ Flat 500.0 ]
+, bond 199 "Scorching Embrace" "Kiyohime"
+  [ np30, atkChance 30 <<< Debuff Target 5 Burn $ Flat 500.0 ]
+, bond 200 "Worthless Jewel" "Mata Hari"
+  [ party NPGen 15 ]
 , bond 201 "Eternal Solitude" "Altera"
-  [ Grant Party 0 AttackUp $ Flat 15.0 ]
-, bond 202 "Gift from the Queen" "Chevalier d'Eon"
-  [ Grant Party 0 (Performance Arts) $ Flat 15.0 ]
+  [ party AttackUp 15 ]
+, bond 202 "Queen's Present" "Chevalier d'Eon"
+  [ party' Arts 15 ]
 , bond 203 "Elixir" "Elisabeth Bathory"
-  [ Grant Party 0 HealPerTurn $ Flat 500.0 ]
+  [ party HealPerTurn 500 ]
 , bond 204 "My Necklace" "Marie Antoinette"
-  [ Grant Party 0 StarUp $ Flat 20.0 ]
-, bond 205 "The Staff He Gave me" "Saint Martha"
-  [ Grant Party 0 HealingReceived $ Flat 30.0 ]
+  [ party StarUp 20 ]
+, bond 205 "Staff He Gave Me" "Saint Martha"
+  [ party HealingReceived 30 ]
 , bond 206 "Iron Maiden" "Carmilla"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 10 $ Debuff Target 1 SealNP Full
-  ]
+  [ np30, atkChance 10 $ Debuff Target 1 SealNP Full ]
 , bond 207 "Cat Apron" "Tamamo Cat"
-  [ Grant Party 0 MaxHP $ Flat 2000.0 ]
+  [ party MaxHP 2000 ]
 , bond 208 "Thirst for Victory" "Boudica"
-  [ Grant Party 0 StarUp $ Flat 20.0 ]
+  [ party StarUp 20 ]
 , bond 209 "To My Dear Friend" "Hans Christian Andersen"
-  [ Grant Party 0 DebuffResist $ Flat 30.0 ]
+  [ party DebuffResist 30 ]
 , bond 210 "Sacred Devotion" "Arash"
   [ When "defeated" $ To Party RemoveDebuffs Full
   , When "defeated" $ To Party Heal $ Flat 5000.0
@@ -1719,34 +1719,25 @@ craftEssences = CraftEssence <$>
   , limited:  true
   }
 , bond 216 "Key of the King's Law" "Gilgamesh"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 30 <<< Grant Self 3 CritUp $ Flat 10.0
-  ]
+  [ np30, atkChance 30 <<< Grant Self 3 CritUp $ Flat 10.0 ]
 , bond 217 "Golden Glass" "Sakata Kintoki"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 30 <<< To Self GaugeUp $ Flat 5.0
-  ]
+  [ np30, atkChance 30 <<< To Self GaugeUp $ Flat 5.0 ]
 , bond 218 "Thunderous Applause" "Nero Claudius"
-  [ Grant Party 0 (Performance Arts) $ Flat 15.0 ]
+  [ party' Arts 15 ]
 , bond 219 "Das Rheingold" "Siegfried"
-  [ Grant Party 0 NPGen $ Flat 15.0 ]
+  [ party NPGen 15 ]
 , bond 220 "Radiance of the Goddess" "Stheno"
-  [ Grant Party 0 (Performance Quick) $ Flat 15.0 ]
+  [ party' Quick 15 ]
 , bond 221 "Voyage of the Flowers" "Altria Pendragon (Lily)"
-  [ Grant Party 0 AttackUp $ Flat 10.0
-  , Grant Party 0 StarUp $ Flat 10.0
-  ]
+  [ party AttackUp 10, party StarUp 10 ]
 , bond 222 "Ark of the Covenant" "David"
-  [ Grant Self 0 NPUp $ Flat 30.0
-  , atkChance 10 $ To Target Kill Full
-  ]
+  [ np30, atkChance 10 $ To Target Kill Full ]
 , bond 223 "Door to Babylon" "Darius III"
-  [ Grant Party 0 (Performance Buster) $ Flat 15.0 ]
+  [ party' Buster 15 ]
 , bond 224 "Blood-Thirsting Axe" "Eric Bloodaxe"
-  [ Grant Party 0 CritUp $ Flat 25.0 ]
+  [ party CritUp 25 ]
 , bond 225 "Insurrection" "Spartacus"
-  [ -- TODO Guts (1 time) with 50% HP
-  ]
+  [ gutsPercent 50 ]
 , { name:     "GO WEST!!"
   , id:       226
   , rarity:   5
@@ -1796,10 +1787,26 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 230 "Tri-Star Belt" "Orion"
-  [ Grant Party 0 CritUp $ Flat 25.0 ]
---, bond 231 "Golden Rudder" "Francis Drake"
-  --[ Grant Party 0 ]
+, bond 230 "Tristar Belt" "Orion"
+  [ party CritUp 25 ]
+, bond 231 "Golden Helm" "Francis Drake"
+  [ party NPUp 20 ]
+, bond 232 "Black Knight's Helmet" "Lancelot"
+  [ np30, atkChance 30 <<< Debuff Target 3 CritChance $ Flat 30.0 ]
+, bond 233 "Golden Apple" "Atalante"
+  [ party' Quick 15 ]
+, bond 234 "Holy Pumpkin Grail" "Elisabeth Bathory (Halloween)"
+  [ party DebuffResist 30 ]
+, bond 235 "Rotary Matchlock" "Oda Nobunaga"
+  [ party CritUp 25 ]
+, bond 236 "Llamrei Unit II" "Altria Pendragon (Santa Alter)"
+  [ party StarUp 20 ]
+, bond 237 "Things to Calm the Heart" "Henry Jekyll & Hyde"
+  [ party' Buster 15 ]
+, bond 238 "Glory of the Past Days" "Edward Teach"
+  [ party' Buster 15 ]
+, bond 239 "Heaven Among the Mountains" "Sasaki Kojiro"
+  [ party' Quick 15 ]
 , { name:     "Divine Princess of the Storm"
   , id:       240
   , rarity:   5
@@ -1852,7 +1859,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  false
   }
-, { name:     "Bygone Dreams"
+, { name:     "Bygone Dream"
   , id:       245
   , rarity:   3
   , stats:    { base: { atk: 200,  hp: 0 }
@@ -1884,6 +1891,26 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
+, bond 248 "Tamamo's Club" "Tamamo no Mae"
+  [ party' Arts 15 ]
+, bond 249 "Headband of Resolve" "Okita Souji"
+  [ party CritUp 25 ]
+, bond 250 "Calico Jack" "Anne Bonny & Mary Read"
+  [ party CritUp 25 ]
+, bond 251 "Gazing Upon Dun Scaith" "Scathach"
+  [ party' Quick 15 ]
+, bond 252 "Star of Prophecy" "Cu Chulainn"
+  [ np30, atkChance 30 <<< Grant Self 3 CritUp $ Flat 10.0 ]
+, bond 253 "Hekate's Staff" "Medea"
+  [ party' Arts 15 ]
+, bond 254 "Formless Island" "Medusa"
+  [ party NPGen 15 ]
+, bond 255 "Cask of the Wise" "Alexander"
+  [ party' Quick 15 ]
+, bond 256 "Shaytan's Arm" "Hassan of the Cursed Arm"
+  [ party KillUp 20 ]
+, bond 257 "Ariadne's Thread" "Asterios"
+  [ party' Quick 15 ]
 , { name:     "Dumplings Over Flowers"
   , id:       258
   , rarity:   5
@@ -1969,13 +1996,35 @@ craftEssences = CraftEssence <$>
 , { name:     "Battle of Camlann"
   , id:       265
   , rarity:   3
-  , stats:    { base: { atk: 500,  hp: 0 }
-              , max:  { atk: 2000, hp: 0 }
+  , stats:    { base: { atk: 300,  hp: 0 }
+              , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ When "defeated" <<< To Party GaugeUp $ 10.0 ~ 15.0 ]
   , bond:     Nothing
   , limited:  false
   }
+, bond 266 "Who Am I?" "Mordred"
+  [ party NPUp 20 ]
+, bond 267 "The Misty Night of London" "Jack the Ripper"
+  [ party CritUp 25 ]
+, bond 268 "Wonderland" "Nursery Rhyme"
+  [ party CritUp 15, party HealingReceived 10 ]
+, bond 269 "Faceless King" "Robin Hood"
+  [ party' Arts 15 ]
+, bond 270 "Usumidori" "Ushiwakamaru"
+  [ party' Quick 15 ]
+, bond 271 "Etiquette of Nine Guests" "Jing Ke"
+  [ np30, atkChance 30 <<< Grant Self 3 KillUp $ Flat 30.0 ]
+, bond 272 "Heaven Scorcher Halberd" "Lu Bu Fengxian"
+  [ party' Buster 15 ]
+, bond 273 "What can be Left Behind" "Georgios"
+  [ When "defeated" <<< Times 1 $ Grant Party 0 Invincibility Full 
+  , When "defeated" <<< Grant Party 3 DamageCut $ Flat 1000.0
+  ]
+, bond 274 "Thermopylae" "Leonidas"
+  [ party' Buster 15 ]
+, bond 275 "Haydn Quartets" "Wolfgang Amadeus Mozart"
+  [ party NPUp 20 ]
 , { name:     "Anniversary Heroines"
   , id:       276
   , rarity:   4
@@ -1991,8 +2040,8 @@ craftEssences = CraftEssence <$>
 , { name:     "Leisure Stroll"
   , id:       277
   , rarity:   5
-  , stats:    { base: { atk: 400,  hp: 250 }
-              , max:  { atk: 1600, hp: 1000 }
+  , stats:    { base: { atk: 250,  hp: 400 }
+              , max:  { atk: 1000, hp: 1600 }
               }
   , effect:   [ Grant Self 0 StarUp $ 400.0 ~ 600.0
               , Grant Self 0 (Performance Arts) $ 10.0 ~ 15.0
@@ -2036,6 +2085,26 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
+, bond 281 "Arm of Raiden" "Nikola Tesla"
+  [ party NPUp 20 ]
+, bond 282 "Endowed Hero" "Arjuna"
+  [ np30, Grant Self 0 StarAbsorb $ Flat 1000.0 ]
+, bond 283 "Lamp of the Unfortunate" "Karna"
+  [ party' Quick 8, party' Arts 8, party' Buster 8 ]
+, bond 284 "Procedure to Humanity" "Frankenstein"
+  [ party' Quick 15 ]
+, bond 285 "Black Helmet" "Altria Pendragon (Lancer Alter)"
+  [ party NPGen 15 ]
+, bond 286 "Legend of the Gallic War" "Gaius Julius Caesar"
+  [ party' Quick 15 ]
+, bond 287 "Rome" "Romulus"
+  [ party NPUp 20 ]
+, bond 288 "Encounter at Gojou Bridge" "Musashibou Benkei"
+  [ party NPFromDamage 20 ]
+, bond 289 "Impure Death Mask" "Phantom of the Opera"
+  [ party' Quick 15 ]
+, bond 290 "Really Convenient" "William Shakespeare"
+  [ party NPGen 15 ]
 , { name:     "Pirates Party!"
   , id:       291
   , rarity:   5
@@ -2132,6 +2201,26 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
+, bond 299 "Annihilation List" "Mysterious Heroine X"
+  [ party (ClassAffinity Saber) 20 ]
+, bond 300 "Imperishable Flames" "Brynhild"
+  [ party' Buster 10, party NPGen 10 ]
+, bond 301 "Ring of Bay Laurel" "Nero Claudius (Bride)"
+  [ party' Arts 15 ]
+, bond 302 "Final Battle" "Beowulf"
+  [ party (AttackVs Dragon) 20 ]
+, bond 303 "Bratan of Wisdom" "Fionn mac Cumhaill"
+  [ party' Arts 10, party NPUp 10 ]
+, bond 304 "Prelati's Spellbook" "Gilles de Rais"
+  [ party' Buster 20, Debuff Party 0 DebuffVuln $ Flat 20.0 ]
+, bond 305 "Parasitic Bomb" "Mephistopheles"
+  [ party NPUp 20 ]
+, bond 306 "Seethe of a Warrior" "Fergus mac Roich"
+  [ party' Buster 10, party NPUp 10 ]
+, bond 307 "My Loathsome Life" "Charles-Henri Sanson"
+  [ party KillUp 10, party NPGen 10 ]
+, bond 308 "There is No Love Here" "Caligula"
+  [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
 , { name:     "Magical Girl of Sapphire"
   , id:       309
   , rarity:   5
@@ -2192,6 +2281,63 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
+, bond 315 "Mugashiki—Shinkuu Myou" "Ryougi Shiki (Saber)"
+  [ party' Arts 15 ]
+, bond 317 "Château d'If" "Edmond Dantes"
+  [ party' Quick 15 ]
+, bond 318 "Unlimited Pancakes" "Medea (Lily)"
+  [ party HealingReceived 30 ]
+, bond 319 "Red Leather Jacket" "Ryougi Shiki (Assassin)"
+  [ party KillUp 30 ]
+, bond 321 "Letter From a Friend" "Gilles de Rais (Caster)"
+  [ party' Buster 20, Debuff Party 0 StarDown $ Flat 20.0 ]
+, bond 322 "Hound of Culann" "Cu Chulainn (Prototype)"
+  [ party (AttackVs Beast) 20 ]
+, bond 323 "Radiance of the Goddess (Euryale)" "Euryale"
+  [ party' Arts 15 ]
+, bond 324 "Hero's Arms" "Hektor"
+  [ party NPUp 20 ]
+, bond 334 "Indomitableness" "Nightingale"
+  [ party' Buster 10, party HealingReceived 20 ]
+, bond 335 "One-Man War" "Cu Chulainn (Alter)"
+  [ np30, gutsPercent 20
+  ]
+, bond 336 "Sacred Spring" "Queen Medb"
+  [ party NPGen 15 ]
+, bond 337 "Indestructible Blade" "Rama"
+  [ party CritUp 25 ]
+, bond 338 "Concealed Goddess" "Helena Blavatsky"
+  [ party (ClassAffinity Assassin) 20 ]
+, bond 339 "Lights of Civilization" "Thomas Edison"
+  [ party NPGen 15 ]
+, bond 340 "Reaching the Zenith of My Skill" "Li Shuwen"
+  [ party' Arts 15 ]
+, bond 341 "Knight's Oath" "Diarmuid ua Duibhne"
+  [ party' Quick 10, party' Arts 10 ]
+, bond 342 "Elemental" "Paracelsus von Hohenheim"
+  [ party' Arts 10, party NPUp 10 ]
+, bond 343 "NEO Difference Engine" "Charles Babbage"
+  [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
+, bond 350 "Hell of Blazing Penalty" "Jeanne d'Arc (Alter)"
+  [ party' Buster 15 ]
+, bond 351 "Gordian Knot" "Iskandar"
+  [ party AttackUp 15 ]
+, bond 352 "Bai Long" "Xuanzang Sanzang"
+  [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
+, bond 353 "Where the Sun Cannot Reach" "EMIYA (Assassin)"
+  [ party' Quick 10, party' Arts 10 ]
+, bond 354 "Dress of Heaven" "Irisviel (Dress of Heaven)"
+  [ party HealingReceived 30 ]
+, bond 355 "Manifestation of The Golden Rule" "Kid Gilgamesh"
+  [ party NPGen 15 ]
+, bond 356 "Spirit of The Vast Land" "Geronimo"
+  [ party NPGen 15 ]
+, bond 357 "Extolling The Revolver" "Billy the Kid"
+  [ party CritUp 25 ]
+, bond 358 "Library of Hundred Men" "Hassan of the Hundred Personas"
+  [ party' Buster 8, party' Quick 8, party' Arts 8 ]
+, bond 359 "Last Splinter" "Angra Mainyu"
+  [ Grant Self 0 (AttackVs Beast) $ Flat 200.0, gutsPercent 20 ]
 , { name:     "Fate/Extella"
   , id:       360
   , rarity:   4
@@ -2264,6 +2410,57 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
+, bond 367 "Divine Oni-Poison Sake" "Shuten-Douji"
+  [ party' Quick 10, party' Arts 10 ]
+, bond 368 "Doujigiri Yasutsuna" "Minamoto-no-Raikou"
+  [ party' Buster 10, party CritUp 15 ]
+, bond 369 "Ramesseum" "Ozymandias"
+  [ party' Arts 10, party' Buster 10 ]
+, bond 370 "Bone Sword (Nameless)" "Ibaraki-Douji"
+  [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
+, bond 371 "Unit Golden Bear" "Sakata Kintoki (Rider)"
+  [ party StarUp 20 ]
+, bond 372 "Gringolet" "Gawain"
+  [ party' Buster 15 ]
+, bond 373 "But I Lied Once" "Tristan"
+  [ party CritUp 25 ]
+, bond 374 "Exercising the Royal Authority" "Nitocris"
+  [ party NPGen 10, party NPUp 10 ]
+, bond 375 "Mask of A Demon" "Fuuma Kotarou"
+  [ party' Quick 15 ]
+, bond 376 "Cook Despite Exhaustion" "Tawara Touta"
+  [ party HealPerTurn 500 ]
+, bond 377 "King's Horse" "Altria Pendragon (Lancer)"
+  [ party AttackUp 10, party NPUp 10 ]
+, bond 378 "All-Encompassing Wisdom" "Leonardo da Vinci"
+  [ party NPUp 20 ]
+, bond 379 "Sunset Beach" "Tamamo no Mae (Lancer)"
+  [ party' Quick 10, party' Buster 10 ]
+, bond 380 "Lady of the Lake" "Lancelot (Saber)"
+  [ party NPGen 10, party CritUp 10 ]
+, bond 381 "Reminiscence of the Summer" "Marie Antoinette (Caster)"
+  [ party CritUp 25 ]
+, bond 382 "Currently In The Middle Of A Shower" 
+           "Anne Bonny & Mary Read (Archer)"
+  [ party' Buster 10, party' Arts 10 ]
+, bond 383 "Prydwen" "Mordred (Rider)"
+  [ party NPUp 20 ]
+, bond 384 "Beach Love Letter (Terror)" "Kiyohime (Lancer)"
+  [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
+, bond 385 "My Long Lost Right Arm" "Bedivere"
+  [ party' Buster 10, party NPGen 10 ]
+, bond 386 "Proof of Existence" "Hassan of the Serenity"
+  [ party' Quick 15 ]
+, bond 391 "Champion Cup" "Altria Pendragon (Archer)"
+  [ party AttackUp 15 ]
+, bond 392 "Phantasmal Summoning (Install)" "Illyasviel von Einzbern"
+  [ party' Buster 8, party' Quick 8, party' Arts 8 ]
+, bond 394 "Holy Knuckle" "Saint Martha (Ruler)"
+  [ party' Buster 15 ]
+, bond 395 "Minimal Prudence" "Scathach (Assassin)"
+  [ party' Quick 15 ]
+, bond 396 "Sharing of Pain" "Chloe von Einzbern"
+  [ party CritUp 30, Debuff Party 0 HealthLoss $ Flat 200.0 ]
 , { name:     "First Order"
   , id:       399
   , rarity:   4
@@ -2276,6 +2473,10 @@ craftEssences = CraftEssence <$>
   }
 ]
   where
+    np30 = Grant Self 0 NPUp $ Flat 30.0
+    gutsPercent = Times 1 <<< Grant Self 0 GutsPercent <<< Flat <<< toNumber
+    party buff = Grant Party 0 buff <<< Flat <<< toNumber
+    party' card = party (Performance card)
     atkChance chance = When "attacking" <<< Chance chance
     bond id name servant effect
         = { name

@@ -21,6 +21,8 @@
         { color: #5656BF
         ; cursor: pointer
         }
+      section .link         { color: inherit }
+      .link:hover           { text-decoration: underline }
       h1, h2, h3            { margin: 0.5em 0 0 0 }
       h2                    { font-size: 1.4em }
       p, h4                 { margin: 0 }
@@ -151,11 +153,13 @@
       article .portrait
         { float: left }
       article .portrait header
-        { bottom: 21px }
+        { bottom: 21px
+        ; margin-right: 10px
+        }
       article .portrait footer
         { font-size: 10px }
       article .portrait header span
-        { font-size: 16px
+        { font-size: 15px
         ; padding: 1px 6px 3px 6px
         }
       article .portrait > img

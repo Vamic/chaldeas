@@ -55,8 +55,9 @@ toSort NPSpec              s  = npDamage true false s
 toSort NPSpecOver          s  = npDamage true true s
 
 doSort ∷ SortBy -> Array Servant -> Array (Tuple String Servant)
-doSort Rarity = map (Tuple "")
-    <<< sortWith \(Servant s) -> show (5 - s.rarity) <> s.name
+doSort Rarity = map (Tuple "") <<< sortWith sorter
+  where
+    sorter (Servant s) = show (5 - s.rarity) <> s.name
 doSort a = map showSort <<< sortWith sorter
   where
     sorter   = toSort a

@@ -35,8 +35,10 @@ toSort ATK    (CraftEssence ce) = toNumber ce.stats.max.atk
 toSort HP     (CraftEssence ce) = toNumber ce.stats.max.hp
 
 doSort ∷ SortBy -> Array CraftEssence -> Array (Tuple String CraftEssence)
-doSort Rarity = map (Tuple "")
-    <<< sortWith \(CraftEssence ce) -> show (5 - ce.rarity) <> ce.name
+doSort Rarity = map showSort <<< sortWith sorter
+  where
+    sorter (CraftEssence ce) = show (5 - ce.rarity) <> ce.name
+    showSort ce'@(CraftEssence ce) = Tuple (fromMaybe "" ce.bond) ce'
 doSort a = map showSort <<< sortWith sorter
   where
     sorter   = toSort a

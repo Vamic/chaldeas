@@ -6,11 +6,11 @@ import Operators
 import Halogen.HTML            as H
 import Halogen.HTML.Events     as E
 import Halogen.HTML.Properties as P
-import Data.String             as S
 
 import Data.Array
 import Data.Int
 import Data.Number.Format
+import Data.String (Pattern(..), Replacement(..), joinWith, replaceAll, split)
 import Data.String.CodeUnits
 import Halogen.HTML
 import Halogen.HTML.Properties
@@ -27,11 +27,13 @@ lvlRow (RangeInfo isPercent a b) = H.tr_
     step = (b - a) / 10.0
 
 noBreakName ∷ String -> String
-noBreakName = unBreak <<< S.split (S.Pattern "(")
+noBreakName = replaceAll (Pattern "Anne Bonny") (Replacement "Anne Bonny")
+          <<< replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read")
+          <<< unBreak <<< split (Pattern "(")
   where
     unBreak [a, b] = a <> "("
-                       <> S.replaceAll (S.Pattern " ") (S.Replacement " ") b
-    unBreak xs = S.joinWith "(" xs
+                       <> replaceAll (Pattern " ") (Replacement " ") b
+    unBreak xs = joinWith "(" xs
 
 fileName ∷ String -> String
 fileName = fromCharArray <<< filter legal <<< toCharArray

@@ -1,6 +1,7 @@
 module Export (craftEssences, servants) where
 
 import Prelude
+import Data.Nullable
 import Data.String.CodeUnits
 import Data.Tuple
 
@@ -8,7 +9,7 @@ import Database as D
 import Database
 
 servants ∷ Unit -> Array _
-servants = \_ -> D.servants <#> \(Servant s@{align: Tuple alignA alignB}) ->
+servants = \_ -> D.servants <#> \s'@(Servant s@{align: Tuple alignA alignB}) ->
     { name:          s.name
     , rarity:        s.rarity
     , class:         show s.class
@@ -28,16 +29,18 @@ servants = \_ -> D.servants <#> \(Servant s@{align: Tuple alignA alignB}) ->
     , alignment:     [show alignA, show alignB]
     , limited:       s.limited
     , free:          s.free
+    , bond:          toNullable $ getBond s'
     }
 
 craftEssences ∷ Unit -> Array _
-craftEssences = \_ -> D.craftEssences <#> \(CraftEssence ce )->
+craftEssences = \_ -> D.craftEssences <#> \(CraftEssence ce) ->
     { name:    ce.name
     , id:      ce.id
     , rarity:  ce.rarity
     , stats:   ce.stats
     , effect:  exportEffect <$> ce.effect
     , limited: ce.limited
+    , bond:    toNullable ce.bond
     }
 
 exportAmount ∷ Amount -> _

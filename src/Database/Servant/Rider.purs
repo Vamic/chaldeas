@@ -454,7 +454,7 @@ riders = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Anne Bonny & Mary Read"
+, { name:     "Anne Bonny & Mary Read"
   , id:       66
   , rarity:   4
   , class:    Rider

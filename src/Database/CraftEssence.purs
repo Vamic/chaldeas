@@ -1680,6 +1680,7 @@ craftEssences = CraftEssence <$>
   , effect:   [ Grant Self 0 (Performance Arts) $ 8.0 ~ 10.0
               , Grant Self 0 (Performance Buster) $ 8.0 ~ 10.0
               , Grant Self 0 (Performance Quick) $ 8.0 ~ 10.0
+              , Grant Self 0 DefenseUp $ 8.0 ~ 10.0
               ]
   , bond:     Nothing
   , limited:  false

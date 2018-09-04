@@ -302,17 +302,17 @@ showBonus amount = case _ of
     FriendPoints
       -> "Friend Points obtained from support becomes +" <> n
     QuestQuartz
-      -> "Increase the amount of QP earned for completing quests by " <> n
+      -> "Increase QP earned from completing quests by " <> n
     QPGain
       -> "Increase QP from enemy drops by " <> n <> "%"
     EXP
-      -> "Increase Master EXP gained by " <> n
+      -> "Increase Master EXP gain by " <> n
     EXPPerc
-      -> "Increase Master EXP gained by " <> n <> "%"
+      -> "Increase Master EXP gain by " <> n <> "%"
     MysticCode
-      -> "Increase Mystic Code EXP gained by " <> n
+      -> "Increase Mystic Code EXP gain by " <> n
     Bond
-      -> "Increase Bond Points gained by " <> n
+      -> "Increase Bond Points gain by " <> n
   where
     n = show amount
 

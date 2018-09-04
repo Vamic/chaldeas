@@ -43,7 +43,7 @@ berserkers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   12
-              , effect: [ To Enemy DamageThruDef $ 600.0 ~ 1000.0 ]
+              , effect: [ To Enemy Damage $ 600.0 ~ 1000.0 ]
               , over:   [ Grant Self 1 AttackUp $ 30.0 ~ 70.0
                         , Grant Self 1 DefenseUp $ 30.0 ~ 70.0
                         ]

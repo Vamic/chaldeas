@@ -17,64 +17,6 @@ import Database.Base
 import Database.Skill
 import Database.Servant
 
-getBond ∷ Servant -> Maybe CraftEssence
-getBond (Servant s) = go s.name
-  where
-    go = memoize \name -> let match (CraftEssence ce) = ce.bond == Just name 
-                          in find match craftEssences
-
-newtype CraftEssence = CraftEssence { name     ∷ String
-                                    , id       ∷ Int
-                                    , rarity   ∷ Int
-                                    , stats    ∷ { base ∷ Stat, max ∷ Stat }
-                                    , effect   ∷ Array ActiveEffect
-                                    , bond     ∷ Maybe String
-                                    , limited  ∷ Boolean
-                                    }
-
-instance _0_ ∷ Show CraftEssence where
-  show (CraftEssence ce) = ce.name
-
-getEffects ∷ CraftEssence -> Array ActiveEffect
-getEffects (CraftEssence ce) = filter (not <<< demerit) $ simplify <$> ce.effect
-
-class (G.BoundedEnum a, Show a) <= MatchCraftEssence a where
-    ceHas ∷ a -> Boolean -> CraftEssence -> Boolean
-instance _b_ ∷ MatchCraftEssence BuffEffect where
-    ceHas a noSelf = any match <<< getEffects where
-        match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
-        match _ = false
-instance _c_ ∷ MatchCraftEssence DebuffEffect where
-    ceHas a _ = any match <<< getEffects where
-        match (Debuff t _ b _) = a == b && not (allied t)
-        match _ = false
-instance _d_ ∷ MatchCraftEssence InstantEffect where
-    ceHas a noSelf = any match <<< getEffects where
-        match (To t b _) = a == b && (not noSelf || t /= Self)
-        match _ = false
-instance _e_ ∷ MatchCraftEssence BonusEffect where
-    ceHas a _ = any match <<< getEffects where
-        match (Bonus b _) = a == b
-        match _ = false
-
-equipped ∷ Class -> ActiveEffect -> ActiveEffect
-equipped = When <<< append "equipped by a " <<< show
-
-{-
-TEMPLATE BELOW
-
-, { name:     ?_
-  , id:       ?_
-  , rarity:   ?_
-  , stats:    { base: { atk: ?_, hp: ?_ }
-              , max:  { atk: ?_, hp: ?_ }
-              }
-  , effect:   ?_
-  , bond:     Nothing
-  , limited:  false
-  }
--}
-
 craftEssences ∷ Array CraftEssence
 craftEssences = CraftEssence <$>
 [ { name:     "Tenacity"
@@ -2489,3 +2431,47 @@ craftEssences = CraftEssence <$>
           , bond:     Just servant
           , limited:  false
           }
+
+
+getBond ∷ Servant -> Maybe CraftEssence
+getBond (Servant s) = go s.name
+  where
+    go = memoize \name -> let match (CraftEssence ce) = ce.bond == Just name 
+                          in find match craftEssences
+
+newtype CraftEssence = CraftEssence { name     ∷ String
+                                    , id       ∷ Int
+                                    , rarity   ∷ Int
+                                    , stats    ∷ { base ∷ Stat, max ∷ Stat }
+                                    , effect   ∷ Array ActiveEffect
+                                    , bond     ∷ Maybe String
+                                    , limited  ∷ Boolean
+                                    }
+
+instance _0_ ∷ Show CraftEssence where
+  show (CraftEssence ce) = ce.name
+
+getEffects ∷ CraftEssence -> Array ActiveEffect
+getEffects (CraftEssence ce) = filter (not <<< demerit) $ simplify <$> ce.effect
+
+class (G.BoundedEnum a, Show a) <= MatchCraftEssence a where
+    ceHas ∷ a -> Boolean -> CraftEssence -> Boolean
+instance _b_ ∷ MatchCraftEssence BuffEffect where
+    ceHas a noSelf = any match <<< getEffects where
+        match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
+        match _ = false
+instance _c_ ∷ MatchCraftEssence DebuffEffect where
+    ceHas a _ = any match <<< getEffects where
+        match (Debuff t _ b _) = a == b && not (allied t)
+        match _ = false
+instance _d_ ∷ MatchCraftEssence InstantEffect where
+    ceHas a noSelf = any match <<< getEffects where
+        match (To t b _) = a == b && (not noSelf || t /= Self)
+        match _ = false
+instance _e_ ∷ MatchCraftEssence BonusEffect where
+    ceHas a _ = any match <<< getEffects where
+        match (Bonus b _) = a == b
+        match _ = false
+
+equipped ∷ Class -> ActiveEffect -> ActiveEffect
+equipped = When <<< append "equipped by a " <<< show

@@ -109,7 +109,7 @@ sabers = Servant <$>
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
   , stats:    { base:  { atk: 1793,  hp: 2089 }
-              , max:   { atk: 11607, hp: 14248 }
+              , max:   { atk: 11607, hp: 14284 }
               , grail: { atk: 12706, hp: 15609 }
               }
   , actives:  [ { name:   "Stars for the Sky A"
@@ -350,7 +350,7 @@ sabers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 4, ex: 5 }
   , traits:   [Male, Brynhild, Riding, EnumaElish]
   , death:    28.0
-  , align:    Lawful:Balanced
+  , align:    Lawful:Good
   , limited:  false
   , free:     false
   }
@@ -405,7 +405,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Buster Buster
-  , stats:    { base:  { atk: 1642,  hp: 1909 }
+  , stats:    { base:  { atk: 1642,  hp: 1901 }
               , max:   { atk: 9854, hp: 11882 }
               , grail: { atk: 11931, hp: 14541 }
               }

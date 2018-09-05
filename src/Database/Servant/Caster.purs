@@ -576,7 +576,7 @@ casters = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 3, ex: 4 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
-  , align:    Lawful:Good
+  , align:    Chaotic:Good
   , limited:  true
   , free:     true
   }
@@ -864,7 +864,7 @@ casters = Servant <$>
   , phantasm: { name:   "Requiem for Death"
               , desc:   "Funeral Music for the Death God"
               , rank:   B
-              , card:   Buster
+              , card:   Arts
               , kind:   "Anti-Army"
               , hits:   0
               , effect: [ To Self OverChance $ 60.0 ~ 80.0 ]

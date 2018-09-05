@@ -759,7 +759,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
-  , stats:    { base:  { atk: 1366,  hp: 1555 }
+  , stats:    { base:  { atk: 1366,  hp: 1979 }
               , max:   { atk: 7356, hp: 8640 }
               , grail: { atk: 9955, hp: 11714 }
               }

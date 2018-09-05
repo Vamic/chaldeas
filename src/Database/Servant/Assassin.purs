@@ -261,7 +261,7 @@ assassins = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "EMIYA (Assassin)"
+, { name:     "Emiya (Assassin)"
   , id:       109
   , rarity:   4
   , class:    Assassin
@@ -319,7 +319,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Star
   , deck:     Deck Quick Quick Quick Arts Buster
-  , stats:    { base:  { atk: 1508,  hp: 1786 }
+  , stats:    { base:  { atk: 1851,  hp: 1786 }
               , max:   { atk: 9049, hp: 11168 }
               , grail: { atk: 10956, hp: 13541 }
               }
@@ -417,7 +417,7 @@ assassins = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Fuuma Kotarou"
+, { name:     "Fuuma \"Evil-wind\" Kotarou"
   , id:       117
   , rarity:   3
   , class:    Assassin
@@ -466,7 +466,7 @@ assassins = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Sasaki Kojiro"
+, { name:     "Sasaki Kojirou"
   , id:       39
   , rarity:   1
   , class:    Assassin
@@ -773,7 +773,7 @@ assassins = Servant <$>
               , over:   [ Debuff Enemy 3 CritChance $ 10.0 ~ 50.0 ]
               , first:  false
               }
-  , gen:      { starWeight: 97, starRate: 25.5, npAtk: 0.38, npDef: 4 }
+  , gen:      { starWeight: 97, starRate: 25.5, npAtk: 0.48, npDef: 4 }
   , hits:     { quick: 3, arts: 3, buster: 1, ex: 6 }
   , traits:   [Female, EnumaElish]
   , death:    44.0

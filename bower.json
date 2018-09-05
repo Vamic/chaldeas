@@ -26,6 +26,6 @@
   { "purescript-psci-support": "^4.0.0" 
   , "purescript-test-unit": "latest"
   , "purescript-affjax": "^7.0.0"
-  , "purescript-argonaut": "^4.0.1"
+  , "purescript-globals": "^4.0.0"
   }
 }

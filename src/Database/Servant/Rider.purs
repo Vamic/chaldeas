@@ -302,7 +302,7 @@ riders = Servant <$>
   , limited:  true
   , free:     true
   }
-, { name:     "Saint Martha"
+, { name:     "Martha"
   , id:       30
   , rarity:   4
   , class:    Rider
@@ -494,7 +494,7 @@ riders = Servant <$>
               , first:  false
               }
   , gen:      { starWeight: 200, starRate: 9.1, npAtk: 0.84, npDef: 3 }
-  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 1 }
   , traits:   [Female, EnumaElish]
   , death:    50.0
   , align:    Chaotic:Evil
@@ -509,7 +509,7 @@ riders = Servant <$>
   , deck:     Deck Quick Quick Quick Arts Buster
   , stats:    { base:  { atk: 1489,  hp: 1787 }
               , max:   { atk: 8937, hp: 11172 }
-              , grail: { atk: 10821, hp: 13456 }
+              , grail: { atk: 10821, hp: 13546 }
               }
   , actives:  [ { name:   "Monstrous Strength C-"
                 , icon:   IconSwordUp

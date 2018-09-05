@@ -200,7 +200,7 @@ berserkers = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Nightingale"
+, { name:     "Florence Nightingale"
   , id:       97
   , rarity:   5
   , class:    Berserker

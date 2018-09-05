@@ -211,7 +211,7 @@ extras = Servant <$>
   , limited:  true
   , free:     false
   }
-, { name:     "Saint Martha (Ruler)"
+, { name:     "Martha (Ruler)"
   , id:       135
   , rarity:   4
   , class:    Ruler

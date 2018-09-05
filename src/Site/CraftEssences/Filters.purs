@@ -17,18 +17,7 @@ import Database
 
 extraFilters ∷ Array (Filter CraftEssence)
 extraFilters = join
-  [ [ namedBonus FilterEventBonus "+50% Attack for Female"
-      [ "Kaleid Ruby"
-      , "Kaleid Sapphire"
-      ]
-  , namedBonus FilterEventBonus "+Mr. Lion-Go Toy"
-      [ "Magical Girl of Sapphire" ]
-  , namedBonus FilterEventBonus "+Magical☆Bushido Musashi"
-      [ "Kill on Sight" ]
-  , namedBonus FilterEventBonus "+Expensive Pudding"
-      [ "Zunga Zunga!" ]
-  ]
-  , [ Filter FilterSource "Limited"
+  [ [ Filter FilterSource "Limited"
       \_ (CraftEssence s) -> s.limited && isNothing s.bond
     , Filter FilterSource "Non-Limited"
       \_ (CraftEssence s) -> not s.limited && isNothing s.bond

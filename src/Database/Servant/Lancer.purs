@@ -111,7 +111,7 @@ lancers = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Tamamo no Mae (Lancer)"
+, { name:     "Tamamo-no-Mae (Lancer)"
   , id:       128
   , rarity:   5
   , class:    Lancer
@@ -461,7 +461,7 @@ lancers = Servant <$>
               , over:   [ Debuff Enemies 3 Curse $ 500.0 ~ 2500.0 ]
               , first:  false
               }
-  , gen:      { starWeight: 90, starRate: 11.0, npAtk: 1.1, npDef: 4 }
+  , gen:      { starWeight: 90, starRate: 11.8, npAtk: 1.1, npDef: 4 }
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    24.0
@@ -621,7 +621,7 @@ lancers = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Leonidas"
+, { name:     "Leonidas I"
   , id:       21
   , rarity:   2
   , class:    Lancer
@@ -818,7 +818,7 @@ lancers = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Diarmuid ua Duibhne"
+, { name:     "Diarmuid Ua Duibhne"
   , id:       71
   , rarity:   3
   , class:    Lancer
@@ -860,7 +860,7 @@ lancers = Servant <$>
               , over:   [ Debuff Enemy 5 Curse $ 500.0 ~ 1500.0 ]
               , first:  false
               }
-  , gen:      { starWeight: 87, starRate: 12.3, npAtk: 0.78, npDef: 4 }
+  , gen:      { starWeight: 87, starRate: 12.3, npAtk: 0.79, npDef: 4 }
   , hits:     { quick: 2, arts: 2, buster: 2, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0

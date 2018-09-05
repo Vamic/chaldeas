@@ -1356,7 +1356,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited :  true
   }
-, { name:     "Summer's Futuresight"
+, { name:     "Summer's Precognition"
   , id:       160
   , rarity:   4
   , icon:     IconDodge
@@ -1700,7 +1700,7 @@ craftEssences = CraftEssence <$>
   }
 , bond 191 "Crown of the Star" "Altria Pendragon" IconDamageUp
   [ party AttackUp 15 ]
-, bond 192 "Relic of the King" "Zhuge Liang (El-Melloi II)" IconBusterUp
+, bond 192 "Relic of the King" "Zhuge Liang (Lord El-Melloi II)" IconBusterUp
   [ party' Buster 15 ]
 , bond 193 "Triumph of the Lord Impaler" "Vlad III" IconBeamUp
   [ np30, atkChance 30 <<< To Self GaugeUp $ Flat 5.0 ]
@@ -1726,7 +1726,7 @@ craftEssences = CraftEssence <$>
   [ party HealPerTurn 500 ]
 , bond 204 "My Necklace" "Marie Antoinette" IconStarHaloUp
   [ party StarUp 20 ]
-, bond 205 "Staff He Gave Me" "Saint Martha" IconHealUp
+, bond 205 "Staff He Gave Me" "Martha" IconHealUp
   [ party HealingReceived 30 ]
 , bond 206 "Iron Maiden" "Carmilla" IconBeamUp
   [ np30, atkChance 10 $ Debuff Target 1 SealNP Full ]
@@ -1895,7 +1895,7 @@ craftEssences = CraftEssence <$>
   [ party' Buster 15 ]
 , bond 238 "Glory of the Past Days" "Edward Teach" IconBusterUp
   [ party' Buster 15 ]
-, bond 239 "Heaven Among the Mountains" "Sasaki Kojiro" IconQuickUp
+, bond 239 "Heaven Among the Mountains" "Sasaki Kojirou" IconQuickUp
   [ party' Quick 15 ]
 , { name:     "Divine Princess of the Storm"
   , id:       240
@@ -1989,7 +1989,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 248 "Tamamo's Club" "Tamamo no Mae" IconArtsUp
+, bond 248 "Tamamo's Club" "Tamamo-no-Mae" IconArtsUp
   [ party' Arts 15 ]
 , bond 249 "Headband of Resolve" "Okita Souji" IconExclamationUp
   [ party CritUp 25 ]
@@ -2129,7 +2129,7 @@ craftEssences = CraftEssence <$>
   [ When "defeated" <<< Times 1 $ Grant Party 0 Invincibility Full 
   , When "defeated" <<< Grant Party 3 DamageCut $ Flat 1000.0
   ]
-, bond 274 "Thermopylae" "Leonidas" IconBusterUp
+, bond 274 "Thermopylae" "Leonidas I" IconBusterUp
   [ party' Buster 15 ]
 , bond 275 "Haydn Quartets" "Wolfgang Amadeus Mozart" IconBeamUp
   [ party NPUp 20 ]
@@ -2423,7 +2423,7 @@ craftEssences = CraftEssence <$>
   [ party' Arts 15 ]
 , bond 324 "Hero's Armament" "Hektor" IconBeamUp
   [ party NPUp 20 ]
-, bond 334 "Indomitableness" "Nightingale" IconBusterUp
+, bond 334 "Indomitableness" "Florence Nightingale" IconBusterUp
   [ party' Buster 10, party HealingReceived 20 ]
 , bond 335 "One-Man War" "Cu Chulainn (Alter)" IconKneel
   [ np30, gutsPercent 20 ]
@@ -2437,7 +2437,7 @@ craftEssences = CraftEssence <$>
   [ party NPGen 15 ]
 , bond 340 "Reaching the Zenith of My Skill" "Li Shuwen" IconArtsUp
   [ party' Arts 15 ]
-, bond 341 "Knight's Oath" "Diarmuid ua Duibhne" IconArtsUp
+, bond 341 "Knight's Oath" "Diarmuid Ua Duibhne" IconArtsUp
   [ party' Quick 10, party' Arts 10 ]
 , bond 342 "Elemental" "Paracelsus von Hohenheim" IconArtsUp
   [ party' Arts 10, party NPUp 10 ]
@@ -2449,11 +2449,11 @@ craftEssences = CraftEssence <$>
   [ party AttackUp 15 ]
 , bond 352 "Bai Long" "Xuanzang Sanzang" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
-, bond 353 "The Sun Shines Here" "EMIYA (Assassin)" IconArtsQuickUp
+, bond 353 "The Sun Shines Here" "Emiya (Assassin)" IconArtsQuickUp
   [ party' Quick 10, party' Arts 10 ]
 , bond 354 "Dress of Heaven" "Irisviel (Dress of Heaven)" IconHealUp
   [ party HealingReceived 30 ]
-, bond 355 "Manifestation of The Golden Rule" "Kid Gilgamesh" IconNobleUp
+, bond 355 "Manifestation of The Golden Rule" "Gilgamesh (Child)" IconNobleUp
   [ party NPGen 15 ]
 , bond 356 "Spirit of The Vast Land" "Geronimo" IconNobleUp
   [ party NPGen 15 ]
@@ -2558,7 +2558,7 @@ craftEssences = CraftEssence <$>
   [ party CritUp 25 ]
 , bond 374 "Exercising the Royal Authority" "Nitocris" IconNobleUp
   [ party NPGen 10, party NPUp 10 ]
-, bond 375 "Mask of A Demon" "Fuuma Kotarou" IconQuickUp
+, bond 375 "Mask of A Demon" "Fuuma \"Evil-wind\" Kotarou" IconQuickUp
   [ party' Quick 15 ]
 , bond 376 "Cook Despite of Exhaustion" "Tawara Touta" IconHealTurn
   [ party HealPerTurn 500 ]
@@ -2566,7 +2566,7 @@ craftEssences = CraftEssence <$>
   [ party AttackUp 10, party NPUp 10 ]
 , bond 378 "All-Encompassing Wisdom" "Leonardo da Vinci" IconBeamUp
   [ party NPUp 20 ]
-, bond 379 "Sunset Beach" "Tamamo no Mae (Lancer)" IconQuickBusterUp
+, bond 379 "Sunset Beach" "Tamamo-no-Mae (Lancer)" IconQuickBusterUp
   [ party' Quick 10, party' Buster 10 ]
 , bond 380 "Lady of the Lake" "Lancelot (Saber)" IconNobleUp
   [ party NPGen 10, party CritUp 10 ]
@@ -2588,7 +2588,7 @@ craftEssences = CraftEssence <$>
   [ party AttackUp 15 ]
 , bond 392 "Phantasmal Summoning (Install)" "Illyasviel von Einzbern" IconAllUp
   [ party' Buster 8, party' Quick 8, party' Arts 8 ]
-, bond 394 "Holy Knuckle" "Saint Martha (Ruler)" IconBusterUp
+, bond 394 "Holy Knuckle" "Martha (Ruler)" IconBusterUp
   [ party' Buster 15 ]
 , bond 395 "Minimal Prudence" "Scathach (Assassin)" IconQuickUp
   [ party' Quick 15 ]

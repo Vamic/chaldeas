@@ -19,21 +19,7 @@ import Site.Filtering
 
 extraFilters ∷ Array (Filter Servant)
 extraFilters = join
-  [ [ namedBonus FilterEventBonus "+100% Attack"
-      [ "Illyasviel von Einzbern"
-      , "Chloe von Einzbern"
-      ,  "Mash Kyrielight"
-      ]
-    , namedBonus FilterEventBonus "+50% Attack"
-      [ "Queen Medb"
-      , "Nursery Rhyme"
-      , "Helena Blavatsky"
-      , "Medea (Lily)"
-      ]
-    , Filter FilterEventBonus "+50% Kaleid CE"
-      \_ (Servant s) -> Male `notElem` s.traits
-    ]
-  , [ namedBonus FilterAvailability "New"
+  [ [ namedBonus FilterAvailability "New"
       [ "Illyasviel von Einzbern"
       , "Chloe von Einzbern"
       ]

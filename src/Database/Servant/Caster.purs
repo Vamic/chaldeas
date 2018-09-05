@@ -6,7 +6,7 @@ import Database.Model
 
 casters ∷ Array Servant
 casters = Servant <$>
-[ { name:     "Zhuge Liang (El-Melloi II)"
+[ { name:     "Zhuge Liang (Lord El-Melloi II)"
   , id:       37
   , rarity:   5
   , class:    Caster
@@ -63,7 +63,7 @@ casters = Servant <$>
   , limited:  false
   , free:     false
   }
-, { name:     "Tamamo no Mae"
+, { name:     "Tamamo-no-Mae"
   , id:       62
   , rarity:   5
   , class:    Caster

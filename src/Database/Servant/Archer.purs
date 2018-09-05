@@ -710,7 +710,7 @@ archers = Servant <$>
               , rank:   A
               , card:   Buster
               , kind:   "Anti-Army"
-              , hits:   2
+              , hits:   1
               , effect: [ To Enemies Damage $ 800.0 ~ 1200.0
                         , To Self DemeritKill Full
                         ]
@@ -777,7 +777,7 @@ archers = Servant <$>
   , limited:  false
   , free:     true
   }
-, { name:     "Kid Gilgamesh"
+, { name:     "Gilgamesh (Child)"
   , id:       95
   , rarity:   3
   , class:    Archer
@@ -819,7 +819,7 @@ archers = Servant <$>
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 7.9, npAtk: 0.62, npDef: 3 }
-  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
+  , hits:     { quick: 3, arts: 3, buster: 3, ex: 3 }
   , traits:   [Male, Divine, EnumaElish, King]
   , death:    36.0
   , align:    Chaotic:Good

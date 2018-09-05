@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "clean": "rimraf output && rimraf .pulp-cache",
+    "build": "bower install && pulp build --no-check-main --modules Export -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && purs bundle \"output/*/*.js\" -o js/chaldeas.js --main Main --module Main --module Export && uglifyjs js/chaldeas.js -c -m -o js/chaldeas.js"
+  },
+  "devDependencies": {
+    "bower": "^1.8.4",
+    "purescript": "^0.12.0",
+    "pulp": "^12.3.0",
+    "purescript-psa": "^0.7.3",
+    "rimraf": "^2.6.2",
+    "uglifyjs2": "^0.0.1"
+  }
+}

@@ -41,6 +41,10 @@ newtype Servant = Servant { name     ∷ String
 
 instance _0_ ∷ Show Servant where
   show (Servant s) = s.name
+instance _1_ ∷ Eq Servant where
+  eq (Servant a) (Servant b) = eq a.id b.id
+instance _2_ ∷ Ord Servant where
+  compare (Servant a) (Servant b) = compare a.id b.id
 
 data Deck = Deck Card Card Card Card Card
 

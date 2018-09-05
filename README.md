@@ -8,15 +8,11 @@ Bringing order to Fate/Grand Order
 BSD 3-Clause, see [LICENSE](https://github.com/jnbooth/chaldeas/blob/master/LICENSE).
 
 ## Getting Started
-The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [PureScript IDE](https://marketplace.visualstudio.com/items?itemName=nwolverson.ide-purescript) extension. [Pulp](https://github.com/purescript-contrib/pulp#installation), PureScript's build tool, is also required. The reporting frontend [purescript-pulp](https://github.com/natefaubion/purescript-psa) is recommended. Once these prerequisites are installed, `./build.sh` will build CHALDEAS.
+The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [PureScript IDE](https://marketplace.visualstudio.com/items?itemName=nwolverson.ide-purescript) extension. [NPM](https://www.npmjs.com/get-npm) is the package manager. Once NPM is installed, run
 
-In 
-
-~~~~ bower install ~~~~
-
-followed by 
-
-~~~~ pulp build --to js/chaldeas.js --no-check-main --modules Export` ~~~~
+```sh
+npm run build
+```
 
 ## Skill Effects
 Skill effects are enumerated at the top of src/Database/Skill.purs. Before adding a new skill effect, make sure it isn't already on the list.

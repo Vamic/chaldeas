@@ -22,5 +22,6 @@
     , "purescript-strings": "^4.0.0"
     , "purescript-web-uievents": "^1.0.0"
   }
-, "devDependencies": { "purescript-psci-support": "^4.0.0" }
+, "devDependencies": 
+  { "purescript-psci-support": "^4.0.0" }
 }

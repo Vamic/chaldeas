@@ -165,9 +165,10 @@ portrait big artorify (Tuple lab ce'@(CraftEssence ce))
       , H.footer_
         <<< singleton <<< _span <<< S.joinWith "  " $ replicate ce.rarity "★"
       ]
-  where meta       = not big ? (cons <<< _click <<< Focus $ Just ce')
-                   $ [_c $ "portrait stars" <> show ce.rarity]
-        doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
+  where 
+    meta       = not big ? (cons <<< _click <<< Focus $ Just ce')
+               $ [_c $ "portrait stars" <> show ce.rarity]
+    doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
 
 modal ∷ ∀ a. Preferences -> Maybe CraftEssence
         -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)

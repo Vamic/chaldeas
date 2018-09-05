@@ -174,14 +174,15 @@ portrait big artorify ascension (Tuple lab s'@(Servant s))
         <<< ((big && ascension < 4) ? (_ `snoc` nextAscend))
         <<< singleton <<< _span <<< S.joinWith "  " $ replicate s.rarity "★"
       ]
-  where meta       = not big ? (cons <<< _click <<< Focus $ Just s')
-                   $ [_c $ "portrait stars" <> show s.rarity]
-        doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
-        prevAscend = H.a [_click <<< Ascend $ ascension - 1] $ _txt "<"
-        nextAscend = H.a [_click <<< Ascend $ ascension + 1] $ _txt ">"
-        ascend
-          | ascension <= 1 = ""
-          | otherwise      = " " <> show ascension
+  where 
+    meta       = not big ? (cons <<< _click <<< Focus $ Just s')
+               $ [_c $ "portrait stars" <> show s.rarity]
+    doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
+    prevAscend = H.a [_click <<< Ascend $ ascension - 1] $ _txt "<"
+    nextAscend = H.a [_click <<< Ascend $ ascension + 1] $ _txt ">"
+    ascend
+      | ascension <= 1 = ""
+      | otherwise      = " " <> show ascension
 
 modal ∷ ∀ a. Preferences -> Int -> Maybe Servant
         -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
@@ -225,9 +226,10 @@ modal prefs ascend
         , _tr "Star Rate"   <<< _txt $ show s.gen.starRate <> "%"
         , _tr "NP/Hit"      <<< _txt $ show s.gen.npAtk <> "%"
         , _tr "NP/Defend"   <<< _txt $ show s.gen.npDef <> "%"
-        , _tr "Bond CE"     bondCe
+        , _tr "Death Rate"  <<< _txt $ show s.death
         ]
-      , H.h2 [_c "npheading"] $ _txt "Noble Phantasm"
+      , H.section [_c "bond"] [ H.strong_ $ _txt "Max Bond CE: ", bondCe ]
+      , _h 2 "Noble Phantasm"
       , H.table [_c "phantasm"]
         [ _tr "Name" <<< _txt $ s.phantasm.name
         , _tr "Rank" <<< _txt $ show s.phantasm.rank
@@ -260,8 +262,8 @@ modal prefs ascend
     gotBond = getBond s'
     bondCe = case gotBond of
         Just (CraftEssence ce) -> 
-            [ H.span [_c "link", _click $ Switch gotBond] $ _txt ce.name ]
-        Nothing -> [ _span "N/A" ]
+            H.span [_c "link", _click $ Switch gotBond] $ _txt ce.name
+        Nothing -> _span "N/A"
     overMeta
       | s.phantasm.first = [_c "activates"]
       | otherwise        = []

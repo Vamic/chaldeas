@@ -299,8 +299,8 @@ craftEssences = CraftEssence <$>
   , id:       26
   , rarity:   4
   , icon:     IconExclamationUp
-  , stats:    { base: { atk: 0, hp: 400 }
-              , max:  { atk: 0, hp: 1500 }
+  , stats:    { base: { atk: 400,  hp: 0 }
+              , max:  { atk: 1500, hp: 0 }
               }
   , effect:   [ Grant Self 0 CritUp $ 25.0 ~ 30.0 ]
   , bond:     Nothing
@@ -466,8 +466,8 @@ craftEssences = CraftEssence <$>
   , id:       41
   , rarity:   5
   , icon:     IconKneel
-  , stats:    { base: { atk: 0,   hp: 0 }
-              , max:  { atk: 500, hp: 2000 }
+  , stats:    { base: { atk: 0, hp: 500 }
+              , max:  { atk: 0, hp: 2000 }
               }
   , effect:   [ Times 1 <<< Grant Self 0 Guts $ 500.0 ~ 1000.0 ]
   , bond:     Nothing
@@ -561,7 +561,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Jack-o'-Lantern"
   , id:       49
   , rarity:   3
-  , icon:     IconSwordUp
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -609,7 +609,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Little Halloween Devil"
   , id:       53
   , rarity:   5
-  , icon:     IconNoble
+  , icon:     IconNobleUp
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
@@ -644,7 +644,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Code Cast"
   , id:       56
   , rarity:   4
-  , icon:     IconSwordUp
+  , icon:     IconSwordShieldUp
   , stats:    { base: { atk: 200, hp: 300 }
               , max:  { atk: 750, hp: 1125 }
               }
@@ -704,7 +704,7 @@ craftEssences = CraftEssence <$>
 , { name:     "After-Party Order!"
   , id:       60
   , rarity:   4
-  , icon:     IconQuickUp
+  , icon:     IconQuickBusterUp
   , stats:    { base: { atk: 400,  hp: 0 }
               , max:  { atk: 1500, hp: 0 }
               }
@@ -914,7 +914,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Grand New Year"
   , id:       79
   , rarity:   5
-  , icon:     IconCrosshairUp
+  , icon:     IconShield
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
@@ -1022,7 +1022,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Mana Gauge"
   , id:       90
   , rarity:   3
-  , icon:     IconBusterUp
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0  }
               }
@@ -1044,7 +1044,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Storch Ritter"
   , id:       92
   , rarity:   3
-  , icon:     IconBeamUp
+  , icon:     IconDamageUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1260,7 +1260,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Street Choco-Maid"
   , id:       111
   , rarity:   5
-  , icon:     IconAllUp
+  , icon:     IconArtsQuickUp
   , stats:    { base: { atk: 250, hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
@@ -1698,7 +1698,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 191 "Crown of the Star" "Altria Pendragon" IconSwordUp
+, bond 191 "Crown of the Star" "Altria Pendragon" IconDamageUp
   [ party AttackUp 15 ]
 , bond 192 "Relic of the King" "Zhuge Liang (El-Melloi II)" IconBusterUp
   [ party' Buster 15 ]
@@ -1726,7 +1726,7 @@ craftEssences = CraftEssence <$>
   [ party HealPerTurn 500 ]
 , bond 204 "My Necklace" "Marie Antoinette" IconStarHaloUp
   [ party StarUp 20 ]
-, bond 205 "Staff He Gave Me" "Saint Martha" IconBeamUp
+, bond 205 "Staff He Gave Me" "Saint Martha" IconHealUp
   [ party HealingReceived 30 ]
 , bond 206 "Iron Maiden" "Carmilla" IconBeamUp
   [ np30, atkChance 10 $ Debuff Target 1 SealNP Full ]
@@ -1804,7 +1804,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, bond 216 "Key of the King's Law" "Gilgamesh" IconDamageUp
+, bond 216 "Key of the King's Law" "Gilgamesh" IconBeamUp
   [ np30, atkChance 30 <<< Grant Self 3 CritUp $ Flat 10.0 ]
 , bond 217 "Golden Glass" "Sakata Kintoki" IconBeamUp
   [ np30, atkChance 30 <<< To Self GaugeUp $ Flat 5.0 ]
@@ -1824,7 +1824,7 @@ craftEssences = CraftEssence <$>
   [ party CritUp 25 ]
 , bond 225 "Insurrection" "Spartacus" IconKneel
   [ gutsPercent 50 ]
-, { name:     "GO WEST!!"
+, { name:     "Go West!!"
   , id:       226
   , rarity:   5
   , icon:     IconBeamUp
@@ -1981,7 +1981,7 @@ craftEssences = CraftEssence <$>
   , rarity:   3
   , icon:     IconNobleUp
   , stats:    { base: { atk: 100, hp: 160 }
-              , max:  { atk: 500, hp: 180 }
+              , max:  { atk: 500, hp: 800 }
               }
   , effect:   [ Grant Self 0 NPGen $ 5.0 ~ 10.0
               , To Self GaugeUp $ 25.0 ~ 40.0
@@ -2003,7 +2003,7 @@ craftEssences = CraftEssence <$>
   [ party' Arts 15 ]
 , bond 254 "Formless Island" "Medusa" IconNobleUp
   [ party NPGen 15 ]
-, bond 255 "Cask of the Wise" "Alexander" IconExclamationUp
+, bond 255 "Cask of the Wise" "Alexander" IconQuickUp
   [ party' Quick 15 ]
 , bond 256 "Shaytan's Arm" "Hassan of the Cursed Arm" IconReaperUp
   [ party KillUp 20 ]
@@ -2104,8 +2104,8 @@ craftEssences = CraftEssence <$>
   , id:       265
   , rarity:   3
   , icon:     IconNoble
-  , stats:    { base: { atk: 300,  hp: 0 }
-              , max:  { atk: 1500, hp: 0 }
+  , stats:    { base: { atk: 0, hp: 300 }
+              , max:  { atk: 0, hp: 1500 }
               }
   , effect:   [ When "defeated" <<< To Party GaugeUp $ 10.0 ~ 15.0 ]
   , bond:     Nothing
@@ -2411,7 +2411,7 @@ craftEssences = CraftEssence <$>
   [ party' Arts 15 ]
 , bond 317 "Château d'If" "Edmond Dantes" IconQuickUp
   [ party' Quick 15 ]
-, bond 318 "Unlimited Pancakes" "Medea (Lily)" IconHeal
+, bond 318 "Unlimited Pancakes" "Medea (Lily)" IconHealUp
   [ party HealingReceived 30 ]
 , bond 319 "Red Leather Jacket" "Ryougi Shiki (Assassin)" IconReaperUp
   [ party KillUp 30 ]
@@ -2421,7 +2421,7 @@ craftEssences = CraftEssence <$>
   [ party (AttackVs Beast) 20 ]
 , bond 323 "Radiance of the Goddess (Euryale)" "Euryale" IconArtsUp
   [ party' Arts 15 ]
-, bond 324 "Hero's Arms" "Hektor" IconBeamUp
+, bond 324 "Hero's Armament" "Hektor" IconBeamUp
   [ party NPUp 20 ]
 , bond 334 "Indomitableness" "Nightingale" IconBusterUp
   [ party' Buster 10, party HealingReceived 20 ]
@@ -2431,25 +2431,25 @@ craftEssences = CraftEssence <$>
   [ party NPGen 15 ]
 , bond 337 "Indestructible Blade" "Rama" IconExclamationUp
   [ party CritUp 25 ]
-, bond 338 "Concealed Goddess" "Helena Blavatsky" IconSwordUp
+, bond 338 "Concealed Goddess" "Helena Blavatsky" IconDamageUp
   [ party (ClassAffinity Assassin) 20 ]
 , bond 339 "Lights of Civilization" "Thomas Edison" IconNobleUp
   [ party NPGen 15 ]
 , bond 340 "Reaching the Zenith of My Skill" "Li Shuwen" IconArtsUp
   [ party' Arts 15 ]
-, bond 341 "Knight's Oath" "Diarmuid ua Duibhne" IconArtsQuickUp
+, bond 341 "Knight's Oath" "Diarmuid ua Duibhne" IconArtsUp
   [ party' Quick 10, party' Arts 10 ]
 , bond 342 "Elemental" "Paracelsus von Hohenheim" IconArtsUp
   [ party' Arts 10, party NPUp 10 ]
 , bond 343 "NEO Difference Engine" "Charles Babbage" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
-, bond 350 "Hell of Blazing Penalty" "Jeanne d'Arc (Alter)" IconBusterUp
+, bond 350 "Hell of Blazing Punishment" "Jeanne d'Arc (Alter)" IconBusterUp
   [ party' Buster 15 ]
 , bond 351 "Gordian Knot" "Iskandar" IconSwordUp
   [ party AttackUp 15 ]
 , bond 352 "Bai Long" "Xuanzang Sanzang" IconBusterUp
   [ party' Buster 20, Debuff Party 0 DefenseDown $ Flat 10.0 ]
-, bond 353 "Where the Sun Cannot Reach" "EMIYA (Assassin)" IconArtsQuickUp
+, bond 353 "The Sun Shines Here" "EMIYA (Assassin)" IconArtsQuickUp
   [ party' Quick 10, party' Arts 10 ]
 , bond 354 "Dress of Heaven" "Irisviel (Dress of Heaven)" IconHealUp
   [ party HealingReceived 30 ]
@@ -2463,7 +2463,7 @@ craftEssences = CraftEssence <$>
   [ party' Buster 8, party' Quick 8, party' Arts 8 ]
 , bond 359 "Last Splinter" "Angra Mainyu" IconDamageUp
   [ Grant Self 0 (AttackVs Beast) $ Flat 200.0, gutsPercent 20 ]
-, { name:     "Fate/Extella"
+, { name:     "Fate/EXTELLA"
   , id:       360
   , rarity:   4
   , icon:     IconExclamationUp
@@ -2498,7 +2498,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
-, { name:     "Spiritron Portrait: Tamamo no Mae"
+, { name:     "Spiritron Portrait: Tamamo-no-Mae"
   , id:       363
   , rarity:   4
   , icon:     IconRoad
@@ -2560,9 +2560,9 @@ craftEssences = CraftEssence <$>
   [ party NPGen 10, party NPUp 10 ]
 , bond 375 "Mask of A Demon" "Fuuma Kotarou" IconQuickUp
   [ party' Quick 15 ]
-, bond 376 "Cook Despite Exhaustion" "Tawara Touta" IconHealTurn
+, bond 376 "Cook Despite of Exhaustion" "Tawara Touta" IconHealTurn
   [ party HealPerTurn 500 ]
-, bond 377 "King's Horse" "Altria Pendragon (Lancer)" IconSwordUp
+, bond 377 "Dun Stallion" "Altria Pendragon (Lancer)" IconSwordUp
   [ party AttackUp 10, party NPUp 10 ]
 , bond 378 "All-Encompassing Wisdom" "Leonardo da Vinci" IconBeamUp
   [ party NPUp 20 ]

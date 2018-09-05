@@ -23,5 +23,9 @@
     , "purescript-web-uievents": "^1.0.0"
   }
 , "devDependencies": 
-  { "purescript-psci-support": "^4.0.0" }
+  { "purescript-psci-support": "^4.0.0" 
+  , "purescript-test-unit": "latest"
+  , "purescript-affjax": "^7.0.0"
+  , "purescript-argonaut": "^4.0.1"
+  }
 }

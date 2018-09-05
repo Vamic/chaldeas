@@ -70,6 +70,7 @@ data Icon
     | IconSun
     | IconSunUp
     | IconSwordUp
+    | IconSwordShieldUp
     | IconCrosshairUp
     | IconTeeth
     | IconYinYang

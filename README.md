@@ -14,5 +14,11 @@ The recommended development environment is [Visual Studio Code](code.visualstudi
 npm run build
 ```
 
+Similarly, to run tests:
+
+```sh
+npm run test
+```
+
 ## Skill Effects
 Skill effects are enumerated at the top of src/Database/Skill.purs. Before adding a new skill effect, make sure it isn't already on the list.

@@ -56,7 +56,6 @@
       article               { text-align: center }
       section, p, td        { text-align: left }
       p input               { float: left; margin-left: -20px }
-      aside button          { width: 180px; margin-top: 5px; max-width: 100% }
       article .portrait img { width: 248px }
       footer a:first-child  { left: 14px }
       footer a:last-child   { right: 14px }
@@ -70,6 +69,15 @@
         { text-align: center }
       aside a
         { display: block }
+      aside button
+        { width: 5em
+        ; max-width: 45% 
+        }
+      aside:last-child button          
+        { width: 100% 
+        ; max-width: 100%
+        ; margin-top: 5px
+        }
       .selected, .unselected 
         { cursor: pointer }
       .selected:hover, .unselected:hover 

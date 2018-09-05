@@ -30,6 +30,7 @@ data Query a
     = Switch    (Maybe CraftEssence) a
     | Focus     (Maybe Servant) a
     | ClearAll  a
+    | Check     FilterTab Boolean a
     | FilterBy  (Array (Filter Servant)) a
     | Toggle    (Filter Servant) a
     | MatchAny  Boolean a
@@ -114,46 +115,53 @@ comp initialFocus initialPrefs = component
         | otherwise                    = [ P.enabled true, _click ClearAll ]
       filterSection tab = case getFilters tab of
         []    -> []
-        filts -> [ _h 3 $ show tab
-                 , H.form_ $ filts <#> \filt
+        filts -> cons (_h 3 $ show tab)
+                 <<< ((exclusive tab && length filts > 3) ? 
+                 let checked = length $ filter (eq tab <<< getTab) exclude in
+                 append 
+                   [ _button "All" (checked /= 0) $ Check tab true
+                   , _button "None" (checked /= length filts) $ Check tab false
+                  ])
+                 <<< singleton <<< H.form_ $ filts <#> \filt
                      -> H.p [_click $ Toggle filt ]
                       <<< _checkbox (show filt)
                        $ if exclusive tab then filt `notElem` exclude
                          else filt `elem` filters
-                 ]
 
   eval ∷ Query ~> ComponentDSL State Query Message m
   eval = case _ of
-      Switch    switchTo a -> a <$ raise switchTo
-      ClearAll           a -> a <$ modif _{ filters = [], exclude = [] }
-      SetSort   sortBy   a -> a <$ modif _{ sortBy = sortBy
-                                          , sorted = getSort sortBy
-                                          }
-      Ascend    ascend   a -> a <$ modify_ _{ ascend = ascend }
-      MatchAny  matchAny a -> a <$ modif _{ matchAny = matchAny }
-      Focus     focus    a -> a <$ do
+      Switch   switch a -> a <$ raise switch
+      ClearAll        a -> a <$ modif _{ filters = [], exclude = [] }
+      SetSort  sortBy a -> a <$ modif _{ sortBy = sortBy
+                                       , sorted = getSort sortBy
+                                       }
+      Ascend   ascend a -> a <$ modify_ _{ ascend = ascend }
+      MatchAny match  a -> a <$ modif _{ matchAny = match }
+      Check t  true   a -> a <$ modif (modExclude $ filter (notEq t <<< getTab))
+      Check t  false  a -> a <$ modif (modExclude $ nub <<< append (getFilters t))
+      Focus    focus  a -> a <$ do
           liftEffect $ hash focus
           modify_ _{ focus = focus, ascend = 1 }
-      SetPref   k v      a -> a <$ do
+      SetPref  k v    a -> a <$ do
           liftEffect $ setPreference k v
           modif (modPrefs $ M.insert k v)
-      FilterBy   filts    a
-        | any excludes filts -> a <$ modif _{ exclude = filts
-                                            , filters = []
-                                            , focus   = Nothing
-                                            }
-        | otherwise          -> a <$ modif _{ exclude = []
-                                            , filters = filts
-                                            , focus   = Nothing
-                                            }
-      Toggle filt a
-        | excludes filt -> a <$ modif (modExclude $ toggleIn filt)
-        | otherwise     -> a <$ modif (modFilters $ toggleIn filt)
+      Toggle   filt   a
+        | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
+        | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
+      FilterBy filts  a
+        | any (exclusive <<< getTab) filts -> a <$ modif _{ exclude = filts
+                                                          , filters = []
+                                                          , focus   = Nothing
+                                                          }
+        | otherwise                        -> a <$ modif _{ exclude = []
+                                                          , filters = filts
+                                                          , focus   = Nothing
+                                                          }
     where
       modif = modify_ <<< compose updateListing
       modFilters f state@{filters} = state{ filters = f filters }
-      modPrefs   f state@{prefs}   = state{ prefs   = f prefs }
       modExclude f state@{exclude} = state{ exclude = f exclude }
+      modPrefs   f state@{prefs}   = state{ prefs   = f prefs }
       toggleIn x xs
         | x `elem` xs = delete x xs
         | otherwise   = cons x xs

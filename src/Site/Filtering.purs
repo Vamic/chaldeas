@@ -1,7 +1,8 @@
 module Site.Filtering
   ( FilterTab(..)
   , Filter(..)
-  , exclusive, excludes
+  , exclusive
+  , getTab
   , updateListing
   ) where
 
@@ -40,12 +41,17 @@ instance _a_ ∷ Show FilterTab where
 
 data Filter a = Filter FilterTab String (Boolean -> a -> Boolean)
 
-excludes ∷ ∀ a. Filter a -> Boolean
-excludes (Filter tab _ _) = exclusive tab
+getTab ∷ ∀ a. Filter a -> FilterTab
+getTab (Filter tab _ _) = tab
 
 instance _c_ ∷ Eq (Filter a) where
   eq (Filter tabA a _) (Filter tabB b _) = tabA == tabB && a == b
-instance _d_ ∷ Show (Filter a) where
+instance _d_ ∷ Ord (Filter a) where
+  compare (Filter tabA a _) (Filter tabB b _) = case compare tabA tabB of
+      LT -> LT
+      GT -> GT
+      EQ -> compare a b
+instance _e_ ∷ Show (Filter a) where
   show (Filter tab a _) = a
 
 type FilterState a b = { sorted   ∷ Array (Tuple String a)

@@ -613,7 +613,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Grant Self 0 NPUp $ 20.0 ~ 25.0
+  , effect:   [ Grant Self 0 NPGen $ 20.0 ~ 25.0
               , To Self GaugeUp $ 50.0 ~ 60.0
               ]
   , bond:     Nothing

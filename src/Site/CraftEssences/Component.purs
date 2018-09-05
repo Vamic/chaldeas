@@ -132,17 +132,17 @@ comp initialFocus initialPrefs = component
           liftEffect $ setPreference k v
           modif <<< modPrefs $ M.insert k v
       Toggle     filt     a
-        | excludes filt -> a <$ modif (modExclude $ toggleIn filt)
-        | otherwise     -> a <$ modif (modFilters $ toggleIn filt)
+        | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
+        | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
       FilterBy   filts    a
-        | any excludes filts -> a <$ modif _{ exclude = filts
-                                            , filters = []
-                                            , focus   = Nothing
-                                            }
-        | otherwise          -> a <$ modif _{ exclude = []
-                                            , filters = filts
-                                            , focus   = Nothing
-                                            }
+        | any (exclusive <<< getTab) filts -> a <$ modif _{ exclude = filts
+                                                          , filters = []
+                                                          , focus   = Nothing
+                                                          }
+        | otherwise                        -> a <$ modif _{ exclude = []
+                                                          , filters = filts
+                                                          , focus   = Nothing
+                                                          }
       where
       modif = modify_ <<< compose updateListing
       modFilters f state@{filters} = state{ filters = f filters }

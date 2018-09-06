@@ -25,6 +25,7 @@ data Preference
     | ShowTables
     | ExcludeSelf
     | MaxAscension
+    | Thumbnails
 
 instance _a_ ∷ Show Preference where
   show ExcludeSelf = "Exclude self-applied effects"

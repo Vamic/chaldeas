@@ -88,7 +88,8 @@ comp initialFocus initialPrefs = component
           ] <> (filter exclusive enumArray >>= filterSection)
         , H.section_
           <<< (if sortBy == Rarity then identity else reverse)
-          $ portrait false artorify baseAscend <$> listing
+          $ portrait false (pref Thumbnails) (pref Artorify) baseAscend 
+            <$> listing
         , H.aside_ $
           [ _h 1 "Browse"
           , H.a_ <<< singleton <<< H.strong_ $ _txt "Servants"
@@ -105,11 +106,10 @@ comp initialFocus initialPrefs = component
           ] <> (filter (not exclusive) enumArray >>= filterSection)
         ]
     where
-      artorify = getPreference prefs Artorify
-      noSelf   = getPreference prefs ExcludeSelf
+      pref = getPreference prefs
       baseAscend
-        | getPreference prefs MaxAscension = 4
-        | otherwise                        = 1
+        | pref MaxAscension = 4
+        | otherwise         = 1
       clearAll
         | null filters && null exclude = [ P.enabled false ]
         | otherwise                    = [ P.enabled true, _click ClearAll ]
@@ -168,10 +168,12 @@ comp initialFocus initialPrefs = component
       hash Nothing = setHash ""
       hash (Just s) = setHash <<< urlName $ show s
 
-portrait ∷ ∀ a. Boolean -> Boolean -> Int -> Tuple String Servant
+portrait ∷ ∀ a. Boolean -> Boolean -> Boolean -> Int -> Tuple String Servant
            -> HTML a (Query Unit)
-portrait big artorify ascension (Tuple lab s'@(Servant s))
-    = H.div meta
+portrait big thumbnails artorify ascension (Tuple lab s'@(Servant s))
+  | thumbnails && not big = H.div [_c "thumb", _click <<< Focus $ Just s']
+    [ _img $ "img/Servant/" <> fileName s.name <> " Thumbnail.png" ]
+  | otherwise = H.div meta
       [ _img $ "img/Servant/" <> fileName s.name <> ascend <> ".png"
       , H.div_ [ _img $ "img/Class/" <> show s.class <> ".png"]
       , H.header_
@@ -201,7 +203,7 @@ modal prefs ascend
   = H.div [_i "layout", _c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true (getPreference prefs Artorify) ascend $ Tuple "" s'
+      [ portrait true (pref Thumbnails) (pref Artorify) ascend $ Tuple "" s'
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
         , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]
@@ -266,7 +268,8 @@ modal prefs ascend
       ]
     ]
   where
-    showTables = getPreference prefs ShowTables
+    pref = getPreference prefs
+    showTables = pref ShowTables
     gotBond = getBond s'
     bondCe = case gotBond of
         Just (CraftEssence ce) -> 

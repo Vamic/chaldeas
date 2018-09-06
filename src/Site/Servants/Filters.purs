@@ -19,7 +19,9 @@ import Site.Filtering
 
 extraFilters ∷ Array (Filter Servant)
 extraFilters = join
-  [ [ namedBonus FilterAvailability "New"
+  [ [ Filter FilterAvailability "Rate-Up"
+      \_ (Servant s) -> not s.limited && s.class == Archer
+    , namedBonus FilterAvailability "New"
       [ "Illyasviel von Einzbern"
       , "Chloe von Einzbern"
       ]

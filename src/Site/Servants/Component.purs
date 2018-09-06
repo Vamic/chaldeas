@@ -236,10 +236,10 @@ modal prefs ascend
         , _tr "Star Rate"   <<< _txt $ show s.gen.starRate <> "%"
         , _tr "NP/Hit"      <<< _txt $ show s.gen.npAtk <> "%"
         , _tr "NP/Defend"   <<< _txt $ show s.gen.npDef <> "%"
-        , _tr "Death Rate"  <<< _txt $ show s.death
+        --, _tr "Death Rate"  <<< _txt $ show s.death
+        , _tr "Bond CE"     [ bondCe ]
         ]
-      , H.section [_c "bond"] [ H.strong_ $ _txt "Max Bond CE: ", bondCe ]
-      , _h 2 "Noble Phantasm"
+      , H.h2 [_c "clearhead"] $ _txt "Noble Phantasm"
       , H.table [_c "phantasm"]
         [ _tr "Name" <<< _txt $ s.phantasm.name
         , _tr "Rank" <<< _txt $ show s.phantasm.rank

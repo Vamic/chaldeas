@@ -44,9 +44,9 @@ getExtraFilters tab = filter fromTab extraFilters
 getFilters ∷ FilterTab -> Array (Filter CraftEssence)
 getFilters f@FilterBonus    = matchFilter f <$> ceGetAll ∷ Array BonusEffect
 getFilters f@FilterDebuff   = matchFilter f <$> ceGetAll ∷ Array DebuffEffect
-getFilters f@(FilterBuff c)     
+getFilters f@(FilterBuff c)
   = matchFilter f <$> filter (eq c <<< buffCategory) ceGetAll ∷ Array BuffEffect
-getFilters f@FilterAction       
+getFilters f@FilterAction
   = matchFilter f <$> filter (not <<< isDamage) ceGetAll ∷ Array InstantEffect
 getFilters f@FilterDamage
   = matchFilter f <$> filter isDamage getAll ∷ Array InstantEffect

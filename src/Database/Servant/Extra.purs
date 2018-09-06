@@ -278,7 +278,7 @@ extras = Servant <$>
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Party 3 DefenseUp $ 15.0 ~ 20.0
-                          , Times 1 <<< Grant Party 0 DamageCut $ Flat 2000.0
+                          , Times 1 <<< Grant Party 0 DamageDown $ Flat 2000.0
                           ]
                 }
               , { name:   "Obscurant Wall of Chalk"
@@ -303,7 +303,7 @@ extras = Servant <$>
               , card:   Arts
               , kind:   "Anti-Evil"
               , hits:   0
-              , effect: [ Grant Party 3 ReduceDamage $ 100.0 ~ 1000.0
+              , effect: [ Grant Party 3 DamageDown $ 100.0 ~ 1000.0
                         , Grant Others 3 AttackUp $ Flat 30.0
                         ]
               , over:   [ Grant Party 3 DefenseUp $ 30.0 ~ 50.0 ]

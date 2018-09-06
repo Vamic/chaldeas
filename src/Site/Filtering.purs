@@ -14,6 +14,7 @@ import Data.String as S
 import Data.Array
 import Data.Tuple
 
+import Database.Skill
 import Site.Preferences
 
 data FilterTab
@@ -22,7 +23,9 @@ data FilterTab
     | FilterAlignment
     | FilterTrait
     | FilterPassiveSkill
-    | FilterBonus | FilterAction | FilterBuff | FilterDebuff
+    | FilterBonus | FilterAction | FilterDebuff
+    | FilterBuff BuffCategory
+    | FilterDamage
     -- Exclusive
     | FilterSource
     | FilterPhantasm | FilterCard
@@ -32,11 +35,12 @@ data FilterTab
     | FilterRarity
 
 exclusive ∷ FilterTab -> Boolean
-exclusive = (_ > FilterDebuff)
+exclusive = (_ >= FilterSource)
 
 instance _a_ ∷ Show FilterTab where
   show FilterPhantasm = "NP Type"
   show FilterCard     = "NP Card"
+  show (FilterBuff c) = "Buff (" <> show c <> ")"
   show a              = unCamel <<< S.drop 6 $ G.genericShow a
 
 data Filter a = Filter FilterTab String (Boolean -> a -> Boolean)

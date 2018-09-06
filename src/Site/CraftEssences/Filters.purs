@@ -42,14 +42,19 @@ getExtraFilters tab = filter fromTab extraFilters
     fromTab (Filter t _ _) = tab == t
 
 getFilters ∷ FilterTab -> Array (Filter CraftEssence)
-getFilters f@FilterBonus  = matchFilter f <$> ceGetAll ∷ Array BonusEffect
-getFilters f@FilterAction = matchFilter f <$> ceGetAll ∷ Array InstantEffect
-getFilters f@FilterBuff   = matchFilter f <$> ceGetAll ∷ Array BuffEffect
-getFilters f@FilterDebuff = matchFilter f <$> ceGetAll ∷ Array DebuffEffect
-getFilters f              = getExtraFilters f
+getFilters f@FilterBonus    = matchFilter f <$> ceGetAll ∷ Array BonusEffect
+getFilters f@FilterDebuff   = matchFilter f <$> ceGetAll ∷ Array DebuffEffect
+getFilters f@(FilterBuff c)     
+  = matchFilter f <$> filter (eq c <<< buffCategory) ceGetAll ∷ Array BuffEffect
+getFilters f@FilterAction       
+  = matchFilter f <$> filter (not <<< isDamage) ceGetAll ∷ Array InstantEffect
+getFilters f@FilterDamage
+  = matchFilter f <$> filter isDamage getAll ∷ Array InstantEffect
+getFilters f                = getExtraFilters f
 
 activeFilter ∷ ActiveEffect -> Maybe (Filter CraftEssence)
-activeFilter (Grant _ _ buff _) = Just $ matchFilter FilterBuff buff
+activeFilter (Grant _ _ buff _) 
+    = Just $ matchFilter (FilterBuff $ buffCategory buff) buff
 activeFilter (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
 activeFilter (To _ action _) = Just $ matchFilter FilterAction action
 activeFilter (Bonus bonus _) = Just $ matchFilter FilterBonus bonus

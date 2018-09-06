@@ -1328,7 +1328,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
-  , effect:   [ Times 3 <<< Grant Self 0 DamageCut $ 1000.0 ~ 1200.0 ]
+  , effect:   [ Times 3 <<< Grant Self 0 DamageDown $ 1000.0 ~ 1200.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1471,7 +1471,7 @@ craftEssences = CraftEssence <$>
               }
   , effect:   [ Grant Self 0 SureHit Full
               , Grant Self 0 DamageUp $ 400.0 ~ 600.0
-              , Grant Self 0 DamageCut $ 200.0 ~ 300.0
+              , Grant Self 0 DamageDown $ 200.0 ~ 300.0
               ]
   , bond:     Nothing
   , limited:  true
@@ -2127,7 +2127,7 @@ craftEssences = CraftEssence <$>
   [ party' Buster 15 ]
 , bond 273 "What can be Left Behind" "Georgios" IconShield
   [ When "defeated" <<< Times 1 $ Grant Party 0 Invincibility Full 
-  , When "defeated" <<< Grant Party 3 DamageCut $ Flat 1000.0
+  , When "defeated" <<< Grant Party 3 DamageDown $ Flat 1000.0
   ]
 , bond 274 "Thermopylae" "Leonidas I" IconBusterUp
   [ party' Buster 15 ]
@@ -2316,7 +2316,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ Grant Self 0 DamageCut $ 100.0 ~ 200.0
+  , effect:   [ Grant Self 0 DamageDown $ 100.0 ~ 200.0
               , Grant Self 0 DebuffResist $ 5.0 ~ 10.0
               ]
   , bond:     Nothing
@@ -2375,7 +2375,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 0, hp: 300 }
               , max:  { atk: 0, hp: 1500 }
               }
-  , effect:   [ Grant Self 0 DamageCut $ 100.0 ~ 200.0
+  , effect:   [ Grant Self 0 DamageDown $ 100.0 ~ 200.0
               , Grant Self 0 HealingReceived $ 5.0 ~ 10.0
               ]
   , bond:     Nothing

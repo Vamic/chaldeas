@@ -27,7 +27,7 @@ casters = Servant <$>
                 , icon:   IconShieldUp
                 , cd:     8
                 , effect: [ Grant Party 3 DefenseUp $ 20.0 ~ 30.0
-                          , Grant Party 3 ReduceDamage $ 200.0 ~ 500.0
+                          , Grant Party 3 DamageDown $ 200.0 ~ 500.0
                           , To Party GaugeUp $ Flat 10.0
                           ]
                 }
@@ -135,7 +135,7 @@ casters = Servant <$>
                 , icon:   IconCrosshairUp
                 , cd:     8
                 , effect: [ Grant Self 1 Taunt Full
-                          , Grant Self 1 ReduceDamage $ 500.0 ~ 1500.0
+                          , Grant Self 1 DamageDown $ 500.0 ~ 1500.0
                           ]
                 }
               , { name:   "Sanzang's Teaching A"
@@ -1156,7 +1156,7 @@ casters = Servant <$>
               , { name:   "Evil Eye of the Abyss C"
                 , icon:   IconStun
                 , cd:     10
-                , effect: [ Debuff Enemies 5 Terror $ 30.0 ~ 40.0 ]
+                , effect: [ Debuff Enemies 5 Fear $ 30.0 ~ 40.0 ]
                 }
               ]
   , passives: [territoryCreation B]

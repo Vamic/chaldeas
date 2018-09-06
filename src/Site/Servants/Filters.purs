@@ -54,10 +54,8 @@ getExtraFilters tab = filter fromTab extraFilters
     fromTab (Filter t _ _) = tab == t
 
 getFilters ∷ FilterTab -> Array (Filter Servant)
-getFilters f@FilterAction       = matchFilter f <$> getAll ∷ Array InstantEffect
 getFilters f@FilterAlignment    = matchFilter f <$> getAll ∷ Array Alignment
 getFilters f@FilterAttribute    = matchFilter f <$> getAll ∷ Array Attribute
-getFilters f@FilterBuff         = matchFilter f <$> getAll ∷ Array BuffEffect
 getFilters f@FilterCard         = matchFilter f <$> getAll ∷ Array Card
 getFilters f@FilterClass        = matchFilter f <$> getAll ∷ Array Class
 getFilters f@FilterDebuff       = matchFilter f <$> getAll ∷ Array DebuffEffect
@@ -65,6 +63,12 @@ getFilters f@FilterDeck         = matchFilter f <$> getAll ∷ Array Deck
 getFilters f@FilterPhantasm     = matchFilter f <$> getAll ∷ Array PhantasmType
 getFilters f@FilterTrait        = matchFilter f <$> getAll ∷ Array Trait
 getFilters f@FilterPassiveSkill = passiveFilter <$> getPassives
+getFilters f@(FilterBuff c)     
+  = matchFilter f <$> filter (eq c <<< buffCategory) getAll ∷ Array BuffEffect
+getFilters f@FilterAction       
+  = matchFilter f <$> filter (not <<< isDamage) getAll ∷ Array InstantEffect
+getFilters f@FilterDamage
+  = matchFilter f <$> filter isDamage getAll ∷ Array InstantEffect
 getFilters f                    = getExtraFilters f
 
 passiveFilter ∷ String -> Filter Servant
@@ -79,7 +83,8 @@ plural a
   | otherwise = Just a
 
 activeFilter ∷ ActiveEffect -> Maybe (Filter Servant)
-activeFilter (Grant _ _ buff _) = matchFilter FilterBuff <$> plural buff
+activeFilter (Grant _ _ buff _) 
+    = Just $ matchFilter (FilterBuff $ buffCategory buff) buff
 activeFilter (Debuff _ _ debuff _) = matchFilter FilterDebuff <$> plural debuff
 activeFilter (To _ action _) = matchFilter FilterAction <$> plural action
 activeFilter (Bonus _ _) = Nothing

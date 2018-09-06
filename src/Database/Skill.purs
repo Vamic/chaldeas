@@ -2,9 +2,9 @@ module Database.Skill
   ( Amount(..), (~), toMin, toMax
   , Rank(..)
   , Target(..), allied
-  , BuffEffect(..)
+  , BuffEffect(..), BuffCategory(..), buffCategory
   , DebuffEffect(..)
-  , InstantEffect(..)
+  , InstantEffect(..), isDamage
   , BonusEffect(..)
   , ActiveEffect(..), demerit, simplify, ranges
   , Active
@@ -37,7 +37,7 @@ data BuffEffect
     | BuffUp
     | CritUp
     | ClassAffinity Class
-    | DamageCut
+    | DamageDown
     | DamageUp
     | DebuffResist
     | DebuffSuccess
@@ -62,7 +62,6 @@ data BuffEffect
     | NPGen
     | OffensiveResist
     | Overcharge
-    | ReduceDamage
     | Resist DebuffEffect
     | StarAbsorb
     | StarAffinity Class
@@ -83,7 +82,7 @@ showBuff target amount = case _ of
     BuffUp          -> success "buff"
     CritUp          -> increase "critical damage"
     ClassAffinity c -> increase $ "damage" <> against c
-    DamageCut       -> "Reduce" <> p <> " damage taken by " <> n
+    DamageDown      -> "Reduce" <> p <> " damage taken by " <> n
     DamageUp        -> "Increase" <> p <> " damage by " <> n
     DebuffResist    -> resist "debuff"
     DebuffSuccess   -> success "debuff"
@@ -108,11 +107,10 @@ showBuff target amount = case _ of
     NPGen           -> increase "NP generation rate"
     OffensiveResist -> resist "offensive debuff"
     Overcharge      -> "Overcharge" <> p <> " NP by " <> n <> " stages"
-    ReduceDamage    -> "Reduce" <> p <> " damage taken by " <> n
     Resist debuff   -> resist $ G.genericShow debuff <> " debuff"
-    StarAbsorb      -> increase "critical star absorption"
-    StarAffinity c  -> increase $ "critical star generation" <> against c
-    StarUp          -> increase "critical star drop rate"
+    StarAbsorb      -> increase "C. Star absorption"
+    StarAffinity c  -> increase $ "C. Star generation" <> against c
+    StarUp          -> increase "C. Star drop rate"
     Success debuff  -> success $ G.genericShow debuff
     SureHit         -> grant "Sure Hit"
     Taunt           -> "Draw attention of all enemies" <> to
@@ -131,7 +129,57 @@ showBuff target amount = case _ of
       | amount == Full = "Grant" <> s <> " " <> x <> " immunity"
       | otherwise      = "Increase" <> p <> " " <> x <> " resistance" <> by
     against ∷ ∀ a. Show a => a -> String
-    against x = " against " <> show x <> " enemies"
+    against x = " against [" <> show x <> "]"
+
+data BuffCategory 
+    = BuffOffensive 
+    | BuffDefensive 
+    | BuffSupport
+    | BuffUtility
+    | BuffSpecialist
+
+buffCategory ∷ BuffEffect -> BuffCategory
+buffCategory AttackUp          = BuffOffensive
+buffCategory (AttackVs _)      = BuffSpecialist
+buffCategory (AlignAffinity _) = BuffSpecialist
+buffCategory (Performance _)   = BuffOffensive
+buffCategory BuffUp            = BuffUtility
+buffCategory CritUp            = BuffOffensive
+buffCategory (ClassAffinity _) = BuffSpecialist
+buffCategory DamageDown         = BuffDefensive
+buffCategory DamageUp          = BuffOffensive
+buffCategory DebuffResist      = BuffUtility
+buffCategory DebuffSuccess     = BuffUtility
+buffCategory DefenseUp         = BuffDefensive
+buffCategory (DefenseVs _)     = BuffSpecialist
+buffCategory Evasion           = BuffDefensive
+buffCategory GaugePerTurn      = BuffSupport
+buffCategory Guts              = BuffDefensive
+buffCategory GutsPercent       = BuffDefensive
+buffCategory HealingReceived   = BuffSupport
+buffCategory HealPerTurn       = BuffDefensive
+buffCategory HealUp            = BuffSupport
+buffCategory IgnoreInvinc      = BuffOffensive
+buffCategory Invincibility     = BuffDefensive
+buffCategory KillResist        = BuffUtility
+buffCategory KillUp            = BuffUtility
+buffCategory MaxHP             = BuffDefensive
+buffCategory MentalResist      = BuffUtility
+buffCategory MentalSuccess     = BuffUtility
+buffCategory NPUp              = BuffOffensive
+buffCategory NPFromDamage      = BuffSupport
+buffCategory NPGen             = BuffSupport
+buffCategory OffensiveResist   = BuffUtility
+buffCategory Overcharge        = BuffSupport
+buffCategory (Resist _)        = BuffUtility
+buffCategory StarAbsorb        = BuffSupport
+buffCategory (StarAffinity _)  = BuffSpecialist
+buffCategory StarUp            = BuffSupport
+buffCategory (Success _)       = BuffUtility
+buffCategory SureHit           = BuffOffensive
+buffCategory Taunt             = BuffDefensive
+buffCategory StarsPerTurn      = BuffSupport
+
 
 data DebuffEffect
     = ApplyTrait Trait
@@ -143,12 +191,13 @@ data DebuffEffect
     | CharmVuln
     | CritChance
     | CritDown
+    | Confusion
     | Curse
     | DamageVuln
     | DeathDown
     | DebuffVuln
     | DefenseDown
-    | Disorder
+    | Fear
     | HealthLoss
     | MentalVuln
     | NPDown
@@ -158,19 +207,19 @@ data DebuffEffect
     | StarDown
     | Stun
     | StunBomb
-    | Terror
 instance _d_ ∷ Show DebuffEffect where
     show = showDebuff Someone Placeholder
 
 showDebuff ∷ Target -> Amount -> DebuffEffect -> String
 showDebuff target amount = case _ of
-    ApplyTrait t -> "Apply the " <> show t <> " trait" <> to
+    ApplyTrait t -> "Apply [" <> show t <> "]" <> to
     AttackDown   -> reduce "attack"
     BuffBlock    -> "Inflict Buff Block status" <> to
     BuffFail     -> reduce "attack buff success rate"
     Burn         -> damage "Burn"
     Charm        -> "Charm" <> s
     CharmVuln    -> unresist "Charm"
+    Confusion    -> eachTurn "Confusion" "Seal skills"
     CritChance   -> reduce "critical attack chance"
     CritDown     -> reduce "critical damage"
     Curse        -> damage "Curse"
@@ -178,17 +227,16 @@ showDebuff target amount = case _ of
     DeathDown    -> unresist "Instant-Death"
     DebuffVuln   -> unresist "debuff"
     DefenseDown  -> reduce "defense"
-    Disorder     -> eachTurn "Disorder" "Seal skills"
+    Fear         -> eachTurn "Fear" "be Stunned"
     HealthLoss   -> "Decrease" <> p <> " HP by " <> n <> " per turn"
     MentalVuln   -> unresist "mental debuff"
     NPDown       -> reduce "NP Damage"
     Poison       -> damage "Poison"
     SealNP       -> "Seal" <> p <> " NP"
     SealSkills   -> "Seal" <> p <> " skills"
-    StarDown     -> reduce "critical star drop rate"
+    StarDown     -> reduce "C. Star drop rate"
     Stun         -> "Stun" <> s
     StunBomb     -> "Stun" <> s <> " after 1 turn"
-    Terror       -> eachTurn "Terror" "be Stunned"
   where
     n   = show amount
     p:s = possessiveAndSubject target
@@ -227,13 +275,22 @@ data InstantEffect
 instance _e_ ∷ Show InstantEffect where
     show = showInstant Someone Placeholder
 
+isDamage ∷ InstantEffect -> Boolean
+isDamage Avenge = true
+isDamage Damage = true
+isDamage DamageThruDef = true
+isDamage (DamageVs _) = true
+isDamage DamagePoison = true
+isDamage LastStand = true
+isDamage _ = false
+
 showInstant ∷ Target -> Amount -> InstantEffect -> String
 showInstant target amount = case _ of
     Avenge
       -> "Wait 1 turn, then deal " <> n
       <> "% of damage taken during that turn" <> to
     ChangeClass c
-      -> "Change" <> p <> " class to " <> show c
+      -> "Change" <> p <> " class to [" <> show c <> "]"
     Cooldowns
       -> "Reduce" <> p <> " cooldowns by " <> n
     Cure
@@ -243,9 +300,9 @@ showInstant target amount = case _ of
     DamageThruDef
       -> "Deal " <> n <> "% damage" <> to <> ", ignoring defense"
     DamageVs t
-      -> "Deal " <> n <> "% extra damage to " <> show t
+      -> "Deal " <> n <> "% extra damage to [" <> show t <> "]"
     DamagePoison
-      -> "Deal " <> n <> "% extra damage to Poison"
+      -> "Deal " <> n <> "% extra damage to [Poisoned]"
     DemeritBuffs
       -> "Remove" <> p <> " buffs"
     DemeritCharge
@@ -586,3 +643,19 @@ derive instance _28_ ∷ Eq RangeInfo
 derive instance _29_ ∷ Ord RangeInfo
 
 derive instance _30_ ∷ Eq Amount
+
+derive instance _31_ ∷ G.Generic BuffCategory _
+derive instance _32_ ∷ Eq BuffCategory
+derive instance _33_ ∷ Ord BuffCategory
+instance _34_ ∷ G.Enum BuffCategory where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _35_ ∷ G.Bounded BuffCategory where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _36_ ∷ G.BoundedEnum BuffCategory where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum
+instance _37_ ∷ Show BuffCategory where
+  show = drop 4 <<< G.genericShow

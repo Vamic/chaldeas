@@ -334,7 +334,7 @@ assassins = Servant <$>
                 , icon:   IconHeal
                 , cd:     8
                 , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
-                          , Grant Ally 1 ReduceDamage $ 500.0 ~ 1000.0
+                          , Grant Ally 1 DamageDown $ 500.0 ~ 1000.0
                           ]
                 }
               , { name:   "Midsummer Mistake C"
@@ -455,7 +455,7 @@ assassins = Servant <$>
               , kind:   "Anti-Army"
               , hits:   5
               , effect: [ To Enemies Damage $ 600.0 ~ 1000.0 ]
-              , over:   [ Debuff Enemies 5 Disorder $ 30.0 ~ 70.0 ]
+              , over:   [ Debuff Enemies 5 Confusion $ 30.0 ~ 70.0 ]
               , first:  false
               }
   , gen:      { starWeight: 100, starRate: 25.6, npAtk: 0.54, npDef: 4 }

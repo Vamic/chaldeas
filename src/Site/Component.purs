@@ -18,6 +18,7 @@ import Site.CraftEssences.Component as CraftEssences
 
 import Site.Common
 import Site.Preferences
+import Site.Filtering
 import Database
 
 type State = { browseCe ∷ Boolean
@@ -25,11 +26,13 @@ type State = { browseCe ∷ Boolean
              , prefs    ∷ Preferences
              , mServant ∷ Maybe Servant
              , mCe      ∷ Maybe CraftEssence
+             , fServant ∷ Array (Filter Servant)
+             , fCe      ∷ Array (Filter CraftEssence)
              }
 
 data Query a
-    = BrowseServants (Maybe Servant) a
-    | BrowseCraftEssences (Maybe CraftEssence) a
+    = BrowseServants CraftEssences.Message a
+    | BrowseCraftEssences Servants.Message a
 
 type ChildQuery = Coproduct2 Servants.Query CraftEssences.Query
 
@@ -48,6 +51,8 @@ comp initialHash initialPrefs = parentComponent
   initialState :: State
   initialState = { withHash: initialHash, prefs: initialPrefs
                  , browseCe: isJust mCe
+                 , fServant: []
+                 , fCe:      []
                  , mServant
                  , mCe
                  }
@@ -58,24 +63,26 @@ comp initialHash initialPrefs = parentComponent
       mServant = fromHash servants
 
   render :: State -> ParentHTML Query ChildQuery ChildSlot m
-  render {browseCe, withHash, prefs, mServant, mCe}
-    | browseCe  = H.slot' CP.cp2 unit (CraftEssences.comp mCe prefs) unit
-                  $ E.input BrowseServants
-    | otherwise = H.slot' CP.cp1 unit (Servants.comp mServant prefs) unit
-                  $ E.input BrowseCraftEssences
+  render {browseCe, withHash, prefs, fServant, fCe, mServant, mCe}
+    | browseCe  = H.slot' CP.cp2 unit (CraftEssences.comp fCe mCe prefs) 
+                  unit $ E.input BrowseServants
+    | otherwise = H.slot' CP.cp1 unit (Servants.comp fServant mServant prefs) 
+                  unit $ E.input BrowseCraftEssences
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m
-  eval (BrowseServants mServant next) = next <$ do
+  eval (BrowseServants (CraftEssences.Message fCe mServant) next) = next <$ do
       prefs <- liftEffect $ getPreferences
       modify_ _{ browseCe = false
                , withHash = ""
                , prefs    = prefs
+               , fCe      = fCe
                , mServant = mServant
                }
-  eval (BrowseCraftEssences mCe next) = next <$ do
+  eval (BrowseCraftEssences (Servants.Message fServant mCe) next) = next <$ do
       prefs <- liftEffect $ getPreferences
       modify_ _{ browseCe = true
                , withHash = ""
                , prefs    = prefs
+               , fServant = fServant
                , mCe      = mCe
                }

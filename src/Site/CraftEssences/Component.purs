@@ -1,4 +1,4 @@
-module Site.CraftEssences.Component (Query, comp) where
+module Site.CraftEssences.Component (Query, Message(..), comp) where
 
 import Prelude
 import Operators (enumArray, (?))
@@ -11,7 +11,7 @@ import Data.String             as S
 import Control.Alternative
 import Control.Bind
 import Data.Tuple
-import Halogen (Component, ComponentDSL, ComponentHTML, component, liftEffect, modify_, raise)
+import Halogen (Component, ComponentDSL, ComponentHTML, component, get, liftEffect, modify_, raise)
 import Data.Array
 import Data.Maybe
 import Effect.Class
@@ -26,7 +26,7 @@ import Site.CraftEssences.Filters
 import Site.CraftEssences.Sorting
 
 type Input = Unit
-type Message = Maybe Servant
+data Message = Message (Array (Filter CraftEssence)) (Maybe Servant)
 data Query a
     = Switch    (Maybe Servant) a
     | Focus     (Maybe CraftEssence) a
@@ -47,9 +47,9 @@ type State = { filters  ∷ Array (Filter CraftEssence)
              , sorted   ∷ Array (Tuple String CraftEssence)
              }
 
-comp ∷ ∀ m. MonadEffect m => Maybe CraftEssence -> Preferences
-            -> Component HTML Query Unit Message m
-comp initialFocus initialPrefs = component
+comp ∷ ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence 
+       -> Preferences -> Component HTML Query Unit Message m
+comp initialFilt initialFocus initialPrefs = component
     { initialState
     , render
     , eval
@@ -58,16 +58,18 @@ comp initialFocus initialPrefs = component
   where
 
   initialState ∷ Input -> State
-  initialState = const { filters:  []
-                       , exclude:  []
-                       , matchAny: true
-                       , focus:    initialFocus
-                       , sortBy:   Rarity
-                       , prefs:    initialPrefs
-                       , sorted:   initialSort
-                       , listing:  initialSort
-                       }
-    where initialSort = getSort Rarity
+  initialState = const $ updateListing { filters
+                                       , exclude
+                                       , matchAny: true
+                                       , focus:    initialFocus
+                                       , sortBy:   Rarity
+                                       , prefs:    initialPrefs
+                                       , sorted:   initialSort
+                                       , listing:  initialSort
+                                       }
+    where 
+      initialSort = getSort Rarity
+      {yes: exclude, no: filters} = partition (exclusive <<< getTab) initialFilt
 
   render ∷ State -> ComponentHTML Query
   render {exclude, filters, focus, listing, matchAny, prefs, sortBy}
@@ -119,8 +121,10 @@ comp initialFocus initialPrefs = component
 
   eval ∷ Query ~> ComponentDSL State Query Message m
   eval = case _ of
-      Switch    switchTo a -> a <$ raise switchTo
-      ClearAll           a -> a <$ modif _{ filters = [], exclude = [] }
+      Switch    switchTo a -> a <$ do
+          {exclude, filters} <- get
+          raise $ Message (exclude <> filters) switchTo
+      ClearAll           a -> a <$ modif _{ exclude = [], filters = [] }
       SetSort   sortBy   a -> a <$ modif _{ sortBy = sortBy
                                           , sorted = getSort sortBy
                                           }

@@ -7,9 +7,12 @@ module Site.Servants.Filters
   ) where
 
 import Prelude
+import Operators
 import Data.String as S
 
 import Data.Array
+import Data.Date.Component
+import Data.Date
 import Data.Maybe
 import Data.Profunctor.Strong
 import Data.Tuple
@@ -19,9 +22,7 @@ import Site.Filtering
 
 extraFilters ∷ Array (Filter Servant)
 extraFilters = join
-  [ [ Filter FilterAvailability "Rate-Up"
-      \_ (Servant s) -> not s.limited && s.class == Archer
-    , namedBonus FilterAvailability "New"
+  [ [ namedBonus FilterAvailability "New"
       [ "Illyasviel von Einzbern"
       , "Chloe von Einzbern"
       ]
@@ -38,6 +39,31 @@ extraFilters = join
     \_ (Servant s) -> rarity == s.rarity
   ]
 
+scheduledFilters ∷ Array (ScheduledFilter Servant)
+scheduledFilters = 
+  [ ScheduledFilter (ymd 2018 September 6) (ymd 2018 September 6)
+    $ Filter FilterAvailability "Rate-Up"
+      \_ (Servant s) -> not s.limited && s.class == Archer
+  , ScheduledFilter (ymd 2018 September 7) (ymd 2018 September 7)
+    $ Filter FilterAvailability "Rate-Up"
+      \_ (Servant s) -> not s.limited && s.class == Lancer
+  , ScheduledFilter (ymd 2018 September 8) (ymd 2018 September 8)
+    $ Filter FilterAvailability "Rate-Up"
+      \_ (Servant s) -> not s.limited && s.class == Rider
+  , ScheduledFilter (ymd 2018 September 9) (ymd 2018 September 9)
+    $ Filter FilterAvailability "Rate-Up"
+      \_ (Servant s) -> not s.limited && (s.class == Assassin || s.class == Ruler)
+  , ScheduledFilter (ymd 2018 September 10) (ymd 2018 September 10)
+    $ Filter FilterAvailability "Rate-Up"
+      \_ (Servant s) -> not s.limited && s.class == Caster
+  , ScheduledFilter (ymd 2018 September 11) (ymd 2018 September 11)
+    $ Filter FilterAvailability "Rate-Up"
+      \_ (Servant s) -> not s.limited && s.class == Berserker
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 12)
+    $ Filter FilterAvailability "Rate-Up"
+      \_ (Servant s) -> not s.limited && s.class == Saber
+  ]
+
 matchFilter ∷ ∀ a. MatchServant a => FilterTab -> a -> Filter Servant
 matchFilter tab = uncurry (Filter tab) <<< (show &&& has)
 
@@ -50,28 +76,29 @@ namedBonus ∷ FilterTab -> String -> Array String -> Filter Servant
 namedBonus tab bonus servants
     = Filter tab bonus \_ (Servant s) -> s.name `elem` servants
 
-getExtraFilters ∷ FilterTab -> Array (Filter Servant)
-getExtraFilters tab = filter fromTab extraFilters
+getExtraFilters ∷ Date -> FilterTab -> Array (Filter Servant)
+getExtraFilters today tab = filter fromTab 
+    $ getScheduled scheduledFilters today <> extraFilters
   where
     fromTab (Filter t _ _) = tab == t
 
-getFilters ∷ FilterTab -> Array (Filter Servant)
-getFilters f@FilterAlignment    = matchFilter f <$> getAll ∷ Array Alignment
-getFilters f@FilterAttribute    = matchFilter f <$> getAll ∷ Array Attribute
-getFilters f@FilterCard         = matchFilter f <$> getAll ∷ Array Card
-getFilters f@FilterClass        = matchFilter f <$> getAll ∷ Array Class
-getFilters f@FilterDebuff       = matchFilter f <$> getAll ∷ Array DebuffEffect
-getFilters f@FilterDeck         = matchFilter f <$> getAll ∷ Array Deck
-getFilters f@FilterPhantasm     = matchFilter f <$> getAll ∷ Array PhantasmType
-getFilters f@FilterTrait        = matchFilter f <$> getAll ∷ Array Trait
-getFilters f@FilterPassiveSkill = passiveFilter <$> getPassives
-getFilters f@(FilterBuff c)     
+getFilters ∷ Date -> FilterTab -> Array (Filter Servant)
+getFilters _ f@FilterAlignment    = matchFilter f <$> getAll ∷ Array Alignment
+getFilters _ f@FilterAttribute    = matchFilter f <$> getAll ∷ Array Attribute
+getFilters _ f@FilterCard         = matchFilter f <$> getAll ∷ Array Card
+getFilters _ f@FilterClass        = matchFilter f <$> getAll ∷ Array Class
+getFilters _ f@FilterDebuff       = matchFilter f <$> getAll ∷ Array DebuffEffect
+getFilters _ f@FilterDeck         = matchFilter f <$> getAll ∷ Array Deck
+getFilters _ f@FilterPhantasm     = matchFilter f <$> getAll ∷ Array PhantasmType
+getFilters _ f@FilterTrait        = matchFilter f <$> getAll ∷ Array Trait
+getFilters _ f@FilterPassiveSkill = passiveFilter <$> getPassives
+getFilters _ f@(FilterBuff c)     
   = matchFilter f <$> filter (eq c <<< buffCategory) getAll ∷ Array BuffEffect
-getFilters f@FilterAction       
+getFilters _ f@FilterAction       
   = matchFilter f <$> filter (not <<< isDamage) getAll ∷ Array InstantEffect
-getFilters f@FilterDamage
+getFilters _ f@FilterDamage
   = matchFilter f <$> filter isDamage getAll ∷ Array InstantEffect
-getFilters f                    = getExtraFilters f
+getFilters today f               = getExtraFilters today f
 
 passiveFilter ∷ String -> Filter Servant
 passiveFilter = uncurry (Filter FilterPassiveSkill)

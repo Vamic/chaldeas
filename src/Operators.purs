@@ -3,7 +3,10 @@ module Operators where
 import Prelude
 
 import Data.Either (fromRight)
-import Data.Enum (class BoundedEnum, enumFromTo)
+import Data.Enum (class BoundedEnum, enumFromTo, toEnum)
+import Data.Date (Date, exactDate)
+import Data.Date.Component(Month)
+import Data.Maybe (fromJust)
 import Data.Tuple (Tuple(..))
 import Data.String.Regex (regex, replace)
 import Partial.Unsafe (unsafePartial)
@@ -17,6 +20,12 @@ doIf false = const identity
 
 enumArray ∷ ∀ a. BoundedEnum a => Array a
 enumArray = enumFromTo bottom top
+
+ymd ∷ Int -> Month -> Int -> Date
+ymd y m d = unsafePartial $ fromJust do
+    y' <- toEnum y
+    d' <- toEnum d
+    exactDate y' m d'
 
 unCamel ∷ String -> String
 unCamel = replace reg "$1 $2"

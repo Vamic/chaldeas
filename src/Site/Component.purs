@@ -1,6 +1,7 @@
 module Site.Component where
 
 import Prelude
+import Data.Date
 import Data.Either
 import Data.Foldable
 import Data.Functor.Coproduct.Nested
@@ -21,7 +22,8 @@ import Site.Preferences
 import Site.Filtering
 import Database
 
-type State = { browseCe ∷ Boolean
+type State = { today    ∷ Date
+             , browseCe ∷ Boolean
              , withHash ∷ String
              , prefs    ∷ Preferences
              , mServant ∷ Maybe Servant
@@ -38,9 +40,9 @@ type ChildQuery = Coproduct2 Servants.Query CraftEssences.Query
 
 type ChildSlot = Either Unit (Either Unit Unit)
 
-comp ∷ ∀ m. MonadEffect m => String -> Preferences
+comp ∷ ∀ m. MonadEffect m => String -> Preferences -> Date
        -> Component HTML Query Unit Void m
-comp initialHash initialPrefs = parentComponent
+comp initialHash initialPrefs initialToday = parentComponent
     { initialState: const initialState
     , render
     , eval
@@ -49,7 +51,9 @@ comp initialHash initialPrefs = parentComponent
   where
 
   initialState :: State
-  initialState = { withHash: initialHash, prefs: initialPrefs
+  initialState = { today:    initialToday
+                 , withHash: initialHash
+                 , prefs:    initialPrefs
                  , browseCe: isJust mCe
                  , fServant: []
                  , fCe:      []
@@ -63,26 +67,32 @@ comp initialHash initialPrefs = parentComponent
       mServant = fromHash servants
 
   render :: State -> ParentHTML Query ChildQuery ChildSlot m
-  render {browseCe, withHash, prefs, fServant, fCe, mServant, mCe}
-    | browseCe  = H.slot' CP.cp2 unit (CraftEssences.comp fCe mCe prefs) 
+  render {browseCe, withHash, prefs, fServant, fCe, mServant, mCe, today}
+    | browseCe  = H.slot' CP.cp2 unit 
+                  (CraftEssences.comp fCe mCe prefs today) 
                   unit $ E.input BrowseServants
-    | otherwise = H.slot' CP.cp1 unit (Servants.comp fServant mServant prefs) 
+    | otherwise = H.slot' CP.cp1 unit 
+                  (Servants.comp fServant mServant prefs today) 
                   unit $ E.input BrowseCraftEssences
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m
   eval (BrowseServants (CraftEssences.Message fCe mServant) next) = next <$ do
-      prefs <- liftEffect $ getPreferences
+      prefs <- liftEffect getPreferences
+      today <- liftEffect getDate
       modify_ _{ browseCe = false
                , withHash = ""
                , prefs    = prefs
+               , today    = today
                , fCe      = fCe
                , mServant = mServant
                }
   eval (BrowseCraftEssences (Servants.Message fServant mCe) next) = next <$ do
-      prefs <- liftEffect $ getPreferences
+      prefs <- liftEffect getPreferences
+      today <- liftEffect getDate
       modify_ _{ browseCe = true
                , withHash = ""
                , prefs    = prefs
+               , today    = today
                , fServant = fServant
                , mCe      = mCe
                }

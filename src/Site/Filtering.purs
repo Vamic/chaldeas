@@ -1,6 +1,8 @@
 module Site.Filtering
   ( FilterTab(..)
   , Filter(..)
+  , ScheduledFilter(..), getScheduled
+  , FilterList(..), collectFilters
   , exclusive
   , getTab
   , updateListing
@@ -12,6 +14,7 @@ import Generic as G
 import Data.String as S
 
 import Data.Array
+import Data.Date
 import Data.Tuple
 
 import Database.Skill
@@ -58,6 +61,14 @@ instance _d_ ∷ Ord (Filter a) where
 instance _e_ ∷ Show (Filter a) where
   show (Filter tab a _) = a
 
+data ScheduledFilter a = ScheduledFilter Date Date (Filter a)
+
+getScheduled ∷ ∀ a. Array (ScheduledFilter a) -> Date -> Array (Filter a)
+getScheduled xs today = toFilter <$> filter scheduled xs
+  where
+    scheduled (ScheduledFilter start end _) = start <= today && today <= end
+    toFilter (ScheduledFilter _ _ x) = x
+
 type FilterState a b = { sorted   ∷ Array (Tuple String a)
                        , listing  ∷ Array (Tuple String a)
                        , matchAny ∷ Boolean
@@ -77,6 +88,11 @@ updateListing st@{exclude, filters, matchAny, prefs, sorted}
            && (null filters || (if matchAny then any else all)
                                (matchFilter x) filters)
 
+type FilterList a = Array (Tuple FilterTab (Array (Filter a)))
+
+collectFilters ∷ ∀ a. (Date -> FilterTab -> Array (Filter a)) -> Date 
+                 -> FilterList a
+collectFilters f today = enumArray <#> \filt -> Tuple filt $ f today filt
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

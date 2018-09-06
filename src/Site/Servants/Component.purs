@@ -11,6 +11,7 @@ import Data.String             as S
 import Data.Tuple
 import Halogen (Component, ComponentDSL, ComponentHTML, component, get, liftEffect, modify_, raise)
 import Data.Array
+import Data.Date
 import Data.Int
 import Data.Maybe
 import Effect.Class
@@ -50,14 +51,16 @@ type State = { filters  ∷ Array (Filter Servant)
              }
 
 comp ∷ ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant 
-       -> Preferences -> Component HTML Query Unit Message m
-comp initialFilt initialFocus initialPrefs = component
+       -> Preferences -> Date -> Component HTML Query Unit Message m
+comp initialFilt initialFocus initialPrefs today = component
     { initialState
     , render
     , eval
     , receiver: const Nothing
     }
   where
+  allFilters ∷ FilterList Servant
+  allFilters = collectFilters getFilters today
 
   initialState ∷ Input -> State
   initialState = const $ updateListing { filters
@@ -87,7 +90,7 @@ comp initialFilt initialFocus initialPrefs = component
              -> H.p [_click $ SetSort sort]
                 $ _radio (show sort) (sortBy == sort)
           , _h 1 "Include"
-          ] <> (filter exclusive enumArray >>= filterSection)
+          ] <> (filter (exclusive <<< fst) allFilters >>= filterSection)
         , H.section_
           <<< (if sortBy == Rarity then identity else reverse)
           $ portrait false (pref Thumbnails) (pref Artorify) baseAscend 
@@ -105,7 +108,7 @@ comp initialFilt initialFocus initialPrefs = component
               ]
             , H.button clearAll $ _txt "Reset All"
             ]
-          ] <> (filter (not exclusive) enumArray >>= filterSection)
+          ] <> (filter (not exclusive <<< fst) allFilters >>= filterSection)
         ]
     where
       pref = getPreference prefs
@@ -115,9 +118,8 @@ comp initialFilt initialFocus initialPrefs = component
       clearAll
         | null filters && null exclude = [ P.enabled false ]
         | otherwise                    = [ P.enabled true, _click ClearAll ]
-      filterSection tab = case getFilters tab of
-        []    -> []
-        filts -> cons (_h 3 $ show tab)
+      filterSection (Tuple _ []) = []
+      filterSection (Tuple tab filts) = cons (_h 3 $ show tab)
                  <<< ((exclusive tab && length filts > 3) ? 
                  let checked = length $ filter (eq tab <<< getTab) exclude in
                  append 
@@ -142,7 +144,8 @@ comp initialFilt initialFocus initialPrefs = component
       Ascend   ascend a -> a <$ modify_ _{ ascend = ascend }
       MatchAny match  a -> a <$ modif _{ matchAny = match }
       Check t  true   a -> a <$ modif (modExclude $ filter (notEq t <<< getTab))
-      Check t  false  a -> a <$ modif (modExclude $ nub <<< append (getFilters t))
+      Check t  false  a -> a <$ 
+          modif (modExclude $ nub <<< append (getFilters today t))
       Focus    focus  a -> a <$ do
           liftEffect $ hash focus
           modify_ _{ focus = focus, ascend = 1 }

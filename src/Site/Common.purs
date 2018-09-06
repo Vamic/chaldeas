@@ -8,10 +8,17 @@ import Halogen.HTML.Events     as E
 import Halogen.HTML.Properties as P
 
 import Data.Array
+import Data.DateTime
 import Data.Int
+import Data.Maybe
 import Data.Number.Format
+import Data.Profunctor.Strong ((&&&))
 import Data.String (Pattern(..), Replacement(..), joinWith, replaceAll, split)
 import Data.String.CodeUnits
+import Data.Time.Duration
+import Data.Tuple (uncurry)
+import Effect
+import Effect.Now
 import Halogen.HTML
 import Halogen.HTML.Properties
 import Web.UIEvent.MouseEvent
@@ -19,6 +26,10 @@ import Web.UIEvent.MouseEvent
 import Printing
 import Database
 import Site.Preferences
+
+getDate ∷ Effect Date
+getDate = date <<< uncurry fromMaybe <<< (identity &&& adjust (Hours (-4.0))) 
+          <$> nowDateTime
 
 lvlRow ∷ ∀ a b. RangeInfo -> HTML a b
 lvlRow (RangeInfo isPercent a b) = H.tr_

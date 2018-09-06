@@ -7,6 +7,7 @@ import Prelude
 import Data.String as S
 
 import Data.Array
+import Data.Date
 import Data.Foldable
 import Data.Maybe
 import Data.Profunctor.Strong
@@ -29,6 +30,9 @@ extraFilters = join
     \_ (CraftEssence ce) -> rarity == ce.rarity
   ]
 
+scheduledFilters ∷ Array (ScheduledFilter CraftEssence)
+scheduledFilters = []
+
 matchFilter ∷ ∀ a. MatchCraftEssence a => FilterTab -> a -> Filter CraftEssence
 matchFilter tab = uncurry (Filter tab) <<< (show &&& ceHas)
 
@@ -36,21 +40,22 @@ namedBonus ∷ FilterTab -> String -> Array String -> Filter CraftEssence
 namedBonus tab bonus craftEssences
     = Filter tab bonus \_ (CraftEssence ce) -> ce.name `elem` craftEssences
 
-getExtraFilters ∷ FilterTab -> Array (Filter CraftEssence)
-getExtraFilters tab = filter fromTab extraFilters
+getExtraFilters ∷ Date -> FilterTab -> Array (Filter CraftEssence)
+getExtraFilters today tab = filter fromTab 
+    $ getScheduled scheduledFilters today <> extraFilters
   where
     fromTab (Filter t _ _) = tab == t
 
-getFilters ∷ FilterTab -> Array (Filter CraftEssence)
-getFilters f@FilterBonus    = matchFilter f <$> ceGetAll ∷ Array BonusEffect
-getFilters f@FilterDebuff   = matchFilter f <$> ceGetAll ∷ Array DebuffEffect
-getFilters f@(FilterBuff c)
+getFilters ∷ Date -> FilterTab -> Array (Filter CraftEssence)
+getFilters _ f@FilterBonus    = matchFilter f <$> ceGetAll ∷ Array BonusEffect
+getFilters _ f@FilterDebuff   = matchFilter f <$> ceGetAll ∷ Array DebuffEffect
+getFilters _ f@(FilterBuff c)
   = matchFilter f <$> filter (eq c <<< buffCategory) ceGetAll ∷ Array BuffEffect
-getFilters f@FilterAction
+getFilters _ f@FilterAction
   = matchFilter f <$> filter (not <<< isDamage) ceGetAll ∷ Array InstantEffect
-getFilters f@FilterDamage
+getFilters _ f@FilterDamage
   = matchFilter f <$> filter isDamage getAll ∷ Array InstantEffect
-getFilters f                = getExtraFilters f
+getFilters today f = getExtraFilters today f
 
 activeFilter ∷ ActiveEffect -> Maybe (Filter CraftEssence)
 activeFilter (Grant _ _ buff _) 

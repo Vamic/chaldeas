@@ -55,10 +55,10 @@
       form p                { margin-left: 20px }
       article               { text-align: center }
       section, p, td        { text-align: left }
-      p input               { float: left; margin-left: -20px }
+      p input               { float: left; margin-left: -20px; margin-top: 1px }
       article .portrait img { width: 248px }
-      footer a:first-child  { left: 14px }
-      footer a:last-child   { right: 14px }
+      footer a:first-child  { left: 20px }
+      footer a:last-child   { right: 20px }
       footer a
         { position: absolute 
         ; cursor: pointer
@@ -74,7 +74,7 @@
         ; max-width: 45% 
         }
       aside:last-child button          
-        { width: 100% 
+        { width: 16em 
         ; max-width: 100%
         ; margin-top: 5px
         }
@@ -104,15 +104,17 @@
         }
       #layout > aside 
         { overflow: scroll
-        ; padding: 0.75em 1.5em
+        ; padding: 0.5em 1em
         ; flex: 2 1 0
         ; min-width: 95px
         }
+      #layout > aside:last-child
+        { flex: 3 1 0 }
       #layout > aside > nav span
         { display: block }
       #layout > section
         { overflow: scroll 
-        ; flex: 7 1 0
+        ; flex: 8 1 0
         ; text-align: center
         }
       .portrait
@@ -209,6 +211,7 @@
       .thumb
         { display: inline-block 
         ; cursor: pointer
+        ; margin: 3px
         }
       #cover
         { position: absolute 

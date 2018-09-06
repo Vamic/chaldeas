@@ -61,7 +61,7 @@ instance _b_ ∷ Show Trait where
   show = case _ of
     Brynhild        -> "Brynhild's Beloved"
     DemiServant      -> "Demi-servant"
-    HeavenOrEarth    -> "Heaven or Earth"
+    HeavenOrEarth    -> "Heaven/Earth"
     GreekMyth        -> "Greek Mythology Males"
     PseudoServant    -> "Pseudo-Servant"
     ThreatToHumanity -> "Threat to Humanity"

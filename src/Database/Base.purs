@@ -3,7 +3,7 @@ module Database.Base
   , Attribute(..)
   , Card(..)
   , Class(..)
-  , Stat(..), showStat
+  , Stat(..), showStat, addStats
   , Trait(..)
   ) where
 
@@ -31,6 +31,9 @@ data Class = Saber | Archer | Lancer | Caster | Rider | Assassin | Berserker
 type Stat = { atk ∷ Int, hp ∷ Int }
 showStat ∷ Stat -> String
 showStat {atk, hp} = "ATK: " <> show atk <> ", HP: " <> show hp
+
+addStats ∷ Stat -> Stat -> Stat
+addStats a b = {atk: a.atk + b.atk, hp: a.hp + b.hp}
 
 data Trait
     = Arthur

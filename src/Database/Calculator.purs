@@ -174,6 +174,9 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
           | not $ allied t = [ Tuple instant $ f a / 100.0 ]
         go _ _ = []
 
+test ∷ List Boolean
+test = [true]
+
 passiveBuffs ∷ Servant -> Array (Tuple BuffEffect Number)
 passiveBuffs (Servant {passives}) = passives >>= _.effect >>= go <<< simplify
   where

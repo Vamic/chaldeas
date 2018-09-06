@@ -15,8 +15,9 @@ import Site.Preferences
 
 main ∷ Effect Unit
 main = do
-    hash <- getHash
+    hash  <- getHash
     prefs <- getPreferences
     today <- getDate
+    team  <- getTeam
     HA.runHalogenAff $
-    HA.awaitBody >>= runUI (comp hash prefs today) unit
+    HA.awaitBody >>= runUI (comp hash prefs today team) unit

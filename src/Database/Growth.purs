@@ -1,4 +1,4 @@
-module Database.Growth (growthCurves) where
+module Database.Growth (lvlStats) where
 
 import Prelude
 import Data.Array

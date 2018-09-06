@@ -94,16 +94,16 @@ comp initialFilt initialFocus initialPrefs today = component
         , H.aside_ $
           [ _h 1 "Browse"
           , H.a [_click $ Switch Nothing, P.href "#"] $ _txt "Servants"
-          , H.a_ <<< singleton <<< H.strong_ $ _txt "Craft Essences"
+          , H.a_ [H.strong_ $ _txt "Craft Essences"]
           , _h 1 "Filter"
           , H.form_
-            [ H.table_ <<< singleton $ H.tr_
+            [ H.table_ [ H.tr_
               [ _th "Match"
               , H.td [_click $ MatchAny false] $ _radio "All" (not matchAny)
               , H.td [_click $ MatchAny true]  $ _radio "Any"      matchAny
               ]
             , H.button clearAll $ _txt "Reset All"
-            ]
+            ] ]
           ] <> (filter (not exclusive <<< fst) allFilters >>= filterSection)
         ]
     where
@@ -168,8 +168,7 @@ portrait big artorify (Tuple lab ce'@(CraftEssence ce))
       , H.header_
         <<< (lab /= "") ? append [_span $ noBreakName lab, H.br_]
         $ [ _span <<< noBreakName <<< artorify ? doArtorify $ ce.name ]
-      , H.footer_
-        <<< singleton <<< _span <<< S.joinWith "  " $ replicate ce.rarity "★"
+      , H.footer_ [_span <<< S.joinWith "  " $ replicate ce.rarity "★"]
       ]
   where 
     meta       = not big ? (cons <<< _click <<< Focus $ Just ce')

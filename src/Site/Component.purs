@@ -26,6 +26,7 @@ type State = { today    ∷ Date
              , browseCe ∷ Boolean
              , withHash ∷ String
              , prefs    ∷ Preferences
+             , team     ∷ Array MyServant
              , mServant ∷ Maybe Servant
              , mCe      ∷ Maybe CraftEssence
              , fServant ∷ Array (Filter Servant)
@@ -40,9 +41,9 @@ type ChildQuery = Coproduct2 Servants.Query CraftEssences.Query
 
 type ChildSlot = Either Unit (Either Unit Unit)
 
-comp ∷ ∀ m. MonadEffect m => String -> Preferences -> Date
+comp ∷ ∀ m. MonadEffect m => String -> Preferences -> Date -> Array MyServant
        -> Component HTML Query Unit Void m
-comp initialHash initialPrefs initialToday = parentComponent
+comp initialHash initialPrefs initialToday initialTeam = parentComponent
     { initialState: const initialState
     , render
     , eval
@@ -54,6 +55,7 @@ comp initialHash initialPrefs initialToday = parentComponent
   initialState = { today:    initialToday
                  , withHash: initialHash
                  , prefs:    initialPrefs
+                 , team:     initialTeam
                  , browseCe: isJust mCe
                  , fServant: []
                  , fCe:      []
@@ -79,9 +81,11 @@ comp initialHash initialPrefs initialToday = parentComponent
   eval (BrowseServants (CraftEssences.Message fCe mServant) next) = next <$ do
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
+      team  <- liftEffect getTeam
       modify_ _{ browseCe = false
                , withHash = ""
                , prefs    = prefs
+               , team     = team
                , today    = today
                , fCe      = fCe
                , mServant = mServant
@@ -89,9 +93,11 @@ comp initialHash initialPrefs initialToday = parentComponent
   eval (BrowseCraftEssences (Servants.Message fServant mCe) next) = next <$ do
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
+      team  <- liftEffect getTeam
       modify_ _{ browseCe = true
                , withHash = ""
                , prefs    = prefs
+               , team     = team
                , today    = today
                , fServant = fServant
                , mCe      = mCe

@@ -380,9 +380,9 @@ bondEl ce@(Just (CraftEssence {name, icon, effect})) = H.section_ $
     [ _img $ "img/Skill/" <> show icon <> ".png"
     , H.h3 [_c "link", _click $ Switch ce] $ _txt name
     , H.p_
-      [                  H.text "★★★★ "
-      , _strong "ATK: ", H.text "100 "
-      , _strong "DEF: ", H.text "100"
+      [                  _span "★★★★ "
+      , _strong "ATK: ", _span "100 "
+      , _strong "DEF: ", _span "100"
       ]
     ] <> (_p <<< show <<< nvmEquipped <$> effect)
   where

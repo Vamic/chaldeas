@@ -12,6 +12,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    10
   , stats:    { base:  { atk: 1979,  hp: 1790 }
               , max:   { atk: 12805, hp: 12210 }
               , grail: { atk: 14017, hp: 13377 }
@@ -63,6 +64,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    30
   , stats:    { base:  { atk: 1786,  hp: 1980 }
               , max:   { atk: 11556, hp: 13500 }
               , grail: { atk: 12650, hp: 14790 }
@@ -114,6 +116,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Mankind
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    9
   , stats:    { base:  { atk: 1964,  hp: 1782 }
               , max:   { atk: 12712, hp: 12150 }
               , grail: { atk: 13915, hp: 13311 }
@@ -161,6 +164,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    15
   , stats:    { base:  { atk: 1777,  hp: 2019 }
               , max:   { atk: 11499, hp: 13770 }
               , grail: { atk: 12587, hp: 15086 }
@@ -206,6 +210,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    30
   , stats:    { base:  { atk: 1573,  hp: 2232 }
               , max:   { atk: 10184, hp: 15221 }
               , grail: { atk: 11148, hp: 16675 }
@@ -255,6 +260,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Heaven
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    9
   , stats:    { base:  { atk: 1775,  hp: 1652 }
               , max:   { atk: 10655, hp: 10327 }
               , grail: { atk: 12901, hp: 12521 }
@@ -304,6 +310,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    24
   , stats:    { base:  { atk: 1573,  hp: 1710 }
               , max:   { atk: 9441, hp: 10687 }
               , grail: { atk: 11431, hp: 12958 }
@@ -355,6 +362,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    29
   , stats:    { base:  { atk: 1606,  hp: 1752 }
               , max:   { atk: 9636, hp: 10954 }
               , grail: { atk: 11667, hp: 13282 }
@@ -408,6 +416,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    14
   , stats:    { base:  { atk: 1746,  hp: 1652 }
               , max:   { atk: 10477, hp: 10327 }
               , grail: { atk: 12685, hp: 12521 }
@@ -455,6 +464,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    4
   , stats:    { base:  { atk: 1707,  hp: 1652 }
               , max:   { atk: 10247, hp: 10327 }
               , grail: { atk: 12407, hp: 12521 }
@@ -504,6 +514,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    9
   , stats:    { base:  { atk: 1504,  hp: 1833 }
               , max:   { atk: 9026, hp: 11458 }
               , grail: { atk: 10929, hp: 13893 }
@@ -551,6 +562,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Mankind
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    8
   , stats:    { base:  { atk: 1507,  hp: 1494 }
               , max:   { atk: 8119, hp: 8302 }
               , grail: { atk: 10988, hp: 11256 }
@@ -603,6 +615,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Mankind
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    6
   , stats:    { base:  { atk: 922,  hp: 1544 }
               , max:   { atk: 5073, hp: 7722 }
               , grail: { atk: 7883, hp: 11904 }
@@ -652,6 +665,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    1
   , stats:    { base:  { atk: 1097,  hp: 1320 }
               , max:   { atk: 6037, hp: 6604 }
               , grail: { atk: 9381, hp: 10181 }
@@ -704,6 +718,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    3
   , stats:    { base:  { atk: 1233,  hp: 1649 }
               , max:   { atk: 6644, hp: 9166 }
               , grail: { atk: 8992, hp: 12428 }
@@ -755,6 +770,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Mankind
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    2
   , stats:    { base:  { atk: 1116,  hp: 1447 }
               , max:   { atk: 6290, hp: 7688 }
               , grail: { atk: 9115, hp: 11095 }
@@ -806,6 +822,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Mankind
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    3
   , stats:    { base:  { atk: 1412,  hp: 1577 }
               , max:   { atk: 7608, hp: 8763 }
               , grail: { atk: 10297, hp: 11881 }
@@ -855,6 +872,7 @@ berserkers = Servant <$>
   , class:    Berserker
   , attr:     Mankind
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    12
   , stats:    { base:  { atk: 1374,  hp: 1211 }
               , max:   { atk: 6831, hp: 7303 }
               , grail: { atk: 9899, hp: 10540 }

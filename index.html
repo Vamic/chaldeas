@@ -25,23 +25,21 @@
         { color: #c0c0c0 }
       .activates p:first-child::after, .demerit::after
         { font-style: italic }
-      span, p, table, br, h1, h2, h3, h4, h5, ul, ol, a
-        { line-height: 1.31em
-        ; z-index: 100
-        }
+      span, p, table, br, h1, h2, h3, h4, h5, ul, ol, a, strong
+        { line-height: 1.31em }
       article > table > tr > th
         { min-width: 6em
         ; vertical-align: top
         }
-      .light section p.link, .dark section p.link, .phantasm p.link
+      .light section p.link, .dark section p.link, #phantasm p.link
         { color: inherit }
-      .link:hover           { text-decoration: underline }
-      .link                 { cursor: pointer }
-      .light .link          { color: #5656BF }
-      .dark .link           { color: #D5A55F }
+      .link:hover, aside a:hover  
+        { text-decoration: underline }
+      a, .link              { cursor: pointer }
       h1, h2, h3            { margin: 0.5em 0 0 0 }
-      h2                    { font-size: 1.4em }
+      h2                    { font-size: 1.4em; margin-top: 1em }
       p, h4                 { margin: 0 }
+      tr                    { vertical-align: text-top }
       th                    { text-align: right }
       th, td                { padding: 0 5px }
       th::after             { content: ":" }
@@ -55,64 +53,71 @@
       form p                { margin-left: 20px }
       article               { text-align: center }
       section, p, td        { text-align: left }
-      p input               { float: left; margin-left: -20px; margin-top: 1px }
       article .portrait img { width: 248px }
       footer a:first-child  { left: 20px }
       footer a:last-child   { right: 20px }
       footer a
         { position: absolute 
-        ; cursor: pointer
         ; font-size: 16px
         ; bottom: -3px
         }
       thead th, tbody th, tbody td
         { text-align: center }
+      .light .link, .light aside a  
+        { color: #5656BF }
+      .dark  .link, .dark  aside a  
+        { color: #D5A55F }
       aside a
         { display: block }
+      aside p input 
+        { float: left
+        ; margin-left: -20px
+        ; margin-top: 1px
+        }
       aside button
         { width: 5em
         ; max-width: 45% 
         }
+      section p strong
+        { margin-left: 1em }
+      section p strong:first-child
+        { margin-left: 0em }
       aside:last-child button          
         { width: 16em 
         ; max-width: 100%
         ; margin-top: 5px
         }
-      .selected, .unselected 
-        { cursor: pointer }
-      .selected:hover, .unselected:hover 
-        { text-decoration: underline }
-      #layout > article > table 
+      article > table 
         { width: 220px 
         ; margin-top: -1px
         ; margin-bottom: 12px
         ; position: relative
         ; left: -10px
         }
-      #layout > article table.phantasm
+      article table#phantasm
         { width: 100% 
         ; padding-right: 10px
         }
-      .phantasm th
+      #phantasm th
         { width: 104px 
         ; vertical-align: text-top
         }
-      #layout
+      body > div:last-child
         { display: flex
         ; position: absolute
         ; top:0;left:0;right:0;bottom:0
         }
-      #layout > aside 
+      aside 
         { overflow: scroll
         ; padding: 0.5em 1em
         ; flex: 2 1 0
         ; min-width: 95px
         }
-      #layout > aside:last-child
+      aside:last-child
         { flex: 3 1 0 }
-      #layout > aside > nav span
+      aside > nav span
         { display: block }
-      #layout > section
+      div > section
         { overflow: scroll 
         ; flex: 8 1 0
         ; text-align: center
@@ -219,16 +224,16 @@
         ; cursor: pointer
         ; z-index: 3
         }
-      #layout > article, #cover 
+      article, #cover 
         { display: none }
-      .fade#layout > article, .fade #cover 
+      .fade > article, .fade #cover 
         { display: block }
       .fade > section, .fade > aside
         { opacity: 0.2
         ; pointer-events: none
         ; filter: blur(1px)
         }
-      #layout > article
+      article
         { position: absolute
         ; top:4%;left:0;right:0
         ; max-height: 92%
@@ -239,30 +244,21 @@
         ; z-index: 10
         ; padding: 5px 0
         }
-      #layout.light > article
+      .light article
         { background-color: #ffffff
         ; border: 1px solid #aaaaaa
         ; border-top-color: #bbbbbb
         ; box-shadow: 0 0px 10px rgba(0,0,0,0.2)
         }
-      #layout.dark > article
+      .dark article
         { background-color: #060606
         ; border: 1px solid #333333
         ; border-top-color: #444444
         ; box-shadow: 0 0px 10px rgba(0,0,0,0.5)
         }
-      .bond
-        { text-align: center 
-        ; padding-top: 10px
-        }
       td:first-child 
         { padding-right: 0.5em
         ; font-weight: bold
-        }
-      .card
-        { display: inline-block 
-        ; font-weight: bold
-        ; margin-right: 3px
         }
       article section
         { padding: 0 10px }
@@ -270,86 +266,119 @@
         { text-align: center }
       article > img
         { margin-top: -10px }
-      .clearhead
+      #myservant
         { clear: both 
-        ; padding-top: 10px
+        ; margin-top: -11px
+        ; padding: 7px 0 4px 0
+        }
+      #myservant input
+        { width: 3em 
+        ; margin: 0 2px 0 5px
+        }
+      #myservant table
+        { width: 100% 
+        ; padding: 0 10px
+        }
+      #myservant td
+        { padding: 0 
+        ; position: relative
+        }
+      #myservant strong
+        { text-align: right
+        ; width: 100%
+        ; display: inline-block
+        }
+      #myservant td:first-child strong
+        { text-align: left }
+      #myservant a
+        { color: #ff0000 
+        ; font-weight: bold
+        }
+      #myservant > a
+        { color: #00a900 }
+      #myservant a:hover
+        { text-decoration: underline }
+      #myservant img 
+        { height: 20px
+        ; margin: 0
+        ; padding: 0
+        ; vertical-align: bottom
+        ; position: absolute
+        ; right: 0
+        ; bottom: 1px
         }
       article section img
         { float: left 
         ; width: 35px
         ; margin: 1px 6px 0 1px
         }
-      #layout > article section table, table table
+      article section table, table table
         { table-layout: fixed
         ; margin-top: 3px
         ; border-spacing: 0
         }
-      #layout.light > article section table, .light table table
+      .light article section table, .light table table, .light #myservant
         { background-color: #eeeeee
         ; border: 1px solid #dddddd
         }
-      #layout.dark > article section table, .dark table table
+      .dark article section table, .dark table table, .dark #myservant
         { background-color: #111111
         ; border: 1px solid #181818
         }
-      #layout > article section table
+      article section table
         { width: 100% }
-      #layout.light > article section table col:nth-child(even),
-                         .light table table col:nth-child(even)
+      .light article section table col:nth-child(even)
+      ,         .light table table col:nth-child(even)
         { background-color: #dddddd }
-      #layout.dark > article section table col:nth-child(even),
-                         .dark table table col:nth-child(even)
+      .dark > article section table col:nth-child(even)
+      ,           .dark table table col:nth-child(even)
         { background-color: #181818 }
-      #layout > article section table td
+      article section table td
         { padding: 2px 0 }
-      #layout.light > article section table th, .light table table th
+      .light article section table th, .light table table th
         { border-bottom: 1px solid #cccccc }
-      #layout.dark > article section table th, .dark table table th
+      .dark article section table th, .dark table table th
         { border-bottom: 1px solid #222222 }
       article section td:first-child, table table td:first-child
         { font-weight: inherit }
-      .npheading
-        { margin-top: -4px }
-      .trait::after 
-        { content: ", " }
-      .trait:last-child::after 
-        { content: none }
-    aside form
-      { margin-bottom: 6px }
-    .activates p:first-child::after { content: " [Activates first]" }
-    .demerit::after                 { content: " [Demerit]" }
-    @media (max-device-width: 800px) 
-      { body                             { font-size: 8px }
-        aside td                         { display: block }
-        section .portrait > img           { width: 75px }
-        section .portrait header span     { font-size: 9px }
-        article .portrait > img           { width: 130px }
-        form p                           { margin-left: 15px }
-        article .portrait header span     { font-size: 11px }
-        #layout > article table.phantasm { width: auto }
-        .phantasm th                     { width: initial }
-        p input
-          { margin-left: -15px
-          ; position: relative
-          ; bottom: 3px
-          ; max-height: 1em
-          ; margin-bottom: -1em
-          }
-        article > table:nth-child(2), article > table:nth-child(3)
-          { float: left
-          ; max-width: 36% 
-          }
-        article > table:nth-child(4) 
-          { max-width: 33% }
-        article section
-          { max-width: 35em
-          ; margin: auto
-          }
-        article section img
-          { width: 20px
-          ; margin-top: 2px
-          }
-      }
+      aside form
+        { margin-bottom: 6px }
+      .trait::after                   { content: ", " }
+      .trait:last-child::after        { content: none }
+      .activates p:first-child::after { content: " [Activates first]" }
+      .demerit::after                 { content: " [Demerit]" }
+      @media (max-device-width: 800px) 
+        { body                          { font-size: 8px }
+          aside td                      { display: block }
+          section .portrait > img       { width: 75px }
+          section .portrait header span { font-size: 9px }
+          article .portrait > img       { width: 130px }
+          form p                        { margin-left: 15px }
+          article .portrait header span { font-size: 11px }
+          article table#phantasm        { width: auto }
+          #phantasm th                  { width: initial }
+          aside p input
+            { position: relative
+            ; bottom: 3px
+            ; max-height: 1em
+            ; float: left
+            ; margin: 1px 0 -1em -20px
+            }
+          article > table:nth-child(2), article > table:nth-child(3)
+            { float: left
+            ; max-width: 36% 
+            }
+          article > table:nth-child(4) 
+            { max-width: 33% }
+          article section
+            { max-width: 35em
+            ; margin: auto
+            }
+          article section img
+            { width: 20px
+            ; margin-top: 2px
+            }
+        }
     </style>
     <script type="text/javascript" src="js/chaldeas.js"></script>
   </head>

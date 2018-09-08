@@ -31,13 +31,13 @@ servants = addUniversal <<< addHeavenOrEarth
         <> riders
         <> sabers
   where
-    addUniversal (Servant s@{traits, passives})
-        = Servant s { traits   = sortWith show $ cons Humanoid traits
-                    , passives = sortWith show passives
+    addUniversal (Servant s)
+        = Servant s { traits   = sortWith show $ cons Humanoid s.traits
+                    , passives = sortWith show s.passives
                     }
-    addHeavenOrEarth s'@(Servant s@{attr, traits})
-      | attr /= Earth && attr /= Heaven = s'
-      | otherwise = Servant s {traits = cons HeavenOrEarth traits}
+    addHeavenOrEarth s'@(Servant s)
+      | s.attr /= Earth && s.attr /= Heaven = s'
+      | otherwise = Servant s {traits = cons HeavenOrEarth s.traits}
 
 getAll ∷ ∀ a. MatchServant a => Array a
 getAll = (_ $ unit) $ memoize \_ -> sortWith show $ filter exists enumArray

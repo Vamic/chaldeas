@@ -12,6 +12,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    5
   , stats:    { base:  { atk: 1850,  hp: 1881 }
               , max:   { atk: 11971, hp: 12830 }
               , grail: { atk: 13104, hp: 14056 }
@@ -64,6 +65,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Star
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    10
   , stats:    { base:  { atk: 1750,  hp: 1881 }
               , max:   { atk: 11326, hp: 12830 }
               , grail: { atk: 12398, hp: 14056 }
@@ -114,6 +116,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    10
   , stats:    { base:  { atk: 1786,  hp: 1938 }
               , max:   { atk: 11560, hp: 13219 }
               , grail: { atk: 12654, hp: 14482 }
@@ -161,6 +164,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    5
   , stats:    { base:  { atk: 1591,  hp: 2048 }
               , max:   { atk: 10296, hp: 13968 }
               , grail: { atk: 11270, hp: 15303 }
@@ -212,6 +216,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Earth
   , deck:     Deck Quick Quick Arts Buster Buster
+  , curve:    9
   , stats:    { base:  { atk: 1636,  hp: 1728 }
               , max:   { atk: 9819, hp: 10800 }
               , grail: { atk: 11889, hp: 13095 }
@@ -261,6 +266,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    29
   , stats:    { base:  { atk: 1543,  hp: 1805 }
               , max:   { atk: 9258, hp: 11286 }
               , grail: { atk: 11209, hp: 13684 }
@@ -308,6 +314,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    4
   , stats:    { base:  { atk: 1335,  hp: 2090 }
               , max:   { atk: 8014, hp: 13068 }
               , grail: { atk: 9703, hp: 15845 }
@@ -359,6 +366,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Earth
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    24
   , stats:    { base:  { atk: 1535,  hp: 1824 }
               , max:   { atk: 9212, hp: 11400 }
               , grail: { atk: 11154, hp: 13822 }
@@ -408,6 +416,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    9
   , stats:    { base:  { atk: 1382,  hp: 1975 }
               , max:   { atk: 8293, hp: 12348 }
               , grail: { atk: 10041, hp: 14972 }
@@ -460,6 +469,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    29
   , stats:    { base:  { atk: 1504,  hp: 1805 }
               , max:   { atk: 9029, hp: 11286 }
               , grail: { atk: 10932, hp: 13684 }
@@ -507,6 +517,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Earth
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    24
   , stats:    { base:  { atk: 1489,  hp: 1787 }
               , max:   { atk: 8937, hp: 11172 }
               , grail: { atk: 10821, hp: 13546 }
@@ -557,6 +568,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    2
   , stats:    { base:  { atk: 929,  hp: 1731 }
               , max:   { atk: 5236, hp: 9200 }
               , grail: { atk: 7587, hp: 13278 }
@@ -608,6 +620,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    8
   , stats:    { base:  { atk: 1314, hp: 1625 }
               , max:   { atk: 7076, hp: 9028 }
               , grail: { atk: 9576, hp: 12240 }
@@ -655,6 +668,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Earth
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    24
   , stats:    { base:  { atk: 1337,  hp: 1608 }
               , max:   { atk: 7200, hp: 8937 }
               , grail: { atk: 9744, hp: 12117 }
@@ -704,6 +718,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    12
   , stats:    { base:  { atk: 1097,  hp: 1488 }
               , max:   { atk: 6188, hp: 7907 }
               , grail: { atk: 8967, hp: 11411 }
@@ -759,6 +774,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    3
   , stats:    { base:  { atk: 1366,  hp: 1979 }
               , max:   { atk: 7356, hp: 8640 }
               , grail: { atk: 9955, hp: 11714 }
@@ -805,6 +821,7 @@ riders = Servant <$>
   , class:    Rider
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    3
   , stats:    { base:  { atk: 1168,  hp: 1823 }
               , max:   { atk: 6289, hp: 10130 }
               , grail: { atk: 8511, hp: 13735 }

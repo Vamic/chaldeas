@@ -12,6 +12,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Earth
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    25
   , stats:    { base:  { atk: 1786,  hp: 1862 }
               , max:   { atk: 11557, hp: 12696 }
               , grail: { atk: 12651, hp: 13909 }
@@ -61,6 +62,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Earth
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    25
   , stats:    { base:  { atk: 1853,  hp: 1881 }
               , max:   { atk: 11993, hp: 12825 }
               , grail: { atk: 13128, hp: 14050 }
@@ -116,6 +118,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Star
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    5
   , stats:    { base:  { atk: 1817,  hp: 1862 }
               , max:   { atk: 11761, hp: 12696 }
               , grail: { atk: 12874, hp: 13909 }
@@ -163,6 +166,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    4
   , stats:    { base:  { atk: 1477,  hp: 1768 }
               , max:   { atk: 8867, hp: 11055 }
               , grail: { atk: 10736, hp: 13404 }
@@ -215,6 +219,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Earth
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    14
   , stats:    { base:  { atk: 1568,  hp: 1675 }
               , max:   { atk: 9408, hp: 10473 }
               , grail: { atk: 11391, hp: 12698 }
@@ -267,6 +272,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    24
   , stats:    { base:  { atk: 1493,  hp: 1786 }
               , max:   { atk: 8958, hp: 11168 }
               , grail: { atk: 10846, hp: 13541 }
@@ -319,6 +325,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Star
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    4
   , stats:    { base:  { atk: 1851,  hp: 1786 }
               , max:   { atk: 9049, hp: 11168 }
               , grail: { atk: 10956, hp: 13541 }
@@ -370,6 +377,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Heaven
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    4
   , stats:    { base:  { atk: 1497,  hp: 1843 }
               , max:   { atk: 8985, hp: 11518 }
               , grail: { atk: 10879, hp: 13965 }
@@ -423,6 +431,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    8
   , stats:    { base:  { atk: 1316,  hp: 1592 }
               , max:   { atk: 7091, hp: 8844 }
               , grail: { atk: 9597, hp: 11991 }
@@ -472,6 +481,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    6
   , stats:    { base:  { atk: 1042,  hp: 1244 }
               , max:   { atk: 5735, hp: 6220 }
               , grail: { atk: 8912, hp: 9588 }
@@ -523,6 +533,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    2
   , stats:    { base:  { atk: 1114,  hp: 1429 }
               , max:   { atk: 6280, hp: 7594 }
               , grail: { atk: 9100, hp: 10960 }
@@ -570,6 +581,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Earth
   , deck:     Deck Quick Quick Arts Buster Buster
+  , curve:    23
   , stats:    { base:  { atk: 1173,  hp: 1741 }
               , max:   { atk: 6320, hp: 9675 }
               , grail: { atk: 8553, hp: 13118 }
@@ -629,6 +641,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    8
   , stats:    { base:  { atk: 1338,  hp: 1492 }
               , max:   { atk: 7207, hp: 8293 }
               , grail: { atk: 9754, hp: 11244 }
@@ -682,6 +695,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    12
   , stats:    { base:  { atk: 968,  hp: 1568 }
               , max:   { atk: 5456, hp: 8309 }
               , grail: { atk: 7906, hp: 11991 }
@@ -731,6 +745,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    28
   , stats:    { base:  { atk: 1241,  hp: 1675 }
               , max:   { atk: 6686, hp: 9310 }
               , grail: { atk: 9049, hp: 12623 }
@@ -787,6 +802,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    23
   , stats:    { base:  { atk: 1232,  hp: 1675 }
               , max:   { atk: 6636, hp: 9310 }
               , grail: { atk: 8981, hp: 12623 }
@@ -840,6 +856,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Earth
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    2
   , stats:    { base:  { atk: 1003,  hp: 1580 }
               , max:   { atk: 5654, hp: 8393 }
               , grail: { atk: 8193, hp: 12112 }
@@ -890,6 +907,7 @@ assassins = Servant <$>
   , class:    Assassin
   , attr:     Mankind
   , deck:     Deck Quick Quick Quick Arts Buster
+  , curve:    6
   , stats:    { base:  { atk: 977,  hp: 1313 }
               , max:   { atk: 5377, hp: 6565 }
               , grail: { atk: 8355, hp: 10120 }

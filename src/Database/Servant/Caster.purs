@@ -12,6 +12,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    15
   , stats:    { base:  { atk: 1637,  hp: 2091 }
               , max:   { atk: 10598, hp: 14259 }
               , grail: { atk: 11601, hp: 15621 }
@@ -69,6 +70,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    5
   , stats:    { base:  { atk: 1629,  hp: 2091 }
               , max:   { atk: 10546, hp: 14259 }
               , grail: { atk: 11544, hp: 15621 }
@@ -120,6 +122,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    15
   , stats:    { base:  { atk: 1801,  hp: 1901 }
               , max:   { atk: 11658, hp: 12965 }
               , grail: { atk: 12761, hp: 14204 }
@@ -172,6 +175,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Star
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    30
   , stats:    { base:  { atk: 1637,  hp: 2091 }
               , max:   { atk: 10598, hp: 14259 }
               , grail: { atk: 11601, hp: 15621 }
@@ -228,6 +232,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    10
   , stats:    { base:  { atk: 1677,  hp: 2027 }
               , max:   { atk: 10857, hp: 13825 }
               , grail: { atk: 11885, hp: 15146 }
@@ -282,6 +287,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    9
   , stats:    { base:  { atk: 1294,  hp: 2091 }
               , max:   { atk: 7766, hp: 13070 }
               , grail: { atk: 9403, hp: 15847 }
@@ -331,6 +337,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    4
   , stats:    { base:  { atk: 1436,  hp: 1824 }
               , max:   { atk: 8616, hp: 11404 }
               , grail: { atk: 10432, hp: 13827 }
@@ -382,6 +389,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    4
   , stats:    { base:  { atk: 1438,  hp: 1901 }
               , max:   { atk: 8629, hp: 11882 }
               , grail: { atk: 10448, hp: 14407 }
@@ -437,6 +445,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    4
   , stats:    { base:  { atk: 1438,  hp: 1901 }
               , max:   { atk: 8629, hp: 11882 }
               , grail: { atk: 10448, hp: 14407 }
@@ -490,6 +499,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    9
   , stats:    { base:  { atk: 1510,  hp: 1806 }
               , max:   { atk: 9060, hp: 11288 }
               , grail: { atk: 10970, hp: 13686 }
@@ -539,6 +549,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    24
   , stats:    { base:  { atk: 1372,  hp: 1996 }
               , max:   { atk: 8237, hp: 12476 }
               , grail: { atk: 9973, hp: 15127 }
@@ -586,6 +597,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    9
   , stats:    { base:  { atk: 1510,  hp: 1824 }
               , max:   { atk: 9060, hp: 11404 }
               , grail: { atk: 10970, hp: 13827 }
@@ -639,6 +651,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    24
   , stats:    { base:  { atk: 1325,  hp: 1901 }
               , max:   { atk: 7952, hp: 11882 }
               , grail: { atk: 9628, hp: 14407 }
@@ -691,6 +704,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    12
   , stats:    { base:  { atk: 1021,  hp: 1597 }
               , max:   { atk: 5758, hp: 8484 }
               , grail: { atk: 8344, hp: 12244 }
@@ -742,6 +756,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    13
   , stats:    { base:  { atk: 1377,  hp: 1555 }
               , max:   { atk: 7418, hp: 8643 }
               , grail: { atk: 10039, hp: 11719 }
@@ -791,6 +806,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    12
   , stats:    { base:  { atk: 1028,  hp: 1520 }
               , max:   { atk: 5798, hp: 8080 }
               , grail: { atk: 8402, hp: 11661 }
@@ -840,6 +856,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Star
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    1
   , stats:    { base:  { atk: 944,  hp: 1425 }
               , max:   { atk: 5195, hp: 7129 }
               , grail: { atk: 8072, hp: 10990 }
@@ -890,6 +907,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    13
   , stats:    { base:  { atk: 1113,  hp: 1959 }
               , max:   { atk: 5996, hp: 10887 }
               , grail: { atk: 8115, hp: 14761 }
@@ -941,6 +959,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    8
   , stats:    { base:  { atk: 1222,  hp: 1728 }
               , max:   { atk: 6580, hp: 9604 }
               , grail: { atk: 8905, hp: 13022 }
@@ -994,6 +1013,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    8
   , stats:    { base:  { atk: 1270,  hp: 1659 }
               , max:   { atk: 6839, hp: 9216 }
               , grail: { atk: 9255, hp: 12495 }
@@ -1043,6 +1063,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    3
   , stats:    { base:  { atk: 1246,  hp: 1711 }
               , max:   { atk: 6711, hp: 9506 }
               , grail: { atk: 9082, hp: 12889 }
@@ -1088,6 +1109,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    3
   , stats:    { base:  { atk: 1273,  hp: 1642 }
               , max:   { atk: 6857, hp: 9123 }
               , grail: { atk: 9280, hp: 12369 }
@@ -1137,6 +1159,7 @@ casters = Servant <$>
   , class:    Caster
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    13
   , stats:    { base:  { atk: 1209,  hp: 1711 }
               , max:   { atk: 6514, hp: 9506 }
               , grail: { atk: 8816, hp: 12889 }

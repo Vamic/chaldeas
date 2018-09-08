@@ -11,12 +11,13 @@ import Data.Map as M
 import Data.Array
 import Data.Int
 import Data.Maybe
-import Data.Map (Map)
+import Data.Map (Map, isEmpty)
 import Data.Ord
 import Data.Profunctor.Strong
-import Data.Tuple (Tuple(..), uncurry)
+import Data.Tuple (Tuple(..))
 
 import Database
+import Database.MyServant
 import Printing
 
 data SortBy
@@ -54,19 +55,18 @@ toSort NPDmgOver           s  = npDamage false true s
 toSort NPSpec              s  = npDamage true false s
 toSort NPSpecOver          s  = npDamage true true s
 
-doSort ∷ SortBy -> Array Servant -> Array (Tuple String Servant)
-doSort Rarity = map (Tuple "") <<< sortWith sorter
+doSort ∷ SortBy -> Array MyServant -> Array (Tuple String Servant)
+doSort Rarity = map (Tuple "") <<< sortWith sorter <<< map getBase
   where
     sorter (Servant s) = show (5 - s.rarity) <> s.name
 doSort a = map showSort <<< sortWith sorter
   where
-    sorter   = toSort a
+    sorter (MyServant ms)  = toSort a $ ms.servant
     showSort
       | a `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver]
-          = \s'@(Servant s) -> (flip Tuple) s'
-          $ (if s.free || s.rarity < 4 then "NP5: " else "NP1: ")
-         <> (output <<< abs $ sorter s')
-      | otherwise = uncurry Tuple <<< (output <<< abs <<< sorter &&& identity)
+          = \ms'@(MyServant ms) -> (flip Tuple) (getBase ms') 
+              $ "NP" <> show ms.npLvl <> ": " <> (output <<< abs $ sorter ms')
+      | otherwise = output <<< abs <<< sorter &&& getBase
     output = case a of
         -- NPGain    -> (_ <> "%") <<< print 2
         -- StarRate  -> (_ <> "%") <<< print 2
@@ -77,10 +77,12 @@ doSort a = map showSort <<< sortWith sorter
 sorted ∷ Map SortBy (Array (Tuple String Servant))
 sorted = M.fromFoldable $ go <$> enumArray
   where
-    go sorter = Tuple sorter $ doSort sorter servants
+    go sorter = Tuple sorter <<< doSort sorter $ unowned <$> servants
 
-getSort ∷ SortBy -> Array (Tuple String Servant)
-getSort sorter = fromMaybe [] $ M.lookup sorter sorted
+getSort ∷ Map Servant MyServant -> SortBy -> Array (Tuple String Servant)
+getSort team sorter
+  | isEmpty team = fromMaybe [] $ M.lookup sorter sorted
+  | otherwise    = doSort sorter $ owned team <$> servants
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

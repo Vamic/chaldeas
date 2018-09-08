@@ -41,11 +41,7 @@ extraFilters = join
 
 scheduledFilters ∷ Array (ScheduledFilter Servant)
 scheduledFilters = 
-  [ ScheduledFilter (ymd 2018 September 6) (ymd 2018 September 6)
-    $ Filter FilterAvailability "Rate-Up"
-      \_ (Servant s) -> not s.limited && s.class == Archer
-
-  , ScheduledFilter (ymd 2018 September 7) (ymd 2018 September 7)
+  [ ScheduledFilter (ymd 2018 September 7) (ymd 2018 September 7)
     $ Filter FilterAvailability "Rate-Up"
       \_ (Servant s) -> not s.limited && s.class == Lancer
 
@@ -65,55 +61,51 @@ scheduledFilters =
     $ Filter FilterAvailability "Rate-Up"
       \_ (Servant s) -> not s.limited && s.class == Berserker
 
-  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 12)
-    $ Filter FilterAvailability "Rate-Up"
-      \_ (Servant s) -> not s.limited && s.class == Saber
-
   ------------
   -- NERO FEST
   ------------
 
-  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 14)
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 13)
     $ namedBonus FilterAvailability "Rate-Up"
       [ "Brynhild", "Nero Claudius" ]
+
+  , ScheduledFilter (ymd 2018 September 14) (ymd 2018 September 14)
+    $ namedBonus FilterAvailability "Rate-Up"
+      [ "Nero Claudius (Bride)", "Nero Claudius" ]
 
   , ScheduledFilter (ymd 2018 September 15) (ymd 2018 September 15)
     $ namedBonus FilterAvailability "Rate-Up"
-      [ "Nero Claudius (Bride)", "Nero Claudius" ]
+      [ "Brynhild", "Nero Claudius (Bride)", "Nero Claudius" ]
 
   , ScheduledFilter (ymd 2018 September 16) (ymd 2018 September 16)
     $ namedBonus FilterAvailability "Rate-Up"
-      [ "Brynhild", "Nero Claudius (Bride)", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 17) (ymd 2018 September 17)
-    $ namedBonus FilterAvailability "Rate-Up"
       [ "Brynhild", "Nero Claudius" ]
 
-  , ScheduledFilter (ymd 2018 September 18) (ymd 2018 September 19)
+  , ScheduledFilter (ymd 2018 September 17) (ymd 2018 September 18)
     $ namedBonus FilterAvailability "Rate-Up"
       [ "Nero Claudius (Bride)", "Nero Claudius" ]
 
-  , ScheduledFilter (ymd 2018 September 20) (ymd 2018 September 21)
+  , ScheduledFilter (ymd 2018 September 19) (ymd 2018 September 20)
     $ namedBonus FilterAvailability "Rate-Up"
       [ "Brynhild", "Nero Claudius" ]
+
+  , ScheduledFilter (ymd 2018 September 21) (ymd 2018 September 21)
+    $ namedBonus FilterAvailability "Rate-Up"
+      [ "Nero Claudius (Bride)", "Nero Claudius" ]
 
   , ScheduledFilter (ymd 2018 September 22) (ymd 2018 September 22)
     $ namedBonus FilterAvailability "Rate-Up"
-      [ "Nero Claudius (Bride)", "Nero Claudius" ]
+      [ "Brynhild","Nero Claudius (Bride)", "Nero Claudius" ]
 
   , ScheduledFilter (ymd 2018 September 23) (ymd 2018 September 23)
     $ namedBonus FilterAvailability "Rate-Up"
-      [ "Brynhild","Nero Claudius (Bride)", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 24) (ymd 2018 September 24)
-    $ namedBonus FilterAvailability "Rate-Up"
       [ "Brynhild", "Nero Claudius" ]
 
-  , ScheduledFilter (ymd 2018 September 25) (ymd 2018 September 26)
+  , ScheduledFilter (ymd 2018 September 24) (ymd 2018 September 25)
     $ namedBonus FilterAvailability "Rate-Up"
       [ "Nero Claudius (Bride)", "Nero Claudius" ]
 
-  , ScheduledFilter (ymd 2018 September 27) (ymd 2018 September 27)
+  , ScheduledFilter (ymd 2018 September 26) (ymd 2018 September 26)
     $ namedBonus FilterAvailability "Rate-Up"
       [ "Brynhild", "Nero Claudius" ]
   ]
@@ -127,8 +119,8 @@ singleFilter tab a
   | otherwise = [matchFilter tab a]
 
 namedBonus ∷ FilterTab -> String -> Array String -> Filter Servant
-namedBonus tab bonus servants
-    = Filter tab bonus \_ (Servant s) -> s.name `elem` servants
+namedBonus tab bonus servants = Filter tab bonus 
+                                \_ (Servant s) -> s.name `elem` servants
 
 getExtraFilters ∷ Date -> FilterTab -> Array (Filter Servant)
 getExtraFilters today tab = filter fromTab 

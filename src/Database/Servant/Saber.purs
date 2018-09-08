@@ -12,6 +12,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Buster Buster
+  , curve:    10
   , stats:    { base:  { atk: 1865,  hp: 1939 }
               , max:   { atk: 12068, hp: 13225 }
               , grail: { atk: 13210, hp: 14489 }
@@ -59,6 +60,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    5
   , stats:    { base:  { atk: 1907,  hp: 2039 }
               , max:   { atk: 12343, hp: 13907 }
               , grail: { atk: 13511, hp: 15236 }
@@ -108,6 +110,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    30
   , stats:    { base:  { atk: 1793,  hp: 2089 }
               , max:   { atk: 11607, hp: 14284 }
               , grail: { atk: 12706, hp: 15609 }
@@ -160,6 +163,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    25
   , stats:    { base:  { atk: 1811,  hp: 2153 }
               , max:   { atk: 11723, hp: 14680 }
               , grail: { atk: 12833, hp: 16083 }
@@ -210,6 +214,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    15
   , stats:    { base:  { atk: 1656,  hp: 2266 }
               , max:   { atk: 10721, hp: 15453 }
               , grail: { atk: 11736, hp: 16929 }
@@ -264,6 +269,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    5
   , stats:    { base:  { atk: 1734,  hp: 2222 }
               , max:   { atk: 11221, hp: 15150 }
               , grail: { atk: 12283, hp: 16597 }
@@ -309,6 +315,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    14
   , stats:    { base:  { atk: 1658,  hp: 1854 }
               , max:   { atk: 9949, hp: 11589 }
               , grail: { atk: 12046, hp: 14051 }
@@ -360,6 +367,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    14
   , stats:    { base:  { atk: 1708,  hp: 1854 }
               , max:   { atk: 10248, hp: 11589 }
               , grail: { atk: 12408, hp: 14051 }
@@ -405,6 +413,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    24
   , stats:    { base:  { atk: 1642,  hp: 1901 }
               , max:   { atk: 9854, hp: 11882 }
               , grail: { atk: 11931, hp: 14541 }
@@ -454,6 +463,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    15
   , stats:    { base:  { atk: 1574,  hp: 1880 }
               , max:   { atk: 9449, hp: 11753 }
               , grail: { atk: 11441, hp: 14250 }
@@ -504,6 +514,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    9
   , stats:    { base:  { atk: 1734,  hp: 2121 }
               , max:   { atk: 8765, hp: 13256 }
               , grail: { atk: 10613, hp: 16073 }
@@ -557,6 +568,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    4
   , stats:    { base:  { atk: 1363,  hp: 2266 }
               , max:   { atk: 8181, hp: 14165 }
               , grail: { atk: 9905, hp: 17175 }
@@ -606,6 +618,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    4
   , stats:    { base:  { atk: 1695,  hp: 1827 }
               , max:   { atk: 10173, hp: 11419 }
               , grail: { atk: 12317, hp: 13845 }
@@ -659,6 +672,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    14
   , stats:    { base:  { atk: 1287,  hp: 1699 }
               , max:   { atk: 7726, hp: 10623 }
               , grail: { atk: 9355, hp: 12880 }
@@ -704,6 +718,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Buster Buster
+  , curve:    13
   , stats:    { base:  { atk: 1392,  hp: 1727 }
               , max:   { atk: 7497, hp: 9595 }
               , grail: { atk: 10146, hp: 13009 }
@@ -751,6 +766,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Earth
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    23
   , stats:    { base:  { atk: 1385,  hp: 1761 }
               , max:   { atk: 7460, hp: 9786 }
               , grail: { atk: 10096, hp: 13268 }
@@ -804,6 +820,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Star
   , deck:     Deck Quick Quick Arts Buster Buster
+  , curve:    13
   , stats:    { base:  { atk: 1416,  hp: 1727 }
               , max:   { atk: 7627, hp: 9595 }
               , grail: { atk: 10322, hp: 13009 }
@@ -853,6 +870,7 @@ sabers = Servant <$>
   , class:    Saber
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    13
   , stats:    { base:  { atk: 1228,  hp: 1889 }
               , max:   { atk: 6615, hp: 10498 }
               , grail: { atk: 8952, hp: 14234 }
@@ -894,5 +912,4 @@ sabers = Servant <$>
   , limited:  false
   , free:     false
   }
-
 ]

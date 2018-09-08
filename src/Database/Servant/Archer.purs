@@ -12,6 +12,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    10
   , stats:    { base:  { atk: 1897,  hp: 1920 }
               , max:   { atk: 12280, hp: 13097 }
               , grail: { atk: 13442, hp: 14348 }
@@ -59,6 +60,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Earth
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    5 --TODO
   , stats:    { base:  { atk: 1742,  hp: 2134 }
               , max:   { atk: 11276, hp: 14553 }
               , grail: { atk: 12343, hp: 15943 }
@@ -112,6 +114,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Star
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    10
   , stats:    { base:  { atk: 1820,  hp: 2027 }
               , max:   { atk: 11781, hp: 13825 }
               , grail: { atk: 12896, hp: 15146 }
@@ -166,6 +169,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Heaven
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    25
   , stats:    { base:  { atk: 1716,  hp: 2134 }
               , max:   { atk: 11107, hp: 14553 }
               , grail: { atk: 12158, hp: 15943 }
@@ -219,6 +223,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    25
   , stats:    { base:  { atk: 1907,  hp: 1940 }
               , max:   { atk: 12342, hp: 13230 }
               , grail: { atk: 13510, hp: 14494 }
@@ -272,6 +277,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Heaven
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    9
   , stats:    { base:  { atk: 1640,  hp: 1746 }
               , max:   { atk: 9845, hp: 10914 }
               , grail: { atk: 11920, hp: 13239 }
@@ -326,6 +332,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    14
   , stats:    { base:  { atk: 1862,  hp: 1582 }
               , max:   { atk: 9494, hp: 11637 }
               , grail: { atk: 11495, hp: 14110 }
@@ -373,6 +380,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Earth
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    14
   , stats:    { base:  { atk: 1622,  hp: 1862 }
               , max:   { atk: 9735, hp: 11637 }
               , grail: { atk: 11787, hp: 14110 }
@@ -427,6 +435,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    14
   , stats:    { base:  { atk: 1566,  hp: 1843 }
               , max:   { atk: 9398, hp: 11521 }
               , grail: { atk: 11379, hp: 13969 }
@@ -477,6 +486,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Earth
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    9
   , stats:    { base:  { atk: 1438,  hp: 1996 }
               , max:   { atk: 8633, hp: 12476 }
               , grail: { atk: 10453, hp: 15127 }
@@ -524,6 +534,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    29
   , stats:    { base:  { atk: 1574,  hp: 1843 }
               , max:   { atk: 9446, hp: 11521 }
               , grail: { atk: 11437, hp: 13969 }
@@ -578,6 +589,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    3
   , stats:    { base:  { atk: 1247,  hp: 1833 }
               , max:   { atk: 6715, hp: 10187 }
               , grail: { atk: 9088, hp: 13812 }
@@ -628,6 +640,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Heaven
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    3
   , stats:    { base:  { atk: 1306,  hp: 1711 }
               , max:   { atk: 7032, hp: 9506 }
               , grail: { atk: 9517, hp: 12889 }
@@ -680,6 +693,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    1
   , stats:    { base:  { atk: 1057, hp: 1424 }
               , max:   { atk: 5816, hp: 7122 }
               , grail: { atk: 9037, hp: 10979 }
@@ -731,6 +745,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    23
   , stats:    { base:  { atk: 1436,  hp: 1555 }
               , max:   { atk: 7736,  hp: 8643 }
               , grail: { atk: 10470, hp: 11719 }
@@ -783,6 +798,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Heaven
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    8
   , stats:    { base:  { atk: 1429,  hp: 1571 }
               , max:   { atk: 7696, hp: 8731 }
               , grail: { atk: 10415, hp: 11838 }
@@ -832,6 +848,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    3
   , stats:    { base:  { atk: 1279,  hp: 1711 }
               , max:   { atk: 6890, hp: 9506 }
               , grail: { atk: 9325, hp: 12889 }
@@ -881,6 +898,7 @@ archers = Servant <$>
   , class:    Archer
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    28
   , stats:    { base:  { atk: 1306,  hp: 1764 }
               , max:   { atk: 7032, hp: 9800 }
               , grail: { atk: 9517, hp: 13287 }

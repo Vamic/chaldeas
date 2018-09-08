@@ -9,6 +9,7 @@ module Database.Skill
   , ActiveEffect(..), demerit, simplify, ranges
   , Active
   , RangeInfo(..)
+  , apAmount, mapAmount
   ) where
 
 import Prelude
@@ -93,7 +94,7 @@ showBuff target amount = case _ of
     Guts            -> "Grant" <> s <> " Guts with " <> n <> " HP"
     GutsPercent     -> "Grant" <> s <> " Guts with " <> n <> "% HP"
     HealingReceived -> increase "healing received"
-    HealPerTurn     -> "Heal" <> s <> " " <> n <> " HP every turn"
+    HealPerTurn     -> "Restore " <> n <> " HP" <> to
     HealUp          -> increase "healing power"
     IgnoreInvinc    -> grant "Ignore Invincibility"
     Invincibility   -> grant "Invincibility"
@@ -320,7 +321,7 @@ showInstant target amount = case _ of
     GaugeUp
       -> "Increase" <> p <> " NP gauge by " <> n <> "%"
     Heal
-      -> "Heal" <> s <> " " <> if full then "to full" else (n <> " HP")
+      -> "Restore " <> if full then "all" else n <> " HP" <> to
     LastStand
       -> "Deal up to " <> n <> "% damage based on missing health" <> to
     OverChance
@@ -385,6 +386,31 @@ data ActiveEffect
     | Times Int ActiveEffect
     | ToMax Amount ActiveEffect
 
+apAmount ∷ (Number -> Number -> Number) -> Amount -> Number
+apAmount f (Range a b) = f a b
+apAmount _ (Flat a) = a
+apAmount _ Placeholder = 0.0
+apAmount _ Full = 0.0
+
+mapAmount ∷ (Number -> Number -> Amount) -> ActiveEffect -> ActiveEffect
+mapAmount f eff = go eff
+  where
+    f' (Range a b) = f a b
+    f' a = a
+    go (Grant a b c d)  = Grant a b c $ f' d
+    go (Debuff a b c d) = Debuff a b c $ f' d
+    go (To a b c)       = To a b $ f' c
+    go (Bonus a b)      = Bonus a $ f' b
+    go (Chance a b)     = Chance a $ go b
+    go (When a b)       = When a $ go b
+    go (Times a b)      = Times a $ go b
+    go (ToMax a b)      = ToMax (f' a) $ go b
+    go (Chances a b c)  = case f (toNumber a) (toNumber b) of
+        Flat amt    -> Chance (floor amt) $ go c
+        Range a' b' -> Chances (floor a') (floor b') $ go c
+        Placeholder -> go c
+        Full        -> go c
+
 simplify ∷ ActiveEffect -> ActiveEffect
 simplify (Chance _ ef)    = simplify ef
 simplify (Chances _ _ ef) = simplify ef
@@ -432,8 +458,8 @@ instance _g_ ∷ Show ActiveEffect where
 
 uncap ∷ String -> String
 uncap s = case uncons s of
-    Nothing                  -> s
     Just {head: x, tail: xs} -> toLower (singleton x) <> xs
+    Nothing                  -> s
 
 data Amount
     = Placeholder
@@ -549,23 +575,6 @@ ranges = bindFlipped toInfo
     go (a ~ b) = pure $ Tuple a b
     go _ = empty
 
-instance _01_ ∷ Eq ActiveEffect where
-  eq activeA activeB = case activeA, activeB of
-      Grant ta _ a _,  Grant tb _ b _  -> eq a b && tEq ta tb
-      Debuff ta _ a _, Debuff tb _ b _ -> eq a b && tEq ta tb
-      To ta a _,       To tb b _       -> eq a b && tEq ta tb
-      Bonus a _,       Bonus b _       -> eq a b
-      Chance _ a,      Chance _ b      -> eq a b
-      Chances _ _ a,   Chances _ _ b   -> eq a b
-      _,               _               -> false
-    where
-      tEq Someone _ = true
-      tEq _ Someone = true
-      tEq ta tb = eq ta tb
-      nEq Placeholder _ = true
-      nEq _ Placeholder = true
-      nEq na nb = eq na nb
-
 type Active = { name   ∷ String
               , icon   ∷ Icon
               , cd     ∷ Int
@@ -659,3 +668,5 @@ instance _36_ ∷ G.BoundedEnum BuffCategory where
   fromEnum = G.genericFromEnum
 instance _37_ ∷ Show BuffCategory where
   show = drop 4 <<< G.genericShow
+
+derive instance _38_ ∷ Eq ActiveEffect

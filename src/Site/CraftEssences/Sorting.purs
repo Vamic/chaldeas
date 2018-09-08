@@ -42,7 +42,7 @@ doSort Rarity = map showSort <<< sortWith sorter
 doSort a = map showSort <<< sortWith sorter
   where
     sorter   = toSort a
-    showSort = uncurry Tuple <<< (output <<< abs <<< sorter &&& identity)
+    showSort = output <<< abs <<< sorter &&& identity
     output   = print 0
 
 sorted ∷ Map SortBy (Array (Tuple String CraftEssence))

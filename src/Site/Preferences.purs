@@ -1,7 +1,6 @@
 module Site.Preferences
     ( Preference(..)
     , Preferences
-    , MyServant(..)
     , setPreference
     , getPreference
     , getPreferences
@@ -15,17 +14,19 @@ import Generic as G
 
 import Data.Array ((!!))
 import Data.Int (fromString)
-import Data.Map (Map, fromFoldable, lookup)
+import Data.Map (Map, fromFoldable, lookup, toUnfoldable)
 import Data.Maybe
+import Data.Profunctor.Strong
 import Data.String (Pattern(..), joinWith, split)
 import Data.Traversable
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple(..), snd)
 import Effect
 import Web.Storage.Storage
 import Web.HTML
 import Web.HTML.Window
 
 import Database
+import Database.MyServant
 
 data Preference
     = Artorify
@@ -60,15 +61,6 @@ getPreferences = fromFoldable <$> traverse go enumArray
                     >>= pure <<< fromFlag
         pure $ Tuple k v
 
-newtype MyServant = MyServant { servant ∷ Servant 
-                              , level   ∷ Int
-                              , fou     ∷ Stat
-                              , skills  ∷ Array Int
-                              , npLvl   ∷ Int
-                              }
-getServant ∷ MyServant -> Servant
-getServant (MyServant {servant}) = servant
-
 delimTeam ∷ String
 delimTeam = "~"
 delimServant ∷ String
@@ -78,10 +70,14 @@ delimSkills = "|"
 
 writeServant ∷ MyServant -> String
 writeServant (MyServant m@{servant:(Servant s)}) = joinWith delimServant
-    [ s.name, show m.level, show m.fou.atk, show m.fou.hp, skil, show m.npLvl ]
-  where
-    skil = joinWith delimSkills $ show <$> m.skills
-
+    [ s.name
+    , show m.level
+    , show m.fou.atk
+    , show m.fou.hp
+    , joinWith delimSkills $ show <$> m.skills
+    , show m.npLvl
+    , show m.ascent 
+    ]
 
 readServant ∷ String -> Maybe MyServant
 readServant text = do
@@ -91,21 +87,27 @@ readServant text = do
     showFouHp   <- text' !! 3
     showSkills  <- text' !! 4
     showNpLvl   <- text' !! 5
+    showAscent  <- text' !! 6
     servant     <- find (eq servantName <<< show) servants
     level       <- fromString showLevel
     atk         <- fromString showFouAtk
     hp          <- fromString showFouHp
     skills      <- traverse fromString $ split (Pattern delimSkills) showSkills
     npLvl       <- fromString showNpLvl
-    pure $ MyServant { servant, level, fou: {atk, hp}, skills, npLvl }
+    ascent      <- fromString showAscent
+    let fou      = {atk, hp}
+        base     = servant
+    pure <<< recalc 
+           $ MyServant { servant, level, fou, skills, npLvl, base, ascent }
   where text' = split (Pattern delimServant) text
 
-setTeam ∷ Array MyServant -> Effect Unit
+setTeam ∷ Map Servant MyServant -> Effect Unit
 setTeam team = window >>= localStorage >>= setItem "team" 
-               (joinWith delimTeam $ writeServant <$> team)
+               (joinWith delimTeam $ writeServant <<< snd <$> toUnfoldable team)
 
-getTeam ∷ Effect (Array MyServant)
-getTeam = window >>= localStorage >>= getItem "team" >>= pure <<< fromMaybe [] 
+getTeam ∷ Effect (Map Servant MyServant)
+getTeam = window >>= localStorage >>= getItem "team" >>= pure 
+          <<< fromFoldable <<< map (getBase &&& identity) <<< fromMaybe [] 
           <<< (_ >>= traverse readServant <<< split (Pattern delimTeam))
 
 -------------------------------

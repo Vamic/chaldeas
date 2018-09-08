@@ -79,14 +79,13 @@ type FilterState a b = { sorted   ∷ Array (Tuple String a)
                        }
 
 updateListing ∷ ∀ a b. FilterState a b -> FilterState a b
-updateListing st@{exclude, filters, matchAny, prefs, sorted}
-    = st{ listing = filter (match <<< snd) sorted }
+updateListing st = st{ listing = filter (match <<< snd) st.sorted }
   where
-    noSelf = getPreference prefs ExcludeSelf
+    noSelf = getPreference st.prefs ExcludeSelf
     matchFilter x (Filter _ _ f) = f noSelf x
-    match x = (null exclude || all (not <<< matchFilter x) exclude)
-           && (null filters || (if matchAny then any else all)
-                               (matchFilter x) filters)
+    match x = (null st.exclude || all (not <<< matchFilter x) st.exclude)
+           && (null st.filters || (if st.matchAny then any else all)
+                               (matchFilter x) st.filters)
 
 type FilterList a = Array (Tuple FilterTab (Array (Filter a)))
 

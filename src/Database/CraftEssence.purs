@@ -2069,7 +2069,7 @@ craftEssences = CraftEssence <$>
               , max:  { atk: 2000, hp: 0 }
               }
   , effect:   [ Grant Self 0 CritUp $ 20.0 ~ 25.0
-              , Grant Party 0 StarsPerTurn $ 3.0 ~ 4.0
+              , Grant Self 0 StarsPerTurn $ 3.0 ~ 4.0
               ]
   , bond:     Nothing
   , limited:  true

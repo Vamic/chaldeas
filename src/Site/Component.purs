@@ -5,10 +5,12 @@ import Data.Date
 import Data.Either
 import Data.Foldable
 import Data.Functor.Coproduct.Nested
+import Data.Map (Map)
 import Data.Maybe
 import Effect.Class
 import Halogen (Component, ParentDSL, ParentHTML, parentComponent, liftEffect, modify_)
 import Halogen.HTML (HTML)
+import Routing.Hash
 
 import Halogen.Component.ChildPath as CP
 import Halogen.HTML as H
@@ -21,12 +23,13 @@ import Site.Common
 import Site.Preferences
 import Site.Filtering
 import Database
+import Database.MyServant
 
 type State = { today    ∷ Date
              , browseCe ∷ Boolean
              , withHash ∷ String
              , prefs    ∷ Preferences
-             , team     ∷ Array MyServant
+             , team     ∷ Map Servant MyServant
              , mServant ∷ Maybe Servant
              , mCe      ∷ Maybe CraftEssence
              , fServant ∷ Array (Filter Servant)
@@ -41,8 +44,8 @@ type ChildQuery = Coproduct2 Servants.Query CraftEssences.Query
 
 type ChildSlot = Either Unit (Either Unit Unit)
 
-comp ∷ ∀ m. MonadEffect m => String -> Preferences -> Date -> Array MyServant
-       -> Component HTML Query Unit Void m
+comp ∷ ∀ m. MonadEffect m => String -> Preferences -> Date 
+       -> Map Servant MyServant -> Component HTML Query Unit Void m
 comp initialHash initialPrefs initialToday initialTeam = parentComponent
     { initialState: const initialState
     , render
@@ -69,16 +72,17 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
       mServant = fromHash servants
 
   render :: State -> ParentHTML Query ChildQuery ChildSlot m
-  render {browseCe, withHash, prefs, fServant, fCe, mServant, mCe, today}
+  render {browseCe, withHash, prefs, fServant, fCe, mServant, mCe, team, today}
     | browseCe  = H.slot' CP.cp2 unit 
                   (CraftEssences.comp fCe mCe prefs today) 
                   unit $ E.input BrowseServants
     | otherwise = H.slot' CP.cp1 unit 
-                  (Servants.comp fServant mServant prefs today) 
+                  (Servants.comp fServant mServant prefs today team) 
                   unit $ E.input BrowseCraftEssences
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m
   eval (BrowseServants (CraftEssences.Message fCe mServant) next) = next <$ do
+      liftEffect $ setHash ""
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
       team  <- liftEffect getTeam
@@ -91,13 +95,12 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
                , mServant = mServant
                }
   eval (BrowseCraftEssences (Servants.Message fServant mCe) next) = next <$ do
+      liftEffect $ setHash ""
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
-      team  <- liftEffect getTeam
       modify_ _{ browseCe = true
                , withHash = ""
                , prefs    = prefs
-               , team     = team
                , today    = today
                , fServant = fServant
                , mCe      = mCe

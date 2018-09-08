@@ -174,9 +174,6 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
           | not $ allied t = [ Tuple instant $ f a / 100.0 ]
         go _ _ = []
 
-test ∷ List Boolean
-test = [true]
-
 passiveBuffs ∷ Servant -> Array (Tuple BuffEffect Number)
 passiveBuffs (Servant {passives}) = passives >>= _.effect >>= go <<< simplify
   where
@@ -190,8 +187,7 @@ selfable Ally   = true
 selfable Party  = true
 selfable _      = false
 
-matchSum ∷ ∀ a b f. Eq a => Semiring b => Foldable f => Functor f
-           => f (Tuple a b) -> a -> b
+matchSum ∷ ∀ a b. Eq a => Semiring b => Array (Tuple a b) -> a -> b
 matchSum xs k = sum $ go <$> xs
   where
     go (Tuple k1 v) | k == k1 = v

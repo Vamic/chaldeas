@@ -1,24 +1,113 @@
-module Database.Growth (lvlStats) where
+module Database.MyServant 
+  ( MyServant(..), getBase
+  , recalc
+  , unowned, newServant, owned
+  , growthCurves
+  ) where
 
 import Prelude
-import Data.Array
+import Data.Array (index, zipWith)
 import Data.Int
 import Data.Maybe
+import Data.Map (Map, fromFoldable, lookup)
+import Data.Profunctor.Strong
 
-import Database.Model
+import Database
+
+newtype MyServant = MyServant { base    ∷ Servant 
+                              , level   ∷ Int
+                              , fou     ∷ Stat
+                              , skills  ∷ Array Int
+                              , npLvl   ∷ Int
+                              , ascent  ∷ Int
+                              , servant ∷ Servant
+                              }
+instance _0_ ∷ Eq MyServant where
+  eq a b = eq (getBase a) (getBase b)
+instance _1_ ∷ Ord MyServant where
+  compare a b = compare (getBase a) (getBase b)
+
+getBase ∷ MyServant -> Servant
+getBase (MyServant {base}) = base
+
+recalc ∷ MyServant -> MyServant
+recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
+    { servant = Servant s 
+        { stats    = s.stats{ base = calcStats, max = calcStats }
+        , phantasm = s.phantasm
+              { effect = mapAmount calcNP <$> s.phantasm.effect
+              , over   = if ms.level == 0 then s.phantasm.over 
+                          else mapAmount calcOver <$> s.phantasm.over
+              }
+        , actives  = zipWith calcActives ms.skills s.actives 
+        } 
+    }
+  where
+    calcStats = addStats ms.fou $ lvlStats s' ms.level
+    calcNP minAmount maxAmount = Flat $ minAmount + (maxAmount - minAmount) * 
+        case ms.npLvl of
+            1 -> 0.0
+            2 -> 0.5
+            3 -> 0.75 
+            4 -> 0.875
+            _ -> 1.0
+    calcOver minAmount maxAmount 
+      | ms.npLvl == 1 = Flat minAmount
+      | otherwise = Range minAmount 
+                  $ minAmount + (maxAmount - minAmount) 
+                  * (toNumber ms.npLvl - 1.0) / 4.0
+    calcActives lvl skill = skill { effect = mapAmount calc <$> skill.effect 
+                                  , cd = skill.cd - (max 2 lvl - 2) / 4
+                                  }
+      where
+        calc minAmount maxAmount
+          | lvl == 10 = Flat maxAmount
+          | otherwise = Flat $ minAmount + (maxAmount - minAmount)
+                                         * (toNumber lvl - 1.0) / 10.0
+
+makeUnowned ∷ Servant -> MyServant
+makeUnowned servant@(Servant s)
+    = MyServant { servant
+                , base:   servant
+                , level:  0
+                , fou:    {atk: 990, hp: 990}
+                , skills: [10, 10, 10]
+                , npLvl:  if s.rarity <= 3 || s.free then 5 else 1
+                , ascent: 1
+                }
+
+unowneds ∷ Map Servant MyServant
+unowneds = fromFoldable $ (identity &&& makeUnowned) <$> servants
+
+unowned ∷ Servant -> MyServant
+unowned s = fromMaybe' (\_ -> makeUnowned s) $ lookup s unowneds
+
+newServant ∷ Servant -> MyServant
+newServant servant@(Servant s)
+    = MyServant { servant
+                , base:   servant
+                , level:  1
+                , fou:    {atk: 0, hp: 0}
+                , skills: [1, 1, 1]
+                , npLvl:  1
+                , ascent: 1
+                }
+owned ∷ Map Servant MyServant -> Servant -> MyServant
+owned team servant = fromMaybe (unowned servant) 
+                   $ lookup servant team
 
 lvlStats ∷ Servant -> Int -> Stat
-lvlStats (Servant {stats:{base, max}}) lvl = { atk: go base.atk max.atk
-                                             , hp:  go base.hp  max.hp
-                                             }
+lvlStats (Servant {stats:{max}}) 0 = max
+lvlStats (Servant {curve, stats:{base, max}}) lvl = { atk: go base.atk max.atk
+                                                    , hp:  go base.hp  max.hp
+                                                    }
   where
     go ∷ Int -> Int -> Int
     go baseVal maxVal = add baseVal <<< floor
                       $ (toNumber (maxVal - baseVal) * modifier / 1000.0)
-    growthCurve = 0 -- TODO
     modifier ∷ Number
     modifier    = toNumber <<< fromMaybe 0
-                $ index growthCurves growthCurve >>= (flip index) lvl
+                $ index growthCurves curve >>= (flip index) lvl
 
 growthCurves ∷ Array (Array Int)
 growthCurves = [

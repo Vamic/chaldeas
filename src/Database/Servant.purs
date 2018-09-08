@@ -26,6 +26,7 @@ newtype Servant = Servant { name     ∷ String
                           , class    ∷ Class
                           , attr     ∷ Attribute
                           , deck     ∷ Deck
+                          , curve    ∷ Int
                           , stats    ∷ { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
                           , actives  ∷ Array Active
                           , passives ∷ Array Passive
@@ -76,9 +77,9 @@ type Gen = { starWeight ∷ Int
            }
 
 getEffects ∷ Servant -> Array ActiveEffect
-getEffects (Servant {phantasm:{effect, over}, actives})
-    = filter (not <<< demerit)
-    $ simplify <$> effect <> over <> (actives >>= _.effect)
+getEffects (Servant s) = filter (not <<< demerit) $ simplify 
+                     <$> s.phantasm.effect <> s.phantasm.over 
+                      <> (s.actives >>= _.effect)
 
 phantasmEffects ∷ NoblePhantasm -> Array ActiveEffect
 phantasmEffects {effect, over} = effect <> over

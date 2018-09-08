@@ -12,6 +12,7 @@ extras = Servant <$>
   , class:    Ruler
   , attr:     Star
   , deck:     Deck Quick Arts Arts Arts Buster
+  , curve:    10
   , stats:    { base:  { atk: 1482,  hp: 2420 }
               , max:   { atk: 9593, hp: 16500 }
               , grail: { atk: 10501, hp: 18076 }
@@ -60,6 +61,7 @@ extras = Servant <$>
   , class:    Ruler
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    10
   , stats:    { base:  { atk: 1695,  hp: 2069 }
               , max:   { atk: 10972, hp: 14107 }
               , grail: { atk: 12011, hp: 15455 }
@@ -110,6 +112,7 @@ extras = Servant <$>
   , class:    Avenger
   , attr:     Mankind
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    15
   , stats:    { base:  { atk: 2046,  hp: 1724 }
               , max:   { atk: 13244, hp: 11761 }
               , grail: { atk: 14498, hp: 12885 }
@@ -164,6 +167,7 @@ extras = Servant <$>
   , class:    Avenger
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Buster Buster
+  , curve:    15
   , stats:    { base:  { atk: 1953,  hp: 1785 }
               , max:   { atk: 12641, hp: 12177 }
               , grail: { atk: 13838, hp: 13340 }
@@ -217,6 +221,7 @@ extras = Servant <$>
   , class:    Ruler
   , attr:     Mankind
   , deck:     Deck Quick Arts Buster Buster Buster
+  , curve:    4
   , stats:    { base:  { atk: 1591,  hp: 1800 }
               , max:   { atk: 9546, hp: 11250 }
               , grail: { atk: 11558, hp: 13640 }
@@ -270,8 +275,9 @@ extras = Servant <$>
   , class:    Shielder
   , attr:     Earth
   , deck:     Deck Quick Arts Arts Buster Buster
+  , curve:    11
   , stats:    { base:  { atk: 1261,  hp: 1854 }
-              , max:   { atk: 8730, hp: 12877 }
+              , max:   { atk: 6791, hp: 10302 }
               , grail: { atk: 10575, hp: 15619 }
               }
   , actives:  [ { name:   "Honorable Wall of Snowflakes"
@@ -323,6 +329,7 @@ extras = Servant <$>
   , class:    Avenger
   , attr:     Mankind
   , deck:     Deck Quick Quick Arts Arts Buster
+  , curve:    2
   , stats:    { base:  { atk: 1008,  hp: 1502 }
               , max:   { atk: 5683, hp: 7981 }
               , grail: { atk: 8235, hp: 11518 }

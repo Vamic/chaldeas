@@ -3,7 +3,8 @@
   "scripts": {
     "bower": "bower install",
     "clean": "rimraf output && rimraf .pulp-cache",
-    "test": "bower install && pulp test",
+    "test":  "bower install && pulp test",
+    "devel": "bower install && pulp build --no-check-main --modules Export -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && purs bundle \"output/*/*.js\" -o js/chaldeas.js --main Main --module Main --module Export",
     "build": "bower install && pulp build --no-check-main --modules Export -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && purs bundle \"output/*/*.js\" -o js/chaldeas.js --main Main --module Main --module Export && uglifyjs js/chaldeas.js -c -m -o js/chaldeas.js"
   },
   "devDependencies": {

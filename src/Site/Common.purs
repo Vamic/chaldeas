@@ -7,7 +7,7 @@ import Halogen.HTML            as H
 import Halogen.HTML.Events     as E
 import Halogen.HTML.Properties as P
 
-import Data.Array
+import Data.Array 
 import Data.DateTime
 import Data.Int
 import Data.Maybe
@@ -87,20 +87,20 @@ _style ∷ ∀ a b. String -> IProp (style ∷ String | b) a
 _style = P.attr (H.AttrName "style")
 
 _txt ∷ ∀ a b. String -> Array (HTML a b)
-_txt = (flip cons) [] <<< H.text
-
-_a ∷ ∀ a b. String -> String -> String -> String -> HTML a b
-_a id' class' href' = H.a [_i id', _c class', P.href href'] <<< _txt
-
-_img ∷ ∀ a b. String -> HTML a b
-_img src = H.img [_src src]
+_txt text = [H.text text]
 
 _click ∷ ∀ a b. (Unit -> b Unit) -> IProp ( onClick ∷ MouseEvent | a ) (b Unit)
 _click = E.onClick <<< E.input_
 
+_a ∷ ∀ a b. String -> (Unit -> b Unit) -> HTML a (b Unit)
+_a text click = H.a [_click click] $ _txt text
+
+_img ∷ ∀ a b. String -> HTML a b
+_img src = H.img [_src src]
+
 _button ∷ ∀ a b. String -> Boolean -> (Unit -> b Unit) -> HTML a (b Unit)
-_button label enable clicked 
-  | enable    = H.button [ _click clicked, P.enabled enable ] $ _txt label
+_button label enable click
+  | enable    = H.button [ _click click, P.enabled enable ] $ _txt label
   | otherwise = H.button [ P.enabled enable ] $ _txt label
 
 _table ∷ ∀ a b. Array String -> Array (HTML a b) -> HTML a b
@@ -125,12 +125,28 @@ _checkbox label checked
       , H.label_ $ _txt label
       ]
 
+_int ∷ ∀ a b. (Unit -> b Unit) -> Int -> Int -> Int 
+       -> (Int -> Unit -> b Unit) -> Array (HTML a (b Unit))
+_int ifFail minVal maxVal actualVal changed
+    = [ H.input 
+        [ P.type_ P.InputNumber
+        , P.value $ show actualVal
+        , P.min   $ toNumber minVal
+        , P.max   $ toNumber maxVal
+        , P.step  $ P.Step 1.0
+        , E.onValueInput <<< E.input $ \val -> case fromString val of
+            Just intVal | intVal >= minVal && intVal <= maxVal -> changed intVal
+            _ -> ifFail
+        ]
+      , H.text $ "/" <> show maxVal
+      ]
+
 _span ∷ ∀ a b. String -> HTML a b
 _span = H.span_ <<< _txt
 _p ∷ ∀ a b. String -> HTML a b
 _p = H.p_ <<< _txt
-_b ∷ ∀ a b. String -> HTML a b
-_b = H.b_ <<< _txt
+_strong ∷ ∀ a b. String -> HTML a b
+_strong = H.strong_ <<< _txt
 _th ∷ ∀ a b. String -> HTML a b
 _th = H.th_ <<< _txt
 _td ∷ ∀ a b. String -> HTML a b

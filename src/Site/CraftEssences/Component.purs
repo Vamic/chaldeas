@@ -8,8 +8,6 @@ import Halogen.HTML.Properties as P
 import Data.Map                as M
 import Data.String             as S
 
-import Control.Alternative
-import Control.Bind
 import Data.Date
 import Data.Tuple
 import Halogen (Component, ComponentDSL, ComponentHTML, component, get, liftEffect, modify_, raise)
@@ -75,50 +73,49 @@ comp initialFilt initialFocus initialPrefs today = component
       {yes: exclude, no: filters} = partition (exclusive <<< getTab) initialFilt
 
   render ∷ State -> ComponentHTML Query
-  render {exclude, filters, focus, listing, matchAny, prefs, sortBy}
-      = modal prefs focus
-        [ H.aside_ $
-          [ _h 1 "Settings"
-          , H.form_ $ M.toUnfoldable prefs <#> \(Tuple k v)
-             -> H.p [_click <<< SetPref k $ not v]
-                $ _checkbox (show k) v
-          , _h 1 "Sort by"
-          , H.form_ $ enumArray <#> \sort
-             -> H.p [_click $ SetSort sort]
-                $ _radio (show sort) (sortBy == sort)
-          , _h 1 "Include"
-          ] <> (filter (exclusive <<< fst) allFilters >>= filterSection)
-        , H.section_
-          <<< (if sortBy == Rarity then identity else reverse)
-          $ portrait false artorify <$> listing
-        , H.aside_ $
-          [ _h 1 "Browse"
-          , H.a [_click $ Switch Nothing, P.href "#"] $ _txt "Servants"
-          , H.a_ [H.strong_ $ _txt "Craft Essences"]
-          , _h 1 "Filter"
-          , H.form_
-            [ H.table_ [ H.tr_
-              [ _th "Match"
-              , H.td [_click $ MatchAny false] $ _radio "All" (not matchAny)
-              , H.td [_click $ MatchAny true]  $ _radio "Any"      matchAny
-              ]
-            , H.button clearAll $ _txt "Reset All"
-            ] ]
-          ] <> (filter (not exclusive <<< fst) allFilters >>= filterSection)
-        ]
+  render st = modal st.prefs st.focus
+      [ H.aside_ $
+        [ _h 1 "Settings"
+        , H.form_ $ M.toUnfoldable st.prefs <#> \(Tuple k v)
+            -> H.p [_click <<< SetPref k $ not v]
+              $ _checkbox (show k) v
+        , _h 1 "Sort by"
+        , H.form_ $ enumArray <#> \sort
+            -> H.p [_click $ SetSort sort]
+              $ _radio (show sort) (st.sortBy == sort)
+        , _h 1 "Include"
+        ] <> (filter (exclusive <<< fst) allFilters >>= filterSection)
+      , H.section_
+        <<< (if st.sortBy == Rarity then identity else reverse)
+        $ portrait false artorify <$> st.listing
+      , H.aside_ $
+        [ _h 1 "Browse"
+        , _strong "Craft Essences"
+        , _a "Servants" $ Switch Nothing
+        , _h 1 "Filter"
+        , H.form_
+          [ H.table_ [ H.tr_
+            [ _th "Match"
+            , H.td [_click $ MatchAny false] $ _radio "All" (not st.matchAny)
+            , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
+            ]
+          , H.button clearAll $ _txt "Reset All"
+          ] ]
+        ] <> (filter (not exclusive <<< fst) allFilters >>= filterSection)
+      ]
     where
-      artorify = getPreference prefs Artorify
-      noSelf   = getPreference prefs ExcludeSelf
+      artorify = getPreference st.prefs Artorify
+      noSelf   = getPreference st.prefs ExcludeSelf
       clearAll
-        | null filters && null exclude = [ P.enabled false ]
-        | otherwise                    = [ P.enabled true, _click ClearAll ]
+        | null st.filters && null st.exclude = [ P.enabled false ]
+        | otherwise = [ P.enabled true, _click ClearAll ]
       filterSection (Tuple _ []) = []
       filterSection (Tuple tab filts) = [ _h 3 $ show tab
                  , H.form_ $ filts <#> \filt
                      -> H.p [_click $ Toggle filt ]
                        <<< _checkbox (show filt)
-                       $ if exclusive tab then filt `notElem` exclude
-                         else filt `elem` filters
+                       $ if exclusive tab then filt `notElem` st.exclude
+                         else filt `elem` st.filters
                  ]
 
   eval ∷ Query ~> ComponentDSL State Query Message m
@@ -134,26 +131,28 @@ comp initialFilt initialFocus initialPrefs today = component
       Focus     focus    a -> a <$ do
           liftEffect $ hash focus
           modify_ _{ focus = focus }
+      FilterBy filts  a -> a <$ do
+          liftEffect $ hash Nothing
+          modif if any (exclusive <<< getTab) filts
+            then _{ exclude = filts
+                  , filters = []
+                  , focus   = Nothing
+                  }
+            else _{ exclude = []
+                  , filters = filts
+                  , focus   = Nothing
+                  }
       SetPref   k v      a -> a <$ do
           liftEffect $ setPreference k v
           modif <<< modPrefs $ M.insert k v
       Toggle     filt     a
         | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
         | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
-      FilterBy   filts    a
-        | any (exclusive <<< getTab) filts -> a <$ modif _{ exclude = filts
-                                                          , filters = []
-                                                          , focus   = Nothing
-                                                          }
-        | otherwise                        -> a <$ modif _{ exclude = []
-                                                          , filters = filts
-                                                          , focus   = Nothing
-                                                          }
       where
       modif = modify_ <<< compose updateListing
-      modFilters f state@{filters} = state{ filters = f filters }
-      modPrefs   f state@{prefs}   = state{ prefs   = f prefs }
-      modExclude f state@{exclude} = state{ exclude = f exclude }
+      modFilters f st = st{ filters = f st.filters }
+      modPrefs   f st = st{ prefs   = f st.prefs }
+      modExclude f st = st{ exclude = f st.exclude }
       toggleIn x xs
         | x `elem` xs = delete x xs
         | otherwise   = cons x xs
@@ -162,14 +161,13 @@ comp initialFilt initialFocus initialPrefs today = component
 
 portrait ∷ ∀ a. Boolean -> Boolean -> Tuple String CraftEssence
            -> HTML a (Query Unit)
-portrait big artorify (Tuple lab ce'@(CraftEssence ce))
-    = H.div meta
-      [ _img $ "img/CraftEssence/" <> fileName ce.name <> ".png"
-      , H.header_
-        <<< (lab /= "") ? append [_span $ noBreakName lab, H.br_]
-        $ [ _span <<< noBreakName <<< artorify ? doArtorify $ ce.name ]
-      , H.footer_ [_span <<< S.joinWith "  " $ replicate ce.rarity "★"]
-      ]
+portrait big artorify (Tuple lab ce'@(CraftEssence ce)) = H.div meta
+    [ _img $ "img/CraftEssence/" <> fileName ce.name <> ".png"
+    , H.header_
+      <<< (lab /= "") ? append [_span $ noBreakName lab, H.br_]
+      $ [ _span <<< noBreakName <<< artorify ? doArtorify $ ce.name ]
+    , H.footer_ [_span <<< S.joinWith "  " $ replicate ce.rarity "★"]
+    ]
   where 
     meta       = not big ? (cons <<< _click <<< Focus $ Just ce')
                $ [_c $ "portrait stars" <> show ce.rarity]
@@ -177,11 +175,11 @@ portrait big artorify (Tuple lab ce'@(CraftEssence ce))
 
 modal ∷ ∀ a. Preferences -> Maybe CraftEssence
         -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
-modal prefs Nothing = H.div [ _i "layout", _c $ mode prefs] <<< append
+modal prefs Nothing = H.div [_c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
 modal prefs
-(Just ce'@(CraftEssence ce@{stats:{base, max}}))
-  = H.div [_i "layout", _c $ "fade " <> mode prefs] <<< append
+(Just ce'@(CraftEssence ce@{stats:{base, max}})) = H.div 
+    [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
       [ portrait true (getPreference prefs Artorify) $ Tuple "" ce'
@@ -192,10 +190,10 @@ modal prefs
       , _img $ "img/Skill/" <> show ce.icon <> ".png"
       , _h 2 "Effects"
       ] <> (if base == max then [] else
-      [ H.section_ $ effectEl <$> flatten toMin ce.effect
+      [ H.section_ $ effectEl <<< mapAmount (\a _ -> Flat a) <$> ce.effect
       , _h 2 "Max Limit Break"
       ]) <>
-      [ H.section_ $ effectEl <$> flatten toMax ce.effect ]
+      [ H.section_ $ effectEl <<< mapAmount (\_ b -> Flat b) <$> ce.effect ]
     ]
 
 effectEl ∷ ∀ a. ActiveEffect -> HTML a (Query Unit)
@@ -204,19 +202,3 @@ effectEl ef
   | otherwise  = H.p (maybe [] meta $ activeFilter ef) <<< _txt $ show ef
   where
     meta filt = [_c "link", _click $ FilterBy [filt] ]
-
-flatten ∷ ∀ f. Alternative f => Bind f => (Amount -> Number) -> f ActiveEffect -> f ActiveEffect
-flatten f = bindFlipped go
-  where
-    f' a
-      | a /= Full && f a == 0.0 = empty
-      | otherwise = pure <<< Flat $ f a
-    go (Grant a b c d) = Grant a b c <$> f' d
-    go (Debuff a b c d) = Debuff a b c <$> f' d
-    go (To a b c ) = To a b <$> f' c
-    go (Bonus a b) = Bonus a <$> f' b
-    go (Chance a b) = Chance a <$> go b
-    go (Chances a b c) = Chances a b <$> go c
-    go (When a b) = When a <$> go b
-    go (Times a b) = Times a <$> go b
-    go (ToMax a b) = ToMax (Flat $ f a) <$> go b

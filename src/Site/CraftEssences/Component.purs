@@ -94,13 +94,15 @@ comp initialFilt initialFocus initialPrefs today = component
         , _a "Servants" $ Switch Nothing
         , _h 1 "Filter"
         , H.form_
-          [ H.table_ [ H.tr_
-            [ _th "Match"
-            , H.td [_click $ MatchAny false] $ _radio "All" (not st.matchAny)
-            , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
+          [ H.table_ 
+            [ H.tr_
+              [ _th "Match"
+              , H.td [_click $ MatchAny false] $ _radio "All" (not st.matchAny)
+              , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
+              ]
             ]
-          , H.button clearAll $ _txt "Reset All"
-          ] ]
+          , H.button clearAll $ _txt "Reset All" 
+          ]
         ] <> (filter (not exclusive <<< fst) allFilters >>= filterSection)
       ]
     where

@@ -176,7 +176,7 @@ archers = Servant <$>
               }
   , actives:  [ { name:   "Grace of the Goddess EX"
                 , icon:   IconShieldUp
-                , cd:     9
+                , cd:     7
                 , effect: [ Grant Self 1 DefenseUp $ 30.0 ~ 50.0
                           , Grant Self 3 AttackUp $ Flat 20.0
                           , Grant Self 3 DebuffResist $ Flat 50.0

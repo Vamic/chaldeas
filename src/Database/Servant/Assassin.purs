@@ -620,7 +620,7 @@ assassins = Servant <$>
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   0
-              , effect: [ To Self (ChangeClass Berserker) Full
+              , effect: [ To Self BecomeHyde Full
                         , Grant Self 0 MaxHP $ 3000.0 ~ 6000.0
                         , To Self Heal Full
                         ]

@@ -250,7 +250,7 @@ showDebuff target amount = case _ of
 
 data InstantEffect
     = Avenge
-    | ChangeClass Class
+    | BecomeHyde -- is there a better way to do this?
     | Cooldowns
     | Cure
     | Damage
@@ -290,8 +290,11 @@ showInstant target amount = case _ of
     Avenge
       -> "Wait 1 turn, then deal " <> n
       <> "% of damage taken during that turn" <> to
-    ChangeClass c
-      -> "Change" <> p <> " class to [" <> show c <> "]"
+    BecomeHyde
+      -> "Transform into Hyde. Class: [Berserker]. \
+         \Star Weight: 9. Star Rate: 5%. NP/Hit: 1.02%. NP/Defend: 5%. \
+         \Alignment: Chaotic Evil. Lose [" <> show Brynhild <> "] trait. \
+         \Skills are more effective"
     Cooldowns
       -> "Reduce" <> p <> " cooldowns by " <> n
     Cure
@@ -321,7 +324,7 @@ showInstant target amount = case _ of
     GaugeUp
       -> "Increase" <> p <> " NP gauge by " <> n <> "%"
     Heal
-      -> "Restore " <> if full then "all" else n <> " HP" <> to
+      -> "Restore " <> (if full then "all" else n) <> " HP" <> to
     LastStand
       -> "Deal up to " <> n <> "% damage based on missing health" <> to
     OverChance

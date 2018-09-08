@@ -103,7 +103,8 @@ instance _b_ ∷ MatchServant DebuffEffect where
         match (Debuff t _ b _) = a == b
         match _ = false
 instance _c_ ∷ MatchServant InstantEffect where
-    has a noSelf        = any match <<< getEffects where
+    has BecomeHyde _ = const false
+    has a noSelf     = any match <<< getEffects where
         match (To t b _) = a == b && (not noSelf || t /= Self)
         match _ = false
 instance _d_ ∷ MatchServant Trait where

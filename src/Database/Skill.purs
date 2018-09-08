@@ -447,6 +447,7 @@ instance _g_ ∷ Show ActiveEffect where
           Debuff t dur deb amt -> showDebuff t amt deb <> turns dur
           To t instant amt     -> showInstant t amt instant
           Bonus bonus amt      -> showBonus amt bonus
+          Chance 0 ef          -> "Chance to " <> uncap (go ef)
           Chance per ef        -> show per <> "% chance to " <> uncap (go ef)
           Chances a b ef       -> show a <> "~" <> show b <> "% chance to "
                                   <> uncap (go ef)
@@ -602,9 +603,6 @@ instance _5_ ∷ G.BoundedEnum BuffEffect where
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
 
-derive instance _6_ ∷ Eq Rank
-derive instance _7_ ∷ Ord Rank
-
 derive instance _8_ ∷ G.Generic DebuffEffect _
 derive instance _9_ ∷ Eq DebuffEffect
 derive instance _10_ ∷ Ord DebuffEffect
@@ -673,3 +671,17 @@ instance _37_ ∷ Show BuffCategory where
   show = drop 4 <<< G.genericShow
 
 derive instance _38_ ∷ Eq ActiveEffect
+
+derive instance _39_ ∷ Eq Rank
+derive instance _40_ ∷ Ord Rank
+derive instance _41_ ∷ G.Generic Rank _
+instance _42_ ∷ G.Enum Rank where
+  succ = G.genericSucc
+  pred = G.genericPred
+instance _43_ ∷ G.Bounded Rank where
+  top = G.genericTop
+  bottom = G.genericBottom
+instance _44_ ∷ G.BoundedEnum Rank where
+  cardinality = G.genericCardinality
+  toEnum = G.genericToEnum
+  fromEnum = G.genericFromEnum

@@ -93,7 +93,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
   render st = modal st.prefs st.ascent st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ M.toUnfoldable st.prefs <#> \(Tuple k v)
+        , H.form_ $ M.toUnfoldableUnordered st.prefs <#> \(Tuple k v)
             -> H.p [_click <<< SetPref k $ not v]
               $ _checkbox (show k) v
         , _h 1 "Sort by"

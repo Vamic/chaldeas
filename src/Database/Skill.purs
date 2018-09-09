@@ -649,9 +649,6 @@ derive instance _26_ ∷ G.Generic Target _
 instance _27_ ∷ Show Target where
   show = G.genericShow
 
-derive instance _28_ ∷ Eq RangeInfo
-derive instance _29_ ∷ Ord RangeInfo
-
 derive instance _30_ ∷ Eq Amount
 
 derive instance _31_ ∷ G.Generic BuffCategory _
@@ -685,3 +682,10 @@ instance _44_ ∷ G.BoundedEnum Rank where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
+
+
+derive instance _45_ ∷ Eq RangeInfo
+derive instance _46_ ∷ Ord RangeInfo
+derive instance _47_ ∷ G.Generic RangeInfo _
+instance _48_ ∷ Show RangeInfo where
+  show = G.genericShow

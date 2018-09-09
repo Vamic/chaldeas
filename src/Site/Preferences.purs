@@ -14,7 +14,7 @@ import Generic as G
 
 import Data.Array ((!!))
 import Data.Int (fromString)
-import Data.Map (Map, fromFoldable, lookup, toUnfoldable)
+import Data.Map (Map, fromFoldable, lookup, toUnfoldableUnordered)
 import Data.Maybe
 import Data.Profunctor.Strong
 import Data.String (Pattern(..), joinWith, split)
@@ -103,7 +103,7 @@ readServant text = do
 
 setTeam ∷ Map Servant MyServant -> Effect Unit
 setTeam team = window >>= localStorage >>= setItem "team" 
-               (joinWith delimTeam $ writeServant <<< snd <$> toUnfoldable team)
+               (joinWith delimTeam $ writeServant <<< snd <$> toUnfoldableUnordered team)
 
 getTeam ∷ Effect (Map Servant MyServant)
 getTeam = window >>= localStorage >>= getItem "team" >>= pure 

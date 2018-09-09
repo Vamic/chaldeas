@@ -27,9 +27,10 @@ extras = Servant <$>
                 , cd:     7
                 , effect: [ Debuff Enemy 1 NPDown $ 15.0 ~ 30.0 ]
                 }
-              , { name:   "Divine Judgment A"
+              , { name:   "Divine Judgement A"
                 , icon:   IconStun
                 , cd:     8
+                -- TODO only affects Servants?
                 , effect: [ Chances 70 120 $ Debuff Enemy 1 Stun Full ]
                 }
               ]
@@ -79,9 +80,10 @@ extras = Servant <$>
                           , To (EnemyType Demon) GaugeDown $ Flat 1.0
                           ]
                 }
-              , { name:   "Divine Judgment C"
+              , { name:   "Divine Judgement C"
                 , icon:   IconStun
                 , cd:     8
+                -- TODO only affects [Servants]?
                 , effect: [ Chances 50 100 $ Debuff Enemy 1 Stun Full ]
                 }
               ]
@@ -334,12 +336,12 @@ extras = Servant <$>
               , max:   { atk: 5683, hp: 7981 }
               , grail: { atk: 8235, hp: 11518 }
               }
-  , actives:  [ { name:   "Tawrich C"
+  , actives:  [ { name:   "Zarich C"
                 , icon:   IconExclamationDown
                 , cd:     8
                 , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Zarich C"
+              , { name:   "Tawrich C"
                 , icon:   IconDarkMagic
                 , cd:     8
                 , effect: [ To Enemy GaugeDown $ Flat 1.0

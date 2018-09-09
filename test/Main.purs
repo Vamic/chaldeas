@@ -4,17 +4,16 @@ import Database
 
 import Affjax as AX
 import Affjax.ResponseFormat as ResponseFormat
-import Data.Array (catMaybes, elem, filter, head, nub, reverse, (..), (\\))
+import Data.Array (catMaybes, delete, elem, filter, head, nub, reverse, (..), (\\))
 import Data.Either (Either(..))
 import Data.Foldable (all, foldl, traverse_)
 import Data.Formatter.Number (Formatter(..), format)
-import Data.Generic.Rep.Show
+import Data.Generic.Rep.Show (genericShow)
 import Data.Int (toNumber)
 import Data.Map (Map, fromFoldable, lookup)
 import Data.Maybe (Maybe(..), fromMaybe)
-import Data.Number (fromString)
 import Data.Number.Format (toString)
-import Data.String (Pattern(..), stripSuffix)
+import Data.String (Pattern(..), Replacement(..), stripSuffix)
 import Data.String as S
 import Data.String.CodeUnits (fromCharArray, toCharArray)
 import Data.Traversable (for_, traverse)
@@ -23,10 +22,10 @@ import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
 import Global.Unsafe (unsafeEncodeURIComponent)
 import Operators (enumArray)
-import Prelude (class Eq, class Ord, class Show, Unit, bind, compare, discard, otherwise, pure, show, ($), (<<<), (<>), (<#>), (>>=), (<$>),(||))
+import Prelude (class Eq, class Ord, class Show, Unit, append, bind, compare, discard, flip, map, otherwise, pure, show, ($), (<<<), (<>), (<#>), (>>=), (<$>),(||))
 import Test.Output.Fancy (runTest)
 import Test.Unit (TestSuite, test, suite, failure)
-import Test.Unit.Assert (shouldEqual)
+import Test.Unit.Assert (shouldEqual, equal')
 import Test.Unit.Main (runTestWith)
 
 wikiRoot ∷ String
@@ -65,6 +64,7 @@ wikiZip a = do
   where
     wikiFail err = MediaWiki $ fromFoldable [Tuple "err" err]
     encode = unsafeEncodeURIComponent <<< translate <<< show
+    translate "Cheerful-Type Mystic Code" = "Cheerful Model Mystic Code"
     translate "Fergus mac Roich" = "Fergus mac Róich"
     translate "Mugashiki—Shinkuu Myou" = "Mugashiki - Shinkuu Myōu"
     translate "Heroic Portrait: Scathach" = "Heroic Portrait: Scáthach"
@@ -79,6 +79,11 @@ wikiZip a = do
     translate "Angra Mainyu" = "Aŋra Mainiiu"
     translate "Edmond Dantes" = "Edmond Dantès"
     translate "Leonardo da Vinci" = "Leonardo Da Vinci"
+    translate "Wisdom of Dun Scaith" = "Wisdom of Dún Scáith"
+    translate "Beautiful Princess (Sea)" = "Princess of Loveliness (Ocean)"
+    translate "Monstrous Strength B (Jekyll & Hyde)" = "Monstrous Strength"
+    translate "Whim of the Goddess A (Euryale)" = "Whim of the Goddess"
+    translate "Treasure Hunt (Sea)" = "Treasure Hunt (Ocean)"
     translate x = x
 
 wikiMatch ∷ MediaWiki -> String -> String -> TestSuite
@@ -112,64 +117,39 @@ testCraftEssence (CraftEssence ce) info@(MediaWiki mw) = case lookup "err" mw of
                               , sign: false
                               }
 
-shouldMatch ∷ ∀ a. Eq a => Ord a => Show a => Array a -> Array a -> TestSuite
-shouldMatch a b = do
-    test "From DB" $ shouldEqual (nub a \\ nub b) []
-    test "From wiki" $ shouldEqual (nub b \\ nub a) []
-
-testServant ∷ Map ShowString MediaWiki -> Servant -> MediaWiki 
-              -> TestSuite
-testServant skills (Servant s) info@(MediaWiki mw) = case lookup "err" mw of
-    Just err -> suite s.name <<< test "MediaWiki" $ failure err
-    _        -> case lookup "id" mw of
-        Nothing  -> suite s.name <<< test "MediaWiki" $ failure "Not found"
-        Just _   -> suite s.name do
-            wiki "id"            <<< prId $ toNumber s.id
-            wiki "class"           $ show s.class
-            wiki "minatk"          $ show s.stats.base.atk
-            wiki "maxatk"          $ show s.stats.max.atk
-            wiki "minhp"           $ show s.stats.base.hp
-            wiki "maxhp"           $ show s.stats.max.hp
-            wiki "grailatk"        $ show s.stats.grail.atk
-            wiki "grailhp"         $ show s.stats.grail.hp
-            wiki "rarity"          $ show s.rarity
-            wiki "commandcard"     $ show s.deck
-            wiki "attribute"       $ showAttr s.attr
-            wiki "quickhit"        $ show s.hits.quick
-            wiki "artshit"         $ show s.hits.arts
-            wiki "busterhit"       $ show s.hits.buster
-            wiki "extrahit"        $ show s.hits.ex
-            wiki "deathresist"     $ toString s.death
-            wiki "starabsorption"  $ show s.gen.starWeight
-            wiki "stargeneration"  $ toString s.gen.starRate
-            wiki "npchargeattack"  $ toString s.gen.npAtk
-            wiki "npchargedefense" $ show s.gen.npDef
-            wiki "icon"            $ show s.phantasm.card
-            wiki "hitcount"        $ showHitcount s.phantasm.hits
-            wiki "alignment"       $ showAlign s.align
-            for_ s.actives $ \a -> suite a.name 
-              $ case lookup (ShowString $ unRank a.name) skills of
-                Nothing -> test "Skills" <<< failure 
-                           $ "Couldn't find skill " <> a.name
-                Just skill'@(MediaWiki skill) -> do
-                    let skillEffs = showActive <$> a.effect
-                        skillVals = ranges a.effect
-                        wikiEffs = catMaybes $ (1..7) <#> \num 
-                          -> readActive <$> lookup ("effect" <> show num) skill
-                        wikiVals = catMaybes $ (1..7) <#> \num
-                          -> do
-                            let val i = "e-" <> show num <> "lvl" <> show i
-                            wikiFrom <- lookup (val 1) skill
-                            wikiTo <- lookup (val 10) skill
-                            let isPercent = S.contains (Pattern "%") wikiFrom
-                            from <- fromString $ unSuffix wikiFrom (Pattern "%") 
-                            to   <- fromString $ unSuffix wikiTo (Pattern "%") 
-                            pure $ RangeInfo isPercent from to
-                    wikiMatch skill' "cooldown1" $ show a.cd
-                    shouldMatch skillEffs wikiEffs
-                    shouldMatch skillVals wikiVals
+shouldMatch ∷ ∀ a. Eq a => Ord a => Show a => Array a -> Array a -> Aff Unit
+shouldMatch a b = shouldBeNull $ nub a \\ nub b
+    --test "DB" <<< shouldBeNull $ nub b \\ nub a
   where
-    wiki = wikiMatch info
+    shouldBeNull xs = equal' ("missing " <> S.joinWith ", " (show <$> xs)) xs []
+
+testServant ∷ Servant -> MediaWiki -> TestSuite
+testServant (Servant s) mw = suite (s.name <> ": Stats") do
+      wiki "id"            <<< prId $ toNumber s.id
+      wiki "class"           $ show s.class
+      wiki "minatk"          $ show s.stats.base.atk
+      wiki "maxatk"          $ show s.stats.max.atk
+      wiki "minhp"           $ show s.stats.base.hp
+      wiki "maxhp"           $ show s.stats.max.hp
+      wiki "grailatk"        $ show s.stats.grail.atk
+      wiki "grailhp"         $ show s.stats.grail.hp
+      wiki "rarity"          $ show s.rarity
+      wiki "commandcard"     $ show s.deck
+      wiki "attribute"       $ showAttr s.attr
+      wiki "quickhit"        $ show s.hits.quick
+      wiki "artshit"         $ show s.hits.arts
+      wiki "busterhit"       $ show s.hits.buster
+      wiki "extrahit"        $ show s.hits.ex
+      wiki "deathresist"     $ toString s.death
+      wiki "starabsorption"  $ show s.gen.starWeight
+      wiki "stargeneration"  $ toString s.gen.starRate
+      wiki "npchargeattack"  $ toString s.gen.npAtk
+      wiki "npchargedefense" $ show s.gen.npDef
+      wiki "icon"            $ show s.phantasm.card
+      wiki "hitcount"        $ showHitcount s.phantasm.hits
+      wiki "alignment"       $ showAlign s.align
+  where
+    wiki = wikiMatch mw
     showAlign (Tuple Neutral Neutral) = "True Neutral"
     showAlign (Tuple a Mad) = show a <> " Madness"
     showAlign (Tuple a b) = show a <> " " <> show b
@@ -183,6 +163,29 @@ testServant skills (Servant s) info@(MediaWiki mw) = case lookup "err" mw of
                               , abbreviations: false
                               , sign: false
                               }
+
+testNP ∷ Servant -> MediaWiki -> TestSuite
+testNP (Servant s) (MediaWiki mw) = suite (s.name <> ": NP") do
+      test "Primary Effects" $ shouldMatch sNpEffs wikiNpEffs
+      test "Overcharge Effects" $ shouldMatch sOcEffs wikiOcEffs
+  where
+    sNpEffs    = showActive <$> s.phantasm.effect
+    sOcEffs    = showActive <$> s.phantasm.over
+    wikiNpEffs = map readActive <<< catMaybes 
+               $ (flip lookup) mw <<< append "effect" <<< show <$> (1..6)
+    wikiOcEffs = map readActive <<< catMaybes 
+               $ (flip lookup) mw <<< append "oceffect" <<< show <$> (1..6)
+
+testSkills ∷ Map ShowString MediaWiki -> Servant -> MediaWiki -> TestSuite
+testSkills skills (Servant s) info = suite (s.name <> ": Skills") 
+    $ for_ s.actives \a -> case lookup (ShowString $ unRank a.name) skills of
+        Nothing -> test a.name <<< failure $ "Couldn't find skill"
+        Just skill'@(MediaWiki skill) -> do
+            let skillEffs = showActive <$> a.effect
+                wikiEffs = catMaybes $ (1..7) <#> \num 
+                  -> readActive <$> lookup ("effect" <> show num) skill
+            wikiMatch skill' "cooldown1" $ show a.cd
+            test a.name $ shouldMatch skillEffs wikiEffs  
 
 unSuffix ∷ String -> Pattern -> String
 unSuffix s pat = fromMaybe s $ stripSuffix pat s
@@ -205,11 +208,19 @@ main = launchAff_ do
     servants <- traverse wikiZip servants
     ces      <- traverse wikiZip craftEssences
     runTestWith runTest do
-        traverse_ (uncurry $ testServant skills) servants
+        traverse_ (uncurry $ testSkills skills) servants
+        traverse_ (uncurry testServant) servants
+        traverse_ (uncurry testNP) servants
         traverse_ (uncurry testCraftEssence) ces
   where
     getActives (Servant s) = s.actives
-    skillNames    = nub $ unRank <<< _.name <$> (servants >>= getActives)
+    tag "Elemental"        = "Elemental (Skill)"
+    tag "Concentration"    = "Concentration (Skill)"
+    tag "Projection"       = "Projection (Skill)"
+    tag a                  = a
+    skillNames = delete "[\"\"]" <<< nub $ tag <<< unRank <<< _.name 
+                 <$> (servants >>= getActives)
+
 printIcon ∷ Icon -> String
 printIcon IconAllUp = "All Up"
 printIcon IconArtsUp = "Arts Up"
@@ -252,6 +263,13 @@ printIcon IconCrosshairUp = "Taunt"
 printIcon a = show a
 
 showActive ∷ ActiveEffect -> String
+showActive (To _ (DamageVs _) _) = "Extra Damage"
+showActive (To _ DamagePoison _) = "Extra Damage"
+showActive (Grant _ _ (AttackVs _) _) = "Special Attack"
+showActive (Grant _ _ (AlignAffinity _) _) = "Special Attack"
+showActive (Grant _ _ (ClassAffinity _) _) = "Special Attack"
+showActive (Grant _ _ (DefenseVs _) _) = "Special Defense"
+showActive (Grant _ _ (StarAffinity _) _) = "Special Stars"
 showActive (To _ ef _) = genericShow ef
 showActive (Grant _ _ ef _) = genericShow ef
 showActive (Debuff _ _ ef _) = genericShow ef
@@ -265,31 +283,61 @@ showActive (ToMax _ ef) = showActive ef
 readActive ∷ String -> String
 readActive effect = go 
   where
-    words = S.split (Pattern " ") $ S.toLower effect
-    inWords x = elem x words || elem (x <> "s") words
+    words = S.split (Pattern " ") <<< S.trim
+            <<< S.replaceAll (Pattern ".") (Replacement " ") $ S.toLower effect
+    inWords x = elem x words || elem (x <> "s") words 
     match xs = all inWords xs
     go
-      | match ["stun"] = show Stun
+      | match ["special","attack"] = "Special Attack"
+      | match ["special","defense"] = "Special Defense"
+      | match ["extra","own","hp"] = genericShow LastStand
+      | match ["deal","damage","self"] = genericShow DemeritDamage
+      | match ["damage","previous","hp"] = genericShow Avenge
+      | match ["increase","incoming","damage"] = genericShow DamageVuln
+      | match ["increase","overcharge"] = genericShow Overcharge
+      | match ["reduces","enemy","np","gauge","by"] = genericShow GaugeDown
+      | match ["reduces","np","gauge","by"] = genericShow DemeritGauge
+      | match ["increase","drop","against"] = "Special Stars"
+      | match ["stun","later"] = genericShow StunBomb
+      | match ["confusion"] = genericShow Confusion
+      | match ["curse"] = genericShow Curse
+      | match ["curses"] = genericShow Curse
+      | match ["fear"] = genericShow Fear
+      | match ["attack","against"] = "Special Attack"
+      | match ["increase","damage","against"] = "Special Attack"
+      | match ["atk","against"] = "Special Attack"
+      | match ["stun"] = genericShow Stun
+      | match ["gauge","turn"] = genericShow GaugePerTurn
       | match ["increasing","atk"] = genericShow AttackUp
       | match ["increasing","def"] = genericShow DefenseUp
       | match ["prevent","np"] = genericShow SealNP
-      | match ["gain","stars","per"] = genericShow StarsPerTurn
+      | match ["prevent","buff"] = genericShow BuffBlock
+      | match ["gain","stars","turn"] = genericShow StarsPerTurn
       | match ["increase","critical","strength"] = genericShow CritUp
       | match ["increase","star","generation"] = genericShow StarUp
+      | match ["decrease","mental","resist"] = genericShow MentalVuln
       | match ["debuff","immunity"] = genericShow DebuffResist
       | match ["guts"] = genericShow Guts
       | match ["reduce","gauge"] = genericShow GaugeDown
       | match ["increase","def"] = genericShow DefenseUp
+      | match ["increase","defense"] = genericShow DefenseUp
+      | match ["reduce","np","strength"] = genericShow NPDown
       | match ["increase","np","strength"] = genericShow NPUp
+      | match ["increase","np","damage"] = genericShow NPUp
+      | match ["hp","recovery","turn"] = genericShow HealPerTurn
+      | match ["hp","recovery"] = genericShow HealingReceived
+      | match ["restore","gauge"] = genericShow GaugeUp
       | match ["restore","turn"] = genericShow HealPerTurn
-      | match ["restore","turns"] = genericShow HealPerTurn
+      | match ["regenerate","turn"] = genericShow HealPerTurn
       | match ["restore"] = genericShow Heal
+      | match ["restore's"] = genericShow Heal
       | match ["special","defense"] = "Special Defense"
       | match ["burn"] = genericShow Burn
       | match ["def","down"] = genericShow DefenseDown
       | match ["damage","cut"] = genericShow DamageDown
       | match ["damage","plus"] = genericShow DamageUp
       | match ["death","immunity"] = genericShow KillResist
+      | match ["reduce","death","resist"] = genericShow DeathDown
       | match ["death","trigger"] = genericShow DemeritKill
       | match ["defense","down"] = genericShow DefenseDown
       | match ["evade"] = genericShow Evasion
@@ -297,6 +345,7 @@ readActive effect = go
       | match ["recover","turn"] = genericShow HealPerTurn
       | match ["recover"] = genericShow Heal
       | match ["ignore","invincibility"] = genericShow IgnoreInvinc
+      | match ["ignore","invincible"] = genericShow IgnoreInvinc
       | match ["invincible"] = genericShow Invincibility
       | match ["np","seal"] = genericShow SealNP
       | match ["special","attack"] = "Special Attack"
@@ -305,52 +354,67 @@ readActive effect = go
       | match ["immunity","mental"] = genericShow MentalResist
       | match ["increase","damage"] = genericShow DamageUp
       | match ["increase","debuff","success"] = genericShow DebuffSuccess
+      | match ["death","success"] = genericShow KillUp
       | match ["death"] = genericShow Kill
       | match ["charm","resist"] = genericShow CharmVuln
       | match ["charm"] = genericShow Charm
       | match ["skill","seal"] = genericShow SealSkills
       | match ["chance","each"] = genericShow OverChance
       | match ["decrease","charge"] = genericShow GaugeDown
+      | match ["decrease","gauge"] = genericShow GaugeDown
+      | match ["decrease","np","strength"] = genericShow NPDown
       | match ["immobilize"] = genericShow Stun
       | match ["arts","effectiveness"] = genericShow $ Performance Arts
-      | match ["buster","effectiveness"] = genericShow $ Performance Arts
-      | match ["quick","effectiveness"] = genericShow $ Performance Arts
+      | match ["buster","effectiveness"] = genericShow $ Performance Buster
+      | match ["quick","effectiveness"] = genericShow $ Performance Quick
+      | match ["charge","enemy","gauge"] = genericShow DemeritCharge
       | match ["charge","gauge"] = genericShow GaugeUp
       | match ["deal","damage","defense"] = genericShow DamageThruDef
       | match ["deal","damage","def-ignoring"] = genericShow DamageThruDef
-      | match ["extra","own","hp"] = genericShow LastStand
+      | match ["extra","damage","turn"] = "Special Attack"
+      | match ["additional","damage","all","enemies"] = genericShow Damage
+      | match ["additional","damage","turn"] = "Special Attack"
       | match ["extra","damage"] = "Extra Damage"
       | match ["additional","damage"] = "Extra Damage"
       | match ["deal","damage"] = genericShow Damage
       | match ["decrease","atk"] = genericShow AttackDown
+      | match ["decrease","attack"] = genericShow AttackDown
+      | match ["reduce","atk"] = genericShow AttackDown
       | match ["decrease","critical","rate"] = genericShow CritChance
+      | match ["reduce","critical","rate"] = genericShow CritChance
       | match ["decrease","def"] = genericShow DefenseDown
+      | match ["increase","attack","resist"] = genericShow OffensiveResist
       | match ["decrease","debuff","resist"] = genericShow DebuffVuln
+      | match ["reduce","chance"] = genericShow CritChance
+      | match ["reduce","debuff","resist"] = genericShow DebuffVuln
+      | match ["increase","debuff","resist"] = genericShow DebuffResist
+      | match ["increase","debuff","resistance"] = genericShow DebuffResist
+      | match ["decrease","buff","success"] = genericShow BuffFail
+      | match ["increase","buff","success"] = genericShow BuffUp
       | match ["decrease","hp","fall"] = genericShow DemeritHealth
       | match ["decrease","critical","chance"] = genericShow CritChance
       | match ["drain","own","gauge"] = genericShow DemeritGauge
       | match ["gain","stars"] = genericShow GainStars
       | match ["heal"] = genericShow Heal
       | match ["increase","star","drop"] = genericShow StarUp
+      | match ["increase","healing","effectiveness"] = genericShow HealUp
       | match ["star","gather"] = genericShow StarAbsorb
       | match ["maximum","hp"] = genericShow MaxHP
+      | match ["max","hp"] = genericShow MaxHP
       | match ["increase","gauge"] = genericShow GaugeUp
-      | match ["attack","against"] = "Special Attack"
       | match ["increase","np","gain"] = genericShow NPGen
       | match ["poison","resist"] = genericShow $ Resist Poison
       | match ["quick","performance"] = genericShow $ Performance Quick
       | match ["arts","performance"] = genericShow $ Performance Arts
       | match ["buster","performance"] = genericShow $ Performance Buster
-      | match ["increase","critical","damages"] = genericShow CritUp
-      | match ["confusion"] = genericShow Confusion
-      | match ["curse"] = genericShow Curse
-      | match ["curses"] = genericShow Curse
-      | match ["fear"] = genericShow Fear
+      | match ["increase","critical","damage"] = genericShow CritUp
       | match ["nullify"] = genericShow BuffBlock
+      | match ["remove","poison"] = genericShow Cure
       | match ["poison"] = genericShow Poison
       | match ["lock","skills"] = genericShow SealNP
       | match ["reduce","hp"] = genericShow DemeritDamage
       | match ["reduce","damage","taken"] = genericShow DamageDown
+      | match ["remove","buffs","self"] = genericShow DemeritBuffs
       | match ["remove","buffs"] = genericShow RemoveBuffs
       | match ["remove","poison"] = genericShow Cure
       | match ["remove","mental"] = genericShow RemoveMental
@@ -358,9 +422,15 @@ readActive effect = go
       | match ["remove","effects#mental_debuff"] = genericShow RemoveMental
       | match ["sacrifice"] = genericShow DemeritKill
       | match ["severe","damage"] = genericShow Damage
-      | match ["charge","gauge"] = genericShow GaugeUp
       | match ["cooldowns"] = genericShow Cooldowns
       | match ["increase","gauge"] = genericShow GaugeUp
-      | match ["damage","previous","hp"] = genericShow Avenge
       | match ["personality"] = genericShow BecomeHyde
-      | otherwise = ""
+      | match ["increase","atk"] = genericShow AttackUp
+      | match ["increase","attack"] = genericShow AttackUp
+      | match ["reduce","defense"] = genericShow DefenseDown
+      | match ["reduce","def"] = genericShow DefenseDown
+      | match ["greatly","increase","status","effects"] = genericShow MentalSuccess
+      | match ["increase","mental","success"] = genericShow MentalSuccess
+      | match ["increase","status","effects"] = genericShow MentalResist
+      | match ["debuff","rate"] = genericShow DebuffSuccess
+      | otherwise = show words

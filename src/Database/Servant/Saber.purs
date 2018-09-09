@@ -75,6 +75,7 @@ sabers = Servant <$>
                 , cd:     7
                 , effect: [ Grant Self 3 OffensiveResist $ 40.0 ~ 80.0
                           , To Self Heal $ 1000.0 ~ 2500.0
+                          , Grant Self 1 StarUp $ 100.0 ~ 300.0
                           ]
                 }
               , { name:   "Crest of the Star EX"
@@ -471,7 +472,7 @@ sabers = Servant <$>
   , actives:  [ { name:   "Migraine B"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
+                , effect: [ Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           , To Self Heal $ 500.0 ~ 2000.0
                           ]
                 }
@@ -623,7 +624,7 @@ sabers = Servant <$>
               , max:   { atk: 10173, hp: 11419 }
               , grail: { atk: 12317, hp: 13845 }
               }
-  , actives:  [ { name:   "Numeral of the Saint EX"
+  , actives:  [ { name:   "Numeral of The Saint EX"
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ Flat 20.0
@@ -775,12 +776,12 @@ sabers = Servant <$>
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0
-                          , Grant Self 3 DebuffResist $ 20.0 ~ 40.0
+                          , Grant Self 3 MentalResist $ 20.0 ~ 40.0
                           ]
                 }
               , { name:   "Defiant B"
                 , icon:   IconShieldUp
-                , cd:     6
+                , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 15.0 ~ 25.0
                           , Debuff Self 3 BuffFail $ Flat 50.0
                           ]
@@ -839,7 +840,7 @@ sabers = Servant <$>
                 }
               , { name:   "Oath of Protection B"
                 , icon:   IconShieldUp
-                , cd:     8
+                , cd:     7
                 , effect: [ Grant Party 1 DefenseUp $ Flat 30.0
                           , Grant Self 1 DebuffResist $ 30.0 ~ 50.0
                           ]

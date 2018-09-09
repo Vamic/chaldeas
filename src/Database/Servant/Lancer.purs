@@ -85,7 +85,7 @@ lancers = Servant <$>
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Uncrowned Arms Mastery"
+              , { name:   "Uncrowned Arms Mastership"
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ Flat 25.0
@@ -341,7 +341,7 @@ lancers = Servant <$>
   , actives:  [ { name:   "Chinese Martial Arts (Liu He Da Qiang) A++"
                 , icon:   IconBullseye
                 , cd:     8
-                , effect: [ Grant Self 1 Evasion Full
+                , effect: [ Grant Self 1 SureHit Full
                           , Grant Self 1 CritUp $ 50.0 ~ 100.0
                           ]
                 }
@@ -402,7 +402,7 @@ lancers = Servant <$>
                 , cd:     7
                 , effect: [ Grant Self 3 (Performance Buster) $ 20.0 ~ 30.0 ]
                 }
-              , { name:   "Pursuer of Love A"
+              , { name:   "Stalking A"
                 , icon:   IconShieldDown
                 , cd:     7
                 , effect: [ Chance 500
@@ -606,7 +606,7 @@ lancers = Servant <$>
                           , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
-              , { name:   "Beast-Slayer B+"
+              , { name:   "Beast Slayer B+"
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 3 (AttackVs Beast) $ 40.0 ~ 60.0 ]
@@ -646,7 +646,7 @@ lancers = Servant <$>
               }
   , actives:  [ { name:   "Rear Guard's Pride A"
                 , icon:   IconCrosshairUp
-                , cd:     7
+                , cd:     8
                 , effect: [ Grant Self 1 Taunt Full
                           , Grant Self 3 NPGen $ 50.0 ~ 100.0
                           ]
@@ -749,7 +749,7 @@ lancers = Servant <$>
               }
   , actives:  [ { name:   "Tactics C+"
                 , icon:   IconBeamUp
-                , cd:     6
+                , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 8.5 ~ 17.0 ]
                 }
               , { name:   "Proof of Friendship C"
@@ -872,7 +872,7 @@ lancers = Servant <$>
               , kind:   "Anti-Personnel"
               , hits:   2
               , effect: [ To Enemy Damage $ 1600.0 ~ 2400.0
-                        , To Enemy RemoveDebuffs Full
+                        , To Enemy RemoveBuffs Full
                         ]
               , over:   [ Debuff Enemy 5 Curse $ 500.0 ~ 1500.0 ]
               , first:  false

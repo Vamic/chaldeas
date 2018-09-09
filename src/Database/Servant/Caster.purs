@@ -141,7 +141,7 @@ casters = Servant <$>
                           , Grant Self 1 DamageDown $ 500.0 ~ 1500.0
                           ]
                 }
-              , { name:   "Sanzang's Teaching A"
+              , { name:   "Sanzang's Teachings A"
                 , icon:   IconNobleUp
                 , cd:     7
                 , effect: [ Grant Party 3 NPGen $ 10.0 ~ 30.0
@@ -237,7 +237,7 @@ casters = Servant <$>
               , max:   { atk: 10857, hp: 13825 }
               , grail: { atk: 11885, hp: 15146 }
               }
-  , actives:  [ { name:   "Happiness Mystic Code A"
+  , actives:  [ { name:   "Cheerful-Type Mystic Code A"
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
@@ -294,7 +294,7 @@ casters = Servant <$>
               }
   , actives:  [ { name:   "Rapid Words of Divine A"
                 , icon:   IconNoble
-                , cd:     8
+                , cd:     9
                 , effect: [ To Self GaugeUp $ 80.0 ~ 150.0 ]
                 }
               , { name:   "Poison Resistance A++"
@@ -716,7 +716,7 @@ casters = Servant <$>
                 }
               , { name:   "Rapid Casting E"
                 , icon:   IconNoble
-                , cd:     8
+                , cd:     10
                 , effect: [ To Self GaugeUp $ 50.0 ~ 75.0 ]
                 }
               , { name:   "Innocent Monster D"
@@ -738,7 +738,7 @@ casters = Servant <$>
               , over:   [ Chance 0 <<< Grant Party 3 AttackUp $ 20.0 ~ 40.0
                         , Chance 0 <<< Grant Party 3 DefenseUp $ 20.0 ~ 40.0
                         , Chance 0 <<< Grant Party 3 StarUp $ 20.0 ~ 40.0
-                        , To Party Heal $ 1000.0 ~ 3000.0
+                        , Grant Party 3 HealPerTurn $ 1000.0 ~ 3000.0
                         ]
               , first:  false
               }
@@ -763,7 +763,7 @@ casters = Servant <$>
               }
   , actives:  [ { name:   "Rapid Words of Divine A"
                 , icon:   IconNoble
-                , cd:     8
+                , cd:     9
                 , effect: [ To Self GaugeUp $ 80.0 ~ 150.0 ]
                 }
               , { name:   "Argon Coin"

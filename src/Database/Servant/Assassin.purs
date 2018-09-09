@@ -17,7 +17,7 @@ assassins = Servant <$>
               , max:   { atk: 11557, hp: 12696 }
               , grail: { atk: 12651, hp: 13909 }
               }
-  , actives:  [ { name:   "Murderer on a Misty Night A"
+  , actives:  [ { name:   "Murder on a Misty Night A"
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
@@ -384,7 +384,7 @@ assassins = Servant <$>
               }
   , actives:  [ { name:   "Vampirism C"
                 , icon:   IconDarkMagic
-                , cd:     9
+                , cd:     8
                 , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
@@ -443,7 +443,7 @@ assassins = Servant <$>
                           , Debuff Enemies 3 CritChance $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Ninjutsu A<>+"
+              , { name:   "Ninjutsu A+"
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Ally 1 Evasion Full
@@ -877,8 +877,8 @@ assassins = Servant <$>
               , { name:   "Mental Corruption A"
                 , icon:   IconStaffUp
                 , cd:     7
-                , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0
-                          , Grant Self 3 MentalResist $ 50.0 ~ 100.0
+                , effect: [ Grant Self 3 DebuffSuccess $ 5.0 ~ 25.0
+                          , Grant Self 3 DebuffResist $ 50.0 ~ 100.0
                           ]
                 }
               ]
@@ -925,7 +925,7 @@ assassins = Servant <$>
                           , Debuff Enemies 3 DefenseDown $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Double-Cross B"
+              , { name:   "Double-cross B"
                 , icon:   IconCircuits
                 , cd:     8
                 , effect: [ Debuff Enemy 1 SealSkills Full

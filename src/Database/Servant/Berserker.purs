@@ -71,7 +71,7 @@ berserkers = Servant <$>
               }
   , actives:  [ { name:   "Eternal Arms Mastery A+"
                 , icon:   IconStarUp
-                , cd:     8
+                , cd:     7
                 , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
                 }
               , { name:   "Mana Burst (Lightning) A"
@@ -134,7 +134,7 @@ berserkers = Servant <$>
               , { name:   "Natural Body A"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 60.0 ~ 120.0
+                , effect: [ Grant Self 3 OffensiveResist $ 60.0 ~ 120.0
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
@@ -172,7 +172,9 @@ berserkers = Servant <$>
   , actives:  [ { name:   "Vampirism A"
                 , icon:   IconDarkMagic
                 , cd:     8
-                , effect: [ Chances 80 100 <<< To Enemy GaugeDown $ Flat 1.0 ]
+                , effect: [ Chances 80 100 <<< To Enemy GaugeDown $ Flat 1.0 
+                          , To Self GaugeUp $ 20.0 ~ 30.0
+                          ]
                 }
               , { name:   "Morph C"
                 , icon:   IconShieldUp
@@ -240,7 +242,7 @@ berserkers = Servant <$>
               , card:   Arts
               , kind:   "Anti-Army"
               , hits:   0
-              , effect: [ To Party RemoveBuffs Full
+              , effect: [ To Party RemoveDebuffs Full
                         , To Party Heal $ 3000.0 ~ 5000.0
                         ]
               , over:   [ Debuff Enemies 1 NPDown $ 50.0 ~ 100.0 ]
@@ -269,7 +271,7 @@ berserkers = Servant <$>
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 10.5 ~ 31.0
-                          , Grant Self 3 DebuffResist $ 21.0 ~ 42.0
+                          , Grant Self 3 MentalResist $ 21.0 ~ 42.0
                           ]
                 }
               , { name:   "Mind's Eye (Fake) B"
@@ -521,7 +523,7 @@ berserkers = Servant <$>
               }
   , actives:  [ { name:   "Monstrous Strength B"
                 , icon:   IconSwordUp
-                , cd:     9
+                , cd:     7
                 , effect: [ Grant Self 2 AttackUp $ 10.0 ~ 30.0 ]
                 }
               , { name:   "Curse E"
@@ -627,7 +629,7 @@ berserkers = Servant <$>
                 }
               , { name:   "Unyielding Will A"
                 , icon:   IconKneel
-                , cd:     9
+                , cd:     7
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ Flat 1.0
                           , To Self GaugeUp $ 10.0 ~ 30.0
                           ]
@@ -735,7 +737,7 @@ berserkers = Servant <$>
                           , Grant Enemy 3 AttackUp $ Flat 20.0
                           ]
                 }
-              , { name:   "Flame-Colored Kiss A"
+              , { name:   "Flame-Coloured Kiss A"
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0

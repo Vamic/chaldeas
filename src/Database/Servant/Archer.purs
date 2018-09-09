@@ -235,7 +235,7 @@ archers = Servant <$>
                 }
               , { name:   "Hero of the Endowed A"
                 , icon:   IconNoble
-                , cd:     10
+                , cd:     12
                 , effect: [ To Self GaugeUp $ Flat 25.0
                           , Grant Self 5 HealPerTurn $ 1000.0 ~ 2000.0
                           , Grant Party 5 StarsPerTurn $ 4.0 ~ 8.0
@@ -297,7 +297,7 @@ archers = Servant <$>
                           , Grant Self 1 (Performance Buster) $ 20.0 ~ 35.0
                           ]
                 }
-              , { name:   "Kiss Demon B"
+              , { name:   "Kissing Freak B"
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
@@ -393,14 +393,14 @@ archers = Servant <$>
                           , To Party Heal $ 200.0 ~ 600.0
                           ]
                 }
-              , { name:   "Unblessed Birth B"
+              , { name:   "Grace of the Unexpected Birth B"
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
                           , Debuff Self 1 SealNP Full
                           ]
                 }
-              , { name:   "Critique to the King B"
+              , { name:   "Admonishment of the King of Knights"
                 , icon:   IconCircuits
                 , cd:     7
                 , effect: [ To Enemy RemoveBuffs Full
@@ -553,7 +553,7 @@ archers = Servant <$>
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
-              , { name:   "Pirate's Honor C+"
+              , { name:   "Pirate's Glory C+"
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 8.5 ~ 25.5

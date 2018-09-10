@@ -4,7 +4,7 @@ import Prelude
 import Operators
 import Database.Model
 
-riders ∷ Array Servant
+riders :: Array Servant
 riders = Servant <$>
 [ { name:     "Ozymandias"
   , id:       118
@@ -25,7 +25,7 @@ riders = Servant <$>
               , { name:   "Imperial Privilege A"
                 , icon:   IconHeal
                 , cd:     7
-                , effect: [ To Self Heal $ 100.0 ~ 3000.0
+                , effect: [ To Self Heal $ 1000.0 ~ 3000.0
                           , Chance 60 <<< Grant Self 3 AttackUp $ 20.0 ~ 40.0
                           , Chance 60 <<< Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
@@ -185,8 +185,8 @@ riders = Servant <$>
               , { name:   "Siren Song C"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 50 80
-                            $ Debuff (EnemyType Male) 1 Charm Full ]
+                , effect: [ Chances 50 80 $
+                            Debuff (EnemyType Male) 1 Charm Full ]
                 }
               ]
   , passives: [magicResistance B, riding A]
@@ -236,7 +236,7 @@ riders = Servant <$>
               , { name:   "Natural Body A"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 60.0 ~ 120.0
+                , effect: [ Grant Self 3 OffensiveResist $ 60.0 ~ 120.0
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
@@ -424,8 +424,8 @@ riders = Servant <$>
   , actives:  [ { name:   "Siren Song C"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 50 80
-                            $ Debuff (EnemyType Male) 1 Charm Full ]
+                , effect: [ Chances 50 80 $
+                            Debuff (EnemyType Male) 1 Charm Full ]
                 }
               , { name:   "Beautiful Princess A"
                 , icon:   IconShield
@@ -583,7 +583,7 @@ riders = Servant <$>
               , { name:   "Martyr's Soul B+"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
+                , effect: [ Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           , To Self Heal $ 750.0 ~ 2000.0
                           ]
                 }
@@ -787,8 +787,8 @@ riders = Servant <$>
               , { name:   "Fair Youth B"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 50 80
-                            $ Debuff (EnemyType Humanoid) 1 Charm Full ]
+                , effect: [ Chances 50 80 $
+                            Debuff (EnemyType Humanoid) 1 Charm Full ]
                 }
               , { name:   "Omen of the Conqueror A"
                 , icon:   IconQuickUp

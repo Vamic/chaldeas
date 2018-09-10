@@ -29,5 +29,6 @@
   , "purescript-test-unit": "latest"
   , "purescript-affjax": "^7.0.0"
   , "purescript-globals": "^4.0.0"
+  , "purescript-yargs": "latest"
   }
 }

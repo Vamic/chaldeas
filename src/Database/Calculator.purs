@@ -13,15 +13,14 @@ import Data.Tuple
 
 import Database.Model (ActiveEffect(..), BuffEffect(..), Card(..), Class(..), DebuffEffect(..), InstantEffect(..), Servant(..), Target(..), allied, simplify, toMax, toMin)
 
-npPerArts ∷ Servant -> Number
-npPerArts s'@(Servant s)
-    = toNumber s.hits.arts
-    * offensiveNPRate
-    * (firstCardBonus + (cardNpValue * (1.0 + cardMod)))
-    * enemyServerMod
-    * (1.0 + npChargeRateMod)
-    * criticalModifier
-    * overkillModifier
+npPerArts :: Servant -> Number
+npPerArts s'@(Servant s) = toNumber s.hits.arts
+                         * offensiveNPRate
+                         * ( firstCardBonus + (cardNpValue * (1.0 + cardMod)) )
+                         * enemyServerMod
+                         * ( 1.0 + npChargeRateMod )
+                         * criticalModifier
+                         * overkillModifier
   where
     offensiveNPRate  = s.gen.npAtk
     firstCardBonus   = 0.0
@@ -33,15 +32,18 @@ npPerArts s'@(Servant s)
     overkillModifier = 1.0
     buffs            = passiveBuffs s'
 
-starsPerQuick ∷ Servant -> Number
-starsPerQuick s'@(Servant s)
-    = toNumber s.hits.quick
-    * min 3.0
-        ( baseStarRate + firstCardBonus + (cardStarValue * (1.0 + cardMod))
-        + serverRate + starDropMod - enemyStarDropMod + criticalModifier
-        )
-    * overkillModifier
-    + overkillAdd
+starsPerQuick :: Servant -> Number
+starsPerQuick s'@(Servant s) = toNumber s.hits.quick 
+                             * min 3.0 ( baseStarRate 
+                                       + firstCardBonus 
+                                       + ( cardStarValue * (1.0 + cardMod) )
+                                       + serverRate 
+                                       + starDropMod 
+                                       - enemyStarDropMod 
+                                       + criticalModifier
+                                       )
+                             * overkillModifier
+                             + overkillAdd
   where
     baseStarRate     = s.gen.starRate / 100.0
     firstCardBonus   = 0.0
@@ -55,27 +57,31 @@ starsPerQuick s'@(Servant s)
     overkillAdd      = 0.0
     buffs            = passiveBuffs s'
 
-npDamage ∷ Boolean -> Boolean -> Servant -> Number
-npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
-    = if npDamageMultiplier == 0.0 then 0.0 else
-      servantAtk
-    * npDamageMultiplier
-    * (firstCardBonus + (cardDamageValue * (1.0 + cardMod)))
-    * classAtkBonus
-    * triangleModifier
-    * attributeModifier
-    * randomModifier
-    * 0.23
-    * (1.0 + atkMod - defMod)
-    * criticalModifier
-    * extraCardModifier
-    * (1.0 - specialDefMod)
-    * (1.0 + powerMod + selfDamageMod
-      + (critDamageMod * isCrit)
-      + (npDamageMod * isNP)
-      )
-    * (1.0 + ((superEffectiveModifier - 1.0) * isSuperEffective))
-    + dmgPlusAdd + selfDmgCutAdd + (servantAtk * busterChainMod)
+npDamage :: Boolean -> Boolean -> Servant -> Number
+npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) = 
+    if npDamageMultiplier == 0.0 then 0.0 
+    else servantAtk
+       * npDamageMultiplier
+       * ( firstCardBonus + (cardDamageValue * (1.0 + cardMod)) )
+       * classAtkBonus
+       * triangleModifier
+       * attributeModifier
+       * randomModifier
+       * 0.23
+       * ( 1.0 + atkMod - defMod )
+       * criticalModifier
+       * extraCardModifier
+       * ( 1.0 - specialDefMod )
+       * ( 1.0 
+         + powerMod 
+         + selfDamageMod 
+         + (critDamageMod * isCrit) 
+         + (npDamageMod * isNP)
+         )
+      * ( 1.0 + ((superEffectiveModifier - 1.0) * isSuperEffective) )
+      + dmgPlusAdd 
+      + selfDmgCutAdd 
+      + ( servantAtk * busterChainMod )
   where
     --------------------
     -- FROM YOUR SERVANT
@@ -90,8 +96,8 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
         Caster    -> 0.90
         Assassin  -> 0.90
         _         -> 1.0
-    triangleModifier = (_ + 1.0) <<< sum
-                     $ matchSum buffs <<< ClassAffinity <$> specials
+    triangleModifier = (_ + 1.0) <<< sum $ 
+                       matchSum buffs <<< ClassAffinity <$> specials
     attributeModifier = 1.0
     -------------
     -- FROM CARDS
@@ -111,11 +117,11 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
     ---------------------
     -- FROM NP PROPERTIES
     ---------------------
-    npDamageMultiplier = sum $ matchSum instants
-                     <$> (special ? cons LastStand $ [Damage, DamageThruDef])
-    superEffectiveModifier = (_ + 1.0 + matchSum instants DamagePoison)
-                           <<< fromMaybe 0.0 <<< maximum
-                           $ matchSum instants <<< DamageVs <$> specials
+    npDamageMultiplier = sum $ map (matchSum instants) <<<
+                         special ? cons LastStand $ [Damage, DamageThruDef]
+    superEffectiveModifier = (_ + 1.0 + matchSum instants DamagePoison) <<<
+                             fromMaybe 0.0 <<< maximum $
+                             matchSum instants <<< DamageVs <$> specials
     isSuperEffective = 1.0
     -------------
     -- FROM BUFFS
@@ -124,8 +130,8 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
         Arts   -> Performance Arts
         Buster -> Performance Buster
         Quick  -> Performance Quick
-    atkMod = (_ + matchSum buffs AttackUp) <<< fromMaybe 0.0 <<< maximum
-           $ matchSum buffs <<< AttackVs <$> specials
+    atkMod = (_ + matchSum buffs AttackUp) <<< fromMaybe 0.0 <<< maximum $
+             matchSum buffs <<< AttackVs <$> specials
     defMod = matchSum debuffs DefenseDown
     specialDefMod = 0.0
     powerMod = 0.0
@@ -137,7 +143,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
     dmgPlusAdd = 100.0 * (matchSum buffs DamageUp + matchSum debuffs DamageVuln)
     selfDmgCutAdd = 0.0
     -- INTERNAL
-    specials ∷ ∀ a. BoundedEnum a => Array a
+    specials :: ∀ a. BoundedEnum a => Array a
     specials
       | special   = enumArray
       | otherwise = []
@@ -174,20 +180,20 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}})
           | not $ allied t = [ Tuple instant $ f a / 100.0 ]
         go _ _ = []
 
-passiveBuffs ∷ Servant -> Array (Tuple BuffEffect Number)
+passiveBuffs :: Servant -> Array (Tuple BuffEffect Number)
 passiveBuffs (Servant {passives}) = passives >>= _.effect >>= go <<< simplify
   where
     go (Grant t _ buff a)
       | selfable t = [ Tuple buff $ toMax a / 100.0 ]
     go _ = []
 
-selfable ∷ Target -> Boolean
+selfable :: Target -> Boolean
 selfable Self   = true
 selfable Ally   = true
 selfable Party  = true
 selfable _      = false
 
-matchSum ∷ ∀ a b. Eq a => Semiring b => Array (Tuple a b) -> a -> b
+matchSum :: ∀ a b. Eq a => Semiring b => Array (Tuple a b) -> a -> b
 matchSum xs k = sum $ go <$> xs
   where
     go (Tuple k1 v) | k == k1 = v

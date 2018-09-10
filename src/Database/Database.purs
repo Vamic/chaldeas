@@ -20,7 +20,7 @@ import Database.Servant.Lancer
 import Database.Servant.Rider
 import Database.Servant.Saber
 
-servants ∷ Array Servant
+servants :: Array Servant
 servants = addUniversal <<< addHeavenOrEarth
        <$> archers
         <> assassins
@@ -31,23 +31,23 @@ servants = addUniversal <<< addHeavenOrEarth
         <> riders
         <> sabers
   where
-    addUniversal (Servant s)
-        = Servant s { traits   = sortWith show $ cons Humanoid s.traits
-                    , passives = sortWith show s.passives
-                    }
+    addUniversal (Servant s) = Servant s 
+        { traits   = sortWith show $ cons Humanoid s.traits
+        , passives = sortWith show s.passives
+        }
     addHeavenOrEarth s'@(Servant s)
       | s.attr /= Earth && s.attr /= Heaven = s'
       | otherwise = Servant s {traits = cons HeavenOrEarth s.traits}
 
-getAll ∷ ∀ a. MatchServant a => Array a
+getAll :: ∀ a. MatchServant a => Array a
 getAll = (_ $ unit) $ memoize \_ -> sortWith show $ filter exists enumArray
   where
     exists eff = any (has eff false) servants
 
-ceGetAll ∷ ∀ a. MatchCraftEssence a => Array a
+ceGetAll :: ∀ a. MatchCraftEssence a => Array a
 ceGetAll = (_ $ unit) $ memoize \_ -> sortWith show $ filter exists enumArray
   where
     exists eff = any (ceHas eff false) craftEssences
 
-getPassives ∷ Array String
+getPassives :: Array String
 getPassives = sort <<< nub $ servants >>= \(Servant s) -> _.name <$> s.passives

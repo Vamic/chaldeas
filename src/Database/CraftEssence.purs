@@ -18,7 +18,7 @@ import Database.Base
 import Database.Skill
 import Database.Servant
 
-craftEssences ∷ Array CraftEssence
+craftEssences :: Array CraftEssence
 craftEssences = CraftEssence <$>
 [ { name:     "Tenacity"
   , id:       1
@@ -868,8 +868,8 @@ craftEssences = CraftEssence <$>
               , max:  { atk: 2400, hp: 0 }
               }
   , effect:   [ When "defeated by an enemy" $ Debuff Killer 2 SealNP Full
-              , When "defeated by an enemy"
-                <<< Debuff Killer 10 Curse $ 1000.0 ~ 2000.0
+              , When "defeated by an enemy" <<<
+                Debuff Killer 10 Curse $ 1000.0 ~ 2000.0
               ]
   , bond:     Nothing
   , limited:  false
@@ -1748,8 +1748,8 @@ craftEssences = CraftEssence <$>
               , max:  { atk: 1000, hp: 1600 }
               }
   , effect:   [ Grant Self 0 (Performance Quick) $ 10.0 ~ 15.0
-              , When "defeated"
-                <<< Grant Party 1 (Performance Quick) $ 20.0 ~ 30.0
+              , When "defeated" <<<
+                Grant Party 1 (Performance Quick) $ 20.0 ~ 30.0
               ]
   , bond:     Nothing
   , limited:  true
@@ -2607,65 +2607,66 @@ craftEssences = CraftEssence <$>
   }
 ]
   where
-    np30 = Grant Self 0 NPUp $ Flat 30.0
+    np30        = Grant Self 0 NPUp $ Flat 30.0
     gutsPercent = Times 1 <<< Grant Self 0 GutsPercent <<< Flat <<< toNumber
-    party buff = Grant Party 0 buff <<< Flat <<< toNumber
+    party buff  = Grant Party 0 buff <<< Flat <<< toNumber
     party' card = party (Performance card)
     atkChance chance = When "attacking" <<< Chance chance
-    bond id name servant icon effect
-        = { name
-          , id
-          , rarity:   4
-          , icon
-          , stats:    { base: { atk: 100, hp: 100 }
-                      , max:  { atk: 100, hp: 100 }
-                      }
-          , effect:   When ("equipped by " <> servant) <$> effect
-          , bond:     Just servant
-          , limited:  false
-          }
+    bond id name servant icon effect = 
+        { name
+        , id
+        , rarity:   4
+        , icon
+        , stats:    { base: { atk: 100, hp: 100 }
+                    , max:  { atk: 100, hp: 100 }
+                    }
+        , effect:   When ("equipped by " <> servant) <$> effect
+        , bond:     Just servant
+        , limited:  false
+        }
 
 
-getBond ∷ Servant -> Maybe CraftEssence
+getBond :: Servant -> Maybe CraftEssence
 getBond (Servant s) = go s.name
   where
-    go = memoize \name -> let match (CraftEssence ce) = ce.bond == Just name 
-                          in find match craftEssences
+    go = memoize \name -> 
+         let match (CraftEssence ce) = ce.bond == Just name 
+         in find match craftEssences
 
-newtype CraftEssence = CraftEssence { name     ∷ String
-                                    , id       ∷ Int
-                                    , rarity   ∷ Int
-                                    , icon     ∷ Icon
-                                    , stats    ∷ { base ∷ Stat, max ∷ Stat }
-                                    , effect   ∷ Array ActiveEffect
-                                    , bond     ∷ Maybe String
-                                    , limited  ∷ Boolean
+newtype CraftEssence = CraftEssence { name     :: String
+                                    , id       :: Int
+                                    , rarity   :: Int
+                                    , icon     :: Icon
+                                    , stats    :: { base :: Stat, max :: Stat }
+                                    , effect   :: Array ActiveEffect
+                                    , bond     :: Maybe String
+                                    , limited  :: Boolean
                                     }
 
-instance _0_ ∷ Show CraftEssence where
+instance _0_ :: Show CraftEssence where
   show (CraftEssence ce) = ce.name
 
-getEffects ∷ CraftEssence -> Array ActiveEffect
+getEffects :: CraftEssence -> Array ActiveEffect
 getEffects (CraftEssence ce) = filter (not <<< demerit) $ simplify <$> ce.effect
 
 class (G.BoundedEnum a, Show a) <= MatchCraftEssence a where
-    ceHas ∷ a -> Boolean -> CraftEssence -> Boolean
-instance _b_ ∷ MatchCraftEssence BuffEffect where
+    ceHas :: a -> Boolean -> CraftEssence -> Boolean
+instance _b_ :: MatchCraftEssence BuffEffect where
     ceHas a noSelf = any match <<< getEffects where
         match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
         match _ = false
-instance _c_ ∷ MatchCraftEssence DebuffEffect where
+instance _c_ :: MatchCraftEssence DebuffEffect where
     ceHas a _ = any match <<< getEffects where
         match (Debuff t _ b _) = a == b && not (allied t)
         match _ = false
-instance _d_ ∷ MatchCraftEssence InstantEffect where
+instance _d_ :: MatchCraftEssence InstantEffect where
     ceHas a noSelf = any match <<< getEffects where
         match (To t b _) = a == b && (not noSelf || t /= Self)
         match _ = false
-instance _e_ ∷ MatchCraftEssence BonusEffect where
+instance _e_ :: MatchCraftEssence BonusEffect where
     ceHas a _ = any match <<< getEffects where
         match (Bonus b _) = a == b
         match _ = false
 
-equipped ∷ Class -> ActiveEffect -> ActiveEffect
+equipped :: Class -> ActiveEffect -> ActiveEffect
 equipped = When <<< append "equipped by a " <<< show

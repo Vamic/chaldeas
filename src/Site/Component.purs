@@ -25,15 +25,15 @@ import Site.Filtering
 import Database
 import Database.MyServant
 
-type State = { today    ∷ Date
-             , browseCe ∷ Boolean
-             , withHash ∷ String
-             , prefs    ∷ Preferences
-             , team     ∷ Map Servant MyServant
-             , mServant ∷ Maybe Servant
-             , mCe      ∷ Maybe CraftEssence
-             , fServant ∷ Array (Filter Servant)
-             , fCe      ∷ Array (Filter CraftEssence)
+type State = { today    :: Date
+             , browseCe :: Boolean
+             , withHash :: String
+             , prefs    :: Preferences
+             , team     :: Map Servant MyServant
+             , mServant :: Maybe Servant
+             , mCe      :: Maybe CraftEssence
+             , fServant :: Array (Filter Servant)
+             , fCe      :: Array (Filter CraftEssence)
              }
 
 data Query a
@@ -44,8 +44,8 @@ type ChildQuery = Coproduct2 Servants.Query CraftEssences.Query
 
 type ChildSlot = Either Unit (Either Unit Unit)
 
-comp ∷ ∀ m. MonadEffect m => String -> Preferences -> Date 
-       -> Map Servant MyServant -> Component HTML Query Unit Void m
+comp :: ∀ m. MonadEffect m => String -> Preferences -> Date 
+     -> Map Servant MyServant -> Component HTML Query Unit Void m
 comp initialHash initialPrefs initialToday initialTeam = parentComponent
     { initialState: const initialState
     , render
@@ -66,7 +66,7 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
                  , mCe
                  }
     where
-      fromHash ∷ ∀ f a. Foldable f => Show a => f a -> Maybe a
+      fromHash :: ∀ f a. Foldable f => Show a => f a -> Maybe a
       fromHash = find (eq initialHash <<< urlName <<< show)
       mCe      = fromHash craftEssences
       mServant = fromHash servants

@@ -20,72 +20,73 @@ import Database.Base
 import Database.Passive
 import Database.Skill
 
-newtype Servant = Servant { name     ∷ String
-                          , id       ∷ Int
-                          , rarity   ∷ Int
-                          , class    ∷ Class
-                          , attr     ∷ Attribute
-                          , deck     ∷ Deck
-                          , curve    ∷ Int
-                          , stats    ∷ { base ∷ Stat, max ∷ Stat, grail ∷ Stat }
-                          , actives  ∷ Array Active
-                          , passives ∷ Array Passive
-                          , phantasm ∷ NoblePhantasm
-                          , gen      ∷ Gen
-                          , hits     ∷ Hits
-                          , traits   ∷ Array Trait
-                          , death    ∷ Number
-                          , align    ∷ Tuple Alignment Alignment
-                          , limited  ∷ Boolean
-                          , free     ∷ Boolean
+newtype Servant = Servant { name     :: String
+                          , id       :: Int
+                          , rarity   :: Int
+                          , class    :: Class
+                          , attr     :: Attribute
+                          , deck     :: Deck
+                          , curve    :: Int
+                          , stats    :: { base :: Stat, max :: Stat, grail :: Stat }
+                          , actives  :: Array Active
+                          , passives :: Array Passive
+                          , phantasm :: NoblePhantasm
+                          , gen      :: Gen
+                          , hits     :: Hits
+                          , traits   :: Array Trait
+                          , death    :: Number
+                          , align    :: Tuple Alignment Alignment
+                          , limited  :: Boolean
+                          , free     :: Boolean
                           }
 
-instance _0_ ∷ Show Servant where
+instance _0_ :: Show Servant where
   show (Servant s) = s.name
-instance _1_ ∷ Eq Servant where
+instance _1_ :: Eq Servant where
   eq (Servant a) (Servant b) = eq a.id b.id
-instance _2_ ∷ Ord Servant where
+instance _2_ :: Ord Servant where
   compare (Servant a) (Servant b) = compare a.id b.id
 
 data Deck = Deck Card Card Card Card Card
 
-data Ratings = Ratings { damage     ∷ Int
-                        , np         ∷ Int
-                        , critical   ∷ Int
-                        , utility    ∷ Int
-                        , support    ∷ Int
-                        , durability ∷ Int
+data Ratings = Ratings { damage     :: Int
+                        , np         :: Int
+                        , critical   :: Int
+                        , utility    :: Int
+                        , support    :: Int
+                        , durability :: Int
                         }
 
-type NoblePhantasm = { name   ∷ String
-                     , desc   ∷ String
-                     , rank   ∷ Rank
-                     , card   ∷ Card
-                     , kind   ∷ String
-                     , hits   ∷ Int
-                     , effect ∷ Array ActiveEffect
-                     , over   ∷ Array ActiveEffect
-                     , first  ∷ Boolean
+type NoblePhantasm = { name   :: String
+                     , desc   :: String
+                     , rank   :: Rank
+                     , card   :: Card
+                     , kind   :: String
+                     , hits   :: Int
+                     , effect :: Array ActiveEffect
+                     , over   :: Array ActiveEffect
+                     , first  :: Boolean
                      }
 
-type Hits = { arts ∷ Int, buster ∷ Int, quick ∷ Int, ex ∷ Int }
+type Hits = { arts :: Int, buster :: Int, quick :: Int, ex :: Int }
 
-type Gen = { starWeight ∷ Int
-           , starRate   ∷ Number
-           , npAtk      ∷ Number
-           , npDef      ∷ Int
+type Gen = { starWeight :: Int
+           , starRate   :: Number
+           , npAtk      :: Number
+           , npDef      :: Int
            }
 
-getEffects ∷ Servant -> Array ActiveEffect
+getEffects :: Servant -> Array ActiveEffect
 getEffects (Servant s) = filter (not <<< demerit) $ simplify 
-                     <$> s.phantasm.effect <> s.phantasm.over 
-                      <> (s.actives >>= _.effect)
+                         <$> s.phantasm.effect 
+                          <> s.phantasm.over 
+                          <> (s.actives >>= _.effect)
 
-phantasmEffects ∷ NoblePhantasm -> Array ActiveEffect
+phantasmEffects :: NoblePhantasm -> Array ActiveEffect
 phantasmEffects {effect, over} = effect <> over
 
 data PhantasmType = SingleTarget | MultiTarget | Support
-instance _01_ ∷ Show PhantasmType where
+instance _01_ :: Show PhantasmType where
   show = case _ of
     SingleTarget -> "Single-Target"
     MultiTarget  -> "Multi-Target"
@@ -93,25 +94,25 @@ instance _01_ ∷ Show PhantasmType where
 
 
 class (G.BoundedEnum a, Show a) <= MatchServant a where
-    has ∷ a -> Boolean -> Servant -> Boolean
-instance _a_ ∷ MatchServant BuffEffect where
+    has :: a -> Boolean -> Servant -> Boolean
+instance _a_ :: MatchServant BuffEffect where
     has a noSelf = any match <<< getEffects where
         match (Grant t _ b _) = a == b && (not noSelf || t /= Self)
         match _ = false
-instance _b_ ∷ MatchServant DebuffEffect where
+instance _b_ :: MatchServant DebuffEffect where
     has a _ = any match <<< getEffects where
         match (Debuff t _ b _) = a == b
         match _ = false
-instance _c_ ∷ MatchServant InstantEffect where
+instance _c_ :: MatchServant InstantEffect where
     has BecomeHyde _ = const false
     has a noSelf     = any match <<< getEffects where
         match (To t b _) = a == b && (not noSelf || t /= Self)
         match _ = false
-instance _d_ ∷ MatchServant Trait where
+instance _d_ :: MatchServant Trait where
     has a _ (Servant s) = a `elem` s.traits
-instance _e_ ∷ MatchServant Alignment where
+instance _e_ :: MatchServant Alignment where
     has a _ (Servant {align:Tuple b c}) = a == b || a == c
-instance _f_ ∷ MatchServant PhantasmType where
+instance _f_ :: MatchServant PhantasmType where
     has SingleTarget _ (Servant s) = any match $ phantasmEffects s.phantasm
       where
         match (To Enemy Damage _) = true
@@ -123,45 +124,45 @@ instance _f_ ∷ MatchServant PhantasmType where
         match (To Enemies DamageThruDef _) = true
         match _ = false
     has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
-instance _g_ ∷ MatchServant Class where
+instance _g_ :: MatchServant Class where
     has a _ (Servant s) = a == s.class
-instance _h_ ∷ MatchServant Attribute where
+instance _h_ :: MatchServant Attribute where
     has a _ (Servant s) = a == s.attr
-instance _i_ ∷ MatchServant Deck where
+instance _i_ :: MatchServant Deck where
     has a _ (Servant s) = a == s.deck
-instance _j_ ∷ MatchServant Card where
+instance _j_ :: MatchServant Card where
     has a _ (Servant s) = a == s.phantasm.card
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
-derive instance _7_ ∷ Eq PhantasmType
-derive instance _8_ ∷ Ord PhantasmType
-derive instance _9_ ∷ G.Generic PhantasmType _
-instance _10_ ∷ G.Enum PhantasmType where
+derive instance _7_ :: Eq PhantasmType
+derive instance _8_ :: Ord PhantasmType
+derive instance _9_ :: G.Generic PhantasmType _
+instance _10_ :: G.Enum PhantasmType where
   succ = G.genericSucc
   pred = G.genericPred
-instance _11_ ∷ G.Bounded PhantasmType where
+instance _11_ :: G.Bounded PhantasmType where
   top = G.genericTop
   bottom = G.genericBottom
-instance _12_ ∷ G.BoundedEnum PhantasmType where
+instance _12_ :: G.BoundedEnum PhantasmType where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
 
-derive instance _34_ ∷ Eq Deck
-derive instance _35_ ∷ Ord Deck
-derive instance _36_ ∷ G.Generic Deck _
-instance _37_ ∷ G.Enum Deck where
+derive instance _34_ :: Eq Deck
+derive instance _35_ :: Ord Deck
+derive instance _36_ :: G.Generic Deck _
+instance _37_ :: G.Enum Deck where
   succ = G.genericSucc
   pred = G.genericPred
-instance _38_ ∷ G.Bounded Deck where
+instance _38_ :: G.Bounded Deck where
   top = G.genericTop
   bottom = G.genericBottom
-instance _39_ ∷ G.BoundedEnum Deck where
+instance _39_ :: G.BoundedEnum Deck where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
-instance _40_ ∷ Show Deck where
-  show (Deck a b c d e) = fromCharArray
-                        $ (fromMaybe '?' <<< charAt 0 <<< show) <$> [a, b, c, d, e]
+instance _40_ :: Show Deck where
+  show (Deck a b c d e) = fromCharArray $ 
+      (fromMaybe '?' <<< charAt 0 <<< show) <$> [a, b, c, d, e]

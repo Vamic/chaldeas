@@ -45,22 +45,22 @@ data Query a
     | MineOnly  Boolean a
     | DoNothing a
 
-type State = { filters  ∷ Array (Filter Servant)
-             , exclude  ∷ Array (Filter Servant)
-             , matchAny ∷ Boolean
-             , mineOnly ∷ Boolean
-             , focus    ∷ Maybe MyServant
-             , sortBy   ∷ SortBy
-             , prefs    ∷ Preferences
-             , ascent   ∷ Int
-             , listing  ∷ Array (Tuple String Servant)
-             , sorted   ∷ Array (Tuple String Servant)
-             , team     ∷ Map Servant MyServant
+type State = { filters  :: Array (Filter Servant)
+             , exclude  :: Array (Filter Servant)
+             , matchAny :: Boolean
+             , mineOnly :: Boolean
+             , focus    :: Maybe MyServant
+             , sortBy   :: SortBy
+             , prefs    :: Preferences
+             , ascent   :: Int
+             , listing  :: Array (Tuple String Servant)
+             , sorted   :: Array (Tuple String Servant)
+             , team     :: Map Servant MyServant
              }
 
-comp ∷ ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant 
-       -> Preferences -> Date -> Map Servant MyServant 
-       -> Component HTML Query Unit Message m
+comp :: ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant 
+     -> Preferences -> Date -> Map Servant MyServant 
+     -> Component HTML Query Unit Message m
 comp initialFilt initialFocus initialPrefs today initialTeam = component
     { initialState
     , render
@@ -68,10 +68,10 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
     , receiver: const Nothing
     }
   where
-  allFilters ∷ FilterList Servant
+  allFilters :: FilterList Servant
   allFilters = collectFilters getFilters today
 
-  initialState ∷ Input -> State
+  initialState :: Input -> State
   initialState = const $ updateListing 
       { filters
       , exclude
@@ -89,23 +89,20 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       initialSort = getSort empty Rarity
       {yes: exclude, no: filters} = partition (exclusive <<< getTab) initialFilt
 
-  render ∷ State -> ComponentHTML Query
+  render :: State -> ComponentHTML Query
   render st = modal st.prefs st.ascent st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ M.toUnfoldableUnordered st.prefs <#> \(Tuple k v)
-            -> H.p [_click <<< SetPref k $ not v]
-              $ _checkbox (show k) v
+        , H.form_ $ M.toUnfoldableUnordered st.prefs <#> \(Tuple k v) -> 
+          H.p [_click <<< SetPref k $ not v] $ _checkbox (show k) v
         , _h 1 "Sort by"
-        , H.form_ $ enumArray <#> \sort
-            -> H.p [_click $ SetSort sort]
-              $ _radio (show sort) (st.sortBy == sort)
+        , H.form_ $ enumArray <#> \sort -> 
+          H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
         , _h 1 "Include"
         ] <> (filter (exclusive <<< fst) allFilters' >>= filterSection)
-      , H.section_
-        <<< (if st.sortBy == Rarity then identity else reverse)
-        $ portrait false (pref Thumbnails) (pref Artorify) baseAscend 
-          <$> (st.mineOnly ? filter isMine $ st.listing)
+      , H.section_ <<< (if st.sortBy == Rarity then identity else reverse) $
+        portrait false (pref Thumbnails) (pref Artorify) baseAscend
+        <$> (st.mineOnly ? filter isMine $ st.listing)
       , H.aside_ $
         [ _h 1 "Browse"
         , _a "Craft Essences" $ Switch Nothing
@@ -141,20 +138,21 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
       filterSection (Tuple _ []) = []
-      filterSection (Tuple tab filts) = cons (_h 3 $ show tab)
-                 <<< ((exclusive tab && length filts > 3) ? 
-                 let checked = length $ filter (eq tab <<< getTab) st.exclude in
-                 append 
-                   [ _button "All" (checked /= 0) $ Check tab true
-                   , _button "None" (checked /= length filts) $ Check tab false
-                  ])
-                 <<< singleton <<< H.form_ $ filts <#> \filt
-                     -> H.p [_click $ Toggle filt ]
-                      <<< _checkbox (show filt)
-                       $ if exclusive tab then filt `notElem` st.exclude
-                         else filt `elem` st.filters
+      filterSection (Tuple tab filts) = 
+          cons (_h 3 $ show tab) <<< 
+          ( (exclusive tab && length filts > 3) ? 
+              let checked = length $ filter (eq tab <<< getTab) st.exclude
+              in append 
+                  [ _button "All" (checked /= 0) $ Check tab true
+                  , _button "None" (checked /= length filts) $ Check tab false
+                  ]
+          ) <<< singleton <<< H.form_ $ filts <#> \filt -> 
+          H.p [_click $ Toggle filt ] <<< _checkbox (show filt) $ 
+          if exclusive tab 
+          then filt `notElem` st.exclude
+          else filt `elem` st.filters
 
-  eval ∷ Query ~> ComponentDSL State Query Message m
+  eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
       DoNothing       a -> pure a
       Ascend   ascent a -> a <$ modify_ _{ ascent = ascent }
@@ -212,25 +210,24 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       hash Nothing = setHash ""
       hash (Just s) = setHash <<< urlName $ show s
 
-portrait ∷ ∀ a. Boolean -> Boolean -> Boolean -> Int -> Tuple String Servant
-           -> HTML a (Query Unit)
+portrait :: ∀ a. Boolean -> Boolean -> Boolean -> Int -> Tuple String Servant
+         -> HTML a (Query Unit)
 portrait big thumbnails artorify ascension (Tuple lab s'@(Servant s))
   | thumbnails && not big = H.div [_c "thumb", _click <<< Focus $ Just s']
     [ _img $ "img/Servant/" <> fileName s.name <> " Thumbnail.png" ]
   | otherwise = H.div meta
       [ _img $ "img/Servant/" <> fileName s.name <> ascent <> ".png"
       , H.div_ [ _img $ "img/Class/" <> show s.class <> ".png"]
-      , H.header_
-        <<< (lab /= "") ? append [_span lab, H.br_]
-        $ [ _span <<< noBreakName <<< artorify ? doArtorify $ s.name ]
-      , H.footer_
-        <<< ((big && ascension > 1) ? cons prevAscend)
-        <<< ((big && ascension < 4) ? (_ `snoc` nextAscend))
-          $ [_span <<< S.joinWith "  " $ replicate s.rarity "★"]
+      , H.header_ <<< (lab /= "") ? append [_span lab, H.br_] $
+        [ _span <<< noBreakName <<< artorify ? doArtorify $ s.name ]
+      , H.footer_ <<< 
+        ((big && ascension > 1) ? cons prevAscend) <<<
+        ((big && ascension < 4) ? (_ `snoc` nextAscend)) $
+        [_span <<< S.joinWith "  " $ replicate s.rarity "★"]
       ]
   where 
-    meta       = not big ? (cons <<< _click <<< Focus $ Just s')
-               $ [_c $ "portrait stars" <> show s.rarity]
+    meta       = not big ? (cons <<< _click <<< Focus $ Just s') $
+                 [_c $ "portrait stars" <> show s.rarity]
     doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
     prevAscend = _a "<" <<< Ascend $ ascension - 1
     nextAscend = _a ">" <<< Ascend $ ascension + 1
@@ -238,8 +235,8 @@ portrait big thumbnails artorify ascension (Tuple lab s'@(Servant s))
       | ascension <= 1 = ""
       | otherwise      = " " <> show ascension
 
-modal ∷ ∀ a. Preferences -> Int -> Maybe MyServant
-        -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
+modal :: ∀ a. Preferences -> Int -> Maybe MyServant
+      -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
 modal prefs _ Nothing = H.div [_c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
 modal prefs ascent (Just ms')= H.div 
@@ -266,8 +263,8 @@ modal prefs ascent (Just ms')= H.div
       , H.table_
         [ _tr "Class"       [ link FilterClass s.class ]
         , _tr "Deck"        [ link FilterDeck s.deck ]
-        , _tr "NP Type"     [ link FilterPhantasm <<< fromMaybe Support
-                            $ find (\t -> has t false s')
+        , _tr "NP Type"     [ link FilterPhantasm <<< fromMaybe Support $
+                              find (\t -> has t false s') 
                               [SingleTarget, MultiTarget]
                             ]
         , _tr "Alignment"   $ [ link FilterAlignment alignA
@@ -293,17 +290,16 @@ modal prefs ascent (Just ms')= H.div
         , H.tr_
           [ _th "Effects"
           , H.td_ <<< showTables ? (flip snoc)
-              ( _table (append "NP" <<< show <$> 1..5)
-                $ npRow <$> nub (ranges b.phantasm.effect)
+              ( _table (append "NP" <<< show <$> 1..5) $
+                npRow <$> nub (ranges b.phantasm.effect)
               ) $ effectEl <$> s.phantasm.effect
           ]
         , H.tr_
           [ _th "Overcharge"
           , H.td overMeta <<< showTables ? (flip snoc)
-              (_table ((_ <> "%") <<< show <<< (_ * 100) <$> 1..5)
-                $ overRow <$> nub (ranges b.phantasm.over)
-              )
-            $ effectEl <$> s.phantasm.over
+              ( _table ((_ <> "%") <<< show <<< (_ * 100) <$> 1..5) $
+                overRow <$> nub (ranges b.phantasm.over)
+              ) $ effectEl <$> s.phantasm.over
           ]
         ]
       , _h 2 "Active Skills"] 
@@ -328,16 +324,16 @@ modal prefs ascent (Just ms')= H.div
     alter f = OnTeam true <<< MyServant $ f ms
     _mInt = _int DoNothing
     update i x xs = fromMaybe xs $ updateAt i x xs
-    skillBox (Tuple {icon} lvl) i 
-        = [ H.td_ [_img $ "img/Skill/" <> show icon <> ".png"]
-          , H.td_ $ _mInt 1 10 lvl 
-            \val -> alter _{ skills = update i val ms.skills }
-          ]
+    skillBox (Tuple {icon} lvl) i = 
+        [ H.td_ [_img $ "img/Skill/" <> show icon <> ".png"]
+        , H.td_ $ _mInt 1 10 lvl \val -> 
+          alter _{ skills = update i val ms.skills }
+        ]
     myServantBox
-      | ms.level == 0 
-          = [ _a "+Add to My Servants" <<< OnTeam true $ newServant s' ]
-      | otherwise     
-          = [ H.table_
+      | ms.level == 0 = 
+            [ _a "+Add to My Servants" <<< OnTeam true $ newServant s' ]
+      | otherwise = 
+            [ H.table_
               [ H.tr_
                 [ H.td_ [_strong "Level:"]
                 , H.td_ $ _mInt 1 100 ms.level   \val -> alter _{level = val}
@@ -355,17 +351,18 @@ modal prefs ascent (Just ms')= H.div
               ]
             ]
 
-activeEl ∷ ∀ a. Boolean -> Active -> Active -> HTML a (Query Unit)
-activeEl showTables active@{name, icon, cd, effect} base = H.section_
-    <<< showTables ? (flip snoc)
-      (_table (show <$> 1..10) $ lvlRow <$> nub (ranges base.effect)) $
+activeEl :: ∀ a. Boolean -> Active -> Active -> HTML a (Query Unit)
+activeEl showTables active@{name, icon, cd, effect} base = 
+    H.section_ <<< showTables ? (flip snoc) effectTable $
     [ _img $ "img/Skill/" <> show icon <> ".png"
     , _h 3 name
     , _strong "CD: "
     , H.text <<< (active == base) ? (_ <> "~" <> show (cd - 2)) $ show cd
     ] <> (effectEl <$> effect)
+  where
+    effectTable = _table (show <$> 1..10) $ lvlRow <$> nub (ranges base.effect)
 
-passiveEl ∷ ∀ a. Passive -> HTML a (Query Unit)
+passiveEl :: ∀ a. Passive -> HTML a (Query Unit)
 passiveEl {name, rank, icon, effect} = H.section_ $
     [ _img $ "img/Skill/" <> show icon <> ".png"
     , H.h3_
@@ -374,7 +371,7 @@ passiveEl {name, rank, icon, effect} = H.section_ $
       ]
     ] <> (_p <<< show <$> effect)
 
-bondEl ∷ ∀ a. Maybe CraftEssence -> HTML a (Query Unit)
+bondEl :: ∀ a. Maybe CraftEssence -> HTML a (Query Unit)
 bondEl Nothing = H.section_ $ _txt "N/A"
 bondEl ce@(Just (CraftEssence {name, icon, effect})) = H.section_ $
     [ _img $ "img/Skill/" <> show icon <> ".png"
@@ -389,32 +386,34 @@ bondEl ce@(Just (CraftEssence {name, icon, effect})) = H.section_ $
     nvmEquipped (When _ ef) = ef
     nvmEquipped ef = ef
 
-effectEl ∷ ∀ a. ActiveEffect -> HTML a (Query Unit)
+effectEl :: ∀ a. ActiveEffect -> HTML a (Query Unit)
 effectEl ef
   | demerit ef = H.p [_c "demerit"] <<< _txt $ show ef
   | otherwise  = H.p (maybe [] meta $ activeFilter ef) <<< _txt $ show ef
   where
     meta filt = [_c "link", _click $ FilterBy [filt]]
 
-traitEl ∷ ∀ a. Trait -> HTML a (Query Unit)
-traitEl trait = H.a
-    [_c "trait link", _click <<< FilterBy $ singleFilter FilterTrait trait]
-    <<< _txt $ show trait
+traitEl :: ∀ a. Trait -> HTML a (Query Unit)
+traitEl trait = 
+    H.a 
+    [_c "trait link", _click <<< FilterBy $ singleFilter FilterTrait trait]   
+    [H.text $ show trait]
 
-npRow ∷ ∀ a b. RangeInfo -> HTML a b
-npRow (RangeInfo isPercent a b) = H.tr_
-          $ toCell isPercent <<< (_ + a) <<< (_ * over)
-         <$> [0.0, 0.5, 0.75, 0.825, 1.0]
+npRow :: ∀ a b. RangeInfo -> HTML a b
+npRow (RangeInfo isPercent a b) = 
+    H.tr_ $ toCell isPercent <<< (_ + a) <<< (_ * over) 
+    <$> [0.0, 0.5, 0.75, 0.825, 1.0]
   where
     over = b - a
 
-overRow ∷ ∀ a b. RangeInfo -> HTML a b
-overRow (RangeInfo isPercent a b) = H.tr_
-          $ toCell isPercent <<< (_ + a) <<< (_ * over) <<< toNumber
-         <$> 0..4
+overRow :: ∀ a b. RangeInfo -> HTML a b
+overRow (RangeInfo isPercent a b) = 
+    H.tr_ $ toCell isPercent <<< (_ + a) <<< (_ * over) <<< toNumber <$> (0..4)
   where
     over = (b - a) / 4.0
 
-link ∷ ∀ a b. MatchServant a => FilterTab -> a -> HTML b (Query Unit)
-link tab a = H.a [_c "link", _click <<< FilterBy $ singleFilter tab a]
-            <<< _txt $ show a
+link :: ∀ a b. MatchServant a => FilterTab -> a -> HTML b (Query Unit)
+link tab a = 
+    H.a 
+    [_c "link", _click <<< FilterBy $ singleFilter tab a]
+    [H.text $ show a]

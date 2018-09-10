@@ -29,6 +29,7 @@ import Data.Tuple
 
 import Database.Base
 import Database.Icon
+import Printing 
 
 data BuffEffect
     = AlignAffinity Alignment
@@ -71,10 +72,10 @@ data BuffEffect
     | Success DebuffEffect
     | SureHit
     | Taunt
-instance _c_ ∷ Show BuffEffect where
+instance _c_ :: Show BuffEffect where
     show = showBuff Someone Placeholder
 
-showBuff ∷ Target -> Amount -> BuffEffect -> String
+showBuff :: Target -> Amount -> BuffEffect -> String
 showBuff target amount = case _ of
     AttackUp        -> increase "attack"
     AttackVs t    -> increase $ "attack" <> against t
@@ -129,7 +130,7 @@ showBuff target amount = case _ of
     resist   x
       | amount == Full = "Grant" <> s <> " " <> x <> " immunity"
       | otherwise      = "Increase" <> p <> " " <> x <> " resistance" <> by
-    against ∷ ∀ a. Show a => a -> String
+    against :: ∀ a. Show a => a -> String
     against x = " against [" <> show x <> "]"
 
 data BuffCategory 
@@ -139,7 +140,7 @@ data BuffCategory
     | BuffUtility
     | BuffSpecialist
 
-buffCategory ∷ BuffEffect -> BuffCategory
+buffCategory :: BuffEffect -> BuffCategory
 buffCategory AttackUp          = BuffOffensive
 buffCategory (AttackVs _)      = BuffSpecialist
 buffCategory (AlignAffinity _) = BuffSpecialist
@@ -208,10 +209,10 @@ data DebuffEffect
     | StarDown
     | Stun
     | StunBomb
-instance _d_ ∷ Show DebuffEffect where
+instance _d_ :: Show DebuffEffect where
     show = showDebuff Someone Placeholder
 
-showDebuff ∷ Target -> Amount -> DebuffEffect -> String
+showDebuff :: Target -> Amount -> DebuffEffect -> String
 showDebuff target amount = case _ of
     ApplyTrait t -> "Apply [" <> show t <> "]" <> to
     AttackDown   -> reduce "attack"
@@ -273,10 +274,10 @@ data InstantEffect
     | RemoveBuffs
     | RemoveDebuffs
     | RemoveMental
-instance _e_ ∷ Show InstantEffect where
+instance _e_ :: Show InstantEffect where
     show = showInstant Someone Placeholder
 
-isDamage ∷ InstantEffect -> Boolean
+isDamage :: InstantEffect -> Boolean
 isDamage Avenge = true
 isDamage Damage = true
 isDamage DamageThruDef = true
@@ -285,7 +286,7 @@ isDamage DamagePoison = true
 isDamage LastStand = true
 isDamage _ = false
 
-showInstant ∷ Target -> Amount -> InstantEffect -> String
+showInstant :: Target -> Amount -> InstantEffect -> String
 showInstant target amount = case _ of
     Avenge
       -> "Wait 1 turn, then deal " <> n
@@ -355,10 +356,10 @@ data BonusEffect
     | EXPPerc
     | MysticCode
     | Bond
-instance _f_ ∷ Show BonusEffect where
+instance _f_ :: Show BonusEffect where
   show = showBonus Placeholder
 
-showBonus ∷ Amount -> BonusEffect -> String
+showBonus :: Amount -> BonusEffect -> String
 showBonus amount = case _ of
     FriendPoints
       -> "Friend Points obtained from support becomes +" <> n
@@ -389,13 +390,13 @@ data ActiveEffect
     | Times Int ActiveEffect
     | ToMax Amount ActiveEffect
 
-apAmount ∷ (Number -> Number -> Number) -> Amount -> Number
+apAmount :: (Number -> Number -> Number) -> Amount -> Number
 apAmount f (Range a b) = f a b
 apAmount _ (Flat a) = a
 apAmount _ Placeholder = 0.0
 apAmount _ Full = 0.0
 
-mapAmount ∷ (Number -> Number -> Amount) -> ActiveEffect -> ActiveEffect
+mapAmount :: (Number -> Number -> Amount) -> ActiveEffect -> ActiveEffect
 mapAmount f eff = go eff
   where
     f' (Range a b) = f a b
@@ -414,7 +415,7 @@ mapAmount f eff = go eff
         Placeholder -> go c
         Full        -> go c
 
-simplify ∷ ActiveEffect -> ActiveEffect
+simplify :: ActiveEffect -> ActiveEffect
 simplify (Chance _ ef)    = simplify ef
 simplify (Chances _ _ ef) = simplify ef
 simplify (When _ ef)      = simplify ef
@@ -422,7 +423,7 @@ simplify (Times _ ef)     = simplify ef
 simplify (ToMax _ ef)   = simplify ef
 simplify ef               = ef
 
-demerit ∷ ActiveEffect -> Boolean
+demerit :: ActiveEffect -> Boolean
 demerit (Grant t _ _ _) = not $ allied t
 demerit (Debuff t _ _ _) = allied t
 demerit (To _ DemeritBuffs _) = true
@@ -439,7 +440,7 @@ demerit (When _ ef) = demerit ef
 demerit (Times _ ef) = demerit ef
 demerit (ToMax _ ef) = demerit ef
 
-instance _g_ ∷ Show ActiveEffect where
+instance _g_ :: Show ActiveEffect where
   show = (_ <> ".") <<< go
     where
       go = case _ of
@@ -460,7 +461,7 @@ instance _g_ ∷ Show ActiveEffect where
       turns 1   = " for 1 turn"
       turns dur = " for " <> show dur <> " turns"
 
-uncap ∷ String -> String
+uncap :: String -> String
 uncap s = case uncons s of
     Just {head: x, tail: xs} -> toLower (singleton x) <> xs
     Nothing                  -> s
@@ -473,19 +474,19 @@ data Amount
 
 infix 1 Range as ~
 
-instance _a_ ∷ Show Amount where
+instance _h_ :: Show Amount where
   show Placeholder = "X"
   show Full = ""
   show (Flat x) = toString x
   show (Range a b) = toString a <> "~" <> toString b
 
-toMin ∷ Amount -> Number
+toMin :: Amount -> Number
 toMin Placeholder = 0.0
 toMin Full = 0.0
 toMin (Flat x) = x
 toMin (Range a _) = a
 
-toMax ∷ Amount -> Number
+toMax :: Amount -> Number
 toMax Placeholder = 0.0
 toMax Full = 0.0
 toMax (Flat x) = x
@@ -497,7 +498,7 @@ data Rank = Unknown | EX
           | CPlusPlus | CPlus | C | CMinus
                       | DPlus | D
                       | EPlus | E | EMinus
-instance _b_ ∷ Show Rank where
+instance _b_ :: Show Rank where
   show = case _ of
     Unknown   -> "--"
     EX        -> "EX"
@@ -523,9 +524,9 @@ data Target = Someone
             | Self | Ally | Party | Enemy | Enemies | Others
             | AlliesType Trait | EnemyType Trait | EnemiesType Trait
             | Killer | Target
-derive instance _00_ ∷ Eq Target
+derive instance _a_ :: Eq Target
 
-allied ∷ Target -> Boolean
+allied :: Target -> Boolean
 allied Self = true
 allied Ally = true
 allied Party = true
@@ -533,7 +534,7 @@ allied Others = true
 allied (AlliesType _) = true
 allied _ = false
 
-possessiveAndSubject ∷ Target -> Tuple String String
+possessiveAndSubject :: Target -> Tuple String String
 possessiveAndSubject = case _ of
     Someone       -> ""
                    : ""
@@ -561,8 +562,13 @@ possessiveAndSubject = case _ of
                    : " target"
 
 data RangeInfo = RangeInfo Boolean Number Number
+instance _i_ :: Show RangeInfo where
+  show (RangeInfo true  from to) = print 2 from <> "% ~ " <> print 2 to <> "%"
+  show (RangeInfo false from to) = print 2 from <>  " ~ " <> print 2 to
+instance _j_ :: Eq RangeInfo where
+  eq (RangeInfo _ a1 a2) (RangeInfo _ b1 b2) = a1 == b1 && a2 == b2
 
-ranges ∷ ∀ f. Alternative f => Bind f => f ActiveEffect -> f RangeInfo
+ranges :: ∀ f. Alternative f => Bind f => f ActiveEffect -> f RangeInfo
 ranges = bindFlipped toInfo
   where
     toInfo eff = uncurry (RangeInfo $ isPercent eff) <$> acc eff
@@ -579,113 +585,109 @@ ranges = bindFlipped toInfo
     go (a ~ b) = pure $ Tuple a b
     go _ = empty
 
-type Active = { name   ∷ String
-              , icon   ∷ Icon
-              , cd     ∷ Int
-              , effect ∷ Array ActiveEffect
+type Active = { name   :: String
+              , icon   :: Icon
+              , cd     :: Int
+              , effect :: Array ActiveEffect
               }
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
-derive instance _0_ ∷ G.Generic BuffEffect _
-derive instance _1_ ∷ Eq BuffEffect
-derive instance _2_ ∷ Ord BuffEffect
-instance _3_ ∷ G.Enum BuffEffect where
+derive instance _0_ :: G.Generic BuffEffect _
+derive instance _1_ :: Eq BuffEffect
+derive instance _2_ :: Ord BuffEffect
+instance _3_ :: G.Enum BuffEffect where
   succ = G.genericSucc
   pred = G.genericPred
-instance _4_ ∷ G.Bounded BuffEffect where
+instance _4_ :: G.Bounded BuffEffect where
   top = G.genericTop
   bottom = G.genericBottom
-instance _5_ ∷ G.BoundedEnum BuffEffect where
+instance _5_ :: G.BoundedEnum BuffEffect where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
 
-derive instance _8_ ∷ G.Generic DebuffEffect _
-derive instance _9_ ∷ Eq DebuffEffect
-derive instance _10_ ∷ Ord DebuffEffect
-instance _11_ ∷ G.Enum DebuffEffect where
+derive instance _8_ :: G.Generic DebuffEffect _
+derive instance _9_ :: Eq DebuffEffect
+derive instance _10_ :: Ord DebuffEffect
+instance _11_ :: G.Enum DebuffEffect where
   succ = G.genericSucc
   pred = G.genericPred
-instance _12_ ∷ G.Bounded DebuffEffect where
+instance _12_ :: G.Bounded DebuffEffect where
   top = G.genericTop
   bottom = G.genericBottom
-instance _13_ ∷ G.BoundedEnum DebuffEffect where
+instance _13_ :: G.BoundedEnum DebuffEffect where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
 
-derive instance _14_ ∷ G.Generic InstantEffect _
-derive instance _15_ ∷ Eq InstantEffect
-derive instance _16_ ∷ Ord InstantEffect
-instance _17_ ∷ G.Enum InstantEffect where
+derive instance _14_ :: G.Generic InstantEffect _
+derive instance _15_ :: Eq InstantEffect
+derive instance _16_ :: Ord InstantEffect
+instance _17_ :: G.Enum InstantEffect where
   succ = G.genericSucc
   pred = G.genericPred
-instance _18_ ∷ G.Bounded InstantEffect where
+instance _18_ :: G.Bounded InstantEffect where
   top = G.genericTop
   bottom = G.genericBottom
-instance _19_ ∷ G.BoundedEnum InstantEffect where
+instance _19_ :: G.BoundedEnum InstantEffect where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
 
-derive instance _20_ ∷ G.Generic BonusEffect _
-derive instance _21_ ∷ Eq BonusEffect
-derive instance _22_ ∷ Ord BonusEffect
-instance _23_ ∷ G.Enum BonusEffect where
+derive instance _20_ :: G.Generic BonusEffect _
+derive instance _21_ :: Eq BonusEffect
+derive instance _22_ :: Ord BonusEffect
+instance _23_ :: G.Enum BonusEffect where
   succ = G.genericSucc
   pred = G.genericPred
-instance _24_ ∷ G.Bounded BonusEffect where
+instance _24_ :: G.Bounded BonusEffect where
   top = G.genericTop
   bottom = G.genericBottom
-instance _25_ ∷ G.BoundedEnum BonusEffect where
+instance _25_ :: G.BoundedEnum BonusEffect where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
 
-derive instance _26_ ∷ G.Generic Target _
-instance _27_ ∷ Show Target where
+derive instance _26_ :: G.Generic Target _
+instance _27_ :: Show Target where
   show = G.genericShow
 
-derive instance _30_ ∷ Eq Amount
+derive instance _30_ :: Eq Amount
 
-derive instance _31_ ∷ G.Generic BuffCategory _
-derive instance _32_ ∷ Eq BuffCategory
-derive instance _33_ ∷ Ord BuffCategory
-instance _34_ ∷ G.Enum BuffCategory where
+derive instance _31_ :: G.Generic BuffCategory _
+derive instance _32_ :: Eq BuffCategory
+derive instance _33_ :: Ord BuffCategory
+instance _34_ :: G.Enum BuffCategory where
   succ = G.genericSucc
   pred = G.genericPred
-instance _35_ ∷ G.Bounded BuffCategory where
+instance _35_ :: G.Bounded BuffCategory where
   top = G.genericTop
   bottom = G.genericBottom
-instance _36_ ∷ G.BoundedEnum BuffCategory where
+instance _36_ :: G.BoundedEnum BuffCategory where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
-instance _37_ ∷ Show BuffCategory where
+instance _37_ :: Show BuffCategory where
   show = drop 4 <<< G.genericShow
 
-derive instance _38_ ∷ Eq ActiveEffect
+derive instance _38_ :: Eq ActiveEffect
 
-derive instance _39_ ∷ Eq Rank
-derive instance _40_ ∷ Ord Rank
-derive instance _41_ ∷ G.Generic Rank _
-instance _42_ ∷ G.Enum Rank where
+derive instance _39_ :: Eq Rank
+derive instance _40_ :: Ord Rank
+derive instance _41_ :: G.Generic Rank _
+instance _42_ :: G.Enum Rank where
   succ = G.genericSucc
   pred = G.genericPred
-instance _43_ ∷ G.Bounded Rank where
+instance _43_ :: G.Bounded Rank where
   top = G.genericTop
   bottom = G.genericBottom
-instance _44_ ∷ G.BoundedEnum Rank where
+instance _44_ :: G.BoundedEnum Rank where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum
 
-
-derive instance _45_ ∷ Eq RangeInfo
-derive instance _46_ ∷ Ord RangeInfo
-derive instance _47_ ∷ G.Generic RangeInfo _
-instance _48_ ∷ Show RangeInfo where
-  show = G.genericShow
+derive instance _46_ :: Ord RangeInfo
+derive instance _47_ :: G.Generic RangeInfo _

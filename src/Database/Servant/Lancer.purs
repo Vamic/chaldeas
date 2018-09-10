@@ -4,7 +4,7 @@ import Prelude
 import Operators
 import Database.Model
 
-lancers ∷ Array Servant
+lancers :: Array Servant
 lancers = Servant <$>
 [ { name:     "Scathach"
   , id:       70
@@ -21,9 +21,10 @@ lancers = Servant <$>
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Grant Self 1 Evasion Full
-                          , Chance 80 <<< Grant Self 3 CritUp $ 30.0 ~ 50.0
-                          , Chance 80
-                            <<< Grant Self 3 StarAbsorb $ 300.0 ~ 500.0
+                          , Chance 80 <<< 
+                            Grant Self 3 CritUp $ 30.0 ~ 50.0
+                          , Chance 80 <<< 
+                            Grant Self 3 StarAbsorb $ 300.0 ~ 500.0
                           ]
                 }
               , { name:   "Primordial Rune"
@@ -405,8 +406,8 @@ lancers = Servant <$>
               , { name:   "Stalking A"
                 , icon:   IconShieldDown
                 , cd:     7
-                , effect: [ Chance 500
-                            <<< Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0
+                , effect: [ Chance 500 <<< 
+                            Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0
                           , Grant Enemy 3 AttackUp $ Flat 20.0
                           ]
                 }
@@ -697,7 +698,7 @@ lancers = Servant <$>
   , actives:  [ { name:   "Natural Body C"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
+                , effect: [ Grant Self 3 OffensiveResist $ 50.0 ~ 100.0
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
@@ -855,8 +856,8 @@ lancers = Servant <$>
               , { name:   "Love Spot C"
                 , icon:   IconSwordDown
                 , cd:     7
-                , effect: [ Debuff (EnemiesType Female) 1 AttackDown
-                            $ 30.0 ~ 50.0 ]
+                , effect: [ Debuff (EnemiesType Female) 1 AttackDown $ 
+                            30.0 ~ 50.0 ]
                 }
               , { name:   "Knight's Strategy B"
                 , icon:   IconStarHaloUp

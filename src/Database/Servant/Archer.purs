@@ -4,7 +4,7 @@ import Prelude
 import Operators
 import Database.Model
 
-archers ∷ Array Servant
+archers :: Array Servant
 archers = Servant <$>
 [ { name:     "Gilgamesh"
   , id:       12
@@ -655,8 +655,8 @@ archers = Servant <$>
               , { name:   "Siren Song A"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 70 100
-                            $ Debuff (EnemyType Male) 1 Charm Full ]
+                , effect: [ Chances 70 100 $ 
+                            Debuff (EnemyType Male) 1 Charm Full ]
                 }
               , { name:   "Whim of the Goddess A (Euryale)"
                 , icon:   IconArtsUp
@@ -675,8 +675,8 @@ archers = Servant <$>
                         , To Enemy (DamageVs Male) $ 150.0 ~ 250.0
                         , Chance 150 <<< Debuff Enemy 3 AttackDown $ Flat 20.0
                         ]
-              , over:   [ Chances 100 200
-                          $ Debuff (EnemyType Male) 1 Charm Full ]
+              , over:   [ Chances 100 200 $
+                          Debuff (EnemyType Male) 1 Charm Full ]
               , first:  false
               }
   , gen:      { starWeight: 156, starRate: 7.9, npAtk: 0.9, npDef: 3 }
@@ -811,8 +811,8 @@ archers = Servant <$>
               , { name:   "Fair Youth C"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 45 75
-                            $ Debuff (EnemyType Humanoid) 1 Charm Full ]
+                , effect: [ Chances 45 75 $
+                            Debuff (EnemyType Humanoid) 1 Charm Full ]
                 }
               , { name:   "Golden Rule A"
                 , icon:   IconNobleUp

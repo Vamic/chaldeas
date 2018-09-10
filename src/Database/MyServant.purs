@@ -14,23 +14,23 @@ import Data.Profunctor.Strong
 
 import Database
 
-newtype MyServant = MyServant { base    ∷ Servant 
-                              , level   ∷ Int
-                              , fou     ∷ Stat
-                              , skills  ∷ Array Int
-                              , npLvl   ∷ Int
-                              , ascent  ∷ Int
-                              , servant ∷ Servant
+newtype MyServant = MyServant { base    :: Servant 
+                              , level   :: Int
+                              , fou     :: Stat
+                              , skills  :: Array Int
+                              , npLvl   :: Int
+                              , ascent  :: Int
+                              , servant :: Servant
                               }
-instance _0_ ∷ Eq MyServant where
+instance _0_ :: Eq MyServant where
   eq a b = eq (getBase a) (getBase b)
-instance _1_ ∷ Ord MyServant where
+instance _1_ :: Ord MyServant where
   compare a b = compare (getBase a) (getBase b)
 
-getBase ∷ MyServant -> Servant
+getBase :: MyServant -> Servant
 getBase (MyServant {base}) = base
 
-recalc ∷ MyServant -> MyServant
+recalc :: MyServant -> MyServant
 recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
     { servant = Servant s 
         { stats    = s.stats{ base = calcStats, max = calcStats }
@@ -53,9 +53,8 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
             _ -> 1.0
     calcOver minAmount maxAmount 
       | ms.npLvl == 1 = Flat minAmount
-      | otherwise = Range minAmount 
-                  $ minAmount + (maxAmount - minAmount) 
-                  * (toNumber ms.npLvl - 1.0) / 4.0
+      | otherwise = Range minAmount $ minAmount + (maxAmount - minAmount) 
+                                    * (toNumber ms.npLvl - 1.0) / 4.0
     calcActives lvl skill = skill { effect = mapAmount calc <$> skill.effect 
                                   , cd = skill.cd - (max 2 lvl - 2) / 4
                                   }
@@ -65,51 +64,52 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
           | otherwise = Flat $ minAmount + (maxAmount - minAmount)
                                          * (toNumber lvl - 1.0) / 10.0
 
-makeUnowned ∷ Servant -> MyServant
-makeUnowned servant@(Servant s)
-    = MyServant { servant
-                , base:   servant
-                , level:  0
-                , fou:    {atk: 990, hp: 990}
-                , skills: [10, 10, 10]
-                , npLvl:  if s.rarity <= 3 || s.free then 5 else 1
-                , ascent: 1
-                }
+makeUnowned :: Servant -> MyServant
+makeUnowned servant@(Servant s) = MyServant 
+    { servant
+    , base:   servant
+    , level:  0
+    , fou:    {atk: 990, hp: 990}
+    , skills: [10, 10, 10]
+    , npLvl:  if s.rarity <= 3 || s.free then 5 else 1
+    , ascent: 1
+    }
 
-unowneds ∷ Map Servant MyServant
+unowneds :: Map Servant MyServant
 unowneds = fromFoldable $ (identity &&& makeUnowned) <$> servants
 
-unowned ∷ Servant -> MyServant
+unowned :: Servant -> MyServant
 unowned s = fromMaybe' (\_ -> makeUnowned s) $ lookup s unowneds
 
-newServant ∷ Servant -> MyServant
-newServant servant@(Servant s)
-    = MyServant { servant
-                , base:   servant
-                , level:  1
-                , fou:    {atk: 0, hp: 0}
-                , skills: [1, 1, 1]
-                , npLvl:  1
-                , ascent: 1
-                }
-owned ∷ Map Servant MyServant -> Servant -> MyServant
-owned team servant = fromMaybe (unowned servant) 
-                   $ lookup servant team
+newServant :: Servant -> MyServant
+newServant servant@(Servant s) = MyServant 
+    { servant
+    , base:   servant
+    , level:  1
+    , fou:    {atk: 0, hp: 0}
+    , skills: [1, 1, 1]
+    , npLvl:  1
+    , ascent: 1
+    }
+    
+owned :: Map Servant MyServant -> Servant -> MyServant
+owned team servant = fromMaybe (unowned servant) $
+                     lookup servant team
 
-lvlStats ∷ Servant -> Int -> Stat
+lvlStats :: Servant -> Int -> Stat
 lvlStats (Servant {stats:{max}}) 0 = max
 lvlStats (Servant {curve, stats:{base, max}}) lvl = { atk: go base.atk max.atk
                                                     , hp:  go base.hp  max.hp
                                                     }
   where
-    go ∷ Int -> Int -> Int
-    go baseVal maxVal = add baseVal <<< floor
-                      $ (toNumber (maxVal - baseVal) * modifier / 1000.0)
-    modifier ∷ Number
-    modifier    = toNumber <<< fromMaybe 0
-                $ index growthCurves curve >>= (flip index) lvl
+    go :: Int -> Int -> Int
+    go baseVal maxVal = add baseVal <<< floor $
+                        toNumber (maxVal - baseVal) * modifier / 1000.0
+    modifier :: Number
+    modifier    = toNumber <<< fromMaybe 0 $
+                  index growthCurves curve >>= (flip index) lvl
 
-growthCurves ∷ Array (Array Int)
+growthCurves :: Array (Array Int)
 growthCurves = [
   [ 0, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 101, 111, 121, 131, 141, 151, 161, 171, 181, 191, 202, 212, 222, 232, 242, 252, 262, 272, 282, 292, 303, 313, 323, 333, 343, 353, 363, 373, 383, 393, 404, 414, 424, 434, 444, 454, 464, 474, 484, 494, 505, 515, 525, 535, 545, 555, 565, 575, 585, 595, 606, 616, 626, 636, 646, 656, 666, 676, 686, 696, 707, 717, 727, 737, 747, 757, 767, 777, 787, 797, 808, 818, 828, 838, 848, 858, 868, 878, 888, 898, 909, 919, 929, 939, 949, 959, 969, 979, 989, 1000, 1010, 1020, 1030, 1040, 1050, 1060, 1070, 1080, 1090, 1101, 1111, 1121, 1131, 1141, 1151, 1161, 1171, 1181, 1191, 1202, 1212, 1222, 1232, 1242, 1252, 1262, 1272, 1282, 1292, 1303, 1313, 1323, 1333, 1343, 1353, 1363, 1373, 1383, 1393, 1404, 1414, 1424, 1434, 1444, 1454, 1464, 1474, 1484, 1494, 1505, 1515, 1525, 1535, 1545, 1555, 1565, 1575, 1585, 1595, 1606, 1616, 1626, 1636, 1646, 1656, 1666, 1676, 1686, 1696, 1707, 1717, 1727, 1737, 1747, 1757, 1767, 1777, 1787, 1797, 1808, 1818, 1828, 1838, 1848, 1858, 1868, 1878, 1888, 1898, 1909, 1919, 1929, 1939, 1949, 1959, 1969, 1979, 1989, 2000, 2010 ]
 , [ 0, 0, 16, 33, 50, 67, 84, 101, 118, 135, 152, 169, 186, 203, 220, 237, 254, 271, 288, 305, 322, 338, 355, 372, 389, 406, 423, 440, 457, 474, 491, 508, 525, 542, 559, 576, 593, 610, 627, 644, 661, 677, 694, 711, 728, 745, 762, 779, 796, 813, 830, 847, 864, 881, 898, 915, 932, 949, 966, 983, 1000, 1016, 1033, 1050, 1067, 1084, 1101, 1118, 1135, 1152, 1169, 1186, 1203, 1220, 1237, 1254, 1271, 1288, 1305, 1322, 1338, 1355, 1372, 1389, 1406, 1423, 1440, 1457, 1474, 1491, 1508, 1525, 1542, 1559, 1576, 1593, 1610, 1627, 1644, 1661, 1677 ]

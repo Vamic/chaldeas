@@ -8,7 +8,7 @@ import Data.Tuple
 import Database as D
 import Database
 
-servants ∷ Unit -> Array _
+servants :: Unit -> Array _
 servants = \_ -> D.servants <#> \s'@(Servant s@{align: Tuple alignA alignB}) ->
     { name:          s.name
     , rarity:        s.rarity
@@ -32,7 +32,7 @@ servants = \_ -> D.servants <#> \s'@(Servant s@{align: Tuple alignA alignB}) ->
     , bond:          toNullable $ getBond s'
     }
 
-craftEssences ∷ Unit -> Array _
+craftEssences :: Unit -> Array _
 craftEssences = \_ -> D.craftEssences <#> \(CraftEssence ce) ->
     { name:    ce.name
     , id:      ce.id
@@ -44,13 +44,13 @@ craftEssences = \_ -> D.craftEssences <#> \(CraftEssence ce) ->
     , bond:    toNullable ce.bond
     }
 
-exportAmount ∷ Amount -> _
+exportAmount :: Amount -> _
 exportAmount (Flat a)    = { from: a, to: a }
 exportAmount (a ~ b)     = { from: a, to: b }
 exportAmount Full        = { from: 0.0, to: 0.0 }
 exportAmount Placeholder = { from: 0.0, to: 0.0 }
 
-exportActive ∷ Active -> _
+exportActive :: Active -> _
 exportActive {name, icon, cd, effect} =
     { name
     , icon: show icon
@@ -58,14 +58,14 @@ exportActive {name, icon, cd, effect} =
     , effect: exportEffect <$> effect
     }
 
-exportPassive ∷ Passive -> _
+exportPassive :: Passive -> _
 exportPassive {name, rank, icon, effect} =
     { name: name <> " " <> show rank
     , icon: show icon
     , effect: exportEffect <$> effect
     }
 
-exportPhantasm ∷ NoblePhantasm -> _
+exportPhantasm :: NoblePhantasm -> _
 exportPhantasm {name, desc, rank, card, kind, hits, effect, over} =
     { name
     , desc
@@ -77,7 +77,7 @@ exportPhantasm {name, desc, rank, card, kind, hits, effect, over} =
     , over: exportEffect <$> over
     }
 
-exportEffect ∷ ActiveEffect -> _
+exportEffect :: ActiveEffect -> _
 exportEffect (Grant target duration effect amount) =
     { target: show target
     , duration

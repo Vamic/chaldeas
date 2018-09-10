@@ -79,18 +79,18 @@ data Icon
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
-derive instance _0_ ∷ G.Generic Icon _
-derive instance _1_ ∷ Eq Icon
-derive instance _2_ ∷ Ord Icon
-instance _3_ ∷ Show Icon where
+derive instance _0_ :: G.Generic Icon _
+derive instance _1_ :: Eq Icon
+derive instance _2_ :: Ord Icon
+instance _3_ :: Show Icon where
   show = drop 4 <<< G.genericShow
-instance _4_ ∷ G.Enum Icon where
+instance _4_ :: G.Enum Icon where
   succ = G.genericSucc
   pred = G.genericPred
-instance _5_ ∷ G.Bounded Icon where
+instance _5_ :: G.Bounded Icon where
   top = G.genericTop
   bottom = G.genericBottom
-instance _6_ ∷ G.BoundedEnum Icon where
+instance _6_ :: G.BoundedEnum Icon where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum

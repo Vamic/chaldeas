@@ -4,7 +4,7 @@ import Prelude
 import Operators
 import Database.Model
 
-berserkers ∷ Array Servant
+berserkers :: Array Servant
 berserkers = Servant <$>
 [ { name:     "Cu Chulainn (Alter)"
   , id:       98
@@ -34,7 +34,7 @@ berserkers = Servant <$>
               , { name:   "Battle Continuation A"
                 , icon:   IconKneel
                 , cd:     9
-                , effect: [ Times 1 <<< Grant Self 5 Guts $ Flat 1.0 ]
+                , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
               ]
   , passives: [madness C, divinity C]
@@ -84,10 +84,8 @@ berserkers = Servant <$>
               , { name:   "Mystic Slayer A"
                 , icon:   IconDamageUp
                 , cd:     8
-                , effect: [ Grant Self 3 (AttackVs Demonic)
-                            $ 30.0 ~ 50.0
-                          , Grant Self 3 (AttackVs HeavenOrEarth)
-                            $ 30.0 ~ 50.0
+                , effect: [ Grant Self 3 (AttackVs Demonic) $ 30.0 ~ 50.0
+                          , Grant Self 3 (AttackVs HeavenOrEarth) $ 30.0 ~ 50.0
                           ]
                 }
               ]
@@ -326,7 +324,7 @@ berserkers = Servant <$>
                 , icon:   IconStun
                 , cd:     8
                 , effect: [ Chance 60 $ Debuff Enemy 1 Stun Full
-                          , Debuff Enemy 1 DefenseDown $ 10.0 ~ 20.0
+                          , Debuff Enemy 1 DefenseDown $ 20.0 ~ 30.0
                           ]
                 }
               , { name:   "Overload C"
@@ -680,7 +678,7 @@ berserkers = Servant <$>
               , { name:   "Natural Demon A++"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
+                , effect: [ Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           , Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }

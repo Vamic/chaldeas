@@ -37,10 +37,10 @@ data FilterTab
     | FilterAttribute
     | FilterRarity
 
-exclusive ∷ FilterTab -> Boolean
+exclusive :: FilterTab -> Boolean
 exclusive = (_ >= FilterSource)
 
-instance _a_ ∷ Show FilterTab where
+instance _a_ :: Show FilterTab where
   show FilterPhantasm = "NP Type"
   show FilterCard     = "NP Card"
   show (FilterBuff c) = "Buff (" <> show c <> ")"
@@ -48,65 +48,65 @@ instance _a_ ∷ Show FilterTab where
 
 data Filter a = Filter FilterTab String (Boolean -> a -> Boolean)
 
-getTab ∷ ∀ a. Filter a -> FilterTab
+getTab :: ∀ a. Filter a -> FilterTab
 getTab (Filter tab _ _) = tab
 
-instance _c_ ∷ Eq (Filter a) where
+instance _c_ :: Eq (Filter a) where
   eq (Filter tabA a _) (Filter tabB b _) = tabA == tabB && a == b
-instance _d_ ∷ Ord (Filter a) where
+instance _d_ :: Ord (Filter a) where
   compare (Filter tabA a _) (Filter tabB b _) = case compare tabA tabB of
       LT -> LT
       GT -> GT
       EQ -> compare a b
-instance _e_ ∷ Show (Filter a) where
+instance _e_ :: Show (Filter a) where
   show (Filter tab a _) = a
 
 data ScheduledFilter a = ScheduledFilter Date Date (Filter a)
 
-getScheduled ∷ ∀ a. Array (ScheduledFilter a) -> Date -> Array (Filter a)
+getScheduled :: ∀ a. Array (ScheduledFilter a) -> Date -> Array (Filter a)
 getScheduled xs today = toFilter <$> filter scheduled xs
   where
     scheduled (ScheduledFilter start end _) = start <= today && today <= end
     toFilter (ScheduledFilter _ _ x) = x
 
-type FilterState a b = { sorted   ∷ Array (Tuple String a)
-                       , listing  ∷ Array (Tuple String a)
-                       , matchAny ∷ Boolean
-                       , filters  ∷ Array (Filter a)
-                       , exclude  ∷ Array (Filter a)
-                       , prefs    ∷ Preferences
+type FilterState a b = { sorted   :: Array (Tuple String a)
+                       , listing  :: Array (Tuple String a)
+                       , matchAny :: Boolean
+                       , filters  :: Array (Filter a)
+                       , exclude  :: Array (Filter a)
+                       , prefs    :: Preferences
                        | b
                        }
 
-updateListing ∷ ∀ a b. FilterState a b -> FilterState a b
+updateListing :: ∀ a b. FilterState a b -> FilterState a b
 updateListing st = st{ listing = filter (match <<< snd) st.sorted }
   where
     noSelf = getPreference st.prefs ExcludeSelf
     matchFilter x (Filter _ _ f) = f noSelf x
     match x = (null st.exclude || all (not <<< matchFilter x) st.exclude)
            && (null st.filters || (if st.matchAny then any else all)
-                               (matchFilter x) st.filters)
+              (matchFilter x) st.filters)
 
 type FilterList a = Array (Tuple FilterTab (Array (Filter a)))
 
-collectFilters ∷ ∀ a. (Date -> FilterTab -> Array (Filter a)) -> Date 
-                 -> FilterList a
+collectFilters :: ∀ a. (Date -> FilterTab -> Array (Filter a)) -> Date 
+               -> FilterList a
 collectFilters f today = enumArray <#> \filt -> Tuple filt $ f today filt
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
 
-derive instance _0_ ∷ G.Generic FilterTab _
-derive instance _1_ ∷ Eq FilterTab
-derive instance _2_ ∷ Ord FilterTab
-instance _4_ ∷ G.Enum FilterTab where
+derive instance _0_ :: G.Generic FilterTab _
+derive instance _1_ :: Eq FilterTab
+derive instance _2_ :: Ord FilterTab
+instance _4_ :: G.Enum FilterTab where
   succ = G.genericSucc
   pred = G.genericPred
-instance _5_ ∷ G.Bounded FilterTab where
+instance _5_ :: G.Bounded FilterTab where
   top = G.genericTop
   bottom = G.genericBottom
-instance _6_ ∷ G.BoundedEnum FilterTab where
+instance _6_ :: G.BoundedEnum FilterTab where
   cardinality = G.genericCardinality
   toEnum = G.genericToEnum
   fromEnum = G.genericFromEnum

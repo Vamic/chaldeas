@@ -36,18 +36,18 @@ data Query a
     | SetSort   SortBy a
     | SetPref   Preference Boolean a
 
-type State = { filters  ∷ Array (Filter CraftEssence)
-             , exclude  ∷ Array (Filter CraftEssence)
-             , matchAny ∷ Boolean
-             , focus    ∷ Maybe CraftEssence
-             , sortBy   ∷ SortBy
-             , prefs    ∷ Preferences
-             , listing  ∷ Array (Tuple String CraftEssence)
-             , sorted   ∷ Array (Tuple String CraftEssence)
+type State = { filters  :: Array (Filter CraftEssence)
+             , exclude  :: Array (Filter CraftEssence)
+             , matchAny :: Boolean
+             , focus    :: Maybe CraftEssence
+             , sortBy   :: SortBy
+             , prefs    :: Preferences
+             , listing  :: Array (Tuple String CraftEssence)
+             , sorted   :: Array (Tuple String CraftEssence)
              }
 
-comp ∷ ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence 
-       -> Preferences -> Date -> Component HTML Query Unit Message m
+comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence 
+     -> Preferences -> Date -> Component HTML Query Unit Message m
 comp initialFilt initialFocus initialPrefs today = component
     { initialState
     , render
@@ -55,10 +55,10 @@ comp initialFilt initialFocus initialPrefs today = component
     , receiver: const Nothing
     }
   where
-  allFilters ∷ FilterList CraftEssence
+  allFilters :: FilterList CraftEssence
   allFilters = collectFilters getFilters today
 
-  initialState ∷ Input -> State
+  initialState :: Input -> State
   initialState = const $ updateListing { filters
                                        , exclude
                                        , matchAny: true
@@ -72,22 +72,19 @@ comp initialFilt initialFocus initialPrefs today = component
       initialSort = getSort Rarity
       {yes: exclude, no: filters} = partition (exclusive <<< getTab) initialFilt
 
-  render ∷ State -> ComponentHTML Query
+  render :: State -> ComponentHTML Query
   render st = modal st.prefs st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ M.toUnfoldableUnordered st.prefs <#> \(Tuple k v)
-            -> H.p [_click <<< SetPref k $ not v]
-              $ _checkbox (show k) v
+        , H.form_ $ M.toUnfoldableUnordered st.prefs <#> \(Tuple k v) -> 
+          H.p [_click <<< SetPref k $ not v] $ _checkbox (show k) v
         , _h 1 "Sort by"
-        , H.form_ $ enumArray <#> \sort
-            -> H.p [_click $ SetSort sort]
-              $ _radio (show sort) (st.sortBy == sort)
+        , H.form_ $ enumArray <#> \sort -> 
+          H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
         , _h 1 "Include"
         ] <> (filter (exclusive <<< fst) allFilters >>= filterSection)
-      , H.section_
-        <<< (if st.sortBy == Rarity then identity else reverse)
-        $ portrait false artorify <$> st.listing
+      , H.section_ <<< (if st.sortBy == Rarity then identity else reverse) $
+        portrait false artorify <$> st.listing
       , H.aside_ $
         [ _h 1 "Browse"
         , _strong "Craft Essences"
@@ -112,15 +109,16 @@ comp initialFilt initialFocus initialPrefs today = component
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
       filterSection (Tuple _ []) = []
-      filterSection (Tuple tab filts) = [ _h 3 $ show tab
-                 , H.form_ $ filts <#> \filt
-                     -> H.p [_click $ Toggle filt ]
-                       <<< _checkbox (show filt)
-                       $ if exclusive tab then filt `notElem` st.exclude
-                         else filt `elem` st.filters
-                 ]
+      filterSection (Tuple tab filts) = 
+          [ _h 3 $ show tab
+          , H.form_ $ filts <#> \filt -> 
+            H.p [_click $ Toggle filt ] <<< _checkbox (show filt) $
+            if exclusive tab 
+            then filt `notElem` st.exclude 
+            else filt `elem` st.filters
+          ]
 
-  eval ∷ Query ~> ComponentDSL State Query Message m
+  eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
       Switch    switchTo a -> a <$ do
           {exclude, filters} <- get
@@ -161,22 +159,21 @@ comp initialFilt initialFocus initialPrefs today = component
       hash Nothing = setHash ""
       hash (Just ce) = setHash <<< urlName $ show ce
 
-portrait ∷ ∀ a. Boolean -> Boolean -> Tuple String CraftEssence
-           -> HTML a (Query Unit)
+portrait :: ∀ a. Boolean -> Boolean -> Tuple String CraftEssence
+         -> HTML a (Query Unit)
 portrait big artorify (Tuple lab ce'@(CraftEssence ce)) = H.div meta
     [ _img $ "img/CraftEssence/" <> fileName ce.name <> ".png"
-    , H.header_
-      <<< (lab /= "") ? append [_span $ noBreakName lab, H.br_]
-      $ [ _span <<< noBreakName <<< artorify ? doArtorify $ ce.name ]
+    , H.header_ <<< (lab /= "") ? append [_span $ noBreakName lab, H.br_] $
+      [ _span <<< noBreakName <<< artorify ? doArtorify $ ce.name ]
     , H.footer_ [_span <<< S.joinWith "  " $ replicate ce.rarity "★"]
     ]
   where 
-    meta       = not big ? (cons <<< _click <<< Focus $ Just ce')
-               $ [_c $ "portrait stars" <> show ce.rarity]
+    meta       = not big ? (cons <<< _click <<< Focus $ Just ce') $
+                 [_c $ "portrait stars" <> show ce.rarity]
     doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
 
-modal ∷ ∀ a. Preferences -> Maybe CraftEssence
-        -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
+modal :: ∀ a. Preferences -> Maybe CraftEssence
+      -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
 modal prefs Nothing = H.div [_c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
 modal prefs
@@ -198,7 +195,7 @@ modal prefs
       [ H.section_ $ effectEl <<< mapAmount (\_ b -> Flat b) <$> ce.effect ]
     ]
 
-effectEl ∷ ∀ a. ActiveEffect -> HTML a (Query Unit)
+effectEl :: ∀ a. ActiveEffect -> HTML a (Query Unit)
 effectEl ef
   | demerit ef = H.p [_c "demerit"] <<< _txt $ show ef
   | otherwise  = H.p (maybe [] meta $ activeFilter ef) <<< _txt $ show ef

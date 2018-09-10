@@ -4,7 +4,7 @@ import Prelude
 import Operators
 import Database.Model
 
-extras ∷ Array Servant
+extras :: Array Servant
 extras = Servant <$>
 [ { name:     "Jeanne d'Arc"
   , id:       59
@@ -232,8 +232,8 @@ extras = Servant <$>
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
-                          , When "on Waterside or Beach field"
-                            <<< Grant Self 3 AttackUp $ 10.0 ~ 20.0
+                          , When "on Waterside or Beach field" <<< 
+                            Grant Self 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }
               , { name:   "Natural Body (Sea) A"
@@ -351,16 +351,16 @@ extras = Servant <$>
               , { name:   "Annihilation Wish A"
                 , icon:   IconQuickUp
                 , cd:     10
-                , effect: [ When "turn 1" $ Grant Self 1 (Performance Quick)
-                            $ 20.0 ~ 40.0
-                          , When "turn 2" $ Grant Self 1 (Performance Quick)
-                            $ 40.0 ~ 80.0
-                          , When "turn 3" $ Grant Self 1 (Performance Quick)
-                            $ 60.0 ~ 120.0
-                          , When "turn 4" $ Grant Self 1 (Performance Quick)
-                            $ 80.0 ~ 160.0
-                          , When "turn 5" $ Grant Self 1 (Performance Quick)
-                            $ 100.0 ~ 200.0
+                , effect: [ When "turn 1" $ Grant Self 1 (Performance Quick) $
+                            20.0 ~ 40.0
+                          , When "turn 2" $ Grant Self 1 (Performance Quick) $
+                            40.0 ~ 80.0
+                          , When "turn 3" $ Grant Self 1 (Performance Quick) $
+                            60.0 ~ 120.0
+                          , When "turn 4" $ Grant Self 1 (Performance Quick) $
+                            80.0 ~ 160.0
+                          , When "turn 5" $ Grant Self 1 (Performance Quick) $
+                            100.0 ~ 200.0
                           , When "turn 6" $ To Self DemeritKill Full
                           ]
                 }

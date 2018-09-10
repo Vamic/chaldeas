@@ -13,7 +13,7 @@ import Site.Common
 import Site.Component
 import Site.Preferences
 
-main ∷ Effect Unit
+main :: Effect Unit
 main = do
     hash  <- getHash
     prefs <- getPreferences

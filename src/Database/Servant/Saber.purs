@@ -4,7 +4,7 @@ import Prelude
 import Operators
 import Database.Model
 
-sabers ∷ Array Servant
+sabers :: Array Servant
 sabers = Servant <$>
 [ { name:     "Okita Souji"
   , id:       68
@@ -75,7 +75,6 @@ sabers = Servant <$>
                 , cd:     7
                 , effect: [ Grant Self 3 OffensiveResist $ 40.0 ~ 80.0
                           , To Self Heal $ 1000.0 ~ 2500.0
-                          , Grant Self 1 StarUp $ 100.0 ~ 300.0
                           ]
                 }
               , { name:   "Crest of the Star EX"
@@ -628,8 +627,8 @@ sabers = Servant <$>
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ Flat 20.0
-                          , When "on Open Field with Sunshine"
-                            <<< Grant Self 3 (Performance Buster) $ 20.0 ~ 30.0
+                          , When "on Open Field with Sunshine" <<<
+                            Grant Self 3 (Performance Buster) $ 20.0 ~ 30.0
                           ]
                 }
               , { name:   "Charisma E"

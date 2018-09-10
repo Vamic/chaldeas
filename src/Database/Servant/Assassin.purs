@@ -4,7 +4,7 @@ import Prelude
 import Operators
 import Database.Model
 
-assassins ∷ Array Servant
+assassins :: Array Servant
 assassins = Servant <$>
 [ { name:     "Jack the Ripper"
   , id:       75
@@ -99,6 +99,7 @@ assassins = Servant <$>
                         , Debuff Enemies 3 AttackDown $ Flat 10.0
                         , Debuff Enemies 3 NPDown $ Flat 10.0
                         , Debuff Enemies 3 CritChance $ Flat 10.0
+                        , Debuff Enemies 3 DefenseDown $ Flat 10.0
                         , Debuff Enemies 1 SealSkills Full
                         ]
               , over:   [ Debuff Enemies 5 Poison $ 1000.0 ~ 5000.0 ]
@@ -333,7 +334,7 @@ assassins = Servant <$>
   , actives:  [ { name:   "Beach Crisis A+"
                 , icon:   IconCrosshairUp
                 , cd:     8
-                , effect: [ Grant Self 1 Taunt Full
+                , effect: [ Chances 100 300 $ Grant Self 1 Taunt Full
                           , Grant Self 1 CritUp $ 30.0 ~ 50.0
                           ]
                 }
@@ -392,8 +393,8 @@ assassins = Servant <$>
               , { name:   "Siren Song A"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 70 100
-                            $ Debuff (EnemyType Male) 1 Charm Full ]
+                , effect: [ Chances 70 100 $
+                            Debuff (EnemyType Male) 1 Charm Full ]
                 }
               , { name:   "Whim of the Goddess A"
                 , icon:   IconSwordUp
@@ -413,8 +414,8 @@ assassins = Servant <$>
               , effect: [ To (EnemyType Male) Kill $ 100.0 ~ 150.0
                         , Chance 150 <<< Debuff Enemy 3 DefenseDown $ Flat 20.0
                         ]
-              , over:   [ Chances 100 200
-                          $ Debuff (EnemyType Male) 1 Charm Full ]
+              , over:   [ Chances 100 200 $
+                          Debuff (EnemyType Male) 1 Charm Full ]
               , first:  false
               }
   , gen:      { starWeight: 104, starRate: 25.0, npAtk: 2.26, npDef: 4 }
@@ -590,17 +591,17 @@ assassins = Servant <$>
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 5.0 ~ 15.0
-                          , When "transformed into Hyde"
-                            <<< Grant Self 3 AttackUp $ 25.0 ~ 35.0
+                          , When "transformed into Hyde" <<<
+                            Grant Self 3 AttackUp $ 25.0 ~ 35.0
                           ]
                 }
               , { name:   "Panicky Voice A"
                 , icon:   IconStun
                 , cd:     8
-                , effect: [ Times 1
-                            <<< Grant Self 0 (Success Stun) $ 5.0  ~ 15.0
-                          , When "transformed into Hyde" <<< Times 1
-                            <<< Grant Self 0 (Success Stun) $ 85.0 ~ 135.0
+                , effect: [ Times 1 <<<
+                            Grant Self 0 (Success Stun) $ 5.0  ~ 15.0
+                          , When "transformed into Hyde" <<< Times 1 <<<
+                            Grant Self 0 (Success Stun) $ 85.0 ~ 135.0
                           , Chance 10 $ Debuff Enemy 1 Stun Full
                           ]
                 }
@@ -608,8 +609,8 @@ assassins = Servant <$>
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 5.0 ~ 15.0
-                          , When "transformed into Hyde"
-                            <<< Grant Self 3 CritUp $ 25.0 ~ 35.0
+                          , When "transformed into Hyde" <<<
+                            Grant Self 3 CritUp $ 25.0 ~ 35.0
                           ]
                 }
               ]
@@ -760,12 +761,12 @@ assassins = Servant <$>
               , { name:   "Wide Specialization A+"
                 , icon:   IconAllUp
                 , cd:     7
-                , effect: [ Chances 60 80
-                            <<< Grant Self 3 (Performance Buster) $ Flat 30.0
-                          , Chances 60 80
-                            <<< Grant Self 3 (Performance Quick) $ Flat 30.0
-                          , Chances 60 80
-                            <<< Grant Self 3 (Performance Arts) $ Flat 30.0
+                , effect: [ Chances 60 80 <<<
+                            Grant Self 3 (Performance Buster) $ Flat 30.0
+                          , Chances 60 80 <<<
+                            Grant Self 3 (Performance Quick) $ Flat 30.0
+                          , Chances 60 80 <<<
+                            Grant Self 3 (Performance Arts) $ Flat 30.0
                           , Grant Self 1 Evasion Full
                           ] -- TODO
                 }
@@ -871,8 +872,8 @@ assassins = Servant <$>
               , { name:   "Siren Song B"
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 60 90
-                            $ Debuff (EnemyType Female) 1 Charm Full ]
+                , effect: [ Chances 60 90 $
+                            Debuff (EnemyType Female) 1 Charm Full ]
                 }
               , { name:   "Mental Corruption A"
                 , icon:   IconStaffUp
@@ -920,8 +921,8 @@ assassins = Servant <$>
               , { name:   "Pheromone B"
                 , icon:   IconHeart
                 , cd:     8
-                , effect: [ Chances 30 60
-                            $ Debuff (EnemiesType Male) 1 Charm Full
+                , effect: [ Chances 30 60 $
+                            Debuff (EnemiesType Male) 1 Charm Full
                           , Debuff Enemies 3 DefenseDown $ 10.0 ~ 20.0
                           ]
                 }

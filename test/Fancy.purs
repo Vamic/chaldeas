@@ -1,6 +1,4 @@
-module Test.Output.Fancy
-  ( runTest
-  ) where
+module Test.Fancy (runTest) where
 
 import Prelude
 

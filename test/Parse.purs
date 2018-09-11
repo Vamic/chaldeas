@@ -10,18 +10,18 @@ module Test.Parse
 import Prelude
 import Operators ((:))
 import Printing (prettify)
-import Database (ActiveEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..))
+import Database (ActiveEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), craftEssences)
 
 import Data.Array (elem)
 import Data.Foldable (all, any, find)
 import Data.Generic.Rep.Show (genericShow)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (fromMaybe, maybe)
 import Data.String (Pattern(..))
 import Data.String as S
 import Data.String.CodeUnits (fromCharArray, toCharArray)
 import Data.Tuple (Tuple(..))
 
-import Test.Base (MaybeRank(..), addRank, getRank)
+import Test.Base (MaybeRank(..), addRank, getRank, showRank, unRank)
 
 upgradeNPs :: Array String
 upgradeNPs = 
@@ -47,14 +47,23 @@ uniqueSkills =
     , "Henry Jekyll & Hyde": "Monstrous Strength"
     ]
 
+ceNames :: Array String
+ceNames = show <$> craftEssences
+
 skillRanks :: Servant -> Array (Tuple MaybeRank String)
 skillRanks s'@(Servant s) = ranker <<< addRank getRank <<< _.name <$> s.actives
   where
+    tagCe skill
+      | skill `elem` ceNames = skill <> " (Skill)"
+      | otherwise            = skill
     rankUp (Pure rank) skill
       | Tuple s.name skill `elem` uniqueSkills  = Unique s' rank
       | Tuple s.name skill `elem` upgradeSkills = Upgrade rank
     rankUp a _ = a
-    ranker (Tuple rank skill) = Tuple (rankUp rank skill) skill
+    ranker (Tuple rank skill) = Tuple (rankUp rank unRanked) $ tagCe unRanked 
+                             <> maybe "" (append " ") (showRank rank)
+      where
+        unRanked = unRank rank skill
 
 translate :: String -> String
 translate "Cheerful-Type Mystic Code" = "Cheerful Model Mystic Code"
@@ -62,11 +71,6 @@ translate "Mugashiki—Shinkuu Myou" = "Mugashiki - Shinkuu Myōu"
 translate "Leonardo da Vinci" = "Leonardo Da Vinci"
 translate "Beautiful Princess (Sea)" = "Princess of Loveliness (Ocean)"
 translate "Treasure Hunt (Sea)" = "Treasure Hunt (Ocean)"
-translate "Elemental" = "Elemental (Skill)"
-translate "Projection" = "Projection (Skill)"
-translate "Projection" = "Projection (Skill)"
-translate "Projection" = "Projection (Skill)"
-translate "Concentration" = "Concentration (Skill)"
 translate a = prettify a
 
 printIcon :: Icon -> String

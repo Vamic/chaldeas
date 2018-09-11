@@ -297,7 +297,7 @@ modal prefs ascent (Just ms')= H.div
         , H.tr_
           [ _th "Overcharge"
           , H.td overMeta <<< showTables ? flip snoc
-              ( _table ((_ <> "%") <<< show <<< (_ * 100) <$> 1..5) $
+              ( _table (flip append "%" <<< show <<< (_ * 100) <$> 1..5) $
                 overRow <$> nub (ranges b.phantasm.over)
               ) $ effectEl <$> s.phantasm.over
           ]

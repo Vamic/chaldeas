@@ -441,7 +441,7 @@ demerit (Times _ ef) = demerit ef
 demerit (ToMax _ ef) = demerit ef
 
 instance _g_ :: Show ActiveEffect where
-  show = (_ <> ".") <<< go
+  show = flip append "." <<< go
     where
       go = case _ of
           Grant t dur buff amt -> showBuff t amt buff <> turns dur

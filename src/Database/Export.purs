@@ -106,19 +106,19 @@ exportEffect (Bonus bonus amount) =
     , amount: exportAmount amount
     , chance: {from: 100, to: 100}
     }
-exportEffect (Chance chance activeEffect) =
-    (exportEffect activeEffect) { chance = {from: chance, to: chance} }
-exportEffect (Chances a b activeEffect) =
-    (exportEffect activeEffect) { chance = {from: a, to: b} }
-exportEffect (ToMax a activeEffect) = 
-    baseEffect { effect = baseEffect.effect <> " every turn up to " <> show a }
-  where baseEffect = exportEffect activeEffect
-exportEffect (When condition activeEffect) =
-    baseEffect { effect = "If " <> condition <> ": " <> baseEffect.effect }
-  where baseEffect = exportEffect activeEffect
-exportEffect (Times 1 activeEffect) =
-    baseEffect { effect = baseEffect.effect <> " (1 time)" }
-  where baseEffect = exportEffect activeEffect
-exportEffect (Times times activeEffect) =
-    baseEffect { effect = baseEffect.effect <> " (" <> show times <> " times)" }
-  where baseEffect = exportEffect activeEffect
+exportEffect (Chance chance effect) = (exportEffect effect) 
+    { chance = {from: chance, to: chance} }
+exportEffect (Chances a b effect)   = (exportEffect effect) 
+    { chance = {from: a, to: b} }
+exportEffect (ToMax a effect) = modEffect (exportEffect effect) <<<
+    flip append $ " every turn up to " <> show a
+exportEffect (When condition effect) = modEffect (exportEffect effect) <<<
+    append $ "If " <> condition <> ": "
+exportEffect (Times 1 effect) = modEffect (exportEffect effect) $
+    flip append " (1 time)"
+exportEffect (Times times effect) = modEffect (exportEffect effect) <<<
+    flip append $ " (" <> show times <> " times)"
+
+modEffect :: ∀ a. { effect :: String | a } -> (String -> String) 
+          -> { effect :: String | a }
+modEffect base f = base { effect = f base.effect }

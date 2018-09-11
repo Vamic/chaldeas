@@ -137,7 +137,7 @@ passiveBase name icon effects rank = { name
                                      , effect: activate <$> effects
                                      }
   where
-    activate (Give target buff ranks) = 
-        Grant target 0 buff <<< fromMaybe Placeholder $ 
-        Flat <$> lookup rank ranks
+    activate (Give target buff ranks) = Grant target 0 buff <<<
+                                        fromMaybe Placeholder $ 
+                                        Flat <$> lookup rank ranks
 

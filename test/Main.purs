@@ -25,7 +25,7 @@ import Data.Maybe (Maybe(..))
 import Data.Number.Format (toString)
 import Data.String (Pattern(..))
 import Data.Traversable (traverse, traverse_)
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple(..), snd)
 import Effect (Effect)
 import Test.Unit (TestSuite, test, suite, failure)
 import Test.Unit.Assert (assert, equal')
@@ -33,7 +33,7 @@ import Test.Unit.Main (runTestWith)
 import Test.Fancy (runTest)
 
 import Test.Base (class CleanShow, cleanShow, MaybeRank(..), addRank)
-import Test.MediaWiki (MediaWiki(..), wiki, wikiRange)
+import Test.MediaWiki (MediaWiki, printBool, wiki, wikiRange, wikiLookup)
 import Test.Parse (printIcon, effects, readEffect, skillRanks, npRank)
 
 main :: Effect Unit
@@ -69,11 +69,16 @@ app ce servant = Console.log msg *> Aff.launchAff_ do
     maybeTake limits = Array.take limits
 
 wikiMatch :: MediaWiki -> String -> String -> TestSuite
-wikiMatch (MediaWiki mw) k obj = test k $ case Map.lookup k mw of
+wikiMatch mw k obj = test k $ case wikiLookup mw k of
     Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "]") $
                obj `Array.elem` v
     Nothing -> failure $ "Missing property " <> k <> " in " <> show mw 
-            <> Maybe.maybe "" (append ": ") (Map.lookup "err" mw >>= Array.head)
+            <> Maybe.maybe "" (append ": ") (wikiLookup mw "err" >>= Array.head)
+
+
+wikiHas :: MediaWiki -> String -> String -> Boolean
+wikiHas mw k obj = Maybe.maybe false (Array.elem obj <<< map String.toLower) $ 
+                   wikiLookup mw k
 
 testCraftEssence :: Tuple DB.CraftEssence MediaWiki -> TestSuite
 testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
@@ -84,6 +89,7 @@ testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
     match "minhp"     $ show ce.stats.base.hp
     match "rarity"    $ show ce.rarity
     match "imagetype" $ printIcon ce.icon
+    match "limited"   $ printBool ce.limited
   where
     match = wikiMatch mw
     prId = format $ Formatter { comma: false
@@ -98,7 +104,8 @@ shouldMatch a b = do
     test "Wiki" <<< beNull $ Array.nubEq a \\ Array.nubEq b
     test "DB"   <<< beNull $ Array.nubEq b \\ Array.nubEq a
   where
-    beNull xs = equal' ("missing " <> String.joinWith ", " (cleanShow <$> xs)) xs []
+    beNull xs = equal' ("missing " <> String.joinWith ", " (cleanShow <$> xs)) 
+                xs []
 
 testServant :: Tuple DB.Servant MediaWiki -> TestSuite
 testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Stats") do
@@ -125,6 +132,8 @@ testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Stats") do
       match "icon"            $ show s.phantasm.card
       match "hitcount"        $ showHitcount s.phantasm.hits
       match "alignment"       $ showAlign s.align
+      test "status" $ assert (show $ wikiLookup mw "status") status
+
   where
     match = wikiMatch mw
     showAlign (Tuple DB.Neutral DB.Neutral) = "True Neutral"
@@ -134,6 +143,12 @@ testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Stats") do
     showAttr a = show a
     showHitcount 0 = "－"
     showHitcount a = show a
+    hasStatus = wikiHas mw "status"
+    status
+      | s.free && s.limited = hasStatus "welfare"
+      | s.limited           = hasStatus "limited"
+      | otherwise     = not $ hasStatus "welfare" 
+                           || hasStatus "limited"
     prId = format $ Formatter { comma: false
                               , before: 3
                               , after: 0
@@ -151,11 +166,11 @@ testNP (Tuple (DB.Servant s) mw) = suite (s.name <> ": NP") do
               wikiRange mw "oceffect" (0..6) >>= readEffect
 
 wikiRanges :: MediaWiki -> Array DB.RangeInfo
-wikiRanges (MediaWiki mw) = Array.catMaybes $ go <$> (0..7)
+wikiRanges mw = Array.catMaybes $ go <$> (0..7)
   where 
     go i = do
-        from <- Map.lookup ("e" <> show i <> "-lvl1") mw  >>= Array.head
-        to   <- Map.lookup ("e" <> show i <> "-lvl10") mw >>= Array.head
+        from <- wikiLookup mw ("e" <> show i <> "-lvl1") >>= Array.head
+        to   <- wikiLookup mw ("e" <> show i <> "-lvl10") >>= Array.head
         let isPercent = String.contains (Pattern "%") from
             stripFrom = maybeDo (String.stripSuffix $ Pattern "%") from
             stripTo   = maybeDo (String.stripSuffix $ Pattern "%") to
@@ -172,8 +187,8 @@ testSkill skill mw = suite skill.name do
         wikiRange mw "effect" (0..7) >>= readEffect
 
 testSkills :: Map String MediaWiki -> DB.Servant -> TestSuite
-testSkills skills (DB.Servant s) = suite (s.name <> ": Skills") $ 
-    traverse_ go s.actives
+testSkills skills s'(DB.Servant s) = suite (s.name <> ": Skills") <<<
+    traverse_ go $ snd <$> skillRanks s'
   where
     go skill = case Map.lookup skill.name skills of
         Nothing -> test skill.name <<< failure $ "Couldn't find skill"

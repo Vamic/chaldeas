@@ -60,8 +60,8 @@ unRank mRank s = Maybe.fromMaybe s do
     String.stripSuffix (Pattern $ " " <> rank) s
 
 indices :: Array String -> String -> Maybe Int
-indices patterns s = 
-    foldl ((<|>)) Nothing $ flip String.indexOf s <<< Pattern <$> patterns
+indices patterns s = foldl ((<|>)) Nothing $ 
+                     flip String.indexOf s <<< Pattern <$> patterns
 
 getRank :: String -> MaybeRank
 getRank = memoize go

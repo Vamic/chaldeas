@@ -1987,7 +1987,7 @@ craftEssences = CraftEssence <$>
               , To Self GaugeUp $ 25.0 ~ 40.0
               ]
   , bond:     Nothing
-  , limited:  true
+  , limited:  false
   }
 , bond 248 "Tamamo's Club" "Tamamo-no-Mae" IconArtsUp
   [ party' Arts 15 ]

@@ -68,9 +68,7 @@ doSort a = map showSort <<< sortWith sorter
           "NP" <> show ms.npLvl <> ": " <> (output <<< abs $ sorter ms')
       | otherwise = output <<< abs <<< sorter &&& getBase
     output = case a of
-        -- NPGain    -> (_ <> "%") <<< print 2
-        -- StarRate  -> (_ <> "%") <<< print 2
-        NPArts    -> (_ <> "%") <<< print 2
+        NPArts    -> flip append "%" <<< print 2
         StarQuick -> print 2
         _         -> print 0
 

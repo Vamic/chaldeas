@@ -1,7 +1,8 @@
 module Test.MediaWiki 
   ( MediaWiki(..)
+  , printBool
   , wikiRange
-  , wiki
+  , wiki, wikiLookup
   ) where
 
 import Prelude
@@ -21,7 +22,7 @@ import Data.String.Regex.Unsafe as Unsafe
 import Control.MonadZero (guard)
 import Data.Either (Either(..))
 import Data.Map (Map)
-import Data.Newtype (class Newtype)
+import Data.Maybe (Maybe)
 import Data.String (Pattern(..))
 import Data.String.Regex (Regex)
 import Data.Tuple (Tuple(..))
@@ -31,7 +32,7 @@ import Test.Base (class CleanShow, cleanShow, MaybeRank, showRank, unRank, indic
 import Test.Parse (translate)
 
 wikiLink :: Regex
-wikiLink = Unsafe.unsafeRegex "\\[\\[[^\\|]+\\|([^\\]]+)\\]\\]" mempty
+wikiLink = Unsafe.unsafeRegex """\[\[[^\|\]]+\|([^\]]+)\]\]""" mempty
 
 unLink :: String -> String
 unLink = Regex.replace wikiLink "$1"
@@ -40,7 +41,12 @@ wikiRoot :: String
 wikiRoot = "https://grandorder.wiki/index.php?action=raw&title="
 
 newtype MediaWiki = MediaWiki (Map String (Array String))
-derive instance _6_ :: Newtype MediaWiki _
+instance _0_ :: Show MediaWiki where
+  show (MediaWiki mw) = show mw
+
+wikiLookup :: MediaWiki -> String -> Maybe (Array String)
+wikiLookup (MediaWiki mw) = flip Map.lookup mw
+
 toWiki :: String -> MaybeRank -> MediaWiki
 toWiki text mRank = 
     MediaWiki <<< Map.fromFoldable <<< Array.reverse <<< Array.catMaybes <<< 
@@ -88,7 +94,11 @@ wiki (Tuple mRank a) = wikify <<< _.body <$> AX.get ResponseFormat.string encode
     encode  = append wikiRoot <<< Global.unsafeEncodeURIComponent <<< 
               translate $ unRank mRank name
 
+printBool :: Boolean -> String
+printBool true  = "Yes"
+printBool false = "No"
+
 wikiRange :: MediaWiki -> String -> Array Int -> Array String
-wikiRange (MediaWiki mw) k range = 
-    join <<< Array.catMaybes $ 
-    flip Map.lookup mw <<< append k <<< show <$> range
+wikiRange (MediaWiki mw) k range = join <<< Array.catMaybes $ 
+                                   flip Map.lookup mw <<< append k <<< 
+                                   show <$> range

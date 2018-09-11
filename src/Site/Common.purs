@@ -41,9 +41,8 @@ noBreakName doPrettify = doPrettify ? prettify <<<
     replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
     unBreak <<< split (Pattern "(")
   where
-    unBreak [a, b] = 
-        a <> "(" <> replaceAll (Pattern " ") (Replacement " ") b
-    unBreak xs = joinWith "(" xs
+    unBreak [a, b] = a <> "(" <> replaceAll (Pattern " ") (Replacement " ") b
+    unBreak xs     = joinWith "(" xs
 
 fileName :: String -> String
 fileName = fromCharArray <<< filter legal <<< toCharArray
@@ -62,7 +61,8 @@ print' :: Int -> String
 print' = print 0 <<< toNumber
 
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
-toCell isPercent = _td <<< (isPercent ? (_ <> "%")) <<< toString <<< roundTo 2
+toCell isPercent = _td <<< (isPercent ? flip append "%") <<< 
+                   toString <<< roundTo 2
 
 urlName :: String -> String
 urlName = fromCharArray <<< filter legal <<< toCharArray

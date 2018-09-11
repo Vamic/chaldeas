@@ -267,10 +267,7 @@ modal prefs ascent (Just ms')= H.div
                               find (\t -> has t false s') 
                               [SingleTarget, MultiTarget]
                             ]
-        , _tr "Alignment"   $ [ link FilterAlignment alignA
-                              , H.text " "
-                              , link FilterAlignment alignB
-                              ]
+        , _tr "Alignment"   $ alignBox s.align
         , _tr "Attribute"   $ [ link FilterAttribute s.attr ]
         , _tr "Star Weight" <<< _txt $ show s.gen.starWeight
         , _tr "Star Rate"   <<< _txt $ show s.gen.starRate <> "%"
@@ -284,7 +281,7 @@ modal prefs ascent (Just ms')= H.div
       , _h 2 "Noble Phantasm"
       , H.table [_i "phantasm"]
         [ _tr "Name" <<< _txt $ s.phantasm.name
-        , _tr "Rank" <<< _txt $ show s.phantasm.rank
+        , _tr "Rank" <<< _txt $ npRank s.phantasm.rank
         , _tr "Card" $ [ link FilterCard s.phantasm.card ]
         , _tr "Class" <<< _txt $ s.phantasm.kind
         , H.tr_
@@ -303,7 +300,7 @@ modal prefs ascent (Just ms')= H.div
           ]
         ]
       , _h 2 "Active Skills"] 
-      <> (zipWith (activeEl showTables) s.actives b.actives) <>
+      <> (zipWith (skillEl showTables) s.skills b.skills) <>
       [ _h 2 "Passive Skills"] <> (passiveEl <$> s.passives) <>
       [ _h 2 "Max-Bond Craft Essence"
       , bondEl $ getBond s'
@@ -313,7 +310,8 @@ modal prefs ascent (Just ms')= H.div
     ]
   where
     MyServant ms@{servant:s'@(Servant s), base:(Servant b)} = ms'
-    Tuple alignA alignB = s.align
+    npRank Unknown = "--"
+    npRank x       = show x
     {base} = s.stats
     {max, grail} = b.stats
     pref = getPreference prefs
@@ -323,6 +321,17 @@ modal prefs ascent (Just ms')= H.div
       | otherwise        = []
     alter f = OnTeam true <<< MyServant $ f ms
     _mInt = _int DoNothing
+    alignBox []                 = [H.text "None"]
+    alignBox [Neutral, Neutral] = [H.text "True ", link FilterAlignment Neutral]
+    alignBox [a, b, c, d]       = [ link FilterAlignment a
+                                  , H.text " "
+                                  , link FilterAlignment b
+                                  , H.text " / "
+                                  , link FilterAlignment c
+                                  , H.text " "
+                                  , link FilterAlignment d
+                                  ]
+    alignBox xs = xs >>= \x -> [link FilterAlignment x, H.text " "]
     skillBox (Tuple {icon} lvl) i = 
         [ H.td_ [_img $ "img/Skill/" <> show icon <> ".png"]
         , H.td_ $ _mInt 1 10 lvl \val -> 
@@ -346,22 +355,22 @@ modal prefs ascent (Just ms')= H.div
               , H.tr_ <<< append 
                 [ H.td_ [ _a "Delete" <<< OnTeam false $ unowned s' ]
                 , H.td_ [_strong "Skills:"]
-                ] <<< join $ zipWith skillBox (zip s.actives ms.skills) (0..2)
+                ] <<< join $ zipWith skillBox (zip s.skills ms.skills) (0..2)
               ]
             ]
 
-activeEl :: ∀ a. Boolean -> Active -> Active -> HTML a (Query Unit)
-activeEl showTables active@{name, icon, cd, effect} base = 
+skillEl :: ∀ a. Boolean -> Skill -> Skill -> HTML a (Query Unit)
+skillEl showTables active@{name, icon, cd, rank, effect} base = 
     H.section_ <<< showTables ? flip snoc effectTable $
     [ _img $ "img/Skill/" <> show icon <> ".png"
-    , _h 3 name
+    , _h 3 $ name <> show rank
     , _strong "CD: "
     , H.text <<< (active == base) ? (_ <> "~" <> show (cd - 2)) $ show cd
     ] <> (effectEl <$> effect)
   where
     effectTable = _table (show <$> 1..10) $ lvlRow <$> nub (ranges base.effect)
 
-passiveEl :: ∀ a. Passive -> HTML a (Query Unit)
+passiveEl :: ∀ a. Skill -> HTML a (Query Unit)
 passiveEl {name, rank, icon, effect} = H.section_ $
     [ _img $ "img/Skill/" <> show icon <> ".png"
     , H.h3_
@@ -385,10 +394,10 @@ bondEl ce@(Just (CraftEssence {name, icon, effect})) = H.section_ $
     nvmEquipped (When _ ef) = ef
     nvmEquipped ef = ef
 
-effectEl :: ∀ a. ActiveEffect -> HTML a (Query Unit)
+effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)
 effectEl ef
   | demerit ef = H.p [_c "demerit"] <<< _txt $ show ef
-  | otherwise  = H.p (maybe [] meta $ activeFilter ef) <<< _txt $ show ef
+  | otherwise  = H.p (maybe [] meta $ skillFilter ef) <<< _txt $ show ef
   where
     meta filt = [_c "link", _click $ FilterBy [filt]]
 
@@ -399,20 +408,20 @@ traitEl trait =
     [H.text $ show trait]
 
 npRow :: ∀ a b. RangeInfo -> HTML a b
-npRow (RangeInfo isPercent a b) = 
-    H.tr_ $ toCell isPercent <<< (_ + a) <<< (_ * over) 
+npRow (RangeInfo isPercent x y) = 
+    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * over) 
     <$> [0.0, 0.5, 0.75, 0.825, 1.0]
   where
-    over = b - a
+    over = y - x
 
 overRow :: ∀ a b. RangeInfo -> HTML a b
-overRow (RangeInfo isPercent a b) = 
-    H.tr_ $ toCell isPercent <<< (_ + a) <<< (_ * over) <<< toNumber <$> (0..4)
+overRow (RangeInfo isPercent x y) = 
+    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * over) <<< toNumber <$> (0..4)
   where
-    over = (b - a) / 4.0
+    over = (y - x) / 4.0
 
 link :: ∀ a b. MatchServant a => FilterTab -> a -> HTML b (Query Unit)
-link tab a = 
+link tab x = 
     H.a 
-    [_c "link", _click <<< FilterBy $ singleFilter tab a]
-    [H.text $ show a]
+    [_c "link", _click <<< FilterBy $ singleFilter tab x]
+    [H.text $ show x]

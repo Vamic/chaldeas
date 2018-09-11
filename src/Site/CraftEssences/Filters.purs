@@ -1,9 +1,10 @@
 module Site.CraftEssences.Filters
-  ( activeFilter
+  ( skillFilter
   , getFilters
   ) where
 
 import Prelude
+import Operators
 import Data.String as S
 
 import Data.Array
@@ -31,7 +32,26 @@ extraFilters = join
   ]
 
 scheduledFilters :: Array (ScheduledFilter CraftEssence)
-scheduledFilters = []
+scheduledFilters = 
+  [ ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+    namedBonus FilterAvailability "Limited to Event"
+    [ "Glory is With Me", "Original Legion", "Howl at the Moon" ]
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+    namedBonus FilterAvailability "+1~2 Crimson Petal"
+    [ "Joint Recital" ]
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+    namedBonus FilterAvailability "+100~200% Attack"
+    [ "Princess of the White Rose" ]
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+    namedBonus FilterAvailability "+1~2 Gold Medal"
+    [ "Glory Is With Me" ]
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+    namedBonus FilterAvailability "+1~2 Silver Medal"
+    [ "Original Legion" ]
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+    namedBonus FilterAvailability "+1~2 Bronze Medal"
+    [ "Howl at the Moon" ]
+  ]
 
 matchFilter :: ∀ a. MatchCraftEssence a => FilterTab -> a -> Filter CraftEssence
 matchFilter tab = uncurry (Filter tab) <<< (show &&& ceHas)
@@ -59,14 +79,14 @@ getFilters _ f@FilterDamage   = matchFilter f <$> filter isDamage
                                 getAll :: Array InstantEffect
 getFilters today f = getExtraFilters today f
 
-activeFilter :: ActiveEffect -> Maybe (Filter CraftEssence)
-activeFilter (Grant _ _ buff _)    = Just $ matchFilter 
+skillFilter :: SkillEffect -> Maybe (Filter CraftEssence)
+skillFilter (Grant _ _ buff _)    = Just $ matchFilter 
                                      (FilterBuff $ buffCategory buff) buff
-activeFilter (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
-activeFilter (To _ action _)       = Just $ matchFilter FilterAction action
-activeFilter (Bonus bonus _)       = Just $ matchFilter FilterBonus bonus
-activeFilter (Chance _ ef')        = activeFilter ef'
-activeFilter (Chances _ _ ef')     = activeFilter ef'
-activeFilter (When _ ef')          = activeFilter ef'
-activeFilter (Times _ ef')         = activeFilter ef'
-activeFilter (ToMax _ ef')         = activeFilter ef'
+skillFilter (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
+skillFilter (To _ action _)       = Just $ matchFilter FilterAction action
+skillFilter (Bonus bonus _)       = Just $ matchFilter FilterBonus bonus
+skillFilter (Chance _ ef')        = skillFilter ef'
+skillFilter (Chances _ _ ef')     = skillFilter ef'
+skillFilter (When _ ef')          = skillFilter ef'
+skillFilter (Times _ ef')         = skillFilter ef'
+skillFilter (ToMax _ ef')         = skillFilter ef'

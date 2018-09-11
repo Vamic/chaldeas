@@ -33,4 +33,4 @@ prettify "Angra Mainyu" = "Aŋra Mainiiu"
 prettify "Edmond Dantes" = "Edmond Dantès"
 prettify "Leonardo da Vinci" = "Leonardo Da Vinci"
 prettify "Wisdom of Dun Scaith" = "Wisdom of Dún Scáith"
-prettify a = a
+prettify x = x

@@ -122,22 +122,16 @@ unlimitedManaSupply = passiveBase "Unlimited Mana Supply" IconNobleTurn
 
 data PassiveEffect = Give Target BuffEffect (Array (Tuple Rank Number))
 
-type Passive = { name   :: String
-               , rank   :: Rank
-               , icon   :: Icon
-               , effect :: Array ActiveEffect
-               }
-
-type PassiveBase = Rank -> Passive
+type PassiveBase = Rank -> Skill
 
 passiveBase :: String -> Icon -> Array PassiveEffect -> PassiveBase
 passiveBase name icon effects rank = { name
                                      , rank
                                      , icon
-                                     , effect: activate <$> effects
+                                     , cd:     0
+                                     , effect: skill <$> effects
                                      }
   where
-    activate (Give target buff ranks) = Grant target 0 buff <<<
-                                        fromMaybe Placeholder $ 
-                                        Flat <$> lookup rank ranks
+    skill (Give targ buff ranks) = Grant targ 0 buff <<< fromMaybe Placeholder $ 
+                                   Flat <$> lookup rank ranks
 

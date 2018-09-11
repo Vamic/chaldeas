@@ -32,9 +32,9 @@ import Test.Unit.Assert (assert, equal')
 import Test.Unit.Main (runTestWith)
 import Test.Fancy (runTest)
 
-import Test.Base (class CleanShow, cleanShow, MaybeRank(..), addRank)
-import Test.MediaWiki (MediaWiki, printBool, wiki, wikiRange, wikiLookup)
-import Test.Parse (printIcon, effects, readEffect, skillRanks, npRank)
+import Test.Base (MaybeRank(..), addRank)
+import Test.Wiki (Wiki, printBool, wiki, wikiRange, wikiLookup)
+import Test.Parse (SkillWrapper(..), printIcon, effects, readEffect, skillRanks, npRank)
 
 main :: Effect Unit
 main = Yargs.runY (usage <> example) $ app 
@@ -60,7 +60,7 @@ app ce servant = Console.log msg *> Aff.launchAff_ do
         traverse_ testCraftEssence ces
   where
     show' (-1) = "all"
-    show' a    = show a
+    show' x    = show x
     msg        = "Scanning " <> show' ce <> " Craft Essences and " 
                  <> show' servant <> " Servants"
     servants   = maybeTake servant DB.servants
@@ -68,7 +68,7 @@ app ce servant = Console.log msg *> Aff.launchAff_ do
     maybeTake (-1)   = identity
     maybeTake limits = Array.take limits
 
-wikiMatch :: MediaWiki -> String -> String -> TestSuite
+wikiMatch :: Wiki -> String -> String -> TestSuite
 wikiMatch mw k obj = test k $ case wikiLookup mw k of
     Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "]") $
                obj `Array.elem` v
@@ -76,11 +76,11 @@ wikiMatch mw k obj = test k $ case wikiLookup mw k of
             <> Maybe.maybe "" (append ": ") (wikiLookup mw "err" >>= Array.head)
 
 
-wikiHas :: MediaWiki -> String -> String -> Boolean
+wikiHas :: Wiki -> String -> String -> Boolean
 wikiHas mw k obj = Maybe.maybe false (Array.elem obj <<< map String.toLower) $ 
                    wikiLookup mw k
 
-testCraftEssence :: Tuple DB.CraftEssence MediaWiki -> TestSuite
+testCraftEssence :: Tuple DB.CraftEssence Wiki -> TestSuite
 testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
     match "id"      <<< prId $ Int.toNumber ce.id
     match "maxatk"    $ show ce.stats.max.atk
@@ -99,15 +99,15 @@ testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
                               , sign: false
                               }
 
-shouldMatch :: ∀ a. Eq a => CleanShow a => Array a -> Array a -> TestSuite
-shouldMatch a b = do
-    test "Wiki" <<< beNull $ Array.nubEq a \\ Array.nubEq b
-    test "DB"   <<< beNull $ Array.nubEq b \\ Array.nubEq a
+shouldMatch :: ∀ a. Eq a => Show a => Array a -> Array a -> TestSuite
+shouldMatch x y = do
+    test "Wiki" <<< beNull $ Array.nubEq x \\ Array.nubEq y
+    test "DB"   <<< beNull $ Array.nubEq y \\ Array.nubEq x
   where
-    beNull xs = equal' ("missing " <> String.joinWith ", " (cleanShow <$> xs)) 
+    beNull xs = equal' ("missing " <> String.joinWith ", " (show <$> xs))
                 xs []
 
-testServant :: Tuple DB.Servant MediaWiki -> TestSuite
+testServant :: Tuple DB.Servant Wiki -> TestSuite
 testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Stats") do
       match "id"            <<< prId $ Int.toNumber s.id
       match "class"           $ show s.class
@@ -136,13 +136,14 @@ testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Stats") do
 
   where
     match = wikiMatch mw
-    showAlign (Tuple DB.Neutral DB.Neutral) = "True Neutral"
-    showAlign (Tuple a DB.Mad) = show a <> " Madness"
-    showAlign (Tuple a b) = show a <> " " <> show b
+    showAlign[] = "Changes per Master"
+    showAlign [DB.Neutral, DB.Neutral] = "True Neutral"
+    showAlign [x, DB.Mad] = show x <> " Madness"
+    showAlign xs = String.joinWith " " $ show <$> xs
     showAttr DB.Mankind = "Human"
-    showAttr a = show a
+    showAttr x = show x
     showHitcount 0 = "－"
-    showHitcount a = show a
+    showHitcount x = show x
     hasStatus = wikiHas mw "status"
     status
       | s.free && s.limited = hasStatus "welfare"
@@ -156,7 +157,7 @@ testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Stats") do
                               , sign: false
                               }
 
-testNP :: Tuple DB.Servant MediaWiki -> TestSuite
+testNP :: Tuple DB.Servant Wiki -> TestSuite
 testNP (Tuple (DB.Servant s) mw) = suite (s.name <> ": NP") do
       suite "Primary Effects" do
           shouldMatch (effects s.phantasm.effect) $ 
@@ -165,7 +166,7 @@ testNP (Tuple (DB.Servant s) mw) = suite (s.name <> ": NP") do
           shouldMatch (effects s.phantasm.over) $
               wikiRange mw "oceffect" (0..6) >>= readEffect
 
-wikiRanges :: MediaWiki -> Array DB.RangeInfo
+wikiRanges :: Wiki -> Array DB.RangeInfo
 wikiRanges mw = Array.catMaybes $ go <$> (0..7)
   where 
     go i = do
@@ -179,17 +180,17 @@ wikiRanges mw = Array.catMaybes $ go <$> (0..7)
         guard $ fromVal /= toVal
         pure $ DB.RangeInfo isPercent fromVal toVal
 
-testSkill :: DB.Active -> MediaWiki -> TestSuite
-testSkill skill mw = suite skill.name do
+testSkill :: SkillWrapper -> Wiki -> TestSuite
+testSkill (SkillWrapper skill) mw = suite skill.name do
     wikiMatch mw "cooldown1" $ show skill.cd
     shouldMatch (DB.ranges skill.effect) $ wikiRanges mw
     shouldMatch (effects skill.effect) $
         wikiRange mw "effect" (0..7) >>= readEffect
 
-testSkills :: Map String MediaWiki -> DB.Servant -> TestSuite
-testSkills skills s'(DB.Servant s) = suite (s.name <> ": Skills") <<<
+testSkills :: Map SkillWrapper Wiki -> DB.Servant -> TestSuite
+testSkills skills s'@(DB.Servant s) = suite (s.name <> ": Skills") <<<
     traverse_ go $ snd <$> skillRanks s'
   where
-    go skill = case Map.lookup skill.name skills of
-        Nothing -> test skill.name <<< failure $ "Couldn't find skill"
+    go skill = case Map.lookup skill skills of
+        Nothing -> test (show skill) <<< failure $ "Couldn't find skill"
         Just mw -> testSkill skill mw

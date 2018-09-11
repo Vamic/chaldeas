@@ -6,8 +6,8 @@ module Database.Skill
   , DebuffEffect(..)
   , InstantEffect(..), isDamage
   , BonusEffect(..)
-  , ActiveEffect(..), demerit, simplify, ranges
-  , Active
+  , SkillEffect(..), demerit, simplify, ranges
+  , Skill
   , RangeInfo(..)
   , apAmount, mapAmount
   ) where
@@ -379,28 +379,28 @@ showBonus amount = case _ of
     n = show amount
 
 -- | Int field is duration, Number field is amount
-data ActiveEffect
+data SkillEffect
     = Grant Target Int BuffEffect Amount
     | Debuff Target Int DebuffEffect Amount
     | To Target InstantEffect Amount
     | Bonus BonusEffect Amount
-    | Chance Int ActiveEffect
-    | Chances Int Int ActiveEffect
-    | When String ActiveEffect
-    | Times Int ActiveEffect
-    | ToMax Amount ActiveEffect
+    | Chance Int SkillEffect
+    | Chances Int Int SkillEffect
+    | When String SkillEffect
+    | Times Int SkillEffect
+    | ToMax Amount SkillEffect
 
 apAmount :: (Number -> Number -> Number) -> Amount -> Number
-apAmount f (Range a b) = f a b
-apAmount _ (Flat a) = a
+apAmount f (Range x y) = f x y
+apAmount _ (Flat x) = x
 apAmount _ Placeholder = 0.0
 apAmount _ Full = 0.0
 
-mapAmount :: (Number -> Number -> Amount) -> ActiveEffect -> ActiveEffect
+mapAmount :: (Number -> Number -> Amount) -> SkillEffect -> SkillEffect
 mapAmount f eff = go eff
   where
     f' (Range a b) = f a b
-    f' a = a
+    f' x = x
     go (Grant a b c d)  = Grant a b c $ f' d
     go (Debuff a b c d) = Debuff a b c $ f' d
     go (To a b c)       = To a b $ f' c
@@ -410,12 +410,12 @@ mapAmount f eff = go eff
     go (Times a b)      = Times a $ go b
     go (ToMax a b)      = ToMax (f' a) $ go b
     go (Chances a b c)  = case f (toNumber a) (toNumber b) of
-        Flat amt    -> Chance (floor amt) $ go c
-        Range a' b' -> Chances (floor a') (floor b') $ go c
+        Flat x      -> Chance (floor x) $ go c
+        Range x y   -> Chances (floor x) (floor y) $ go c
         Placeholder -> go c
         Full        -> go c
 
-simplify :: ActiveEffect -> ActiveEffect
+simplify :: SkillEffect -> SkillEffect
 simplify (Chance _ ef)    = simplify ef
 simplify (Chances _ _ ef) = simplify ef
 simplify (When _ ef)      = simplify ef
@@ -423,7 +423,7 @@ simplify (Times _ ef)     = simplify ef
 simplify (ToMax _ ef)   = simplify ef
 simplify ef               = ef
 
-demerit :: ActiveEffect -> Boolean
+demerit :: SkillEffect -> Boolean
 demerit (Grant t _ _ _) = not $ allied t
 demerit (Debuff t _ _ _) = allied t
 demerit (To _ DemeritBuffs _) = true
@@ -440,7 +440,7 @@ demerit (When _ ef) = demerit ef
 demerit (Times _ ef) = demerit ef
 demerit (ToMax _ ef) = demerit ef
 
-instance _g_ :: Show ActiveEffect where
+instance _g_ :: Show SkillEffect where
   show = flip append "." <<< go
     where
       go = case _ of
@@ -450,7 +450,7 @@ instance _g_ :: Show ActiveEffect where
           Bonus bonus amt      -> showBonus amt bonus
           Chance 0 ef          -> "Chance to " <> uncap (go ef)
           Chance per ef        -> show per <> "% chance to " <> uncap (go ef)
-          Chances a b ef       -> show a <> "~" <> show b <> "% chance to "
+          Chances x y ef       -> show x <> "~" <> show y <> "% chance to "
                                   <> uncap (go ef)
           When "attacking" ef  -> go ef <> " when attacking"
           When cond ef         -> "If " <> cond <> ": " <> uncap (go ef)
@@ -478,13 +478,13 @@ instance _h_ :: Show Amount where
   show Placeholder = "X"
   show Full = ""
   show (Flat x) = toString x
-  show (Range a b) = toString a <> "~" <> toString b
+  show (Range x y) = toString x <> "~" <> toString y
 
 toMin :: Amount -> Number
 toMin Placeholder = 0.0
 toMin Full = 0.0
 toMin (Flat x) = x
-toMin (Range a _) = a
+toMin (Range x _) = x
 
 toMax :: Amount -> Number
 toMax Placeholder = 0.0
@@ -492,33 +492,34 @@ toMax Full = 0.0
 toMax (Flat x) = x
 toMax (Range _ b) = b
 
-data Rank = Unknown | EX
-          | APlusPlus | APlus | A | AMinus
-          | BPlusPlus | BPlus | B | BMinus
-          | CPlusPlus | CPlus | C | CMinus
-                      | DPlus | D
-                      | EPlus | E | EMinus
+data Rank 
+    = Unknown | EX
+    | APlusPlus | APlus | A | AMinus
+    | BPlusPlus | BPlus | B | BMinus
+    | CPlusPlus | CPlus | C | CMinus
+                | DPlus | D
+                | EPlus | E | EMinus
 instance _b_ :: Show Rank where
   show = case _ of
-    Unknown   -> "--"
-    EX        -> "EX"
-    APlusPlus -> "A++"
-    APlus     -> "A+"
-    A         -> "A"
-    AMinus    -> "A-"
-    BPlusPlus -> "B++"
-    BPlus     -> "B+"
-    B         -> "B"
-    BMinus    -> "B-"
-    CPlusPlus -> "C++"
-    CPlus     -> "C+"
-    C         -> "C"
-    CMinus    -> "C-"
-    DPlus     -> "D+"
-    D         -> "D"
-    EPlus     -> "E+"
-    E         -> "E"
-    EMinus    -> "E-"
+    Unknown       -> ""
+    EX            -> " EX"
+    APlusPlus     -> " A++"
+    APlus         -> " A+"
+    A             -> " A"
+    AMinus        -> " A-"
+    BPlusPlus     -> " B++"
+    BPlus         -> " B+"
+    B             -> " B"
+    BMinus        -> " B-"
+    CPlusPlus     -> " C++"
+    CPlus         -> " C+"
+    C             -> " C"
+    CMinus        -> " C-"
+    DPlus         -> " D+"
+    D             -> " D"
+    EPlus         -> " E+"
+    E             -> " E"
+    EMinus        -> " E-"
 
 data Target = Someone
             | Self | Ally | Party | Enemy | Enemies | Others
@@ -568,28 +569,29 @@ instance _i_ :: Show RangeInfo where
 instance _j_ :: Eq RangeInfo where
   eq (RangeInfo _ a1 a2) (RangeInfo _ b1 b2) = a1 == b1 && a2 == b2
 
-ranges :: ∀ f. Alternative f => Bind f => f ActiveEffect -> f RangeInfo
+ranges :: ∀ f. Alternative f => Bind f => f SkillEffect -> f RangeInfo
 ranges = bindFlipped toInfo
   where
     toInfo eff = uncurry (RangeInfo $ isPercent eff) <$> acc eff
     isPercent = elem '%' <<< toCharArray <<< show
-    acc (Grant _ _ _ a) = go a
-    acc (Debuff _ _ _ a) = go a
-    acc (To _ _ a) = go a
-    acc (Bonus _ a) = go a
+    acc (Grant _ _ _ x) = go x
+    acc (Debuff _ _ _ x) = go x
+    acc (To _ _ x) = go x
+    acc (Bonus _ x) = go x
     acc (Chance _ ef) = acc ef
-    acc (Chances a b ef) = pure (Tuple (toNumber a) (toNumber b)) <|> acc ef
+    acc (Chances x y ef) = pure (Tuple (toNumber x) (toNumber y)) <|> acc ef
     acc (When _ ef) = acc ef
     acc (Times _ ef) = acc ef
     acc (ToMax _ ef) = acc ef
-    go (a ~ b) = pure $ Tuple a b
+    go (x ~ y) = pure $ Tuple x y
     go _ = empty
 
-type Active = { name   :: String
-              , icon   :: Icon
-              , cd     :: Int
-              , effect :: Array ActiveEffect
-              }
+type Skill = { name   :: String
+             , rank   :: Rank
+             , icon   :: Icon
+             , cd     :: Int
+             , effect :: Array SkillEffect
+             }
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
@@ -673,7 +675,7 @@ instance _36_ :: G.BoundedEnum BuffCategory where
 instance _37_ :: Show BuffCategory where
   show = drop 4 <<< G.genericShow
 
-derive instance _38_ :: Eq ActiveEffect
+derive instance _38_ :: Eq SkillEffect
 
 derive instance _39_ :: Eq Rank
 derive instance _40_ :: Ord Rank

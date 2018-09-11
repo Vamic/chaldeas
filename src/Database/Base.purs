@@ -1,5 +1,5 @@
 module Database.Base
-  ( Alignment(..), showAlignment
+  ( Alignment(..)
   , Attribute(..)
   , Card(..)
   , Class(..)
@@ -8,18 +8,10 @@ module Database.Base
   ) where
 
 import Prelude
-import Operators
 import Generic as G
-
-import Data.Tuple
 
 data Alignment = Lawful | Neutral | Chaotic | Good | Balanced | Evil
                | Mad | Summer | Bride
-
-showAlignment :: Tuple Alignment Alignment -> String
-showAlignment = case _ of
-    Neutral:Balanced -> "True Neutral"
-    a:b             -> show a <> " " <> show b
 
 data Attribute = Mankind | Earth | Heaven | Star
 
@@ -33,7 +25,7 @@ showStat :: Stat -> String
 showStat {atk, hp} = "ATK: " <> show atk <> ", HP: " <> show hp
 
 addStats :: Stat -> Stat -> Stat
-addStats a b = {atk: a.atk + b.atk, hp: a.hp + b.hp}
+addStats x y = {atk: x.atk + y.atk, hp: x.hp + y.hp}
 
 data Trait
     = Arthur
@@ -52,6 +44,7 @@ data Trait
     | King
     | Male
     | Mecha
+    | Nonbinary
     | PseudoServant
     | Riding
     | Roman
@@ -69,7 +62,7 @@ instance _b_ :: Show Trait where
     PseudoServant    -> "Pseudo-Servant"
     ThreatToHumanity -> "Threat to Humanity"
     EnumaElish       -> "Weak to Enuma Elish"
-    a                -> G.genericShow a
+    x                -> G.genericShow x
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

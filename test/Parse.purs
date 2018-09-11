@@ -1,5 +1,6 @@
 module Test.Parse 
-  ( translate
+  ( SkillWrapper(..)
+  , translate
   , printIcon
   , effects
   , readEffect
@@ -8,20 +9,22 @@ module Test.Parse
   ) where
 
 import Prelude
-import Operators ((:))
+import Operators (compareThen, (:))
 import Printing (prettify)
-import Database (ActiveEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), craftEssences)
+import Database (SkillEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), Skill, craftEssences)
 
 import Data.Array (elem)
 import Data.Foldable (all, any, find)
 import Data.Generic.Rep.Show (genericShow)
-import Data.Maybe (fromMaybe, maybe)
+import Data.Maybe (fromMaybe)
+import Data.Newtype (class Newtype, unwrap)
+import Data.Profunctor.Strong (second)
 import Data.String (Pattern(..))
 import Data.String as S
 import Data.String.CodeUnits (fromCharArray, toCharArray)
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple)
 
-import Test.Base (MaybeRank(..), addRank, getRank, showRank, unRank)
+import Test.Base (MaybeRank(..))
 
 upgradeNPs :: Array String
 upgradeNPs = 
@@ -43,27 +46,30 @@ uniqueSkills =
     [ "Brynhild": "Primordial Rune"
     , "Scathach": "Primordial Rune"
     , "Euryale":  "Whim of the Goddess"
-    , "Stheno":    "Whim of the Goddess"
+    , "Stheno":   "Whim of the Goddess"
     , "Henry Jekyll & Hyde": "Monstrous Strength"
     ]
 
 ceNames :: Array String
 ceNames = show <$> craftEssences
 
-skillRanks :: Servant -> Array (Tuple MaybeRank String)
-skillRanks s'@(Servant s) = ranker <<< addRank getRank <<< _.name <$> s.actives
+newtype SkillWrapper = SkillWrapper Skill
+derive instance _0_ :: Newtype SkillWrapper _
+instance __1_ :: Show SkillWrapper where
+    show (SkillWrapper skill) = skill.name
+instance _2_ :: Eq SkillWrapper where
+    eq (SkillWrapper x) (SkillWrapper y) = x.name == y.name && x.rank == y.rank
+instance _3_ :: Ord SkillWrapper where
+    compare = compareThen (_.name <<< unwrap) (_.rank <<< unwrap)
+
+skillRanks :: Servant -> Array (Tuple MaybeRank SkillWrapper)
+skillRanks s'@(Servant s) = second SkillWrapper <<< go <$> s.skills
   where
-    tagCe skill
-      | skill `elem` ceNames = skill <> " (Skill)"
-      | otherwise            = skill
-    rankUp (Pure rank) skill
-      | Tuple s.name skill `elem` uniqueSkills  = Unique s' rank
-      | Tuple s.name skill `elem` upgradeSkills = Upgrade rank
-    rankUp a _ = a
-    ranker (Tuple rank skill) = Tuple (rankUp rank unRanked) $ tagCe unRanked 
-                             <> maybe "" (append " ") (showRank rank)
-      where
-        unRanked = unRank rank skill
+    go x
+      | x.name `elem` ceNames = Pure x.rank : x { name = x.name <> " (Skill)" }
+      | (s.name : x.name) `elem` upgradeSkills = Upgrade x.rank   : x
+      | (s.name : x.name) `elem` uniqueSkills  = Unique s' x.rank : x
+      | otherwise                              = Pure x.rank      : x
 
 translate :: String -> String
 translate "Cheerful-Type Mystic Code" = "Cheerful Model Mystic Code"
@@ -71,7 +77,10 @@ translate "Mugashiki—Shinkuu Myou" = "Mugashiki - Shinkuu Myōu"
 translate "Leonardo da Vinci" = "Leonardo Da Vinci"
 translate "Beautiful Princess (Sea)" = "Princess of Loveliness (Ocean)"
 translate "Treasure Hunt (Sea)" = "Treasure Hunt (Ocean)"
-translate a = prettify a
+translate "Glory Is With Me" = "Praise Me!"
+translate "Original Legion" = "Legion of Pioneers"
+translate "Howl at the Moon" = "Howling to the Moonlight"
+translate x = prettify x
 
 printIcon :: Icon -> String
 printIcon IconAllUp = "All Up"
@@ -112,9 +121,9 @@ printIcon IconQuickUp = "Quick Up"
 printIcon IconArtsQuickUp = "QuickArts Up"
 printIcon IconCircuits = "Skill Seal"
 printIcon IconCrosshairUp = "Taunt"
-printIcon a = show a
+printIcon x = show x
 
-effects :: Array ActiveEffect -> Array String
+effects :: Array SkillEffect -> Array String
 effects = map showEffect
   where
     showEffect (Debuff _ _ (ApplyTrait _) _) = "Apply Trait"
@@ -168,7 +177,7 @@ readEffect effect = go
     sanitize '[' = ' '
     sanitize ']' = ' '
     sanitize '#' = ' '
-    sanitize a   = a
+    sanitize x   = x
     inWords x = elem x words || elem (x <> "s") words 
     match xs = all (any inWords <<< synonyms) xs
     synonyms word = fromMaybe [word] $ find (elem word) synonym

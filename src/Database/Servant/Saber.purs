@@ -1,7 +1,6 @@
 module Database.Servant.Saber (sabers) where
 
 import Prelude
-import Operators
 import Database.Model
 
 sabers :: Array Servant
@@ -17,17 +16,20 @@ sabers = Servant <$>
               , max:   { atk: 12068, hp: 13225 }
               , grail: { atk: 13210, hp: 14489 }
               }
-  , actives:  [ { name:   "Shukuchi B"
+  , skills:   [ { name:   "Shukuchi"
+                , rank:   B
                 , icon:   IconQuickUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Quick) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Weak Constitution A"
+              , { name:   "Weak Constitution"
+                , rank:   A
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0 ]
                 }
-              , { name:   "Mind's Eye (Fake) A"
+              , { name:   "Mind's Eye (Fake)"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
@@ -50,7 +52,7 @@ sabers = Servant <$>
   , hits:     { quick: 5, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Saberface, EnumaElish]
   , death:    35.0
-  , align:    Neutral:Balanced
+  , align:    [Neutral, Balanced]
   , limited:  true
   , free:     false
   }
@@ -65,19 +67,22 @@ sabers = Servant <$>
               , max:   { atk: 12343, hp: 13907 }
               , grail: { atk: 13511, hp: 15236 }
               }
-  , actives:  [ { name:   "Tactics B"
+  , skills:   [ { name:   "Tactics"
+                , rank:   B
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Natural Body D"
+              , { name:   "Natural Body"
+                , rank:   D
                 , icon:   IconHoodUp
                 , cd:     7
                 , effect: [ Grant Self 3 OffensiveResist $ 40.0 ~ 80.0
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
-              , { name:   "Crest of the Star EX"
+              , { name:   "Crest of the Star"
+                , rank:   EX
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0
@@ -100,7 +105,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Divine, EnumaElish, King]
   , death:    24.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -115,19 +120,22 @@ sabers = Servant <$>
               , max:   { atk: 11607, hp: 14284 }
               , grail: { atk: 12706, hp: 15609 }
               }
-  , actives:  [ { name:   "Stars for the Sky A"
+  , skills:   [ { name:   "Stars for the Sky"
+                , rank:   A
                 , icon:   IconNobleUp
                 , cd:     9
                 , effect: [ Grant Ally 3 NPGen $ 35.0 ~ 45.0 ]
                 }
-              , { name:   "Flowers for the Earth A"
+              , { name:   "Flowers for the Earth"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     8
                 , effect: [ Grant Ally 3 AttackUp $ 30.0 ~ 40.0
                           , Grant Ally 3 StarUp $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Love for the People A"
+              , { name:   "Love for the People"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
@@ -153,7 +161,7 @@ sabers = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 1, ex: 5 }
   , traits:   [Female, Riding, Saberface, Roman, EnumaElish, King]
   , death:    35.0
-  , align:    Chaotic:Bride
+  , align:    [Chaotic, Bride]
   , limited:  true
   , free:     false
   }
@@ -168,17 +176,20 @@ sabers = Servant <$>
               , max:   { atk: 11723, hp: 14680 }
               , grail: { atk: 12833, hp: 16083 }
               }
-  , actives:  [ { name:   "Mana Burst A"
+  , skills:   [ { name:   "Mana Burst"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Intuition B"
+              , { name:   "Intuition"
+                , rank:   B
                 , icon:   IconStar
                 , cd:     7
                 , effect: [ To Party GainStars $ 4.0 ~ 14.0 ]
                 }
-              , { name:   "Secret of Pedigree EX"
+              , { name:   "Secret of Pedigree"
+                , rank:   EX
                 , icon:   IconShieldUp
                 , cd:     8
                 , effect: [ Grant Self 1 DefenseUp $ 30.0 ~ 50.0
@@ -188,7 +199,7 @@ sabers = Servant <$>
                 }
               ]
   , passives: [magicResistance B, riding B]
-  , phantasm: { name:   "Clarent Blood Arthur A+"
+  , phantasm: { name:   "Clarent Blood Arthur"
               , desc:   "Rebellion Against My Beautiful Father"
               , rank:   APlus
               , card:   Buster
@@ -204,7 +215,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, EnumaElish]
   , death:    24.5
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -219,7 +230,8 @@ sabers = Servant <$>
               , max:   { atk: 10721, hp: 15453 }
               , grail: { atk: 11736, hp: 16929 }
               }
-  , actives:  [ { name:   "Mystic Eyes of Death Perception C"
+  , skills:   [ { name:   "Mystic Eyes of Death Perception"
+                , rank:   C
                 , icon:   IconMystic
                 , cd:     7
                 , effect: [ Grant Self 1 IgnoreInvinc Full
@@ -227,14 +239,16 @@ sabers = Servant <$>
                           , Debuff Enemies 1 DeathDown $ 60.0 ~ 80.0
                           ]
                 }
-              , { name:   "Unyou B"
+              , { name:   "Unyou"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 15.0 ~ 25.0
                           , Grant Self 3 MentalResist $ 18.0 ~ 36.0
                           ]
                 }
-              , { name:   "Yin-Yang A"
+              , { name:   "Yin-Yang"
+                , rank:   A
                 , icon:   IconYinYang
                 , cd:     6
                 , effect: [ To Self Heal $ 2000.0 ~ 5000.0
@@ -259,7 +273,7 @@ sabers = Servant <$>
   , hits:     { quick: 4, arts: 2, buster: 1, ex: 4 }
   , traits:   [Female, EnumaElish, PseudoServant]
   , death:    24.5
-  , align:    Neutral:Balanced
+  , align:    [Neutral, Balanced]
   , limited:  true
   , free:     false
   }
@@ -274,17 +288,20 @@ sabers = Servant <$>
               , max:   { atk: 11221, hp: 15150 }
               , grail: { atk: 12283, hp: 16597 }
               }
-  , actives:  [ { name:   "Charisma B"
+  , skills:   [ { name:   "Charisma"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Mana Burst A"
+              , { name:   "Mana Burst"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Intuition A"
+              , { name:   "Intuition"
+                , rank:   A
                 , icon:   IconStar
                 , cd:     7
                 , effect: [ To Party GainStars $ 5.0 ~ 15.0 ]
@@ -305,7 +322,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    21.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -320,19 +337,22 @@ sabers = Servant <$>
               , max:   { atk: 9949, hp: 11589 }
               , grail: { atk: 12046, hp: 14051 }
               }
-  , actives:  [ { name:   "Knight of the Lake A"
+  , skills:   [ { name:   "Knight of the Lake"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ Flat 30.0
                           , To Party GainStars $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Eternal Arms Mastery A+"
+              , { name:   "Eternal Arms Mastery"
+                , rank:   APlus
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
                 }
-              , { name:   "Knight of Owner A++"
+              , { name:   "Knight of Owner"
+                , rank:   APlusPlus
                 , icon:   IconStarTurn
                 , cd:     8
                 , effect: [ Grant Party 3 StarsPerTurn $ 5.0 ~ 15.0
@@ -357,7 +377,7 @@ sabers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 4, ex: 5 }
   , traits:   [Male, Brynhild, Riding, EnumaElish]
   , death:    28.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -372,17 +392,20 @@ sabers = Servant <$>
               , max:   { atk: 10248, hp: 11589 }
               , grail: { atk: 12408, hp: 14051 }
               }
-  , actives:  [ { name:   "Mana Burst A"
+  , skills:   [ { name:   "Mana Burst"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Intuition B"
+              , { name:   "Intuition"
+                , rank:   B
                 , icon:   IconStar
                 , cd:     7
                 , effect: [ To Party GainStars $ 4.0 ~ 14.0 ]
                 }
-              , { name:   "Charisma E"
+              , { name:   "Charisma"
+                , rank:   E
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 6.0 ~ 12.0 ]
@@ -403,7 +426,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, King, Dragon, Saberface, Arthur, EnumaElish]
   , death:    19.2
-  , align:    Lawful:Evil
+  , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
   }
@@ -418,19 +441,22 @@ sabers = Servant <$>
               , max:   { atk: 9854, hp: 11882 }
               , grail: { atk: 11931, hp: 14541 }
               }
-  , actives:  [ { name:   "Blessing of Martial Arts A"
+  , skills:   [ { name:   "Blessing of Martial Arts"
+                , rank:   A
                 , icon:   IconStarUp
                 , cd:     6
                 , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 500.0
                           , Grant Self 1 CritUp $ 50.0 ~ 100.0
                           ]
                 }
-              , { name:   "Charisma B"
+              , { name:   "Charisma"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Curse of Separation A"
+              , { name:   "Curse of Separation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 3 Guts $ Flat 1000.0
@@ -453,7 +479,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, Riding, Brynhild, Divine, EnumaElish, King]
   , death:    24.5
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -468,14 +494,16 @@ sabers = Servant <$>
               , max:   { atk: 9449, hp: 11753 }
               , grail: { atk: 11441, hp: 14250 }
               }
-  , actives:  [ { name:   "Migraine B"
+  , skills:   [ { name:   "Migraine"
+                , rank:   B
                 , icon:   IconHoodUp
                 , cd:     7
                 , effect: [ Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           , To Self Heal $ 500.0 ~ 2000.0
                           ]
                 }
-              , { name:   "Imperial Privilege EX"
+              , { name:   "Imperial Privilege"
+                , rank:   EX
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 1200.0 ~ 3400.0
@@ -483,7 +511,8 @@ sabers = Servant <$>
                           , Chance 60 <<< Grant Self 3 DefenseUp $ 22.0 ~ 44.0
                           ]
                 }
-              , { name:   "Invictus Spiritus A"
+              , { name:   "Invictus Spiritus"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     12
                 , effect: [ Times 3 <<< Grant Self 5 Guts $ 300.0 ~ 600.0 ]
@@ -504,7 +533,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, Riding, Roman, Saberface, EnumaElish, King]
   , death:    24.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -519,21 +548,24 @@ sabers = Servant <$>
               , max:   { atk: 8765, hp: 13256 }
               , grail: { atk: 10613, hp: 16073 }
               }
-  , actives:  [ { name:   "Mind's Eye (True) C"
+  , skills:   [ { name:   "Mind's Eye (True)"
+                , rank:   C
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
-              , { name:   "Self-Suggestion A"
+              , { name:   "Self-Suggestion"
+                , rank:   A
                 , icon:   IconBubbles
                 , cd:     7
                 , effect: [ To Self RemoveDebuffs Full
                           , Grant Self 3 DebuffResist $ 50.0 ~ 100.0
                           ]
                 }
-              , { name:   "Beautiful Appearance C"
+              , { name:   "Beautiful Appearance"
+                , rank:   C
                 , icon:   IconFace
                 , cd:     7
                 , effect: [ Grant Self 3 Taunt Full
@@ -556,9 +588,9 @@ sabers = Servant <$>
               }
   , gen:      { starWeight: 102, starRate: 10.0, npAtk: 0.83, npDef: 3 }
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
-  , traits:   [Riding, EnumaElish]
+  , traits:   [Nonbinary, Riding, EnumaElish]
   , death:    28.0
-  , align:    Neutral:Balanced
+  , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
   }
@@ -573,19 +605,22 @@ sabers = Servant <$>
               , max:   { atk: 8181, hp: 14165 }
               , grail: { atk: 9905, hp: 17175 }
               }
-  , actives:  [ { name:   "Golden Rule C-"
+  , skills:   [ { name:   "Golden Rule"
+                , rank:   CMinus
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 15.0 ~ 37.5 ]
                 }
-              , { name:   "Disengage A"
+              , { name:   "Disengage"
+                , rank:   A
                 , icon:   IconBubbles
                 , cd:     7
                 , effect: [ To Self RemoveDebuffs Full
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
-              , { name:   "Dragon-Slayer A"
+              , { name:   "Dragon-Slayer"
+                , rank:   A
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 3 (AttackVs Dragon) $ 50.0 ~ 80.0
@@ -608,7 +643,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Brynhild, Dragon, EnumaElish, King]
   , death:    28.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -623,7 +658,8 @@ sabers = Servant <$>
               , max:   { atk: 10173, hp: 11419 }
               , grail: { atk: 12317, hp: 13845 }
               }
-  , actives:  [ { name:   "Numeral of The Saint EX"
+  , skills:   [ { name:   "Numeral of The Saint"
+                , rank:   EX
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ Flat 20.0
@@ -631,12 +667,14 @@ sabers = Servant <$>
                             Grant Self 3 (Performance Buster) $ 20.0 ~ 30.0
                           ]
                 }
-              , { name:   "Charisma E"
+              , { name:   "Charisma"
+                , rank:   E
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 6.0 ~ 12.0 ]
                 }
-              , { name:   "Belt of Bertilak EX"
+              , { name:   "Belt of Bertilak"
+                , rank:   EX
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ Flat 20.0
@@ -662,7 +700,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, Riding, EnumaElish]
   , death:    21.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -677,17 +715,20 @@ sabers = Servant <$>
               , max:   { atk: 7726, hp: 10623 }
               , grail: { atk: 9355, hp: 12880 }
               }
-  , actives:  [ { name:   "Intuition B"
+  , skills:   [ { name:   "Intuition"
+                , rank:   B
                 , icon:   IconStar
                 , cd:     7
                 , effect: [ To Party GainStars $ 4.0 ~ 14.0 ]
                 }
-              , { name:   "Mana Burst A"
+              , { name:   "Mana Burst"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Journey of the Flowers EX"
+              , { name:   "Journey of the Flowers"
+                , rank:   EX
                 , icon:   IconNobleUp
                 , cd:     7
                 , effect: [ Grant Party 3 NPGen $ 10.0 ~ 20.0 ]
@@ -708,7 +749,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    21.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  true
   , free:     true
   }
@@ -723,17 +764,20 @@ sabers = Servant <$>
               , max:   { atk: 7497, hp: 9595 }
               , grail: { atk: 10146, hp: 13009 }
               }
-  , actives:  [ { name:   "Tactics B"
+  , skills:   [ { name:   "Tactics"
+                , rank:   B
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Charisma C"
+              , { name:   "Charisma"
+                , rank:   C
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 8.0 ~ 16.0 ]
                 }
-              , { name:   "Incite EX"
+              , { name:   "Incite"
+                , rank:   EX
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Ally 3 CritUp $ 20.0 ~ 40.0
@@ -756,7 +800,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, King, Riding, Brynhild, Roman, Divine, EnumaElish]
   , death:    31.5
-  , align:    Neutral:Balanced
+  , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
   }
@@ -771,21 +815,24 @@ sabers = Servant <$>
               , max:   { atk: 7460, hp: 9786 }
               , grail: { atk: 10096, hp: 13268 }
               }
-  , actives:  [ { name:   "Valor A"
+  , skills:   [ { name:   "Valor"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0
                           , Grant Self 3 MentalResist $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Defiant B"
+              , { name:   "Defiant"
+                , rank:   B
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 15.0 ~ 25.0
                           , Debuff Self 3 BuffFail $ Flat 50.0
                           ]
                 }
-              , { name:   "Mind's Eye (True) A"
+              , { name:   "Mind's Eye (True)"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
@@ -810,7 +857,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Brynhild, EnumaElish, King]
   , death:    35.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -825,19 +872,22 @@ sabers = Servant <$>
               , max:   { atk: 7627, hp: 9595 }
               , grail: { atk: 10322, hp: 13009 }
               }
-  , actives:  [ { name:   "Tactics C"
+  , skills:   [ { name:   "Tactics"
+                , rank:   C
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 8.0 ~ 16.0 ]
                 }
-              , { name:   "Calm and Collected B"
+              , { name:   "Calm and Collected"
+                , rank:   B
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ Flat 30.0
                           , Grant Self 3 DebuffResist $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Oath of Protection B"
+              , { name:   "Oath of Protection"
+                , rank:   B
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Party 1 DefenseUp $ Flat 30.0
@@ -860,7 +910,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, Riding, EnumaElish]
   , death:    28.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     true
   }
@@ -875,17 +925,20 @@ sabers = Servant <$>
               , max:   { atk: 6615, hp: 10498 }
               , grail: { atk: 8952, hp: 14234 }
               }
-  , actives:  [ { name:   "Tactics C"
+  , skills:   [ { name:   "Tactics"
+                , rank:   C
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 8.0 ~ 16.0 ]
                 }
-              , { name:   "Golden Rule B"
+              , { name:   "Golden Rule"
+                , rank:   B
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 18.0 ~ 45.0 ]
                 }
-              , { name:   "Prelati's Encouragement B"
+              , { name:   "Prelati's Encouragement"
+                , rank:   B
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 5 (Performance Buster) $ 20.0 ~ 40.0 ]
@@ -908,7 +961,7 @@ sabers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Brynhild, EnumaElish]
   , death:    31.5
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }

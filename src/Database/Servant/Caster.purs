@@ -1,7 +1,6 @@
 module Database.Servant.Caster (casters) where
 
 import Prelude
-import Operators
 import Database.Model
 
 casters :: Array Servant
@@ -17,14 +16,16 @@ casters = Servant <$>
               , max:   { atk: 10598, hp: 14259 }
               , grail: { atk: 11601, hp: 15621 }
               }
-  , actives:  [ { name:   "Discerning Eye A"
+  , skills:   [ { name:   "Discerning Eye"
+                , rank:   A
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Ally 3 CritUp $ 20.0 ~ 50.0
                           , To Ally GaugeUp $ Flat 30.0
                           ]
                 }
-              , { name:   "Tactician's Advice A+"
+              , { name:   "Tactician's Advice"
+                , rank:   APlus
                 , icon:   IconShieldUp
                 , cd:     8
                 , effect: [ Grant Party 3 DefenseUp $ 20.0 ~ 30.0
@@ -32,7 +33,8 @@ casters = Servant <$>
                           , To Party GaugeUp $ Flat 10.0
                           ]
                 }
-              , { name:   "Tactician's Command A+"
+              , { name:   "Tactician's Command"
+                , rank:   APlus
                 , icon:   IconSwordUp
                 , cd:     8
                 , effect: [ Grant Party 3 AttackUp $ 20.0 ~ 30.0
@@ -60,7 +62,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild, PseudoServant]
   , death:    34.5
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  false
   , free:     false
   }
@@ -75,19 +77,22 @@ casters = Servant <$>
               , max:   { atk: 10546, hp: 14259 }
               , grail: { atk: 11544, hp: 15621 }
               }
-  , actives:  [ { name:   "Curse EX"
+  , skills:   [ { name:   "Curse"
+                , rank:   EX
                 , icon:   IconDarkMagic
                 , cd:     7
                 , effect: [ Chances 80 100 <<< To Enemy GaugeDown $ Flat 1.0 ]
                 }
-              , { name:   "Morph A"
+              , { name:   "Morph"
+                , rank:   A
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0
                           , Grant Self 1 DefenseUp $ Flat 30.0
                           ]
                 }
-              , { name:   "Fox's Wedding EX"
+              , { name:   "Fox's Wedding"
+                , rank:   EX
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Ally 3 (Performance Arts) $ 30.0 ~ 50.0
@@ -112,7 +117,7 @@ casters = Servant <$>
   , hits:     { quick: 3, arts: 5, buster: 1, ex: 4 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    36.0
-  , align:    Neutral:Evil
+  , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
   }
@@ -127,21 +132,24 @@ casters = Servant <$>
               , max:   { atk: 11658, hp: 12965 }
               , grail: { atk: 12761, hp: 14204 }
               }
-  , actives:  [ { name:   "Rapid Sutra Chanting A"
+  , skills:   [ { name:   "Rapid Sutra Chanting"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     9
                 , effect: [ To Self GaugeUp $ 50.0 ~ 80.0
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Captivating Rosy Cheeks A"
+              , { name:   "Captivating Rosy Cheeks"
+                , rank:   A
                 , icon:   IconCrosshairUp
                 , cd:     8
                 , effect: [ Grant Self 1 Taunt Full
                           , Grant Self 1 DamageDown $ 500.0 ~ 1500.0
                           ]
                 }
-              , { name:   "Sanzang's Teachings A"
+              , { name:   "Sanzang's Teachings"
+                , rank:   A
                 , icon:   IconNobleUp
                 , cd:     7
                 , effect: [ Grant Party 3 NPGen $ 10.0 ~ 30.0
@@ -165,7 +173,7 @@ casters = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 6 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -180,7 +188,8 @@ casters = Servant <$>
               , max:   { atk: 10598, hp: 14259 }
               , grail: { atk: 11601, hp: 15621 }
               }
-  , actives:  [ { name:   "Inherent Wisdom EX"
+  , skills:   [ { name:   "Inherent Wisdom"
+                , rank:   EX
                 , icon:   IconKneel
                 , cd:     7
                 , effect: [ Times 1 <<< Grant Self 3 Guts $ 1000.0 ~ 3000.0
@@ -188,7 +197,8 @@ casters = Servant <$>
                           , Chance 85 <<< Grant Self 3 NPUp $ 20.0 ~ 30.0
                           ]
                 }
-              , { name:   "Golden Rule (Body) B"
+              , { name:   "Golden Rule (Body)"
+                , rank:   B
                 , icon:   IconHealTurn
                 , cd:     8
                 , effect: [ Grant Self 2 DebuffResist Full
@@ -196,7 +206,8 @@ casters = Servant <$>
                           , Grant Self 3 GaugePerTurn $ Flat 10.0
                           ]
                 }
-              , { name:   "Pioneer of the Stars EX"
+              , { name:   "Pioneer of the Stars"
+                , rank:   EX
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
@@ -222,7 +233,7 @@ casters = Servant <$>
   , hits:     { quick: 4, arts: 3, buster: 1, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    34.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
   }
@@ -237,19 +248,22 @@ casters = Servant <$>
               , max:   { atk: 10857, hp: 13825 }
               , grail: { atk: 11885, hp: 15146 }
               }
-  , actives:  [ { name:   "Cheerful-Type Mystic Code A"
+  , skills:   [ { name:   "Cheerful-Type Mystic Code"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Child of Nature B"
+              , { name:   "Child of Nature"
+                , rank:   B
                 , icon:   IconShield
                 , cd:     8
                 , effect: [ Grant Self 1 Invincibility Full
                           , Grant Self 3 NPGen $ 18.0 ~ 28.0
                           ]
                 }
-              , { name:   "Suspicious Medicine A"
+              , { name:   "Suspicious Medicine"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     8
                 , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
@@ -277,7 +291,7 @@ casters = Servant <$>
   , hits:     { quick: 3, arts: 5, buster: 1, ex: 5 }
   , traits:   [Female, PseudoServant, EnumaElish]
   , death:    42.0
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  true
   , free:     false
   }
@@ -292,19 +306,22 @@ casters = Servant <$>
               , max:   { atk: 7766, hp: 13070 }
               , grail: { atk: 9403, hp: 15847 }
               }
-  , actives:  [ { name:   "Rapid Words of Divine A"
+  , skills:   [ { name:   "Rapid Words of Divine"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     9
                 , effect: [ To Self GaugeUp $ 80.0 ~ 150.0 ]
                 }
-              , { name:   "Poison Resistance A++"
+              , { name:   "Poison Resistance"
+                , rank:   APlusPlus
                 , icon:   IconBubbles
                 , cd:     7
                 , effect: [ To Party Cure Full
                           , To Party Heal $ 2000.0 ~ 3000.0
                           ]
                 }
-              , { name:   "Ephemeral Love B"
+              , { name:   "Ephemeral Love"
+                , rank:   B
                 , icon:   IconHeal
                 , cd:     10
                 , effect: [ Grant Ally 1 HealingReceived $ 50.0 ~ 100.0 ]
@@ -327,7 +344,7 @@ casters = Servant <$>
   , hits:     { quick: 4, arts: 4, buster: 3, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -342,21 +359,24 @@ casters = Servant <$>
               , max:   { atk: 8616, hp: 11404 }
               , grail: { atk: 10432, hp: 13827 }
               }
-  , actives:  [ { name:   "Innocent Monster EX"
+  , skills:   [ { name:   "Innocent Monster"
+                , rank:   EX
                 , icon:   IconStarTurn
                 , cd:     7
                 , effect: [ Grant Party 3 StarsPerTurn $ 6.0 ~ 12.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
-              , { name:   "Mana Burst (Pumpkin) A"
+              , { name:   "Mana Burst (Pumpkin)"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 25.0 ~ 45.0
                           , Debuff Enemies 10 Burn $ Flat 300.0
                           ]
                 }
-              , { name:   "Performance Continuation A"
+              , { name:   "Performance Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0
@@ -379,7 +399,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 4 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    42.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  true
   , free:     true
   }
@@ -394,14 +414,16 @@ casters = Servant <$>
               , max:   { atk: 8629, hp: 11882 }
               , grail: { atk: 10448, hp: 14407 }
               }
-  , actives:  [ { name:   "Self-Modification A"
+  , skills:   [ { name:   "Self-Modification"
+                , rank:   A
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
                           , Grant Self 3 StarAbsorb $ 300.0 ~ 600.0
                           ]
                 }
-              , { name:   "Morph A+"
+              , { name:   "Morph"
+                , rank:   APlus
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0
@@ -409,7 +431,8 @@ casters = Servant <$>
                           , Grant Self 3 DebuffResist $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Meanwhile A"
+              , { name:   "Meanwhile"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 20.0 ~ 40.0
@@ -435,7 +458,7 @@ casters = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
-  , align:    Neutral:Balanced
+  , align:    []
   , limited:  false
   , free:     false
   }
@@ -450,19 +473,22 @@ casters = Servant <$>
               , max:   { atk: 8629, hp: 11882 }
               , grail: { atk: 10448, hp: 14407 }
               }
-  , actives:  [ { name:   "Mana Tuning C"
+  , skills:   [ { name:   "Mana Tuning"
+                , rank:   C
                 , icon:   IconNoble
                 , cd:     9
                 , effect: [ To Party GaugeUp $ 10.0 ~ 20.0 ]
                 }
-              , { name:   "Mahatma A"
+              , { name:   "Mahatma"
+                , rank:   A
                 , icon:   IconStarTurn
                 , cd:     10
                 , effect: [ Grant Party 5 StarsPerTurn $ Flat 5.0
                           , Chances 60 80 <<< Grant Self 1 NPUp $ Flat 50.0
                           ]
                 }
-              , { name:   "Search for the Unknown B"
+              , { name:   "Search for the Unknown"
+                , rank:   B
                 , icon:   IconAllUp
                 , cd:     9
                 , effect: [ Grant Party 3 (Performance Quick) $ 15.0 ~ 20.0
@@ -489,7 +515,7 @@ casters = Servant <$>
   , hits:     { quick: 6, arts: 3, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -504,19 +530,22 @@ casters = Servant <$>
               , max:   { atk: 9060, hp: 11288 }
               , grail: { atk: 10970, hp: 13686 }
               }
-  , actives:  [ { name:   "Egyptian Magecraft A"
+  , skills:   [ { name:   "Egyptian Magecraft"
+                , rank:   A
                 , icon:   IconReaperUp
                 , cd:     7
                 , effect: [ Grant Self 3 KillUp $ 50.0 ~ 100.0
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
-              , { name:   "Rapid Words of Divine B"
+              , { name:   "Rapid Words of Divine"
+                , rank:   B
                 , icon:   IconNoble
                 , cd:     9
                 , effect: [ To Self GaugeUp $ 60.0 ~ 120.0 ]
                 }
-              , { name:   "Affection of the Sky God B"
+              , { name:   "Affection of the Sky God"
+                , rank:   B
                 , icon:   IconKneel
                 , cd:     7
                 , effect: [ Times 1 <<< Grant Self 3 Guts $ 1000.0 ~ 2000.0
@@ -539,7 +568,7 @@ casters = Servant <$>
   , hits:     { quick: 4, arts: 3, buster: 3, ex: 5 }
   , traits:   [Female, Divine, King, EnumaElish]
   , death:    36.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -554,19 +583,22 @@ casters = Servant <$>
               , max:   { atk: 8237, hp: 12476 }
               , grail: { atk: 9973, hp: 15127 }
               }
-  , actives:  [ { name:   "Sacrificial Resolve A"
+  , skills:   [ { name:   "Sacrificial Resolve"
+                , rank:   A
                 , icon:   IconHealUp
                 , cd:     9
                 , effect: [ Grant Self 1 HealUp$ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Child of Nature A"
+              , { name:   "Child of Nature"
+                , rank:   A
                 , icon:   IconShield
                 , cd:     8
                 , effect: [ Grant Self 1 Invincibility Full
                           , Grant Self 3 NPGen $ 20.0 ~ 30.0
                           ]
                 }
-              , { name:   "Magical Healing A"
+              , { name:   "Magical Healing"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Ally Heal $ 2000.0 ~ 3000.0 ]
@@ -587,7 +619,7 @@ casters = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 3, ex: 4 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    34.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  true
   , free:     true
   }
@@ -602,21 +634,24 @@ casters = Servant <$>
               , max:   { atk: 9060, hp: 11404 }
               , grail: { atk: 10970, hp: 13827 }
               }
-  , actives:  [ { name:   "Beach Flower A+"
+  , skills:   [ { name:   "Beach Flower"
+                , rank:   APlus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 9.5 ~ 19.5
                           , Grant (AlliesType Male) 3 StarUp $ 21.0 ~ 41.0
                           ]
                 }
-              , { name:   "Sparkling Sunflower A"
+              , { name:   "Sparkling Sunflower"
+                , rank:   A
                 , icon:   IconStarTurn
                 , cd:     9
                 , effect: [ Grant Party 3 StarsPerTurn $ 5.0 ~ 10.0
                           , Grant Self 3 HealPerTurn $ 500.0 ~ 1000.0
                           ]
                 }
-              , { name:   "Beautiful Princess (Sea) A"
+              , { name:   "Beautiful Princess (Sea)"
+                , rank:   A
                 , icon:   IconShield
                 , cd:     8
                 , effect: [ Times 3 $ Grant Self 0 Invincibility Full
@@ -641,7 +676,7 @@ casters = Servant <$>
   , hits:     { quick: 3, arts: 5, buster: 1, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    36.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  true
   , free:     false
   }
@@ -656,19 +691,22 @@ casters = Servant <$>
               , max:   { atk: 7952, hp: 11882 }
               , grail: { atk: 9628, hp: 14407 }
               }
-  , actives:  [ { name:   "Morph C"
+  , skills:   [ { name:   "Morph"
+                , rank:   C
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 16.0 ~ 24.0 ]
                 }
-              , { name:   "Mass Production A"
+              , { name:   "Mass Production"
+                , rank:   A
                 , icon:   IconStarTurn
                 , cd:     12
                 , effect: [ Grant Party 5 StarsPerTurn $ 5.0 ~ 10.0
                           , Grant Self 5 GaugePerTurn $ 5.0 ~ 10.0
                           ]
                 }
-              , { name:   "Concept Improvement A+"
+              , { name:   "Concept Improvement"
+                , rank:   APlus
                 , icon:   IconSunUp
                 , cd:     8
                 , effect: [ Grant Ally 1 Overcharge $ Flat 2.0
@@ -694,7 +732,7 @@ casters = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 3, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    60.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -709,17 +747,20 @@ casters = Servant <$>
               , max:   { atk: 5758, hp: 8484 }
               , grail: { atk: 8344, hp: 12244 }
               }
-  , actives:  [ { name:   "Human Observation A"
+  , skills:   [ { name:   "Human Observation"
+                , rank:   A
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Party 3 CritUp $ 10.0 ~ 40.0 ]
                 }
-              , { name:   "Rapid Casting E"
+              , { name:   "Rapid Casting"
+                , rank:   E
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 50.0 ~ 75.0 ]
                 }
-              , { name:   "Innocent Monster D"
+              , { name:   "Innocent Monster"
+                , rank:   D
                 , icon:   IconStarTurn
                 , cd:     7
                 , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0
@@ -746,7 +787,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    30.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -761,17 +802,20 @@ casters = Servant <$>
               , max:   { atk: 7418, hp: 8643 }
               , grail: { atk: 10039, hp: 11719 }
               }
-  , actives:  [ { name:   "Rapid Words of Divine A"
+  , skills:   [ { name:   "Rapid Words of Divine"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     9
                 , effect: [ To Self GaugeUp $ 80.0 ~ 150.0 ]
                 }
               , { name:   "Argon Coin"
+                , rank:   Unknown
                 , icon:   IconHeal
                 , cd:     6
                 , effect: [ To Self Heal $ 500.0 ~ 2500.0 ]
                 }
-              , { name:   "Circe's Teaching A"
+              , { name:   "Circe's Teaching"
+                , rank:   A
                 , icon:   IconBubbles
                 , cd:     8
                 , effect: [ To Ally RemoveDebuffs Full
@@ -796,7 +840,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    34.5
-  , align:    Neutral:Evil
+  , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
   }
@@ -811,19 +855,22 @@ casters = Servant <$>
               , max:   { atk: 5798, hp: 8080 }
               , grail: { atk: 8402, hp: 11661 }
               }
-  , actives:  [ { name:   "Enchant A"
+  , skills:   [ { name:   "Enchant"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Party 1 (Performance Buster) $ 20.0 ~ 40.0 ]
                 }
-              , { name:   "Self-Preservation B"
+              , { name:   "Self-Preservation"
+                , rank:   B
                 , icon:   IconShield
                 , cd:     8
                 , effect: [ Grant Self 1 Invincibility Full
                           , To Self Heal $ 500.0 ~ 1500.0
                           ]
                 }
-              , { name:   "King's Men C"
+              , { name:   "King's Men"
+                , rank:   C
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Ally GaugeUp $ Flat 20.0
@@ -846,7 +893,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    45.0
-  , align:    Neutral:Balanced
+  , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
   }
@@ -861,17 +908,20 @@ casters = Servant <$>
               , max:   { atk: 5195, hp: 7129 }
               , grail: { atk: 8072, hp: 10990 }
               }
-  , actives:  [ { name:   "Protection of Muse (Fake) EX"
+  , skills:   [ { name:   "Protection of Muse (Fake)"
+                , rank:   EX
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Party 1 (Performance Arts) $ 22.0 ~ 44.0 ]
                 }
-              , { name:   "Aesthetic Appreciation B"
+              , { name:   "Aesthetic Appreciation"
+                , rank:   B
                 , icon:   IconBeamDown
                 , cd:     7
                 , effect: [ Debuff Enemy 1 NPDown $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Eine kleine Nachtmusik EX"
+              , { name:   "Eine kleine Nachtmusik"
+                , rank:   EX
                 , icon:   IconStar
                 , cd:     8
                 , effect: [ To Party GainStars $ 20.0 ~ 50.0 ]
@@ -897,7 +947,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, Brynhild]
   , death:    40.5
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  false
   , free:     false
   }
@@ -912,21 +962,24 @@ casters = Servant <$>
               , max:   { atk: 5996, hp: 10887 }
               , grail: { atk: 8115, hp: 14761 }
               }
-  , actives:  [ { name:   "Concentration C"
+  , skills:   [ { name:   "Concentration"
+                , rank:   C
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 20.0 ~ 30.0
                           , Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0
                           ]
                 }
-              , { name:   "Mechanized Armor EX"
+              , { name:   "Mechanized Armor"
+                , rank:   EX
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 1 AttackUp $ 15.0 ~ 25.0
                           , Grant Self 1 Invincibility Full
                           ]
                 }
-              , { name:   "Overload D"
+              , { name:   "Overload"
+                , rank:   D
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Self 1 NPUp $ 15.0 ~ 25.0
@@ -949,7 +1002,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -964,21 +1017,24 @@ casters = Servant <$>
               , max:   { atk: 6580, hp: 9604 }
               , grail: { atk: 8905, hp: 13022 }
               }
-  , actives:  [ { name:   "Rune Spell A"
+  , skills:   [ { name:   "Rune Spell"
+                , rank:   A
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
                           , Grant Self 3 DebuffResist $ 20.0 ~ 50.0
                           ]
                 }
-              , { name:   "Divine Protection from Arrows A"
+              , { name:   "Divine Protection from Arrows"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Times 3 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 9.0 ~ 18.0
                           ]
                 }
-              , { name:   "Disengage C"
+              , { name:   "Disengage"
+                , rank:   C
                 , icon:   IconBubbles
                 , cd:     7
                 , effect: [ To Self RemoveDebuffs Full
@@ -1003,7 +1059,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    42.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     true
   }
@@ -1018,19 +1074,22 @@ casters = Servant <$>
               , max:   { atk: 6839, hp: 9216 }
               , grail: { atk: 9255, hp: 12495 }
               }
-  , actives:  [ { name:   "Curse A"
+  , skills:   [ { name:   "Curse"
+                , rank:   A
                 , icon:   IconDarkMagic
                 , cd:     7
                 , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0 ]
                 }
-              , { name:   "Innocent Monster B"
+              , { name:   "Innocent Monster"
+                , rank:   B
                 , icon:   IconStarTurn
                 , cd:     7
                 , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0
                           , Debuff Self 3 DefenseDown $ Flat 18.0
                           ]
                 }
-              , { name:   "Clown's Laughter A+"
+              , { name:   "Clown's Laughter"
+                , rank:   APlus
                 , icon:   IconHoodX
                 , cd:     8
                 , effect: [ Times 3 $ Debuff Enemy 0 BuffBlock Full
@@ -1053,7 +1112,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    36.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -1068,17 +1127,20 @@ casters = Servant <$>
               , max:   { atk: 6711, hp: 9506 }
               , grail: { atk: 9082, hp: 12889 }
               }
-  , actives:  [ { name:   "Rapid Casting A"
+  , skills:   [ { name:   "Rapid Casting"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     10
                 , effect: [ To Self GaugeUp $ 55.0 ~ 80.0 ]
                 }
-              , { name:   "Elemental A+"
+              , { name:   "Elemental"
+                , rank:   APlus
                 , icon:   IconArtsUp
                 , cd:     9
                 , effect: [ Grant Party 3 (Performance Arts) $ 10.0 ~ 20.0 ]
                 }
-              , { name:   "Philosopher's Stone A"
+              , { name:   "Philosopher's Stone"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     10
                 , effect: [ Times 1 <<< Grant Ally 3 Guts $ 1000.0 ~ 3000.0 ]
@@ -1099,7 +1161,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -1114,17 +1176,20 @@ casters = Servant <$>
               , max:   { atk: 6857, hp: 9123 }
               , grail: { atk: 9280, hp: 12369 }
               }
-  , actives:  [ { name:   "Bloody Devil B"
+  , skills:   [ { name:   "Bloody Devil"
+                , rank:   B
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Shamanism B"
+              , { name:   "Shamanism"
+                , rank:   B
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Arts) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Guardian Beast B"
+              , { name:   "Guardian Beast"
+                , rank:   B
                 , icon:   IconQuickUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Quick) $ 30.0 ~ 50.0 ]
@@ -1149,7 +1214,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    40.5
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  false
   , free:     true
   }
@@ -1164,19 +1229,22 @@ casters = Servant <$>
               , max:   { atk: 6514, hp: 9506 }
               , grail: { atk: 8816, hp: 12889 }
               }
-  , actives:  [ { name:   "Mental Corruption A"
+  , skills:   [ { name:   "Mental Corruption"
+                , rank:   A
                 , icon:   IconStaffUp
                 , cd:     7
                 , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0
                           , Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           ]
                 }
-              , { name:   "Aesthetic Appreciation E-"
+              , { name:   "Aesthetic Appreciation"
+                , rank:   EMinus
                 , icon:   IconBeamDown
                 , cd:     7
                 , effect: [ Debuff Enemy 1 NPDown $ 5.5 ~ 11.0 ]
                 }
-              , { name:   "Evil Eye of the Abyss C"
+              , { name:   "Evil Eye of the Abyss"
+                , rank:   C
                 , icon:   IconStun
                 , cd:     10
                 , effect: [ Debuff Enemies 5 Fear $ 30.0 ~ 40.0 ]
@@ -1197,7 +1265,7 @@ casters = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    48.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }

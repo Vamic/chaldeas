@@ -1,6 +1,6 @@
 module Site.Servants.Filters
   ( getFilters
-  , activeFilter
+  , skillFilter
   , matchFilter
   , passiveFilter
   , singleFilter
@@ -41,23 +41,7 @@ extraFilters = join
 
 scheduledFilters :: Array (ScheduledFilter Servant)
 scheduledFilters = 
-  [ ScheduledFilter (ymd 2018 September 7) (ymd 2018 September 7) $
-    Filter FilterAvailability "Rate-Up"
-    \_ (Servant s) -> not s.limited && s.class == Lancer
-
-  , ScheduledFilter (ymd 2018 September 8) (ymd 2018 September 8) $
-    Filter FilterAvailability "Rate-Up"
-    \_ (Servant s) -> not s.limited && s.class == Rider
-
-  , ScheduledFilter (ymd 2018 September 9) (ymd 2018 September 9) $
-    Filter FilterAvailability "Rate-Up"
-    \_ (Servant s) -> not s.limited && (s.class == Assassin || s.class == Ruler)
-
-  , ScheduledFilter (ymd 2018 September 10) (ymd 2018 September 10) $
-    Filter FilterAvailability "Rate-Up"
-    \_ (Servant s) -> not s.limited && s.class == Caster
-
-  , ScheduledFilter (ymd 2018 September 11) (ymd 2018 September 11) $
+  [ ScheduledFilter (ymd 2018 September 11) (ymd 2018 September 11) $
     Filter FilterAvailability "Rate-Up"
     \_ (Servant s) -> not s.limited && s.class == Berserker
 
@@ -65,58 +49,24 @@ scheduledFilters =
   -- NERO FEST
   ------------
 
-  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 13) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Brynhild", "Nero Claudius" ]
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+    namedBonus FilterAvailability "Limited to Event"
+    [ "Nero Claudius (Bride)" ]
 
-  , ScheduledFilter (ymd 2018 September 14) (ymd 2018 September 14) $
+  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
     namedBonus FilterAvailability "Rate-Up"
-    [ "Nero Claudius (Bride)", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 15) (ymd 2018 September 15) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Brynhild", "Nero Claudius (Bride)", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 16) (ymd 2018 September 16) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Brynhild", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 17) (ymd 2018 September 18) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Nero Claudius (Bride)", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 19) (ymd 2018 September 20) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Brynhild", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 21) (ymd 2018 September 21) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Nero Claudius (Bride)", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 22) (ymd 2018 September 22) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Brynhild","Nero Claudius (Bride)", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 23) (ymd 2018 September 23) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Brynhild", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 24) (ymd 2018 September 25) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Nero Claudius (Bride)", "Nero Claudius" ]
-
-  , ScheduledFilter (ymd 2018 September 26) (ymd 2018 September 26) $
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Brynhild", "Nero Claudius" ]
+    [ "Nero Claudius (Bride)", "Nero Claudius"
+    , "Gaius Julius Caesar", "Romulus", "Boudica"
+    ]
   ]
 
 matchFilter :: ∀ a. MatchServant a => FilterTab -> a -> Filter Servant
 matchFilter tab = uncurry (Filter tab) <<< (show &&& has)
 
 singleFilter :: ∀ a. MatchServant a => FilterTab -> a -> Array (Filter Servant)
-singleFilter tab a
-  | exclusive tab = matchFilter tab <$> delete a getAll
-  | otherwise = [matchFilter tab a]
+singleFilter tab x
+  | exclusive tab = matchFilter tab <$> delete x getAll
+  | otherwise = [matchFilter tab x]
 
 namedBonus :: FilterTab -> String -> Array String -> Filter Servant
 namedBonus tab bonus servants = Filter tab bonus 
@@ -165,18 +115,18 @@ passiveFilter = uncurry (Filter FilterPassiveSkill) <<<
     hasPassive p (Servant s) = any (eq p) $ _.name <$> s.passives
 
 plural :: ∀ a. MatchServant a => a -> Maybe a
-plural a
-  | null <<< drop 1 $ filter (has a false) servants = Nothing
-  | otherwise = Just a
+plural x
+  | null <<< drop 1 $ filter (has x false) servants = Nothing
+  | otherwise = Just x
 
-activeFilter :: ActiveEffect -> Maybe (Filter Servant)
-activeFilter (Grant _ _ buff _)    = Just $ matchFilter 
+skillFilter :: SkillEffect -> Maybe (Filter Servant)
+skillFilter (Grant _ _ buff _)    = Just $ matchFilter 
                                      (FilterBuff $ buffCategory buff) buff
-activeFilter (Debuff _ _ debuff _) = matchFilter FilterDebuff <$> plural debuff
-activeFilter (To _ action _)       = matchFilter FilterAction <$> plural action
-activeFilter (Bonus _ _)           = Nothing
-activeFilter (Chance _ ef')        = activeFilter ef'
-activeFilter (Chances _ _ ef')     = activeFilter ef'
-activeFilter (When _ ef')          = activeFilter ef'
-activeFilter (Times _ ef')         = activeFilter ef'
-activeFilter (ToMax _ ef')         = activeFilter ef'
+skillFilter (Debuff _ _ debuff _) = matchFilter FilterDebuff <$> plural debuff
+skillFilter (To _ action _)       = matchFilter FilterAction <$> plural action
+skillFilter (Bonus _ _)           = Nothing
+skillFilter (Chance _ ef')        = skillFilter ef'
+skillFilter (Chances _ _ ef')     = skillFilter ef'
+skillFilter (When _ ef')          = skillFilter ef'
+skillFilter (Times _ ef')         = skillFilter ef'
+skillFilter (ToMax _ ef')         = skillFilter ef'

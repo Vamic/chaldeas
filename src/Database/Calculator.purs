@@ -11,7 +11,7 @@ import Data.Int
 import Data.Maybe
 import Data.Tuple
 
-import Database.Model (ActiveEffect(..), BuffEffect(..), Card(..), Class(..), DebuffEffect(..), InstantEffect(..), Servant(..), Target(..), allied, simplify, toMax, toMin)
+import Database.Model (SkillEffect(..), BuffEffect(..), Card(..), Class(..), DebuffEffect(..), InstantEffect(..), Servant(..), Target(..), allied, simplify, toMax, toMin)
 
 npPerArts :: Servant -> Number
 npPerArts s'@(Servant s) = toNumber s.hits.arts
@@ -153,7 +153,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
     overStrength
       | maxOver   = toMax
       | otherwise = toMin
-    skillFs = simplify <$> (s.actives >>= _.effect)
+    skillFs = simplify <$> (s.skills >>= _.effect)
                         <> (s.passives >>= _.effect)
     npFs    = simplify <$> effect
     overFs  = simplify <$> over
@@ -162,29 +162,29 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
          <> (npFs >>= go npStrength)
          <> (firstFs >>= go overStrength)
       where
-        go f (Grant t _ buff a)
-          | selfable t = [ Tuple buff $ f a / 100.0 ]
+        go f (Grant t _ buff n)
+          | selfable t = [ Tuple buff $ f n / 100.0 ]
         go _ _ = []
     debuffs = (skillFs >>= go toMax)
            <> (npFs >>= go npStrength)
            <> (firstFs >>= go overStrength)
       where
-        go f (Debuff t _ debuff a)
-          | not $ allied t = [ Tuple debuff $ f a / 100.0 ]
+        go f (Debuff t _ debuff n)
+          | not $ allied t = [ Tuple debuff $ f n / 100.0 ]
         go _ _ = []
     instants = (skillFs >>= go toMax)
             <> (npFs    >>= go npStrength)
             <> (overFs  >>= go overStrength)
       where
-        go f (To t instant a)
-          | not $ allied t = [ Tuple instant $ f a / 100.0 ]
+        go f (To t instant n)
+          | not $ allied t = [ Tuple instant $ f n / 100.0 ]
         go _ _ = []
 
 passiveBuffs :: Servant -> Array (Tuple BuffEffect Number)
 passiveBuffs (Servant {passives}) = passives >>= _.effect >>= go <<< simplify
   where
-    go (Grant t _ buff a)
-      | selfable t = [ Tuple buff $ toMax a / 100.0 ]
+    go (Grant t _ buff n)
+      | selfable t = [ Tuple buff $ toMax n / 100.0 ]
     go _ = []
 
 selfable :: Target -> Boolean

@@ -3,21 +3,20 @@ module Export (craftEssences, servants) where
 import Prelude
 import Data.Nullable
 import Data.String.CodeUnits
-import Data.Tuple
 
 import Database as D
 import Database
 
 servants :: Unit -> Array _
-servants = \_ -> D.servants <#> \s'@(Servant s@{align: Tuple alignA alignB}) ->
+servants = \_ -> D.servants <#> \s'@(Servant s) ->
     { name:          s.name
     , rarity:        s.rarity
     , class:         show s.class
     , attribute:     show s.attr
     , deck:          toCharArray $ show s.deck
     , stats:         s.stats
-    , activeSkills:  exportActive <$> s.actives
-    , passiveSkills: exportPassive <$> s.passives
+    , activeSkills:  exportSkill <$> s.skills
+    , passiveSkills: exportSkill <$> s.passives
     , noblePhantasm: exportPhantasm s.phantasm
     , starWeight:    s.gen.starWeight
     , starRate:      s.gen.starRate
@@ -26,7 +25,7 @@ servants = \_ -> D.servants <#> \s'@(Servant s@{align: Tuple alignA alignB}) ->
     , hits:          s.hits
     , traits:        show <$> s.traits
     , deathRate:     s.death
-    , alignment:     [show alignA, show alignB]
+    , alignment:     show <$> s.align
     , limited:       s.limited
     , free:          s.free
     , bond:          toNullable $ getBond s'
@@ -45,23 +44,16 @@ craftEssences = \_ -> D.craftEssences <#> \(CraftEssence ce) ->
     }
 
 exportAmount :: Amount -> _
-exportAmount (Flat a)    = { from: a, to: a }
-exportAmount (a ~ b)     = { from: a, to: b }
+exportAmount (Flat x)    = { from: x, to: x }
+exportAmount (x ~ y)     = { from: x, to: y }
 exportAmount Full        = { from: 0.0, to: 0.0 }
 exportAmount Placeholder = { from: 0.0, to: 0.0 }
 
-exportActive :: Active -> _
-exportActive {name, icon, cd, effect} =
+exportSkill :: Skill -> _
+exportSkill {name, icon, cd, effect} =
     { name
     , icon: show icon
     , cd
-    , effect: exportEffect <$> effect
-    }
-
-exportPassive :: Passive -> _
-exportPassive {name, rank, icon, effect} =
-    { name: name <> " " <> show rank
-    , icon: show icon
     , effect: exportEffect <$> effect
     }
 
@@ -77,7 +69,7 @@ exportPhantasm {name, desc, rank, card, kind, hits, effect, over} =
     , over: exportEffect <$> over
     }
 
-exportEffect :: ActiveEffect -> _
+exportEffect :: SkillEffect -> _
 exportEffect (Grant target duration effect amount) =
     { target: show target
     , duration
@@ -108,10 +100,10 @@ exportEffect (Bonus bonus amount) =
     }
 exportEffect (Chance chance effect) = (exportEffect effect) 
     { chance = {from: chance, to: chance} }
-exportEffect (Chances a b effect)   = (exportEffect effect) 
-    { chance = {from: a, to: b} }
-exportEffect (ToMax a effect) = modEffect (exportEffect effect) <<<
-    flip append $ " every turn up to " <> show a
+exportEffect (Chances x y effect)   = (exportEffect effect) 
+    { chance = {from: x, to: y} }
+exportEffect (ToMax x effect) = modEffect (exportEffect effect) <<<
+    flip append $ " every turn up to " <> show x
 exportEffect (When condition effect) = modEffect (exportEffect effect) <<<
     append $ "If " <> condition <> ": "
 exportEffect (Times 1 effect) = modEffect (exportEffect effect) $

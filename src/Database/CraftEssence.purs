@@ -5,18 +5,17 @@ module Database.CraftEssence
   , getBond
   ) where
 
-import Prelude
-import Generic as G
-
 import Data.Array
 import Data.Function.Memoize
-import Data.Maybe
 import Data.Int
-
-import Database.Icon
+import Data.Maybe
 import Database.Base
-import Database.Skill
+import Database.Icon
 import Database.Servant
+import Database.Skill
+import Prelude
+
+import Generic as G
 
 craftEssences :: Array CraftEssence
 craftEssences = CraftEssence <$>
@@ -2423,6 +2422,72 @@ craftEssences = CraftEssence <$>
   [ party' Arts 15 ]
 , bond 324 "Hero's Armament" "Hektor" IconBeamUp
   [ party NPUp 20 ]
+, { name:     "Glory Is With Me"
+  , id:       325
+  , rarity:   5
+  , icon:     IconBeamUp
+  , stats:    { base: { atk: 500,  hp: 0 }
+              , max:  { atk: 2000, hp: 0 }
+              }
+  , effect:   [ Grant Self 0 NPUp $ 15.0 ~ 20.0
+              , Grant Self 0 CritUp $ 15.0 ~ 20.0
+              , Grant Self 0 StarsPerTurn $ 3.0 ~ 4.0
+              ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Original Legion"
+  , id:       326
+  , rarity:   4
+  , icon:     IconShieldUp
+  , stats:    { base: { atk: 200, hp: 320 }
+              , max:  { atk: 750, hp: 1200 }
+              }
+  , effect:   [ Grant Self 0 DefenseUp $ 8.0 ~ 20.0
+              , Grant Self 0 NPUp $ 15.0 ~ 20.0
+              ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Howl at the Moon"
+  , id:       327
+  , rarity:   3
+  , icon:     IconBusterUp
+  , stats:    { base: { atk: 200,  hp: 0 }
+              , max:  { atk: 1000, hp: 0 }
+              }
+  , effect:   [ Grant Self 0 (Performance Buster) $ 10.0 ~ 15.0
+              , Debuff Self 0 DebuffVuln $ Flat 20.0
+              ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Princess of the White Rose"
+  , id:       328
+  , rarity:   5
+  , icon:     IconKneel
+  , stats:    { base: { atk: 250,  hp: 400 }
+              , max:  { atk: 1000, hp: 1600 }
+              }
+  , effect:   [ Times 1 <<< Grant Self 0 Guts $ Flat 1.0
+              , To Self GaugeUp $ 10.0 ~ 20.0
+              ]
+  , bond:     Nothing
+  , limited:  true
+  }
+, { name:     "Joint Recital"
+  , id:       329
+  , rarity:   5
+  , icon:     IconBusterUp
+  , stats:    { base: { atk: 500,  hp: 0 }
+              , max:  { atk: 2000, hp: 0 }
+              }
+  , effect:   [ Grant Self 0 (Performance Buster) $ 15.0 ~ 20.0
+              , Grant Self 0 CritUp $ 15.0 ~ 20.0
+              ]
+  , bond:     Nothing
+  , limited:  true
+  }
 , bond 334 "Indomitableness" "Florence Nightingale" IconBusterUp
   [ party' Buster 10, party HealingReceived 20 ]
 , bond 335 "One-Man War" "Cu Chulainn (Alter)" IconKneel
@@ -2638,7 +2703,7 @@ newtype CraftEssence = CraftEssence { name     :: String
                                     , rarity   :: Int
                                     , icon     :: Icon
                                     , stats    :: { base :: Stat, max :: Stat }
-                                    , effect   :: Array ActiveEffect
+                                    , effect   :: Array SkillEffect
                                     , bond     :: Maybe String
                                     , limited  :: Boolean
                                     }
@@ -2646,27 +2711,27 @@ newtype CraftEssence = CraftEssence { name     :: String
 instance _0_ :: Show CraftEssence where
   show (CraftEssence ce) = ce.name
 
-getEffects :: CraftEssence -> Array ActiveEffect
+getEffects :: CraftEssence -> Array SkillEffect
 getEffects (CraftEssence ce) = filter (not <<< demerit) $ simplify <$> ce.effect
 
 class (G.BoundedEnum a, Show a) <= MatchCraftEssence a where
     ceHas :: a -> Boolean -> CraftEssence -> Boolean
 instance _b_ :: MatchCraftEssence BuffEffect where
-    ceHas a noSelf = any match <<< getEffects where
-        match (Grant t _ b _) = a == b && allied t && (not noSelf || t /= Self)
+    ceHas x noSelf = any match <<< getEffects where
+        match (Grant t _ y _) = x == y && allied t && (not noSelf || t /= Self)
         match _ = false
 instance _c_ :: MatchCraftEssence DebuffEffect where
-    ceHas a _ = any match <<< getEffects where
-        match (Debuff t _ b _) = a == b && not (allied t)
+    ceHas x _ = any match <<< getEffects where
+        match (Debuff t _ y _) = x == y && not (allied t)
         match _ = false
 instance _d_ :: MatchCraftEssence InstantEffect where
-    ceHas a noSelf = any match <<< getEffects where
-        match (To t b _) = a == b && (not noSelf || t /= Self)
+    ceHas x noSelf = any match <<< getEffects where
+        match (To t y _) = x == y && (not noSelf || t /= Self)
         match _ = false
 instance _e_ :: MatchCraftEssence BonusEffect where
-    ceHas a _ = any match <<< getEffects where
-        match (Bonus b _) = a == b
+    ceHas x _ = any match <<< getEffects where
+        match (Bonus y _) = x == y
         match _ = false
 
-equipped :: Class -> ActiveEffect -> ActiveEffect
+equipped :: Class -> SkillEffect -> SkillEffect
 equipped = When <<< append "equipped by a " <<< show

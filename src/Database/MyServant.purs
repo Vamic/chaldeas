@@ -7,6 +7,7 @@ module Database.MyServant
 
 import Prelude
 import Data.Array (index, zipWith)
+import Data.Function
 import Data.Int
 import Data.Maybe
 import Data.Map (Map, fromFoldable, lookup)
@@ -23,9 +24,9 @@ newtype MyServant = MyServant { base    :: Servant
                               , servant :: Servant
                               }
 instance _0_ :: Eq MyServant where
-  eq a b = eq (getBase a) (getBase b)
+  eq x y = eq (getBase x) (getBase y)
 instance _1_ :: Ord MyServant where
-  compare a b = compare (getBase a) (getBase b)
+  compare = compare `on` getBase
 
 getBase :: MyServant -> Servant
 getBase (MyServant {base}) = base
@@ -39,7 +40,7 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
               , over   = if ms.level == 0 then s.phantasm.over 
                           else mapAmount calcOver <$> s.phantasm.over
               }
-        , actives  = zipWith calcActives ms.skills s.actives 
+        , skills  = zipWith calcActives ms.skills s.skills 
         } 
     }
   where

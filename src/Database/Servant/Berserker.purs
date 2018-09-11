@@ -1,7 +1,6 @@
 module Database.Servant.Berserker (berserkers) where
 
 import Prelude
-import Operators
 import Database.Model
 
 berserkers :: Array Servant
@@ -17,21 +16,24 @@ berserkers = Servant <$>
               , max:   { atk: 12805, hp: 12210 }
               , grail: { atk: 14017, hp: 13377 }
               }
-  , actives:  [ { name:   "Madness of the Spirits A"
+  , skills:   [ { name:   "Madness of the Spirits"
+                , rank:   A
                 , icon:   IconExclamationDown
                 , cd:     8
                 , effect: [ Debuff Enemies 3 AttackDown $ 10.0 ~ 20.0
                           , Debuff Enemies 3 CritChance $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Protection from Arrows C"
+              , { name:   "Protection from Arrows"
+                , rank:   C
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Times 2 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 7.0 ~ 14.0
                           ]
                 }
-              , { name:   "Battle Continuation A"
+              , { name:   "Battle Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
@@ -54,7 +56,7 @@ berserkers = Servant <$>
   , hits:     { quick: 4, arts: 3, buster: 3, ex: 5 }
   , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    52.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -69,19 +71,22 @@ berserkers = Servant <$>
               , max:   { atk: 11556, hp: 13500 }
               , grail: { atk: 12650, hp: 14790 }
               }
-  , actives:  [ { name:   "Eternal Arms Mastery A+"
+  , skills:   [ { name:   "Eternal Arms Mastery"
+                , rank:   APlus
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
                 }
-              , { name:   "Mana Burst (Lightning) A"
+              , { name:   "Mana Burst (Lightning)"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     8
                 , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
                           , Grant Self 1 Evasion Full
                           ]
                 }
-              , { name:   "Mystic Slayer A"
+              , { name:   "Mystic Slayer"
+                , rank:   A
                 , icon:   IconDamageUp
                 , cd:     8
                 , effect: [ Grant Self 3 (AttackVs Demonic) $ 30.0 ~ 50.0
@@ -104,7 +109,7 @@ berserkers = Servant <$>
   , hits:     { quick: 3, arts: 4, buster: 1, ex: 5 }
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    39.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
   }
@@ -119,17 +124,20 @@ berserkers = Servant <$>
               , max:   { atk: 12712, hp: 12150 }
               , grail: { atk: 13915, hp: 13311 }
               }
-  , actives:  [ { name:   "Monstrous Strength A+"
+  , skills:   [ { name:   "Monstrous Strength"
+                , rank:   APlus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 1 AttackUp $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Animal Communication C"
+              , { name:   "Animal Communication"
+                , rank:   C
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Natural Body A"
+              , { name:   "Natural Body"
+                , rank:   A
                 , icon:   IconHoodUp
                 , cd:     7
                 , effect: [ Grant Self 3 OffensiveResist $ 60.0 ~ 120.0
@@ -152,7 +160,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    52.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  true
   , free:     false
   }
@@ -167,19 +175,22 @@ berserkers = Servant <$>
               , max:   { atk: 11499, hp: 13770 }
               , grail: { atk: 12587, hp: 15086 }
               }
-  , actives:  [ { name:   "Vampirism A"
+  , skills:   [ { name:   "Vampirism"
+                , rank:   A
                 , icon:   IconDarkMagic
                 , cd:     8
                 , effect: [ Chances 80 100 <<< To Enemy GaugeDown $ Flat 1.0 
                           , To Self GaugeUp $ 20.0 ~ 30.0
                           ]
                 }
-              , { name:   "Morph C"
+              , { name:   "Morph"
+                , rank:   C
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 16.0 ~ 24.0 ]
                 }
-              , { name:   "Battle Continuation A"
+              , { name:   "Battle Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
@@ -200,7 +211,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild, King]
   , death:    45.5
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -215,19 +226,22 @@ berserkers = Servant <$>
               , max:   { atk: 10184, hp: 15221 }
               , grail: { atk: 11148, hp: 16675 }
               }
-  , actives:  [ { name:   "Nurse of Steel A"
+  , skills:   [ { name:   "Nurse of Steel"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Ally Heal $ 2000.0 ~ 4000.0 ]
                 }
-              , { name:   "Understanding of the Human Body A"
+              , { name:   "Understanding of the Human Body"
+                , rank:   A
                 , icon:   IconDamageUp
                 , cd:     8
                 , effect: [ Grant Self 3 (AttackVs Humanoid) $ 30.0 ~ 50.0
                           , Grant Self 3 (DefenseVs Humanoid) $ 15.0 ~ 25.0
                           ]
                 }
-              , { name:   "Angel's Cry EX"
+              , { name:   "Angel's Cry"
+                , rank:   EX
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Ally 3 (Performance Buster) $ 30.0 ~ 50.0 ]
@@ -250,7 +264,7 @@ berserkers = Servant <$>
   , hits:     { quick: 6, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    56.8
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -265,21 +279,24 @@ berserkers = Servant <$>
               , max:   { atk: 10655, hp: 10327 }
               , grail: { atk: 12901, hp: 12521 }
               }
-  , actives:  [ { name:   "Valor A+"
+  , skills:   [ { name:   "Valor"
+                , rank:   APlus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 10.5 ~ 31.0
                           , Grant Self 3 MentalResist $ 21.0 ~ 42.0
                           ]
                 }
-              , { name:   "Mind's Eye (Fake) B"
+              , { name:   "Mind's Eye (Fake)"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 3 CritUp $ 18.0 ~ 36.0
                           ]
                 }
-              , { name:   "Battle Continuation A"
+              , { name:   "Battle Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
@@ -300,7 +317,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, EnumaElish, GreekMyth]
   , death:    39.0
-  , align:    Chaotic:Mad
+  , align:    [Chaotic, Mad]
   , limited:  false
   , free:     false
   }
@@ -315,19 +332,22 @@ berserkers = Servant <$>
               , max:   { atk: 9441, hp: 10687 }
               , grail: { atk: 11431, hp: 12958 }
               }
-  , actives:  [ { name:   "Galvanism B"
+  , skills:   [ { name:   "Galvanism"
+                , rank:   B
                 , icon:   IconNobleUp
                 , cd:     7
                 , effect: [ Grant Self 3 NPGen $ 25.0 ~ 45.0 ]
                 }
-              , { name:   "Wail of the Living Dead C"
+              , { name:   "Wail of the Living Dead"
+                , rank:   C
                 , icon:   IconStun
                 , cd:     8
                 , effect: [ Chance 60 $ Debuff Enemy 1 Stun Full
                           , Debuff Enemy 1 DefenseDown $ 20.0 ~ 30.0
                           ]
                 }
-              , { name:   "Overload C"
+              , { name:   "Overload"
+                , rank:   C
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Self 1 NPUp $ 20.0 ~ 30.0
@@ -352,7 +372,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    58.5
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -367,21 +387,24 @@ berserkers = Servant <$>
               , max:   { atk: 9636, hp: 10954 }
               , grail: { atk: 11667, hp: 13282 }
               }
-  , actives:  [ { name:   "Demonic Nature of Oni A"
+  , skills:   [ { name:   "Demonic Nature of Oni"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
                           , Grant Self 3 NPUp $ 20.0 ~ 30.0
                           ]
                 }
-              , { name:   "Disengage A"
+              , { name:   "Disengage"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self RemoveDebuffs Full
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
-              , { name:   "Morph A"
+              , { name:   "Morph"
+                , rank:   A
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 30.0
@@ -406,7 +429,7 @@ berserkers = Servant <$>
   , hits:     { quick: 4, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, Demonic, EnumaElish]
   , death:    52.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -421,17 +444,20 @@ berserkers = Servant <$>
               , max:   { atk: 10477, hp: 10327 }
               , grail: { atk: 12685, hp: 12521 }
               }
-  , actives:  [ { name:   "Eternal Arms Mastery A+"
+  , skills:   [ { name:   "Eternal Arms Mastery"
+                , rank:   APlus
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarAbsorb $ 3000.0 ~ 6000.0 ]
                 }
-              , { name:   "Protection of the Spirits A"
+              , { name:   "Protection of the Spirits"
+                , rank:   A
                 , icon:   IconStarHaloUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarUp $ 10.0 ~ 30.0 ]
                 }
-              , { name:   "Mana Reversal A"
+              , { name:   "Mana Reversal"
+                , rank:   A
                 , icon:   IconNobleUp
                 , cd:     7
                 , effect: [ Grant Self 1 NPGen $ 50.0 ~ 100.0
@@ -454,7 +480,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    52.0
-  , align:    Lawful:Mad
+  , align:    [Lawful, Mad]
   , limited:  false
   , free:     false
   }
@@ -469,19 +495,22 @@ berserkers = Servant <$>
               , max:   { atk: 10247, hp: 10327 }
               , grail: { atk: 12407, hp: 12521 }
               }
-  , actives:  [ { name:   "Berserk A"
+  , skills:   [ { name:   "Berserk"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 1 AttackUp $ 20.0 ~ 30.0
                           , Grant Self 1 NPUp $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Intuition B"
+              , { name:   "Intuition"
+                , rank:   B
                 , icon:   IconStar
                 , cd:     7
                 , effect: [ To Party GainStars $ 4.0 ~ 14.0 ]
                 }
-              , { name:   "Battle Continuation B"
+              , { name:   "Battle Continuation"
+                , rank:   B
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
@@ -504,7 +533,7 @@ berserkers = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhild, King]
   , death:    58.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -519,17 +548,20 @@ berserkers = Servant <$>
               , max:   { atk: 9026, hp: 11458 }
               , grail: { atk: 10929, hp: 13893 }
               }
-  , actives:  [ { name:   "Monstrous Strength B"
+  , skills:   [ { name:   "Monstrous Strength"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 2 AttackUp $ 10.0 ~ 30.0 ]
                 }
-              , { name:   "Curse E"
+              , { name:   "Curse"
+                , rank:   E
                 , icon:   IconDarkMagic
                 , cd:     7
                 , effect: [ Chances 40 60 <<< To Enemy GaugeDown $ Flat 1.0 ]
                 }
-              , { name:   "Morph B"
+              , { name:   "Morph"
+                , rank:   B
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 18.0 ~ 27.0 ]
@@ -552,7 +584,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 2, ex: 3 }
   , traits:   [Female, Beast, EnumaElish]
   , death:    39.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -567,21 +599,24 @@ berserkers = Servant <$>
               , max:   { atk: 8119, hp: 8302 }
               , grail: { atk: 10988, hp: 11256 }
               }
-  , actives:  [ { name:   "Valor B"
+  , skills:   [ { name:   "Valor"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 9.0 ~ 27.0
                           , Grant Self 3 MentalResist $ 18.0 ~ 36.0
                           ]
                 }
-              , { name:   "Defiant B"
+              , { name:   "Defiant"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 15.0 ~ 25.0
                           , Debuff Self 3 BuffFail $ Flat 50.0
                           ]
                 }
-              , { name:   "Chaotic Villain A"
+              , { name:   "Chaotic Villain"
+                , rank:   A
                 , icon:   IconBeamUp
                 , cd:     8
                 , effect: [ Grant Self 1 NPUp $ 20.0 ~ 30.0
@@ -605,7 +640,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    50.3
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -620,19 +655,22 @@ berserkers = Servant <$>
               , max:   { atk: 5073, hp: 7722 }
               , grail: { atk: 7883, hp: 11904 }
               }
-  , actives:  [ { name:   "Honor of Suffering B+"
+  , skills:   [ { name:   "Honor of Suffering"
+                , rank:   BPlus
                 , icon:   IconHealTurn
                 , cd:     9
                 , effect: [ Grant Self 5 HealPerTurn $ 500.0 ~ 1500.0 ]
                 }
-              , { name:   "Unyielding Will A"
+              , { name:   "Unyielding Will"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     7
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ Flat 1.0
                           , To Self GaugeUp $ 10.0 ~ 30.0
                           ]
                 }
-              , { name:   "Triumphant Return of the Sword B"
+              , { name:   "Triumphant Return of the Sword"
+                , rank:   B
                 , icon:   IconBusterUp
                 , cd:     8
                 , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 40.0
@@ -655,7 +693,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Roman, EnumaElish]
   , death:    65.0
-  , align:    Neutral:Balanced
+  , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
   }
@@ -670,19 +708,22 @@ berserkers = Servant <$>
               , max:   { atk: 6037, hp: 6604 }
               , grail: { atk: 9381, hp: 10181 }
               }
-  , actives:  [ { name:   "Monstrous Strength A"
+  , skills:   [ { name:   "Monstrous Strength"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0 ]
                 }
-              , { name:   "Natural Demon A++"
+              , { name:   "Natural Demon"
+                , rank:   APlusPlus
                 , icon:   IconHoodUp
                 , cd:     7
                 , effect: [ Grant Self 3 OffensiveResist $ 50.0 ~ 100.0
                           , Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Labrys of the Abyss C"
+              , { name:   "Labrys of the Abyss"
+                , rank:   C
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 1 StarAbsorb $ 3000.0 ~ 6000.0
@@ -708,7 +749,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, GreekMyth]
   , death:    58.5
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -723,19 +764,22 @@ berserkers = Servant <$>
               , max:   { atk: 6644, hp: 9166 }
               , grail: { atk: 8992, hp: 12428 }
               }
-  , actives:  [ { name:   "Morph C"
+  , skills:   [ { name:   "Morph"
+                , rank:   C
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 16.0 ~ 24.0 ]
                 }
-              , { name:   "Stalking B"
+              , { name:   "Stalking"
+                , rank:   B
                 , icon:   IconShieldDown
                 , cd:     7
                 , effect: [ Debuff Enemy 4 DefenseDown $ 12.0 ~ 24.0
                           , Grant Enemy 3 AttackUp $ Flat 20.0
                           ]
                 }
-              , { name:   "Flame-Coloured Kiss A"
+              , { name:   "Flame-Coloured Kiss"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
@@ -760,7 +804,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    65.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     true
   }
@@ -775,19 +819,22 @@ berserkers = Servant <$>
               , max:   { atk: 6290, hp: 7688 }
               , grail: { atk: 9115, hp: 11095 }
               }
-  , actives:  [ { name:   "Supporting Curse C+"
+  , skills:   [ { name:   "Supporting Curse"
+                , rank:   CPlus
                 , icon:   IconSwordDown
                 , cd:     7
                 , effect: [ Debuff Enemy 2 AttackDown $ 5.0 ~ 15.0
                           , Debuff Enemy 2 DefenseDown $ 10.0 ~ 30.0
                           ]
                 }
-              , { name:   "Battle Continuation B"
+              , { name:   "Battle Continuation"
+                , rank:   B
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
                 }
-              , { name:   "Half-Dead Bloodaxe A+"
+              , { name:   "Half-Dead Bloodaxe"
+                , rank:   APlus
                 , icon:   IconBubbles
                 , cd:     8
                 , effect: [ To Self RemoveDebuffs Full
@@ -812,7 +859,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    58.5
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -827,19 +874,22 @@ berserkers = Servant <$>
               , max:   { atk: 7608, hp: 8763 }
               , grail: { atk: 10297, hp: 11881 }
               }
-  , actives:  [ { name:   "Golden Rule B"
+  , skills:   [ { name:   "Golden Rule"
+                , rank:   B
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 18.0 ~ 45.0 ]
                 }
-              , { name:   "Disengage A"
+              , { name:   "Disengage"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self RemoveDebuffs Full
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
-              , { name:   "Battle Continuation A"
+              , { name:   "Battle Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
@@ -862,7 +912,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    65.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -877,14 +927,16 @@ berserkers = Servant <$>
               , max:   { atk: 6831, hp: 7303 }
               , grail: { atk: 9899, hp: 10540 }
               }
-  , actives:  [ { name:   "Sadistic Streak A"
+  , skills:   [ { name:   "Sadistic Streak"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 10.0 ~ 30.0
                           , Debuff Self 3 DefenseDown $ Flat 10.0
                           ]
                 }
-              , { name:   "Imperial Privilege A"
+              , { name:   "Imperial Privilege"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 1000.0 ~ 3000.0
@@ -892,7 +944,8 @@ berserkers = Servant <$>
                           , Chance 60 <<< Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Glory of Past Days B"
+              , { name:   "Glory of Past Days"
+                , rank:   B
                 , icon:   IconBusterUp
                 , cd:     5
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0
@@ -915,7 +968,7 @@ berserkers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Male, Roman, EnumaElish, King]
   , death:    56.8
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }

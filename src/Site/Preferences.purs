@@ -40,7 +40,7 @@ instance _a_ :: Show Preference where
   show ExcludeSelf = "Exclude self-applied effects"
   show MaxAscension = "Show all at max ascension"
   show ShowTables = "Show skill and NP tables"
-  show a = unCamel $ G.genericShow a
+  show x = unCamel $ G.genericShow x
 
 setPreference :: Preference -> Boolean -> Effect Unit
 setPreference pref set = window >>= localStorage

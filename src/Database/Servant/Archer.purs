@@ -1,7 +1,6 @@
 module Database.Servant.Archer (archers) where
 
 import Prelude
-import Operators
 import Database.Model
 
 archers :: Array Servant
@@ -17,17 +16,20 @@ archers = Servant <$>
               , max:   { atk: 12280, hp: 13097 }
               , grail: { atk: 13442, hp: 14348 }
               }
-  , actives:  [ { name:   "Charisma A+"
+  , skills:   [ { name:   "Charisma"
+                , rank:   APlus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 10.5 ~ 21.0 ]
                 }
-              , { name:   "Golden Rule A"
+              , { name:   "Golden Rule"
+                , rank:   A
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 20.0 ~ 50.0 ]
                 }
-              , { name:   "Collector EX"
+              , { name:   "Collector"
+                , rank:   EX
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarAbsorb $ 300.0 ~ 600.0 ]
@@ -50,7 +52,7 @@ archers = Servant <$>
   , hits:     { quick: 5, arts: 5, buster: 5, ex: 8 }
   , traits:   [Male, Divine, EnumaElish, King]
   , death:    31.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited: true
   , free:    false
   }
@@ -65,21 +67,24 @@ archers = Servant <$>
               , max:   { atk: 11276, hp: 14553 }
               , grail: { atk: 12343, hp: 15943 }
               }
-  , actives:  [ { name:   "Summer Splash! A+"
+  , skills:   [ { name:   "Summer Splash!"
+                , rank:   APlus
                 , icon:   IconArtsUp
                 , cd:     8
                 , effect: [ Grant Self 3 (Performance Arts)  $ 20.0 ~ 30.0
                           , Grant Party 3 DefenseUp $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Beach House Protection EX"
+              , { name:   "Beach House Protection"
+                , rank:   EX
                 , icon:   IconHeal
                 , cd:     6
                 , effect: [ To Self Heal $ 2000.0 ~ 5000.0
                           , To Self DemeritGauge $ Flat 10.0
                           ]
                 }
-              , { name:   "Beach Flower B"
+              , { name:   "Beach Flower"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 8.0 ~ 18.0
@@ -104,7 +109,7 @@ archers = Servant <$>
   , hits:     { quick: 4, arts: 3, buster: 3, ex: 5 }
   , traits:   [Female, EnumaElish, Arthur, Dragon, King, Saberface ]
   , death:    25.8
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  true
   , free:     false
   }
@@ -119,12 +124,14 @@ archers = Servant <$>
               , max:   { atk: 11781, hp: 13825 }
               , grail: { atk: 12896, hp: 15146 }
               }
-  , actives:  [ { name:   "Galvanism A"
+  , skills:   [ { name:   "Galvanism"
+                , rank:   A
                 , icon:   IconNobleUp
                 , cd:     7
                 , effect: [ Grant Self 3 NPGen $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Inherent Wisdom A"
+              , { name:   "Inherent Wisdom"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     7
                 , effect: [ Times 1 <<< Grant Self 3 Guts $ 1000.0 ~ 3000.0
@@ -132,7 +139,8 @@ archers = Servant <$>
                           , Chance 80 <<< Grant Self 1 NPUp $ 20.0 ~ 30.0
                           ]
                 }
-              , { name:   "Pioneer of the Stars EX"
+              , { name:   "Pioneer of the Stars"
+                , rank:   EX
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
@@ -159,7 +167,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Brynhild]
   , death:    31.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -174,7 +182,8 @@ archers = Servant <$>
               , max:   { atk: 11107, hp: 14553 }
               , grail: { atk: 12158, hp: 15943 }
               }
-  , actives:  [ { name:   "Grace of the Goddess EX"
+  , skills:   [ { name:   "Grace of the Goddess"
+                , rank:   EX
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 1 DefenseUp $ 30.0 ~ 50.0
@@ -182,12 +191,14 @@ archers = Servant <$>
                           , Grant Self 3 DebuffResist $ Flat 50.0
                           ]
                 }
-              , { name:   "Punish the Unfaithful A+"
+              , { name:   "Punish the Unfaithful"
+                , rank:   APlus
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 1 (AttackVs Male) $ 50.0 ~ 100.0 ]
                 }
-              , { name:   "Mind's Eye (Fake) B-"
+              , { name:   "Mind's Eye (Fake)"
+                , rank:   BMinus
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
@@ -213,7 +224,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 1, buster: 1, ex: 4 }
   , traits:   [Male, GreekMyth, EnumaElish]
   , death:    27.0
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -228,12 +239,14 @@ archers = Servant <$>
               , max:   { atk: 12342, hp: 13230 }
               , grail: { atk: 13510, hp: 14494 }
               }
-  , actives:  [ { name:   "Clairvoyance C+"
+  , skills:   [ { name:   "Clairvoyance"
+                , rank:   CPlus
                 , icon:   IconStarHaloUp
                 , cd:     8
                 , effect: [ Grant Self 3 StarUp $ 18.0 ~ 36.0 ]
                 }
-              , { name:   "Hero of the Endowed A"
+              , { name:   "Hero of the Endowed"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     12
                 , effect: [ To Self GaugeUp $ Flat 25.0
@@ -241,7 +254,8 @@ archers = Servant <$>
                           , Grant Party 5 StarsPerTurn $ 4.0 ~ 8.0
                           ]
                 }
-              , { name:   "Mana Burst (Flame) A"
+              , { name:   "Mana Burst (Flame)"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
@@ -267,7 +281,7 @@ archers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 3, ex: 5 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    31.5
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -282,14 +296,16 @@ archers = Servant <$>
               , max:   { atk: 9845, hp: 10914 }
               , grail: { atk: 11920, hp: 13239 }
               }
-  , actives:  [ { name:   "Mind's Eye (Fake) B"
+  , skills:   [ { name:   "Mind's Eye (Fake)"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 3 CritUp $ 18.0 ~ 36.0
                           ]
                 }
-              , { name:   "Projection B"
+              , { name:   "Projection"
+                , rank:   B
                 , icon:   IconAllUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Arts) $ 20.0 ~ 35.0
@@ -297,7 +313,8 @@ archers = Servant <$>
                           , Grant Self 1 (Performance Buster) $ 20.0 ~ 35.0
                           ]
                 }
-              , { name:   "Kissing Freak B"
+              , { name:   "Kissing Freak"
+                , rank:   B
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
@@ -322,7 +339,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 6, buster: 2, ex: 4 }
   , traits:   [Female, PseudoServant, EnumaElish]
   , death:    36.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  true
   , free:     true
   }
@@ -337,17 +354,20 @@ archers = Servant <$>
               , max:   { atk: 9494, hp: 11637 }
               , grail: { atk: 11495, hp: 14110 }
               }
-  , actives:  [ { name:   "Strategy B"
+  , skills:   [ { name:   "Strategy"
+                , rank:   B
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Party 3 NPGen $ 20.0 ~ 30.0 ]
                 }
-              , { name:   "Unifying the Nation by Force A"
+              , { name:   "Unifying the Nation by Force"
+                , rank:   A
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 1 (AttackVs Divine) $ 50.0 ~ 100.0 ]
                 }
-              , { name:   "The Demonic King A"
+              , { name:   "The Demonic King"
+                , rank:   A
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
@@ -370,7 +390,7 @@ archers = Servant <$>
   , hits:     { quick: 2, arts: 4, buster: 4, ex: 5 }
   , traits:   [Female, EnumaElish, King]
   , death:    31.5
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  true
   , free:     true
   }
@@ -385,7 +405,8 @@ archers = Servant <$>
               , max:   { atk: 9735, hp: 11637 }
               , grail: { atk: 11787, hp: 14110 }
               }
-  , actives:  [ { name:   "Harp of Healing C"
+  , skills:   [ { name:   "Harp of Healing"
+                , rank:   C
                 , icon:   IconBubbles
                 , cd:     8
                 , effect: [ To Party RemoveMental Full
@@ -393,7 +414,8 @@ archers = Servant <$>
                           , To Party Heal $ 200.0 ~ 600.0
                           ]
                 }
-              , { name:   "Grace of the Unexpected Birth B"
+              , { name:   "Grace of the Unexpected Birth"
+                , rank:   B
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
@@ -401,6 +423,7 @@ archers = Servant <$>
                           ]
                 }
               , { name:   "Admonishment of the King of Knights"
+                , rank:   Unknown
                 , icon:   IconCircuits
                 , cd:     7
                 , effect: [ To Enemy RemoveBuffs Full
@@ -425,7 +448,7 @@ archers = Servant <$>
   , hits:     { quick: 4, arts: 3, buster: 5, ex: 6 }
   , traits:   [Male, EnumaElish]
   , death:    31.5
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -440,19 +463,22 @@ archers = Servant <$>
               , max:   { atk: 9398, hp: 11521 }
               , grail: { atk: 11379, hp: 13969 }
               }
-  , actives:  [ { name:   "Mind's Eye (True) B"
+  , skills:   [ { name:   "Mind's Eye (True)"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 3 DefenseUp $ 9.0 ~ 18.0
                           ]
                 }
-              , { name:   "Clairvoyance C"
+              , { name:   "Clairvoyance"
+                , rank:   C
                 , icon:   IconStarHaloUp
                 , cd:     8
                 , effect: [ Grant Self 3 StarUp $ 16.0 ~ 32.0 ]
                 }
-              , { name:   "Projection A"
+              , { name:   "Projection"
+                , rank:   A
                 , icon:   IconAllUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Arts) $ 25.0 ~ 40.0
@@ -476,7 +502,7 @@ archers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 5 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    31.5
-  , align:    Neutral:Balanced
+  , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
   }
@@ -491,17 +517,20 @@ archers = Servant <$>
               , max:   { atk: 8633, hp: 12476 }
               , grail: { atk: 10453, hp: 15127 }
               }
-  , actives:  [ { name:   "Beyond Arcadia A"
+  , skills:   [ { name:   "Beyond Arcadia"
+                , rank:   A
                 , icon:   IconQuickUp
                 , cd:     7
                 , effect: [ Grant Party 1 (Performance Quick) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Hunter's Aesthetic C"
+              , { name:   "Hunter's Aesthetic"
+                , rank:   C
                 , icon:   IconStarUp
                 , cd:     6
                 , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0 ]
                 }
-              , { name:   "Calydonian Hunt A"
+              , { name:   "Calydonian Hunt"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
@@ -524,7 +553,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    31.5
-  , align:    Neutral:Evil
+  , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
   }
@@ -539,21 +568,24 @@ archers = Servant <$>
               , max:   { atk: 9446, hp: 11521 }
               , grail: { atk: 11437, hp: 13969 }
               }
-  , actives:  [ { name:   "Beach Flower A+"
+  , skills:   [ { name:   "Beach Flower"
+                , rank:   APlus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 9.5 ~ 19.5
                           , Grant (AlliesType Male) 3 StarUp $ 21.0 ~ 41.0
                           ]
                 }
-              , { name:   "Treasure Hunt (Sea) C"
+              , { name:   "Treasure Hunt (Sea)"
+                , rank:   C
                 , icon:   IconStarHaloUp
                 , cd:     8
                 , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 600.0
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
-              , { name:   "Pirate's Glory C+"
+              , { name:   "Pirate's Glory"
+                , rank:   CPlus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 8.5 ~ 25.5
@@ -579,7 +611,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    40.5
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  true
   , free:     false
   }
@@ -594,19 +626,22 @@ archers = Servant <$>
               , max:   { atk: 6715, hp: 10187 }
               , grail: { atk: 9088, hp: 13812 }
               }
-  , actives:  [ { name:   "Sabotage A"
+  , skills:   [ { name:   "Sabotage"
+                , rank:   A
                 , icon:   IconSwordDown
                 , cd:     7
                 , effect: [ Debuff Enemies 3 AttackDown $ 5.0 ~ 15.0
                           , Debuff Enemies 5 Poison $ Flat 500.0
                           ]
                 }
-              , { name:   "Golden Rule E"
+              , { name:   "Golden Rule"
+                , rank:   E
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 12.0 ~ 30.0 ]
                 }
-              , { name:   "May King B"
+              , { name:   "May King"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 SureHit Full
@@ -630,7 +665,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    31.5
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  false
   , free:     false
   }
@@ -645,27 +680,30 @@ archers = Servant <$>
               , max:   { atk: 7032, hp: 9506 }
               , grail: { atk: 9517, hp: 12889 }
               }
-  , actives:  [ { name:   "Vampirism C"
+  , skills:   [ { name:   "Vampirism"
+                , rank:   C
                 , icon:   IconDarkMagic
                 , cd:     8
                 , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
                 }
-              , { name:   "Siren Song A"
+              , { name:   "Siren Song"
+                , rank:   A
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Chances 70 100 $ 
                             Debuff (EnemyType Male) 1 Charm Full ]
                 }
-              , { name:   "Whim of the Goddess A"
+              , { name:   "Whim of the Goddess"
+                , rank:   A
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Self 3 (Performance Arts) $ 20.0 ~ 30.0 ]
                 }
               ]
   , passives: [magicResistance A, independentAction APlus, coreOfGoddess EX]
-  , phantasm: { name:   "Eye of the Euryale B"
+  , phantasm: { name:   "Eye of the Euryale"
               , desc:   "Gaze of the Goddess"
               , rank:   B
               , card:   Arts
@@ -683,7 +721,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    22.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -698,19 +736,22 @@ archers = Servant <$>
               , max:   { atk: 5816, hp: 7122 }
               , grail: { atk: 9037, hp: 10979 }
               }
-  , actives:  [ { name:   "Toughness EX"
+  , skills:   [ { name:   "Toughness "
+                , rank:   EX
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 3 DefenseUp $ 10.0 ~ 20.0
                           , Grant Self 3 (Resist Poison) $ 80.0 ~ 160.0
                           ]
                 }
-              , { name:   "Clairvoyance A"
+              , { name:   "Clairvoyance"
+                , rank:   A
                 , icon:   IconStarHaloUp
                 , cd:     8
                 , effect: [ Grant Self 3 StarUp $ 20.0 ~ 40.0 ]
                 }
-              , { name:   "Arrow Construction A"
+              , { name:   "Arrow Construction"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
@@ -735,7 +776,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    45.0
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -750,14 +791,16 @@ archers = Servant <$>
               , max:   { atk: 7736,  hp: 8643 }
               , grail: { atk: 10470, hp: 11719 }
               }
-  , actives:  [ { name:   "Divine Protection A"
+  , skills:   [ { name:   "Divine Protection"
+                , rank:   A
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Self 1 DefenseUp $ Flat 50.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
-              , { name:   "Harp of Healing B"
+              , { name:   "Harp of Healing"
+                , rank:   B
                 , icon:   IconBubbles
                 , cd:     8
                 , effect: [ To Party RemoveMental Full
@@ -765,7 +808,8 @@ archers = Servant <$>
                           , To Party Heal $ 300.0 ~ 800.0
                           ]
                 }
-              , { name:   "Charisma B"
+              , { name:   "Charisma"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 9.0 ~ 18.0 ]
@@ -788,7 +832,7 @@ archers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    36.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     true
   }
@@ -803,18 +847,21 @@ archers = Servant <$>
               , max:   { atk: 7696, hp: 8731 }
               , grail: { atk: 10415, hp: 11838 }
               }
-  , actives:  [ { name:   "Charisma A+"
+  , skills:   [ { name:   "Charisma"
+                , rank:   APlus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 10.5 ~ 21.0 ]
                 }
-              , { name:   "Fair Youth C"
+              , { name:   "Fair Youth"
+                , rank:   C
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Chances 45 75 $
                             Debuff (EnemyType Humanoid) 1 Charm Full ]
                 }
-              , { name:   "Golden Rule A"
+              , { name:   "Golden Rule"
+                , rank:   A
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 20.0 ~ 50.0 ]
@@ -838,7 +885,7 @@ archers = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 3, ex: 3 }
   , traits:   [Male, Divine, EnumaElish, King]
   , death:    36.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -853,17 +900,20 @@ archers = Servant <$>
               , max:   { atk: 6890, hp: 9506 }
               , grail: { atk: 9325, hp: 12889 }
               }
-  , actives:  [ { name:   "Marksmanship A++"
+  , skills:   [ { name:   "Marksmanship"
+                , rank:   APlusPlus
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 1 CritUp $ 60.0 ~ 120.0 ]
                 }
-              , { name:   "Quick Draw A+"
+              , { name:   "Quick Draw"
+                , rank:   APlus
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Mind's Eye (Fake) C"
+              , { name:   "Mind's Eye (Fake)"
+                , rank:   C
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
@@ -888,7 +938,7 @@ archers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 4, ex: 4 }
   , traits:   [Male, Riding, EnumaElish]
   , death:    45.0
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -903,21 +953,24 @@ archers = Servant <$>
               , max:   { atk: 7032, hp: 9800 }
               , grail: { atk: 9517, hp: 13287 }
               }
-  , actives:  [ { name:   "Protection of the Dragon King C"
+  , skills:   [ { name:   "Protection of the Dragon King"
+                , rank:   C
                 , icon:   IconBusterUp
                 , cd:     8
                 , effect: [ Grant Self 3 (Performance Buster) $ 20.0 ~ 30.0
                           , To Self Heal $ 1000.0 ~ 2000.0
                           ]
                 }
-              , { name:   "Protection from Arrows C"
+              , { name:   "Protection from Arrows"
+                , rank:   C
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Times 2 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 7.0 ~ 14.0
                           ]
                 }
-              , { name:   "Inexhaustible Straw Bag EX"
+              , { name:   "Inexhaustible Straw Bag"
+                , rank:   EX
                 , icon:   IconHPUp
                 , cd:     7
                 , effect: [ Grant Party 3 MaxHP $ 1000.0 ~ 2000.0 ]
@@ -938,7 +991,7 @@ archers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, EnumaElish]
   , death:    36.0
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  false
   , free:     false
   }

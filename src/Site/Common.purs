@@ -29,11 +29,11 @@ getDate :: Effect Date
 getDate = date <<< maybeDo (adjust <<< Hours $ -4.0) <$> nowDateTime
 
 lvlRow :: ∀ a b. RangeInfo -> HTML a b
-lvlRow (RangeInfo isPercent a b) = 
-    H.tr_ $ toCell isPercent <<< (_ + a) <<< (_ * step) <<< toNumber 
+lvlRow (RangeInfo isPercent x y) = 
+    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * step) <<< toNumber 
     <$> (0..8) `snoc` 10
   where
-    step = (b - a) / 10.0
+    step = (y - x) / 10.0
 
 noBreakName :: Boolean -> String -> String
 noBreakName doPrettify = doPrettify ? prettify <<< 
@@ -41,7 +41,7 @@ noBreakName doPrettify = doPrettify ? prettify <<<
     replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
     unBreak <<< split (Pattern "(")
   where
-    unBreak [a, b] = a <> "(" <> replaceAll (Pattern " ") (Replacement " ") b
+    unBreak [x, y] = x <> "(" <> replaceAll (Pattern " ") (Replacement " ") y
     unBreak xs     = joinWith "(" xs
 
 fileName :: String -> String
@@ -109,7 +109,7 @@ _table headings tbody = H.table_
   ]
 
 _tr :: ∀ a b. String -> Array (HTML a b) -> HTML a b
-_tr a b = H.tr_ [ _th a, H.td_ b ]
+_tr x y = H.tr_ [ _th x, H.td_ y ]
 
 _radio :: ∀ a b. String -> Boolean -> Array (HTML a b)
 _radio label checked = 

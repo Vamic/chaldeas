@@ -12,12 +12,11 @@ import Prelude
 import Generic as G
 
 import Data.Array
+import Data.Function
 import Data.Maybe
 import Data.String.CodeUnits
-import Data.Tuple
 
 import Database.Base
-import Database.Passive
 import Database.Skill
 
 newtype Servant = Servant { name     :: String
@@ -28,14 +27,14 @@ newtype Servant = Servant { name     :: String
                           , deck     :: Deck
                           , curve    :: Int
                           , stats    :: { base :: Stat, max :: Stat, grail :: Stat }
-                          , actives  :: Array Active
-                          , passives :: Array Passive
+                          , skills   :: Array Skill
+                          , passives :: Array Skill
                           , phantasm :: NoblePhantasm
                           , gen      :: Gen
                           , hits     :: Hits
                           , traits   :: Array Trait
                           , death    :: Number
-                          , align    :: Tuple Alignment Alignment
+                          , align    :: Array Alignment
                           , limited  :: Boolean
                           , free     :: Boolean
                           }
@@ -43,9 +42,9 @@ newtype Servant = Servant { name     :: String
 instance _0_ :: Show Servant where
   show (Servant s) = s.name
 instance _1_ :: Eq Servant where
-  eq (Servant a) (Servant b) = eq a.id b.id
+  eq (Servant x) (Servant y) = eq x.id y.id
 instance _2_ :: Ord Servant where
-  compare (Servant a) (Servant b) = compare a.id b.id
+  compare = compare `on` \(Servant x) -> x.id
 
 data Deck = Deck Card Card Card Card Card
 
@@ -63,8 +62,8 @@ type NoblePhantasm = { name   :: String
                      , card   :: Card
                      , kind   :: String
                      , hits   :: Int
-                     , effect :: Array ActiveEffect
-                     , over   :: Array ActiveEffect
+                     , effect :: Array SkillEffect
+                     , over   :: Array SkillEffect
                      , first  :: Boolean
                      }
 
@@ -76,13 +75,13 @@ type Gen = { starWeight :: Int
            , npDef      :: Int
            }
 
-getEffects :: Servant -> Array ActiveEffect
+getEffects :: Servant -> Array SkillEffect
 getEffects (Servant s) = filter (not <<< demerit) $ simplify 
                          <$> s.phantasm.effect 
                           <> s.phantasm.over 
-                          <> (s.actives >>= _.effect)
+                          <> (s.skills >>= _.effect)
 
-phantasmEffects :: NoblePhantasm -> Array ActiveEffect
+phantasmEffects :: NoblePhantasm -> Array SkillEffect
 phantasmEffects {effect, over} = effect <> over
 
 data PhantasmType = SingleTarget | MultiTarget | Support
@@ -96,22 +95,22 @@ instance _01_ :: Show PhantasmType where
 class (G.BoundedEnum a, Show a) <= MatchServant a where
     has :: a -> Boolean -> Servant -> Boolean
 instance _a_ :: MatchServant BuffEffect where
-    has a noSelf = any match <<< getEffects where
-        match (Grant t _ b _) = a == b && (not noSelf || t /= Self)
+    has x noSelf = any match <<< getEffects where
+        match (Grant t _ y _) = x == y && (not noSelf || t /= Self)
         match _ = false
 instance _b_ :: MatchServant DebuffEffect where
-    has a _ = any match <<< getEffects where
-        match (Debuff t _ b _) = a == b
+    has x _ = any match <<< getEffects where
+        match (Debuff t _ y _) = x == y
         match _ = false
 instance _c_ :: MatchServant InstantEffect where
     has BecomeHyde _ = const false
-    has a noSelf     = any match <<< getEffects where
-        match (To t b _) = a == b && (not noSelf || t /= Self)
+    has x noSelf     = any match <<< getEffects where
+        match (To t y _) = x == y && (not noSelf || t /= Self)
         match _ = false
 instance _d_ :: MatchServant Trait where
-    has a _ (Servant s) = a `elem` s.traits
+    has x _ (Servant s) = x `elem` s.traits
 instance _e_ :: MatchServant Alignment where
-    has a _ (Servant {align:Tuple b c}) = a == b || a == c
+    has x _ (Servant s) = x `elem` s.align
 instance _f_ :: MatchServant PhantasmType where
     has SingleTarget _ (Servant s) = any match $ phantasmEffects s.phantasm
       where
@@ -125,13 +124,13 @@ instance _f_ :: MatchServant PhantasmType where
         match _ = false
     has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
 instance _g_ :: MatchServant Class where
-    has a _ (Servant s) = a == s.class
+    has x _ (Servant s) = x == s.class
 instance _h_ :: MatchServant Attribute where
-    has a _ (Servant s) = a == s.attr
+    has x _ (Servant s) = x == s.attr
 instance _i_ :: MatchServant Deck where
-    has a _ (Servant s) = a == s.deck
+    has x _ (Servant s) = x == s.deck
 instance _j_ :: MatchServant Card where
-    has a _ (Servant s) = a == s.phantasm.card
+    has x _ (Servant s) = x == s.phantasm.card
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------

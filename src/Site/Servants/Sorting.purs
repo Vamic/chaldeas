@@ -40,7 +40,7 @@ instance _a_ :: Show SortBy where
   show NPDmgOver  = "NP Damage + Overcharge"
   show NPSpec     = "NP Special Damage"
   show NPSpecOver = "NP Special + Overcharge"
-  show a = unCamel $ G.genericShow a
+  show x          = unCamel $ G.genericShow x
 
 toSort :: SortBy -> Servant -> Number
 toSort ID         (Servant s) = negate $ toNumber s.id
@@ -59,15 +59,15 @@ doSort :: SortBy -> Array MyServant -> Array (Tuple String Servant)
 doSort Rarity = map (Tuple "") <<< sortWith sorter <<< map getBase
   where
     sorter (Servant s) = show (5 - s.rarity) <> s.name
-doSort a = map showSort <<< sortWith sorter
+doSort x = map showSort <<< sortWith sorter
   where
-    sorter (MyServant ms)  = toSort a $ ms.servant
+    sorter (MyServant ms)  = toSort x $ ms.servant
     showSort
-      | a `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \ms'@(MyServant ms) -> 
+      | x `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \ms'@(MyServant ms) -> 
           flip Tuple (getBase ms') $
           "NP" <> show ms.npLvl <> ": " <> (output <<< abs $ sorter ms')
       | otherwise = output <<< abs <<< sorter &&& getBase
-    output = case a of
+    output = case x of
         NPArts    -> flip append "%" <<< print 2
         StarQuick -> print 2
         _         -> print 0

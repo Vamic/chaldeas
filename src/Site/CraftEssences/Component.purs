@@ -189,15 +189,15 @@ modal prefs
       , _img $ "img/Skill/" <> show ce.icon <> ".png"
       , _h 2 "Effects"
       ] <> (if base == max then [] else
-      [ H.section_ $ effectEl <<< mapAmount (\a _ -> Flat a) <$> ce.effect
+      [ H.section_ $ effectEl <<< mapAmount (\x _ -> Flat x) <$> ce.effect
       , _h 2 "Max Limit Break"
       ]) <>
-      [ H.section_ $ effectEl <<< mapAmount (\_ b -> Flat b) <$> ce.effect ]
+      [ H.section_ $ effectEl <<< mapAmount (\_ y -> Flat y) <$> ce.effect ]
     ]
 
-effectEl :: ∀ a. ActiveEffect -> HTML a (Query Unit)
+effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)
 effectEl ef
   | demerit ef = H.p [_c "demerit"] <<< _txt $ show ef
-  | otherwise  = H.p (maybe [] meta $ activeFilter ef) <<< _txt $ show ef
+  | otherwise  = H.p (maybe [] meta $ skillFilter ef) <<< _txt $ show ef
   where
     meta filt = [_c "link", _click $ FilterBy [filt] ]

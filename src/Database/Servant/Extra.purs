@@ -1,7 +1,6 @@
 module Database.Servant.Extra (extras) where
 
 import Prelude
-import Operators
 import Database.Model
 
 extras :: Array Servant
@@ -17,17 +16,20 @@ extras = Servant <$>
               , max:   { atk: 9593, hp: 16500 }
               , grail: { atk: 10501, hp: 18076 }
               }
-  , actives:  [ { name:   "Revelation A"
+  , skills:   [ { name:   "Revelation"
+                , rank:   A
                 , icon:   IconStarTurn
                 , cd:     8
                 , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0 ]
                 }
-              , { name:   "True Name Revelation B"
+              , { name:   "True Name Revelation"
+                , rank:   B
                 , icon:   IconBeamDown
                 , cd:     7
                 , effect: [ Debuff Enemy 1 NPDown $ 15.0 ~ 30.0 ]
                 }
-              , { name:   "Divine Judgement A"
+              , { name:   "Divine Judgement"
+                , rank:   A
                 , icon:   IconStun
                 , cd:     8
                 -- TODO only affects Servants?
@@ -52,7 +54,7 @@ extras = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish, Saberface]
   , death:    21.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -67,12 +69,14 @@ extras = Servant <$>
               , max:   { atk: 10972, hp: 14107 }
               , grail: { atk: 12011, hp: 15455 }
               }
-  , actives:  [ { name:   "Revelation A"
+  , skills:   [ { name:   "Revelation"
+                , rank:   A
                 , icon:   IconStarTurn
                 , cd:     8
                 , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0 ]
                 }
-              , { name:   "Baptism Rite B+"
+              , { name:   "Baptism Rite"
+                , rank:   BPlus
                 , icon:   IconNobleTurn
                 , cd:     12
                 , effect: [ Grant Self 5 GaugePerTurn $ 10.0 ~ 20.0
@@ -80,7 +84,8 @@ extras = Servant <$>
                           , To (EnemyType Demon) GaugeDown $ Flat 1.0
                           ]
                 }
-              , { name:   "Divine Judgement C"
+              , { name:   "Divine Judgement"
+                , rank:   C
                 , icon:   IconStun
                 , cd:     8
                 -- TODO only affects [Servants]?
@@ -104,7 +109,7 @@ extras = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 7 }
   , traits:   [Male, EnumaElish]
   , death:    21.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  true
   , free:     false
   }
@@ -119,21 +124,24 @@ extras = Servant <$>
               , max:   { atk: 13244, hp: 11761 }
               , grail: { atk: 14498, hp: 12885 }
               }
-  , actives:  [ { name:   "Self-Modification EX"
+  , skills:   [ { name:   "Self-Modification"
+                , rank:   EX
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0
                           , Grant Self 3 StarAbsorb $ 400.0 ~ 800.0
                           ]
                 }
-              , { name:   "Dragon Witch EX"
+              , { name:   "Dragon Witch"
+                , rank:   EX
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
                           , Grant (AlliesType Dragon) 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Ephemeral Dream A"
+              , { name:   "Ephemeral Dream"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     8
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0
@@ -159,7 +167,7 @@ extras = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 4, ex: 7 }
   , traits:   [Female, EnumaElish, Saberface]
   , death:    5.7
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  true
   , free:     false
   }
@@ -174,7 +182,8 @@ extras = Servant <$>
               , max:   { atk: 12641, hp: 12177 }
               , grail: { atk: 13838, hp: 13340 }
               }
-  , actives:  [ { name:   "Iron Determination EX"
+  , skills:   [ { name:   "Iron Determination"
+                , rank:   EX
                 , icon:   IconShieldBreak
                 , cd:     8
                 , effect: [ Grant Self 1 IgnoreInvinc Full
@@ -182,12 +191,14 @@ extras = Servant <$>
                           , Grant Self 3 DebuffResist $ 14.0 ~ 32.0
                           ]
                 }
-              , { name:   "Golden Rule A"
+              , { name:   "Golden Rule"
+                , rank:   A
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 20.0 ~ 50.0 ]
                 }
-              , { name:   "Wisdom of Crisis A"
+              , { name:   "Wisdom of Crisis"
+                , rank:   A
                 , icon:   IconDarkMagic
                 , cd:     8
                 , effect: [ To Enemy GaugeDown $ Flat 1.0
@@ -213,7 +224,7 @@ extras = Servant <$>
   , hits:     { quick: 4, arts: 2, buster: 3, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    7.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  true
   , free:     false
   }
@@ -228,7 +239,8 @@ extras = Servant <$>
               , max:   { atk: 9546, hp: 11250 }
               , grail: { atk: 11558, hp: 13640 }
               }
-  , actives:  [ { name:   "Saint of the Shore B+"
+  , skills:   [ { name:   "Saint of the Shore"
+                , rank:   BPlus
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
@@ -236,14 +248,16 @@ extras = Servant <$>
                             Grant Self 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Natural Body (Sea) A"
+              , { name:   "Natural Body (Sea)"
+                , rank:   A
                 , icon:   IconFlex
                 , cd:     7
                 , effect: [ Grant Self 0 DebuffResist Full
                           , To Self Heal $ 1000.0 ~ 3000.0
                           ]
                 }
-              , { name:   "Jacob's Limbs B"
+              , { name:   "Jacob's Limbs"
+                , rank:   B
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 1 (AttackVs Demon) $ 50.0 ~ 100.0
@@ -267,7 +281,7 @@ extras = Servant <$>
   , hits:     { quick: 4, arts: 3, buster: 1, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    21.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  true
   , free:     false
   }
@@ -282,7 +296,8 @@ extras = Servant <$>
               , max:   { atk: 6791, hp: 10302 }
               , grail: { atk: 10575, hp: 15619 }
               }
-  , actives:  [ { name:   "Honorable Wall of Snowflakes"
+  , skills:   [ { name:   "Honorable Wall of Snowflakes"
+                , rank:   Unknown
                 , icon:   IconShieldUp
                 , cd:     7
                 , effect: [ Grant Party 3 DefenseUp $ 15.0 ~ 20.0
@@ -290,6 +305,7 @@ extras = Servant <$>
                           ]
                 }
               , { name:   "Obscurant Wall of Chalk"
+                , rank:   Unknown
                 , icon:   IconShield
                 , cd:     9
                 , effect: [ Grant Ally 1 Invincibility Full
@@ -297,6 +313,7 @@ extras = Servant <$>
                           ]
                 }
               , { name:   "Shield of Rousing Resolution"
+                , rank:   Unknown
                 , icon:   IconCrosshairUp
                 , cd:     8
                 , effect: [ Grant Self 1 Taunt Full
@@ -321,7 +338,7 @@ extras = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, EnumaElish]
   , death:    24.5
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -336,19 +353,22 @@ extras = Servant <$>
               , max:   { atk: 5683, hp: 7981 }
               , grail: { atk: 8235, hp: 11518 }
               }
-  , actives:  [ { name:   "Zarich C"
+  , skills:   [ { name:   "Zarich"
+                , rank:   C
                 , icon:   IconExclamationDown
                 , cd:     8
                 , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Tawrich C"
+              , { name:   "Tawrich"
+                , rank:   C
                 , icon:   IconDarkMagic
                 , cd:     8
                 , effect: [ To Enemy GaugeDown $ Flat 1.0
                           , Debuff Enemy 3 AttackDown $ 10.0 ~ 30.0
                           ]
                 }
-              , { name:   "Annihilation Wish A"
+              , { name:   "Annihilation Wish"
+                , rank:   A
                 , icon:   IconQuickUp
                 , cd:     10
                 , effect: [ When "turn 1" $ Grant Self 1 (Performance Quick) $
@@ -380,7 +400,7 @@ extras = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    9.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }

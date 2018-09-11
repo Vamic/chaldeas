@@ -1,6 +1,7 @@
 module Operators 
   ( enumArray
   , unCamel
+  , compareThen
   , ymd
   , (:)
   , (?), doIf
@@ -43,3 +44,8 @@ camel = unsafeRegex "([a-z])([A-Z])" mempty
 
 unCamel :: String -> String
 unCamel = replace camel "$1 $2"
+
+compareThen :: ∀ a b c. Ord b => Ord c => (a -> b) -> (a -> c) -> a -> a -> Ordering
+compareThen f g x y = case compare (f x) (f y) of
+    EQ -> compare (g x) (g y)
+    a  -> a

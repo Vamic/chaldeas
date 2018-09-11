@@ -1,7 +1,6 @@
 module Database.Servant.Assassin (assassins) where
 
 import Prelude
-import Operators
 import Database.Model
 
 assassins :: Array Servant
@@ -17,21 +16,24 @@ assassins = Servant <$>
               , max:   { atk: 11557, hp: 12696 }
               , grail: { atk: 12651, hp: 13909 }
               }
-  , actives:  [ { name:   "Murder on a Misty Night A"
+  , skills:   [ { name:   "Murder on a Misty Night"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 1 (Performance Quick) $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Information Erasure B"
+              , { name:   "Information Erasure"
+                , rank:   B
                 , icon:   IconCircuits
                 , cd:     7
                 , effect: [ To Enemy RemoveBuffs Full
                           , Debuff Enemy 3 CritChance $ 10.0 ~ 30.0
                           ]
                 }
-              , { name:   "Surgery E"
+              , { name:   "Surgery"
+                , rank:   E
                 , icon:   IconHeal
                 , cd:     6
                 , effect: [ To Ally Heal $ 500.0 ~ 2500.0 ]
@@ -52,7 +54,7 @@ assassins = Servant <$>
   , hits:     { quick: 5, arts: 2, buster: 2, ex: 4 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -67,21 +69,24 @@ assassins = Servant <$>
               , max:   { atk: 11993, hp: 12825 }
               , grail: { atk: 13128, hp: 14050 }
               }
-  , actives:  [ { name:   "Intoxicating Aroma of Fruits A"
+  , skills:   [ { name:   "Intoxicating Aroma of Fruits"
+                , rank:   A
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Chance 60 $ Debuff Enemies 1 Charm Full
                           , Debuff Enemies 3 DefenseDown $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Demonic Nature of Oni A"
+              , { name:   "Demonic Nature of Oni"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
                           , Grant Self 3 NPUp $ 20.0 ~ 30.0
                           ]
                 }
-              , { name:   "Battle Continuation A+"
+              , { name:   "Battle Continuation"
+                , rank:   APlus
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1200.0 ~ 2700.0 ]
@@ -109,7 +114,7 @@ assassins = Servant <$>
   , hits:     { quick: 4, arts: 3, buster: 1, ex: 6 }
   , traits:   [Female, Demonic, EnumaElish, Divine, Dragon]
   , death:    31.6
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  true
   , free:     false
   }
@@ -124,17 +129,20 @@ assassins = Servant <$>
               , max:   { atk: 11761, hp: 12696 }
               , grail: { atk: 12874, hp: 13909 }
               }
-  , actives:  [ { name:   "Fire Support EX"
+  , skills:   [ { name:   "Fire Support"
+                , rank:   EX
                 , icon:   IconStun
                 , cd:     10
                 , effect: [ Chances 60 80 $ Debuff Enemies 1 StunBomb Full ]
                 }
-              , { name:   "Intuition C+"
+              , { name:   "Intuition"
+                , rank:   CPlus
                 , icon:   IconStar
                 , cd:     7
                 , effect: [ To Party GainStars $ 4.0 ~ 14.0 ]
                 }
-              , { name:   "Galactic Meteor Sword C"
+              , { name:   "Galactic Meteor Sword"
+                , rank:   C
                 , icon:   IconStarHaloUp
                 , cd:     8
                 , effect: [ Grant Self 3 (ClassAffinity Saber) $ 30.0 ~ 50.0
@@ -157,7 +165,7 @@ assassins = Servant <$>
   , hits:     { quick: 4, arts: 2, buster: 1, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, King]
   , death:    38.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
   }
@@ -172,7 +180,8 @@ assassins = Servant <$>
               , max:   { atk: 8867, hp: 11055 }
               , grail: { atk: 10736, hp: 13404 }
               }
-  , actives:  [ { name:   "Mystic Eyes of Death Perception A"
+  , skills:   [ { name:   "Mystic Eyes of Death Perception"
+                , rank:   A
                 , icon:   IconMystic
                 , cd:     7
                 , effect: [ Grant Self 1 IgnoreInvinc Full
@@ -180,14 +189,16 @@ assassins = Servant <$>
                           , Debuff Enemy 1 DeathDown $ 80.0 ~ 100.0
                           ]
                 }
-              , { name:   "Mind's Eye (Fake) A"
+              , { name:   "Mind's Eye (Fake)"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Yin-Yang B"
+              , { name:   "Yin-Yang"
+                , rank:   B
                 , icon:   IconYinYang
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
@@ -210,7 +221,7 @@ assassins = Servant <$>
   , hits:     { quick: 4, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, EnumaElish, PseudoServant]
   , death:    44.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  true
   , free:     true
   }
@@ -225,19 +236,22 @@ assassins = Servant <$>
               , max:   { atk: 9408, hp: 10473 }
               , grail: { atk: 11391, hp: 12698 }
               }
-  , actives:  [ { name:   "Vampirism C"
+  , skills:   [ { name:   "Vampirism"
+                , rank:   C
                 , icon:   IconDarkMagic
                 , cd:     8
                 , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
                 }
-              , { name:   "Torture Technique A"
+              , { name:   "Torture Technique"
+                , rank:   A
                 , icon:   IconShieldDown
                 , cd:     7
                 , effect: [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 20.0 ]
                 }
-              , { name:   "Bath of Fresh Blood A"
+              , { name:   "Bath of Fresh Blood"
+                , rank:   A
                 , icon:   IconExclamationDown
                 , cd:     8
                 , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0
@@ -263,7 +277,7 @@ assassins = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -278,12 +292,14 @@ assassins = Servant <$>
               , max:   { atk: 8958, hp: 11168 }
               , grail: { atk: 10846, hp: 13541 }
               }
-  , actives:  [ { name:   "Magecraft B"
+  , skills:   [ { name:   "Magecraft"
+                , rank:   B
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Arts) $ 24.0 ~ 40.0 ]
                 }
-              , { name:   "Affection of the Holy Grail A+"
+              , { name:   "Affection of the Holy Grail"
+                , rank:   APlus
                 , icon:   IconShieldBreak
                 , cd:     7
                 , effect: [ Grant Self 3 IgnoreInvinc Full
@@ -291,7 +307,8 @@ assassins = Servant <$>
                           , Debuff Others 3 DebuffVuln $ Flat 20.0
                           ]
                 }
-              , { name:   "Scapegoat C"
+              , { name:   "Scapegoat"
+                , rank:   C
                 , icon:   IconCrosshairUp
                 , cd:     7
                 , effect: [ Grant Ally 1 Taunt Full
@@ -316,7 +333,7 @@ assassins = Servant <$>
   , hits:     { quick: 4, arts: 2, buster: 6, ex: 8 }
   , traits:   [Male, Brynhild, EnumaElish]
   , death:    44.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -331,21 +348,24 @@ assassins = Servant <$>
               , max:   { atk: 9049, hp: 11168 }
               , grail: { atk: 10956, hp: 13541 }
               }
-  , actives:  [ { name:   "Beach Crisis A+"
+  , skills:   [ { name:   "Beach Crisis"
+                , rank:   APlus
                 , icon:   IconCrosshairUp
                 , cd:     8
                 , effect: [ Chances 100 300 $ Grant Self 1 Taunt Full
                           , Grant Self 1 CritUp $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Primordial Rune (Sea) A"
+              , { name:   "Primordial Rune (Sea)"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     8
                 , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
                           , Grant Ally 1 DamageDown $ 500.0 ~ 1000.0
                           ]
                 }
-              , { name:   "Midsummer Mistake C"
+              , { name:   "Midsummer Mistake"
+                , rank:   C
                 , icon:   IconShieldBreak
                 , cd:     8
                 , effect: [ Grant Self 1 IgnoreInvinc Full
@@ -368,7 +388,7 @@ assassins = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 3, ex: 5 }
   , traits:   [Female, King, EnumaElish]
   , death:    44.0
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  true
   , free:     true
   }
@@ -383,20 +403,23 @@ assassins = Servant <$>
               , max:   { atk: 8985, hp: 11518 }
               , grail: { atk: 10879, hp: 13965 }
               }
-  , actives:  [ { name:   "Vampirism C"
+  , skills:   [ { name:   "Vampirism"
+                , rank:   C
                 , icon:   IconDarkMagic
                 , cd:     8
                 , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , To Self GaugeUp $ 18.0 ~ 27.0
                           ]
                 }
-              , { name:   "Siren Song A"
+              , { name:   "Siren Song"
+                , rank:   A
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Chances 70 100 $
                             Debuff (EnemyType Male) 1 Charm Full ]
                 }
-              , { name:   "Whim of the Goddess A"
+              , { name:   "Whim of the Goddess"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
@@ -422,7 +445,7 @@ assassins = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, Divine, EnumaElish]
   , death:    27.5
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -437,21 +460,24 @@ assassins = Servant <$>
               , max:   { atk: 7091, hp: 8844 }
               , grail: { atk: 9597, hp: 11991 }
               }
-  , actives:  [ { name:   "Sabotage B+"
+  , skills:   [ { name:   "Sabotage"
+                , rank:   BPlus
                 , icon:   IconSwordDown
                 , cd:     7
                 , effect: [ Debuff Enemies 3 AttackDown $ Flat 10.0
                           , Debuff Enemies 3 CritChance $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Ninjutsu A+"
+              , { name:   "Ninjutsu"
+                , rank:   APlus
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Ally 1 Evasion Full
                           , Grant Ally 1 StarUp $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Suspicious Shadow C"
+              , { name:   "Suspicious Shadow"
+                , rank:   C
                 , icon:   IconHoodDown
                 , cd:     7
                 , effect: [ Debuff Enemies 1 DebuffVuln $ 50.0 ~ 100.0 ]
@@ -472,7 +498,7 @@ assassins = Servant <$>
   , hits:     { quick: 4, arts: 4, buster: 1, ex: 4 }
   , traits:   [Male, EnumaElish]
   , death:    38.5
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -487,21 +513,24 @@ assassins = Servant <$>
               , max:   { atk: 5735, hp: 6220 }
               , grail: { atk: 8912, hp: 9588 }
               }
-  , actives:  [ { name:   "Mind's Eye (Fake) A"
+  , skills:   [ { name:   "Mind's Eye (Fake)"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 3 CritUp $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Vitrify B+"
+              , { name:   "Vitrify"
+                , rank:   BPlus
                 , icon:   IconBubbles
                 , cd:     6
                 , effect: [ To Self RemoveMental Full
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
-              , { name:   "Knowledge of the Sowa B"
+              , { name:   "Knowledge of the Sowa"
+                , rank:   B
                 , icon:   IconBullseye
                 , cd:     7
                 , effect: [ Grant Self 3 SureHit Full
@@ -524,7 +553,7 @@ assassins = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    55.0
-  , align:    Neutral:Evil
+  , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
   }
@@ -539,17 +568,20 @@ assassins = Servant <$>
               , max:   { atk: 6280, hp: 7594 }
               , grail: { atk: 9100, hp: 10960 }
               }
-  , actives:  [ { name:   "Throw (Dagger) B"
+  , skills:   [ { name:   "Throw (Dagger)"
+                , rank:   B
                 , icon:   IconStar
                 , cd:     6
                 , effect: [ To Party GainStars $ 3.0 ~ 12.0 ]
                 }
-              , { name:   "Self-Modification C"
+              , { name:   "Self-Modification"
+                , rank:   C
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 20.0 ~ 50.0 ]
                 }
-              , { name:   "Protection Against the Wind A"
+              , { name:   "Protection Against the Wind"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Times 3 $ Grant Self 0 Evasion Full
@@ -572,7 +604,7 @@ assassins = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    44.0
-  , align:    Lawful:Evil
+  , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
   }
@@ -587,7 +619,8 @@ assassins = Servant <$>
               , max:   { atk: 6320, hp: 9675 }
               , grail: { atk: 8553, hp: 13118 }
               }
-  , actives:  [ { name:   "Monstrous Strength B"
+  , skills:   [ { name:   "Monstrous Strength"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 5.0 ~ 15.0
@@ -595,7 +628,8 @@ assassins = Servant <$>
                             Grant Self 3 AttackUp $ 25.0 ~ 35.0
                           ]
                 }
-              , { name:   "Panicky Voice A"
+              , { name:   "Panicky Voice"
+                , rank:   A
                 , icon:   IconStun
                 , cd:     8
                 , effect: [ Times 1 <<<
@@ -605,7 +639,8 @@ assassins = Servant <$>
                           , Chance 10 $ Debuff Enemy 1 Stun Full
                           ]
                 }
-              , { name:   "Self-Modification D"
+              , { name:   "Self-Modification"
+                , rank:   D
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 5.0 ~ 15.0
@@ -632,7 +667,7 @@ assassins = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    55.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good, Chaotic, Evil]
   , limited:  false
   , free:     true
   }
@@ -647,19 +682,22 @@ assassins = Servant <$>
               , max:   { atk: 7207, hp: 8293 }
               , grail: { atk: 9754, hp: 11244 }
               }
-  , actives:  [ { name:   "Restrain A"
+  , skills:   [ { name:   "Restrain"
+                , rank:   A
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarAbsorb $ Flat 200.0
                           , To Party GainStars $ 5.0 ~ 15.0
                           ]
                 }
-              , { name:   "Planning B"
+              , { name:   "Planning"
+                , rank:   B
                 , icon:   IconStarHaloUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarUp $ 10.0 ~ 30.0 ]
                 }
-              , { name:   "Insolent A"
+              , { name:   "Insolent"
+                , rank:   A
                 , icon:   IconQuickUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Quick) $ 20.0 ~ 30.0
@@ -686,7 +724,7 @@ assassins = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -701,19 +739,22 @@ assassins = Servant <$>
               , max:   { atk: 5456, hp: 8309 }
               , grail: { atk: 7906, hp: 11991 }
               }
-  , actives:  [ { name:   "Executioner A++"
+  , skills:   [ { name:   "Executioner"
+                , rank:   APlusPlus
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 3 (AlignAffinity Evil) $ 40.0 ~ 60.0 ]
                 }
-              , { name:   "Medicine A+"
+              , { name:   "Medicine"
+                , rank:   APlus
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Ally Heal $ 1000.0 ~ 3000.0
                           , To Ally RemoveDebuffs Full
                           ]
                 }
-              , { name:   "Human Study B"
+              , { name:   "Human Study"
+                , rank:   B
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 3 (AttackVs Human) $ 40.0 ~ 60.0 ]
@@ -736,7 +777,7 @@ assassins = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    49.5
-  , align:    Lawful:Evil
+  , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
   }
@@ -751,14 +792,16 @@ assassins = Servant <$>
               , max:   { atk: 6686, hp: 9310 }
               , grail: { atk: 9049, hp: 12623 }
               }
-  , actives:  [ { name:   "Librarian of Knowledge C"
+  , skills:   [ { name:   "Librarian of Knowledge"
+                , rank:   C
                 , icon:   IconNobleUp
                 , cd:     7
                 , effect: [ Grant Self 3 NPGen $ 10.0 ~ 20.0
                           , Grant Self 3 StarUp $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Wide Specialization A+"
+              , { name:   "Wide Specialization"
+                , rank:   APlus
                 , icon:   IconAllUp
                 , cd:     7
                 , effect: [ Chances 60 80 <<<
@@ -768,9 +811,10 @@ assassins = Servant <$>
                           , Chances 60 80 <<<
                             Grant Self 3 (Performance Arts) $ Flat 30.0
                           , Grant Self 1 Evasion Full
-                          ] -- TODO
+                          ]
                 }
-              , { name:   "Battle Retreat B"
+              , { name:   "Battle Retreat"
+                , rank:   B
                 , icon:   IconHeal
                 , cd:     8
                 , effect: [ To Self Heal $ 2000.0 ~ 4000.0
@@ -793,7 +837,7 @@ assassins = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 1, ex: 6 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
-  , align:    Lawful:Evil
+  , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
   }
@@ -808,19 +852,22 @@ assassins = Servant <$>
               , max:   { atk: 6636, hp: 9310 }
               , grail: { atk: 8981, hp: 12623 }
               }
-  , actives:  [ { name:   "Morph (Infiltration) C"
+  , skills:   [ { name:   "Morph (Infiltration)"
+                , rank:   C
                 , icon:   IconExclamationDown
                 , cd:     9
                 , effect: [ Debuff Enemy 3 CritChance $ 10.0 ~ 20.0
                           , To Enemy GaugeDown $ Flat 1.0
                           ]
                 }
-              , { name:   "Throw (Dagger) C"
+              , { name:   "Throw (Dagger)"
+                , rank:   C
                 , icon:   IconStar
                 , cd:     6
                 , effect: [ To Party GainStars $ 2.0 ~ 12.0 ]
                 }
-              , { name:   "Dance of Silence B"
+              , { name:   "Dance of Silence"
+                , rank:   B
                 , icon:   IconReaperUp
                 , cd:     8
                 , effect: [ Grant Self 3 KillUp $ 20.0 ~ 50.0
@@ -847,7 +894,7 @@ assassins = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 4, ex: 5 }
   , traits:   [Female, EnumaElish]
   , death:    44.0
-  , align:    Lawful:Evil
+  , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
   }
@@ -862,20 +909,23 @@ assassins = Servant <$>
               , max:   { atk: 5654, hp: 8393 }
               , grail: { atk: 8193, hp: 12112 }
               }
-  , actives:  [ { name:   "Innocent Monster D"
+  , skills:   [ { name:   "Innocent Monster"
+                , rank:   D
                 , icon:   IconStarTurn
                 , cd:     7
                 , effect: [ Grant Party 3 StarsPerTurn $ 3.0 ~ 9.0
                           , Debuff Self 3 DefenseDown $ Flat 14.0
                           ]
                 }
-              , { name:   "Siren Song B"
+              , { name:   "Siren Song"
+                , rank:   B
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Chances 60 90 $
                             Debuff (EnemyType Female) 1 Charm Full ]
                 }
-              , { name:   "Mental Corruption A"
+              , { name:   "Mental Corruption"
+                , rank:   A
                 , icon:   IconStaffUp
                 , cd:     7
                 , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0
@@ -898,7 +948,7 @@ assassins = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 2, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    49.5
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -913,12 +963,14 @@ assassins = Servant <$>
               , max:   { atk: 5377, hp: 6565 }
               , grail: { atk: 8355, hp: 10120 }
               }
-  , actives:  [ { name:   "Espionage A++"
+  , skills:   [ { name:   "Espionage"
+                , rank:   APlusPlus
                 , icon:   IconStarHaloUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarUp $ 10.0 ~ 30.0 ]
                 }
-              , { name:   "Pheromone B"
+              , { name:   "Pheromone"
+                , rank:   B
                 , icon:   IconHeart
                 , cd:     8
                 , effect: [ Chances 30 60 $
@@ -926,7 +978,8 @@ assassins = Servant <$>
                           , Debuff Enemies 3 DefenseDown $ 10.0 ~ 20.0
                           ]
                 }
-              , { name:   "Double-cross B"
+              , { name:   "Double-cross"
+                , rank:   B
                 , icon:   IconCircuits
                 , cd:     8
                 , effect: [ Debuff Enemy 1 SealSkills Full
@@ -951,7 +1004,7 @@ assassins = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, EnumaElish]
   , death:    55.0
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }

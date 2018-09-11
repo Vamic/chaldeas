@@ -39,9 +39,9 @@ doSort Rarity = map showSort <<< sortWith sorter
   where
     sorter (CraftEssence ce) = show (5 - ce.rarity) <> ce.name
     showSort ce'@(CraftEssence ce) = Tuple (fromMaybe "" ce.bond) ce'
-doSort a = map showSort <<< sortWith sorter
+doSort x = map showSort <<< sortWith sorter
   where
-    sorter   = toSort a
+    sorter   = toSort x
     showSort = output <<< abs <<< sorter &&& identity
     output   = print 0
 

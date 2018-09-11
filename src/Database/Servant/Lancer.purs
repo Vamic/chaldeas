@@ -1,7 +1,6 @@
 module Database.Servant.Lancer (lancers) where
 
 import Prelude
-import Operators
 import Database.Model
 
 lancers :: Array Servant
@@ -17,7 +16,8 @@ lancers = Servant <$>
               , max:   { atk: 11375, hp: 14825 }
               , grail: { atk: 12452, hp: 16241 }
               }
-  , actives:  [ { name:   "Wisdom of Dun Scaith A+"
+  , skills:   [ { name:   "Wisdom of Dun Scaith"
+                , rank:   APlus
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Grant Self 1 Evasion Full
@@ -28,11 +28,13 @@ lancers = Servant <$>
                           ]
                 }
               , { name:   "Primordial Rune"
+                , rank:   Unknown
                 , icon:   IconQuickUp
                 , cd:     8
                 , effect: [ Grant Ally 1 (Performance Quick) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "God-Slayer B"
+              , { name:   "God-Slayer"
+                , rank:   B
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 1 (AttackVs Divine) $ 50.0 ~ 100.0
@@ -57,7 +59,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 6, ex: 7 }
   , traits:   [Female, EnumaElish, King]
   , death:    32.0
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  true
   , free:     false
   }
@@ -72,14 +74,16 @@ lancers = Servant <$>
               , max:   { atk: 11976, hp: 13632 }
               , grail: { atk: 13110, hp: 14934 }
               }
-  , actives:  [ { name:   "Knowledge of the Deprived A"
+  , skills:   [ { name:   "Knowledge of the Deprived"
+                , rank:   A
                 , icon:   IconCircuits
                 , cd:     8
                 , effect: [ Debuff Enemy 1 SealNP Full
                           , Debuff Enemy 1 DebuffVuln $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Mana Burst (Flame) A"
+              , { name:   "Mana Burst (Flame)"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 20.0 ~ 30.0
@@ -87,6 +91,7 @@ lancers = Servant <$>
                           ]
                 }
               , { name:   "Uncrowned Arms Mastership"
+                , rank:   Unknown
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ Flat 25.0
@@ -110,7 +115,7 @@ lancers = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 1, ex: 4 }
   , traits:   [Male, Riding, Brynhild, Divine, EnumaElish]
   , death:    28.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -125,14 +130,16 @@ lancers = Servant <$>
               , max:   { atk: 10726, hp: 15147 }
               , grail: { atk: 11741, hp: 16594 }
               }
-  , actives:  [ { name:   "Beach Flower EX"
+  , skills:   [ { name:   "Beach Flower"
+                , rank:   EX
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0
                           , Grant (AlliesType Male) 3 StarUp $ 22.0 ~ 42.0
                           ]
                 }
-              , { name:   "Midsummer Curse A"
+              , { name:   "Midsummer Curse"
+                , rank:   A
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Debuff Enemy 1 Charm Full
@@ -141,7 +148,8 @@ lancers = Servant <$>
                           , To Enemy DemeritCharge $ Flat 1.0
                           ]
                 }
-              , { name:   "Goddess Morph B"
+              , { name:   "Goddess Morph"
+                , rank:   B
                 , icon:   IconShield
                 , cd:     8
                 , effect: [ Grant Self 1 Invincibility Full
@@ -169,7 +177,7 @@ lancers = Servant <$>
   , hits:     { quick: 4, arts: 2, buster: 3, ex: 4 }
   , traits:   [Female, Divine, Riding, EnumaElish]
   , death:    40.0
-  , align:    Neutral:Summer
+  , align:    [Neutral, Summer]
   , limited:  true
   , free:     false
   }
@@ -184,7 +192,8 @@ lancers = Servant <$>
               , max:   { atk: 11432, hp: 14825 }
               , grail: { atk: 12514, hp: 16241 }
               }
-  , actives:  [ { name:   "Mana Burst (Flame) B"
+  , skills:   [ { name:   "Mana Burst (Flame)"
+                , rank:   B
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 15.0 ~ 25.0
@@ -192,13 +201,15 @@ lancers = Servant <$>
                           ]
                 }
               , { name:   "Primordial Rune"
+                , rank:   Unknown
                 , icon:   IconExclamationDown
                 , cd:     8
                 , effect: [ Debuff Enemy 3 CritChance $ 30.0 ~ 50.0
                           , Debuff Enemy 1 NPDown $ 15.0 ~ 30.0
                           ]
                 }
-              , { name:   "Hero's Assistant C"
+              , { name:   "Hero's Assistant"
+                , rank:   C
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Ally 3 StarAbsorb $ 300.0 ~ 600.0
@@ -223,7 +234,7 @@ lancers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    32.0
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  true
   , free:     false
   }
@@ -238,17 +249,20 @@ lancers = Servant <$>
               , max:   { atk: 10995, hp: 15606 }
               , grail: { atk: 12036 , hp: 17097 }
               }
-  , actives:  [ { name:   "Mana Burst A"
+  , skills:   [ { name:   "Mana Burst"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Charisma B"
+              , { name:   "Charisma"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Protection of World's End EX"
+              , { name:   "Protection of World's End"
+                , rank:   EX
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
@@ -273,7 +287,7 @@ lancers = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 5 }
   , traits:   [Female, Arthur, Dragon, King, Riding, Saberface, EnumaElish]
   , death:    24.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -288,12 +302,14 @@ lancers = Servant <$>
               , max:   { atk: 9968, hp: 11761 }
               , grail: { atk: 12069, hp: 14260 }
               }
-  , actives:  [ { name:   "Mana Burst A+"
+  , skills:   [ { name:   "Mana Burst"
+                , rank:   APlus
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 35.0 ~ 55.0 ]
                 }
-              , { name:   "Protection of World's End A"
+              , { name:   "Protection of World's End"
+                , rank:   A
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 1 StarAbsorb $ 500.0 ~ 1000.0
@@ -301,7 +317,8 @@ lancers = Servant <$>
                           , To Party GainStars $ 5.0 ~ 10.0
                           ]
                 }
-              , { name:   "Charisma E"
+              , { name:   "Charisma"
+                , rank:   E
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 6.0 ~ 12.0 ]
@@ -324,7 +341,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 4 }
   , traits:   [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
   , death:    23.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -339,21 +356,24 @@ lancers = Servant <$>
               , max:   { atk: 9653, hp: 11360 }
               , grail: { atk: 11688, hp: 13774 }
               }
-  , actives:  [ { name:   "Chinese Martial Arts (Liu He Da Qiang) A++"
+  , skills:   [ { name:   "Chinese Martial Arts (Liu He Da Qiang)"
+                , rank:   APlusPlus
                 , icon:   IconBullseye
                 , cd:     8
                 , effect: [ Grant Self 1 SureHit Full
                           , Grant Self 1 CritUp $ 50.0 ~ 100.0
                           ]
                 }
-              , { name:   "Sphere Boundary B"
+              , { name:   "Sphere Boundary"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 1 StarAbsorb $ 300.0 ~ 500.0
                           ]
                 }
-              , { name:   "Juezhao B"
+              , { name:   "Juezhao"
+                , rank:   B
                 , icon:   IconShieldBreak
                 , cd:     8
                 , effect: [ Grant Self 1 IgnoreInvinc Full
@@ -378,7 +398,7 @@ lancers = Servant <$>
   , hits:     { quick: 3, arts: 3, buster: 1, ex: 5 }
   , traits:   [Male, EnumaElish]
   , death:    40.0
-  , align:    Neutral:Evil
+  , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
   }
@@ -393,17 +413,20 @@ lancers = Servant <$>
               , max:   { atk: 8936, hp: 11870 }
               , grail: { atk: 10820, hp: 14392 }
               }
-  , actives:  [ { name:   "Passionate Summer A"
+  , skills:   [ { name:   "Passionate Summer"
+                , rank:   A
                 , icon:   IconExclamationDown
                 , cd:     7
                 , effect: [ Debuff Enemies 3 CritChance $ 20.0 ~ 30.0 ]
                 }
-              , { name:   "Bath Transformation A"
+              , { name:   "Bath Transformation"
+                , rank:   A
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 3 (Performance Buster) $ 20.0 ~ 30.0 ]
                 }
-              , { name:   "Stalking A"
+              , { name:   "Stalking"
+                , rank:   A
                 , icon:   IconShieldDown
                 , cd:     7
                 , effect: [ Chance 500 <<< 
@@ -429,7 +452,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 6, ex: 5 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    40.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  true
   , free:     false
   }
@@ -444,17 +467,20 @@ lancers = Servant <$>
               , max:   { atk: 9122, hp: 11870 }
               , grail: { atk: 11045, hp: 14392 }
               }
-  , actives:  [ { name:   "Charisma C"
+  , skills:   [ { name:   "Charisma"
+                , rank:   C
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 8.0 ~ 16.0 ]
                 }
-              , { name:   "Torture Technique A"
+              , { name:   "Torture Technique"
+                , rank:   A
                 , icon:   IconShieldDown
                 , cd:     7
                 , effect: [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 20.0 ]
                 }
-              , { name:   "Battle Continuation B"
+              , { name:   "Battle Continuation"
+                , rank:   B
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 4 Guts $ 750.0 ~ 2000.0 ]
@@ -475,7 +501,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Dragon, EnumaElish]
   , death:    24.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -490,12 +516,14 @@ lancers = Servant <$>
               , max:   { atk: 8930, hp: 12750 }
               , grail: { atk: 10812, hp: 15459 }
               }
-  , actives:  [ { name:   "Clairvoyance B"
+  , skills:   [ { name:   "Clairvoyance"
+                , rank:   B
                 , icon:   IconStarHaloUp
                 , cd:     8
                 , effect: [ Grant Self 3 StarUp $ 19.0 ~ 38.0 ]
                 }
-              , { name:   "Trouble with Women A"
+              , { name:   "Trouble with Women"
+                , rank:   A
                 , icon:   IconDodge
                 , cd:     12
                 , effect: [ Chances 60 100 $ Grant Self 1 Evasion Full
@@ -503,7 +531,8 @@ lancers = Servant <$>
                           , Debuff Self 3 CharmVuln $ Flat 80.0
                           ]
                 }
-              , { name:   "Magecraft B"
+              , { name:   "Magecraft"
+                , rank:   B
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Arts) $ 24.0 ~ 40.0 ]
@@ -526,7 +555,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    32.0
-  , align:    Neutral:Balanced
+  , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
   }
@@ -541,19 +570,22 @@ lancers = Servant <$>
               , max:   { atk: 7239, hp: 9593 }
               , grail: { atk: 9797, hp: 13007 }
               }
-  , actives:  [ { name:   "Battle Continuation A"
+  , skills:   [ { name:   "Battle Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
-              , { name:   "Protection from Arrows B"
+              , { name:   "Protection from Arrows"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Times 3 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
-              , { name:   "Disengage C"
+              , { name:   "Disengage"
+                , rank:   C
                 , icon:   IconBubbles
                 , cd:     7
                 , effect: [ To Self RemoveDebuffs Full
@@ -578,7 +610,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, Brynhild, EnumaElish]
   , death:    32.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -593,21 +625,24 @@ lancers = Servant <$>
               , max:   { atk: 7082, hp: 10098 }
               , grail: { atk: 9584, hp: 13691 }
               }
-  , actives:  [ { name:   "Rune Spell B"
+  , skills:   [ { name:   "Rune Spell"
+                , rank:   B
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 3 CritUp $ 18.0 ~ 45.0
                           , Grant Self 3 DebuffResist $ 18.0 ~ 45.0
                           ]
                 }
-              , { name:   "Protection from Arrows B"
+              , { name:   "Protection from Arrows"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Times 3 $ Grant Self 0 Evasion Full
                           , Grant Self 3 DefenseUp $ 8.0 ~ 16.0
                           ]
                 }
-              , { name:   "Beast Slayer B+"
+              , { name:   "Beast Slayer"
+                , rank:   BPlus
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 3 (AttackVs Beast) $ 40.0 ~ 60.0 ]
@@ -630,7 +665,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Divine, EnumaElish]
   , death:    28.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -645,19 +680,22 @@ lancers = Servant <$>
               , max:   { atk: 6583, hp: 7959 }
               , grail: { atk: 9539, hp: 11486 }
               }
-  , actives:  [ { name:   "Rear Guard's Pride A"
+  , skills:   [ { name:   "Rear Guard's Pride"
+                , rank:   A
                 , icon:   IconCrosshairUp
                 , cd:     8
                 , effect: [ Grant Self 1 Taunt Full
                           , Grant Self 3 NPGen $ 50.0 ~ 100.0
                           ]
                 }
-              , { name:   "Battle Continuation A"
+              , { name:   "Battle Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
-              , { name:   "Warrior's War Cry B"
+              , { name:   "Warrior's War Cry"
+                , rank:   B
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Party 3 (Performance Buster) $ 15.0 ~ 25.0 ]
@@ -680,7 +718,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, King]
   , death:    32.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -695,14 +733,16 @@ lancers = Servant <$>
               , max:   { atk: 7239, hp: 9883 }
               , grail: { atk: 9797, hp: 13400 }
               }
-  , actives:  [ { name:   "Natural Body C"
+  , skills:   [ { name:   "Natural Body"
+                , rank:   C
                 , icon:   IconHoodUp
                 , cd:     7
                 , effect: [ Grant Self 3 OffensiveResist $ 50.0 ~ 100.0
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
-              , { name:   "Imperial Privilege EX"
+              , { name:   "Imperial Privilege"
+                , rank:   EX
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 1200.0 ~ 3400.0
@@ -710,7 +750,8 @@ lancers = Servant <$>
                           , Chance 60 <<< Grant Self 3 DefenseUp $ 22.0 ~ 44.0
                           ]
                 }
-              , { name:   "Seven Hills A"
+              , { name:   "Seven Hills"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Ally 1 Guts $ Flat 1000.0
@@ -733,7 +774,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Roman, King]
   , death:    32.0
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -748,19 +789,22 @@ lancers = Servant <$>
               , max:   { atk: 6928 , hp: 10200 }
               , grail: { atk: 9376, hp: 13829 }
               }
-  , actives:  [ { name:   "Tactics C+"
+  , skills:   [ { name:   "Tactics"
+                , rank:   CPlus
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 8.5 ~ 17.0 ]
                 }
-              , { name:   "Proof of Friendship C"
+              , { name:   "Proof of Friendship"
+                , rank:   C
                 , icon:   IconDarkMagic
                 , cd:     7
                 , effect: [ Chances 60 80 <<< To Enemy GaugeDown $ Flat 1.0
                           , Chances 60 80 $ Debuff Enemy 1 Stun Full
                           ]
                 }
-              , { name:   "Disengage B"
+              , { name:   "Disengage"
+                , rank:   B
                 , icon:   IconBubbles
                 , cd:     7
                 , effect: [ To Self RemoveDebuffs Full
@@ -783,7 +827,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, EnumaElish, GreekMyth]
   , death:    28.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }
@@ -798,12 +842,14 @@ lancers = Servant <$>
               , max:   { atk: 5801, hp: 9149 }
               , grail: { atk: 8406, hp: 13204 }
               }
-  , actives:  [ { name:   "Vengeful Spirit Exorcism A"
+  , skills:   [ { name:   "Vengeful Spirit Exorcism"
+                , rank:   A
                 , icon:   IconCircuits
                 , cd:     7
                 , effect: [ Chances 50 100 $ Debuff Enemy 1 SealSkills Full ]
                 }
-              , { name:   "Imposing Stance B"
+              , { name:   "Imposing Stance"
+                , rank:   B
                 , icon:   IconCrosshairUp
                 , cd:     7
                 , effect: [ Grant Self 1 Taunt Full
@@ -811,6 +857,7 @@ lancers = Servant <$>
                           ]
                 }
               , { name:   "Blank Subscription List"
+                , rank:   Unknown
                 , icon:   IconCircuits
                 , cd:     10
                 , effect: [ Chances 60 80 $ Debuff Enemies 1 SealNP Full ]
@@ -831,7 +878,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -846,20 +893,23 @@ lancers = Servant <$>
               , max:   { atk: 6877, hp: 10098 }
               , grail: { atk: 9307, hp: 13691 }
               }
-  , actives:  [ { name:   "Mind's Eye (True) B"
+  , skills:   [ { name:   "Mind's Eye (True)"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 3 DefenseUp $ 9.0 ~ 18.0
                           ]
                 }
-              , { name:   "Love Spot C"
+              , { name:   "Love Spot"
+                , rank:   C
                 , icon:   IconSwordDown
                 , cd:     7
                 , effect: [ Debuff (EnemiesType Female) 1 AttackDown $ 
                             30.0 ~ 50.0 ]
                 }
-              , { name:   "Knight's Strategy B"
+              , { name:   "Knight's Strategy"
+                , rank:   B
                 , icon:   IconStarHaloUp
                 , cd:     7
                 , effect: [ Grant Self 3 StarUp $ 30.0 ~ 50.0 ]
@@ -882,7 +932,7 @@ lancers = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 2, ex: 4 }
   , traits:   [Male, EnumaElish, Brynhild]
   , death:    36.0
-  , align:    Lawful:Balanced
+  , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
   }

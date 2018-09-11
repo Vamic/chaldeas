@@ -1,7 +1,6 @@
 module Database.Servant.Rider (riders) where
 
 import Prelude
-import Operators
 import Database.Model
 
 riders :: Array Servant
@@ -17,12 +16,14 @@ riders = Servant <$>
               , max:   { atk: 11971, hp: 12830 }
               , grail: { atk: 13104, hp: 14056 }
               }
-  , actives:  [ { name:   "Charisma B"
+  , skills:   [ { name:   "Charisma"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Imperial Privilege A"
+              , { name:   "Imperial Privilege"
+                , rank:   A
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Self Heal $ 1000.0 ~ 3000.0
@@ -30,7 +31,8 @@ riders = Servant <$>
                           , Chance 60 <<< Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Protection of the Sun God A"
+              , { name:   "Protection of the Sun God"
+                , rank:   A
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Party GaugeUp $ Flat 20.0
@@ -55,7 +57,7 @@ riders = Servant <$>
   , hits:     { quick: 5, arts: 3, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, Divine, Riding, EnumaElish, King]
   , death:    30.0
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -70,19 +72,22 @@ riders = Servant <$>
               , max:   { atk: 11326, hp: 12830 }
               , grail: { atk: 12398, hp: 14056 }
               }
-  , actives:  [ { name:   "Voyager of the Storm A+"
+  , skills:   [ { name:   "Voyager of the Storm"
+                , rank:   APlus
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 8.5 ~ 17.0
                           , Grant Party 1 AttackUp $ 8.5 ~ 17.0
                           ]
                 }
-              , { name:   "Golden Rule B"
+              , { name:   "Golden Rule"
+                , rank:   B
                 , icon:   IconNobleUp
                 , cd:     8
                 , effect: [ Grant Self 3 NPGen $ 18.0 ~ 45.0 ]
                 }
-              , { name:   "Pioneer of the Stars EX"
+              , { name:   "Pioneer of the Stars"
+                , rank:   EX
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0
@@ -106,7 +111,7 @@ riders = Servant <$>
   , hits:     { quick: 6, arts: 4, buster: 2, ex: 4 }
   , traits:   [Female, Riding]
   , death:    50.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -121,17 +126,20 @@ riders = Servant <$>
               , max:   { atk: 11560, hp: 13219 }
               , grail: { atk: 12654, hp: 14482 }
               }
-  , actives:  [ { name:   "Charisma A"
+  , skills:   [ { name:   "Charisma"
+                , rank:   A
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 10.0 ~ 20.0 ]
                 }
-              , { name:   "Tactics B"
+              , { name:   "Tactics"
+                , rank:   B
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Lightning Conqueror EX"
+              , { name:   "Lightning Conqueror"
+                , rank:   EX
                 , icon:   IconBusterUp
                 , cd:     8
                 , effect: [ Grant Self 1 (Performance Buster) $ 30.0 ~ 50.0
@@ -154,7 +162,7 @@ riders = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 6 }
   , traits:   [Male, Brynhild, Divine, GreekMyth, King, Riding, EnumaElish]
   , death:    40.0
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  true
   , free:     false
   }
@@ -169,7 +177,8 @@ riders = Servant <$>
               , max:   { atk: 10296, hp: 13968 }
               , grail: { atk: 11270, hp: 15303 }
               }
-  , actives:  [ { name:   "Golden Rule (Body) A"
+  , skills:   [ { name:   "Golden Rule (Body)"
+                , rank:   A
                 , icon:   IconHealTurn
                 , cd:     8
                 , effect: [ Grant Self 3 DebuffResist Full
@@ -177,12 +186,14 @@ riders = Servant <$>
                           , Grant Self 3 GaugePerTurn $ Flat 10.0
                           ]
                 }
-              , { name:   "Charisma B"
+              , { name:   "Charisma"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 9.0 ~ 18.0 ]
                 }
-              , { name:   "Siren Song C"
+              , { name:   "Siren Song"
+                , rank:   C
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Chances 50 80 $
@@ -206,7 +217,7 @@ riders = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 7 }
   , traits:   [Female, Riding, EnumaElish, King]
   , death:    40.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -221,19 +232,22 @@ riders = Servant <$>
               , max:   { atk: 9819, hp: 10800 }
               , grail: { atk: 11889, hp: 13095 }
               }
-  , actives:  [ { name:   "Long-Distance Dash A"
+  , skills:   [ { name:   "Long-Distance Dash"
+                , rank:   A
                 , icon:   IconQuickUp
                 , cd:     7
                 , effect: [ Grant Self 3 (Performance Quick) $ 20.0 ~ 30.0
                           , Grant Self 3 StarUp $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Animal Communication C"
+              , { name:   "Animal Communication"
+                , rank:   C
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Natural Body A"
+              , { name:   "Natural Body"
+                , rank:   A
                 , icon:   IconHoodUp
                 , cd:     7
                 , effect: [ Grant Self 3 OffensiveResist $ 60.0 ~ 120.0
@@ -256,7 +270,7 @@ riders = Servant <$>
   , hits:     { quick: 4, arts: 2, buster: 1, ex: 5 }
   , traits:   [Male, Brynhild, Divine, EnumaElish]
   , death:    40.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  true
   , free:     true
   }
@@ -271,19 +285,22 @@ riders = Servant <$>
               , max:   { atk: 9258, hp: 11286 }
               , grail: { atk: 11209, hp: 13684 }
               }
-  , actives:  [ { name:   "Saint's Gift EX"
+  , skills:   [ { name:   "Saint's Gift"
+                , rank:   EX
                 , icon:   IconHeal
                 , cd:     7
                 , effect: [ To Ally Heal $ 1500.0 ~ 3500.0
                           , Grant Ally 3 StarUp $ Flat 30.0
                           ]
                 }
-              , { name:   "Intuition A"
+              , { name:   "Intuition"
+                , rank:   A
                 , icon:   IconStar
                 , cd:     7
                 , effect: [ To Party GainStars $ 5.0 ~ 15.0 ]
                 }
-              , { name:   "Mana Burst A-"
+              , { name:   "Mana Burst"
+                , rank:   AMinus
                 , icon:   IconBusterUp
                 , cd:     7
                 , effect: [ Grant Self 1 (Performance Buster) $ 25.0 ~ 45.0 ]
@@ -304,7 +321,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Arthur, Dragon, Riding, Saberface, EnumaElish, King]
   , death:    35.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  true
   , free:     true
   }
@@ -319,21 +336,24 @@ riders = Servant <$>
               , max:   { atk: 8014, hp: 13068 }
               , grail: { atk: 9703, hp: 15845 }
               }
-  , actives:  [ { name:   "Protection of the Faith A"
+  , skills:   [ { name:   "Protection of the Faith"
+                , rank:   A
                 , icon:   IconHoodUp
                 , cd:     7
                 , effect: [ Grant Self 3 DebuffResist $ 50.0 ~ 100.0
                           , To Self Heal $ 1000.0 ~ 2500.0
                           ]
                 }
-              , { name:   "Miracle D+"
+              , { name:   "Miracle"
+                , rank:   DPlus
                 , icon:   IconHeal
                 , cd:     8
                 , effect: [ To Party Heal $ 1000.0 ~ 2000.0
                           , To Party RemoveDebuffs Full
                           ]
                 }
-              , { name:   "Oath of the Holy Maiden C"
+              , { name:   "Oath of the Holy Maiden"
+                , rank:   C
                 , icon:   IconShieldDown
                 , cd:     7
                 , effect: [ Debuff Enemy 3 DefenseDown $ 10.0 ~ 30.0
@@ -356,7 +376,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Divine, EnumaElish]
   , death:    30.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -371,19 +391,22 @@ riders = Servant <$>
               , max:   { atk: 9212, hp: 11400 }
               , grail: { atk: 11154, hp: 13822 }
               }
-  , actives:  [ { name:   "Cerulean Ride A"
+  , skills:   [ { name:   "Cerulean Ride"
+                , rank:   A
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Self 3 (Performance Arts) $ 20.0 ~ 30.0 ]
                 }
-              , { name:   "Rodeo Flip A+"
+              , { name:   "Rodeo Flip"
+                , rank:   APlus
                 , icon:   IconDodge
                 , cd:     9
                 , effect: [ Grant Self 1 Evasion Full
                           , Grant Self 1 StarUp $ 30.0 ~ 50.0
                           ]
                 }
-              , { name:   "Endless Summer B"
+              , { name:   "Endless Summer"
+                , rank:   B
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 3 Guts $ Flat 1000.0
@@ -406,7 +429,7 @@ riders = Servant <$>
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 4 }
   , traits:   [Female, Dragon, Saberface, EnumaElish]
   , death:    35.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
   }
@@ -421,20 +444,23 @@ riders = Servant <$>
               , max:   { atk: 8293, hp: 12348 }
               , grail: { atk: 10041, hp: 14972 }
               }
-  , actives:  [ { name:   "Siren Song C"
+  , skills:   [ { name:   "Siren Song"
+                , rank:   C
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Chances 50 80 $
                             Debuff (EnemyType Male) 1 Charm Full ]
                 }
-              , { name:   "Beautiful Princess A"
+              , { name:   "Beautiful Princess"
+                , rank:   A
                 , icon:   IconShield
                 , cd:     8
                 , effect: [ Times 3 $ Grant Self 0 Invincibility Full
                           , Grant Self 5 HealPerTurn $ 200.0 ~ 600.0
                           ]
                 }
-              , { name:   "God's Grace B"
+              , { name:   "God's Grace"
+                , rank:   B
                 , icon:   IconStaffUp
                 , cd:     7
                 , effect: [ Grant Self 3 MentalSuccess $ 10.0 ~ 30.0
@@ -459,7 +485,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 1, buster: 1, ex: 3 }
   , traits:   [Female, Riding, EnumaElish]
   , death:    35.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -474,17 +500,20 @@ riders = Servant <$>
               , max:   { atk: 9029, hp: 11286 }
               , grail: { atk: 10932, hp: 13684 }
               }
-  , actives:  [ { name:   "Voyage A"
+  , skills:   [ { name:   "Voyage"
+                , rank:   A
                 , icon:   IconStarHaloUp
                 , cd:     8
                 , effect: [ Grant Self 3 StarUp $ 30.0 ~ 50.0 ]
                 }
-              , { name:   "Marksmanship B"
+              , { name:   "Marksmanship"
+                , rank:   B
                 , icon:   IconExclamationUp
                 , cd:     7
                 , effect: [ Grant Self 1 CritUp $ 50.0 ~ 100.0 ]
                 }
-              , { name:   "Combination C"
+              , { name:   "Combination"
+                , rank:   C
                 , icon:   IconStarUp
                 , cd:     7
                 , effect: [ Grant Self 1 StarAbsorb $ 300.0 ~ 600.0
@@ -507,7 +536,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 1 }
   , traits:   [Female, EnumaElish]
   , death:    50.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil, Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -522,17 +551,20 @@ riders = Servant <$>
               , max:   { atk: 8937, hp: 11172 }
               , grail: { atk: 10821, hp: 13546 }
               }
-  , actives:  [ { name:   "Monstrous Strength C-"
+  , skills:   [ { name:   "Monstrous Strength"
+                , rank:   CMinus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 1 AttackUp $ 8.0 ~ 28.0 ]
                 }
-              , { name:   "Trap of Argalia D"
+              , { name:   "Trap of Argalia"
+                , rank:   D
                 , icon:   IconStun
                 , cd:     10
                 , effect: [ Chances 60 90 $ Debuff Enemy 1 Stun Full ]
                 }
-              , { name:   "Evaporation of Reason D"
+              , { name:   "Evaporation of Reason"
+                , rank:   D
                 , icon:   IconStarTurn
                 , cd:     10
                 , effect: [ Chance 65 <<< Grant Party 3 StarsPerTurn $ 5.0 ~ 10.0
@@ -556,9 +588,9 @@ riders = Servant <$>
               }
   , gen:      { starWeight: 205, starRate: 9.0, npAtk: 0.66, npDef: 1 }
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
-  , traits:   [Riding, EnumaElish]
+  , traits:   [Nonbinary, Riding, EnumaElish]
   , death:    40.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -573,21 +605,24 @@ riders = Servant <$>
               , max:   { atk: 5236, hp: 9200 }
               , grail: { atk: 7587, hp: 13278 }
               }
-  , actives:  [ { name:   "Guardian Knight A+"
+  , skills:   [ { name:   "Guardian Knight"
+                , rank:   APlus
                 , icon:   IconCrosshairUp
                 , cd:     7
                 , effect: [ Grant Self 3 Taunt Full
                           , Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }
-              , { name:   "Martyr's Soul B+"
+              , { name:   "Martyr's Soul"
+                , rank:   BPlus
                 , icon:   IconHoodUp
                 , cd:     7
                 , effect: [ Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           , To Self Heal $ 750.0 ~ 2000.0
                           ]
                 }
-              , { name:   "Battle Continuation A"
+              , { name:   "Battle Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
@@ -610,7 +645,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Brynhild, EnumaElish]
   , death:    45.0
-  , align:    Lawful:Good
+  , align:    [Lawful, Good]
   , limited:  false
   , free:     false
   }
@@ -625,17 +660,20 @@ riders = Servant <$>
               , max:   { atk: 7076, hp: 9028 }
               , grail: { atk: 9576, hp: 12240 }
               }
-  , actives:  [ { name:   "Tengu's Strategy A"
+  , skills:   [ { name:   "Tengu's Strategy"
+                , rank:   A
                 , icon:   IconNobleUp
                 , cd:     7
                 , effect: [ Grant Party 3 NPGen $ 10.0 ~ 20.0 ]
                 }
-              , { name:   "Charisma C+"
+              , { name:   "Charisma"
+                , rank:   CPlus
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 8.5 ~ 17.0 ]
                 }
-              , { name:   "Art of the Swallow B"
+              , { name:   "Art of the Swallow"
+                , rank:   B
                 , icon:   IconDodge
                 , cd:     8
                 , effect: [ Times 1 $ Grant Self 1 Evasion Full
@@ -658,7 +696,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Brynhild, EnumaElish]
   , death:    35.0
-  , align:    Chaotic:Balanced
+  , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
   }
@@ -673,17 +711,20 @@ riders = Servant <$>
               , max:   { atk: 7200, hp: 8937 }
               , grail: { atk: 9744, hp: 12117 }
               }
-  , actives:  [ { name:   "Mystic Eyes A+"
+  , skills:   [ { name:   "Mystic Eyes"
+                , rank:   APlus
                 , icon:   IconStun
                 , cd:     8
                 , effect: [ Chances 50 100 $ Debuff Enemy 1 Stun Full ]
                 }
-              , { name:   "Monstrous Strength B"
+              , { name:   "Monstrous Strength"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 2 AttackUp $ 10.0 ~ 30.0 ]
                 }
-              , { name:   "Blood Fort Andromeda B"
+              , { name:   "Blood Fort Andromeda"
+                , rank:   B
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ Flat 20.0
@@ -708,7 +749,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Female, Riding, Divine]
   , death:    35.0
-  , align:    Chaotic:Good
+  , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
   }
@@ -723,14 +764,16 @@ riders = Servant <$>
               , max:   { atk: 6188, hp: 7907 }
               , grail: { atk: 8967, hp: 11411 }
               }
-  , actives:  [ { name:   "Voyager of the Storm A"
+  , skills:   [ { name:   "Voyager of the Storm"
+                , rank:   A
                 , icon:   IconBeamUp
                 , cd:     7
                 , effect: [ Grant Party 1 NPUp $ 8.0 ~ 16.0
                           , Grant Party 1 AttackUp $ 8.0 ~ 16.0
                           ]
                 }
-              , { name:   "Pirate's Glory B"
+              , { name:   "Pirate's Glory"
+                , rank:   B
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 9.0 ~ 27.0
@@ -738,12 +781,13 @@ riders = Servant <$>
                           , Debuff Self 3 DebuffVuln $ Flat 50.0
                           ]
                 }
-              , { name:   "Gentlemanly Love C"
+              , { name:   "Gentlemanly Love"
+                , rank:   C
                 , icon:   IconHeal
                 , cd:     8
                 , effect: [ To Party Heal $ 1000.0 ~ 2000.0
                           , To (AlliesType Female) Heal $ 1000.0 ~ 2000.0
-                            -- TODO also genderfluid
+                          , To (AlliesType Nonbinary) Heal $ 1000.0 ~ 2000.0
                           ]
                 }
               ]
@@ -764,7 +808,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    45.0
-  , align:    Chaotic:Evil
+  , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
   }
@@ -779,18 +823,21 @@ riders = Servant <$>
               , max:   { atk: 7356, hp: 8640 }
               , grail: { atk: 9955, hp: 11714 }
               }
-  , actives:  [ { name:   "Charisma C"
+  , skills:   [ { name:   "Charisma"
+                , rank:   C
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Party 3 AttackUp $ 8.0 ~ 16.0 ]
                 }
-              , { name:   "Fair Youth B"
+              , { name:   "Fair Youth"
+                , rank:   B
                 , icon:   IconHeart
                 , cd:     9
                 , effect: [ Chances 50 80 $
                             Debuff (EnemyType Humanoid) 1 Charm Full ]
                 }
-              , { name:   "Omen of the Conqueror A"
+              , { name:   "Omen of the Conqueror"
+                , rank:   A
                 , icon:   IconQuickUp
                 , cd:     7
                 , effect: [ Grant Party 3 (Performance Quick) $ 10.0 ~ 20.0 ]
@@ -811,7 +858,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, Riding, Divine, EnumaElish, GreekMyth, King]
   , death:    40.0
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  false
   , free:     false
   }
@@ -826,17 +873,20 @@ riders = Servant <$>
               , max:   { atk: 6289, hp: 10130 }
               , grail: { atk: 8511, hp: 13735 }
               }
-  , actives:  [ { name:   "Vow to the Goddess B"
+  , skills:   [ { name:   "Vow to the Goddess"
+                , rank:   B
                 , icon:   IconDamageUp
                 , cd:     7
                 , effect: [ Grant Self 3 (AttackVs Roman) $ 40.0 ~ 60.0 ]
                 }
-              , { name:   "Battle Continuation A"
+              , { name:   "Battle Continuation"
+                , rank:   A
                 , icon:   IconKneel
                 , cd:     9
                 , effect: [ Times 1 <<< Grant Self 5 Guts $ 1000.0 ~ 2500.0 ]
                 }
-              , { name:   "Andraste's Protection A"
+              , { name:   "Andraste's Protection"
+                , rank:   A
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Party 3 (Performance Arts) $ 10.0 ~ 20.0 ]
@@ -857,7 +907,7 @@ riders = Servant <$>
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Female, Riding, EnumaElish, King]
   , death:    45.0
-  , align:    Neutral:Good
+  , align:    [Neutral, Good]
   , limited:  false
   , free:     true
   }

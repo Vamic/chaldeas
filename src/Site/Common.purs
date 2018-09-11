@@ -12,11 +12,9 @@ import Data.DateTime
 import Data.Int
 import Data.Maybe
 import Data.Number.Format
-import Data.Profunctor.Strong ((&&&))
 import Data.String (Pattern(..), Replacement(..), joinWith, replaceAll, split)
 import Data.String.CodeUnits
 import Data.Time.Duration
-import Data.Tuple (uncurry)
 import Effect
 import Effect.Now
 import Halogen.HTML
@@ -28,8 +26,7 @@ import Database
 import Site.Preferences
 
 getDate :: Effect Date
-getDate = date <<< uncurry fromMaybe <<< 
-          (identity &&& adjust (Hours (-4.0))) <$> nowDateTime
+getDate = date <<< maybeDo (adjust <<< Hours $ -4.0) <$> nowDateTime
 
 lvlRow :: ∀ a b. RangeInfo -> HTML a b
 lvlRow (RangeInfo isPercent a b) = 
@@ -38,8 +35,8 @@ lvlRow (RangeInfo isPercent a b) =
   where
     step = (b - a) / 10.0
 
-noBreakName :: String -> String
-noBreakName = 
+noBreakName :: Boolean -> String -> String
+noBreakName doPrettify = doPrettify ? prettify <<< 
     replaceAll (Pattern "Anne Bonny") (Replacement "Anne Bonny") <<<
     replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
     unBreak <<< split (Pattern "(")

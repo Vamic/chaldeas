@@ -1,7 +1,16 @@
-module Test.Parse (translate, printIcon, effects, readEffect) where
+module Test.Parse 
+  ( translate
+  , printIcon
+  , effects
+  , readEffect
+  , skillRanks
+  , npRank
+  ) where
 
 import Prelude
-import Database (ActiveEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..))
+import Operators ((:))
+import Printing (prettify)
+import Database (ActiveEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..))
 
 import Data.Array (elem)
 import Data.Foldable (all, any, find)
@@ -10,34 +19,55 @@ import Data.Maybe (fromMaybe)
 import Data.String (Pattern(..))
 import Data.String as S
 import Data.String.CodeUnits (fromCharArray, toCharArray)
+import Data.Tuple (Tuple(..))
+
+import Test.Base (MaybeRank(..), addRank, getRank)
+
+upgradeNPs :: Array String
+upgradeNPs = 
+    [ "Orion"
+    , "Asterios"
+    ]
+
+npRank :: Servant -> MaybeRank
+npRank (Servant s) = (if s.name `elem` upgradeNPs then Upgrade else Pure) 
+                     s.phantasm.rank
+
+upgradeSkills :: Array (Tuple String String)
+upgradeSkills = 
+    [ "Tamamo-no-Mae": "Fox's Wedding"
+    ]
+
+uniqueSkills :: Array (Tuple String String)
+uniqueSkills = 
+    [ "Brynhild": "Primordial Rune"
+    , "Scathach": "Primordial Rune"
+    , "Euryale":  "Whim of the Goddess"
+    , "Stheno":    "Whim of the Goddess"
+    , "Henry Jekyll & Hyde": "Monstrous Strength"
+    ]
+
+skillRanks :: Servant -> Array (Tuple MaybeRank String)
+skillRanks s'@(Servant s) = ranker <<< addRank getRank <<< _.name <$> s.actives
+  where
+    rankUp (Pure rank) skill
+      | Tuple s.name skill `elem` uniqueSkills  = Unique s' rank
+      | Tuple s.name skill `elem` upgradeSkills = Upgrade rank
+    rankUp a _ = a
+    ranker (Tuple rank skill) = Tuple (rankUp rank skill) skill
 
 translate :: String -> String
 translate "Cheerful-Type Mystic Code" = "Cheerful Model Mystic Code"
-translate "Fergus mac Roich" = "Fergus mac Róich"
 translate "Mugashiki—Shinkuu Myou" = "Mugashiki - Shinkuu Myōu"
-translate "Heroic Portrait: Scathach" = "Heroic Portrait: Scáthach"
-translate "Cu Chulainn" = "Cú Chulainn"
-translate "Cu Chulainn (Prototype)" = "Cú Chulainn (Prototype)"
-translate "Cu Chulainn (Alter)" = "Cú Chulainn (Alter)"
-translate "Cu Chulainn (Caster)" = "Cú Chulainn (Caster)"
-translate "Elisabeth Bathory" = "Elisabeth Báthory"
-translate "Elisabeth Bathory (Halloween)" = "Elisabeth Báthory (Halloween)"
-translate "Scathach" = "Scáthach"
-translate "Scathach (Assassin)" = "Scáthach (Assassin)"
-translate "Angra Mainyu" = "Aŋra Mainiiu"
-translate "Edmond Dantes" = "Edmond Dantès"
 translate "Leonardo da Vinci" = "Leonardo Da Vinci"
-translate "Wisdom of Dun Scaith" = "Wisdom of Dún Scáith"
 translate "Beautiful Princess (Sea)" = "Princess of Loveliness (Ocean)"
-translate "Monstrous Strength B (Jekyll & Hyde)" = "Monstrous Strength"
-translate "Whim of the Goddess A (Euryale)" = "Whim of the Goddess"
 translate "Treasure Hunt (Sea)" = "Treasure Hunt (Ocean)"
 translate "Elemental" = "Elemental (Skill)"
 translate "Projection" = "Projection (Skill)"
 translate "Projection" = "Projection (Skill)"
 translate "Projection" = "Projection (Skill)"
 translate "Concentration" = "Concentration (Skill)"
-translate a = a
+translate a = prettify a
 
 printIcon :: Icon -> String
 printIcon IconAllUp = "All Up"
@@ -103,6 +133,27 @@ effects = map showEffect
     showEffect (When _ ef) = showEffect ef
     showEffect (ToMax _ ef) = showEffect ef
 
+synonym :: Array (Array String)
+synonym = 
+    [ ["special","against"]
+    , ["increase", "increasing"]
+    , ["reduce", "decrease", "down"]
+    , ["attack", "atk"]
+    , ["defense", "def"]
+    , ["prevent", "seal", "lock"]
+    , ["per", "each", "every"]
+    , ["additional", "extra"]
+    , ["effectiveness", "performance"]
+    , ["maximum", "max"]
+    , ["np", "phantasm"]
+    , ["self", "yourself"]
+    , ["restore", "recover", "regenerate", "restore's"]
+    , ["invincible", "invincibility"]
+    , ["rate", "chance"]
+    , ["resist", "resistance"]
+    , ["immune", "immunity"]
+    ]
+
 readEffect :: String -> Array String
 readEffect effect = go 
   where
@@ -116,27 +167,10 @@ readEffect effect = go
     sanitize a   = a
     inWords x = elem x words || elem (x <> "s") words 
     match xs = all (any inWords <<< synonyms) xs
-    synonyms word = fromMaybe [word] $ find (elem word) 
-        [ ["special","against"]
-        , ["increase", "increasing"]
-        , ["reduce", "decrease", "down"]
-        , ["attack", "atk"]
-        , ["defense", "def"]
-        , ["prevent", "seal", "lock"]
-        , ["per", "each", "every"]
-        , ["additional", "extra"]
-        , ["effectiveness", "performance"]
-        , ["maximum", "max"]
-        , ["np", "phantasm"]
-        , ["self", "yourself"]
-        , ["restore", "recover", "regenerate", "restore's"]
-        , ["invincible", "invincibility"]
-        , ["rate", "chance"]
-        , ["resist", "resistance"]
-        , ["immune", "immunity"]
-        ]
+    synonyms word = fromMaybe [word] $ find (elem word) synonym
     go
       | match ["formula"] = []
+      | match ["end","of","turn"] = []
 
       | match ["reduce","attack","defense","critical","chance","debuff"
               ,"resist","np","strength"] = genericShow <$> 
@@ -147,9 +181,9 @@ readEffect effect = go
           [DefenseDown, CritChance]
       | match ["reduce","attack","defense"] = genericShow <$>
           [AttackDown, DefenseDown]
-      | match ["increase","gain","critical","recovery","debuff","resist"] =
+      | match ["increase","gain","critical","strength","drop","recovery","debuff","resist"] =
           genericShow <$>
-          [NPGen, CritUp, HealingReceived, DebuffResist]
+          [NPGen, CritUp, HealingReceived, StarUp, DebuffResist]
       | match ["increase","attack","defense","star"] = genericShow <$>
           [AttackUp, DefenseUp, StarUp]
       | match ["increase","attack","defense"] = genericShow <$>
@@ -157,19 +191,20 @@ readEffect effect = go
       | match ["reduce","np","strength","critical","strength"] = genericShow <$>
           [NPDown, CritDown]
       
+      | match ["decrease","1000hp","yourself"] = [genericShow DemeritDamage]
+      | match ["damage","previous","hp"] = [genericShow Avenge]
       | match ["hp","fall"] = [genericShow DemeritHealth]
       | match ["additional","damage","all","enemies"] = [genericShow Damage]
       | match ["confusion"] = [genericShow Confusion]
       | match ["current","hp"] = [genericShow LastStand]
       | match ["extra","own","hp"] = [genericShow LastStand]
+      | match ["against","drop"] = ["Special Stars"]
       | match ["apply","trait"] = ["Apply Trait"]
-      | match ["extra","damage","turn"] = ["Special Attack"]
+      | match ["additional","damage","turns"] = ["Special Attack"]
       | match ["extra","damage"] = ["Extra Damage"]
       | match ["special","attack"] = ["Special Attack"]
       | match ["special","damage"] = ["Special Attack"]
       | match ["special","defense"] = ["Special Defense"]
-      | match ["against","drop"] = ["Special Stars"]
-      | match ["damage","previous","hp"] = [genericShow Avenge]
       | match ["transform","hyde"] = [genericShow BecomeHyde]
       | match ["nullify"] = [genericShow BuffBlock]
       | match ["prevent","buff"] = [genericShow BuffBlock]
@@ -267,12 +302,18 @@ readEffect effect = go
       | match ["increase","debuff","resist"] = [genericShow DebuffResist]
       | match ["debuff","rate"] = [genericShow DebuffSuccess]
       | match ["increase","debuff","success"] = [genericShow DebuffSuccess]
+      | match ["increase","stun","success"] = [genericShow DebuffSuccess]
       | match ["reduce","debuff","resist"] = [genericShow DebuffVuln]
+      | match ["decrease","np"] = [genericShow GaugeDown]
       | match ["decrease","attack"] = [genericShow AttackDown]
       | match ["increase","attack"] = [genericShow AttackUp]
       | match ["severe","damage"] = [genericShow Damage]
       | match ["deal","damage"] = [genericShow Damage]
 
+      | match ["high","chance","status"] = [genericShow Charm]
+
       | match ["against","buster"] = []
       | match ["effect","activates"] = []
+      | match ["depends"] = []
+
       | otherwise = [show words]

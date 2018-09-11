@@ -678,7 +678,7 @@ berserkers = Servant <$>
               , { name:   "Natural Demon A++"
                 , icon:   IconHoodUp
                 , cd:     7
-                , effect: [ Grant Self 3 MentalResist $ 50.0 ~ 100.0
+                , effect: [ Grant Self 3 OffensiveResist $ 50.0 ~ 100.0
                           , Grant Self 3 DefenseUp $ 20.0 ~ 40.0
                           ]
                 }

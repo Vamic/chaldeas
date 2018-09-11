@@ -56,10 +56,8 @@ getPreferences = fromFoldable <$> traverse go enumArray
   where
     fromFlag (Just "true") = true
     fromFlag _             = false
-    go k = do
-        v <- window >>= localStorage >>= getItem (G.genericShow k)
-                    >>= pure <<< fromFlag
-        pure $ Tuple k v
+    go k = map (Tuple k) $ window >>= localStorage >>= 
+           getItem (G.genericShow k) >>= pure <<< fromFlag
 
 delimTeam :: String
 delimTeam = "~"

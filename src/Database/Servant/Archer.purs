@@ -658,7 +658,7 @@ archers = Servant <$>
                 , effect: [ Chances 70 100 $ 
                             Debuff (EnemyType Male) 1 Charm Full ]
                 }
-              , { name:   "Whim of the Goddess A (Euryale)"
+              , { name:   "Whim of the Goddess A"
                 , icon:   IconArtsUp
                 , cd:     7
                 , effect: [ Grant Self 3 (Performance Arts) $ 20.0 ~ 30.0 ]

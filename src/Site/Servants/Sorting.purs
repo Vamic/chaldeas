@@ -64,7 +64,7 @@ doSort a = map showSort <<< sortWith sorter
     sorter (MyServant ms)  = toSort a $ ms.servant
     showSort
       | a `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \ms'@(MyServant ms) -> 
-          (flip Tuple) (getBase ms') $
+          flip Tuple (getBase ms') $
           "NP" <> show ms.npLvl <> ": " <> (output <<< abs $ sorter ms')
       | otherwise = output <<< abs <<< sorter &&& getBase
     output = case a of

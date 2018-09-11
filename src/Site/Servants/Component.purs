@@ -219,7 +219,7 @@ portrait big thumbnails artorify ascension (Tuple lab s'@(Servant s))
       [ _img $ "img/Servant/" <> fileName s.name <> ascent <> ".png"
       , H.div_ [ _img $ "img/Class/" <> show s.class <> ".png"]
       , H.header_ <<< (lab /= "") ? append [_span lab, H.br_] $
-        [ _span <<< noBreakName <<< artorify ? doArtorify $ s.name ]
+        [ _span <<< noBreakName big <<< artorify ? doArtorify $ s.name ]
       , H.footer_ <<< 
         ((big && ascension > 1) ? cons prevAscend) <<<
         ((big && ascension < 4) ? (_ `snoc` nextAscend)) $
@@ -289,14 +289,14 @@ modal prefs ascent (Just ms')= H.div
         , _tr "Class" <<< _txt $ s.phantasm.kind
         , H.tr_
           [ _th "Effects"
-          , H.td_ <<< showTables ? (flip snoc)
+          , H.td_ <<< showTables ? flip snoc
               ( _table (append "NP" <<< show <$> 1..5) $
                 npRow <$> nub (ranges b.phantasm.effect)
               ) $ effectEl <$> s.phantasm.effect
           ]
         , H.tr_
           [ _th "Overcharge"
-          , H.td overMeta <<< showTables ? (flip snoc)
+          , H.td overMeta <<< showTables ? flip snoc
               ( _table ((_ <> "%") <<< show <<< (_ * 100) <$> 1..5) $
                 overRow <$> nub (ranges b.phantasm.over)
               ) $ effectEl <$> s.phantasm.over
@@ -323,11 +323,10 @@ modal prefs ascent (Just ms')= H.div
       | otherwise        = []
     alter f = OnTeam true <<< MyServant $ f ms
     _mInt = _int DoNothing
-    update i x xs = fromMaybe xs $ updateAt i x xs
     skillBox (Tuple {icon} lvl) i = 
         [ H.td_ [_img $ "img/Skill/" <> show icon <> ".png"]
         , H.td_ $ _mInt 1 10 lvl \val -> 
-          alter _{ skills = update i val ms.skills }
+          alter _{ skills = maybeDo (updateAt i val) ms.skills }
         ]
     myServantBox
       | ms.level == 0 = 
@@ -353,7 +352,7 @@ modal prefs ascent (Just ms')= H.div
 
 activeEl :: ∀ a. Boolean -> Active -> Active -> HTML a (Query Unit)
 activeEl showTables active@{name, icon, cd, effect} base = 
-    H.section_ <<< showTables ? (flip snoc) effectTable $
+    H.section_ <<< showTables ? flip snoc effectTable $
     [ _img $ "img/Skill/" <> show icon <> ".png"
     , _h 3 name
     , _strong "CD: "

@@ -163,8 +163,8 @@ portrait :: ∀ a. Boolean -> Boolean -> Tuple String CraftEssence
          -> HTML a (Query Unit)
 portrait big artorify (Tuple lab ce'@(CraftEssence ce)) = H.div meta
     [ _img $ "img/CraftEssence/" <> fileName ce.name <> ".png"
-    , H.header_ <<< (lab /= "") ? append [_span $ noBreakName lab, H.br_] $
-      [ _span <<< noBreakName <<< artorify ? doArtorify $ ce.name ]
+    , H.header_ <<< (lab /= "") ? append [_span $ noBreakName big lab, H.br_] $
+      [ _span <<< noBreakName big <<< artorify ? doArtorify $ ce.name ]
     , H.footer_ [_span <<< S.joinWith "  " $ replicate ce.rarity "★"]
     ]
   where 

@@ -1,6 +1,7 @@
 module Test.Main where
 
 import Prelude
+import Operators (maybeDo)
 
 import Effect.Aff     as Aff
 import Data.Array     as Array
@@ -26,14 +27,14 @@ import Data.String (Pattern(..))
 import Data.Traversable (traverse, traverse_)
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
-import Operators (enumArray)
 import Test.Unit (TestSuite, test, suite, failure)
 import Test.Unit.Assert (assert, equal')
 import Test.Unit.Main (runTestWith)
-
 import Test.Fancy (runTest)
-import Test.MediaWiki (class CleanShow, cleanShow, MediaWiki(..), wiki, wikiRange)
-import Test.Parse (printIcon, effects, readEffect)
+
+import Test.Base (class CleanShow, cleanShow, MaybeRank(..), addRank)
+import Test.MediaWiki (MediaWiki(..), wiki, wikiRange)
+import Test.Parse (printIcon, effects, readEffect, skillRanks, npRank)
 
 main :: Effect Unit
 main = Yargs.runY (usage <> example) $ app 
@@ -48,10 +49,10 @@ main = Yargs.runY (usage <> example) $ app
 
 app :: Int -> Int -> Effect Unit
 app ce servant = Console.log msg *> Aff.launchAff_ do
-    skills <- Map.fromFoldable <$> traverse (wiki getRank) skillNames
-    stats  <- traverse (wiki $ const Nothing) servants
-    nps    <- traverse (wiki npRank)          servants
-    ces    <- traverse (wiki $ const Nothing) $ maybeTake ce DB.craftEssences
+    skills <- Map.fromFoldable <$> traverse wiki (servants >>= skillRanks)
+    stats  <- traverse (wiki <<< Tuple Unranked) servants
+    nps    <- traverse (wiki <<< addRank npRank) servants
+    ces    <- traverse (wiki <<< Tuple Unranked) (maybeTake ce DB.craftEssences)
     runTestWith runTest do
         traverse_ (testSkills skills) servants
         traverse_ testServant stats
@@ -63,9 +64,6 @@ app ce servant = Console.log msg *> Aff.launchAff_ do
     msg        = "Scanning " <> show' ce <> " Craft Essences and " 
                  <> show' servant <> " Servants"
     servants   = maybeTake servant DB.servants
-    skillNames = Array.nub $ _.name <$> (servants >>= getActives)
-    getActives (DB.Servant s) = s.actives
-    npRank (DB.Servant s)     = Just s.phantasm.rank
     maybeTake :: ∀ a. Int -> Array a -> Array a
     maybeTake (-1)   = identity
     maybeTake limits = Array.take limits
@@ -73,12 +71,9 @@ app ce servant = Console.log msg *> Aff.launchAff_ do
 wikiMatch :: MediaWiki -> String -> String -> TestSuite
 wikiMatch (MediaWiki mw) k obj = test k $ case Map.lookup k mw of
     Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "]") $
-               Array.elem obj v
+               obj `Array.elem` v
     Nothing -> failure $ "Missing property " <> k <> " in " <> show mw 
-            <> Maybe.fromMaybe "" do
-                   err     <- Map.lookup "err" mw
-                   errHead <- Array.head err
-                   pure $ ": " <> errHead
+            <> Maybe.maybe "" (append ": ") (Map.lookup "err" mw >>= Array.head)
 
 testCraftEssence :: Tuple DB.CraftEssence MediaWiki -> TestSuite
 testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
@@ -98,11 +93,10 @@ testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
                               , sign: false
                               }
 
-shouldMatch :: ∀ a. Eq a => Ord a => CleanShow a => Array a -> Array a 
-            -> TestSuite
+shouldMatch :: ∀ a. Eq a => CleanShow a => Array a -> Array a -> TestSuite
 shouldMatch a b = do
-    test "Wiki" <<< beNull $ Array.nub a \\ Array.nub b
-    test "DB" <<< beNull $ Array.nub b \\ Array.nub a
+    test "Wiki" <<< beNull $ Array.nubEq a \\ Array.nubEq b
+    test "DB"   <<< beNull $ Array.nubEq b \\ Array.nubEq a
   where
     beNull xs = equal' ("missing " <> String.joinWith ", " (cleanShow <$> xs)) xs []
 
@@ -163,8 +157,8 @@ wikiRanges (MediaWiki mw) = Array.catMaybes $ go <$> (0..7)
         from <- Map.lookup ("e" <> show i <> "-lvl1") mw  >>= Array.head
         to   <- Map.lookup ("e" <> show i <> "-lvl10") mw >>= Array.head
         let isPercent = String.contains (Pattern "%") from
-            stripFrom = unSuffix (Pattern "%") from
-            stripTo   = unSuffix (Pattern "%") to
+            stripFrom = maybeDo (String.stripSuffix $ Pattern "%") from
+            stripTo   = maybeDo (String.stripSuffix $ Pattern "%") to
         fromVal <- Number.fromString stripFrom
         toVal   <- Number.fromString stripTo  
         guard $ fromVal /= toVal
@@ -184,11 +178,3 @@ testSkills skills (DB.Servant s) = suite (s.name <> ": Skills") $
     go skill = case Map.lookup skill.name skills of
         Nothing -> test skill.name <<< failure $ "Couldn't find skill"
         Just mw -> testSkill skill mw
-
-unSuffix :: Pattern -> String -> String
-unSuffix pat s = Maybe.fromMaybe s $ String.stripSuffix pat s
-
-getRank :: String -> Maybe DB.Rank
-getRank s = Array.find (Maybe.isJust <<< unRank) enumArray
-  where
-    unRank rank = String.stripSuffix (Pattern $ " " <> show rank) s

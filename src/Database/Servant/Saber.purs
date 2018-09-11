@@ -231,7 +231,7 @@ sabers = Servant <$>
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 15.0 ~ 25.0
-                          , Grant Self 3 DebuffResist $ 18.0 ~ 36.0
+                          , Grant Self 3 MentalResist $ 18.0 ~ 36.0
                           ]
                 }
               , { name:   "Yin-Yang A"

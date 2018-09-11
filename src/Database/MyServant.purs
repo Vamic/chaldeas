@@ -107,7 +107,7 @@ lvlStats (Servant {curve, stats:{base, max}}) lvl = { atk: go base.atk max.atk
                         toNumber (maxVal - baseVal) * modifier / 1000.0
     modifier :: Number
     modifier    = toNumber <<< fromMaybe 0 $
-                  index growthCurves curve >>= (flip index) lvl
+                  index growthCurves curve >>= flip index lvl
 
 growthCurves :: Array (Array Int)
 growthCurves = [

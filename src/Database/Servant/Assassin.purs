@@ -191,7 +191,7 @@ assassins = Servant <$>
                 , icon:   IconYinYang
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
-                          , To Self DemeritHealth $ Flat 1000.0
+                          , To Self DemeritDamage $ Flat 1000.0
                           ]
                 }
               ]
@@ -521,7 +521,7 @@ assassins = Servant <$>
               , first:  false
               }
   , gen:      { starWeight: 102, starRate: 25.3, npAtk: 1.05, npDef: 4 }
-  , hits:     { quick: 2, arts: 2, buster: 1, ex: 4 }
+  , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
   , traits:   [Male, EnumaElish]
   , death:    55.0
   , align:    Neutral:Evil
@@ -587,7 +587,7 @@ assassins = Servant <$>
               , max:   { atk: 6320, hp: 9675 }
               , grail: { atk: 8553, hp: 13118 }
               }
-  , actives:  [ { name:   "Monstrous Strength B (Jekyll & Hyde)"
+  , actives:  [ { name:   "Monstrous Strength B"
                 , icon:   IconSwordUp
                 , cd:     7
                 , effect: [ Grant Self 3 AttackUp $ 5.0 ~ 15.0
@@ -878,8 +878,8 @@ assassins = Servant <$>
               , { name:   "Mental Corruption A"
                 , icon:   IconStaffUp
                 , cd:     7
-                , effect: [ Grant Self 3 DebuffSuccess $ 5.0 ~ 25.0
-                          , Grant Self 3 DebuffResist $ 50.0 ~ 100.0
+                , effect: [ Grant Self 3 MentalSuccess $ 5.0 ~ 25.0
+                          , Grant Self 3 MentalResist $ 50.0 ~ 100.0
                           ]
                 }
               ]

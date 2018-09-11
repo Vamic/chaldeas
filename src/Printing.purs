@@ -16,3 +16,21 @@ print places = format $ Formatter { comma: true
 roundTo :: Int -> Number -> Number
 roundTo places = (_ / zeroes) <<< round <<< (_ * zeroes)
   where zeroes = toNumber $ pow 10 places
+
+prettify :: String -> String
+prettify "Fergus mac Roich" = "Fergus mac Róich"
+prettify "Mugashiki—Shinkuu Myou" = "Mugashiki—Shinkuu Myōu"
+prettify "Heroic Portrait: Scathach" = "Heroic Portrait: Scáthach"
+prettify "Cu Chulainn" = "Cú Chulainn"
+prettify "Cu Chulainn (Prototype)" = "Cú Chulainn (Prototype)"
+prettify "Cu Chulainn (Alter)" = "Cú Chulainn (Alter)"
+prettify "Cu Chulainn (Caster)" = "Cú Chulainn (Caster)"
+prettify "Elisabeth Bathory" = "Elisabeth Báthory"
+prettify "Elisabeth Bathory (Halloween)" = "Elisabeth Báthory (Halloween)"
+prettify "Scathach" = "Scáthach"
+prettify "Scathach (Assassin)" = "Scáthach (Assassin)"
+prettify "Angra Mainyu" = "Aŋra Mainiiu"
+prettify "Edmond Dantes" = "Edmond Dantès"
+prettify "Leonardo da Vinci" = "Leonardo Da Vinci"
+prettify "Wisdom of Dun Scaith" = "Wisdom of Dún Scáith"
+prettify a = a

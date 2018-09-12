@@ -39,19 +39,19 @@ scheduledFilters =
     , "Joint Recital", "Princess of the White Rose"
     ]
   , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
-    namedBonus FilterAvailability "+1~2 Crimson Petal"
+    namedBonus FilterEventBonus "+1~2 Crimson Petal"
     [ "Joint Recital" ]
   , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
-    namedBonus FilterAvailability "+100~200% Attack"
+    namedBonus FilterEventBonus "+100~200% Attack"
     [ "Princess of the White Rose" ]
   , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
-    namedBonus FilterAvailability "+1~2 Gold Medal"
+    namedBonus FilterEventBonus "+1~2 Gold Medal"
     [ "Glory Is With Me" ]
   , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
-    namedBonus FilterAvailability "+1~2 Silver Medal"
+    namedBonus FilterEventBonus "+1~2 Silver Medal"
     [ "Original Legion" ]
   , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
-    namedBonus FilterAvailability "+1~2 Bronze Medal"
+    namedBonus FilterEventBonus "+1~2 Bronze Medal"
     [ "Howl at the Moon" ]
   ]
 

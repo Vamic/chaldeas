@@ -35,7 +35,9 @@ scheduledFilters :: Array (ScheduledFilter CraftEssence)
 scheduledFilters = 
   [ ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
     namedBonus FilterAvailability "Limited to Event"
-    [ "Glory is With Me", "Original Legion", "Howl at the Moon" ]
+    [ "Glory Is With Me", "Original Legion", "Howl at the Moon"
+    , "Joint Recital", "Princess of the White Rose"
+    ]
   , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
     namedBonus FilterAvailability "+1~2 Crimson Petal"
     [ "Joint Recital" ]

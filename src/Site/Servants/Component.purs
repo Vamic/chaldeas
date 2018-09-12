@@ -245,9 +245,9 @@ modal prefs ascent (Just ms')= H.div
     , H.article_ $
       [ portrait true (pref Thumbnails) (pref Artorify) ascent $ Tuple "" s'
       , _table ["", "ATK", "HP"]
-        [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
-        , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]
-        , H.tr_ [ _th "Grail", _td $ print' grail.atk, _td $ print' grail.hp ]
+        [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
+        , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
+        , H.tr_ [ _th "Grail", _td $ places' grail.atk, _td $ places' grail.hp ]
         ]
       , _table ["", "Q", "A", "B", "EX", "NP"]
 
@@ -274,8 +274,8 @@ modal prefs ascent (Just ms')= H.div
         , _tr "NP/Hit"      <<< _txt $ show s.gen.npAtk <> "%"
         , _tr "NP/Defend"   <<< _txt $ show s.gen.npDef <> "%"
         --, _tr "Death Rate"  <<< _txt $ show s.death
-        , _tr "Stars/Quick" <<< _txt $ print 2 (starsPerQuick s')
-        , _tr "NP/Arts"     <<< _txt $ print 2 (npPerArts s') <> "%"
+        , _tr "Stars/Quick" <<< _txt $ places 2 (starsPerQuick s')
+        , _tr "NP/Arts"     <<< _txt $ places 2 (npPerArts s') <> "%"
         ]
       , H.form [_i "myservant"] myServantBox
       , _h 2 "Noble Phantasm"

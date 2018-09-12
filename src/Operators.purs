@@ -6,16 +6,20 @@ module Operators
   , (:)
   , (?), doIf
   , maybeDo
+  , filterOut
   ) where
 
 import Prelude
 
+import Data.Array (filter)
 import Data.Enum (class BoundedEnum, enumFromTo, toEnum)
 import Data.Date (Date, exactDate)
 import Data.Date.Component(Month)
+import Data.Foldable (class Foldable, elem)
 import Data.Function.Memoize (memoize)
 import Data.Maybe (Maybe, fromJust, fromMaybe)
 import Data.Tuple (Tuple(..))
+import Data.String.CodeUnits (fromCharArray, toCharArray)
 import Data.String.Regex (Regex, replace)
 import Data.String.Regex.Unsafe (unsafeRegex)
 import Partial.Unsafe (unsafePartial)
@@ -34,7 +38,7 @@ enumArray :: ∀ a. BoundedEnum a => Array a
 enumArray = flip memoize unit \_ -> enumFromTo bottom top
 
 ymd :: Int -> Month -> Int -> Date
-ymd y m d = unsafePartial $ fromJust do
+ymd y m d = unsafePartial fromJust do
     y' <- toEnum y
     d' <- toEnum d
     exactDate y' m d'
@@ -45,7 +49,11 @@ camel = unsafeRegex "([a-z])([A-Z])" mempty
 unCamel :: String -> String
 unCamel = replace camel "$1 $2"
 
-compareThen :: ∀ a b c. Ord b => Ord c => (a -> b) -> (a -> c) -> a -> a -> Ordering
+compareThen :: ∀ a b c. Ord b => Ord c => (a -> b) -> (a -> c) -> a -> a 
+            -> Ordering
 compareThen f g x y = case compare (f x) (f y) of
     EQ -> compare (g x) (g y)
     a  -> a
+
+filterOut :: ∀ f. Foldable f => f Char -> String -> String
+filterOut xs = fromCharArray <<< filter (not <<< flip elem xs) <<< toCharArray

@@ -289,7 +289,7 @@ isDamage _ = false
 showInstant :: Target -> Amount -> InstantEffect -> String
 showInstant target amount = case _ of
     Avenge
-      -> "Wait 1 turn, then deal " <> n
+      -> "At the end of the next turn, deal " <> n
       <> "% of damage taken during that turn" <> to
     BecomeHyde
       -> "Transform into Hyde. Class: [Berserker]. \
@@ -564,8 +564,8 @@ possessiveAndSubject = case _ of
 
 data RangeInfo = RangeInfo Boolean Number Number
 instance _i_ :: Show RangeInfo where
-  show (RangeInfo true  from to) = print 2 from <> "% ~ " <> print 2 to <> "%"
-  show (RangeInfo false from to) = print 2 from <>  " ~ " <> print 2 to
+  show (RangeInfo true  from to) = places 2 from <> "% ~ " <> places 2 to <> "%"
+  show (RangeInfo false from to) = places 2 from <>  " ~ " <> places 2 to
 instance _j_ :: Eq RangeInfo where
   eq (RangeInfo _ a1 a2) (RangeInfo _ b1 b2) = a1 == b1 && a2 == b2
 

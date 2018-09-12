@@ -1,10 +1,11 @@
 module Test.Base 
-  ( MaybeRank(..)
+  ( MaybeRank(..), RankedSkill(..)
   , addRank
   , indices
   ) where
 
 import Prelude 
+import Operators (compareThen)
 
 import Data.String as String
 import Database as DB
@@ -20,8 +21,9 @@ data MaybeRank = Unranked
                | Pure     DB.Rank
                | Upgrade  DB.Rank
                | Unique   DB.Servant DB.Rank
-               
-instance _0_ :: Show MaybeRank where
+derive instance _0_ :: Eq MaybeRank
+derive instance _1_ :: Ord MaybeRank
+instance _2_ :: Show MaybeRank where
   show Unranked              = "--"
   show (Pure rank)           = "Rank" <> show rank
   show (Upgrade DB.Unknown)  = "NP"
@@ -30,6 +32,13 @@ instance _0_ :: Show MaybeRank where
   show (Unique s rank)
     | show s == "Henry Jekyll & Hyde" = "Rank" <> show rank <> " (Hyde)"
     | otherwise                       = show s
+
+data RankedSkill = RankedSkill DB.Skill MaybeRank
+derive instance _3_ :: Eq RankedSkill
+instance _4_ :: Ord RankedSkill where
+  compare = compareThen show \(RankedSkill _ rank) -> rank
+instance _5_ :: Show RankedSkill where
+  show (RankedSkill skill _) = skill.name
 
 indices :: Array String -> String -> Maybe Int
 indices patterns s = foldl ((<|>)) Nothing $ 

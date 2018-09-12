@@ -43,7 +43,7 @@ doSort x = map showSort <<< sortWith sorter
   where
     sorter   = toSort x
     showSort = output <<< abs <<< sorter &&& identity
-    output   = print 0
+    output   = places 0
 
 sorted :: Map SortBy (Array (Tuple String CraftEssence))
 sorted = M.fromFoldable $ go <$> enumArray

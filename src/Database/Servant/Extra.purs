@@ -392,7 +392,8 @@ extras = Servant <$>
               , card:   Arts
               , kind:   "Anti-Unit"
               , hits:   1
-              , effect: [ To Enemy Avenge $ 200.0 ~ 300.0 ]
+              , effect: [ Debuff Self 0 Stun Full
+                        , To Enemy Avenge $ 200.0 ~ 300.0 ]
               , over:   [ To Self Heal $ 1000.0 ~ 5000.0 ]
               , first:  false
               }

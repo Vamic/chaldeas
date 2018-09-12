@@ -1,7 +1,7 @@
 module Test.Main where
 
 import Prelude
-import Operators (maybeDo)
+import Operators (maybeDo, (:))
 
 import Effect.Aff     as Aff
 import Data.Array     as Array
@@ -27,14 +27,14 @@ import Data.String (Pattern(..))
 import Data.Traversable (traverse, traverse_)
 import Data.Tuple (Tuple(..), snd)
 import Effect (Effect)
-import Test.Unit (TestSuite, test, suite, failure)
-import Test.Unit.Assert (assert, equal')
+import Test.Unit (TestSuite, Test, test, success, suite, failure)
+import Test.Unit.Assert (assert)
 import Test.Unit.Main (runTestWith)
-import Test.Fancy (runTest)
+import Test.Console (runTest)
 
-import Test.Base (MaybeRank(..), addRank)
+import Test.Base (MaybeRank(..), RankedSkill(..), addRank)
 import Test.Wiki (Wiki, printBool, wiki, wikiRange, wikiLookup)
-import Test.Parse (SkillWrapper(..), printIcon, effects, readEffect, skillRanks, npRank)
+import Test.Parse (printIcon, effects, readEffect, skillRanks, npRank)
 
 main :: Effect Unit
 main = Yargs.runY (usage <> example) $ app 
@@ -45,7 +45,6 @@ main = Yargs.runY (usage <> example) $ app
     usage = Setup.usage     "$0 [--ce <amount>] [--s <amount>]" 
     example = Setup.example "$0 --ce 10 --s 0" 
                             "Test 10 Craft Essences and no Servants."
-
 
 app :: Int -> Int -> Effect Unit
 app ce servant = Console.log msg *> Aff.launchAff_ do
@@ -70,7 +69,7 @@ app ce servant = Console.log msg *> Aff.launchAff_ do
 
 wikiMatch :: Wiki -> String -> String -> TestSuite
 wikiMatch mw k obj = test k $ case wikiLookup mw k of
-    Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "]") $
+    Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "].") $
                obj `Array.elem` v
     Nothing -> failure $ "Missing property " <> k <> " in " <> show mw 
             <> Maybe.maybe "" (append ": ") (wikiLookup mw "err" >>= Array.head)
@@ -99,41 +98,53 @@ testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
                               , sign: false
                               }
 
-shouldMatch :: ∀ a. Eq a => Show a => Array a -> Array a -> TestSuite
-shouldMatch x y = do
+shouldMatch :: ∀ a. Eq a => Show a => Array a -> Array a -> Test
+shouldMatch x y = case wiki : db of
+    [] : [] -> success
+    xs : [] -> failure $ "Missing from Wiki: " <> showAll xs <> "."
+    [] : ys -> failure $ "Missing from DB: "   <> showAll ys <> "."
+    xs : ys -> failure $ "Missing from Wiki: " <> showAll xs <> "."
+                      <> "Missing from DB: "   <> showAll ys <> "."
+{-
     test "Wiki" <<< beNull $ Array.nubEq x \\ Array.nubEq y
     test "DB"   <<< beNull $ Array.nubEq y \\ Array.nubEq x
+-}
   where
-    beNull xs = equal' ("missing " <> String.joinWith ", " (show <$> xs))
-                xs []
+    wiki = Array.nubEq x \\ Array.nubEq y
+    db   = Array.nubEq y \\ Array.nubEq x
+    showAll = String.joinWith "," <<< map show
 
 testServant :: Tuple DB.Servant Wiki -> TestSuite
-testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Stats") do
-      match "id"            <<< prId $ Int.toNumber s.id
-      match "class"           $ show s.class
-      match "minatk"          $ show s.stats.base.atk
-      match "maxatk"          $ show s.stats.max.atk
-      match "minhp"           $ show s.stats.base.hp
-      match "maxhp"           $ show s.stats.max.hp
-      match "grailatk"        $ show s.stats.grail.atk
-      match "grailhp"         $ show s.stats.grail.hp
-      match "rarity"          $ show s.rarity
-      match "commandcard"     $ show s.deck
-      match "attribute"       $ showAttr s.attr
-      match "quickhit"        $ show s.hits.quick
-      match "artshit"         $ show s.hits.arts
-      match "busterhit"       $ show s.hits.buster
-      match "extrahit"        $ show s.hits.ex
-      match "deathresist"     $ toString s.death
-      match "starabsorption"  $ show s.gen.starWeight
-      match "stargeneration"  $ toString s.gen.starRate
-      match "npchargeattack"  $ toString s.gen.npAtk
-      match "npchargedefense" $ show s.gen.npDef
-      match "icon"            $ show s.phantasm.card
-      match "hitcount"        $ showHitcount s.phantasm.hits
-      match "alignment"       $ showAlign s.align
-      test "status" $ assert (show $ wikiLookup mw "status") status
-
+testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Info") do
+    suite "Profile" do
+        match "id"            <<< prId $ Int.toNumber s.id
+        match "class"           $ show s.class
+        match "rarity"          $ show s.rarity
+        match "attribute"       $ showAttr s.attr
+        match "alignment"       $ showAlign s.align
+        match "deathresist"     $ toString s.death
+        test "status" $ assert (show $ wikiLookup mw "status") status
+    suite "Stats" do
+        match "minatk"          $ show s.stats.base.atk
+        match "maxatk"          $ show s.stats.max.atk
+        match "minhp"           $ show s.stats.base.hp
+        match "maxhp"           $ show s.stats.max.hp
+        match "grailatk"        $ show s.stats.grail.atk
+        match "grailhp"         $ show s.stats.grail.hp
+    suite "Hitcounts" do
+        match "quickhit"        $ show s.hits.quick
+        match "artshit"         $ show s.hits.arts
+        match "busterhit"       $ show s.hits.buster
+        match "extrahit"        $ show s.hits.ex
+    suite "Generation" do
+        match "starabsorption"  $ show s.gen.starWeight
+        match "stargeneration"  $ toString s.gen.starRate
+        match "npchargeattack"  $ toString s.gen.npAtk
+        match "npchargedefense" $ show s.gen.npDef
+    suite "Deck" do
+        match "commandcard"     $ show s.deck
+        match "icon"            $ show s.phantasm.card
+        match "hitcount"        $ showHitcount s.phantasm.hits
   where
     match = wikiMatch mw
     showAlign[] = "Changes per Master"
@@ -159,10 +170,10 @@ testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Stats") do
 
 testNP :: Tuple DB.Servant Wiki -> TestSuite
 testNP (Tuple (DB.Servant s) mw) = suite (s.name <> ": NP") do
-      suite "Primary Effects" do
+      test "Primary Effects" do
           shouldMatch (effects s.phantasm.effect) $ 
               wikiRange mw "effect" (0..6) >>= readEffect
-      suite "Overcharge Effects" do 
+      test "Overcharge Effects" do 
           shouldMatch (effects s.phantasm.over) $
               wikiRange mw "oceffect" (0..6) >>= readEffect
 
@@ -180,17 +191,20 @@ wikiRanges mw = Array.catMaybes $ go <$> (0..7)
         guard $ fromVal /= toVal
         pure $ DB.RangeInfo isPercent fromVal toVal
 
-testSkill :: SkillWrapper -> Wiki -> TestSuite
-testSkill (SkillWrapper skill) mw = suite skill.name do
+testSkill :: DB.Skill -> Wiki -> TestSuite
+testSkill skill mw = suite skill.name do
     wikiMatch mw "cooldown1" $ show skill.cd
-    shouldMatch (DB.ranges skill.effect) $ wikiRanges mw
-    shouldMatch (effects skill.effect) $
+    test "values" do
+        shouldMatch (DB.ranges skill.effect) $ wikiRanges mw
+    test "effects" do
+        shouldMatch (effects skill.effect) $
         wikiRange mw "effect" (0..7) >>= readEffect
 
-testSkills :: Map SkillWrapper Wiki -> DB.Servant -> TestSuite
+testSkills :: Map RankedSkill Wiki -> DB.Servant -> TestSuite
 testSkills skills s'@(DB.Servant s) = suite (s.name <> ": Skills") <<<
     traverse_ go $ snd <$> skillRanks s'
   where
-    go skill = case Map.lookup skill skills of
-        Nothing -> test (show skill) <<< failure $ "Couldn't find skill"
+    go :: RankedSkill -> TestSuite
+    go ranked@(RankedSkill skill _) = case Map.lookup ranked skills of
+        Nothing -> test skill.name <<< failure $ "Couldn't find skill"
         Just mw -> testSkill skill mw

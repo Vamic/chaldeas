@@ -6,11 +6,10 @@ module Test.Wiki
   ) where
 
 import Prelude
-import Operators (maybeDo)
+import Operators (filterOut, maybeDo)
 
 import Affjax                   as AX
 import Data.Array               as Array
-import Data.String.CodeUnits    as CodeUnits
 import Global.Unsafe            as Global
 import Data.Map                 as Map
 import Data.Maybe               as Maybe
@@ -70,18 +69,7 @@ toWiki text rank =
         maybeDo (String.stripPrefix $ Pattern "=") <$> afterLines
     untilBraces line = _.before <<< 
                       flip String.splitAt line <$> indices ["}}","/"] line
-    sanitize = CodeUnits.fromCharArray <<< Array.filter legal <<<         
-               CodeUnits.toCharArray
-      where
-        legal '%'  = false
-        legal ','  = false
-        legal '{'  = false
-        legal '['  = false
-        legal ']'  = false
-        legal '('  = false
-        legal ')'  = false
-        legal '\'' = false
-        legal _    = true
+    sanitize = filterOut ['%',',','{','}','[',']','(',')','\'']
 
 wiki :: ∀ a. Show a => Tuple MaybeRank a -> Aff (Tuple a Wiki)
 wiki (Tuple mRank x) = Tuple x <<< wikify <<< 

@@ -183,8 +183,8 @@ modal prefs
     , H.article_ $
       [ portrait true (getPreference prefs Artorify) $ Tuple "" ce'
       , _table ["", "ATK", "HP"]
-        [ H.tr_ [ _th "Base",  _td $ print' base.atk,  _td $ print' base.hp ]
-        , H.tr_ [ _th "Max",   _td $ print' max.atk,   _td $ print' max.hp ]
+        [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
+        , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
         ]
       , _img $ "img/Skill/" <> show ce.icon <> ".png"
       , _h 2 "Effects"

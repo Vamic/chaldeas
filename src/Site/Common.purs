@@ -13,7 +13,6 @@ import Data.Int
 import Data.Maybe
 import Data.Number.Format
 import Data.String (Pattern(..), Replacement(..), joinWith, replaceAll, split)
-import Data.String.CodeUnits
 import Data.Time.Duration
 import Effect
 import Effect.Now
@@ -45,31 +44,21 @@ noBreakName doPrettify = doPrettify ? prettify <<<
     unBreak xs     = joinWith "(" xs
 
 fileName :: String -> String
-fileName = fromCharArray <<< filter legal <<< toCharArray
-  where
-    legal ':' = false
-    legal '/' = false
-    legal '?' = false
-    legal _   = true
-
+fileName = filterOut [':','/','?']
 mode :: Preferences -> String
 mode prefs
   | getPreference prefs NightMode = "dark"
   | otherwise = "light"
 
-print' :: Int -> String
-print' = print 0 <<< toNumber
+places' :: Int -> String
+places' = places 0 <<< toNumber
 
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
 toCell isPercent = _td <<< (isPercent ? flip append "%") <<< 
                    toString <<< roundTo 2
 
 urlName :: String -> String
-urlName = fromCharArray <<< filter legal <<< toCharArray
-  where
-    legal ' ' = false
-    legal ' ' = false
-    legal _   = true
+urlName = filterOut [' ',' ']
 
 ----------------
 -- ABBREVIATIONS

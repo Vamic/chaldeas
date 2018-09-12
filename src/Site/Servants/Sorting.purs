@@ -68,9 +68,9 @@ doSort x = map showSort <<< sortWith sorter
           "NP" <> show ms.npLvl <> ": " <> (output <<< abs $ sorter ms')
       | otherwise = output <<< abs <<< sorter &&& getBase
     output = case x of
-        NPArts    -> flip append "%" <<< print 2
-        StarQuick -> print 2
-        _         -> print 0
+        NPArts    -> flip append "%" <<< places 2
+        StarQuick -> places 2
+        _         -> places 0
 
 sorted :: Map SortBy (Array (Tuple String Servant))
 sorted = M.fromFoldable $ go <$> enumArray

@@ -1,4 +1,4 @@
-module Test.Fancy (runTest) where
+module Test.Console (runTest) where
 
 import Prelude
 
@@ -7,67 +7,69 @@ import Effect.Class (liftEffect)
 import Effect.Exception (message)
 import Data.Either (Either(Left, Right))
 import Data.Foldable (traverse_)
-import Data.List (List, uncons, length)
+import Data.Int (toNumber)
+import Data.List (List, uncons, length, null)
 import Data.Maybe (Maybe(Just, Nothing))
 import Data.Tuple (Tuple(Tuple))
 import Test.Unit (TestList, TestSuite, collectResults, countSkippedTests, keepErrors, walkSuite)
-import Test.Unit.Console (printFail, savePos, restorePos, eraseLine, printPass, printLabel, print)
+import Test.Unit.Console (printFail, printPass, printLabel, print)
+
+import Printing (places)
 
 indent :: Int -> String
 indent 0 = mempty
 indent n = "  " <> indent (n - 1)
 
 indent' :: forall a. List a -> String
-indent' = length >>> indent
+indent' = indent <<< length
 
 printLive :: TestSuite -> Aff TestList
 printLive tst = walkSuite runSuiteItem tst
   where
     runSuiteItem path (Left label) = do
       liftEffect do
+        when (null path) $ print "\n"
+        print "\n"
         print $ indent' path
-        print "\x2192 Suite: "
         printLabel label
-        void $ print "\n"
+        print "\n"
+        void <<< print $ indent' path
     runSuiteItem path (Right (Tuple label t)) = do
-      liftEffect do
-        print $ indent' path
-        savePos
-        print "\x2192 Running: "
-        printLabel label
-        restorePos
       result <- attempt t
       void $ case result of
         (Right _) -> liftEffect do
-          eraseLine
-          printPass "\x2713 Passed: "
-          printLabel label
-          print "\n"
+          printPass "\x2713"
+          printPass label
+          print " "
         (Left err) -> liftEffect do
-          eraseLine
-          printFail "\x2620 Failed: "
-          printLabel label
-          print " because "
-          printFail $ message err
-          print "\n"
-
+          printFail "\x2620"
+          printFail label
+          print " "
 
 printErrors :: TestList -> Int -> Aff Unit
 printErrors tests skCount = do
   results <- collectResults tests
-  let errors = keepErrors results
-      skMsg = case skCount of
+  let errors    = keepErrors results
+      failed    = length errors
+      total     = length results
+      percent   = append "(" <<< flip append "%)" <<< places 2 $ 
+                  100.0 * toNumber failed / toNumber total
+      skMsg     = case skCount of
           0 -> ""
           1 -> " (1 test skipped)"
           i -> " (" <> show i <> " tests skipped)"
   liftEffect do
-    case length errors of
-      0 -> printPass $ "\nAll " <> show (length results) <> " tests passed" <> skMsg <> "! 🎉\n"
+    case failed of
+      0 -> printPass $ "\n\nYorokobe, shounen! 🎉 All " <> show total 
+           <> " tests passed" <> skMsg <> ".\n\n"
       1 -> do
-        printFail $ "\n1 test failed" <> skMsg <>":\n\n"
+        printFail $ 
+            "\n1/" <> show total <> " test failed " <> percent 
+            <> skMsg <>":\n\n"
         list errors
       i -> do
-        printFail $ "\n" <> show i <> " tests failed" <> skMsg <> ":\n\n"
+        printFail $ "\n" <> show i <> "/" <> show total <> " tests failed " <> percent 
+            <> skMsg <> ":\n\n"
         list errors
   where list = traverse_ printItem
         printItem (Tuple path err) = do
@@ -77,7 +79,7 @@ printErrors tests skCount = do
         printHeader level path = case uncons path of
           Nothing -> print $ indent level
           Just {head, tail} -> do
-            print $ indent level <> "In \"" <> head <> "\":\n"
+            print $ indent level <> head <> ":\n" --"In \"" <> head <> "\":\n"
             printHeader (level + 1) tail
         printError err = do
           printFail $ message err

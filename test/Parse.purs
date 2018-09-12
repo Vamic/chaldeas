@@ -1,6 +1,5 @@
 module Test.Parse 
-  ( SkillWrapper(..)
-  , translate
+  ( translate
   , printIcon
   , effects
   , readEffect
@@ -9,40 +8,38 @@ module Test.Parse
   ) where
 
 import Prelude
-import Operators (compareThen, (:))
+import Operators (filterOut, (:))
 import Printing (prettify)
-import Database (SkillEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), Skill, craftEssences)
+import Database (SkillEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), craftEssences)
 
 import Data.Array (elem)
 import Data.Foldable (all, any, find)
 import Data.Generic.Rep.Show (genericShow)
 import Data.Maybe (fromMaybe)
-import Data.Newtype (class Newtype, unwrap)
-import Data.Profunctor.Strong (second)
 import Data.String (Pattern(..))
 import Data.String as S
-import Data.String.CodeUnits (fromCharArray, toCharArray)
-import Data.Tuple (Tuple)
+import Data.Tuple (Tuple(..))
 
-import Test.Base (MaybeRank(..))
+import Test.Base (MaybeRank(..), RankedSkill(..))
 
-upgradeNPs :: Array String
-upgradeNPs = 
+upgradeNP :: Array String
+upgradeNP = 
     [ "Orion"
     , "Asterios"
+    , "Sasaki Kojirou"
     ]
 
 npRank :: Servant -> MaybeRank
-npRank (Servant s) = (if s.name `elem` upgradeNPs then Upgrade else Pure) 
+npRank (Servant s) = (if s.name `elem` upgradeNP then Upgrade else Pure) 
                      s.phantasm.rank
 
-upgradeSkills :: Array (Tuple String String)
-upgradeSkills = 
+upgradeSkill :: Array (Tuple String String)
+upgradeSkill = 
     [ "Tamamo-no-Mae": "Fox's Wedding"
     ]
 
-uniqueSkills :: Array (Tuple String String)
-uniqueSkills = 
+uniqueSkill :: Array (Tuple String String)
+uniqueSkill = 
     [ "Brynhild": "Primordial Rune"
     , "Scathach": "Primordial Rune"
     , "Euryale":  "Whim of the Goddess"
@@ -53,23 +50,17 @@ uniqueSkills =
 ceNames :: Array String
 ceNames = show <$> craftEssences
 
-newtype SkillWrapper = SkillWrapper Skill
-derive instance _0_ :: Newtype SkillWrapper _
-instance __1_ :: Show SkillWrapper where
-    show (SkillWrapper skill) = skill.name
-instance _2_ :: Eq SkillWrapper where
-    eq (SkillWrapper x) (SkillWrapper y) = x.name == y.name && x.rank == y.rank
-instance _3_ :: Ord SkillWrapper where
-    compare = compareThen (_.name <<< unwrap) (_.rank <<< unwrap)
-
-skillRanks :: Servant -> Array (Tuple MaybeRank SkillWrapper)
-skillRanks s'@(Servant s) = second SkillWrapper <<< go <$> s.skills
+skillRanks :: Servant -> Array (Tuple MaybeRank RankedSkill)
+skillRanks s'@(Servant s) = tuplify <<< go <$> s.skills
   where
+    tuplify ranked@(RankedSkill _ rank) = Tuple rank ranked
+    flagged x = elem (s.name : x.name)
     go x
-      | x.name `elem` ceNames = Pure x.rank : x { name = x.name <> " (Skill)" }
-      | (s.name : x.name) `elem` upgradeSkills = Upgrade x.rank   : x
-      | (s.name : x.name) `elem` uniqueSkills  = Unique s' x.rank : x
-      | otherwise                              = Pure x.rank      : x
+      | x.name `elem` ceNames    = RankedSkill x { name = x.name <> " (Skill)" } 
+                                                 $ Pure x.rank
+      | x `flagged` upgradeSkill = RankedSkill x $ Upgrade x.rank
+      | x `flagged` uniqueSkill  = RankedSkill x $ Unique s' x.rank
+      | otherwise                = RankedSkill x $ Pure x.rank
 
 translate :: String -> String
 translate "Cheerful-Type Mystic Code" = "Cheerful Model Mystic Code"
@@ -170,14 +161,8 @@ synonym =
 readEffect :: String -> Array String
 readEffect effect = go 
   where
-    words = S.split (Pattern " ") <<< S.trim <<< fromCharArray <<< 
-            map sanitize <<< toCharArray $ S.toLower effect
-    sanitize '.' = ' '
-    sanitize '|' = ' '
-    sanitize '[' = ' '
-    sanitize ']' = ' '
-    sanitize '#' = ' '
-    sanitize x   = x
+    words = S.split (Pattern " ") <<< S.trim <<< 
+            filterOut ['.','|','[',']','#'] $ S.toLower effect
     inWords x = elem x words || elem (x <> "s") words 
     match xs = all (any inWords <<< synonyms) xs
     synonyms word = fromMaybe [word] $ find (elem word) synonym
@@ -194,8 +179,8 @@ readEffect effect = go
           [DefenseDown, CritChance]
       | match ["reduce","attack","defense"] = genericShow <$>
           [AttackDown, DefenseDown]
-      | match ["increase","gain","critical","strength","drop","recovery","debuff","resist"] =
-          genericShow <$>
+      | match ["increase","gain","critical","strength","drop","recovery"
+              ,"debuff","resist"] = genericShow <$>
           [NPGen, CritUp, HealingReceived, StarUp, DebuffResist]
       | match ["increase","attack","defense","star"] = genericShow <$>
           [AttackUp, DefenseUp, StarUp]
@@ -203,7 +188,10 @@ readEffect effect = go
           [AttackUp, DefenseUp]
       | match ["reduce","np","strength","critical","strength"] = genericShow <$>
           [NPDown, CritDown]
-      
+      | match ["remove","debuffs","restore","hp"] = genericShow <$>
+          [RemoveDebuffs, Heal]
+
+      | match ["additional","damage","turn"] = ["Special Attack"]
       | match ["decrease","1000hp","yourself"] = [genericShow DemeritDamage]
       | match ["damage","previous","hp"] = [genericShow Avenge]
       | match ["hp","fall"] = [genericShow DemeritHealth]
@@ -213,7 +201,6 @@ readEffect effect = go
       | match ["extra","own","hp"] = [genericShow LastStand]
       | match ["against","drop"] = ["Special Stars"]
       | match ["apply","trait"] = ["Apply Trait"]
-      | match ["additional","damage","turns"] = ["Special Attack"]
       | match ["extra","damage"] = ["Extra Damage"]
       | match ["special","attack"] = ["Special Attack"]
       | match ["special","damage"] = ["Special Attack"]
@@ -305,7 +292,6 @@ readEffect effect = go
       | match ["immobilize"] = [genericShow Stun]
       | match ["stun","later"] = [genericShow StunBomb]
       | match ["stun","delayed"] = [genericShow StunBomb]
-      | match ["stun"] = [genericShow Stun]
       | match ["sure","hit"] = [genericShow SureHit]
       | match ["target","focus"] = [genericShow Taunt]
 
@@ -322,6 +308,7 @@ readEffect effect = go
       | match ["increase","attack"] = [genericShow AttackUp]
       | match ["severe","damage"] = [genericShow Damage]
       | match ["deal","damage"] = [genericShow Damage]
+      | match ["stun"] = [genericShow Stun]
 
       | match ["high","chance","status"] = [genericShow Charm]
 

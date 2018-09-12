@@ -49,11 +49,11 @@ scheduledFilters =
   -- NERO FEST
   ------------
 
-  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 25) $
     namedBonus FilterAvailability "Limited to Event"
     [ "Nero Claudius (Bride)" ]
 
-  , ScheduledFilter (ymd 2018 September 12) (ymd 2018 September 24) $
+  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 25) $
     namedBonus FilterAvailability "Rate-Up"
     [ "Nero Claudius (Bride)", "Nero Claudius"
     , "Gaius Julius Caesar", "Romulus", "Boudica"

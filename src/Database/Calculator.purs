@@ -25,11 +25,11 @@ npPer s'@(Servant s) card = toNumber s.hits.arts
                           * overkillModifier
   where
     offensiveNPRate  = s.gen.npAtk
-    firstCardBonus   = 0.0
-    cardNpValue      = case card of
-                           Arts   -> 3.0
-                           Quick  -> 1.0
-                           Buster -> 0.0
+    firstCardBonus   = 1.0
+    cardNpValue      = 1.5 * case card of
+                                 Arts   -> 3.0
+                                 Quick  -> 1.0
+                                 Buster -> 0.0
     cardMod          = matchSum buffs $ Performance card
     enemyServerMod   = 1.0
     npChargeRateMod  = matchSum buffs NPGen
@@ -52,10 +52,10 @@ starsPer s'@(Servant s) card = toNumber s.hits.quick
                              + overkillAdd
   where
     baseStarRate     = s.gen.starRate / 100.0
-    firstCardBonus   = 0.0
+    firstCardBonus   = 0.2
     cardStarValue    = case card of
-                           Quick  -> 0.8
-                           Arts   -> 0.1
+                           Quick  -> 1.3
+                           Arts   -> 0.15
                            Buster -> 0.0
     cardMod          = matchSum buffs $ Performance card
     serverRate       = 0.0

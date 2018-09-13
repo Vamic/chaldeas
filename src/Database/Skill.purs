@@ -1,3 +1,15 @@
+-- | There are three types of skill effects in the game: 
+-- | buffs, or positive status effects with a duration; 
+-- | debuffs, or negative status effects with a duration;
+-- | and instant actions like gaining stars or reducing an enemy's NP gauge.
+-- | 
+-- | In CHALDEAS, Buffs are represented by `BuffEffect`s, 
+-- | debuffs by `DebuffEffect`s, and instant actions by `InstantEffect`s.
+-- | This system is also used by passive skills, Noble Phantasm effects,
+-- | and Craft Essences.
+-- | 
+-- | For Craft Essences only, there are also `BonusEffect`s that increase gains 
+-- | of Quartz Points, Bond, and so on.
 module Database.Skill
   ( Amount(..), (~), toMin, toMax
   , Rank(..)
@@ -28,7 +40,6 @@ import Data.String.CodeUnits (toCharArray)
 import Data.Tuple
 
 import Database.Base
-import Database.Icon
 import Printing 
 
 data BuffEffect
@@ -120,16 +131,18 @@ showBuff target amount = case _ of
         Self -> " for yourself"
         _    -> ""
   where
-    n   = show amount
-    p:s = possessiveAndSubject target
-    to  = if s == "" then "" else " to" <> s
-    by  = " by " <> n <> "%"
+    n       = show amount
+    (p ^ s) = possessiveAndSubject target
+    to      = case s of
+                  "" -> ""
+                  _  -> " to" <> s
+    by      = " by " <> n <> "%"
     grant    x = "Grant" <> s <> " " <> x
     increase x = "Increase" <> p <> " " <> x <> by
     success  x = increase $ x <> " success rate"
-    resist   x
-      | amount == Full = "Grant" <> s <> " " <> x <> " immunity"
-      | otherwise      = "Increase" <> p <> " " <> x <> " resistance" <> by
+    resist   x = case amount of
+                     Full -> "Grant" <> s <> " " <> x <> " immunity"
+                     _    -> "Increase" <> p <> " " <> x <> " resistance" <> by
     against :: ∀ a. Show a => a -> String
     against x = " against [" <> show x <> "]"
 
@@ -240,9 +253,11 @@ showDebuff target amount = case _ of
     Stun         -> "Stun" <> s
     StunBomb     -> "Stun" <> s <> " after 1 turn"
   where
-    n   = show amount
-    p:s = possessiveAndSubject target
-    to  = if s == "" then "" else " to" <> s
+    n          = show amount
+    (p ^ s)    = possessiveAndSubject target
+    to         = case s of
+                     "" -> ""
+                     _  -> " to" <> s
     reduce   x = "Reduce" <> p <> " " <> x <> " by " <> n <> "%"
     unresist x = reduce $ x <> " resistance"
     damage   x = "Inflict " <> n <> " " <> x <> " damage" <> to <> " every turn"
@@ -339,14 +354,17 @@ showInstant target amount = case _ of
     Kill
       -> not full ? append (n <> "% chance to ") $ "Instant-Kill " <> s
     GainStars
-      -> "Gain " <> n <> " critical stars" <> case target of
-          Self -> " for yourself"
-          _    -> ""
+      -> "Gain " <> n <> " critical stars" 
+         <> case target of
+                Self -> " for yourself"
+                _    -> ""
   where
-    n    = show amount
-    p:s  = possessiveAndSubject target
-    to   = if s == "" then "" else " to" <> s
-    full = amount == Full
+    n     = show amount
+    p ^ s = possessiveAndSubject target
+    to    = case s of
+                "" -> ""
+                _  -> " to" <> s
+    full  = amount == Full
 
 data BonusEffect
     = FriendPoints
@@ -357,7 +375,7 @@ data BonusEffect
     | MysticCode
     | Bond
 instance _f_ :: Show BonusEffect where
-  show = showBonus Placeholder
+    show = showBonus Placeholder
 
 showBonus :: Amount -> BonusEffect -> String
 showBonus amount = case _ of
@@ -410,10 +428,10 @@ mapAmount f eff = go eff
     go (Times a b)      = Times a $ go b
     go (ToMax a b)      = ToMax (f' a) $ go b
     go (Chances a b c)  = case f (toNumber a) (toNumber b) of
-        Flat x      -> Chance (floor x) $ go c
-        Range x y   -> Chances (floor x) (floor y) $ go c
-        Placeholder -> go c
-        Full        -> go c
+                              Flat x      -> Chance (floor x) $ go c
+                              Range x y   -> Chances (floor x) (floor y) $ go c
+                              Placeholder -> go c
+                              Full        -> go c
 
 simplify :: SkillEffect -> SkillEffect
 simplify (Chance _ ef)    = simplify ef
@@ -441,30 +459,31 @@ demerit (Times _ ef) = demerit ef
 demerit (ToMax _ ef) = demerit ef
 
 instance _g_ :: Show SkillEffect where
-  show = flip append "." <<< go
-    where
-      go = case _ of
-          Grant t dur buff amt -> showBuff t amt buff <> turns dur
-          Debuff t dur deb amt -> showDebuff t amt deb <> turns dur
-          To t instant amt     -> showInstant t amt instant
-          Bonus bonus amt      -> showBonus amt bonus
-          Chance 0 ef          -> "Chance to " <> uncap (go ef)
-          Chance per ef        -> show per <> "% chance to " <> uncap (go ef)
-          Chances x y ef       -> show x <> "~" <> show y <> "% chance to "
-                                  <> uncap (go ef)
-          When "attacking" ef  -> go ef <> " when attacking"
-          When cond ef         -> "If " <> cond <> ": " <> uncap (go ef)
-          Times 1 ef           -> go ef <> " (1 time)"
-          Times times ef       -> go ef <> " (" <> show times <> " times)"
-          ToMax amount ef -> go ef <> " every turn (max " <> show amount <> ")"
-      turns 0   = ""
-      turns 1   = " for 1 turn"
-      turns dur = " for " <> show dur <> " turns"
+    show = flip append "." <<< go
+      where
+        go = case _ of
+            Grant t dur buff amt -> showBuff t amt buff <> turns dur
+            Debuff t dur deb amt -> showDebuff t amt deb <> turns dur
+            To t instant amt     -> showInstant t amt instant
+            Bonus bonus amt      -> showBonus amt bonus
+            Chance 0 ef          -> "Chance to " <> uncap (go ef)
+            Chance per ef        -> show per <> "% chance to " <> uncap (go ef)
+            Chances x y ef       -> show x <> "~" <> show y <> "% chance to "
+                                    <> uncap (go ef)
+            When "attacking" ef  -> go ef <> " when attacking"
+            When cond ef         -> "If " <> cond <> ": " <> uncap (go ef)
+            Times 1 ef           -> go ef <> " (1 time)"
+            Times times ef       -> go ef <> " (" <> show times <> " times)"
+            ToMax amount ef      -> go ef <> " every turn (max " <> show amount 
+                                    <> ")"
+        turns 0   = ""
+        turns 1   = " for 1 turn"
+        turns dur = " for " <> show dur <> " turns"
 
 uncap :: String -> String
 uncap s = case uncons s of
-    Just {head: x, tail: xs} -> toLower (singleton x) <> xs
-    Nothing                  -> s
+              Just {head: x, tail: xs} -> toLower (singleton x) <> xs
+              Nothing                  -> s
 
 data Amount
     = Placeholder
@@ -475,10 +494,10 @@ data Amount
 infix 1 Range as ~
 
 instance _h_ :: Show Amount where
-  show Placeholder = "X"
-  show Full = ""
-  show (Flat x) = toString x
-  show (Range x y) = toString x <> "~" <> toString y
+    show Placeholder = "X"
+    show Full = ""
+    show (Flat x) = toString x
+    show (Range x y) = toString x <> "~" <> toString y
 
 toMin :: Amount -> Number
 toMin Placeholder = 0.0
@@ -500,26 +519,25 @@ data Rank
                 | DPlus | D
                 | EPlus | E | EMinus
 instance _b_ :: Show Rank where
-  show = case _ of
-    Unknown       -> ""
-    EX            -> " EX"
-    APlusPlus     -> " A++"
-    APlus         -> " A+"
-    A             -> " A"
-    AMinus        -> " A-"
-    BPlusPlus     -> " B++"
-    BPlus         -> " B+"
-    B             -> " B"
-    BMinus        -> " B-"
-    CPlusPlus     -> " C++"
-    CPlus         -> " C+"
-    C             -> " C"
-    CMinus        -> " C-"
-    DPlus         -> " D+"
-    D             -> " D"
-    EPlus         -> " E+"
-    E             -> " E"
-    EMinus        -> " E-"
+    show Unknown   = ""
+    show EX        = " EX"
+    show APlusPlus = " A++"
+    show APlus     = " A+"
+    show A         = " A"
+    show AMinus    = " A-"
+    show BPlusPlus = " B++"
+    show BPlus     = " B+"
+    show B         = " B"
+    show BMinus    = " B-"
+    show CPlusPlus = " C++"
+    show CPlus     = " C+"
+    show C         = " C"
+    show CMinus    = " C-"
+    show DPlus     = " D+"
+    show D         = " D"
+    show EPlus     = " E+"
+    show E         = " E"
+    show EMinus    = " E-"
 
 data Target = Someone
             | Self | Ally | Party | Enemy | Enemies | Others
@@ -538,36 +556,36 @@ allied _ = false
 possessiveAndSubject :: Target -> Tuple String String
 possessiveAndSubject = case _ of
     Someone       -> ""
-                   : ""
+                   ^ ""
     Self          -> " own"
-                   : " self"
+                   ^ " self"
     Ally          -> " one ally's"
-                   : " one ally"
+                   ^ " one ally"
     Party         -> " party's"
-                   : " party"
+                   ^ " party"
     Enemy         -> " one enemy's"
-                   : " one enemy"
+                   ^ " one enemy"
     Enemies       -> " all enemy"
-                   : " all enemies"
+                   ^ " all enemies"
     Others        -> " allies' (excluding self)"
-                   : " allies (excluding self)"
+                   ^ " allies (excluding self)"
     AlliesType t  -> " " <> show t <> " allies'"
-                   : " " <> show t <> " allies"
+                   ^ " " <> show t <> " allies"
     EnemyType t   -> " one " <> show t <> " enemy's"
-                   : " one " <> show t <> " enemy"
+                   ^ " one " <> show t <> " enemy"
     EnemiesType t -> " all " <> show t <> " enemy"
-                   : " all " <> show t <> " enemies"
+                   ^ " all " <> show t <> " enemies"
     Killer        -> " killer's"
-                   : " killer"
+                   ^ " killer"
     Target        -> " target's"
-                   : " target"
+                   ^ " target"
 
 data RangeInfo = RangeInfo Boolean Number Number
 instance _i_ :: Show RangeInfo where
-  show (RangeInfo true  from to) = places 2 from <> "% ~ " <> places 2 to <> "%"
-  show (RangeInfo false from to) = places 2 from <>  " ~ " <> places 2 to
+    show (RangeInfo true  from to) = places 2 from <> "% ~ " <> places 2 to <> "%"
+    show (RangeInfo false from to) = places 2 from <>  " ~ " <> places 2 to
 instance _j_ :: Eq RangeInfo where
-  eq (RangeInfo _ a1 a2) (RangeInfo _ b1 b2) = a1 == b1 && a2 == b2
+    eq (RangeInfo _ a1 a2) (RangeInfo _ b1 b2) = a1 == b1 && a2 == b2
 
 ranges :: ∀ f. Alternative f => Bind f => f SkillEffect -> f RangeInfo
 ranges = bindFlipped toInfo
@@ -579,11 +597,11 @@ ranges = bindFlipped toInfo
     acc (To _ _ x) = go x
     acc (Bonus _ x) = go x
     acc (Chance _ ef) = acc ef
-    acc (Chances x y ef) = pure (Tuple (toNumber x) (toNumber y)) <|> acc ef
+    acc (Chances x y ef) = pure (toNumber x ^ toNumber y) <|> acc ef
     acc (When _ ef) = acc ef
     acc (Times _ ef) = acc ef
     acc (ToMax _ ef) = acc ef
-    go (x ~ y) = pure $ Tuple x y
+    go (x ~ y) = pure (x ^ y)
     go _ = empty
 
 type Skill = { name   :: String
@@ -601,61 +619,61 @@ derive instance _0_ :: G.Generic BuffEffect _
 derive instance _1_ :: Eq BuffEffect
 derive instance _2_ :: Ord BuffEffect
 instance _3_ :: G.Enum BuffEffect where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _4_ :: G.Bounded BuffEffect where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _5_ :: G.BoundedEnum BuffEffect where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum
 
 derive instance _8_ :: G.Generic DebuffEffect _
 derive instance _9_ :: Eq DebuffEffect
 derive instance _10_ :: Ord DebuffEffect
 instance _11_ :: G.Enum DebuffEffect where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _12_ :: G.Bounded DebuffEffect where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _13_ :: G.BoundedEnum DebuffEffect where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum
 
 derive instance _14_ :: G.Generic InstantEffect _
 derive instance _15_ :: Eq InstantEffect
 derive instance _16_ :: Ord InstantEffect
 instance _17_ :: G.Enum InstantEffect where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _18_ :: G.Bounded InstantEffect where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _19_ :: G.BoundedEnum InstantEffect where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum
 
 derive instance _20_ :: G.Generic BonusEffect _
 derive instance _21_ :: Eq BonusEffect
 derive instance _22_ :: Ord BonusEffect
 instance _23_ :: G.Enum BonusEffect where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _24_ :: G.Bounded BonusEffect where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _25_ :: G.BoundedEnum BonusEffect where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum
 
 derive instance _26_ :: G.Generic Target _
 instance _27_ :: Show Target where
-  show = G.genericShow
+    show = G.genericShow
 
 derive instance _30_ :: Eq Amount
 
@@ -663,17 +681,17 @@ derive instance _31_ :: G.Generic BuffCategory _
 derive instance _32_ :: Eq BuffCategory
 derive instance _33_ :: Ord BuffCategory
 instance _34_ :: G.Enum BuffCategory where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _35_ :: G.Bounded BuffCategory where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _36_ :: G.BoundedEnum BuffCategory where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum
 instance _37_ :: Show BuffCategory where
-  show = drop 4 <<< G.genericShow
+    show = drop 4 <<< G.genericShow
 
 derive instance _38_ :: Eq SkillEffect
 
@@ -681,15 +699,15 @@ derive instance _39_ :: Eq Rank
 derive instance _40_ :: Ord Rank
 derive instance _41_ :: G.Generic Rank _
 instance _42_ :: G.Enum Rank where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _43_ :: G.Bounded Rank where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _44_ :: G.BoundedEnum Rank where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum
 
 derive instance _46_ :: Ord RangeInfo
 derive instance _47_ :: G.Generic RangeInfo _

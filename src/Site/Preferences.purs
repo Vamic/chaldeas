@@ -1,3 +1,5 @@
+-- | Persistent user settings. Uses local 
+-- | [Web Storage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).
 module Site.Preferences
     ( Preference(..)
     , Preferences
@@ -37,10 +39,10 @@ data Preference
     | Thumbnails
 
 instance _a_ :: Show Preference where
-  show ExcludeSelf = "Exclude self-applied effects"
-  show MaxAscension = "Show all at max ascension"
-  show ShowTables = "Show skill and NP tables"
-  show x = unCamel $ G.genericShow x
+    show ExcludeSelf = "Exclude self-applied effects"
+    show MaxAscension = "Show all at max ascension"
+    show ShowTables = "Show skill and NP tables"
+    show x = unCamel $ G.genericShow x
 
 setPreference :: Preference -> Boolean -> Effect Unit
 setPreference pref set = window >>= localStorage
@@ -116,12 +118,12 @@ derive instance _0_ :: G.Generic Preference _
 derive instance _1_ :: Eq Preference
 derive instance _2_ :: Ord Preference
 instance _3_ :: G.Enum Preference where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _4_ :: G.Bounded Preference where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _5_ :: G.BoundedEnum Preference where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum

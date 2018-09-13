@@ -1,3 +1,7 @@
+-- | CHALDEAS has a "My Servants" feature for users to keep track of levels
+-- | and stats for particular Servants. This module defines the container for
+-- | such information, which is a `Database.Servant` wrapper with additional
+-- | user info.
 module Database.MyServant 
   ( MyServant(..), getBase
   , recalc
@@ -24,9 +28,9 @@ newtype MyServant = MyServant { base    :: Servant
                               , servant :: Servant
                               }
 instance _0_ :: Eq MyServant where
-  eq x y = eq (getBase x) (getBase y)
+    eq x y = eq (getBase x) (getBase y)
 instance _1_ :: Ord MyServant where
-  compare = compare `on` getBase
+    compare = compare `on` getBase
 
 getBase :: MyServant -> Servant
 getBase (MyServant {base}) = base
@@ -37,8 +41,9 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
         { stats    = s.stats{ base = calcStats, max = calcStats }
         , phantasm = s.phantasm
               { effect = mapAmount calcNP <$> s.phantasm.effect
-              , over   = if ms.level == 0 then s.phantasm.over 
-                          else mapAmount calcOver <$> s.phantasm.over
+              , over   = case ms.level of
+                             0 -> s.phantasm.over
+                             _ -> mapAmount calcOver <$> s.phantasm.over
               }
         , skills  = zipWith calcActives ms.skills s.skills 
         } 
@@ -52,18 +57,22 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
             3 -> 0.75 
             4 -> 0.875
             _ -> 1.0
-    calcOver minAmount maxAmount 
-      | ms.npLvl == 1 = Flat minAmount
-      | otherwise = Range minAmount $ minAmount + (maxAmount - minAmount) 
-                                    * (toNumber ms.npLvl - 1.0) / 4.0
+    calcOver minAmount maxAmount = case ms.npLvl of
+          1 -> Flat minAmount
+          _ -> Range minAmount $ minAmount 
+                              + (maxAmount - minAmount) 
+                              * (toNumber ms.npLvl - 1.0) 
+                              / 4.0
     calcActives lvl skill = skill { effect = mapAmount calc <$> skill.effect 
                                   , cd = skill.cd - (max 2 lvl - 2) / 4
                                   }
       where
-        calc minAmount maxAmount
-          | lvl == 10 = Flat maxAmount
-          | otherwise = Flat $ minAmount + (maxAmount - minAmount)
-                                         * (toNumber lvl - 1.0) / 10.0
+        calc minAmount maxAmount = case lvl of
+            10 -> Flat maxAmount
+            _  -> Flat $ minAmount 
+                       + (maxAmount - minAmount)
+                       * (toNumber lvl - 1.0) 
+                       / 10.0
 
 makeUnowned :: Servant -> MyServant
 makeUnowned servant@(Servant s) = MyServant 

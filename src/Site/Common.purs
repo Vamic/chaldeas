@@ -1,3 +1,4 @@
+-- | Utility rendering functions.
 module Site.Common where
 
 import Prelude
@@ -44,7 +45,7 @@ noBreakName doPrettify = doPrettify ? prettify <<<
     unBreak xs     = joinWith "(" xs
 
 fileName :: String -> String
-fileName = filterOut [':','/','?']
+fileName = filterOut (Pattern "?:/")
 mode :: Preferences -> String
 mode prefs
   | getPreference prefs NightMode = "dark"
@@ -58,7 +59,7 @@ toCell isPercent = _td <<< (isPercent ? flip append "%") <<<
                    toString <<< roundTo 2
 
 urlName :: String -> String
-urlName = filterOut [' ',' ']
+urlName = filterOut (Pattern "  ")
 
 ----------------
 -- ABBREVIATIONS
@@ -121,9 +122,11 @@ _int ifFail minVal maxVal actualVal changed =
       , P.min   $ toNumber minVal
       , P.max   $ toNumber maxVal
       , P.step  $ P.Step 1.0
-      , E.onValueInput <<< E.input $ \val -> case fromString val of
-          Just intVal | intVal >= minVal && intVal <= maxVal -> changed intVal
-          _ -> ifFail
+      , E.onValueInput <<< E.input $ \val -> 
+            case fromString val of
+                Just intVal 
+                  | intVal >= minVal && intVal <= maxVal -> changed intVal
+                _ -> ifFail
       ]
     , H.text $ "/" <> show maxVal
     ]

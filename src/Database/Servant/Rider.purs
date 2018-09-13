@@ -160,7 +160,7 @@ riders = Servant <$>
               }
   , gen:      { starWeight: 205, starRate: 8.8, npAtk: 0.66, npDef: 3 }
   , hits:     { quick: 3, arts: 2, buster: 1, ex: 6 }
-  , traits:   [Male, Brynhild, Divine, GreekMyth, King, Riding, EnumaElish]
+  , traits:   [Male, Brynhild, Divine, GreekMythMale, King, Riding, EnumaElish]
   , death:    40.0
   , align:    [Neutral, Good]
   , limited:  true
@@ -856,7 +856,7 @@ riders = Servant <$>
               }
   , gen:      { starWeight: 205, starRate: 9.0, npAtk: 0.86, npDef: 3 }
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
-  , traits:   [Male, Riding, Divine, EnumaElish, GreekMyth, King]
+  , traits:   [Male, Riding, Divine, EnumaElish, GreekMythMale, King]
   , death:    40.0
   , align:    [Neutral, Good]
   , limited:  false

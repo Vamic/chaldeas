@@ -4,8 +4,8 @@
     "bower": "bower install",
     "clean": "rimraf output && rimraf .pulp-cache",
     "test":  "pulp test",
-    "repl": "pulp repl",
-    "devel": "bower install && pulp build --no-check-main --modules Export -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && purs bundle \"output/*/*.js\" -o js/chaldeas.js --main Main --module Main --module Export",
+    "repl":  "pulp repl",
+    "dev":   "bower install && pulp build --no-check-main --modules Export -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && purs bundle \"output/*/*.js\" -o js/chaldeas.js --main Main --module Main --module Export",
     "build": "bower install && pulp build --no-check-main --modules Export -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && purs bundle \"output/*/*.js\" -o js/chaldeas.js --main Main --module Main --module Export && uglifyjs js/chaldeas.js -c -m -o js/chaldeas.js"
   },
   "devDependencies": {

@@ -1,7 +1,10 @@
+-- | The user interface for Craft Essences. 
+-- This module is only for functions that render Craft Essences to HTML.
+-- Everything else goes in `Database.CraftEssence`.
 module Site.CraftEssences.Component (Query, Message(..), comp) where
 
 import Prelude
-import Operators (enumArray, (?))
+import Operators (enumArray, (?), (^))
 
 import Halogen.HTML            as H
 import Halogen.HTML.Properties as P
@@ -76,7 +79,7 @@ comp initialFilt initialFocus initialPrefs today = component
   render st = modal st.prefs st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ M.toUnfoldableUnordered st.prefs <#> \(Tuple k v) -> 
+        , H.form_ $ M.toUnfoldableUnordered st.prefs <#> \(k ^ v) -> 
           H.p [_click <<< SetPref k $ not v] $ _checkbox (show k) v
         , _h 1 "Sort by"
         , H.form_ $ enumArray <#> \sort -> 
@@ -108,8 +111,8 @@ comp initialFilt initialFocus initialPrefs today = component
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
-      filterSection (Tuple _ []) = []
-      filterSection (Tuple tab filts) = 
+      filterSection (_ ^ []) = []
+      filterSection (tab ^ filts) = 
           [ _h 3 $ show tab
           , H.form_ $ filts <#> \filt -> 
             H.p [_click $ Toggle filt ] <<< _checkbox (show filt) $
@@ -161,7 +164,7 @@ comp initialFilt initialFocus initialPrefs today = component
 
 portrait :: ∀ a. Boolean -> Boolean -> Tuple String CraftEssence
          -> HTML a (Query Unit)
-portrait big artorify (Tuple lab ce'@(CraftEssence ce)) = H.div meta
+portrait big artorify (lab ^ ce'@(CraftEssence ce)) = H.div meta
     [ _img $ "img/CraftEssence/" <> fileName ce.name <> ".png"
     , H.header_ <<< (lab /= "") ? append [_span $ noBreakName big lab, H.br_] $
       [ _span <<< noBreakName big <<< artorify ? doArtorify $ ce.name ]
@@ -181,7 +184,7 @@ modal prefs
     [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true (getPreference prefs Artorify) $ Tuple "" ce'
+      [ portrait true (getPreference prefs Artorify) ("" ^ ce')
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]

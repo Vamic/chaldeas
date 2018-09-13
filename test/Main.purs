@@ -1,7 +1,29 @@
+-- | Tests the database against [GrandOrder.Wiki](grandorder.wiki). 
+-- |
+-- | When running the tests, the following command line arguments are accepted:
+-- | `--ce <amount>` to limit the number of Craft Essences tested,
+-- | `--s <amount>` to limit the number of Servants tested.
+-- |
+-- | Currently tested: 
+-- |
+-- | Craft Essences: 
+-- | id, max atk, max hp, min atk, min hp, rarity, icon type, limited
+-- |
+-- | Servants: 
+-- | NP effects, NP overcharge effects, NP commandcard, NP icon, NP hitcount,
+-- | id, class, rarity, attribute, alignment, death resist, 
+-- | status (limited/welfare/etc.), 
+-- | min atk, max atk, min hp, max hp, grail atk, grail hp, 
+-- | quick hitcount, arts hitcount, buster hitcount, extra hitcount, 
+-- | star absorption, star generation, np charge/attack, np charge/defense 
+-- |
+-- | Skills:
+-- | cooldown, value ranges, effects 
+
 module Test.Main where
 
 import Prelude
-import Operators (maybeDo, (:))
+import Operators (maybeDo, (^))
 
 import Effect.Aff     as Aff
 import Data.Array     as Array
@@ -48,7 +70,8 @@ main = Yargs.runY (usage <> example) $ app
 
 app :: Int -> Int -> Effect Unit
 app ce servant = Console.log msg *> Aff.launchAff_ do
-    skills <- Map.fromFoldable <$> traverse wiki (servants >>= skillRanks)
+    skills <- map Map.fromFoldable <<< traverse wiki <<< Array.nubEq $ 
+              servants >>= skillRanks
     stats  <- traverse (wiki <<< Tuple Unranked) servants
     nps    <- traverse (wiki <<< addRank npRank) servants
     ces    <- traverse (wiki <<< Tuple Unranked) (maybeTake ce DB.craftEssences)
@@ -72,7 +95,8 @@ wikiMatch mw k obj = test k $ case wikiLookup mw k of
     Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "].") $
                obj `Array.elem` v
     Nothing -> failure $ "Missing property " <> k <> " in " <> show mw 
-            <> Maybe.maybe "" (append ": ") (wikiLookup mw "err" >>= Array.head)
+                       <> Maybe.maybe "" (append ": ") 
+                          (wikiLookup mw "err" >>= Array.head)
 
 
 wikiHas :: Wiki -> String -> String -> Boolean
@@ -80,7 +104,7 @@ wikiHas mw k obj = Maybe.maybe false (Array.elem obj <<< map String.toLower) $
                    wikiLookup mw k
 
 testCraftEssence :: Tuple DB.CraftEssence Wiki -> TestSuite
-testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
+testCraftEssence (DB.CraftEssence ce ^ mw) = suite ce.name do
     match "id"      <<< prId $ Int.toNumber ce.id
     match "maxatk"    $ show ce.stats.max.atk
     match "maxhp"     $ show ce.stats.max.hp
@@ -99,12 +123,12 @@ testCraftEssence (Tuple (DB.CraftEssence ce) mw) = suite ce.name do
                               }
 
 shouldMatch :: ∀ a. Eq a => Show a => Array a -> Array a -> Test
-shouldMatch x y = case wiki : db of
-    [] : [] -> success
-    xs : [] -> failure $ "Missing from Wiki: " <> showAll xs <> "."
-    [] : ys -> failure $ "Missing from DB: "   <> showAll ys <> "."
-    xs : ys -> failure $ "Missing from Wiki: " <> showAll xs <> "."
-                      <> "Missing from DB: "   <> showAll ys <> "."
+shouldMatch x y = case (wiki ^ db) of
+    ([] ^ []) -> success
+    (xs ^ []) -> failure $ "Missing from Wiki: " <> showAll xs <> "."
+    ([] ^ ys) -> failure $ "Missing from DB: "   <> showAll ys <> "."
+    (xs ^ ys) -> failure $ "Missing from Wiki: " <> showAll xs <> "."
+                        <> "Missing from DB: "   <> showAll ys <> "."
 {-
     test "Wiki" <<< beNull $ Array.nubEq x \\ Array.nubEq y
     test "DB"   <<< beNull $ Array.nubEq y \\ Array.nubEq x
@@ -115,7 +139,7 @@ shouldMatch x y = case wiki : db of
     showAll = String.joinWith "," <<< map show
 
 testServant :: Tuple DB.Servant Wiki -> TestSuite
-testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Info") do
+testServant (DB.Servant s ^ mw) = suite (s.name <> ": Info") do
     suite "Profile" do
         match "id"            <<< prId $ Int.toNumber s.id
         match "class"           $ show s.class
@@ -169,7 +193,7 @@ testServant (Tuple (DB.Servant s) mw) = suite (s.name <> ": Info") do
                               }
 
 testNP :: Tuple DB.Servant Wiki -> TestSuite
-testNP (Tuple (DB.Servant s) mw) = suite (s.name <> ": NP") do
+testNP (DB.Servant s ^ mw) = suite (s.name <> ": NP") do
       test "Primary Effects" do
           shouldMatch (effects s.phantasm.effect) $ 
               wikiRange mw "effect" (0..6) >>= readEffect

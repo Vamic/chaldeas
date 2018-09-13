@@ -110,13 +110,32 @@
         ; position: relative
         ; left: -10px
         }
-      article table#phantasm
+      article table#phantasm, article table#calc
         { width: 100% 
         ; padding-right: 10px
         }
+      #phantasm table
+        { margin-bottom: 5px }
       #phantasm th
         { width: 104px 
         ; vertical-align: text-top
+        }
+      #calc
+        { padding-left: 10px 
+        ; table-layout: fixed
+        }
+      #calc h3
+        { text-align: center 
+        ; text-transform: uppercase
+        }
+      #calc th
+        { text-align: right
+        ; width: 135px
+        }
+      #calc td
+        { text-align: right }
+      #calc th:first-child
+        { min-width: 6em
         }
       body > div:last-child
         { display: flex
@@ -272,10 +291,6 @@
         ; border-top-color: #444444
         ; box-shadow: 0 0px 10px rgba(0,0,0,0.5)
         }
-      td:first-child 
-        { padding-right: 0.5em
-        ; font-weight: bold
-        }
       article section
         { padding: 0 10px }
       article h2 
@@ -328,39 +343,37 @@
         ; width: 35px
         ; margin: 1px 6px 0 1px
         }
-      article section table, table table
+      article section table, #phantasm table
         { table-layout: fixed
         ; margin-top: 3px
         ; border-spacing: 0
         }
-      .light article section table, .light table table, .light #myservant
+      .light article section table, .light #phantasm table, .light #myservant
         { background-color: #eeeeee
         ; border: 1px solid #dddddd
         }
-      .dark article section table, .dark table table, .dark #myservant
+      .dark article section table, .dark #phantasm table, .dark #myservant
         { background-color: #111111
         ; border: 1px solid #181818
         }
       article section table
         { width: 100% }
       .light article section table col:nth-child(even)
-      ,         .light table table col:nth-child(even)
+      ,         .light #phantasm table col:nth-child(even)
         { background-color: #dddddd }
       .dark > article section table col:nth-child(even)
-      ,           .dark table table col:nth-child(even)
+      ,           .dark #phantasm table col:nth-child(even)
         { background-color: #181818 }
       article section table td
         { padding: 2px 0 }
-      .light article section table th, .light table table th
+      .light article section table th, .light #phantasm table th
         { border-bottom: 1px solid #cccccc }
-      .dark article section table th, .dark table table th
+      .dark article section table th, .dark #phantasm table th
         { border-bottom: 1px solid #222222 }
-      article section td:first-child, table table td:first-child
+      article section td:first-child, #phantasm table td:first-child
         { font-weight: inherit }
       aside form
         { margin-bottom: 6px }
-      .trait::after                   { content: ", " }
-      .trait:last-child::after        { content: none }
       .activates p:first-child::after { content: " [Activates first]" }
       .demerit::after                 { content: " [Demerit]" }
       @media (max-device-width: 800px) 
@@ -372,6 +385,7 @@
           form p                        { margin-left: 15px }
           article .portrait header span { font-size: 11px }
           article table#phantasm        { width: auto }
+          article table#calc            { width: auto }
           #phantasm th                  { width: initial }
           aside p input
             { position: relative

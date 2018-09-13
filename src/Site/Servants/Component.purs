@@ -1,3 +1,6 @@
+-- | The user interface for Servants and My Servants.
+-- This module is only for functions that render Servants to HTML.
+-- Everything else goes in `Database.Servant` and `Database.MyServant`.
 module Site.Servants.Component (Query, Message(..), comp) where
 
 import Prelude
@@ -19,7 +22,6 @@ import Effect.Class
 import Halogen.HTML (HTML)
 import Routing.Hash
 
-import Printing
 import Database
 import Database.MyServant
 import Site.Common
@@ -130,9 +132,9 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
         | pref MaxAscension = 4
         | otherwise         = 1
       allFilters'
-        | st.mineOnly = allFilters <#> \(Tuple tab filts) 
-                                    -> Tuple tab $ filter (\(Filter _ _ f) 
-                                    -> any (f false <<< getBase) st.team) filts
+        | st.mineOnly = allFilters <#> \(Tuple tab filts) -> 
+                        Tuple tab $ filter (\(Filter _ _ f) ->
+                        any (f false <<< getBase) st.team) filts
         | otherwise   = allFilters
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
@@ -250,7 +252,6 @@ modal prefs ascent (Just ms')= H.div
         , H.tr_ [ _th "Grail", _td $ places' grail.atk, _td $ places' grail.hp ]
         ]
       , _table ["", "Q", "A", "B", "EX", "NP"]
-
         [ H.tr_
           [ _th "Hits"
           , _td $ show s.hits.quick
@@ -267,15 +268,16 @@ modal prefs ascent (Just ms')= H.div
                               find (\t -> has t false s') 
                               [SingleTarget, MultiTarget]
                             ]
-        , _tr "Alignment"   $ alignBox s.align
         , _tr "Attribute"   $ [ link FilterAttribute s.attr ]
+        , _tr "Alignment"   $ alignBox s.align
+        , _tr "ID"          <<< _txt $ "#" <> show s.id
         , _tr "Star Weight" <<< _txt $ show s.gen.starWeight
         , _tr "Star Rate"   <<< _txt $ show s.gen.starRate <> "%"
         , _tr "NP/Hit"      <<< _txt $ show s.gen.npAtk <> "%"
         , _tr "NP/Defend"   <<< _txt $ show s.gen.npDef <> "%"
-        --, _tr "Death Rate"  <<< _txt $ show s.death
-        , _tr "Stars/Quick" <<< _txt $ places 2 (starsPerQuick s')
-        , _tr "NP/Arts"     <<< _txt $ places 2 (npPerArts s') <> "%"
+        , _tr "Death Rate"  <<< _txt $ show s.death
+        --, _tr "Stars/Quick" <<< _txt $ places 2 (starsPer s' Quick)
+        --, _tr "NP/Arts"     <<< _txt $ places 2 (npPer s' Arts) <> "%"
         ]
       , H.form [_i "myservant"] myServantBox
       , _h 2 "Noble Phantasm"
@@ -305,7 +307,42 @@ modal prefs ascent (Just ms')= H.div
       [ _h 2 "Max-Bond Craft Essence"
       , bondEl $ getBond s'
       , _h 2 "Traits"
-      , H.section_ $ traitEl <$> s.traits
+      , H.section_ <<< intersperse (H.text ", ") $ link FilterTrait <$> s.traits
+      , _h 2 "Calculator"
+      , H.table [_i "calc"]
+        [ H.tr_
+          [ H.td_
+            [ _h 3 "NP Generation"
+            , H.table_
+              [ _tr "Per Arts card" <<< _txt $ calc NPArts
+              , _tr "Per full deck" <<< _txt $ calc NPDeck
+              ]
+            ]
+          , H.td_
+            [ _h 3 "NP Damage"
+            , H.table_
+              [ _tr "100% Overcharge" <<< _txt $ calc NPDmg
+              , _tr "500% Overcharge" <<< _txt $ calc NPDmgOver
+              ]
+            ]
+          ]
+        , H.tr_
+          [ H.td_
+            [ _h 3 "Star Generation"
+            , H.table_
+              [ _tr "Per Quick card" <<< _txt $ calc StarQuick
+              , _tr "Per full deck"  <<< _txt $ calc StarDeck
+              ]
+            ]
+          , H.td_
+            [ _h 3 "NP Special Damage"
+            , H.table_
+              [ _tr "100% Overcharge" <<< _txt $ calc NPSpec
+              , _tr "500% Overcharge" <<< _txt $ calc NPSpecOver
+              ]
+            ]
+          ]
+        ]
       ]
     ]
   where
@@ -332,32 +369,35 @@ modal prefs ascent (Just ms')= H.div
                                   , link FilterAlignment d
                                   ]
     alignBox xs = xs >>= \x -> [link FilterAlignment x, H.text " "]
+    calc sort = formatSort sort $ toSort sort s'
     skillBox (Tuple {icon} lvl) i = 
         [ H.td_ [_img $ "img/Skill/" <> show icon <> ".png"]
         , H.td_ $ _mInt 1 10 lvl \val -> 
           alter _{ skills = maybeDo (updateAt i val) ms.skills }
         ]
-    myServantBox
-      | ms.level == 0 = 
-            [ _a "+Add to My Servants" <<< OnTeam true $ newServant s' ]
-      | otherwise = 
-            [ H.table_
-              [ H.tr_
-                [ H.td_ [_strong "Level:"]
-                , H.td_ $ _mInt 1 100 ms.level   \val -> alter _{level = val}
-                , H.td_ [_strong "NP:"]
-                , H.td_ $ _mInt 1 5 ms.npLvl     \val -> alter _{npLvl = val}
-                , H.td_ [_strong "+ATK:"]
-                , H.td_ $ _mInt 0 990 ms.fou.atk \val -> alter _{fou{atk = val}}
-                , H.td_ [_strong "+HP:"]
-                , H.td_ $ _mInt 0 990 ms.fou.hp  \val -> alter _{fou{hp = val}}
-                ]
-              , H.tr_ <<< append 
-                [ H.td_ [ _a "Delete" <<< OnTeam false $ unowned s' ]
-                , H.td_ [_strong "Skills:"]
-                ] <<< join $ zipWith skillBox (zip s.skills ms.skills) (0..2)
-              ]
-            ]
+    myServantBox = case ms.level of
+        0 -> [ _a "+Add to My Servants" <<< OnTeam true $ newServant s' ]
+        _ -> [ H.table_
+               [ H.tr_
+                 [ H.td_ [_strong "Level:"]
+                 , H.td_ $ _mInt 1 100 ms.level \val ->
+                       alter _{ level = val }
+                 , H.td_ [_strong "NP:"]
+                 , H.td_ $ _mInt 1 5 ms.npLvl \val -> 
+                       alter _{ npLvl = val }
+                 , H.td_ [_strong "+ATK:"]
+                 , H.td_ $ _mInt 0 990 ms.fou.atk \val -> 
+                       alter _{ fou { atk = val } }
+                 , H.td_ [_strong "+HP:"]
+                 , H.td_ $ _mInt 0 990 ms.fou.hp \val -> 
+                       alter _{ fou { hp = val } }
+                 ]
+               , H.tr_ <<< append 
+                 [ H.td_ [ _a "Delete" <<< OnTeam false $ unowned s' ]
+                 , H.td_ [_strong "Skills:"]
+                 ] <<< join $ zipWith skillBox (zip s.skills ms.skills) (0..2)
+               ]
+             ] 
 
 skillEl :: ∀ a. Boolean -> Skill -> Skill -> HTML a (Query Unit)
 skillEl showTables active@{name, icon, cd, rank, effect} base = 
@@ -400,12 +440,6 @@ effectEl ef
   | otherwise  = H.p (maybe [] meta $ skillFilter ef) <<< _txt $ show ef
   where
     meta filt = [_c "link", _click $ FilterBy [filt]]
-
-traitEl :: ∀ a. Trait -> HTML a (Query Unit)
-traitEl trait = 
-    H.a 
-    [_c "trait link", _click <<< FilterBy $ singleFilter FilterTrait trait]   
-    [H.text $ show trait]
 
 npRow :: ∀ a b. RangeInfo -> HTML a b
 npRow (RangeInfo isPercent x y) = 

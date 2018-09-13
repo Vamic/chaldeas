@@ -1,3 +1,7 @@
+-- | Parses text into game data. Stores specific game information like 
+-- | "what does 'Reduces one enemy's Critical Rate' mean" and
+-- | "which skills of which Servants are unique to them 
+-- | (e.g. Hyde's Monstrous Strength)."
 module Test.Parse 
   ( translate
   , printIcon
@@ -8,7 +12,7 @@ module Test.Parse
   ) where
 
 import Prelude
-import Operators (filterOut, (:))
+import Operators (filterOut, (^))
 import Printing (prettify)
 import Database (SkillEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), craftEssences)
 
@@ -18,7 +22,7 @@ import Data.Generic.Rep.Show (genericShow)
 import Data.Maybe (fromMaybe)
 import Data.String (Pattern(..))
 import Data.String as S
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple)
 
 import Test.Base (MaybeRank(..), RankedSkill(..))
 
@@ -35,16 +39,16 @@ npRank (Servant s) = (if s.name `elem` upgradeNP then Upgrade else Pure)
 
 upgradeSkill :: Array (Tuple String String)
 upgradeSkill = 
-    [ "Tamamo-no-Mae": "Fox's Wedding"
+    [ "Tamamo-no-Mae" ^ "Fox's Wedding"
     ]
 
 uniqueSkill :: Array (Tuple String String)
 uniqueSkill = 
-    [ "Brynhild": "Primordial Rune"
-    , "Scathach": "Primordial Rune"
-    , "Euryale":  "Whim of the Goddess"
-    , "Stheno":   "Whim of the Goddess"
-    , "Henry Jekyll & Hyde": "Monstrous Strength"
+    [ "Brynhild" ^ "Primordial Rune"
+    , "Scathach" ^ "Primordial Rune"
+    , "Euryale"  ^ "Whim of the Goddess"
+    , "Stheno"   ^ "Whim of the Goddess"
+    , "Henry Jekyll & Hyde" ^ "Monstrous Strength"
     ]
 
 ceNames :: Array String
@@ -53,8 +57,8 @@ ceNames = show <$> craftEssences
 skillRanks :: Servant -> Array (Tuple MaybeRank RankedSkill)
 skillRanks s'@(Servant s) = tuplify <<< go <$> s.skills
   where
-    tuplify ranked@(RankedSkill _ rank) = Tuple rank ranked
-    flagged x = elem (s.name : x.name)
+    tuplify ranked@(RankedSkill _ rank) = (rank ^ ranked)
+    flagged x = elem (s.name ^ x.name)
     go x
       | x.name `elem` ceNames    = RankedSkill x { name = x.name <> " (Skill)" } 
                                                  $ Pure x.rank
@@ -162,7 +166,7 @@ readEffect :: String -> Array String
 readEffect effect = go 
   where
     words = S.split (Pattern " ") <<< S.trim <<< 
-            filterOut ['.','|','[',']','#'] $ S.toLower effect
+            filterOut (Pattern ".|[]#") $ S.toLower effect
     inWords x = elem x words || elem (x <> "s") words 
     match xs = all (any inWords <<< synonyms) xs
     synonyms word = fromMaybe [word] $ find (elem word) synonym

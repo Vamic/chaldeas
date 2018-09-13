@@ -1,6 +1,8 @@
 module Site.Servants.Sorting
   ( SortBy(..)
+  , toSort
   , getSort
+  , formatSort
   )where
 
 import Prelude
@@ -9,6 +11,7 @@ import Generic as G
 import Data.Map as M
 
 import Data.Array
+import Data.Foldable (sum)
 import Data.Int
 import Data.Maybe
 import Data.Map (Map, isEmpty)
@@ -27,20 +30,24 @@ data SortBy
     | HP
     | StarWeight
     | NPArts
+    | NPDeck
     | StarQuick
+    | StarDeck
     | NPDmg
     | NPDmgOver
     | NPSpec
     | NPSpecOver
 
 instance _a_ :: Show SortBy where
-  show NPArts     = "NP Gain per Arts card"
-  show StarQuick  = "Stars per Quick card"
-  show NPDmg      = "NP Damage"
-  show NPDmgOver  = "NP Damage + Overcharge"
-  show NPSpec     = "NP Special Damage"
-  show NPSpecOver = "NP Special + Overcharge"
-  show x          = unCamel $ G.genericShow x
+    show NPArts     = "NP Gain per Arts card"
+    show NPDeck     = "NP Gain per full deck"
+    show StarQuick  = "Stars per Quick card"
+    show StarDeck   = "Stars per full deck"
+    show NPDmg      = "NP Damage"
+    show NPDmgOver  = "NP Damage + Overcharge"
+    show NPSpec     = "NP Special Damage"
+    show NPSpecOver = "NP Special + Overcharge"
+    show x          = unCamel $ G.genericShow x
 
 toSort :: SortBy -> Servant -> Number
 toSort ID         (Servant s) = negate $ toNumber s.id
@@ -48,12 +55,21 @@ toSort Rarity     (Servant s) = toNumber s.rarity
 toSort ATK        (Servant s) = toNumber s.stats.max.atk
 toSort HP         (Servant s) = toNumber s.stats.max.hp
 toSort StarWeight (Servant s) = toNumber s.gen.starWeight
-toSort NPArts              s  = npPerArts s
-toSort StarQuick           s  = starsPerQuick s
+toSort NPArts              s  = npPer s Arts
+toSort NPDeck              s  = sum $ npPer s <$> getDeck s
+toSort StarQuick           s  = starsPer s Quick
+toSort StarDeck            s  = sum $ starsPer s <$> getDeck s
 toSort NPDmg               s  = npDamage false false s
 toSort NPDmgOver           s  = npDamage false true s
 toSort NPSpec              s  = npDamage true false s
 toSort NPSpecOver          s  = npDamage true true s
+
+formatSort :: SortBy -> Number -> String
+formatSort NPArts    = flip append "%" <<< places 2
+formatSort NPDeck    = flip append "%" <<< places 2
+formatSort StarQuick = places 2
+formatSort StarDeck  = places 2
+formatSort _         = places 0
 
 doSort :: SortBy -> Array MyServant -> Array (Tuple String Servant)
 doSort Rarity = map (Tuple "") <<< sortWith sorter <<< map getBase
@@ -65,12 +81,8 @@ doSort x = map showSort <<< sortWith sorter
     showSort
       | x `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \ms'@(MyServant ms) -> 
           flip Tuple (getBase ms') $
-          "NP" <> show ms.npLvl <> ": " <> (output <<< abs $ sorter ms')
-      | otherwise = output <<< abs <<< sorter &&& getBase
-    output = case x of
-        NPArts    -> flip append "%" <<< places 2
-        StarQuick -> places 2
-        _         -> places 0
+          "NP" <> show ms.npLvl <> ": " <> (formatSort x <<< abs $ sorter ms')
+      | otherwise = formatSort x <<< abs <<< sorter &&& getBase
 
 sorted :: Map SortBy (Array (Tuple String Servant))
 sorted = M.fromFoldable $ go <$> enumArray
@@ -90,12 +102,12 @@ derive instance _7_ :: G.Generic SortBy _
 derive instance _8_ :: Eq SortBy
 derive instance _9_ :: Ord SortBy
 instance _11_ :: G.Enum SortBy where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _12_ :: G.Bounded SortBy where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _13_ :: G.BoundedEnum SortBy where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum

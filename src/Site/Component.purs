@@ -1,3 +1,5 @@
+-- | A simple Halogen parent component of `Site.Servants.Component` and 
+-- | `Site.CraftEssences.Component`.
 module Site.Component where
 
 import Prelude

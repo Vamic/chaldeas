@@ -1,10 +1,12 @@
-module Printing where
+-- | Helper functions for converting numbers to Strings.
+module Printing (places, roundTo, prettify) where
 
 import Prelude
 import Data.Formatter.Number
 import Data.Int (pow, toNumber)
 import Math (round)
 
+-- | Prints a `Number` with some number of decimal places.
 places :: Int -> Number -> String
 places x = format $ Formatter { comma: true
                               , before: 0
@@ -13,10 +15,12 @@ places x = format $ Formatter { comma: true
                               , sign: false
                               }
 
+-- | Rounds a `Number` to some decimal precision.
 roundTo :: Int -> Number -> Number
 roundTo x = (_ / zeroes) <<< round <<< (_ * zeroes)
   where zeroes = toNumber $ pow 10 x
 
+-- | Adds in fancy diacritics to Servant and Craft Essence names.
 prettify :: String -> String
 prettify "Fergus mac Roich" = "Fergus mac Róich"
 prettify "Mugashiki—Shinkuu Myou" = "Mugashiki—Shinkuu Myōu"

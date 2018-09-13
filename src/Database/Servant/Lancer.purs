@@ -825,7 +825,7 @@ lancers = Servant <$>
               }
   , gen:      { starWeight: 90, starRate: 12.2, npAtk: 1.08, npDef: 4 }
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
-  , traits:   [Male, Riding, EnumaElish, GreekMyth]
+  , traits:   [Male, Riding, EnumaElish, GreekMythMale]
   , death:    28.0
   , align:    [Lawful, Balanced]
   , limited:  false

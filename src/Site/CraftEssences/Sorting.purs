@@ -26,7 +26,7 @@ data SortBy
     | HP
 
 instance _a_ :: Show SortBy where
-  show = G.genericShow
+    show = G.genericShow
 
 toSort :: SortBy -> CraftEssence -> Number
 toSort ID     (CraftEssence ce) = negate $ toNumber ce.id
@@ -38,7 +38,7 @@ doSort :: SortBy -> Array CraftEssence -> Array (Tuple String CraftEssence)
 doSort Rarity = map showSort <<< sortWith sorter
   where
     sorter (CraftEssence ce) = show (5 - ce.rarity) <> ce.name
-    showSort ce'@(CraftEssence ce) = Tuple (fromMaybe "" ce.bond) ce'
+    showSort ce'@(CraftEssence ce) = (fromMaybe "" ce.bond ^ ce')
 doSort x = map showSort <<< sortWith sorter
   where
     sorter   = toSort x
@@ -48,7 +48,7 @@ doSort x = map showSort <<< sortWith sorter
 sorted :: Map SortBy (Array (Tuple String CraftEssence))
 sorted = M.fromFoldable $ go <$> enumArray
   where
-    go sorter = Tuple sorter $ doSort sorter craftEssences
+    go sorter = (sorter ^ doSort sorter craftEssences)
 
 getSort :: SortBy -> Array (Tuple String CraftEssence)
 getSort sorter = fromMaybe [] $ M.lookup sorter sorted
@@ -61,12 +61,12 @@ derive instance _7_ :: G.Generic SortBy _
 derive instance _8_ :: Eq SortBy
 derive instance _9_ :: Ord SortBy
 instance _11_ :: G.Enum SortBy where
-  succ = G.genericSucc
-  pred = G.genericPred
+    succ = G.genericSucc
+    pred = G.genericPred
 instance _12_ :: G.Bounded SortBy where
-  top = G.genericTop
-  bottom = G.genericBottom
+    top = G.genericTop
+    bottom = G.genericBottom
 instance _13_ :: G.BoundedEnum SortBy where
-  cardinality = G.genericCardinality
-  toEnum = G.genericToEnum
-  fromEnum = G.genericFromEnum
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum

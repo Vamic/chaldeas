@@ -315,7 +315,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 10, starRate: 5.0, npAtk: 1.07, npDef: 5 }
   , hits:     { quick: 2, arts: 2, buster: 1, ex: 3 }
-  , traits:   [Male, Divine, EnumaElish, GreekMyth]
+  , traits:   [Male, Divine, EnumaElish, GreekMythMale]
   , death:    39.0
   , align:    [Chaotic, Mad]
   , limited:  false
@@ -747,7 +747,7 @@ berserkers = Servant <$>
               }
   , gen:      { starWeight: 9, starRate: 4.9, npAtk: 0.68, npDef: 5 }
   , hits:     { quick: 2, arts: 3, buster: 1, ex: 3 }
-  , traits:   [Male, EnumaElish, GreekMyth]
+  , traits:   [Male, EnumaElish, GreekMythMale]
   , death:    58.5
   , align:    [Chaotic, Evil]
   , limited:  false

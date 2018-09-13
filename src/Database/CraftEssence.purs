@@ -1,3 +1,7 @@
+-- | All Craft Essences.
+-- Unlike Servants, which are divided into multiple subfiles,
+-- Craft Essences are all included in this one file 
+-- along with their data model definition.
 module Database.CraftEssence
   ( class MatchCraftEssence, ceHas
   , CraftEssence(..)
@@ -10,13 +14,17 @@ import Data.Function.Memoize
 import Data.Int
 import Data.Maybe
 import Database.Base
-import Database.Icon
 import Database.Servant
 import Database.Skill
 import Prelude
 
 import Generic as G
 
+-- | All Craft Essences available in EN. 
+-- Note: Names _must_ be true to their EN localization. 
+-- GrandOrder.Wiki is only trustworthy for CEs that have been in the game
+-- for a while. Craft Essences introduced during events and the like should be
+-- checked against the official announcement.
 craftEssences :: Array CraftEssence
 craftEssences = CraftEssence <$>
 [ { name:     "Tenacity"
@@ -1353,7 +1361,7 @@ craftEssences = CraftEssence <$>
               , Debuff Self 0 DefenseDown $ Flat 15.0
               ]
   , bond:     Nothing
-  , limited :  true
+  , limited:  true
   }
 , { name:     "Summer's Precognition"
   , id:       160
@@ -2709,7 +2717,7 @@ newtype CraftEssence = CraftEssence { name     :: String
                                     }
 
 instance _0_ :: Show CraftEssence where
-  show (CraftEssence ce) = ce.name
+    show (CraftEssence ce) = ce.name
 
 getEffects :: CraftEssence -> Array SkillEffect
 getEffects (CraftEssence ce) = filter (not <<< demerit) $ simplify <$> ce.effect

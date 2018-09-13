@@ -1,4 +1,3 @@
-
 module Main (main) where
 
 import Prelude
@@ -13,6 +12,7 @@ import Site.Common
 import Site.Component
 import Site.Preferences
 
+-- | Runs the website interface.
 main :: Effect Unit
 main = do
     hash  <- getHash

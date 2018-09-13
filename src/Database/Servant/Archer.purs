@@ -222,7 +222,7 @@ archers = Servant <$>
               }
   , gen:      { starWeight: 153, starRate: 8.0, npAtk: 1.0, npDef: 3 }
   , hits:     { quick: 3, arts: 1, buster: 1, ex: 4 }
-  , traits:   [Male, GreekMyth, EnumaElish]
+  , traits:   [Male, GreekMythMale, EnumaElish]
   , death:    27.0
   , align:    [Chaotic, Balanced]
   , limited:  false

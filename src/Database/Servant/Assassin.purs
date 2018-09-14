@@ -324,7 +324,7 @@ assassins = Servant <$>
               , kind:   "Anti-Unit"
               , hits:   15
               , effect: [ To Enemy Damage $ 900.0 ~ 1500.0
-                        , To Enemy GaugeDown Full
+                        , To Enemy GaugeDown $ Flat 1.0
                         ]
               , over:   [ Debuff Enemy 3 CritChance $ 10.0 ~ 50.0 ]
               , first:  false

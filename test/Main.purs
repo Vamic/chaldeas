@@ -127,8 +127,8 @@ shouldMatch x y = case (wiki ^ db) of
     ([] ^ []) -> success
     (xs ^ []) -> failure $ "Missing from Wiki: " <> showAll xs <> "."
     ([] ^ ys) -> failure $ "Missing from DB: "   <> showAll ys <> "."
-    (xs ^ ys) -> failure $ "Missing from Wiki: " <> showAll xs <> "."
-                        <> "Missing from DB: "   <> showAll ys <> "."
+    (xs ^ ys) -> failure $ "Missing from Wiki: " <> showAll xs <> ". \
+                           \Missing from DB: "   <> showAll ys <> "."
 {-
     test "Wiki" <<< beNull $ Array.nubEq x \\ Array.nubEq y
     test "DB"   <<< beNull $ Array.nubEq y \\ Array.nubEq x

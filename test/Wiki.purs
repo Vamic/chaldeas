@@ -19,6 +19,7 @@ import Data.Maybe               as Maybe
 import Affjax.ResponseFormat    as ResponseFormat
 import Data.String              as String
 import Data.String.Regex        as Regex
+import Data.String.Regex.Flags  as Flags
 import Data.String.Regex.Unsafe as Unsafe
 
 import Control.MonadZero (guard)
@@ -35,14 +36,10 @@ import Test.Base (MaybeRank)
 import Test.Parse (translate)
 
 wikiLink :: Regex
-wikiLink = Unsafe.unsafeRegex """\[\[[^\|\]]+\|([^\]]+)\]\]""" mempty
+wikiLink = Unsafe.unsafeRegex """\[\[[^\|\]]+\|([^\]]+)\]\]""" Flags.global
 
 wikiTag :: Regex
-wikiTag = Unsafe.unsafeRegex """<[^\s>]>""" mempty
-
-sanitize :: String -> String
-sanitize = filterOut (Pattern "%,{}[]()'") <<< 
-           Regex.replace wikiLink "$1" <<< Regex.replace wikiTag " "
+wikiTag = Unsafe.unsafeRegex """<[^\s>]+>""" Flags.global
 
 wikiRoot :: String
 wikiRoot = "https://grandorder.wiki/index.php?action=raw&title="
@@ -57,8 +54,8 @@ wikiLookup (Wiki mw) = flip Map.lookup mw
 toWiki :: String -> MaybeRank -> Wiki
 toWiki text rank = 
     Wiki <<< Map.fromFoldable <<< Array.reverse <<< Array.catMaybes <<< 
-    map parseEntry <<< String.split (Pattern "|") <<< sanitize $
-    Maybe.fromMaybe text do 
+    map parseEntry <<< String.split (Pattern "|") <<< 
+    Regex.replace wikiLink "$1" $ Maybe.fromMaybe text do 
         fromStart <- splitAny After [show rank <> "="]     text
         toEnd     <- splitAny Before ["|-|","/onlyinclude"] fromStart
         pure toEnd
@@ -70,8 +67,8 @@ toWiki text rank =
         guard <<< not $ String.null before
         pure <<< Tuple (String.trim $ String.toLower before) <<< 
         Array.filter (not <<< String.null) $ 
-        maybeDo (String.stripPrefix $ Pattern "#tip-text:") <<<
-        String.trim <<< sanitize <<< 
+        maybeDo (String.stripPrefix $ Pattern "#tip-text:") <<< String.trim <<< 
+        filterOut (Pattern "%,{}[]()'") <<< Regex.replace wikiTag " " <<< 
         maybeDo (splitAny After  ["EN:"]) <<<
         maybeDo (splitAny Before ["}}","/"]) <<< 
         maybeDo (String.stripPrefix $ Pattern "=") <$> afterLines

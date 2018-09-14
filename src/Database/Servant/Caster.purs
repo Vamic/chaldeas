@@ -451,7 +451,7 @@ casters = Servant <$>
               , effect: [ To Enemies Damage $ 600.0 ~ 900.0
                         , Debuff Enemies 3 DefenseDown $ Flat 20.0
                         ]
-              , over:   [ Chances 60 100 $ To Enemies GaugeDown Full ]
+              , over:   [ Chances 60 100 <<< To Enemies GaugeDown $ Flat 1.0 ]
               , first:  false
               }
   , gen:      { starWeight: 50, starRate: 10.8, npAtk: 0.54, npDef: 3 }

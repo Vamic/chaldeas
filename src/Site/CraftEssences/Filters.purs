@@ -33,24 +33,24 @@ extraFilters = join
 
 scheduledFilters :: Array (ScheduledFilter CraftEssence)
 scheduledFilters = 
-  [ ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 25) $
+  [ ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
     namedBonus FilterAvailability "Limited to Event"
     [ "Glory Is With Me", "Original Legion", "Howl at the Moon"
     , "Joint Recital", "Princess of the White Rose"
     ]
-  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 25) $
+  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
     namedBonus FilterEventBonus "+1~2 Crimson Petal"
     [ "Joint Recital" ]
-  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 25) $
+  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
     namedBonus FilterEventBonus "+100~200% Attack"
     [ "Princess of the White Rose" ]
-  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 25) $
+  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
     namedBonus FilterEventBonus "+1~2 Gold Medal"
     [ "Glory Is With Me" ]
-  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 25) $
+  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
     namedBonus FilterEventBonus "+1~2 Silver Medal"
     [ "Original Legion" ]
-  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 25) $
+  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
     namedBonus FilterEventBonus "+1~2 Bronze Medal"
     [ "Howl at the Moon" ]
   ]

@@ -26,6 +26,7 @@ import Data.String (Pattern(..))
 import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
 import Data.String.Regex (Regex, replace)
 import Data.String.Regex.Unsafe (unsafeRegex)
+import Data.String.Regex.Flags (global)
 import Data.Tuple (Tuple(..))
 import Partial.Unsafe (unsafePartial)
 
@@ -62,7 +63,7 @@ ymd y m d = unsafePartial fromJust do
 unCamel :: String -> String
 unCamel = replace camel "$1 $2"
 camel :: Regex
-camel = unsafeRegex "([a-z])([A-Z])" mempty
+camel = unsafeRegex "([a-z])([A-Z])" global
 
 -- | Compares by a first function, then by a second if the first yielded EQ.
 compareThen :: ∀ a b c. Ord b => Ord c => (a -> b) -> (a -> c) -> a -> a 

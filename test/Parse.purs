@@ -72,9 +72,7 @@ translate "Mugashiki—Shinkuu Myou" = "Mugashiki - Shinkuu Myōu"
 translate "Leonardo da Vinci" = "Leonardo Da Vinci"
 translate "Beautiful Princess (Sea)" = "Princess of Loveliness (Ocean)"
 translate "Treasure Hunt (Sea)" = "Treasure Hunt (Ocean)"
-translate "Glory Is With Me" = "Praise Me!"
-translate "Original Legion" = "Legion of Pioneers"
-translate "Howl at the Moon" = "Howling to the Moonlight"
+translate "Glory Is With Me" = "Glory Is With Me!"
 translate x = prettify x
 
 printIcon :: Icon -> String

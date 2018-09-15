@@ -89,7 +89,7 @@ instance _c_ :: Show BuffEffect where
 showBuff :: Target -> Amount -> BuffEffect -> String
 showBuff target amount = case _ of
     AttackUp        -> increase "attack"
-    AttackVs t    -> increase $ "attack" <> against t
+    AttackVs t      -> increase $ "attack" <> against t
     AlignAffinity a -> increase $ "attack" <> against a
     Performance c   -> increase $ show c <> " performance"
     BuffUp          -> success "buff"

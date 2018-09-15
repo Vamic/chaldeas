@@ -136,7 +136,7 @@ shouldMatch x y = case (wiki ^ db) of
   where
     wiki = Array.nubEq x \\ Array.nubEq y
     db   = Array.nubEq y \\ Array.nubEq x
-    showAll = String.joinWith "," <<< map show
+    showAll = String.joinWith ", " <<< map show
 
 testServant :: Tuple DB.Servant Wiki -> TestSuite
 testServant (DB.Servant s ^ mw) = suite (s.name <> ": Info") do

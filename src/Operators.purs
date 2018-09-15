@@ -22,7 +22,7 @@ import Data.Date.Component(Month)
 import Data.Foldable (notElem)
 import Data.Function.Memoize (memoize)
 import Data.Maybe (Maybe(..), fromJust, fromMaybe)
-import Data.String (Pattern(..))
+import Data.String (Pattern(..), stripPrefix, stripSuffix)
 import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
 import Data.String.Regex (Regex, replace)
 import Data.String.Regex.Unsafe (unsafeRegex)
@@ -61,9 +61,10 @@ ymd y m d = unsafePartial fromJust do
 
 -- | Converts `NightMode` into "Night Mode" etc.
 unCamel :: String -> String
-unCamel = replace camel "$1 $2"
+unCamel = replace camel "$1 $2" <<< 
+          maybeDo (stripPrefix (Pattern "(") >=> stripSuffix (Pattern ")"))
 camel :: Regex
-camel = unsafeRegex "([a-z])([A-Z])" global
+camel = unsafeRegex "([a-z])([A-Z])|([A-Z])([A-Z][a-z])" global
 
 -- | Compares by a first function, then by a second if the first yielded EQ.
 compareThen :: ∀ a b c. Ord b => Ord c => (a -> b) -> (a -> c) -> a -> a 

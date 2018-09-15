@@ -229,4 +229,3 @@ matchSum xs k = sum $ go <$> xs
   where
     go (k1 ^ v) | k == k1 = v
     go _ = zero
-

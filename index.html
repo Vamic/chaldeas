@@ -376,6 +376,12 @@
         { margin-bottom: 6px }
       .activates p:first-child::after { content: " [Activates first]" }
       .demerit::after                 { content: " [Demerit]" }
+      @media (min-device-width: 800px) and (max-width: 890px)
+        { body                          { font-size: 12px }
+        section .portrait > img         { width: 100px } 
+        section .portrait header span   { font-size: 10px; word-break: normal }
+        .fade article                   { font-size: 14px }
+        }
       @media (max-device-width: 800px) 
         { body                          { font-size: 8px }
           aside td                      { display: block }

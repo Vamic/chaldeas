@@ -87,7 +87,7 @@ comp initialFilt initialFocus initialPrefs today = component
         , _h 1 "Include"
         ] <> (filter (exclusive <<< fst) allFilters >>= filterSection)
       , H.section_ <<< (if st.sortBy == Rarity then identity else reverse) $
-        portrait false artorify <$> st.listing
+        portrait false (pref Thumbnails) (pref Artorify) <$> st.listing
       , H.aside_ $
         [ _h 1 "Browse"
         , _strong "Craft Essences"
@@ -106,8 +106,7 @@ comp initialFilt initialFocus initialPrefs today = component
         ] <> (filter (not exclusive <<< fst) allFilters >>= filterSection)
       ]
     where
-      artorify = getPreference st.prefs Artorify
-      noSelf   = getPreference st.prefs ExcludeSelf
+      pref     = getPreference st.prefs
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
@@ -162,9 +161,12 @@ comp initialFilt initialFocus initialPrefs today = component
       hash Nothing = setHash ""
       hash (Just ce) = setHash <<< urlName $ show ce
 
-portrait :: ∀ a. Boolean -> Boolean -> Tuple String CraftEssence
+portrait :: ∀ a. Boolean -> Boolean -> Boolean -> Tuple String CraftEssence
          -> HTML a (Query Unit)
-portrait big artorify (lab ^ ce'@(CraftEssence ce)) = H.div meta
+portrait big thumbnails artorify (lab ^ ce'@(CraftEssence ce))
+  | thumbnails && not big = H.div [_c "thumb", _click <<< Focus $ Just ce']
+    [ _img $ "img/CraftEssence/" <> fileName ce.name <> " Thumbnail.png" ]
+  | otherwise = H.div meta
     [ _img $ "img/CraftEssence/" <> fileName ce.name <> ".png"
     , H.header_ <<< (lab /= "") ? append [_span $ noBreakName big lab, H.br_] $
       [ _span <<< noBreakName big <<< artorify ? doArtorify $ ce.name ]
@@ -184,7 +186,7 @@ modal prefs
     [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true (getPreference prefs Artorify) ("" ^ ce')
+      [ portrait true (pref Thumbnails) (pref Artorify) ("" ^ ce')
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
@@ -197,6 +199,8 @@ modal prefs
       ]) <>
       [ H.section_ $ effectEl <<< mapAmount (\_ y -> Flat y) <$> ce.effect ]
     ]
+  where
+    pref = getPreference prefs
 
 effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)
 effectEl ef

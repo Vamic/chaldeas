@@ -137,11 +137,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
     -------------
     -- FROM BUFFS
     -------------
-    cardMod = matchSum buffs $ 
-              case card of
-                  Quick  -> Performance Quick
-                  Arts   -> Performance Arts
-                  Buster -> Performance Buster
+    cardMod = matchSum buffs $ Performance card
     atkMod = (_ + matchSum buffs AttackUp) <<< fromMaybe 0.0 <<< maximum $
              matchSum buffs <<< AttackVs <$> specials
     defMod = matchSum debuffs DefenseDown

@@ -11,20 +11,14 @@ module Test.Parse
   , npRank
   ) where
 
-import Prelude
-import Operators (filterOut, (^))
-import Printing (prettify)
-import Database (SkillEffect(..), BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), craftEssences)
+import StandardLibrary
+import Generic     as G
+import Data.String as String
 
-import Data.Array (elem)
-import Data.Foldable (all, any, find)
-import Data.Generic.Rep.Show (genericShow)
-import Data.Maybe (fromMaybe)
-import Data.String (Pattern(..))
-import Data.String as S
-import Data.Tuple (Tuple)
 
-import Test.Base (MaybeRank(..), RankedSkill(..))
+import Printing
+import Database
+import Test.Base
 
 upgradeNP :: Array String
 upgradeNP = 
@@ -127,12 +121,12 @@ effects = map showEffect
     showEffect (Grant _ _ (ClassAffinity _) _) = "Special Attack"
     showEffect (Grant _ _ (DefenseVs _) _) = "Special Defense"
     showEffect (Grant _ _ (StarAffinity _) _) = "Special Stars"
-    showEffect (Grant _ _ (Success _) _) = genericShow DebuffSuccess
-    showEffect (Grant _ _ (Resist _) _) = genericShow DebuffResist
-    showEffect (To _ ef _) = genericShow ef
-    showEffect (Grant _ _ ef _) = genericShow ef
-    showEffect (Debuff _ _ ef _) = genericShow ef
-    showEffect (Bonus ef _) = genericShow ef
+    showEffect (Grant _ _ (Success _) _) = G.genericShow DebuffSuccess
+    showEffect (Grant _ _ (Resist _) _) = G.genericShow DebuffResist
+    showEffect (To _ ef _) = G.genericShow ef
+    showEffect (Grant _ _ ef _) = G.genericShow ef
+    showEffect (Debuff _ _ ef _) = G.genericShow ef
+    showEffect (Bonus ef _) = G.genericShow ef
     showEffect (Chances _ _ ef) = showEffect ef
     showEffect (Chance _ ef) = showEffect ef
     showEffect (Times _ ef) = showEffect ef
@@ -163,8 +157,8 @@ synonym =
 readEffect :: String -> Array String
 readEffect effect = go 
   where
-    words = S.split (Pattern " ") <<< S.trim <<< 
-            filterOut (Pattern ".|[]#") $ S.toLower effect
+    words = String.split (Pattern " ") <<< String.trim <<< 
+            filterOut (Pattern ".|[]#") $ String.toLower effect
     inWords x = elem x words || elem (x <> "s") words 
     match xs = all (any inWords <<< synonyms) xs
     synonyms word = fromMaybe [word] $ find (elem word) synonym
@@ -173,146 +167,147 @@ readEffect effect = go
       | match ["end","of","turn"] = []
 
       | match ["reduce","attack","defense","critical","chance","debuff"
-              ,"resist","np","strength"] = genericShow <$> 
-          [AttackDown, DefenseDown, CritChance, DebuffVuln, NPDown]
-      | match ["reduce","critical","chance","debuff","resist"] = genericShow <$>
-          [CritChance, DebuffVuln]
-      | match ["reduce","defense","critical","chance"] = genericShow <$> 
-          [DefenseDown, CritChance]
-      | match ["reduce","attack","defense"] = genericShow <$>
-          [AttackDown, DefenseDown]
+              ,"resist","np","strength"] = G.genericShow 
+          <$> [AttackDown, DefenseDown, CritChance, DebuffVuln, NPDown]
+      | match ["reduce","critical","chance","debuff","resist"] = G.genericShow 
+          <$> [CritChance, DebuffVuln]
+      | match ["reduce","defense","critical","chance"] = G.genericShow 
+          <$> [DefenseDown, CritChance]
+      | match ["reduce","attack","defense"] = G.genericShow 
+          <$> [AttackDown, DefenseDown]
       | match ["increase","gain","critical","strength","drop","recovery"
-              ,"debuff","resist"] = genericShow <$>
-          [NPGen, CritUp, HealingReceived, StarUp, DebuffResist]
-      | match ["increase","attack","defense","star"] = genericShow <$>
-          [AttackUp, DefenseUp, StarUp]
-      | match ["increase","attack","defense"] = genericShow <$>
-          [AttackUp, DefenseUp]
-      | match ["reduce","np","strength","critical","strength"] = genericShow <$>
-          [NPDown, CritDown]
-      | match ["remove","debuffs","restore","hp"] = genericShow <$>
-          [RemoveDebuffs, Heal]
+              ,"debuff","resist"] = G.genericShow 
+          <$> [NPGen, CritUp, HealingReceived, StarUp, DebuffResist]
+      | match ["increase","attack","defense","star"] = G.genericShow 
+          <$> [AttackUp, DefenseUp, StarUp]
+      | match ["increase","attack","defense"] = G.genericShow 
+          <$> [AttackUp, DefenseUp]
+      | match ["reduce","np","strength","critical","strength"] = G.genericShow 
+          <$> [NPDown, CritDown]
+      | match ["remove","debuffs","restore","hp"] = G.genericShow 
+          <$> [RemoveDebuffs, Heal]
 
       | match ["additional","damage","turn"] = ["Special Attack"]
-      | match ["decrease","1000hp","yourself"] = [genericShow DemeritDamage]
-      | match ["damage","previous","hp"] = [genericShow Avenge]
-      | match ["hp","fall"] = [genericShow DemeritHealth]
-      | match ["additional","damage","all","enemies"] = [genericShow Damage]
-      | match ["confusion"] = [genericShow Confusion]
-      | match ["current","hp"] = [genericShow LastStand]
-      | match ["extra","own","hp"] = [genericShow LastStand]
+      | match ["decrease","1000hp","yourself"] = [G.genericShow DemeritDamage]
+      | match ["damage","previous","hp"] = [G.genericShow Avenge]
+      | match ["hp","fall"] = [G.genericShow DemeritHealth]
+      | match ["additional","damage","all","enemies"] = [G.genericShow Damage]
+      | match ["confusion"] = [G.genericShow Confusion]
+      | match ["current","hp"] = [G.genericShow LastStand]
+      | match ["extra","own","hp"] = [G.genericShow LastStand]
       | match ["against","drop"] = ["Special Stars"]
       | match ["apply","trait"] = ["Apply Trait"]
       | match ["extra","damage"] = ["Extra Damage"]
       | match ["special","attack"] = ["Special Attack"]
       | match ["special","damage"] = ["Special Attack"]
       | match ["special","defense"] = ["Special Defense"]
-      | match ["transform","hyde"] = [genericShow BecomeHyde]
-      | match ["nullify"] = [genericShow BuffBlock]
-      | match ["prevent","buff"] = [genericShow BuffBlock]
-      | match ["decrease","attack","success","yourself"] = [genericShow BuffFail]
-      | match ["decrease","buff","success"] = [genericShow BuffFail]
-      | match ["increase","buff","success"] = [genericShow BuffUp]
-      | match ["burn"] = [genericShow Burn]
-      | match ["charm","resist"] = [genericShow CharmVuln]
-      | match ["charm"] = [genericShow Charm]
-      | match ["cooldowns"] = [genericShow Cooldowns]
-      | match ["decrease","critical","chance"] = [genericShow CritChance]
-      | match ["increase","critical","damage"] = [genericShow CritUp]
-      | match ["increase","critical","strength"] = [genericShow CritUp]
-      | match ["remove","poison"] = [genericShow Cure]
-      | match ["curse"] = [genericShow Curse]
-      | match ["additional","damage","all","enemies"] = [genericShow Damage]
-      | match ["damage","cut"] = [genericShow DamageDown]
-      | match ["reduce","damage","taken"] = [genericShow DamageDown]
-      | match ["deal","damage","defense"] = [genericShow DamageThruDef]
-      | match ["deal","damage","def-ignoring"] = [genericShow DamageThruDef]
-      | match ["increase","incoming","damage"] = [genericShow DamageVuln]
-      | match ["reduce","death","resist"] = [genericShow DeathDown]
-      | match ["debuff","immunity"] = [genericShow DebuffResist]
-      | match ["reduce","defense"] = [genericShow DefenseDown]
-      | match ["increase","defense"] = [genericShow DefenseUp]
-      | match ["remove","buffs","self"] = [genericShow DemeritBuffs]
-      | match ["charge","enemy","gauge"] = [genericShow DemeritCharge]
-      | match ["decrease","hp","fall"] = [genericShow DemeritHealth]
-      | match ["deal","damage","yourself"] = [genericShow DemeritDamage]
-      | match ["reduce","hp"] = [genericShow DemeritDamage]
-      | match ["reduce","enemy","np","gauge","by"] = [genericShow GaugeDown]
-      | match ["reduce","own","gauge"] = [genericShow DemeritGauge]
-      | match ["drain","own","gauge"] = [genericShow DemeritGauge]
-      | match ["death","trigger"] = [genericShow DemeritKill]
-      | match ["sacrifice"] = [genericShow DemeritKill]
-      | match ["evade"] = [genericShow Evasion]
-      | match ["fear"] = [genericShow Fear]
-      | match ["gain","star","turn"] = [genericShow StarsPerTurn]
-      | match ["gain","stars"] = [genericShow GainStars]
-      | match ["decrease","charge"] = [genericShow GaugeDown]
-      | match ["decrease","gauge"] = [genericShow GaugeDown]
-      | match ["gauge","turn"] = [genericShow GaugePerTurn]
-      | match ["restore","gauge"] = [genericShow GaugeUp]
-      | match ["increase","gauge"] = [genericShow GaugeUp]
-      | match ["charge","gauge"] = [genericShow GaugeUp]
-      | match ["reduce","np","gauge","by"] = [genericShow DemeritGauge]
-      | match ["guts"] = [genericShow Guts]
-      | match ["increase","healing","effectiveness"] = [genericShow HealUp]
-      | match ["hp","recovery","per","turn"] = [genericShow HealPerTurn]
-      | match ["restore","turn"] = [genericShow HealPerTurn]
-      | match ["hp","recovery"] = [genericShow HealingReceived]
-      | match ["recover"] = [genericShow Heal]
-      | match ["heal"] = [genericShow Heal]
-      | match ["ignore","invincibility"] = [genericShow IgnoreInvinc]
-      | match ["invincible"] = [genericShow Invincibility]
-      | match ["death","immunity"] = [genericShow KillResist]
-      | match ["death","success"] = [genericShow KillUp]
-      | match ["increase","death","rate"] = [genericShow KillUp]
-      | match ["death"] = [genericShow Kill]
-      | match ["maximum","hp"] = [genericShow MaxHP]
-      | match ["increase","mental","success"] = [genericShow MentalSuccess]
-      | match ["decrease","mental","resist"] = [genericShow MentalVuln]
-      | match ["mental","resist"] = [genericShow MentalResist]
-      | match ["decrease","np","strength"] = [genericShow NPDown]
-      | match ["increase","np","gain"] = [genericShow NPGen]
-      | match ["increase","np","strength"] = [genericShow NPUp]
-      | match ["increase","np","damage"] = [genericShow NPUp]
-      | match ["quick","performance"] = [genericShow $ Performance Quick]
-      | match ["arts","performance"] = [genericShow $ Performance Arts]
-      | match ["buster","performance"] = [genericShow $ Performance Buster]
-      | match ["increase","attack","resist"] = [genericShow OffensiveResist]
-      | match ["chance","apply","each"] = [genericShow OverChance]
-      | match ["increase","overcharge"] = [genericShow Overcharge]
-      | match ["remove","mental"] = [genericShow RemoveMental]
-      | match ["remove","mental_debuff"] = [genericShow RemoveMental]
-      | match ["remove","buff"] = [genericShow RemoveBuffs]
-      | match ["remove","debuff"] = [genericShow RemoveDebuffs]
-      | match ["poison","resist"] = [genericShow DebuffResist]
-      | match ["poison"] = [genericShow Poison]
-      | match ["star","gather"] = [genericShow StarAbsorb]
-      | match ["seal","np"] = [genericShow SealNP]
-      | match ["seal","skill"] = [genericShow SealSkills]
-      | match ["increase","star","generation"] = [genericShow StarUp]
-      | match ["increase","star","drop"] = [genericShow StarUp]
-      | match ["immobilize"] = [genericShow Stun]
-      | match ["stun","later"] = [genericShow StunBomb]
-      | match ["stun","delayed"] = [genericShow StunBomb]
-      | match ["sure","hit"] = [genericShow SureHit]
-      | match ["target","focus"] = [genericShow Taunt]
+      | match ["transform","hyde"] = [G.genericShow BecomeHyde]
+      | match ["nullify"] = [G.genericShow BuffBlock]
+      | match ["prevent","buff"] = [G.genericShow BuffBlock]
+      | match ["decrease","attack","success","yourself"] = 
+          [G.genericShow BuffFail]
+      | match ["decrease","buff","success"] = [G.genericShow BuffFail]
+      | match ["increase","buff","success"] = [G.genericShow BuffUp]
+      | match ["burn"] = [G.genericShow Burn]
+      | match ["charm","resist"] = [G.genericShow CharmVuln]
+      | match ["charm"] = [G.genericShow Charm]
+      | match ["cooldowns"] = [G.genericShow Cooldowns]
+      | match ["decrease","critical","chance"] = [G.genericShow CritChance]
+      | match ["increase","critical","damage"] = [G.genericShow CritUp]
+      | match ["increase","critical","strength"] = [G.genericShow CritUp]
+      | match ["remove","poison"] = [G.genericShow Cure]
+      | match ["curse"] = [G.genericShow Curse]
+      | match ["additional","damage","all","enemies"] = [G.genericShow Damage]
+      | match ["damage","cut"] = [G.genericShow DamageDown]
+      | match ["reduce","damage","taken"] = [G.genericShow DamageDown]
+      | match ["deal","damage","defense"] = [G.genericShow DamageThruDef]
+      | match ["deal","damage","def-ignoring"] = [G.genericShow DamageThruDef]
+      | match ["increase","incoming","damage"] = [G.genericShow DamageVuln]
+      | match ["reduce","death","resist"] = [G.genericShow DeathDown]
+      | match ["debuff","immunity"] = [G.genericShow DebuffResist]
+      | match ["reduce","defense"] = [G.genericShow DefenseDown]
+      | match ["increase","defense"] = [G.genericShow DefenseUp]
+      | match ["remove","buffs","self"] = [G.genericShow DemeritBuffs]
+      | match ["charge","enemy","gauge"] = [G.genericShow DemeritCharge]
+      | match ["decrease","hp","fall"] = [G.genericShow DemeritHealth]
+      | match ["deal","damage","yourself"] = [G.genericShow DemeritDamage]
+      | match ["reduce","hp"] = [G.genericShow DemeritDamage]
+      | match ["reduce","enemy","np","gauge","by"] = [G.genericShow GaugeDown]
+      | match ["reduce","own","gauge"] = [G.genericShow DemeritGauge]
+      | match ["drain","own","gauge"] = [G.genericShow DemeritGauge]
+      | match ["death","trigger"] = [G.genericShow DemeritKill]
+      | match ["sacrifice"] = [G.genericShow DemeritKill]
+      | match ["evade"] = [G.genericShow Evasion]
+      | match ["fear"] = [G.genericShow Fear]
+      | match ["gain","star","turn"] = [G.genericShow StarsPerTurn]
+      | match ["gain","stars"] = [G.genericShow GainStars]
+      | match ["decrease","charge"] = [G.genericShow GaugeDown]
+      | match ["decrease","gauge"] = [G.genericShow GaugeDown]
+      | match ["gauge","turn"] = [G.genericShow GaugePerTurn]
+      | match ["restore","gauge"] = [G.genericShow GaugeUp]
+      | match ["increase","gauge"] = [G.genericShow GaugeUp]
+      | match ["charge","gauge"] = [G.genericShow GaugeUp]
+      | match ["reduce","np","gauge","by"] = [G.genericShow DemeritGauge]
+      | match ["guts"] = [G.genericShow Guts]
+      | match ["increase","healing","effectiveness"] = [G.genericShow HealUp]
+      | match ["hp","recovery","per","turn"] = [G.genericShow HealPerTurn]
+      | match ["restore","turn"] = [G.genericShow HealPerTurn]
+      | match ["hp","recovery"] = [G.genericShow HealingReceived]
+      | match ["recover"] = [G.genericShow Heal]
+      | match ["heal"] = [G.genericShow Heal]
+      | match ["ignore","invincibility"] = [G.genericShow IgnoreInvinc]
+      | match ["invincible"] = [G.genericShow Invincibility]
+      | match ["death","immunity"] = [G.genericShow KillResist]
+      | match ["death","success"] = [G.genericShow KillUp]
+      | match ["increase","death","rate"] = [G.genericShow KillUp]
+      | match ["death"] = [G.genericShow Kill]
+      | match ["maximum","hp"] = [G.genericShow MaxHP]
+      | match ["increase","mental","success"] = [G.genericShow MentalSuccess]
+      | match ["decrease","mental","resist"] = [G.genericShow MentalVuln]
+      | match ["mental","resist"] = [G.genericShow MentalResist]
+      | match ["decrease","np","strength"] = [G.genericShow NPDown]
+      | match ["increase","np","gain"] = [G.genericShow NPGen]
+      | match ["increase","np","strength"] = [G.genericShow NPUp]
+      | match ["increase","np","damage"] = [G.genericShow NPUp]
+      | match ["quick","performance"] = [G.genericShow $ Performance Quick]
+      | match ["arts","performance"] = [G.genericShow $ Performance Arts]
+      | match ["buster","performance"] = [G.genericShow $ Performance Buster]
+      | match ["increase","attack","resist"] = [G.genericShow OffensiveResist]
+      | match ["chance","apply","each"] = [G.genericShow OverChance]
+      | match ["increase","overcharge"] = [G.genericShow Overcharge]
+      | match ["remove","mental"] = [G.genericShow RemoveMental]
+      | match ["remove","mental_debuff"] = [G.genericShow RemoveMental]
+      | match ["remove","buff"] = [G.genericShow RemoveBuffs]
+      | match ["remove","debuff"] = [G.genericShow RemoveDebuffs]
+      | match ["poison","resist"] = [G.genericShow DebuffResist]
+      | match ["poison"] = [G.genericShow Poison]
+      | match ["star","gather"] = [G.genericShow StarAbsorb]
+      | match ["seal","np"] = [G.genericShow SealNP]
+      | match ["seal","skill"] = [G.genericShow SealSkills]
+      | match ["increase","star","generation"] = [G.genericShow StarUp]
+      | match ["increase","star","drop"] = [G.genericShow StarUp]
+      | match ["immobilize"] = [G.genericShow Stun]
+      | match ["stun","later"] = [G.genericShow StunBomb]
+      | match ["stun","delayed"] = [G.genericShow StunBomb]
+      | match ["sure","hit"] = [G.genericShow SureHit]
+      | match ["target","focus"] = [G.genericShow Taunt]
 
-      | match ["increase","status","effects"] = [genericShow MentalResist]
-      | match ["damage","plus"] = [genericShow DamageUp]
-      | match ["increase","damage"] = [genericShow DamageUp]
-      | match ["increase","debuff","resist"] = [genericShow DebuffResist]
-      | match ["debuff","rate"] = [genericShow DebuffSuccess]
-      | match ["increase","debuff","success"] = [genericShow DebuffSuccess]
-      | match ["increase","stun","success"] = [genericShow DebuffSuccess]
-      | match ["reduce","debuff","resist"] = [genericShow DebuffVuln]
-      | match ["decrease","np"] = [genericShow GaugeDown]
-      | match ["decrease","attack"] = [genericShow AttackDown]
-      | match ["increase","attack"] = [genericShow AttackUp]
-      | match ["severe","damage"] = [genericShow Damage]
-      | match ["deal","damage"] = [genericShow Damage]
-      | match ["stun"] = [genericShow Stun]
+      | match ["increase","status","effects"] = [G.genericShow MentalResist]
+      | match ["damage","plus"] = [G.genericShow DamageUp]
+      | match ["increase","damage"] = [G.genericShow DamageUp]
+      | match ["increase","debuff","resist"] = [G.genericShow DebuffResist]
+      | match ["debuff","rate"] = [G.genericShow DebuffSuccess]
+      | match ["increase","debuff","success"] = [G.genericShow DebuffSuccess]
+      | match ["increase","stun","success"] = [G.genericShow DebuffSuccess]
+      | match ["reduce","debuff","resist"] = [G.genericShow DebuffVuln]
+      | match ["decrease","np"] = [G.genericShow GaugeDown]
+      | match ["decrease","attack"] = [G.genericShow AttackDown]
+      | match ["increase","attack"] = [G.genericShow AttackUp]
+      | match ["severe","damage"] = [G.genericShow Damage]
+      | match ["deal","damage"] = [G.genericShow Damage]
+      | match ["stun"] = [G.genericShow Stun]
 
-      | match ["high","chance","status"] = [genericShow Charm]
+      | match ["high","chance","status"] = [G.genericShow Charm]
 
       | match ["against","buster"] = []
       | match ["effect","activates"] = []

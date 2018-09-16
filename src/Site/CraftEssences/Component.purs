@@ -3,25 +3,20 @@
 -- Everything else goes in `Database.CraftEssence`.
 module Site.CraftEssences.Component (Query, Message(..), comp) where
 
-import Prelude
-import Operators (enumArray, (?), (^))
-
+import StandardLibrary
 import Halogen.HTML            as H
+import Data.Map                as Map
+import Routing.Hash            as Hash
 import Halogen.HTML.Properties as P
-import Data.Map                as M
-import Data.String             as S
+import Data.String             as String
 
-import Data.Date
-import Data.Tuple
-import Halogen (Component, ComponentDSL, ComponentHTML, component, get, liftEffect, modify_, raise)
-import Data.Array
-import Data.Maybe
-import Effect.Class
+import Data.Date (Date)
+import Halogen (Component, ComponentDSL, ComponentHTML, component, get, modify_, raise)
 import Halogen.HTML (HTML)
-import Routing.Hash
 
 import Database
 import Site.Common
+import Site.ToImage
 import Site.Filtering
 import Site.Preferences
 import Site.CraftEssences.Filters
@@ -73,20 +68,21 @@ comp initialFilt initialFocus initialPrefs today = component
                                        }
     where 
       initialSort = getSort Rarity
-      {yes: exclude, no: filters} = partition (exclusive <<< getTab) initialFilt
+      {yes: exclude, no: filters} = partition (exclusive <<< getTab) 
+                                    initialFilt
 
   render :: State -> ComponentHTML Query
   render st = modal st.prefs st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ M.toUnfoldableUnordered st.prefs <#> \(k ^ v) -> 
+        , H.form_ $ Map.toUnfoldableUnordered st.prefs <#> \(k ^ v) -> 
           H.p [_click <<< SetPref k $ not v] $ _checkbox (show k) v
         , _h 1 "Sort by"
         , H.form_ $ enumArray <#> \sort -> 
           H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
         , _h 1 "Include"
         ] <> (filter (exclusive <<< fst) allFilters >>= filterSection)
-      , H.section_ <<< (if st.sortBy == Rarity then identity else reverse) $
+      , H.section_ <<< maybeReverse $
         portrait false (pref Thumbnails) (pref Artorify) <$> st.listing
       , H.aside_ $
         [ _h 1 "Browse"
@@ -106,6 +102,9 @@ comp initialFilt initialFocus initialPrefs today = component
         ] <> (filter (not exclusive <<< fst) allFilters >>= filterSection)
       ]
     where
+      maybeReverse = case st.sortBy of
+          Rarity -> identity
+          _      -> reverse
       pref     = getPreference st.prefs
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
@@ -146,7 +145,7 @@ comp initialFilt initialFocus initialPrefs today = component
                   }
       SetPref   k v      a -> a <$ do
           liftEffect $ setPreference k v
-          modif <<< modPrefs $ M.insert k v
+          modif <<< modPrefs $ Map.insert k v
       Toggle     filt     a
         | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
         | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
@@ -157,25 +156,25 @@ comp initialFilt initialFocus initialPrefs today = component
       modExclude f st = st{ exclude = f st.exclude }
       toggleIn x xs
         | x `elem` xs = delete x xs
-        | otherwise   = cons x xs
-      hash Nothing = setHash ""
-      hash (Just ce) = setHash <<< urlName $ show ce
+        | otherwise   = x : xs
+      hash Nothing   = Hash.setHash ""
+      hash (Just ce) = Hash.setHash <<< urlName $ show ce
 
 portrait :: ∀ a. Boolean -> Boolean -> Boolean -> Tuple String CraftEssence
          -> HTML a (Query Unit)
 portrait big thumbnails artorify (lab ^ ce'@(CraftEssence ce))
   | thumbnails && not big = H.div [_c "thumb", _click <<< Focus $ Just ce']
-    [ _img $ "img/CraftEssence/" <> fileName ce.name <> " Thumbnail.png" ]
+    [ toThumbnail ce' ]
   | otherwise = H.div meta
-    [ _img $ "img/CraftEssence/" <> fileName ce.name <> ".png"
+    [ toImage ce'
     , H.header_ <<< (lab /= "") ? append [_span $ noBreakName big lab, H.br_] $
       [ _span <<< noBreakName big <<< artorify ? doArtorify $ ce.name ]
-    , H.footer_ [_span <<< S.joinWith "  " $ replicate ce.rarity "★"]
+    , H.footer_ [_span <<< String.joinWith "  " $ replicate ce.rarity "★"]
     ]
   where 
     meta       = not big ? (cons <<< _click <<< Focus $ Just ce') $
                  [_c $ "portrait stars" <> show ce.rarity]
-    doArtorify = S.replaceAll (S.Pattern "Altria") (S.Replacement "Artoria")
+    doArtorify = String.replaceAll (Pattern "Altria") (Replacement "Artoria")
 
 modal :: ∀ a. Preferences -> Maybe CraftEssence
       -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
@@ -191,7 +190,7 @@ modal prefs
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
         ]
-      , _img $ "img/Skill/" <> show ce.icon <> ".png"
+      , toImage ce.icon
       , _h 2 "Effects"
       ] <> (if base == max then [] else
       [ H.section_ $ effectEl <<< mapAmount (\x _ -> Flat x) <$> ce.effect

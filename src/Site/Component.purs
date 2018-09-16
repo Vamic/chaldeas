@@ -2,25 +2,21 @@
 -- | `Site.CraftEssences.Component`.
 module Site.Component where
 
-import Prelude
-import Data.Date
-import Data.Either
-import Data.Foldable
-import Data.Functor.Coproduct.Nested
-import Data.Map (Map)
-import Data.Maybe
-import Effect.Class
-import Halogen (Component, ParentDSL, ParentHTML, parentComponent, liftEffect, modify_)
-import Halogen.HTML (HTML)
-import Routing.Hash
-
+import StandardLibrary
 import Halogen.Component.ChildPath as CP
-import Halogen.HTML as H
-import Halogen.HTML.Events as E
+import Halogen.HTML.Events         as E
+import Halogen.HTML                as H
+import Routing.Hash                as Hash
 
-import Site.Servants.Component as Servants
+
+import Data.Date (Date)
+import Data.Functor.Coproduct.Nested (Coproduct2)
+import Halogen (Component, ParentDSL, ParentHTML, parentComponent, modify_)
+import Halogen.HTML (HTML)
+
+
+import Site.Servants.Component      as Servants
 import Site.CraftEssences.Component as CraftEssences
-
 import Site.Common
 import Site.Preferences
 import Site.Filtering
@@ -84,7 +80,7 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m
   eval (BrowseServants (CraftEssences.Message fCe mServant) next) = next <$ do
-      liftEffect $ setHash ""
+      liftEffect $ Hash.setHash ""
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
       team  <- liftEffect getTeam
@@ -97,7 +93,7 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
                , mServant = mServant
                }
   eval (BrowseCraftEssences (Servants.Message fServant mCe) next) = next <$ do
-      liftEffect $ setHash ""
+      liftEffect $ Hash.setHash ""
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
       modify_ _{ browseCe = true

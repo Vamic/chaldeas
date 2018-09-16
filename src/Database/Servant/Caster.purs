@@ -1,6 +1,6 @@
 module Database.Servant.Caster (casters) where
 
-import Prelude
+import StandardLibrary
 import Database.Model
 
 casters :: Array Servant

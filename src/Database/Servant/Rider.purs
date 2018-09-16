@@ -1,6 +1,6 @@
 module Database.Servant.Rider (riders) where
 
-import Prelude
+import StandardLibrary
 import Database.Model
 
 riders :: Array Servant

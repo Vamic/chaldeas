@@ -1,6 +1,6 @@
 module Database.Servant.Archer (archers) where
 
-import Prelude
+import StandardLibrary
 import Database.Model
 
 archers :: Array Servant

@@ -7,10 +7,7 @@ module Database
   , servants, getAll, ceGetAll, getPassives
   ) where
 
-import Prelude
-import Operators
-import Data.Array
-import Data.Function.Memoize
+import StandardLibrary
 
 import Database.Model
 import Database.Calculator
@@ -42,18 +39,19 @@ servants = addUniversal <<< addHeavenOrEarth
         <> sabers
   where
     addUniversal (Servant s) = Servant s 
-        { traits   = sortWith show $ cons Humanoid s.traits
+        { traits   = sortWith show $ Humanoid : s.traits
         , passives = sortWith show s.passives
         }
     addHeavenOrEarth s'@(Servant s)
       | s.attr /= Earth && s.attr /= Heaven = s'
-      | otherwise = Servant s {traits = cons HeavenOrEarth s.traits}
+      | otherwise = Servant s {traits = HeavenOrEarth : s.traits}
 
 -- | Retrieves all values of a `MatchServant` Enum 
 -- | that at least one `Servant` in the database `has`. 
 -- | Memoized for performance.
 getAll :: ∀ a. MatchServant a => Array a
-getAll = flip memoize unit \_ -> sortWith show $ filter exists enumArray
+getAll = flip memoize unit \_ -> 
+         sortWith show $ filter exists enumArray
   where
     exists eff = any (has eff false) servants
 
@@ -61,7 +59,8 @@ getAll = flip memoize unit \_ -> sortWith show $ filter exists enumArray
 -- | that at least one `CraftEssence` in the database `ceHas`. 
 -- | Memoized for performance.
 ceGetAll :: ∀ a. MatchCraftEssence a => Array a
-ceGetAll = flip memoize unit \_ -> sortWith show $ filter exists enumArray
+ceGetAll = flip memoize unit \_ -> 
+           sortWith show $ filter exists enumArray
   where
     exists eff = any (ceHas eff false) craftEssences
 
@@ -70,4 +69,5 @@ ceGetAll = flip memoize unit \_ -> sortWith show $ filter exists enumArray
 -- | Memoized for performance.
 getPassives :: Array String
 getPassives = flip memoize unit \_ -> 
-              sort <<< nub $ servants >>= \(Servant s) -> _.name <$> s.passives
+              sort <<< nub $ 
+              servants >>= \(Servant s) -> _.name <$> s.passives

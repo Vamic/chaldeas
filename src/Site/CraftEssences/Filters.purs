@@ -3,17 +3,13 @@ module Site.CraftEssences.Filters
   , getFilters
   ) where
 
-import Prelude
-import Operators
-import Data.String as S
+import StandardLibrary
+import Data.String as String
 
-import Data.Array
-import Data.Date
-import Data.Foldable
-import Data.Maybe
-import Data.Profunctor.Strong
-import Data.Tuple
+import Data.Date(Date, Month(..))
+import Data.Profunctor.Strong ((&&&))
 
+import Site.Common
 import Site.Filtering
 import Database
 
@@ -27,7 +23,7 @@ extraFilters = join
       \_ (CraftEssence ce) -> isJust ce.bond
     ]
   , reverse (1..5) <#> \rarity
-    -> Filter FilterRarity (S.joinWith "" $ replicate rarity "★")
+    -> Filter FilterRarity (String.joinWith "" $ replicate rarity "★")
     \_ (CraftEssence ce) -> rarity == ce.rarity
   ]
 
@@ -75,8 +71,7 @@ getFilters _ f@FilterDebuff   = matchFilter f
                                 <$> ceGetAll :: Array DebuffEffect
 getFilters _ f@(FilterBuff c) = matchFilter f <$> filter (eq c <<< buffCategory) 
                                 ceGetAll :: Array BuffEffect
-getFilters _ f@FilterAction   = matchFilter f <$> filter (not <<< isDamage) 
-                                ceGetAll :: Array InstantEffect
+getFilters _ f@FilterAction   = matchFilter f <$> filter (not <<< isDamage) ceGetAll :: Array InstantEffect
 getFilters _ f@FilterDamage   = matchFilter f <$> filter isDamage
                                 getAll :: Array InstantEffect
 getFilters today f = getExtraFilters today f

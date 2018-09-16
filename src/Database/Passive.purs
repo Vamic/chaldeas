@@ -18,10 +18,9 @@
 
 module Database.Passive where
 
-import Prelude
-import Operators
-import Data.Maybe
-import Data.Tuple
+import StandardLibrary
+import Data.Tuple as Tuple
+
 import Database.Base
 import Database.Skill
 
@@ -150,5 +149,5 @@ passive name icon effects rank = { name
                                      }
   where
     skill (Give targ buff ranks) = Grant targ 0 buff <<< fromMaybe Placeholder $ 
-                                   Flat <$> lookup rank ranks
+                                   Flat <$> Tuple.lookup rank ranks
 

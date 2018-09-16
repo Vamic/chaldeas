@@ -9,16 +9,14 @@ module Database.CraftEssence
   , getBond
   ) where
 
-import Data.Array
-import Data.Function.Memoize
-import Data.Int
-import Data.Maybe
+import StandardLibrary
+import Generic  as G
+import Data.Int as Int
+
 import Database.Base
 import Database.Servant
 import Database.Skill
-import Prelude
 
-import Generic as G
 
 -- | All Craft Essences available in EN. 
 -- Note: Names _must_ be true to their EN localization. 
@@ -2681,8 +2679,8 @@ craftEssences = CraftEssence <$>
 ]
   where
     np30        = Grant Self 0 NPUp $ Flat 30.0
-    gutsPercent = Times 1 <<< Grant Self 0 GutsPercent <<< Flat <<< toNumber
-    party buff  = Grant Party 0 buff <<< Flat <<< toNumber
+    gutsPercent = Times 1 <<< Grant Self 0 GutsPercent <<< Flat <<< Int.toNumber
+    party buff  = Grant Party 0 buff <<< Flat <<< Int.toNumber
     party' card = party (Performance card)
     atkChance chance = When "attacking" <<< Chance chance
     bond id name servant icon effect = 
@@ -2720,7 +2718,8 @@ instance _0_ :: Show CraftEssence where
     show (CraftEssence ce) = ce.name
 
 getEffects :: CraftEssence -> Array SkillEffect
-getEffects (CraftEssence ce) = filter (not <<< demerit) $ simplify <$> ce.effect
+getEffects (CraftEssence ce) = filter (not <<< demerit) $ 
+                               simplify <$> ce.effect
 
 class (G.BoundedEnum a, Show a) <= MatchCraftEssence a where
     ceHas :: a -> Boolean -> CraftEssence -> Boolean

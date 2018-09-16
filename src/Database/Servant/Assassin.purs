@@ -1,6 +1,6 @@
 module Database.Servant.Assassin (assassins) where
 
-import Prelude
+import StandardLibrary
 import Database.Model
 
 assassins :: Array Servant

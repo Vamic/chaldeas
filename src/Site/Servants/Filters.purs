@@ -6,18 +6,14 @@ module Site.Servants.Filters
   , singleFilter
   ) where
 
-import Prelude
-import Operators
-import Data.String as S
+import StandardLibrary
+import Data.String as String
 
-import Data.Array
-import Data.Date.Component
-import Data.Date
-import Data.Maybe
-import Data.Profunctor.Strong
-import Data.Tuple
+import Data.Date (Date, Month(..))
+import Data.Profunctor.Strong ((&&&))
 
 import Database
+import Site.Common
 import Site.Filtering
 
 extraFilters :: Array (Filter Servant)
@@ -35,7 +31,7 @@ extraFilters = join
       \_ (Servant s) -> not s.limited
   ]
   , reverse (1..5) <#> \rarity
-    -> Filter FilterRarity (S.joinWith "" $ replicate rarity "★")
+    -> Filter FilterRarity (String.joinWith "" $ replicate rarity "★")
     \_ (Servant s) -> rarity == s.rarity
   ]
 

@@ -1,6 +1,6 @@
 module Database.Servant.Lancer (lancers) where
 
-import Prelude
+import StandardLibrary
 import Database.Model
 
 lancers :: Array Servant

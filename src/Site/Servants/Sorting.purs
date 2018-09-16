@@ -5,19 +5,12 @@ module Site.Servants.Sorting
   , formatSort
   )where
 
-import Prelude
-import Operators
-import Generic as G
-import Data.Map as M
+import StandardLibrary
+import Generic  as G
+import Data.Int as Int
+import Data.Map as Map
 
-import Data.Array
-import Data.Foldable (sum)
-import Data.Int
-import Data.Maybe
-import Data.Map (Map, isEmpty)
-import Data.Ord
-import Data.Profunctor.Strong
-import Data.Tuple (Tuple(..))
+import Data.Profunctor.Strong ((&&&))
 
 import Database
 import Database.MyServant
@@ -50,11 +43,11 @@ instance _a_ :: Show SortBy where
     show x          = unCamel $ G.genericShow x
 
 toSort :: SortBy -> Servant -> Number
-toSort ID         (Servant s) = negate $ toNumber s.id
-toSort Rarity     (Servant s) = toNumber s.rarity
-toSort ATK        (Servant s) = toNumber s.stats.max.atk
-toSort HP         (Servant s) = toNumber s.stats.max.hp
-toSort StarWeight (Servant s) = toNumber s.gen.starWeight
+toSort ID         (Servant s) = negate $ Int.toNumber s.id
+toSort Rarity     (Servant s) = Int.toNumber s.rarity
+toSort ATK        (Servant s) = Int.toNumber s.stats.max.atk
+toSort HP         (Servant s) = Int.toNumber s.stats.max.hp
+toSort StarWeight (Servant s) = Int.toNumber s.gen.starWeight
 toSort NPArts              s  = npPer s Arts
 toSort NPDeck              s  = sum $ npPer s <$> getDeck s
 toSort StarQuick           s  = starsPer s Quick
@@ -85,14 +78,14 @@ doSort x = map showSort <<< sortWith sorter
       | otherwise = formatSort x <<< abs <<< sorter &&& getBase
 
 sorted :: Map SortBy (Array (Tuple String Servant))
-sorted = M.fromFoldable $ go <$> enumArray
+sorted = Map.fromFoldable $ go <$> enumArray
   where
     go sorter = Tuple sorter <<< doSort sorter $ unowned <$> servants
 
 getSort :: Map Servant MyServant -> SortBy -> Array (Tuple String Servant)
 getSort team sorter
-  | isEmpty team = fromMaybe [] $ M.lookup sorter sorted
-  | otherwise    = doSort sorter $ owned team <$> servants
+  | Map.isEmpty team = fromMaybe [] $ Map.lookup sorter sorted
+  | otherwise        = doSort sorter $ owned team <$> servants
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

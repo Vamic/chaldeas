@@ -1,6 +1,6 @@
 module Database.Servant.Extra (extras) where
 
-import Prelude
+import StandardLibrary
 import Database.Model
 
 extras :: Array Servant

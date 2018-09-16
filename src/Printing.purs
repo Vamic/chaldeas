@@ -1,10 +1,15 @@
--- | Helper functions for converting numbers to Strings.
-module Printing (places, roundTo, prettify) where
+-- | Helper functions for outputting to Strings.
+module Printing (places, roundTo, prettify, unCamel) where
 
-import Prelude
-import Data.Formatter.Number
-import Data.Int (pow, toNumber)
-import Math (round)
+import StandardLibrary
+import Data.String.Regex.Flags  as Flags
+import Data.Int                 as Int
+import Math                     as Math
+import Data.String.Regex        as Regex
+import Data.String              as String
+import Data.String.Regex.Unsafe as Unsafe
+
+import Data.Formatter.Number (Formatter(..), format)
 
 -- | Prints a `Number` with some number of decimal places.
 places :: Int -> Number -> String
@@ -17,8 +22,17 @@ places x = format $ Formatter { comma: true
 
 -- | Rounds a `Number` to some decimal precision.
 roundTo :: Int -> Number -> Number
-roundTo x = (_ / zeroes) <<< round <<< (_ * zeroes)
-  where zeroes = toNumber $ pow 10 x
+roundTo x = (_ / zeroes) <<< Math.round <<< (_ * zeroes)
+  where zeroes = Int.toNumber $ Int.pow 10 x
+
+-- | Converts `NightMode` into "Night Mode" etc.
+unCamel :: String -> String
+unCamel = Regex.replace camel "$1 $2" <<< maybeDo unParen
+  where
+    unParen = String.stripPrefix (Pattern "(") >=> 
+              String.stripSuffix (Pattern ")")
+camel :: Regex
+camel = Unsafe.unsafeRegex "([a-z])([A-Z])|([A-Z])([A-Z][a-z])" Flags.global
 
 -- | Adds in fancy diacritics to Servant and Craft Essence names.
 prettify :: String -> String

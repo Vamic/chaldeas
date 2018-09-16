@@ -9,9 +9,9 @@ module Database.Base
   , Icon(..)
   ) where
 
-import Prelude
-import Generic as G
-import Data.String (drop)
+import StandardLibrary
+import Generic     as G
+import Data.String as String
 
 -- Note: 'No alignment', as in the case of Nursery Rhyme, is an empty array
 -- rather than a separate alignment.
@@ -245,7 +245,7 @@ derive instance _41_ :: G.Generic Icon _
 derive instance _42_ :: Eq Icon
 derive instance _43_ :: Ord Icon
 instance _44_ :: Show Icon where
-    show = drop 4 <<< G.genericShow
+    show = String.drop 4 <<< G.genericShow
 instance _45_ :: G.Enum Icon where
     succ = G.genericSucc
     pred = G.genericPred

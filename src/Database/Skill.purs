@@ -24,20 +24,12 @@ module Database.Skill
   , apAmount, mapAmount
   ) where
 
-import Prelude
-import Operators
-import Generic as G
-
-import Control.Alternative
-import Control.Bind
-import Control.Plus
-import Data.Foldable
-import Data.Number.Format
-import Data.Int
-import Data.Maybe
-import Data.String
-import Data.String.CodeUnits (toCharArray)
-import Data.Tuple
+import StandardLibrary
+import Data.String.CodeUnits as CodeUnits
+import Data.Number.Format    as Format
+import Generic               as G
+import Data.Int              as Int
+import Data.String           as String
 
 import Database.Base
 import Printing 
@@ -427,9 +419,10 @@ mapAmount f eff = go eff
     go (When a b)       = When a $ go b
     go (Times a b)      = Times a $ go b
     go (ToMax a b)      = ToMax (f' a) $ go b
-    go (Chances a b c)  = case f (toNumber a) (toNumber b) of
-                              Flat x      -> Chance (floor x) $ go c
-                              Range x y   -> Chances (floor x) (floor y) $ go c
+    go (Chances a b c)  = case f (Int.toNumber a) (Int.toNumber b) of
+                              Flat x      -> Chance (Int.floor x) $ go c
+                              Range x y   -> Chances (Int.floor x) 
+                                                     (Int.floor y) $ go c
                               Placeholder -> go c
                               Full        -> go c
 
@@ -481,9 +474,9 @@ instance _g_ :: Show SkillEffect where
         turns dur = " for " <> show dur <> " turns"
 
 uncap :: String -> String
-uncap s = case uncons s of
-              Just {head: x, tail: xs} -> toLower (singleton x) <> xs
-              Nothing                  -> s
+uncap s = case String.uncons s of
+    Just {head, tail} -> String.toLower (String.singleton head) <> tail
+    Nothing           -> s
 
 data Amount
     = Placeholder
@@ -496,8 +489,8 @@ infix 1 Range as ~
 instance _h_ :: Show Amount where
     show Placeholder = "X"
     show Full = ""
-    show (Flat x) = toString x
-    show (Range x y) = toString x <> "~" <> toString y
+    show (Flat x) = Format.toString x
+    show (Range x y) = Format.toString x <> "~" <> Format.toString y
 
 toMin :: Amount -> Number
 toMin Placeholder = 0.0
@@ -591,13 +584,13 @@ ranges :: ∀ f. Alternative f => Bind f => f SkillEffect -> f RangeInfo
 ranges = bindFlipped toInfo
   where
     toInfo eff = uncurry (RangeInfo $ isPercent eff) <$> acc eff
-    isPercent = elem '%' <<< toCharArray <<< show
+    isPercent = elem '%' <<< CodeUnits.toCharArray <<< show
     acc (Grant _ _ _ x) = go x
     acc (Debuff _ _ _ x) = go x
     acc (To _ _ x) = go x
     acc (Bonus _ x) = go x
     acc (Chance _ ef) = acc ef
-    acc (Chances x y ef) = pure (toNumber x ^ toNumber y) <|> acc ef
+    acc (Chances x y ef) = pure (Int.toNumber x ^ Int.toNumber y) <|> acc ef
     acc (When _ ef) = acc ef
     acc (Times _ ef) = acc ef
     acc (ToMax _ ef) = acc ef
@@ -691,7 +684,7 @@ instance _36_ :: G.BoundedEnum BuffCategory where
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum
 instance _37_ :: Show BuffCategory where
-    show = drop 4 <<< G.genericShow
+    show = String.drop 4 <<< G.genericShow
 
 derive instance _38_ :: Eq SkillEffect
 

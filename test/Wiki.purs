@@ -8,32 +8,19 @@ module Test.Wiki
   , wiki, wikiLookup
   ) where
 
-import Prelude
-import Operators ((^), filterOut, maybeDo)
+import StandardLibrary
 
-import Affjax                   as AX
-import Data.Array               as Array
+import Affjax                   as Affjax
 import Global.Unsafe            as Global
 import Data.Map                 as Map
-import Data.Maybe               as Maybe
 import Affjax.ResponseFormat    as ResponseFormat
 import Data.String              as String
 import Data.String.Regex        as Regex
 import Data.String.Regex.Flags  as Flags
 import Data.String.Regex.Unsafe as Unsafe
 
-import Control.MonadZero (guard)
-import Data.Either (Either(..))
-import Data.Foldable (class Foldable, oneOf)
-import Data.Map (Map)
-import Data.Maybe (Maybe)
-import Data.String (Pattern(..))
-import Data.String.Regex (Regex)
-import Data.Tuple (Tuple(..))
-import Effect.Aff (Aff)
-
-import Test.Base (MaybeRank)
-import Test.Parse (translate)
+import Test.Base
+import Test.Parse
 
 wikiLink :: Regex
 wikiLink = Unsafe.unsafeRegex """\[\[[^\|\]]+\|([^\]]+)\]\]""" Flags.global
@@ -53,9 +40,9 @@ wikiLookup (Wiki mw) = flip Map.lookup mw
 
 toWiki :: String -> MaybeRank -> Wiki
 toWiki text rank = 
-    Wiki <<< Map.fromFoldable <<< Array.reverse <<< Array.catMaybes <<< 
-    map parseEntry <<< String.split (Pattern "|") <<< 
-    Regex.replace wikiLink "$1" $ Maybe.fromMaybe text do 
+    Wiki <<< Map.fromFoldable <<< reverse <<< mapMaybe parseEntry <<< 
+    String.split (Pattern "|") <<< Regex.replace wikiLink "$1" $ 
+    fromMaybe text do 
         fromStart <- splitAny After [show rank <> "="]     text
         toEnd     <- splitAny Before ["|-|","/onlyinclude"] fromStart
         pure toEnd
@@ -66,7 +53,7 @@ toWiki text rank =
             afterLines      = String.split (Pattern "<br/>") after
         guard <<< not $ String.null before
         pure <<< Tuple (String.trim $ String.toLower before) <<< 
-        Array.filter (not <<< String.null) $ 
+        filter (not <<< String.null) $ 
         maybeDo (String.stripPrefix $ Pattern "#tip-text:") <<< String.trim <<< 
         filterOut (Pattern "%,{}[]()'") <<< Regex.replace wikiTag " " <<< 
         maybeDo (splitAny After  ["EN:"]) <<<
@@ -89,11 +76,11 @@ splitAny side xs s = go <$> indices
 
 wiki :: ∀ a. Show a => Tuple MaybeRank a -> Aff (Tuple a Wiki)
 wiki (mRank ^ x) = Tuple x <<< wikify <<< 
-                   _.body <$> AX.get ResponseFormat.string encode
+                   _.body <$> Affjax.get ResponseFormat.string encode
   where
     wikify (Right obj) = toWiki obj mRank 
     wikify (Left err)  = Wiki $ Map.fromFoldable 
-                         [("err" ^ [AX.printResponseFormatError err])]
+                         [("err" ^ [Affjax.printResponseFormatError err])]
     encode  = append wikiRoot <<< Global.unsafeEncodeURIComponent <<< 
               translate $ show x
 
@@ -102,6 +89,5 @@ printBool true  = "Yes"
 printBool false = "No"
 
 wikiRange :: Wiki -> String -> Array Int -> Array String
-wikiRange (Wiki mw) k range = join <<< Array.catMaybes $ 
-                                   flip Map.lookup mw <<< append k <<< 
-                                   show <$> range
+wikiRange (Wiki mw) k range = range >>= fromMaybe empty <<< 
+                              flip Map.lookup mw <<< append k <<< show

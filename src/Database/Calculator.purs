@@ -1,22 +1,15 @@
 -- | Calculates information for sorting based on datamined formulas.
 module Database.Calculator (npPer, starsPer, npDamage, matchSum) where
 
-import Prelude
-import Operators
-
-import Control.MonadZero
-import Data.Array
-import Data.Enum
-import Data.Foldable
-import Data.Int
-import Data.Maybe
-import Data.Tuple
+import StandardLibrary
+import Data.Array as Array
+import Data.Int   as Int
 
 import Database.Model
 
 -- | Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3306-How-much-NP-do-I-get-in-combat)
 npPer :: Servant -> Card -> Number
-npPer s'@(Servant s) card = toNumber s.hits.arts
+npPer s'@(Servant s) card = Int.toNumber s.hits.arts
                           * offensiveNPRate
                           * ( firstCardBonus + (cardNpValue * (1.0 + cardMod)) )
                           * enemyServerMod
@@ -39,7 +32,7 @@ npPer s'@(Servant s) card = toNumber s.hits.arts
 
 -- | Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3307-How-many-crit-stars-do-I-get-in-combat)
 starsPer :: Servant -> Card -> Number
-starsPer s'@(Servant s) card = toNumber s.hits.quick 
+starsPer s'@(Servant s) card = Int.toNumber s.hits.quick 
                              * min 3.0 ( baseStarRate 
                                        + firstCardBonus 
                                        + ( cardStarValue * (1.0 + cardMod) )
@@ -97,7 +90,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
     --------------------
     -- FROM YOUR SERVANT
     --------------------
-    servantAtk = toNumber s.stats.max.atk
+    servantAtk = Int.toNumber s.stats.max.atk
     classAtkBonus = case s.class of
                         Berserker -> 1.1
                         Ruler     -> 1.1
@@ -129,9 +122,10 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
     -- FROM NP PROPERTIES
     ---------------------
     npDamageMultiplier = sum $ map (matchSum instants) <<<
-                         special ? cons LastStand $ [Damage, DamageThruDef]
+                         special ? cons LastStand $ 
+                         [Damage, DamageThruDef]
     superEffectiveModifier = (_ + 1.0 + matchSum instants DamagePoison) <<<
-                             fromMaybe 0.0 <<< maximum $
+                              fromMaybe 0.0 <<< maximum $
                              matchSum instants <<< DamageVs <$> specials
     isSuperEffective = 1.0
     -------------
@@ -165,7 +159,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
                         <> (s.passives >>= _.effect)
     npFs    = simplify <$> effect
     overFs  = simplify <$> over
-    firstFs = fromFoldable $ guard first *> head overFs
+    firstFs = Array.fromFoldable $ guard first *> head overFs
     buffs = (skillFs >>= go toMax)
          <> (npFs >>= go npStrength)
          <> (firstFs >>= go overStrength)

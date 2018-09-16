@@ -1,48 +1,56 @@
 -- | Utility rendering functions.
 module Site.Common where
 
-import Prelude
-import Operators
-
-import Halogen.HTML            as H
+import StandardLibrary
 import Halogen.HTML.Events     as E
+import Halogen.HTML            as H
 import Halogen.HTML.Properties as P
 
-import Data.Array 
-import Data.DateTime
-import Data.Int
-import Data.Maybe
-import Data.Number.Format
-import Data.String (Pattern(..), Replacement(..), joinWith, replaceAll, split)
-import Data.Time.Duration
-import Effect
-import Effect.Now
-import Halogen.HTML
-import Halogen.HTML.Properties
-import Web.UIEvent.MouseEvent
+import Data.Date (Date, Month)
+import Halogen.HTML (HTML, ClassName(..))
+
+import Data.DateTime as DateTime
+import Data.Int as Int
+import Data.Number.Format as Format
+import Data.Maybe as Maybe
+import Data.String as String
+import Data.Time.Duration (Hours(..))
+import Partial.Unsafe as Unsafe
+import Effect.Now as Now
+import Halogen.HTML.Properties (IProp)
+import Web.UIEvent.MouseEvent (MouseEvent)
 
 import Printing
 import Database
 import Site.Preferences
 
+-- | Builds a `Date` out of a year, month, and day.
+ymd :: Int -> Month -> Int -> Date
+ymd y m d = Unsafe.unsafePartial Maybe.fromJust do
+    y' <- toEnum y
+    d' <- toEnum d
+    DateTime.exactDate y' m d'
+
 getDate :: Effect Date
-getDate = date <<< maybeDo (adjust <<< Hours $ -4.0) <$> nowDateTime
+getDate = DateTime.date <<< 
+          maybeDo (DateTime.adjust <<< Hours $ -4.0) <$> Now.nowDateTime
 
 lvlRow :: ∀ a b. RangeInfo -> HTML a b
 lvlRow (RangeInfo isPercent x y) = 
-    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * step) <<< toNumber 
+    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * step) <<< Int.toNumber 
     <$> (0..8) `snoc` 10
   where
     step = (y - x) / 10.0
 
 noBreakName :: Boolean -> String -> String
 noBreakName doPrettify = doPrettify ? prettify <<< 
-    replaceAll (Pattern "Anne Bonny") (Replacement "Anne Bonny") <<<
-    replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
-    unBreak <<< split (Pattern "(")
+    String.replaceAll (Pattern "Anne Bonny") (Replacement "Anne Bonny") <<<
+    String.replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
+    unBreak <<< String.split (Pattern "(")
   where
-    unBreak [x, y] = x <> "(" <> replaceAll (Pattern " ") (Replacement " ") y
-    unBreak xs     = joinWith "(" xs
+    unBreak [x, y] = x <> "(" 
+                       <> String.replaceAll (Pattern " ") (Replacement " ") y
+    unBreak xs     = String.joinWith "(" xs
 
 fileName :: String -> String
 fileName = filterOut (Pattern "?:/")
@@ -52,11 +60,11 @@ mode prefs
   | otherwise = "light"
 
 places' :: Int -> String
-places' = places 0 <<< toNumber
+places' = places 0 <<< Int.toNumber
 
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
 toCell isPercent = _td <<< (isPercent ? flip append "%") <<< 
-                   toString <<< roundTo 2
+                   Format.toString <<< roundTo 2
 
 urlName :: String -> String
 urlName = filterOut (Pattern "  ")
@@ -119,11 +127,11 @@ _int ifFail minVal maxVal actualVal changed =
     [ H.input 
       [ P.type_ P.InputNumber
       , P.value $ show actualVal
-      , P.min   $ toNumber minVal
-      , P.max   $ toNumber maxVal
+      , P.min   $ Int.toNumber minVal
+      , P.max   $ Int.toNumber maxVal
       , P.step  $ P.Step 1.0
       , E.onValueInput <<< E.input $ \val -> 
-            case fromString val of
+            case Int.fromString val of
                 Just intVal 
                   | intVal >= minVal && intVal <= maxVal -> changed intVal
                 _ -> ifFail

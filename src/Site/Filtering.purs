@@ -9,16 +9,14 @@ module Site.Filtering
   , updateListing
   ) where
 
-import Prelude
-import Operators
-import Generic as G
-import Data.String as S
+import StandardLibrary
+import Generic     as G
+import Data.String as String
 
-import Data.Array
-import Data.Date
-import Data.Profunctor.Strong
-import Data.Tuple
+import Data.Date (Date)
+import Data.Profunctor.Strong ((&&&))
 
+import Printing
 import Database.Skill
 import Site.Preferences
 
@@ -46,7 +44,7 @@ instance _a_ :: Show FilterTab where
     show FilterPhantasm = "NP Type"
     show FilterCard     = "NP Card"
     show (FilterBuff c) = "Buff (" <> show c <> ")"
-    show x              = unCamel <<< S.drop 6 $ G.genericShow x
+    show x              = unCamel <<< String.drop 6 $ G.genericShow x
 
 data Filter a = Filter FilterTab String (Boolean -> a -> Boolean)
 

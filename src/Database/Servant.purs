@@ -13,43 +13,40 @@ module Database.Servant
   , getDeck
   ) where
 
-import Prelude
-import Generic as G
-
-import Data.Array
-import Data.Function
-import Data.Maybe
-import Data.String.CodeUnits
+import StandardLibrary
+import Data.String.CodeUnits as CodeUnits
+import Generic               as G
 
 import Database.Base
 import Database.Skill
 
-newtype Servant = Servant { name     :: String
-                          , id       :: Int
-                          , rarity   :: Int
-                          , class    :: Class
-                          , attr     :: Attribute
-                          , deck     :: Deck
-                          , curve    :: Int
-                          , stats    :: { base :: Stat, max :: Stat, grail :: Stat }
-                          , skills   :: Array Skill
-                          , passives :: Array Skill
-                          , phantasm :: NoblePhantasm
-                          , gen      :: Gen
-                          , hits     :: Hits
-                          , traits   :: Array Trait
-                          , death    :: Number
-                          , align    :: Array Alignment
-                          , limited  :: Boolean
-                          , free     :: Boolean
-                          }
+newtype Servant = 
+    Servant { name     :: String
+            , id       :: Int
+            , rarity   :: Int
+            , class    :: Class
+            , attr     :: Attribute
+            , deck     :: Deck
+            , curve    :: Int
+            , stats    :: { base :: Stat, max :: Stat, grail :: Stat }
+            , skills   :: Array Skill
+            , passives :: Array Skill
+            , phantasm :: NoblePhantasm
+            , gen      :: Gen
+            , hits     :: Hits
+            , traits   :: Array Trait
+            , death    :: Number
+            , align    :: Array Alignment
+            , limited  :: Boolean
+            , free     :: Boolean
+            }
 
 instance _0_ :: Show Servant where
     show (Servant s) = s.name
 instance _1_ :: Eq Servant where
     eq (Servant x) (Servant y) = eq x.id y.id
 instance _2_ :: Ord Servant where
-    compare = compare `on` \(Servant x) -> x.id
+    compare = comparing \(Servant x) -> x.id
 
 data Deck = Deck Card Card Card Card Card
 
@@ -171,5 +168,5 @@ instance _39_ :: G.BoundedEnum Deck where
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum
 instance _40_ :: Show Deck where
-    show (Deck a b c d e) = fromCharArray $ 
-      (fromMaybe '?' <<< charAt 0 <<< show) <$> [a, b, c, d, e]
+    show (Deck a b c d e) = CodeUnits.fromCharArray $ 
+      (fromMaybe '?' <<< CodeUnits.charAt 0 <<< show) <$> [a, b, c, d, e]

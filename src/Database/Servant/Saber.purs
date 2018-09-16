@@ -1,6 +1,6 @@
 module Database.Servant.Saber (sabers) where
 
-import Prelude
+import StandardLibrary
 import Database.Model
 
 sabers :: Array Servant

@@ -1,6 +1,6 @@
 module Database.Servant.Berserker (berserkers) where
 
-import Prelude
+import StandardLibrary
 import Database.Model
 
 berserkers :: Array Servant

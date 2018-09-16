@@ -9,13 +9,11 @@ module Database.MyServant
   , growthCurves
   ) where
 
-import Prelude
-import Data.Array (index, zipWith)
-import Data.Function
-import Data.Int
-import Data.Maybe
-import Data.Map (Map, fromFoldable, lookup)
-import Data.Profunctor.Strong
+import StandardLibrary
+import Data.Int as Int
+import Data.Map as Map
+
+import Data.Profunctor.Strong ((&&&))
 
 import Database
 
@@ -30,7 +28,7 @@ newtype MyServant = MyServant { base    :: Servant
 instance _0_ :: Eq MyServant where
     eq x y = eq (getBase x) (getBase y)
 instance _1_ :: Ord MyServant where
-    compare = compare `on` getBase
+    compare = comparing getBase
 
 getBase :: MyServant -> Servant
 getBase (MyServant {base}) = base
@@ -58,11 +56,11 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
             4 -> 0.875
             _ -> 1.0
     calcOver minAmount maxAmount = case ms.npLvl of
-          1 -> Flat minAmount
-          _ -> Range minAmount $ minAmount 
-                              + (maxAmount - minAmount) 
-                              * (toNumber ms.npLvl - 1.0) 
-                              / 4.0
+        1 -> Flat minAmount
+        _ -> Range minAmount $ minAmount 
+                            + (maxAmount - minAmount) 
+                            * (Int.toNumber ms.npLvl - 1.0) 
+                            / 4.0
     calcActives lvl skill = skill { effect = mapAmount calc <$> skill.effect 
                                   , cd = skill.cd - (max 2 lvl - 2) / 4
                                   }
@@ -71,7 +69,7 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = MyServant ms
             10 -> Flat maxAmount
             _  -> Flat $ minAmount 
                        + (maxAmount - minAmount)
-                       * (toNumber lvl - 1.0) 
+                       * (Int.toNumber lvl - 1.0) 
                        / 10.0
 
 makeUnowned :: Servant -> MyServant
@@ -86,10 +84,10 @@ makeUnowned servant@(Servant s) = MyServant
     }
 
 unowneds :: Map Servant MyServant
-unowneds = fromFoldable $ (identity &&& makeUnowned) <$> servants
+unowneds = Map.fromFoldable $ (identity &&& makeUnowned) <$> servants
 
 unowned :: Servant -> MyServant
-unowned s = fromMaybe' (\_ -> makeUnowned s) $ lookup s unowneds
+unowned s = fromMaybe' (\_ -> makeUnowned s) $ Map.lookup s unowneds
 
 newServant :: Servant -> MyServant
 newServant servant@(Servant s) = MyServant 
@@ -104,7 +102,7 @@ newServant servant@(Servant s) = MyServant
     
 owned :: Map Servant MyServant -> Servant -> MyServant
 owned team servant = fromMaybe (unowned servant) $
-                     lookup servant team
+                     Map.lookup servant team
 
 lvlStats :: Servant -> Int -> Stat
 lvlStats (Servant {stats:{max}}) 0 = max
@@ -113,10 +111,10 @@ lvlStats (Servant {curve, stats:{base, max}}) lvl = { atk: go base.atk max.atk
                                                     }
   where
     go :: Int -> Int -> Int
-    go baseVal maxVal = add baseVal <<< floor $
-                        toNumber (maxVal - baseVal) * modifier / 1000.0
+    go baseVal maxVal = add baseVal <<< Int.floor $
+                        Int.toNumber (maxVal - baseVal) * modifier / 1000.0
     modifier :: Number
-    modifier    = toNumber <<< fromMaybe 0 $
+    modifier    = Int.toNumber <<< fromMaybe 0 $
                   index growthCurves curve >>= flip index lvl
 
 growthCurves :: Array (Array Int)

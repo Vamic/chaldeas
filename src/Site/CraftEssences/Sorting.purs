@@ -3,18 +3,12 @@ module Site.CraftEssences.Sorting
   , getSort
   )where
 
-import Prelude
-import Operators
-import Generic as G
-import Data.Map as M
+import StandardLibrary
+import Generic  as G
+import Data.Map as Map
+import Data.Int as Int
 
-import Data.Array
-import Data.Int
-import Data.Maybe
-import Data.Map
-import Data.Ord
-import Data.Profunctor.Strong
-import Data.Tuple
+import Data.Profunctor.Strong ((&&&))
 
 import Database
 import Printing
@@ -29,10 +23,10 @@ instance _a_ :: Show SortBy where
     show = G.genericShow
 
 toSort :: SortBy -> CraftEssence -> Number
-toSort ID     (CraftEssence ce) = negate $ toNumber ce.id
-toSort Rarity (CraftEssence ce) = toNumber ce.rarity
-toSort ATK    (CraftEssence ce) = toNumber ce.stats.max.atk
-toSort HP     (CraftEssence ce) = toNumber ce.stats.max.hp
+toSort ID     (CraftEssence ce) = negate $ Int.toNumber ce.id
+toSort Rarity (CraftEssence ce) = Int.toNumber ce.rarity
+toSort ATK    (CraftEssence ce) = Int.toNumber ce.stats.max.atk
+toSort HP     (CraftEssence ce) = Int.toNumber ce.stats.max.hp
 
 doSort :: SortBy -> Array CraftEssence -> Array (Tuple String CraftEssence)
 doSort Rarity = map showSort <<< sortWith sorter
@@ -46,12 +40,12 @@ doSort x = map showSort <<< sortWith sorter
     output   = places 0
 
 sorted :: Map SortBy (Array (Tuple String CraftEssence))
-sorted = M.fromFoldable $ go <$> enumArray
+sorted = Map.fromFoldable $ go <$> enumArray
   where
     go sorter = (sorter ^ doSort sorter craftEssences)
 
 getSort :: SortBy -> Array (Tuple String CraftEssence)
-getSort sorter = fromMaybe [] $ M.lookup sorter sorted
+getSort sorter = fromMaybe [] $ Map.lookup sorter sorted
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

@@ -87,7 +87,7 @@ type FilterState a b = { sorted   :: Array (Tuple String a)
 updateListing :: ∀ a b. FilterState a b -> FilterState a b
 updateListing st = st{ listing = filter (match <<< snd) st.sorted }
   where
-    noSelf = getPreference st.prefs ExcludeSelf
+    noSelf = prefer st.prefs ExcludeSelf
     matchFilter x (Filter f) = f.match noSelf x
     match x = (null st.exclude || all (not <<< matchFilter x) st.exclude)
            && (null st.filters || (if st.matchAny then any else all)

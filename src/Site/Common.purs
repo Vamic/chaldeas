@@ -54,8 +54,8 @@ noBreakName doPrettify = doPrettify ? prettify <<<
 
 mode :: Preferences -> String
 mode prefs
-  | getPreference prefs NightMode = "dark"
-  | otherwise = "light"
+  | prefer prefs NightMode = "dark"
+  | otherwise              = "light"
 
 places' :: Int -> String
 places' = places 0 <<< Int.toNumber

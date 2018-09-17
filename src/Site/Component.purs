@@ -8,12 +8,10 @@ import Halogen.HTML.Events         as E
 import Halogen.HTML                as H
 import Routing.Hash                as Hash
 
-
 import Data.Date (Date)
 import Data.Functor.Coproduct.Nested (Coproduct2)
 import Halogen (Component, ParentDSL, ParentHTML, parentComponent, modify_)
 import Halogen.HTML (HTML)
-
 
 import Site.Servants.Component      as Servants
 import Site.CraftEssences.Component as CraftEssences
@@ -58,7 +56,7 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
                  , withHash: initialHash
                  , prefs:    initialPrefs
                  , team:     initialTeam
-                 , browseCe: isJust mCe
+                 , browseCe: initialHash == "CraftEssences" || isJust mCe
                  , fServant: []
                  , fCe:      []
                  , mServant
@@ -81,12 +79,12 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m
   eval (BrowseServants (CraftEssences.Message fCe mServant) next) = next <$ do
-      liftEffect $ Hash.setHash ""
+      liftEffect $ Hash.setHash "Servants"
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
       team  <- liftEffect getTeam
       modify_ _{ browseCe = false
-               , withHash = ""
+               , withHash = "Servants"
                , prefs    = prefs
                , team     = team
                , today    = today
@@ -94,11 +92,11 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
                , mServant = mServant
                }
   eval (BrowseCraftEssences (Servants.Message fServant mCe) next) = next <$ do
-      liftEffect $ Hash.setHash ""
+      liftEffect $ Hash.setHash "CraftEssences"
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
       modify_ _{ browseCe = true
-               , withHash = ""
+               , withHash = "CraftEssences"
                , prefs    = prefs
                , today    = today
                , fServant = fServant

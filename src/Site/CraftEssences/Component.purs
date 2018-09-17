@@ -5,7 +5,6 @@ module Site.CraftEssences.Component (Query, Message(..), comp) where
 
 import StandardLibrary
 import Halogen.HTML            as H
-import Data.Map                as Map
 import Routing.Hash            as Hash
 import Halogen.HTML.Properties as P
 import Data.String             as String
@@ -76,7 +75,7 @@ comp initialFilt initialFocus initialPrefs today = component
   render st = modal st.prefs st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ Map.toUnfoldableUnordered st.prefs <#> \(k ^ v) -> 
+        , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) -> 
           H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
         , _h 1 "Sort by"
         , H.form_ $ enumArray <#> \sort -> 
@@ -84,7 +83,7 @@ comp initialFilt initialFocus initialPrefs today = component
         , _h 1 "Include"
         ] <> (filter (exclusive <<< fst) allFilters >>= filterSection)
       , H.section_ <<< maybeReverse $
-        portrait false (pref Thumbnails) (pref Artorify) <$> st.listing
+        portrait false st.prefs <$> st.listing
       , H.aside_ $
         [ _h 1 "Browse"
         , _strong "Craft Essences"
@@ -106,7 +105,6 @@ comp initialFilt initialFocus initialPrefs today = component
       maybeReverse = case st.sortBy of
           Rarity -> identity
           _      -> reverse
-      pref     = getPreference st.prefs
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
@@ -146,8 +144,8 @@ comp initialFilt initialFocus initialPrefs today = component
                   , focus   = Nothing
                   }
       SetPref   k v      a -> a <$ do
-          liftEffect $ setPreference k v
-          modif <<< modPrefs $ Map.insert k v
+          liftEffect $ writePreference k v
+          modif <<< modPrefs $ setPreference k v
       Toggle     filt     a
         | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
         | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
@@ -159,21 +157,26 @@ comp initialFilt initialFocus initialPrefs today = component
       toggleIn x xs
         | x `elem` xs = delete x xs
         | otherwise   = x : xs
-      hash Nothing   = Hash.setHash ""
+      hash Nothing   = Hash.setHash "CraftEssences"
       hash (Just ce) = Hash.setHash <<< urlName $ show ce
 
-portrait :: ∀ a. Boolean -> Boolean -> Boolean -> Tuple String CraftEssence
+portrait :: ∀ a. Boolean -> Preferences -> Tuple String CraftEssence
          -> HTML a (Query Unit)
-portrait big thumbnails artorify (lab ^ ce'@(CraftEssence ce))
-  | thumbnails && not big = H.div [_c "thumb", _click <<< Focus $ Just ce']
-    [ toThumbnail ce' ]
-  | otherwise = H.div meta
-    [ toImage ce'
-    , H.header_ <<< (lab /= "") ? append [_span $ noBreakName big lab, H.br_] $
-      [ _span <<< noBreakName big <<< artorify ? doArtorify $ ce.name ]
-    , H.footer_ [_span <<< String.joinWith "  " $ replicate ce.rarity "★"]
-    ]
+portrait big prefs (lab ^ ce'@(CraftEssence ce))
+  | not big && prefer prefs Thumbnails = 
+      H.div [_c "thumb", _click <<< Focus $ Just ce']
+      [ toThumbnail ce' ]
+  | otherwise = 
+      H.div meta
+      [ toImage ce'
+      , H.header_ <<< (lab /= "") ? append 
+        [_span $ noBreakName big lab, H.br_] $
+        [ _span <<< noBreakName big $ artorify ce.name ]
+      , H.footer_ [_span <<< String.joinWith "  " $ replicate ce.rarity "★"]
+      ]
   where 
+    artorify   = prefer prefs Artorify ? 
+                 String.replaceAll (Pattern "Altria") (Replacement "Artoria")
     meta       = not big ? (cons <<< _click <<< Focus $ Just ce') $
                  [_c $ "portrait stars" <> show ce.rarity]
     doArtorify = String.replaceAll (Pattern "Altria") (Replacement "Artoria")
@@ -187,7 +190,7 @@ modal prefs
     [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true (pref Thumbnails) (pref Artorify) ("" ^ ce')
+      [ portrait true prefs ("" ^ ce')
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
@@ -200,8 +203,6 @@ modal prefs
       ]) <>
       [ H.section_ $ effectEl <<< mapAmount (\_ y -> Flat y) <$> ce.effect ]
     ]
-  where
-    pref = getPreference prefs
 
 effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)
 effectEl ef

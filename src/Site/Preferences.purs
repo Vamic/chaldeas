@@ -3,9 +3,11 @@
 module Site.Preferences
     ( Preference(..)
     , Preferences
-    , setPreference
-    , getPreference
+    , writePreference
+    , prefer
     , getPreferences
+    , setPreference
+    , unfoldPreferences
     , getTeam
     , setTeam
     ) where
@@ -15,12 +17,14 @@ import Generic             as G
 import Web.HTML            as HTML
 import Data.Int            as Int
 import Data.Map            as Map
+import Data.Set            as Set
 import Data.String         as String
 import Web.Storage.Storage as Storage
 import Web.HTML.Window     as Window
 
 import Data.Profunctor.Strong ((&&&))
 
+import Data.Set (Set)
 import Printing
 import Database
 import Database.MyServant
@@ -39,21 +43,28 @@ instance _a_ :: Show Preference where
     show ShowTables = "Show skill and NP tables"
     show x = unCamel $ G.genericShow x
 
-setPreference :: Preference -> Boolean -> Effect Unit
-setPreference pref set = HTML.window >>= Window.localStorage
+type Preferences = Set Preference
+
+unfoldPreferences :: Preferences -> Array (Tuple Preference Boolean)
+unfoldPreferences prefs = (identity &&& prefer prefs) <$> enumArray
+
+prefer :: Preferences -> Preference -> Boolean
+prefer = flip elem
+
+setPreference :: Preference -> Boolean -> Preferences -> Preferences
+setPreference pref false = Set.delete pref
+setPreference pref true  = Set.insert pref
+
+writePreference :: Preference -> Boolean -> Effect Unit
+writePreference pref set = HTML.window >>= Window.localStorage
                      >>= Storage.setItem (G.genericShow pref) (show set)
 
-type Preferences = Map Preference Boolean
-
-getPreference :: Preferences -> Preference -> Boolean
-getPreference prefs pref = fromMaybe false $ Map.lookup pref prefs
-
 getPreferences :: Effect Preferences
-getPreferences = Map.fromFoldable <$> traverse go enumArray
+getPreferences = Set.unions <$> traverse go enumArray
   where
-    fromFlag (Just "true") = true
-    fromFlag _             = false
-    go k = map (Tuple k) $ 
+    fromFlag (Just "true") = Set.singleton
+    fromFlag _             = const Set.empty
+    go k = map (_ $ k) $ 
            HTML.window >>= Window.localStorage >>= 
            Storage.getItem (G.genericShow k) >>= pure <<< fromFlag
 

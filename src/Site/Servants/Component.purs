@@ -92,7 +92,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
   render st = modal st.prefs st.ascent st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ Map.toUnfoldableUnordered st.prefs <#> \(k ^ v) -> 
+        , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) -> 
           H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
         , _h 1 "Sort by"
         , H.form_ $ enumArray <#> \sort -> 
@@ -100,7 +100,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
         , _h 1 "Include"
         ] <> (filter (exclusive <<< fst) allFilters' >>= filterSection)
       , H.section_ <<< maybeReverse $
-        portrait false (pref Thumbnails) (pref Artorify) baseAscend
+        portrait false st.prefs shareTeam baseAscend
         <$> (st.mineOnly ? filter isMine $ st.listing)
       , H.aside_ $
         [ _h 1 "Browse"
@@ -127,11 +127,13 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       maybeReverse = case st.sortBy of
           Rarity -> identity
           _      -> reverse
-      pref = getPreference st.prefs
+      shareTeam
+        | st.mineOnly = st.team
+        | otherwise   = Map.empty
       isMine (_ ^ s) = any (eq s <<< getBase) st.team
       baseAscend
-        | pref MaxAscension = 4
-        | otherwise         = 1
+        | prefer st.prefs MaxAscension = 4
+        | otherwise                    = 1
       allFilters'
         | st.mineOnly = allFilters <#> \(tab ^ filts) -> 
                         tab ^ filter (\(Filter x) ->
@@ -160,9 +162,9 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
   eval = case _ of
       DoNothing       a -> pure a
       Ascend   ascent a -> a <$ modify_ _{ ascent = ascent }
-      MatchAny match  a -> a <$ modif _{ matchAny = match }
-      MineOnly mine   a -> a <$ modif _{ mineOnly = mine }
-      ClearAll        a -> a <$ modif _{ exclude = [], filters = [] }
+      MatchAny match  a -> a <$ modif   _{ matchAny = match }
+      MineOnly mine   a -> a <$ modif   _{ mineOnly = mine }
+      ClearAll        a -> a <$ modif   _{ exclude = [], filters = [] }
       Check t  true   a -> a <$ do
           modif <<< modExclude <<< filter $ notEq t <<< getTab
       Switch   switch a -> a <$ do
@@ -188,8 +190,8 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                       , focus   = Nothing
                       }
       SetPref  k v    a -> a <$ do
-          liftEffect $ setPreference k v
-          modif (modPrefs $ Map.insert k v)
+          liftEffect $ writePreference k v
+          modif (modPrefs $ setPreference k v)
       Toggle   filt   a
         | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
         | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
@@ -212,33 +214,41 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       toggleIn x xs
         | x `elem` xs = delete x xs
         | otherwise   = x : xs
-      hash Nothing  = Hash.setHash ""
+      hash Nothing  = Hash.setHash "Servants"
       hash (Just s) = Hash.setHash <<< urlName $ show s
 
-portrait :: ∀ a. Boolean -> Boolean -> Boolean -> Int -> Tuple String Servant
-         -> HTML a (Query Unit)
-portrait big thumbnails artorify ascension (lab ^ s'@(Servant s))
-  | thumbnails && not big = H.div [_c "thumb", _click <<< Focus $ Just s']
-    [ toThumbnail s' ]
-  | otherwise = H.div meta
+portrait :: ∀ a. Boolean -> Preferences -> Map Servant MyServant -> Int 
+         -> Tuple String Servant -> HTML a (Query Unit)
+portrait big prefs team ascension (lab ^ s'@(Servant s))
+  | not big && prefer prefs Thumbnails = 
+      H.div [_c "thumb", _click <<< Focus $ Just s']
+      [ toThumbnail s' ]
+  | otherwise =
+      H.div meta
       [ _img $ "img/Servant/" <> fileName s.name <> ascent <> ".png"
       , H.div_ [ toImage s.class ]
-      , H.header_ <<< (lab /= "") ? append [_span lab, H.br_] $
-        [ _span <<< noBreakName big <<< artorify ? doArtorify $ s.name ]
+      , H.header_ <<< (label /= "") ? append [_span label, H.br_] $
+        [ _span <<< noBreakName big $ artorify s.name ]
       , H.footer_ <<< 
         ((big && ascension > 1) ? cons prevAscend) <<<
         ((big && ascension < 4) ? consAfter nextAscend) $
         [_span <<< String.joinWith "  " $ replicate s.rarity "★"]
       ]
-  where 
+  where
+    artorify   = prefer prefs Artorify ? 
+                 String.replaceAll (Pattern "Altria") (Replacement "Artoria")
     meta       = not big ? (cons <<< _click <<< Focus $ Just s') $
                  [_c $ "portrait stars" <> show s.rarity]
-    doArtorify = String.replaceAll (Pattern "Altria") (Replacement "Artoria")
     prevAscend = _a "<" <<< Ascend $ ascension - 1
     nextAscend = _a ">" <<< Ascend $ ascension + 1
     ascent
       | ascension <= 1 = ""
       | otherwise      = " " <> show ascension
+    label = case lab ^ Map.lookup s' team of
+        "" ^ Just (MyServant ms) | not big -> 
+            show ms.level <> "/" <> show (maxLevel s') <> " " 
+            <> String.joinWith "-" (show <$> ms.skills)
+        _ -> ""
 
 modal :: ∀ a. Preferences -> Int -> Maybe MyServant
       -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
@@ -248,7 +258,7 @@ modal prefs ascent (Just ms')= H.div
   [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true (pref Thumbnails) (pref Artorify) ascent $ "" ^ s'
+      [ portrait true prefs Map.empty ascent $ "" ^ s'
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
@@ -354,8 +364,7 @@ modal prefs ascent (Just ms')= H.div
     npRank x       = show x
     {base} = s.stats
     {max, grail} = b.stats
-    pref = getPreference prefs
-    showTables = pref ShowTables
+    showTables = prefer prefs ShowTables
     overMeta
       | s.phantasm.first = [_c "activates"]
       | otherwise        = []

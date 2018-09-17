@@ -1,6 +1,6 @@
 -- | All Craft Essences.
 -- Unlike Servants, which are divided into multiple subfiles,
--- Craft Essences are all included in this one file 
+-- Craft Essences are all included in this one file
 -- along with their data model definition.
 module Database.CraftEssence
   ( class MatchCraftEssence, ceHas
@@ -18,8 +18,8 @@ import Database.Servant
 import Database.Skill
 
 
--- | All Craft Essences available in EN. 
--- Note: Names _must_ be true to their EN localization. 
+-- | All Craft Essences available in EN.
+-- Note: Names _must_ be true to their EN localization.
 -- GrandOrder.Wiki is only trustworthy for CEs that have been in the game
 -- for a while. Craft Essences introduced during events and the like should be
 -- checked against the official announcement.
@@ -1645,7 +1645,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 0, hp: 750 }
               , max:  { atk: 0, hp: 3000 }
               }
-  , effect:   [ Times 3 $ Grant Self 0 Invincibility Full 
+  , effect:   [ Times 3 $ Grant Self 0 Invincibility Full
               , Grant Self 0 DamageUp $ 200.0 ~ 500.0
               ]
   , bond:     Nothing
@@ -2021,7 +2021,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Grant Self 0 (Performance Quick) $ 15.0 ~ 20.0 
+  , effect:   [ Grant Self 0 (Performance Quick) $ 15.0 ~ 20.0
               , Grant Self 0 NPUp $ 15.0 ~ 20.0
               ]
   , bond:     Nothing
@@ -2131,7 +2131,7 @@ craftEssences = CraftEssence <$>
 , bond 272 "Heaven Scorcher Halberd" "Lu Bu Fengxian" IconBusterUp
   [ party' Buster 15 ]
 , bond 273 "What can be Left Behind" "Georgios" IconShield
-  [ When "defeated" <<< Times 1 $ Grant Party 0 Invincibility Full 
+  [ When "defeated" <<< Times 1 $ Grant Party 0 Invincibility Full
   , When "defeated" <<< Grant Party 3 DamageDown $ Flat 1000.0
   ]
 , bond 274 "Thermopylae" "Leonidas I" IconBusterUp
@@ -2641,10 +2641,10 @@ craftEssences = CraftEssence <$>
   [ party' Quick 10, party' Buster 10 ]
 , bond 380 "Lady of the Lake" "Lancelot (Saber)" IconNobleUp
   [ party NPGen 10, party CritUp 10 ]
-, bond 381 "Reminiscence of the Summer" 
+, bond 381 "Reminiscence of the Summer"
            "Marie Antoinette (Caster)" IconExclamationUp
   [ party CritUp 25 ]
-, bond 382 "Currently In The Middle Of A Shower" 
+, bond 382 "Currently In The Middle Of A Shower"
            "Anne Bonny & Mary Read (Archer)" IconBusterArtsUp
   [ party' Buster 10, party' Arts 10 ]
 , bond 383 "Prydwen" "Mordred (Rider)" IconBeamUp
@@ -2683,7 +2683,7 @@ craftEssences = CraftEssence <$>
     party buff  = Grant Party 0 buff <<< Flat <<< Int.toNumber
     party' card = party (Performance card)
     atkChance chance = When "attacking" <<< Chance chance
-    bond id name servant icon effect = 
+    bond id name servant icon effect =
         { name
         , id
         , rarity:   4
@@ -2700,8 +2700,8 @@ craftEssences = CraftEssence <$>
 getBond :: Servant -> Maybe CraftEssence
 getBond (Servant s) = go s.name
   where
-    go = memoize \name -> 
-         let match (CraftEssence ce) = ce.bond == Just name 
+    go = memoize \name ->
+         let match (CraftEssence ce) = ce.bond == Just name
          in find match craftEssences
 
 newtype CraftEssence = CraftEssence { name     :: String
@@ -2718,7 +2718,7 @@ instance _0_ :: Show CraftEssence where
     show (CraftEssence ce) = ce.name
 
 getEffects :: CraftEssence -> Array SkillEffect
-getEffects (CraftEssence ce) = filter (not <<< demerit) $ 
+getEffects (CraftEssence ce) = filter (not <<< demerit) $
                                simplify <$> ce.effect
 
 class (G.BoundedEnum a, Show a) <= MatchCraftEssence a where

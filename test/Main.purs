@@ -1,24 +1,24 @@
--- | Tests the database against [GrandOrder.Wiki](grandorder.wiki). 
+-- | Tests the database against [GrandOrder.Wiki](grandorder.wiki).
 -- |
 -- | When running the tests, the following command line arguments are accepted:
 -- | `--ce <amount>` to limit the number of Craft Essences tested,
 -- | `--s <amount>` to limit the number of Servants tested.
 -- |
--- | Currently tested: 
+-- | Currently tested:
 -- |
--- | Craft Essences: 
+-- | Craft Essences:
 -- | id, max atk, max hp, min atk, min hp, rarity, icon type, limited
 -- |
--- | Servants: 
+-- | Servants:
 -- | NP effects, NP overcharge effects, NP commandcard, NP icon, NP hitcount,
--- | id, class, rarity, attribute, alignment, death resist, 
--- | status (limited/welfare/etc.), 
--- | min atk, max atk, min hp, max hp, grail atk, grail hp, 
--- | quick hitcount, arts hitcount, buster hitcount, extra hitcount, 
--- | star absorption, star generation, np charge/attack, np charge/defense 
+-- | id, class, rarity, attribute, alignment, death resist,
+-- | status (limited/welfare/etc.),
+-- | min atk, max atk, min hp, max hp, grail atk, grail hp,
+-- | quick hitcount, arts hitcount, buster hitcount, extra hitcount,
+-- | star absorption, star generation, np charge/attack, np charge/defense
 -- |
 -- | Skills:
--- | cooldown, value ranges, effects 
+-- | cooldown, value ranges, effects
 
 module Test.Main where
 
@@ -46,22 +46,22 @@ import Test.Wiki (Wiki, printBool, wiki, wikiLookup, wikiRange)
 import Test.Parse (effects, npRank, printIcon, readEffect, skillRanks)
 
 main :: Effect Unit
-main = Yargs.runY (usage <> example) $ app 
+main = Yargs.runY (usage <> example) $ app
        <$> yargNums "ce" "Limit Craft Essences"
        <*> yargNums "s"  "Limit Servants"
   where
     yargNums cmd desc = Yargs.yarg cmd [] (Just desc) (Left (-1)) false
-    usage = Setup.usage     "$0 [--ce <amount>] [--s <amount>]" 
-    example = Setup.example "$0 --ce 10 --s 0" 
+    usage = Setup.usage     "$0 [--ce <amount>] [--s <amount>]"
+    example = Setup.example "$0 --ce 10 --s 0"
                             "Test 10 Craft Essences and no Servants."
 
 app :: Int -> Int -> Effect Unit
 app ce servant = Console.log msg *> Aff.launchAff_ do
-    skills <- map Map.fromFoldable <<< traverse wiki <<< nubEq $ 
+    skills <- map Map.fromFoldable <<< traverse wiki <<< nubEq $
               servs >>= skillRanks
     stats  <- traverse (wiki <<< flip Tuple Unranked) servs
     nps    <- traverse (wiki <<< addRank npRank) servs
-    ces    <- traverse (wiki <<< flip Tuple Unranked) 
+    ces    <- traverse (wiki <<< flip Tuple Unranked)
               (maybeTake ce craftEssences)
     Main.runTestWith Test.runTest do
         traverse_ (testSkills skills) servs
@@ -71,7 +71,7 @@ app ce servant = Console.log msg *> Aff.launchAff_ do
   where
     show' (-1) = "all"
     show' x    = show x
-    msg        = "Scanning " <> show' ce <> " Craft Essences and " 
+    msg        = "Scanning " <> show' ce <> " Craft Essences and "
                  <> show' servant <> " Servants"
     servs     = maybeTake servant servants
     maybeTake :: ∀ a. Int -> Array a -> Array a
@@ -82,12 +82,12 @@ wikiMatch :: Wiki -> String -> String -> TestSuite
 wikiMatch mw k obj = test k $ case wikiLookup mw k of
     Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "].") $
                obj `elem` v
-    Nothing -> failure $ "Missing property " <> k <> " in " <> show mw 
+    Nothing -> failure $ "Missing property " <> k <> " in " <> show mw
                        <> maybe "" (append ": ") (wikiLookup mw "err" >>= head)
 
 
 wikiHas :: Wiki -> String -> String -> Boolean
-wikiHas mw k obj = maybe false (elem obj <<< map String.toLower) $ 
+wikiHas mw k obj = maybe false (elem obj <<< map String.toLower) $
                    wikiLookup mw k
 
 testCraftEssence :: Tuple CraftEssence Wiki -> TestSuite
@@ -164,7 +164,7 @@ testServant (Servant s ^ mw) = suite (s.name <> ": Info") do
     status
       | s.free && s.limited = hasStatus "welfare"
       | s.limited           = hasStatus "limited"
-      | otherwise     = not $ hasStatus "welfare" 
+      | otherwise     = not $ hasStatus "welfare"
                            || hasStatus "limited"
     prId = format $ Formatter { comma: false
                               , before: 3
@@ -176,15 +176,15 @@ testServant (Servant s ^ mw) = suite (s.name <> ": Info") do
 testNP :: Tuple Servant Wiki -> TestSuite
 testNP (Servant s ^ mw) = suite (s.name <> ": NP") do
       test "Primary Effects" do
-          shouldMatch (effects s.phantasm.effect) $ 
+          shouldMatch (effects s.phantasm.effect) $
               wikiRange mw "effect" (0..6) >>= readEffect
-      test "Overcharge Effects" do 
+      test "Overcharge Effects" do
           shouldMatch (effects s.phantasm.over) $
               wikiRange mw "oceffect" (0..6) >>= readEffect
 
 wikiRanges :: Wiki -> Array RangeInfo
 wikiRanges mw = mapMaybe go (0..7)
-  where 
+  where
     go i = do
         from <- wikiLookup mw ("e" <> show i <> "-lvl1") >>= head
         to   <- wikiLookup mw ("e" <> show i <> "-lvl10") >>= head
@@ -192,7 +192,7 @@ wikiRanges mw = mapMaybe go (0..7)
             stripFrom = maybeDo (String.stripSuffix $ Pattern "%") from
             stripTo   = maybeDo (String.stripSuffix $ Pattern "%") to
         fromVal <- Number.fromString stripFrom
-        toVal   <- Number.fromString stripTo  
+        toVal   <- Number.fromString stripTo
         guard $ fromVal /= toVal
         pure $ RangeInfo isPercent fromVal toVal
 

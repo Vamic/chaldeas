@@ -1,6 +1,6 @@
--- | The functions in this module can be invoked from JavaScript to export 
--- | database information as simple objects. 
--- | Since these functions are never called by CHALDEAS code, build commands 
+-- | The functions in this module can be invoked from JavaScript to export
+-- | database information as simple objects.
+-- | Since these functions are never called by CHALDEAS code, build commands
 -- | must manually specify this module's inclusion with `--module Export`.
 -- | The `npm run build` command does so automatically.
 -- Note: `\_ ->` ensures that exported values are created locally and never
@@ -64,7 +64,7 @@ exportAmount DB.Full        = export { from: 0.0, to: 0.0 }
 exportAmount DB.Placeholder = export { from: 0.0, to: 0.0 }
 
 exportSkill :: DB.Skill -> Foreign
-exportSkill {name, icon, cd, effect} = 
+exportSkill {name, icon, cd, effect} =
     export { name
            , icon: show icon
            , cd
@@ -72,7 +72,7 @@ exportSkill {name, icon, cd, effect} =
            }
 
 exportPhantasm :: DB.NoblePhantasm -> Foreign
-exportPhantasm {name, desc, rank, card, kind, hits, effect, over} = 
+exportPhantasm {name, desc, rank, card, kind, hits, effect, over} =
     export { name
            , desc
            , rank: show rank
@@ -114,9 +114,9 @@ exportEffect = export <<< go
         , amount: exportAmount amount
         , chance: {from: 100, to: 100}
         }
-    go (DB.Chance chance effect) = (go effect) 
+    go (DB.Chance chance effect) = (go effect)
         { chance = {from: chance, to: chance} }
-    go (DB.Chances x y effect) = (go effect) 
+    go (DB.Chances x y effect) = (go effect)
         { chance = {from: x, to: y} }
     go (DB.ToMax x effect) = modEffect (go effect) <<<
         flip append $ " every turn up to " <> show x
@@ -127,6 +127,6 @@ exportEffect = export <<< go
     go (DB.Times times effect) = modEffect (go effect) <<<
         flip append $ " (" <> show times <> " times)"
 
-modEffect :: ∀ a. { effect :: String | a } -> (String -> String) 
+modEffect :: ∀ a. { effect :: String | a } -> (String -> String)
           -> { effect :: String | a }
 modEffect base f = base { effect = f base.effect }

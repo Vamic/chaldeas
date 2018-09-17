@@ -935,9 +935,9 @@ casters = Servant <$>
               , kind:   "Anti-Army"
               , hits:   0
               , effect: [ To Self OverChance $ 60.0 ~ 80.0 ]
-              , over:   [ Chance 0 <<< 
+              , over:   [ Chance 0 <<<
                           Debuff Enemies 3 AttackDown $ 20.0 ~ 40.0
-                        , Chance 0 <<< 
+                        , Chance 0 <<<
                           Debuff Enemies 3 DefenseDown $ 20.0 ~ 40.0
                         , Debuff Enemies 3 Curse $ 500.0 ~ 2500.0
                         ]

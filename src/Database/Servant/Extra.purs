@@ -244,7 +244,7 @@ extras = Servant <$>
                 , icon:   IconNoble
                 , cd:     8
                 , effect: [ To Self GaugeUp $ 20.0 ~ 30.0
-                          , When "on Waterside or Beach field" <<< 
+                          , When "on Waterside or Beach field" <<<
                             Grant Self 3 AttackUp $ 10.0 ~ 20.0
                           ]
                 }

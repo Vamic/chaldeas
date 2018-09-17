@@ -15,11 +15,11 @@ import Database
 
 extraFilters :: Array (Filter CraftEssence)
 extraFilters = join
-  [ [ simpleFilter FilterSource "Limited"     
+  [ [ simpleFilter FilterSource "Limited"
       \_ (CraftEssence ce) -> ce.limited && isNothing ce.bond
-    , simpleFilter FilterSource "Non-Limited" 
+    , simpleFilter FilterSource "Non-Limited"
       \_ (CraftEssence ce) -> not ce.limited && isNothing ce.bond
-    , simpleFilter FilterSource "Bond"        
+    , simpleFilter FilterSource "Bond"
       \_ (CraftEssence ce) -> isJust ce.bond
     ]
   , reverse (1..5) <#> \rarity
@@ -28,7 +28,7 @@ extraFilters = join
   ]
 
 scheduledFilters :: Array (ScheduledFilter CraftEssence)
-scheduledFilters = 
+scheduledFilters =
   [ ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
     namedBonus FilterAvailability "Limited to Event"
     [ "Glory Is With Me", "Original Legion", "Howl at the Moon"
@@ -53,24 +53,24 @@ scheduledFilters =
 
 
 matchFilter :: ∀ a. MatchCraftEssence a => FilterTab -> a -> Filter CraftEssence
-matchFilter tab x = 
+matchFilter tab x =
     Filter { icon:  Nothing
            , tab
            , name:  show x
            , match: ceHas x
            }
 
-imageFilter :: ∀ a. ToImage a => MatchCraftEssence a 
+imageFilter :: ∀ a. ToImage a => MatchCraftEssence a
             => FilterTab -> a -> Filter CraftEssence
-imageFilter tab x = 
+imageFilter tab x =
     Filter { icon:  Just $ toImagePath x
            , tab
-           , name:  show x 
+           , name:  show x
            , match: ceHas x
            }
 
 namedBonus :: FilterTab -> String -> Array String -> Filter CraftEssence
-namedBonus tab name names = 
+namedBonus tab name names =
     Filter { icon: Nothing
            , tab
            , name
@@ -78,7 +78,7 @@ namedBonus tab name names =
            }
 
 getExtraFilters :: Date -> FilterTab -> Array (Filter CraftEssence)
-getExtraFilters today tab = 
+getExtraFilters today tab =
     filter fromTab $ getScheduled scheduledFilters today <> extraFilters
   where
     fromTab (Filter x) = tab == x.tab
@@ -86,9 +86,9 @@ getExtraFilters today tab =
 getFilters :: Date -> FilterTab -> Array (Filter CraftEssence)
 getFilters _ f@FilterBonus    = matchFilter f
                                 <$> ceGetAll :: Array BonusEffect
-getFilters _ f@FilterDebuff   = imageFilter f 
+getFilters _ f@FilterDebuff   = imageFilter f
                                 <$> ceGetAll :: Array DebuffEffect
-getFilters _ f@(FilterBuff c) = imageFilter f <$> filter (eq c <<< buffCategory) 
+getFilters _ f@(FilterBuff c) = imageFilter f <$> filter (eq c <<< buffCategory)
                                 ceGetAll :: Array BuffEffect
 getFilters _ f@FilterAction   = matchFilter f <$> filter (not <<< isDamage) ceGetAll :: Array InstantEffect
 getFilters _ f@FilterDamage   = matchFilter f <$> filter isDamage
@@ -96,7 +96,7 @@ getFilters _ f@FilterDamage   = matchFilter f <$> filter isDamage
 getFilters today f = getExtraFilters today f
 
 skillFilter :: SkillEffect -> Maybe (Filter CraftEssence)
-skillFilter (Grant _ _ buff _)    = Just $ matchFilter 
+skillFilter (Grant _ _ buff _)    = Just $ matchFilter
                                      (FilterBuff $ buffCategory buff) buff
 skillFilter (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
 skillFilter (To _ action _)       = Just $ matchFilter FilterAction action

@@ -1,5 +1,5 @@
 -- | Retrieves information from [GrandOrder.Wiki](grandorder.wiki)
--- | in the form of maps from Strings (property names) 
+-- | in the form of maps from Strings (property names)
 -- | to String Arrays (list of entries separated by newlines).
 module Test.Wiki
   ( Wiki(..)
@@ -39,25 +39,25 @@ wikiLookup :: Wiki -> String -> Maybe (Array String)
 wikiLookup (Wiki mw) = flip Map.lookup mw
 
 toWiki :: String -> MaybeRank -> Wiki
-toWiki text rank = 
-    Wiki <<< Map.fromFoldable <<< reverse <<< mapMaybe parseEntry <<< 
-    String.split (Pattern "|") <<< Regex.replace wikiLink "$1" $ 
-    fromMaybe text do 
+toWiki text rank =
+    Wiki <<< Map.fromFoldable <<< reverse <<< mapMaybe parseEntry <<<
+    String.split (Pattern "|") <<< Regex.replace wikiLink "$1" $
+    fromMaybe text do
         fromStart <- splitAny After [show rank <> "="]     text
         toEnd     <- splitAny Before ["|-|","/onlyinclude"] fromStart
         pure toEnd
-  where 
+  where
     parseEntry entry = do
         assignment         <- String.indexOf (Pattern "=") entry
         let {before, after} = String.splitAt assignment entry
             afterLines      = String.split (Pattern "<br/>") after
         guard <<< not $ String.null before
-        pure <<< Tuple (String.trim $ String.toLower before) <<< 
-        filter (not <<< String.null) $ 
-        maybeDo (String.stripPrefix $ Pattern "#tip-text:") <<< String.trim <<< 
-        filterOut (Pattern "%,{}[]()'") <<< Regex.replace wikiTag " " <<< 
+        pure <<< Tuple (String.trim $ String.toLower before) <<<
+        filter (not <<< String.null) $
+        maybeDo (String.stripPrefix $ Pattern "#tip-text:") <<< String.trim <<<
+        filterOut (Pattern "%,{}[]()'") <<< Regex.replace wikiTag " " <<<
         maybeDo (splitAny After  ["EN:"]) <<<
-        maybeDo (splitAny Before ["}}","/"]) <<< 
+        maybeDo (splitAny Before ["}}","/"]) <<<
         maybeDo (String.stripPrefix $ Pattern "=") <$> afterLines
 
 data Side = Before | After
@@ -75,13 +75,13 @@ splitAny side xs s = go <$> indices
             <$> String.indexOf (Pattern pattern) s
 
 wiki :: ∀ a. Show a => Tuple a MaybeRank -> Aff (Tuple a Wiki)
-wiki (x ^ mRank) = Tuple x <<< wikify <<< 
+wiki (x ^ mRank) = Tuple x <<< wikify <<<
                    _.body <$> Affjax.get ResponseFormat.string encode
   where
-    wikify (Right obj) = toWiki obj mRank 
-    wikify (Left err)  = Wiki $ Map.fromFoldable 
+    wikify (Right obj) = toWiki obj mRank
+    wikify (Left err)  = Wiki $ Map.fromFoldable
                          [("err" ^ [Affjax.printResponseFormatError err])]
-    encode  = append wikiRoot <<< Global.unsafeEncodeURIComponent <<< 
+    encode  = append wikiRoot <<< Global.unsafeEncodeURIComponent <<<
               translate $ show x
 
 printBool :: Boolean -> String
@@ -89,5 +89,5 @@ printBool true  = "Yes"
 printBool false = "No"
 
 wikiRange :: Wiki -> String -> Array Int -> Array String
-wikiRange (Wiki mw) k range = range >>= fromMaybe empty <<< 
+wikiRange (Wiki mw) k range = range >>= fromMaybe empty <<<
                               flip Map.lookup mw <<< append k <<< show

@@ -35,7 +35,7 @@ extraFilters = join
   ]
 
 scheduledFilters :: Array (ScheduledFilter Servant)
-scheduledFilters = 
+scheduledFilters =
   [ ScheduledFilter (ymd 2018 September 11) (ymd 2018 September 11) $
     simpleFilter FilterAvailability "Rate-Up"
     \_ (Servant s) -> not s.limited && s.class == Berserker
@@ -56,33 +56,33 @@ scheduledFilters =
   ]
 
 matchFilter :: ∀ a. MatchServant a => FilterTab -> a -> Filter Servant
-matchFilter tab x = 
+matchFilter tab x =
     Filter { icon:  Nothing
            , tab
            , name:  show x
            , match: has x
            }
 
-imageFilter :: ∀ a. ToImage a => MatchServant a 
+imageFilter :: ∀ a. ToImage a => MatchServant a
             => FilterTab -> a -> Filter Servant
-imageFilter tab x = 
+imageFilter tab x =
     Filter { icon:  Just $ toImagePath x
            , tab
-           , name:  show x 
+           , name:  show x
            , match: has x
            }
 
 passiveFilter :: Skill -> Filter Servant
-passiveFilter p = 
+passiveFilter p =
     Filter { icon: Just $ toImagePath p.icon
            , tab:  FilterPassiveSkill
            , name: p.name
-           , match: \_ (Servant s) -> 
+           , match: \_ (Servant s) ->
                    any (eq p.name) $ _.name <$>  s.passives
            }
 
 namedBonus :: FilterTab -> String -> Array String -> Filter Servant
-namedBonus tab name names = 
+namedBonus tab name names =
     Filter { icon: Nothing
            , tab
            , name
@@ -95,38 +95,38 @@ singleFilter tab x
   | otherwise = [matchFilter tab x]
 
 getExtraFilters :: Date -> FilterTab -> Array (Filter Servant)
-getExtraFilters today tab = 
+getExtraFilters today tab =
     filter fromTab $ getScheduled scheduledFilters today <> extraFilters
   where
     fromTab (Filter x) = tab == x.tab
 
 getFilters :: Date -> FilterTab -> Array (Filter Servant)
-getFilters _ f@FilterAlignment    = matchFilter f 
+getFilters _ f@FilterAlignment    = matchFilter f
                                     <$> getAll :: Array Alignment
-getFilters _ f@FilterAttribute    = matchFilter f 
+getFilters _ f@FilterAttribute    = matchFilter f
                                     <$> getAll :: Array Attribute
-getFilters _ f@FilterCard         = imageFilter f 
+getFilters _ f@FilterCard         = imageFilter f
                                     <$> getAll :: Array Card
-getFilters _ f@FilterClass        = imageFilter f 
+getFilters _ f@FilterClass        = imageFilter f
                                     <$> getAll :: Array Class
 getFilters _ f@FilterDebuff       = imageFilter f
                                     <$> getAll :: Array DebuffEffect
-getFilters _ f@FilterDeck         = matchFilter f 
+getFilters _ f@FilterDeck         = matchFilter f
                                     <$> getAll :: Array Deck
-getFilters _ f@FilterPhantasm     = matchFilter f 
+getFilters _ f@FilterPhantasm     = matchFilter f
                                     <$> getAll :: Array PhantasmType
-getFilters _ f@FilterTrait        = matchFilter f 
+getFilters _ f@FilterTrait        = matchFilter f
                                     <$> getAll :: Array Trait
-getFilters _ f@FilterPassiveSkill = passiveFilter 
+getFilters _ f@FilterPassiveSkill = passiveFilter
                                     <$> getPassives
-getFilters _ f@(FilterBuff c)     = imageFilter f 
-                                    <$> filter (eq c <<< buffCategory) 
+getFilters _ f@(FilterBuff c)     = imageFilter f
+                                    <$> filter (eq c <<< buffCategory)
                                     getAll :: Array BuffEffect
-getFilters _ f@FilterAction       = matchFilter f 
-                                    <$> filter (not <<< isDamage) 
+getFilters _ f@FilterAction       = matchFilter f
+                                    <$> filter (not <<< isDamage)
                                     getAll :: Array InstantEffect
-getFilters _ f@FilterDamage       = matchFilter f 
-                                    <$> filter isDamage 
+getFilters _ f@FilterDamage       = matchFilter f
+                                    <$> filter isDamage
                                     getAll :: Array InstantEffect
 getFilters today f               = getExtraFilters today f
 
@@ -136,7 +136,7 @@ plural x
   | otherwise = Just x
 
 skillFilter :: SkillEffect -> Maybe (Filter Servant)
-skillFilter (Grant _ _ buff _)    = Just $ matchFilter 
+skillFilter (Grant _ _ buff _)    = Just $ matchFilter
                                      (FilterBuff $ buffCategory buff) buff
 skillFilter (Debuff _ _ debuff _) = matchFilter FilterDebuff <$> plural debuff
 skillFilter (To _ action _)       = matchFilter FilterAction <$> plural action

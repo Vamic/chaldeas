@@ -1,5 +1,5 @@
 -- | This package contains all typeclasses and functions necessary for deriving
--- | `BoundedEnum` generically for any data structure. 
+-- | `BoundedEnum` generically for any data structure.
 -- | See `Data.Generic.Rep.Enum`.
 
 module Generic (module Import) where

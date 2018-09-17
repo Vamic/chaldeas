@@ -1,5 +1,5 @@
 -- | Utility data structures for testing.
-module Test.Base 
+module Test.Base
   ( MaybeRank(..), RankedSkill(..)
   , addRank
   ) where
@@ -10,7 +10,7 @@ import Data.String as String
 
 import Data.Profunctor.Strong ((&&&))
 
-import Database
+import Database (Rank(..), Servant, Skill)
 
 data MaybeRank = Unranked
                | Pure     Rank

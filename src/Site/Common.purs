@@ -35,23 +35,23 @@ ymd y m d = Unsafe.unsafePartial Maybe.fromJust do
     DateTime.exactDate y' m d'
 
 getDate :: Effect Date
-getDate = DateTime.date <<< 
+getDate = DateTime.date <<<
           maybeDo (DateTime.adjust <<< Hours $ -4.0) <$> Now.nowDateTime
 
 lvlRow :: ∀ a b. RangeInfo -> HTML a b
-lvlRow (RangeInfo isPercent x y) = 
-    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * step) <<< Int.toNumber 
+lvlRow (RangeInfo isPercent x y) =
+    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * step) <<< Int.toNumber
     <$> (0..8) `snoc` 10
   where
     step = (y - x) / 10.0
 
 noBreakName :: Boolean -> String -> String
-noBreakName doPrettify = doPrettify ? prettify <<< 
+noBreakName doPrettify = doPrettify ? prettify <<<
     String.replaceAll (Pattern "Anne Bonny") (Replacement "Anne Bonny") <<<
     String.replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
     unBreak <<< String.split (Pattern "(")
   where
-    unBreak [x, y] = x <> "(" 
+    unBreak [x, y] = x <> "("
                        <> String.replaceAll (Pattern " ") (Replacement " ") y
     unBreak xs     = String.joinWith "(" xs
 
@@ -64,24 +64,24 @@ places' :: Int -> String
 places' = places 0 <<< Int.toNumber
 
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
-toCell isPercent = _td <<< (isPercent ? flip append "%") <<< 
+toCell isPercent = _td <<< (isPercent ? flip append "%") <<<
                    Format.toString <<< roundTo 2
 
 filterSection :: ∀ a b c d. (FilterTab -> Boolean -> Unit -> b Unit)
-              -> (Filter c -> Unit -> b Unit) 
+              -> (Filter c -> Unit -> b Unit)
               -> {exclude :: Array (Filter c), filters :: Array (Filter c) | d}
               -> FilterTab -> Array (Filter c)
               -> Array (HTML a (b Unit))
 filterSection _ _ _ _ [] = []
-filterSection check toggle st tab filts = 
-    cons (_h 3 $ show tab) <<< 
-    ( (exclusive tab && length filts > 3) ? 
+filterSection check toggle st tab filts =
+    cons (_h 3 $ show tab) <<<
+    ( (exclusive tab && length filts > 3) ?
         let checked = length $ filter (eq tab <<< getTab) st.exclude
-        in append 
+        in append
             [ _button "All" (checked /= 0) $ check tab true
             , _button "None" (checked /= length filts) $ check tab false
             ]
-    ) <<< Array.singleton <<< H.form_ $ filts <#> \f'@(Filter f) -> 
+    ) <<< Array.singleton <<< H.form_ $ filts <#> \f'@(Filter f) ->
     H.p [_click $ toggle f' ] <<<
     _checkbox (toImage <$> f.icon) f.name $ checker f'
   where
@@ -130,7 +130,7 @@ _tr :: ∀ a b. String -> Array (HTML a b) -> HTML a b
 _tr x y = H.tr_ [ _th x, H.td_ y ]
 
 _radio :: ∀ a b. String -> Boolean -> Array (HTML a b)
-_radio label checked = 
+_radio label checked =
     [ H.input [ P.type_ P.InputRadio, P.checked checked ]
     , H.label_ $ _txt label
     ]
@@ -143,18 +143,18 @@ _checkbox icon label checked =
                    Just ic -> [ic, H.text label]
     ]
 
-_int :: ∀ a b. (Unit -> b Unit) -> Int -> Int -> Int 
+_int :: ∀ a b. (Unit -> b Unit) -> Int -> Int -> Int
      -> (Int -> Unit -> b Unit) -> Array (HTML a (b Unit))
 _int ifFail minVal maxVal actualVal changed =
-    [ H.input 
+    [ H.input
       [ P.type_ P.InputNumber
       , P.value $ show actualVal
       , P.min   $ Int.toNumber minVal
       , P.max   $ Int.toNumber maxVal
       , P.step  $ P.Step 1.0
-      , E.onValueInput <<< E.input $ \val -> 
+      , E.onValueInput <<< E.input $ \val ->
             case Int.fromString val of
-                Just intVal 
+                Just intVal
                   | intVal >= minVal && intVal <= maxVal -> changed intVal
                 _ -> ifFail
       ]

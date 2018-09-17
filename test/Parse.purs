@@ -1,8 +1,8 @@
--- | Parses text into game data. Stores specific game information like 
+-- | Parses text into game data. Stores specific game information like
 -- | "what does 'Reduces one enemy's Critical Rate' mean" and
--- | "which skills of which Servants are unique to them 
+-- | "which skills of which Servants are unique to them
 -- | (e.g. Hyde's Monstrous Strength)."
-module Test.Parse 
+module Test.Parse
   ( translate
   , printIcon
   , effects
@@ -21,23 +21,23 @@ import Database (BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEf
 import Test.Base (MaybeRank(..), RankedSkill(..))
 
 upgradeNP :: Array String
-upgradeNP = 
+upgradeNP =
     [ "Orion"
     , "Asterios"
     , "Sasaki Kojirou"
     ]
 
 npRank :: Servant -> MaybeRank
-npRank (Servant s) = (if s.name `elem` upgradeNP then Upgrade else Pure) 
+npRank (Servant s) = (if s.name `elem` upgradeNP then Upgrade else Pure)
                      s.phantasm.rank
 
 upgradeSkill :: Array (Tuple String String)
-upgradeSkill = 
+upgradeSkill =
     [ "Tamamo-no-Mae" ^ "Fox's Wedding"
     ]
 
 uniqueSkill :: Array (Tuple String String)
-uniqueSkill = 
+uniqueSkill =
     [ "Brynhild" ^ "Primordial Rune"
     , "Scathach" ^ "Primordial Rune"
     , "Euryale"  ^ "Whim of the Goddess"
@@ -54,7 +54,7 @@ skillRanks s'@(Servant s) = tuplify <<< go <$> s.skills
     tuplify ranked@(RankedSkill _ rank) = (ranked ^ rank)
     flagged x = elem (s.name ^ x.name)
     go x
-      | x.name `elem` ceNames    = RankedSkill x { name = x.name <> " (Skill)" } 
+      | x.name `elem` ceNames    = RankedSkill x { name = x.name <> " (Skill)" }
                                                  $ Pure x.rank
       | x `flagged` upgradeSkill = RankedSkill x $ Upgrade x.rank
       | x `flagged` uniqueSkill  = RankedSkill x $ Unique s' x.rank
@@ -134,7 +134,7 @@ effects = map showEffect
     showEffect (ToMax _ ef) = showEffect ef
 
 synonym :: Array (Array String)
-synonym = 
+synonym =
     [ ["special","against"]
     , ["increase", "increasing"]
     , ["reduce", "decrease", "down"]
@@ -155,11 +155,11 @@ synonym =
     ]
 
 readEffect :: String -> Array String
-readEffect effect = go 
+readEffect effect = go
   where
-    words = String.split (Pattern " ") <<< String.trim <<< 
+    words = String.split (Pattern " ") <<< String.trim <<<
             filterOut (Pattern ".|[]#") $ String.toLower effect
-    inWords x = elem x words || elem (x <> "s") words 
+    inWords x = elem x words || elem (x <> "s") words
     match xs = all (any inWords <<< synonyms) xs
     synonyms word = fromMaybe [word] $ find (elem word) synonym
     go
@@ -167,24 +167,24 @@ readEffect effect = go
       | match ["end","of","turn"] = []
 
       | match ["reduce","attack","defense","critical","chance","debuff"
-              ,"resist","np","strength"] = G.genericShow 
+              ,"resist","np","strength"] = G.genericShow
           <$> [AttackDown, DefenseDown, CritChance, DebuffVuln, NPDown]
-      | match ["reduce","critical","chance","debuff","resist"] = G.genericShow 
+      | match ["reduce","critical","chance","debuff","resist"] = G.genericShow
           <$> [CritChance, DebuffVuln]
-      | match ["reduce","defense","critical","chance"] = G.genericShow 
+      | match ["reduce","defense","critical","chance"] = G.genericShow
           <$> [DefenseDown, CritChance]
-      | match ["reduce","attack","defense"] = G.genericShow 
+      | match ["reduce","attack","defense"] = G.genericShow
           <$> [AttackDown, DefenseDown]
       | match ["increase","gain","critical","strength","drop","recovery"
-              ,"debuff","resist"] = G.genericShow 
+              ,"debuff","resist"] = G.genericShow
           <$> [NPGen, CritUp, HealingReceived, StarUp, DebuffResist]
-      | match ["increase","attack","defense","star"] = G.genericShow 
+      | match ["increase","attack","defense","star"] = G.genericShow
           <$> [AttackUp, DefenseUp, StarUp]
-      | match ["increase","attack","defense"] = G.genericShow 
+      | match ["increase","attack","defense"] = G.genericShow
           <$> [AttackUp, DefenseUp]
-      | match ["reduce","np","strength","critical","strength"] = G.genericShow 
+      | match ["reduce","np","strength","critical","strength"] = G.genericShow
           <$> [NPDown, CritDown]
-      | match ["remove","debuffs","restore","hp"] = G.genericShow 
+      | match ["remove","debuffs","restore","hp"] = G.genericShow
           <$> [RemoveDebuffs, Heal]
 
       | match ["additional","damage","turn"] = ["Special Attack"]
@@ -204,7 +204,7 @@ readEffect effect = go
       | match ["transform","hyde"] = [G.genericShow BecomeHyde]
       | match ["nullify"] = [G.genericShow BuffBlock]
       | match ["prevent","buff"] = [G.genericShow BuffBlock]
-      | match ["decrease","attack","success","yourself"] = 
+      | match ["decrease","attack","success","yourself"] =
           [G.genericShow BuffFail]
       | match ["decrease","buff","success"] = [G.genericShow BuffFail]
       | match ["increase","buff","success"] = [G.genericShow BuffUp]

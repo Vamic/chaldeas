@@ -1,4 +1,4 @@
--- | Persistent user settings. Uses local 
+-- | Persistent user settings. Uses local
 -- | [Web Storage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).
 module Site.Preferences
     ( Preference(..)
@@ -64,8 +64,8 @@ getPreferences = Set.unions <$> traverse go enumArray
   where
     fromFlag (Just "true") = Set.singleton
     fromFlag _             = const Set.empty
-    go k = map (_ $ k) $ 
-           HTML.window >>= Window.localStorage >>= 
+    go k = map (_ $ k) $
+           HTML.window >>= Window.localStorage >>=
            Storage.getItem (G.genericShow k) >>= pure <<< fromFlag
 
 delimTeam :: String
@@ -83,7 +83,7 @@ writeServant (MyServant m@{servant:(Servant s)}) = String.joinWith delimServant
     , show m.fou.hp
     , String.joinWith delimSkills $ show <$> m.skills
     , show m.npLvl
-    , show m.ascent 
+    , show m.ascent
     ]
 
 readServant :: String -> Maybe MyServant
@@ -99,28 +99,28 @@ readServant text = do
     level       <- Int.fromString showLevel
     atk         <- Int.fromString showFouAtk
     hp          <- Int.fromString showFouHp
-    skills      <- traverse Int.fromString $ 
+    skills      <- traverse Int.fromString $
                    String.split (Pattern delimSkills) showSkills
     npLvl       <- Int.fromString showNpLvl
     ascent      <- Int.fromString showAscent
     let fou      = {atk, hp}
         base     = servant
         sorted   = Map.empty
-    pure <<< recalc $ 
+    pure <<< recalc $
     MyServant { servant, level, fou, skills, npLvl, base, ascent, sorted }
   where text' = String.split (Pattern delimServant) text
 
 setTeam :: Map Servant MyServant -> Effect Unit
-setTeam team = HTML.window >>= Window.localStorage >>= 
+setTeam team = HTML.window >>= Window.localStorage >>=
                Storage.setItem "team" showTeam
   where
-    showTeam = String.joinWith delimTeam $ 
+    showTeam = String.joinWith delimTeam $
                writeServant <<< snd <$> Map.toUnfoldableUnordered team
 
 getTeam :: Effect (Map Servant MyServant)
-getTeam = HTML.window >>= Window.localStorage >>= Storage.getItem "team" >>= 
+getTeam = HTML.window >>= Window.localStorage >>= Storage.getItem "team" >>=
           pure <<< Map.fromFoldable <<< map (getBase &&& identity) <<<
-          mapMaybe readServant <<< String.split (Pattern delimTeam) <<< 
+          mapMaybe readServant <<< String.split (Pattern delimTeam) <<<
           fromMaybe ""
 
 -------------------------------

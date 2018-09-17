@@ -1,4 +1,4 @@
--- | A "classy prelude" that augments Prelude with other necessary modules 
+-- | A "classy prelude" that augments Prelude with other necessary modules
 -- | and includes a few missing helper functions such as `intersperse`.
 module StandardLibrary
   ( module Prelude
@@ -65,7 +65,7 @@ import Effect.Class (class MonadEffect, liftEffect)
 import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
 
 -- Since (^) == `Tuple`, it is recommended that its usage should be surrounded
--- by parentheses in order to resemble tuple notation in other languages. 
+-- by parentheses in order to resemble tuple notation in other languages.
 -- (a ^ b)` is much more reminiscent of `(a, b)` than `a ^ b`.
 infixr 0 Tuple as ^
 infixr 9 doIf  as ?
@@ -92,7 +92,7 @@ enumArray :: ∀ a. BoundedEnum a => Array a
 enumArray = flip memoize unit \_ -> enumFromTo bottom top
 
 -- | Compares by a first function, then by a second if the first yielded EQ.
-compareThen :: ∀ a b c. Ord b => Ord c => (a -> b) -> (a -> c) -> a -> a 
+compareThen :: ∀ a b c. Ord b => Ord c => (a -> b) -> (a -> c) -> a -> a
             -> Ordering
 compareThen f g x y = case compare (f x) (f y) of
                           EQ -> compare (g x) (g y)
@@ -100,13 +100,13 @@ compareThen f g x y = case compare (f x) (f y) of
 
 -- | Removes all characters in a `Pattern` from a `String`.
 filterOut :: Pattern -> String -> String
-filterOut (Pattern p) = fromCodePointArray <<< 
-                        filter (flip notElem ps) <<< 
+filterOut (Pattern p) = fromCodePointArray <<<
+                        filter (flip notElem ps) <<<
                         toCodePointArray
   where
     ps = toCodePointArray p
 
--- | Adds an element between every element in an  
+-- | Adds an element between every element in an
 -- | `intersperse 0 [1,2,3] == [1,0,2,0,3]`
 intersperse :: ∀ a. a -> Array a -> Array a
 intersperse _ x@[_] = x

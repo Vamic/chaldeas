@@ -2,7 +2,7 @@
 -- | and stats for particular Servants. This module defines the container for
 -- | such information, which is a `Database.Servant` wrapper with additional
 -- | user info.
-module MyServant 
+module MyServant
   ( MyServant(..), getBase
   , recalc
   , unowned, newServant, owned
@@ -18,7 +18,7 @@ import Database
 import MyServant.GrowthCurves
 import MyServant.Sorting
 
-newtype MyServant = MyServant { base    :: Servant 
+newtype MyServant = MyServant { base    :: Servant
                               , level   :: Int
                               , fou     :: Stat
                               , skills  :: Array Int
@@ -37,7 +37,7 @@ getBase (MyServant {base}) = base
 
 recalc :: MyServant -> MyServant
 recalc (MyServant ms@{base:s'@(Servant s)}) = mapSort $ MyServant ms
-    { servant = Servant s 
+    { servant = Servant s
         { stats    = s.stats{ base = calcStats, max = calcStats }
         , phantasm = s.phantasm
               { effect = mapAmount calcNP <$> s.phantasm.effect
@@ -45,43 +45,43 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = mapSort $ MyServant ms
                              0 -> s.phantasm.over
                              _ -> mapAmount calcOver <$> s.phantasm.over
               }
-        , skills  = zipWith calcActives ms.skills s.skills 
-        } 
+        , skills  = zipWith calcActives ms.skills s.skills
+        }
     }
   where
     calcStats = addStats ms.fou $ lvlStats s' ms.level
-    calcNP minAmount maxAmount = Flat $ minAmount + (maxAmount - minAmount) * 
+    calcNP minAmount maxAmount = Flat $ minAmount + (maxAmount - minAmount) *
         case ms.npLvl of
             1 -> 0.0
             2 -> 0.5
-            3 -> 0.75 
+            3 -> 0.75
             4 -> 0.875
             _ -> 1.0
     calcOver minAmount maxAmount = case ms.npLvl of
         1 -> Flat minAmount
-        _ -> Range minAmount $ minAmount 
-                            + (maxAmount - minAmount) 
-                            * (Int.toNumber ms.npLvl - 1.0) 
+        _ -> Range minAmount $ minAmount
+                            + (maxAmount - minAmount)
+                            * (Int.toNumber ms.npLvl - 1.0)
                             / 4.0
-    calcActives lvl skill = skill { effect = mapAmount calc <$> skill.effect 
+    calcActives lvl skill = skill { effect = mapAmount calc <$> skill.effect
                                   , cd = skill.cd - (max 2 lvl - 2) / 4
                                   }
       where
         calc minAmount maxAmount = case lvl of
             10 -> Flat maxAmount
-            _  -> Flat $ minAmount 
+            _  -> Flat $ minAmount
                        + (maxAmount - minAmount)
-                       * (Int.toNumber lvl - 1.0) 
+                       * (Int.toNumber lvl - 1.0)
                        / 10.0
 
 mapSort :: MyServant -> MyServant
 mapSort (MyServant ms) = MyServant ms { sorted = sorted }
   where
-    sorted = Map.fromFoldable $ 
+    sorted = Map.fromFoldable $
              (identity &&& flip toSort ms.servant) <$> enumArray
 
 makeUnowned :: Servant -> MyServant
-makeUnowned servant@(Servant s) = mapSort $ MyServant 
+makeUnowned servant@(Servant s) = mapSort $ MyServant
     { servant
     , base:   servant
     , level:  0
@@ -99,7 +99,7 @@ unowned :: Servant -> MyServant
 unowned s = fromMaybe' (\_ -> makeUnowned s) $ Map.lookup s unowneds
 
 newServant :: Servant -> MyServant
-newServant servant@(Servant s) = MyServant 
+newServant servant@(Servant s) = MyServant
     { servant
     , base:   servant
     , level:  1
@@ -109,7 +109,7 @@ newServant servant@(Servant s) = MyServant
     , ascent: 1
     , sorted: Map.empty
     }
-    
+
 owned :: Map Servant MyServant -> Servant -> MyServant
 owned team servant = fromMaybe (unowned servant) $
                      Map.lookup servant team

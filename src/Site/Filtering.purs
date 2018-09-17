@@ -47,12 +47,12 @@ instance _a_ :: Show FilterTab where
 
 --data Filter a = Filter FilterTab String (Boolean -> a -> Boolean)
 
-newtype Filter a = Filter { tab   :: FilterTab 
+newtype Filter a = Filter { tab   :: FilterTab
                           , name  :: String
                           , icon  :: Maybe ImagePath
                           , match :: Boolean -> a -> Boolean
                           }
-simpleFilter :: ∀ a. FilterTab -> String -> (Boolean -> a -> Boolean) 
+simpleFilter :: ∀ a. FilterTab -> String -> (Boolean -> a -> Boolean)
              -> Filter a
 simpleFilter tab name match = Filter { icon: Nothing, tab, name, match }
 
@@ -94,7 +94,7 @@ updateListing f st = st{ listing = filter (match <<< f <<< _.obj) st.sorted }
 
 type FilterList a = Array { tab :: FilterTab, filters :: Array (Filter a) }
 
-collectFilters :: ∀ a. (Date -> FilterTab -> Array (Filter a)) -> Date 
+collectFilters :: ∀ a. (Date -> FilterTab -> Array (Filter a)) -> Date
                -> FilterList a
 collectFilters f today = go <$> enumArray
   where

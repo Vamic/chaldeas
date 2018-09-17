@@ -49,22 +49,22 @@ printErrors tests skCount = do
     let errors    = keepErrors results
         failed    = length errors
         total     = length results
-        percent   = append "(" <<< flip append "%)" <<< places 2 $ 
+        percent   = append "(" <<< flip append "%)" <<< places 2 $
                     100.0 * Int.toNumber failed / Int.toNumber total
         skMsg     = case skCount of
                         0 -> ""
                         1 -> " (1 test skipped)"
                         i -> " (" <> show i <> " tests skipped)"
     liftEffect case failed of
-          0 -> Console.printPass $ "\n\nYorokobe, shounen! 🎉 All " 
-                                <> show total <> " tests passed" <> skMsg 
+          0 -> Console.printPass $ "\n\nYorokobe, shounen! 🎉 All "
+                                <> show total <> " tests passed" <> skMsg
                                 <> ".\n\n"
           1 -> do
               Console.printFail  $ "\n1/" <> show total <> " test failed "
                                 <> percent <> skMsg <>":\n\n"
               list errors
           i -> do
-              Console.printFail $ "\n" <> show i <> "/" <> show total 
+              Console.printFail $ "\n" <> show i <> "/" <> show total
                       <> " tests failed " <> percent <> skMsg <> ":\n\n"
               list errors
     where list = traverse_ printItem

@@ -32,13 +32,13 @@ npPer s'@(Servant s) card = Int.toNumber s.hits.arts
 
 -- | Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3307-How-many-crit-stars-do-I-get-in-combat)
 starsPer :: Servant -> Card -> Number
-starsPer s'@(Servant s) card = Int.toNumber s.hits.quick 
-                             * min 3.0 ( baseStarRate 
-                                       + firstCardBonus 
+starsPer s'@(Servant s) card = Int.toNumber s.hits.quick
+                             * min 3.0 ( baseStarRate
+                                       + firstCardBonus
                                        + ( cardStarValue * (1.0 + cardMod) )
-                                       + serverRate 
-                                       + starDropMod 
-                                       - enemyStarDropMod 
+                                       + serverRate
+                                       + starDropMod
+                                       - enemyStarDropMod
                                        + criticalModifier
                                        )
                              * overkillModifier
@@ -61,7 +61,7 @@ starsPer s'@(Servant s) card = Int.toNumber s.hits.quick
 
 -- | Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3309-How-is-damage-calculated)
 npDamage :: Boolean -> Boolean -> Servant -> Number
-npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) = 
+npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
     case npDamageMultiplier of
         0.0 -> 0.0
         _   -> servantAtk
@@ -76,15 +76,15 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
              * criticalModifier
              * extraCardModifier
              * ( 1.0 - specialDefMod )
-             * ( 1.0 
-               + powerMod 
-               + selfDamageMod 
-               + (critDamageMod * isCrit) 
+             * ( 1.0
+               + powerMod
+               + selfDamageMod
+               + (critDamageMod * isCrit)
                + (npDamageMod * isNP)
                )
              * ( 1.0 + ((superEffectiveModifier - 1.0) * isSuperEffective) )
-             + dmgPlusAdd 
-             + selfDmgCutAdd 
+             + dmgPlusAdd
+             + selfDmgCutAdd
              + ( servantAtk * busterChainMod )
   where
     --------------------
@@ -100,7 +100,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
                         Caster    -> 0.90
                         Assassin  -> 0.90
                         _         -> 1.0
-    triangleModifier = (_ + 1.0) <<< sum $ 
+    triangleModifier = (_ + 1.0) <<< sum $
                        matchSum buffs <<< ClassAffinity <$> specials
     attributeModifier = 1.0
     -------------
@@ -122,7 +122,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
     -- FROM NP PROPERTIES
     ---------------------
     npDamageMultiplier = sum $ map (matchSum instants) <<<
-                         special ? cons LastStand $ 
+                         special ? cons LastStand $
                          [Damage, DamageThruDef]
     superEffectiveModifier = (_ + 1.0 + matchSum instants DamagePoison) <<<
                               fromMaybe 0.0 <<< maximum $
@@ -191,7 +191,7 @@ passiveBuffs (Servant {passives}) = passives >>= _.effect >>= go <<< simplify
       | selfable t = [(buff ^ toMax n / 100.0)]
     go _ = []
 
--- | Attacker vs. Defender. Currently not in use. 
+-- | Attacker vs. Defender. Currently not in use.
 -- TODO figure out how to use this
 attributeBonus :: Attribute -> Attribute -> Number
 attributeBonus Mankind Heaven  = 1.1
@@ -207,7 +207,7 @@ attributeBonus Beast   Beast   = 0.0
 -}
 attributeBonus _       _       = 1.0
 
--- | If a skill's target is not `Self`, `Ally`, or `Party`, 
+-- | If a skill's target is not `Self`, `Ally`, or `Party`,
 -- | it cannot be self-applied and therefore should not be used in calculations.
 selfable :: Target -> Boolean
 selfable Self   = true
@@ -215,9 +215,9 @@ selfable Ally   = true
 selfable Party  = true
 selfable _      = false
 
--- | Sums up all effects of a certain type from a Servant's skills 
+-- | Sums up all effects of a certain type from a Servant's skills
 -- | in (Effect, Strength%) format.
-matchSum :: ∀ a b f. Foldable f => Functor f => Eq a => Semiring b 
+matchSum :: ∀ a b f. Foldable f => Functor f => Eq a => Semiring b
          => f (Tuple a b) -> a -> b
 matchSum xs k = sum $ go <$> xs
   where

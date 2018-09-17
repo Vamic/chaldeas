@@ -15,13 +15,13 @@ import Data.String as String
 
 -- Note: 'No alignment', as in the case of Nursery Rhyme, is an empty array
 -- rather than a separate alignment.
-data Alignment 
+data Alignment
     = Lawful | Neutral | Chaotic | Good | Balanced | Evil
     | Mad | Summer | Bride
 
--- | Determines the "attribute modifier" in `Database.Calculator`. 
+-- | Determines the "attribute modifier" in `Database.Calculator`.
 -- | Currently used only for filters.
--- Note: There is a fifth category in the game, "Beast", 
+-- Note: There is a fifth category in the game, "Beast",
 -- which is not represented here because only enemies can have it.
 data Attribute = Mankind | Earth | Heaven | Star
 
@@ -33,7 +33,7 @@ data Card = Quick | Arts | Buster
 -- | Determines the "class attack bonus" and "triangle modifier" in
 -- | in `Database.Calculator`.
 -- Note: MoonCancer and AlterEgo are not represented as they are JP-only.
-data Class 
+data Class
     = Saber | Archer | Lancer | Caster | Rider | Assassin | Berserker
     | Shielder | Ruler | Avenger
 
@@ -48,7 +48,7 @@ addStats :: Stat -> Stat -> Stat
 addStats x y = {atk: x.atk + y.atk, hp: x.hp + y.hp}
 
 -- | Traits are miscellaneous flags attached to Servants. Since many traits are
--- | unlabeled, it can be difficult to figure out which are JP-only and which 
+-- | unlabeled, it can be difficult to figure out which are JP-only and which
 -- | translations are accurate to EN.
 data Trait
     = Arthur

@@ -38,7 +38,7 @@
   , gen:      { starWeight:  ?_
               , starRate:    ?_
               , npPerHit:    ?_
-              , npPerDefend: ?_ 
+              , npPerDefend: ?_
               }
   , hits:     { a: ?_, b: ?_, q: ?_, ex: ?_ }
   , traits:   []
@@ -47,4 +47,4 @@
   , limited:  ?_
   , free:     ?_
   }
- 
+

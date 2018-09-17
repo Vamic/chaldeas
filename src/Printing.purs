@@ -37,7 +37,7 @@ roundTo x = (_ / zeroes) <<< Math.round <<< (_ * zeroes)
 unCamel :: String -> String
 unCamel = Regex.replace camel "$1 $2" <<< maybeDo unParen
   where
-    unParen = String.stripPrefix (Pattern "(") >=> 
+    unParen = String.stripPrefix (Pattern "(") >=>
               String.stripSuffix (Pattern ")")
 camel :: Regex
 camel = Unsafe.unsafeRegex "([a-z])([A-Z])|([A-Z])([A-Z][a-z])" Flags.global

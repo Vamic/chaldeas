@@ -179,7 +179,7 @@ berserkers = Servant <$>
                 , rank:   A
                 , icon:   IconDarkMagic
                 , cd:     8
-                , effect: [ Chances 80 100 <<< To Enemy GaugeDown $ Flat 1.0 
+                , effect: [ Chances 80 100 <<< To Enemy GaugeDown $ Flat 1.0
                           , To Self GaugeUp $ 20.0 ~ 30.0
                           ]
                 }

@@ -1,4 +1,4 @@
--- | The user interface for Craft Essences. 
+-- | The user interface for Craft Essences.
 -- This module is only for functions that render Craft Essences to HTML.
 -- Everything else goes in `Database.CraftEssence`.
 module Site.CraftEssences.Component (Query, Message(..), comp) where
@@ -45,7 +45,7 @@ type State = { filters  :: Array (Filter CraftEssence)
              , listing  :: Array { label :: String, obj :: CraftEssence }
              }
 
-comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence 
+comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence
      -> Preferences -> Date -> Component HTML Query Unit Message m
 comp initialFilt initialFocus initialPrefs today = component
     { initialState
@@ -58,7 +58,7 @@ comp initialFilt initialFocus initialPrefs today = component
   allFilters = collectFilters getFilters today
 
   initialState :: Input -> State
-  initialState = const $ updateListing identity 
+  initialState = const $ updateListing identity
       { filters
       , exclude
       , matchAny: true
@@ -68,19 +68,19 @@ comp initialFilt initialFocus initialPrefs today = component
       , sorted:   initialSort
       , listing:  initialSort
       }
-    where 
+    where
       initialSort = getSort Rarity
-      {yes: exclude, no: filters} = partition (exclusive <<< getTab) 
+      {yes: exclude, no: filters} = partition (exclusive <<< getTab)
                                     initialFilt
 
   render :: State -> ComponentHTML Query
   render st = modal st.prefs st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) -> 
+        , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) ->
           H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
         , _h 1 "Sort by"
-        , H.form_ $ enumArray <#> \sort -> 
+        , H.form_ $ enumArray <#> \sort ->
           H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
         , _h 1 "Include"
         ] <> (filter (exclusive <<< _.tab) allFilters >>= filtersEl)
@@ -92,14 +92,14 @@ comp initialFilt initialFocus initialPrefs today = component
         , _a "Servants" $ Switch Nothing
         , _h 1 "Filter"
         , H.form_
-          [ H.table_ 
+          [ H.table_
             [ H.tr_
               [ _th "Match"
               , H.td [_click $ MatchAny false] $ _radio "All" (not st.matchAny)
               , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
               ]
             ]
-          , H.button clearAll $ _txt "Reset All" 
+          , H.button clearAll $ _txt "Reset All"
           ]
         ] <> (filter (not exclusive <<< _.tab) allFilters >>= filtersEl)
       ]
@@ -120,7 +120,7 @@ comp initialFilt initialFocus initialPrefs today = component
       ClearAll           a -> a <$ modif _{ exclude = [], filters = [] }
       Check t  true      a -> a <$ do
           modif <<< modExclude <<< filter $ notEq t <<< getTab
-      Check t  false    a -> a <$ 
+      Check t  false    a -> a <$
           modif (modExclude $ nub <<< append (getFilters today t))
       SetSort   sortBy   a -> a <$ modif _{ sortBy = sortBy
                                           , sorted = getSort sortBy
@@ -157,22 +157,22 @@ comp initialFilt initialFocus initialPrefs today = component
       hash Nothing   = Hash.setHash "CraftEssences"
       hash (Just ce) = Hash.setHash <<< urlName $ show ce
 
-portrait :: ∀ a. Boolean -> Preferences 
+portrait :: ∀ a. Boolean -> Preferences
          -> { label :: String, obj :: CraftEssence } -> HTML a (Query Unit)
 portrait big prefs {label, obj: ce'@(CraftEssence ce)}
-  | not big && prefer prefs Thumbnails = 
+  | not big && prefer prefs Thumbnails =
       H.div [_c "thumb", _click <<< Focus $ Just ce']
       [ toThumbnail ce' ]
   | otherwise =
       H.div meta
       [ toImage ce'
-      , H.header_ <<< (label /= "") ? append 
+      , H.header_ <<< (label /= "") ? append
         [_span $ noBreakName big label, H.br_] $
         [ _span <<< noBreakName big $ artorify ce.name ]
       , H.footer_ [_span <<< String.joinWith "  " $ replicate ce.rarity "★"]
       ]
-  where 
-    artorify   = prefer prefs Artorify ? 
+  where
+    artorify   = prefer prefs Artorify ?
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")
     meta       = not big ? (cons <<< _click <<< Focus $ Just ce') $
                  [_c $ "portrait stars" <> show ce.rarity]
@@ -183,7 +183,7 @@ modal :: ∀ a. Preferences -> Maybe CraftEssence
 modal prefs Nothing = H.div [_c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
 modal prefs
-(Just ce'@(CraftEssence ce@{stats:{base, max}})) = H.div 
+(Just ce'@(CraftEssence ce@{stats:{base, max}})) = H.div
     [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $

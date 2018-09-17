@@ -26,7 +26,7 @@ toSort Rarity (CraftEssence ce) = Int.toNumber ce.rarity
 toSort ATK    (CraftEssence ce) = Int.toNumber ce.stats.max.atk
 toSort HP     (CraftEssence ce) = Int.toNumber ce.stats.max.hp
 
-doSort :: SortBy -> Array CraftEssence 
+doSort :: SortBy -> Array CraftEssence
        -> Array { label :: String, obj :: CraftEssence }
 doSort Rarity = map showSort <<< sortWith sorter
   where

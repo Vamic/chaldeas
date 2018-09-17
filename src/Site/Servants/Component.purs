@@ -58,8 +58,8 @@ type State = { filters  :: Array (Filter Servant)
              , team     :: Map Servant MyServant
              }
 
-comp :: ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant 
-     -> Preferences -> Date -> Map Servant MyServant 
+comp :: ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant
+     -> Preferences -> Date -> Map Servant MyServant
      -> Component HTML Query Unit Message m
 comp initialFilt initialFocus initialPrefs today initialTeam = component
     { initialState
@@ -96,34 +96,34 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
   render st = modal st.prefs st.ascent st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) -> 
+        , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) ->
           H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
         , _h 1 "Sort by"
-        , H.form_ $ enumArray <#> \sort -> 
+        , H.form_ $ enumArray <#> \sort ->
           H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
         , _h 1 "Include"
         ] <> (filter (exclusive <<< _.tab) allFilters' >>= filtersEl)
-      , H.section_ <<< maybeReverse $ 
+      , H.section_ <<< maybeReverse $
         doPortrait <$> (st.mineOnly ? filter isMine $ st.listing)
       , H.aside_ $
         [ _h 1 "Browse"
         , _a "Craft Essences" $ Switch Nothing
-        , if st.mineOnly then _a      "Servants" $ MineOnly false 
+        , if st.mineOnly then _a      "Servants" $ MineOnly false
                          else _strong "Servants"
-        , if st.mineOnly then _strong "My Servants" 
+        , if st.mineOnly then _strong "My Servants"
                          else _a      "My Servants" $ MineOnly true
         , _h 1 "Filter"
         , H.form_
-          [ H.table_ 
+          [ H.table_
             [ H.tr_
               [ _th "Match"
               , H.td [_click $ MatchAny false] $ _radio "All" (not st.matchAny)
               , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
               ]
-            ] 
+            ]
           , H.button clearAll $ _txt "Reset All"
           ]
-        ] <> 
+        ] <>
           (filter (not exclusive <<< _.tab) allFilters' >>= filtersEl)
       ]
     where
@@ -137,10 +137,10 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
         | prefer st.prefs MaxAscension = 4
         | otherwise                    = 1
       allFilters'
-        | st.mineOnly = allFilters <#> \{tab, filters} -> 
+        | st.mineOnly = allFilters <#> \{tab, filters} ->
                         { tab
                         , filters: filter (\(Filter x) ->
-                              any (x.match false <<< getBase) st.team) filters 
+                              any (x.match false <<< getBase) st.team) filters
                         }
         | otherwise   = allFilters
       clearAll
@@ -150,9 +150,9 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
 
   eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
-      Ascend (MyServant {level: 0}) ascent a -> a <$ 
+      Ascend (MyServant {level: 0}) ascent a -> a <$
           modify_ _{ ascent = ascent }
-      Ascend (MyServant ms) ascent a -> eval $ 
+      Ascend (MyServant ms) ascent a -> eval $
           OnTeam true (MyServant ms{ascent = ascent}) a
       DoNothing         a -> pure a
       MatchAny matchAny a -> a <$ modif   _{ matchAny = matchAny }
@@ -160,12 +160,12 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       ClearAll          a -> a <$ modif   _{ exclude = [], filters = [] }
       Check t  true     a -> a <$ do
           modif <<< modExclude <<< filter $ notEq t <<< getTab
-      Check t  false    a -> a <$ 
+      Check t  false    a -> a <$
           modif (modExclude $ nub <<< append (getFilters today t))
       Switch   switch   a -> a <$ do
           {exclude, filters} <- get
           raise $ Message (exclude <> filters) switch
-      SetSort  sortBy   a -> a <$ modif \st -> 
+      SetSort  sortBy   a -> a <$ modif \st ->
           st{ sortBy = sortBy
             , sorted = getSort sortBy st.myServs
             }
@@ -214,17 +214,17 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       hash (Just s) = Hash.setHash <<< urlName <<< show $ getBase s
 
 showStats :: MyServant -> String
-showStats (MyServant ms) = show ms.level <> "/" <> show (maxLevel ms.servant) 
-                           <> " " <> String.joinWith "·" (show <$> ms.skills) 
+showStats (MyServant ms) = show ms.level <> "/" <> show (maxLevel ms.servant)
+                           <> " " <> String.joinWith "·" (show <$> ms.skills)
 
 isMine :: ∀ a. { obj :: MyServant | a } -> Boolean
 isMine  {obj: MyServant {level: 0}} = false
 isMine _                            = true
 
-portrait :: ∀ a. Boolean -> Preferences -> Int 
+portrait :: ∀ a. Boolean -> Preferences -> Int
          -> { label :: String, obj :: MyServant } -> HTML a (Query Unit)
 portrait big prefs baseAscension { label, obj: ms' }
-  | not big && prefer prefs Thumbnails = 
+  | not big && prefer prefs Thumbnails =
       H.div [_c "thumb", _click <<< Focus $ Just ms' ]
       [ toThumbnail ms' ]
   | otherwise =
@@ -233,14 +233,14 @@ portrait big prefs baseAscension { label, obj: ms' }
       , H.div_ [ toImage s.class ]
       , H.header_ <<< (label /= "") ? append [_span label, H.br_] $
         [ _span <<< noBreakName big $ artorify s.name ]
-      , H.footer_ <<< 
+      , H.footer_ <<<
         ((big && ascension > 1) ? cons prevAscend) <<<
         ((big && ascension < 4) ? consAfter nextAscend) $
         [_span <<< String.joinWith "  " $ replicate s.rarity "★"]
       ]
   where
     MyServant ms@{servant:Servant s} = ms'
-    artorify   = prefer prefs Artorify ? 
+    artorify   = prefer prefs Artorify ?
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")
     meta       = not big ? (cons <<< _click <<< Focus $ Just ms') $
                  [_c $ "portrait stars" <> show s.rarity]
@@ -257,7 +257,7 @@ modal :: ∀ a. Preferences -> Int -> Maybe MyServant
       -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
 modal prefs _ Nothing = H.div [_c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal prefs ascent focus@(Just ms') = H.div 
+modal prefs ascent focus@(Just ms') = H.div
   [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
@@ -281,7 +281,7 @@ modal prefs ascent focus@(Just ms') = H.div
         [ _tr "Class"       [ link FilterClass s.class ]
         , _tr "Deck"        [ link FilterDeck s.deck ]
         , _tr "NP Type"     [ link FilterPhantasm <<< fromMaybe Support $
-                              find (\t -> has t false s') 
+                              find (\t -> has t false s')
                               [SingleTarget, MultiTarget]
                             ]
         , _tr "Attribute"   $ [ link FilterAttribute s.attr ]
@@ -317,7 +317,7 @@ modal prefs ascent focus@(Just ms') = H.div
               ) $ effectEl <$> s.phantasm.over
           ]
         ]
-      , _h 2 "Active Skills"] 
+      , _h 2 "Active Skills"]
       <> (zipWith (skillEl showTables) s.skills b.skills) <>
       [ _h 2 "Passive Skills"] <> (passiveEl <$> s.passives) <>
       [ _h 2 "Max-Bond Craft Essence"
@@ -385,9 +385,9 @@ modal prefs ascent focus@(Just ms') = H.div
                                   ]
     alignBox xs = xs >>= \x -> [link FilterAlignment x, H.text " "]
     calc sort = formatSort sort <<< fromMaybe (-1.0) $ Map.lookup sort sorted
-    skillBox i ({icon} ^ lvl) = 
+    skillBox i ({icon} ^ lvl) =
         [ H.td_ [ toImage icon ]
-        , H.td_ $ _mInt 1 10 lvl \val -> 
+        , H.td_ $ _mInt 1 10 lvl \val ->
           alter _{ skills = maybeDo (Array.updateAt i val) ms.skills }
         ]
     myServantBox = case ms.level of
@@ -398,25 +398,25 @@ modal prefs ascent focus@(Just ms') = H.div
                  , H.td_ $ _mInt 1 100 ms.level \val ->
                        alter _{ level = val }
                  , H.td_ [_strong "NP:"]
-                 , H.td_ $ _mInt 1 5 ms.npLvl \val -> 
+                 , H.td_ $ _mInt 1 5 ms.npLvl \val ->
                        alter _{ npLvl = val }
                  , H.td_ [_strong "+ATK:"]
-                 , H.td_ $ _mInt 0 990 ms.fou.atk \val -> 
+                 , H.td_ $ _mInt 0 990 ms.fou.atk \val ->
                        alter _{ fou { atk = val } }
                  , H.td_ [_strong "+HP:"]
-                 , H.td_ $ _mInt 0 990 ms.fou.hp \val -> 
+                 , H.td_ $ _mInt 0 990 ms.fou.hp \val ->
                        alter _{ fou { hp = val } }
                  ]
-               , H.tr_ <<< append 
+               , H.tr_ <<< append
                  [ H.td_ [ _a "Delete" <<< OnTeam false $ unowned s' ]
                  , H.td_ [_strong "Skills:"]
                  ] <<< join <<<
                    zipWith skillBox (0..10) $ zip s.skills ms.skills
                ]
-             ] 
+             ]
 
 skillEl :: ∀ a. Boolean -> Skill -> Skill -> HTML a (Query Unit)
-skillEl showTables active@{name, icon, cd, rank, effect} base = 
+skillEl showTables active@{name, icon, cd, rank, effect} base =
     H.section_ <<< showTables ? consAfter effectTable $
     [ toImage icon
     , _h 3 $ name <> show rank
@@ -424,7 +424,7 @@ skillEl showTables active@{name, icon, cd, rank, effect} base =
     , H.text <<< (active == base) ? (_ <> "~" <> show (cd - 2)) $ show cd
     ] <> (effectEl <$> effect)
   where
-    effectTable = _table (show <$> 1..10) $ 
+    effectTable = _table (show <$> 1..10) $
                   lvlRow <$> nub (ranges base.effect)
 
 passiveEl :: ∀ a. Skill -> HTML a (Query Unit)
@@ -459,21 +459,21 @@ effectEl ef
     meta filt = [_c "link", _click $ FilterBy [filt]]
 
 npRow :: ∀ a b. RangeInfo -> HTML a b
-npRow (RangeInfo isPercent x y) = 
-    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * over) 
+npRow (RangeInfo isPercent x y) =
+    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * over)
     <$> [0.0, 0.5, 0.75, 0.825, 1.0]
   where
     over = y - x
 
 overRow :: ∀ a b. RangeInfo -> HTML a b
-overRow (RangeInfo isPercent x y) = 
-    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * over) <<< 
+overRow (RangeInfo isPercent x y) =
+    H.tr_ $ toCell isPercent <<< (_ + x) <<< (_ * over) <<<
     Int.toNumber <$> (0..4)
   where
     over = (y - x) / 4.0
 
 link :: ∀ a b. MatchServant a => FilterTab -> a -> HTML b (Query Unit)
-link tab x = 
-    H.a 
+link tab x =
+    H.a
     [_c "link", _click <<< FilterBy $ singleFilter tab x]
     [H.text $ show x]

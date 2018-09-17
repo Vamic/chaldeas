@@ -21,9 +21,9 @@ lancers = Servant <$>
                 , icon:   IconDodge
                 , cd:     7
                 , effect: [ Grant Self 1 Evasion Full
-                          , Chance 80 <<< 
+                          , Chance 80 <<<
                             Grant Self 3 CritUp $ 30.0 ~ 50.0
-                          , Chance 80 <<< 
+                          , Chance 80 <<<
                             Grant Self 3 StarAbsorb $ 300.0 ~ 500.0
                           ]
                 }
@@ -429,7 +429,7 @@ lancers = Servant <$>
                 , rank:   A
                 , icon:   IconShieldDown
                 , cd:     7
-                , effect: [ Chance 500 <<< 
+                , effect: [ Chance 500 <<<
                             Debuff Enemy 3 DefenseDown $ 20.0 ~ 30.0
                           , Grant Enemy 3 AttackUp $ Flat 20.0
                           ]
@@ -905,7 +905,7 @@ lancers = Servant <$>
                 , rank:   C
                 , icon:   IconSwordDown
                 , cd:     7
-                , effect: [ Debuff (EnemiesType Female) 1 AttackDown $ 
+                , effect: [ Debuff (EnemiesType Female) 1 AttackDown $
                             30.0 ~ 50.0 ]
                 }
               , { name:   "Knight's Strategy"

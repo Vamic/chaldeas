@@ -15,18 +15,18 @@ import Printing
 data ImagePath = ImagePath String String
 
 toImage :: ∀ t a b. ToImage t => t -> HTML a b
-toImage x = 
-    H.img 
-    [ P.src $ "img/" <> dir <> "/" <> fileName file <> ".png" 
+toImage x =
+    H.img
+    [ P.src $ "img/" <> dir <> "/" <> fileName file <> ".png"
     , P.title $ unCamel file
     ]
     where
       ImagePath dir file = toImagePath x
 
 toThumbnail :: ∀ t a b. ToImage t => t -> HTML a b
-toThumbnail x = 
-    H.img 
-    [ P.src $ "img/" <> dir <> "/" <> fileName file <> " Thumbnail.png" 
+toThumbnail x =
+    H.img
+    [ P.src $ "img/" <> dir <> "/" <> fileName file <> " Thumbnail.png"
     , P.title $ unCamel file
     ]
     where

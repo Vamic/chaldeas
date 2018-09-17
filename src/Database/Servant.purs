@@ -1,6 +1,6 @@
--- | This module defines the data structure of Servants. 
+-- | This module defines the data structure of Servants.
 -- It does not contain actual database information from the game; that can
--- be found in the [Database.Servant](./Servant) _folder_, which has a 
+-- be found in the [Database.Servant](./Servant) _folder_, which has a
 -- separate file for each Class.
 module Database.Servant
   ( Servant(..), maxLevel
@@ -20,7 +20,7 @@ import Generic               as G
 import Database.Base
 import Database.Skill
 
-newtype Servant = 
+newtype Servant =
     Servant { name     :: String
             , id       :: Int
             , rarity   :: Int
@@ -82,9 +82,9 @@ getDeck :: Servant -> Array Card
 getDeck (Servant {deck:Deck a b c d e}) = [a, b, c, d, e]
 
 getEffects :: Servant -> Array SkillEffect
-getEffects (Servant s) = filter (not <<< demerit) $ simplify 
-                         <$> s.phantasm.effect 
-                          <> s.phantasm.over 
+getEffects (Servant s) = filter (not <<< demerit) $ simplify
+                         <$> s.phantasm.effect
+                          <> s.phantasm.over
                           <> (s.skills >>= _.effect)
 
 phantasmEffects :: NoblePhantasm -> Array SkillEffect
@@ -175,5 +175,5 @@ instance _39_ :: G.BoundedEnum Deck where
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum
 instance _40_ :: Show Deck where
-    show (Deck a b c d e) = CodeUnits.fromCharArray $ 
+    show (Deck a b c d e) = CodeUnits.fromCharArray $
       (fromMaybe '?' <<< CodeUnits.charAt 0 <<< show) <$> [a, b, c, d, e]

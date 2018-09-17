@@ -1,4 +1,4 @@
--- | A simple Halogen parent component of `Site.Servants.Component` and 
+-- | A simple Halogen parent component of `Site.Servants.Component` and
 -- | `Site.CraftEssences.Component`.
 module Site.Component where
 
@@ -41,7 +41,7 @@ type ChildQuery = Coproduct2 Servants.Query CraftEssences.Query
 
 type ChildSlot = Either Unit (Either Unit Unit)
 
-comp :: ∀ m. MonadEffect m => String -> Preferences -> Date 
+comp :: ∀ m. MonadEffect m => String -> Preferences -> Date
      -> Map Servant MyServant -> Component HTML Query Unit Void m
 comp initialHash initialPrefs initialToday initialTeam = parentComponent
     { initialState: const initialState
@@ -70,11 +70,11 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
 
   render :: State -> ParentHTML Query ChildQuery ChildSlot m
   render {browseCe, withHash, prefs, fServant, fCe, mServant, mCe, team, today}
-    | browseCe  = H.slot' CP.cp2 unit 
-                  (CraftEssences.comp fCe mCe prefs today) 
+    | browseCe  = H.slot' CP.cp2 unit
+                  (CraftEssences.comp fCe mCe prefs today)
                   unit $ E.input BrowseServants
-    | otherwise = H.slot' CP.cp1 unit 
-                  (Servants.comp fServant mServant prefs today team) 
+    | otherwise = H.slot' CP.cp1 unit
+                  (Servants.comp fServant mServant prefs today team)
                   unit $ E.input BrowseCraftEssences
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m

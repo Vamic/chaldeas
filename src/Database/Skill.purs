@@ -1,14 +1,14 @@
--- | There are three types of skill effects in the game: 
--- | buffs, or positive status effects with a duration; 
+-- | There are three types of skill effects in the game:
+-- | buffs, or positive status effects with a duration;
 -- | debuffs, or negative status effects with a duration;
 -- | and instant actions like gaining stars or reducing an enemy's NP gauge.
--- | 
--- | In CHALDEAS, Buffs are represented by `BuffEffect`s, 
+-- |
+-- | In CHALDEAS, Buffs are represented by `BuffEffect`s,
 -- | debuffs by `DebuffEffect`s, and instant actions by `InstantEffect`s.
 -- | This system is also used by passive skills, Noble Phantasm effects,
 -- | and Craft Essences.
--- | 
--- | For Craft Essences only, there are also `BonusEffect`s that increase gains 
+-- |
+-- | For Craft Essences only, there are also `BonusEffect`s that increase gains
 -- | of Quartz Points, Bond, and so on.
 module Database.Skill
   ( Amount(..), (~), toMin, toMax
@@ -32,7 +32,69 @@ import Data.Int              as Int
 import Data.String           as String
 
 import Database.Base
-import Printing 
+import Printing
+
+data BonusEffect
+    = FriendPoints
+    | QuestQuartz
+    | QPGain
+    | EXP
+    | EXPPerc
+    | MysticCode
+    | Bond
+
+data InstantEffect
+    = Avenge
+    | BecomeHyde -- is there a better way to do this?
+    | Cooldowns
+    | Cure
+    | Damage
+    | DamageThruDef
+    | DamageVs Trait
+    | DamagePoison
+    | DemeritBuffs
+    | DemeritCharge
+    | DemeritDamage
+    | DemeritGauge
+    | DemeritHealth
+    | DemeritKill
+    | GainStars
+    | GaugeDown
+    | GaugeUp
+    | Heal
+    | Kill
+    | LastStand
+    | OverChance
+    | RemoveBuffs
+    | RemoveDebuffs
+    | RemoveMental
+
+data DebuffEffect
+    = ApplyTrait Trait
+    | AttackDown
+    | BuffBlock
+    | BuffFail
+    | Burn
+    | Charm
+    | CharmVuln
+    | CritChance
+    | CritDown
+    | Confusion
+    | Curse
+    | DamageVuln
+    | DeathDown
+    | DebuffVuln
+    | DefenseDown
+    | Fear
+    | HealthLoss
+    | MentalVuln
+    | NPDown
+    | Poison
+    | SealNP
+    | SealSkills
+    | StarDown
+    | Stun
+    | StunBomb
 
 data BuffEffect
     = AlignAffinity Alignment
@@ -75,7 +137,140 @@ data BuffEffect
     | Success DebuffEffect
     | SureHit
     | Taunt
-instance _c_ :: Show BuffEffect where
+
+instance _c_ :: Show BonusEffect where
+    show = showBonus Placeholder
+
+showBonus :: Amount -> BonusEffect -> String
+showBonus amount = case _ of
+    FriendPoints
+      -> "Friend Points obtained from support becomes +" <> n
+    QuestQuartz
+      -> "Increase QP earned from completing quests by " <> n
+    QPGain
+      -> "Increase QP from enemy drops by " <> n <> "%"
+    EXP
+      -> "Increase Master EXP gain by " <> n
+    EXPPerc
+      -> "Increase Master EXP gain by " <> n <> "%"
+    MysticCode
+      -> "Increase Mystic Code EXP gain by " <> n
+    Bond
+      -> "Increase Bond Points gain by " <> n
+  where
+    n = show amount
+
+instance _d_ :: Show InstantEffect where
+    show = showInstant Someone Placeholder
+
+showInstant :: Target -> Amount -> InstantEffect -> String
+showInstant target amount = case _ of
+    Avenge
+      -> "At the end of the next turn, deal " <> n
+      <> "% of damage taken during that turn" <> to
+    BecomeHyde
+      -> "Transform into Hyde. Class: [Berserker]. \
+         \Star Weight: 9. Star Rate: 5%. NP/Hit: 1.02%. NP/Defend: 5%. \
+         \Alignment: Chaotic Evil. Lose [" <> show Brynhild <> "] trait. \
+         \Skills are more effective"
+    Cooldowns
+      -> "Reduce" <> p <> " cooldowns by " <> n
+    Cure
+      -> "Remove" <> p <> " poison debuffs"
+    Damage
+      -> "Deal " <> n <> "% damage" <> to
+    DamageThruDef
+      -> "Deal " <> n <> "% damage" <> to <> ", ignoring defense"
+    DamageVs t
+      -> "Deal " <> n <> "% extra damage to [" <> show t <> "]"
+    DamagePoison
+      -> "Deal " <> n <> "% extra damage to [Poisoned]"
+    DemeritBuffs
+      -> "Remove" <> p <> " buffs"
+    DemeritCharge
+      -> "Increase" <> s <> " NP gauge by " <> n
+    DemeritGauge
+      -> "Decrease" <> p <> " NP gauge by " <> n <> "%"
+    DemeritDamage
+      -> "Deal " <> n <> " damage" <> to
+    DemeritKill
+      -> "Sacrifice" <> s <> " (can trigger Guts)"
+    DemeritHealth
+      -> "Deal " <> n <> " damage" <> to <> " down to a minimum of 1"
+    GaugeDown
+      -> "Reduce" <> p <> " NP gauge by " <> n
+    GaugeUp
+      -> "Increase" <> p <> " NP gauge by " <> n <> "%"
+    Heal
+      -> "Restore " <> (if full then "all" else n) <> " HP" <> to
+    LastStand
+      -> "Deal up to " <> n <> "% damage based on missing health" <> to
+    OverChance
+      -> "Gain " <> n <> "% chance to apply Overcharge buffs"
+    RemoveBuffs
+      -> "Remove" <> p <> " buffs"
+    RemoveDebuffs
+      -> "Remove" <> p <> " debuffs"
+    RemoveMental
+      -> "Remove" <> p <> " mental debuffs"
+    Kill
+      -> not full ? append (n <> "% chance to ") $ "Instant-Kill " <> s
+    GainStars
+      -> "Gain " <> n <> " critical stars"
+         <> case target of
+                Self -> " for yourself"
+                _    -> ""
+  where
+    n      = show amount
+    {p, s} = possessiveAndSubject target
+    to     = case s of
+                 "" -> ""
+                 _  -> " to" <> s
+    full   = amount == Full
+
+instance _e_ :: Show DebuffEffect where
+    show = showDebuff Someone Placeholder
+
+showDebuff :: Target -> Amount -> DebuffEffect -> String
+showDebuff target amount = case _ of
+    ApplyTrait t -> "Apply [" <> show t <> "]" <> to
+    AttackDown   -> reduce "attack"
+    BuffBlock    -> "Inflict Buff Block status" <> to
+    BuffFail     -> reduce "attack buff success rate"
+    Burn         -> damage "Burn"
+    Charm        -> "Charm" <> s
+    CharmVuln    -> unresist "Charm"
+    Confusion    -> eachTurn "Confusion" "Seal skills"
+    CritChance   -> reduce "critical attack chance"
+    CritDown     -> reduce "critical damage"
+    Curse        -> damage "Curse"
+    DamageVuln   -> "Increase" <> s <> " damage taken by " <> n
+    DeathDown    -> unresist "Instant-Death"
+    DebuffVuln   -> unresist "debuff"
+    DefenseDown  -> reduce "defense"
+    Fear         -> eachTurn "Fear" "be Stunned"
+    HealthLoss   -> "Decrease" <> p <> " HP by " <> n <> " per turn"
+    MentalVuln   -> unresist "mental debuff"
+    NPDown       -> reduce "NP Damage"
+    Poison       -> damage "Poison"
+    SealNP       -> "Seal" <> p <> " NP"
+    SealSkills   -> "Seal" <> p <> " skills"
+    StarDown     -> reduce "C. Star drop rate"
+    Stun         -> "Stun" <> s
+    StunBomb     -> "Stun" <> s <> " after 1 turn"
+  where
+    n          = show amount
+    {p, s}     = possessiveAndSubject target
+    to         = case s of
+                     "" -> ""
+                     _  -> " to" <> s
+    reduce   x = "Reduce" <> p <> " " <> x <> " by " <> n <> "%"
+    unresist x = reduce $ x <> " resistance"
+    damage   x = "Inflict " <> n <> " " <> x <> " damage" <> to <> " every turn"
+    eachTurn x perTurn = "Inflict " <> x <> " status" <> to <> ", causing "
+                         <> n <> "% chance to " <> perTurn <> " every turn"
+
+instance _f_ :: Show BuffEffect where
     show = showBuff Someone Placeholder
 
 showBuff :: Target -> Amount -> BuffEffect -> String
@@ -138,9 +333,9 @@ showBuff target amount = case _ of
     against :: ∀ a. Show a => a -> String
     against x = " against [" <> show x <> "]"
 
-data BuffCategory 
-    = BuffOffensive 
-    | BuffDefensive 
+data BuffCategory
+    = BuffOffensive
+    | BuffDefensive
     | BuffSupport
     | BuffUtility
     | BuffSpecialist
@@ -187,103 +382,6 @@ buffCategory SureHit           = BuffOffensive
 buffCategory Taunt             = BuffDefensive
 buffCategory StarsPerTurn      = BuffSupport
 
-
-data DebuffEffect
-    = ApplyTrait Trait
-    | AttackDown
-    | BuffBlock
-    | BuffFail
-    | Burn
-    | Charm
-    | CharmVuln
-    | CritChance
-    | CritDown
-    | Confusion
-    | Curse
-    | DamageVuln
-    | DeathDown
-    | DebuffVuln
-    | DefenseDown
-    | Fear
-    | HealthLoss
-    | MentalVuln
-    | NPDown
-    | Poison
-    | SealNP
-    | SealSkills
-    | StarDown
-    | Stun
-    | StunBomb
-instance _d_ :: Show DebuffEffect where
-    show = showDebuff Someone Placeholder
-
-showDebuff :: Target -> Amount -> DebuffEffect -> String
-showDebuff target amount = case _ of
-    ApplyTrait t -> "Apply [" <> show t <> "]" <> to
-    AttackDown   -> reduce "attack"
-    BuffBlock    -> "Inflict Buff Block status" <> to
-    BuffFail     -> reduce "attack buff success rate"
-    Burn         -> damage "Burn"
-    Charm        -> "Charm" <> s
-    CharmVuln    -> unresist "Charm"
-    Confusion    -> eachTurn "Confusion" "Seal skills"
-    CritChance   -> reduce "critical attack chance"
-    CritDown     -> reduce "critical damage"
-    Curse        -> damage "Curse"
-    DamageVuln   -> "Increase" <> s <> " damage taken by " <> n
-    DeathDown    -> unresist "Instant-Death"
-    DebuffVuln   -> unresist "debuff"
-    DefenseDown  -> reduce "defense"
-    Fear         -> eachTurn "Fear" "be Stunned"
-    HealthLoss   -> "Decrease" <> p <> " HP by " <> n <> " per turn"
-    MentalVuln   -> unresist "mental debuff"
-    NPDown       -> reduce "NP Damage"
-    Poison       -> damage "Poison"
-    SealNP       -> "Seal" <> p <> " NP"
-    SealSkills   -> "Seal" <> p <> " skills"
-    StarDown     -> reduce "C. Star drop rate"
-    Stun         -> "Stun" <> s
-    StunBomb     -> "Stun" <> s <> " after 1 turn"
-  where
-    n          = show amount
-    {p, s}     = possessiveAndSubject target
-    to         = case s of
-                     "" -> ""
-                     _  -> " to" <> s
-    reduce   x = "Reduce" <> p <> " " <> x <> " by " <> n <> "%"
-    unresist x = reduce $ x <> " resistance"
-    damage   x = "Inflict " <> n <> " " <> x <> " damage" <> to <> " every turn"
-    eachTurn x perTurn = "Inflict " <> x <> " status" <> to <> ", causing "
-                         <> n <> "% chance to " <> perTurn <> " every turn"
-
-data InstantEffect
-    = Avenge
-    | BecomeHyde -- is there a better way to do this?
-    | Cooldowns
-    | Cure
-    | Damage
-    | DamageThruDef
-    | DamageVs Trait
-    | DamagePoison
-    | DemeritBuffs
-    | DemeritCharge
-    | DemeritDamage
-    | DemeritGauge
-    | DemeritHealth
-    | DemeritKill
-    | GainStars
-    | GaugeDown
-    | GaugeUp
-    | Heal
-    | Kill
-    | LastStand
-    | OverChance
-    | RemoveBuffs
-    | RemoveDebuffs
-    | RemoveMental
-instance _e_ :: Show InstantEffect where
-    show = showInstant Someone Placeholder
-
 isDamage :: InstantEffect -> Boolean
 isDamage Avenge = true
 isDamage Damage = true
@@ -292,101 +390,6 @@ isDamage (DamageVs _) = true
 isDamage DamagePoison = true
 isDamage LastStand = true
 isDamage _ = false
-
-showInstant :: Target -> Amount -> InstantEffect -> String
-showInstant target amount = case _ of
-    Avenge
-      -> "At the end of the next turn, deal " <> n
-      <> "% of damage taken during that turn" <> to
-    BecomeHyde
-      -> "Transform into Hyde. Class: [Berserker]. \
-         \Star Weight: 9. Star Rate: 5%. NP/Hit: 1.02%. NP/Defend: 5%. \
-         \Alignment: Chaotic Evil. Lose [" <> show Brynhild <> "] trait. \
-         \Skills are more effective"
-    Cooldowns
-      -> "Reduce" <> p <> " cooldowns by " <> n
-    Cure
-      -> "Remove" <> p <> " poison debuffs"
-    Damage
-      -> "Deal " <> n <> "% damage" <> to
-    DamageThruDef
-      -> "Deal " <> n <> "% damage" <> to <> ", ignoring defense"
-    DamageVs t
-      -> "Deal " <> n <> "% extra damage to [" <> show t <> "]"
-    DamagePoison
-      -> "Deal " <> n <> "% extra damage to [Poisoned]"
-    DemeritBuffs
-      -> "Remove" <> p <> " buffs"
-    DemeritCharge
-      -> "Increase" <> s <> " NP gauge by " <> n
-    DemeritGauge
-      -> "Decrease" <> p <> " NP gauge by " <> n <> "%"
-    DemeritDamage
-      -> "Deal " <> n <> " damage" <> to
-    DemeritKill
-      -> "Sacrifice" <> s <> " (can trigger Guts)"
-    DemeritHealth
-      -> "Deal " <> n <> " damage" <> to <> " down to a minimum of 1"
-    GaugeDown
-      -> "Reduce" <> p <> " NP gauge by " <> n
-    GaugeUp
-      -> "Increase" <> p <> " NP gauge by " <> n <> "%"
-    Heal
-      -> "Restore " <> (if full then "all" else n) <> " HP" <> to
-    LastStand
-      -> "Deal up to " <> n <> "% damage based on missing health" <> to
-    OverChance
-      -> "Gain " <> n <> "% chance to apply Overcharge buffs"
-    RemoveBuffs
-      -> "Remove" <> p <> " buffs"
-    RemoveDebuffs
-      -> "Remove" <> p <> " debuffs"
-    RemoveMental
-      -> "Remove" <> p <> " mental debuffs"
-    Kill
-      -> not full ? append (n <> "% chance to ") $ "Instant-Kill " <> s
-    GainStars
-      -> "Gain " <> n <> " critical stars" 
-         <> case target of
-                Self -> " for yourself"
-                _    -> ""
-  where
-    n      = show amount
-    {p, s} = possessiveAndSubject target
-    to     = case s of
-                 "" -> ""
-                 _  -> " to" <> s
-    full   = amount == Full
-
-data BonusEffect
-    = FriendPoints
-    | QuestQuartz
-    | QPGain
-    | EXP
-    | EXPPerc
-    | MysticCode
-    | Bond
-instance _f_ :: Show BonusEffect where
-    show = showBonus Placeholder
-
-showBonus :: Amount -> BonusEffect -> String
-showBonus amount = case _ of
-    FriendPoints
-      -> "Friend Points obtained from support becomes +" <> n
-    QuestQuartz
-      -> "Increase QP earned from completing quests by " <> n
-    QPGain
-      -> "Increase QP from enemy drops by " <> n <> "%"
-    EXP
-      -> "Increase Master EXP gain by " <> n
-    EXPPerc
-      -> "Increase Master EXP gain by " <> n <> "%"
-    MysticCode
-      -> "Increase Mystic Code EXP gain by " <> n
-    Bond
-      -> "Increase Bond Points gain by " <> n
-  where
-    n = show amount
 
 -- | Int field is duration, Number field is amount
 data SkillEffect
@@ -421,7 +424,7 @@ mapAmount f eff = go eff
     go (ToMax a b)      = ToMax (f' a) $ go b
     go (Chances a b c)  = case f (Int.toNumber a) (Int.toNumber b) of
                               Flat x      -> Chance (Int.floor x) $ go c
-                              Range x y   -> Chances (Int.floor x) 
+                              Range x y   -> Chances (Int.floor x)
                                                      (Int.floor y) $ go c
                               Placeholder -> go c
                               Full        -> go c
@@ -467,7 +470,7 @@ instance _g_ :: Show SkillEffect where
             When cond ef         -> "If " <> cond <> ": " <> uncap (go ef)
             Times 1 ef           -> go ef <> " (1 time)"
             Times times ef       -> go ef <> " (" <> show times <> " times)"
-            ToMax amount ef      -> go ef <> " every turn (max " <> show amount 
+            ToMax amount ef      -> go ef <> " every turn (max " <> show amount
                                     <> ")"
         turns 0   = ""
         turns 1   = " for 1 turn"
@@ -504,7 +507,7 @@ toMax Full = 0.0
 toMax (Flat x) = x
 toMax (Range _ b) = b
 
-data Rank 
+data Rank
     = Unknown | EX
     | APlusPlus | APlus | A | AMinus
     | BPlusPlus | BPlus | B | BMinus
@@ -549,7 +552,7 @@ allied _ = false
 possessiveAndSubject :: Target -> { p :: String, s :: String }
 possessiveAndSubject = case _ of
     Someone       -> { p: ""
-                     , s: "" 
+                     , s: ""
                      }
     Self          -> { p: " own"
                      , s: " self"

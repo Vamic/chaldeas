@@ -692,7 +692,7 @@ archers = Servant <$>
                 , rank:   A
                 , icon:   IconHeart
                 , cd:     9
-                , effect: [ Chances 70 100 $ 
+                , effect: [ Chances 70 100 $
                             Debuff (EnemyType Male) 1 Charm Full ]
                 }
               , { name:   "Whim of the Goddess"

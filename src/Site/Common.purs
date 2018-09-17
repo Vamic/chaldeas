@@ -2,6 +2,7 @@
 module Site.Common where
 
 import StandardLibrary
+import Data.Array              as Array
 import Halogen.HTML.Events     as E
 import Halogen.HTML            as H
 import Halogen.HTML.Properties as P
@@ -23,6 +24,8 @@ import Web.UIEvent.MouseEvent (MouseEvent)
 import Printing
 import Database
 import Site.Preferences
+import Site.Filtering
+import Site.ToImage
 
 -- | Builds a `Date` out of a year, month, and day.
 ymd :: Int -> Month -> Int -> Date
@@ -63,6 +66,28 @@ places' = places 0 <<< Int.toNumber
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
 toCell isPercent = _td <<< (isPercent ? flip append "%") <<< 
                    Format.toString <<< roundTo 2
+
+filterSection :: ∀ a b c d. (FilterTab -> Boolean -> Unit -> b Unit)
+              -> (Filter c -> Unit -> b Unit) 
+              -> {exclude :: Array (Filter c), filters :: Array (Filter c) | d}
+              -> FilterTab -> Array (Filter c)
+              -> Array (HTML a (b Unit))
+filterSection _ _ _ _ [] = []
+filterSection check toggle st tab filts = 
+    cons (_h 3 $ show tab) <<< 
+    ( (exclusive tab && length filts > 3) ? 
+        let checked = length $ filter (eq tab <<< getTab) st.exclude
+        in append 
+            [ _button "All" (checked /= 0) $ check tab true
+            , _button "None" (checked /= length filts) $ check tab false
+            ]
+    ) <<< Array.singleton <<< H.form_ $ filts <#> \f'@(Filter f) -> 
+    H.p [_click $ toggle f' ] <<<
+    _checkbox (toImage <$> f.icon) f.name $ checker f'
+  where
+    checker f'@(Filter f)
+        | exclusive f.tab = f' `notElem` st.exclude
+        | otherwise       = f' `elem`    st.filters
 
 ----------------
 -- ABBREVIATIONS

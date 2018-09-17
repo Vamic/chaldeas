@@ -16,9 +16,9 @@ import Generic     as G
 import Data.String as String
 
 
-import Printing
-import Database
-import Test.Base
+import Printing (prettify)
+import Database (BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), SkillEffect(..), craftEssences)
+import Test.Base (MaybeRank(..), RankedSkill(..))
 
 upgradeNP :: Array String
 upgradeNP = 
@@ -48,10 +48,10 @@ uniqueSkill =
 ceNames :: Array String
 ceNames = show <$> craftEssences
 
-skillRanks :: Servant -> Array (Tuple MaybeRank RankedSkill)
+skillRanks :: Servant -> Array (Tuple RankedSkill MaybeRank)
 skillRanks s'@(Servant s) = tuplify <<< go <$> s.skills
   where
-    tuplify ranked@(RankedSkill _ rank) = (rank ^ ranked)
+    tuplify ranked@(RankedSkill _ rank) = (ranked ^ rank)
     flagged x = elem (s.name ^ x.name)
     go x
       | x.name `elem` ceNames    = RankedSkill x { name = x.name <> " (Skill)" } 

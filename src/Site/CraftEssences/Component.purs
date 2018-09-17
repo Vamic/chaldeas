@@ -28,6 +28,7 @@ data Query a
     = Switch    (Maybe Servant) a
     | Focus     (Maybe CraftEssence) a
     | ClearAll  a
+    | Check     FilterTab Boolean a
     | FilterBy  (Array (Filter CraftEssence)) a
     | Toggle    (Filter CraftEssence) a
     | MatchAny  Boolean a
@@ -40,8 +41,8 @@ type State = { filters  :: Array (Filter CraftEssence)
              , focus    :: Maybe CraftEssence
              , sortBy   :: SortBy
              , prefs    :: Preferences
-             , sorted   :: Array (Tuple String CraftEssence)
-             , listing  :: Array (Tuple String CraftEssence)
+             , sorted   :: Array { label :: String, obj :: CraftEssence }
+             , listing  :: Array { label :: String, obj :: CraftEssence }
              }
 
 comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence 
@@ -82,7 +83,7 @@ comp initialFilt initialFocus initialPrefs today = component
         , H.form_ $ enumArray <#> \sort -> 
           H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
         , _h 1 "Include"
-        ] <> (filter (exclusive <<< fst) allFilters >>= filterSection)
+        ] <> (filter (exclusive <<< _.tab) allFilters >>= filtersEl)
       , H.section_ <<< maybeReverse $
         portrait false st.prefs <$> st.listing
       , H.aside_ $
@@ -100,7 +101,7 @@ comp initialFilt initialFocus initialPrefs today = component
             ]
           , H.button clearAll $ _txt "Reset All" 
           ]
-        ] <> (filter (not exclusive <<< fst) allFilters >>= filterSection)
+        ] <> (filter (not exclusive <<< _.tab) allFilters >>= filtersEl)
       ]
     where
       maybeReverse = case st.sortBy of
@@ -109,16 +110,7 @@ comp initialFilt initialFocus initialPrefs today = component
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
-      check f'@(Filter f)
-        | exclusive f.tab = f' `notElem` st.exclude
-        | otherwise       = f' `elem`    st.filters
-      filterSection (_ ^ []) = []
-      filterSection (tab ^ filts) = 
-          [ _h 3 $ show tab
-          , H.form_ $ filts <#> \f'@(Filter f) -> 
-          H.p [_click $ Toggle f' ] <<< 
-          _checkbox (toImage <$> f.icon) f.name $ check f'
-          ]
+      filtersEl { tab, filters } = filterSection Check Toggle st tab filters
 
   eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
@@ -126,6 +118,10 @@ comp initialFilt initialFocus initialPrefs today = component
           {exclude, filters} <- get
           raise $ Message (exclude <> filters) switchTo
       ClearAll           a -> a <$ modif _{ exclude = [], filters = [] }
+      Check t  true      a -> a <$ do
+          modif <<< modExclude <<< filter $ notEq t <<< getTab
+      Check t  false    a -> a <$ 
+          modif (modExclude $ nub <<< append (getFilters today t))
       SetSort   sortBy   a -> a <$ modif _{ sortBy = sortBy
                                           , sorted = getSort sortBy
                                           }
@@ -161,17 +157,17 @@ comp initialFilt initialFocus initialPrefs today = component
       hash Nothing   = Hash.setHash "CraftEssences"
       hash (Just ce) = Hash.setHash <<< urlName $ show ce
 
-portrait :: ∀ a. Boolean -> Preferences -> Tuple String CraftEssence
-         -> HTML a (Query Unit)
-portrait big prefs (lab ^ ce'@(CraftEssence ce))
+portrait :: ∀ a. Boolean -> Preferences 
+         -> { label :: String, obj :: CraftEssence } -> HTML a (Query Unit)
+portrait big prefs {label, obj: ce'@(CraftEssence ce)}
   | not big && prefer prefs Thumbnails = 
       H.div [_c "thumb", _click <<< Focus $ Just ce']
       [ toThumbnail ce' ]
-  | otherwise = 
+  | otherwise =
       H.div meta
       [ toImage ce'
-      , H.header_ <<< (lab /= "") ? append 
-        [_span $ noBreakName big lab, H.br_] $
+      , H.header_ <<< (label /= "") ? append 
+        [_span $ noBreakName big label, H.br_] $
         [ _span <<< noBreakName big $ artorify ce.name ]
       , H.footer_ [_span <<< String.joinWith "  " $ replicate ce.rarity "★"]
       ]
@@ -191,7 +187,7 @@ modal prefs
     [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true prefs ("" ^ ce')
+      [ portrait true prefs {label: "", obj: ce'}
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]

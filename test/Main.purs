@@ -39,11 +39,11 @@ import Data.Formatter.Number (Formatter(..), format)
 import Test.Unit (TestSuite, Test, test, success, suite, failure)
 import Test.Unit.Assert (assert)
 
-import Database
+import Database (Alignment(..), Attribute(..), CraftEssence(..), RangeInfo(..), Servant(..), Skill, craftEssences, ranges, servants)
 
-import Test.Base 
-import Test.Wiki 
-import Test.Parse 
+import Test.Base (MaybeRank(..), RankedSkill(..), addRank)
+import Test.Wiki (Wiki, printBool, wiki, wikiLookup, wikiRange)
+import Test.Parse (effects, npRank, printIcon, readEffect, skillRanks)
 
 main :: Effect Unit
 main = Yargs.runY (usage <> example) $ app 
@@ -59,9 +59,10 @@ app :: Int -> Int -> Effect Unit
 app ce servant = Console.log msg *> Aff.launchAff_ do
     skills <- map Map.fromFoldable <<< traverse wiki <<< nubEq $ 
               servs >>= skillRanks
-    stats  <- traverse (wiki <<< Tuple Unranked) servs
+    stats  <- traverse (wiki <<< flip Tuple Unranked) servs
     nps    <- traverse (wiki <<< addRank npRank) servs
-    ces    <- traverse (wiki <<< Tuple Unranked) (maybeTake ce craftEssences)
+    ces    <- traverse (wiki <<< flip Tuple Unranked) 
+              (maybeTake ce craftEssences)
     Main.runTestWith Test.runTest do
         traverse_ (testSkills skills) servs
         traverse_ testServant stats
@@ -109,19 +110,13 @@ testCraftEssence (CraftEssence ce ^ mw) = suite ce.name do
                               }
 
 shouldMatch :: ∀ a. Eq a => Show a => Array a -> Array a -> Test
-shouldMatch x y = case (wiki ^ db) of
+shouldMatch x y = case (nubEq x \\ nubEq y ^ nubEq y \\ nubEq x) of
     ([] ^ []) -> success
     (xs ^ []) -> failure $ "Missing from Wiki: " <> showAll xs <> "."
     ([] ^ ys) -> failure $ "Missing from DB: "   <> showAll ys <> "."
     (xs ^ ys) -> failure $ "Missing from Wiki: " <> showAll xs <> ". \
                            \Missing from DB: "   <> showAll ys <> "."
-{-
-    test "Wiki" <<< beNull $ nubEq x \\ nubEq y
-    test "DB"   <<< beNull $ nubEq y \\ nubEq x
--}
   where
-    wiki = nubEq x \\ nubEq y
-    db   = nubEq y \\ nubEq x
     showAll = String.joinWith ", " <<< map show
 
 testServant :: Tuple Servant Wiki -> TestSuite
@@ -212,7 +207,7 @@ testSkill skill mw = suite skill.name do
 
 testSkills :: Map RankedSkill Wiki -> Servant -> TestSuite
 testSkills skills s'@(Servant s) = suite (s.name <> ": Skills") <<<
-    traverse_ go $ snd <$> skillRanks s'
+    traverse_ go $ fst <$> skillRanks s'
   where
     go :: RankedSkill -> TestSuite
     go ranked@(RankedSkill skill _) = case Map.lookup ranked skills of

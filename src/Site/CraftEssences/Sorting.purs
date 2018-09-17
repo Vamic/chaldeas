@@ -8,8 +8,6 @@ import Generic  as G
 import Data.Map as Map
 import Data.Int as Int
 
-import Data.Profunctor.Strong ((&&&))
-
 import Database
 import Printing
 
@@ -28,23 +26,24 @@ toSort Rarity (CraftEssence ce) = Int.toNumber ce.rarity
 toSort ATK    (CraftEssence ce) = Int.toNumber ce.stats.max.atk
 toSort HP     (CraftEssence ce) = Int.toNumber ce.stats.max.hp
 
-doSort :: SortBy -> Array CraftEssence -> Array (Tuple String CraftEssence)
+doSort :: SortBy -> Array CraftEssence 
+       -> Array { label :: String, obj :: CraftEssence }
 doSort Rarity = map showSort <<< sortWith sorter
   where
     sorter (CraftEssence ce) = show (5 - ce.rarity) <> ce.name
-    showSort ce'@(CraftEssence ce) = (fromMaybe "" ce.bond ^ ce')
+    showSort ce'@(CraftEssence ce) = { label: fromMaybe "" ce.bond, obj: ce'}
 doSort x = map showSort <<< sortWith sorter
   where
-    sorter   = toSort x
-    showSort = output <<< abs <<< sorter &&& identity
-    output   = places 0
+    sorter      = toSort x
+    showSort ce = { label: output <<< abs $ sorter ce, obj: ce }
+    output      = places 0
 
-sorted :: Map SortBy (Array (Tuple String CraftEssence))
+sorted :: Map SortBy (Array {label :: String, obj :: CraftEssence})
 sorted = Map.fromFoldable $ go <$> enumArray
   where
     go sorter = (sorter ^ doSort sorter craftEssences)
 
-getSort :: SortBy -> Array (Tuple String CraftEssence)
+getSort :: SortBy -> Array { label :: String, obj ::  CraftEssence }
 getSort sorter = fromMaybe [] $ Map.lookup sorter sorted
 
 -------------------------------

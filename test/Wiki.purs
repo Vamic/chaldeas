@@ -19,8 +19,8 @@ import Data.String.Regex        as Regex
 import Data.String.Regex.Flags  as Flags
 import Data.String.Regex.Unsafe as Unsafe
 
-import Test.Base
-import Test.Parse
+import Test.Base (MaybeRank)
+import Test.Parse (translate)
 
 wikiLink :: Regex
 wikiLink = Unsafe.unsafeRegex """\[\[[^\|\]]+\|([^\]]+)\]\]""" Flags.global
@@ -66,16 +66,16 @@ splitAny :: ∀ m. Foldable m => Monad m
          => Side -> m String -> String -> Maybe String
 splitAny side xs s = go <$> indices
   where
-    go (len ^ i) = case side of
+    go {len, i} = case side of
         Before -> _.before $ String.splitAt i s
         After  -> String.drop len <<< _.after $ String.splitAt i s
     indices = oneOf do
         pattern <- xs
-        pure $ Tuple (String.length pattern) 
+        pure $ { len: String.length pattern, i: _ }
             <$> String.indexOf (Pattern pattern) s
 
-wiki :: ∀ a. Show a => Tuple MaybeRank a -> Aff (Tuple a Wiki)
-wiki (mRank ^ x) = Tuple x <<< wikify <<< 
+wiki :: ∀ a. Show a => Tuple a MaybeRank -> Aff (Tuple a Wiki)
+wiki (x ^ mRank) = Tuple x <<< wikify <<< 
                    _.body <$> Affjax.get ResponseFormat.string encode
   where
     wikify (Right obj) = toWiki obj mRank 

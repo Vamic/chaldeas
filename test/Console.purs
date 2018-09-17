@@ -12,7 +12,7 @@ import Data.List (List)
 import Test.Unit (TestList, TestSuite, collectResults, countSkippedTests, keepErrors, walkSuite)
 import Test.Unit.Console as Console
 
-import Printing
+import Printing (places)
 
 indent :: Int -> String
 indent 0 = mempty

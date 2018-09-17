@@ -53,8 +53,8 @@ type State = { filters  :: Array (Filter Servant)
              , prefs    :: Preferences
              , ascent   :: Int
              , myServs  :: Array MyServant
-             , sorted   :: Array (Tuple String MyServant)
-             , listing  :: Array (Tuple String MyServant)
+             , sorted   :: Array { label :: String, obj :: MyServant }
+             , listing  :: Array { label :: String, obj :: MyServant }
              , team     :: Map Servant MyServant
              }
 
@@ -102,7 +102,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
         , H.form_ $ enumArray <#> \sort -> 
           H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
         , _h 1 "Include"
-        ] <> (filter (exclusive <<< fst) allFilters' >>= filterSection)
+        ] <> (filter (exclusive <<< _.tab) allFilters' >>= filtersEl)
       , H.section_ <<< maybeReverse $ 
         doPortrait <$> (st.mineOnly ? filter isMine $ st.listing)
       , H.aside_ $
@@ -124,41 +124,29 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
           , H.button clearAll $ _txt "Reset All"
           ]
         ] <> 
-          (filter (not exclusive <<< fst) allFilters' >>= filterSection)
+          (filter (not exclusive <<< _.tab) allFilters' >>= filtersEl)
       ]
     where
       maybeReverse = case st.sortBy of
           Rarity -> identity
           _      -> reverse
-      doPortrait ("" ^ ms)
-        | st.mineOnly = portrait false st.prefs baseAscend $ showStats ms ^ ms
-      doPortrait tup  = portrait false st.prefs baseAscend tup
+      doPortrait {label: "", obj: ms}
+        | st.mineOnly = portrait false st.prefs baseAscend { label: showStats ms, obj: ms }
+      doPortrait info = portrait false st.prefs baseAscend info
       baseAscend
         | prefer st.prefs MaxAscension = 4
         | otherwise                    = 1
       allFilters'
-        | st.mineOnly = allFilters <#> \(tab ^ filts) -> 
-                        tab ^ filter (\(Filter x) ->
-                        any (x.match false <<< getBase) st.team) filts
+        | st.mineOnly = allFilters <#> \{tab, filters} -> 
+                        { tab
+                        , filters: filter (\(Filter x) ->
+                              any (x.match false <<< getBase) st.team) filters 
+                        }
         | otherwise   = allFilters
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
-      check f'@(Filter f)
-        | exclusive f.tab = f' `notElem` st.exclude
-        | otherwise       = f' `elem`    st.filters
-      filterSection (_ ^ []) = []
-      filterSection (tab ^ filts) = 
-          cons (_h 3 $ show tab) <<< 
-          ( (exclusive tab && length filts > 3) ? 
-              let checked = length $ filter (eq tab <<< getTab) st.exclude
-              in append 
-                  [ _button "All" (checked /= 0) $ Check tab true
-                  , _button "None" (checked /= length filts) $ Check tab false
-                  ]
-          ) <<< Array.singleton <<< H.form_ $ filts <#> \f'@(Filter f) -> 
-          H.p [_click $ Toggle f' ] <<<
-          _checkbox (toImage <$> f.icon) f.name $ check f'
+      filtersEl { tab, filters } = filterSection Check Toggle st tab filters
 
   eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
@@ -172,6 +160,8 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       ClearAll          a -> a <$ modif   _{ exclude = [], filters = [] }
       Check t  true     a -> a <$ do
           modif <<< modExclude <<< filter $ notEq t <<< getTab
+      Check t  false    a -> a <$ 
+          modif (modExclude $ nub <<< append (getFilters today t))
       Switch   switch   a -> a <$ do
           {exclude, filters} <- get
           raise $ Message (exclude <> filters) switch
@@ -179,8 +169,6 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
           st{ sortBy = sortBy
             , sorted = getSort sortBy st.myServs
             }
-      Check t  false    a -> a <$ 
-          modif (modExclude $ nub <<< append (getFilters today t))
       Focus    focus    a -> a <$ do
           liftEffect $ hash focus
           modify_ _{ focus = focus, ascent = 1 }
@@ -229,13 +217,13 @@ showStats :: MyServant -> String
 showStats (MyServant ms) = show ms.level <> "/" <> show (maxLevel ms.servant) 
                            <> " " <> String.joinWith "·" (show <$> ms.skills) 
 
-isMine :: ∀ a. Tuple a MyServant -> Boolean
-isMine (_ ^ (MyServant {level: 0})) = false
+isMine :: ∀ a. { obj :: MyServant | a } -> Boolean
+isMine  {obj: MyServant {level: 0}} = false
 isMine _                            = true
 
 portrait :: ∀ a. Boolean -> Preferences -> Int 
-         -> Tuple String MyServant -> HTML a (Query Unit)
-portrait big prefs baseAscension (lab ^ ms')
+         -> { label :: String, obj :: MyServant } -> HTML a (Query Unit)
+portrait big prefs baseAscension { label, obj: ms' }
   | not big && prefer prefs Thumbnails = 
       H.div [_c "thumb", _click <<< Focus $ Just ms' ]
       [ toThumbnail ms' ]
@@ -243,7 +231,7 @@ portrait big prefs baseAscension (lab ^ ms')
       H.div meta
       [ _img $ "img/Servant/" <> fileName s.name <> ascent <> ".png"
       , H.div_ [ toImage s.class ]
-      , H.header_ <<< (lab /= "") ? append [_span lab, H.br_] $
+      , H.header_ <<< (label /= "") ? append [_span label, H.br_] $
         [ _span <<< noBreakName big $ artorify s.name ]
       , H.footer_ <<< 
         ((big && ascension > 1) ? cons prevAscend) <<<
@@ -273,7 +261,7 @@ modal prefs ascent focus@(Just ms') = H.div
   [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true prefs ascent $ "" ^ ms'
+      [ portrait true prefs ascent { label: "", obj: ms' }
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]

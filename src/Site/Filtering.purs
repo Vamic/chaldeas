@@ -13,7 +13,6 @@ import Generic     as G
 import Data.String as String
 
 import Data.Date (Date)
-import Data.Profunctor.Strong ((&&&))
 
 import Printing
 import Database.Skill
@@ -75,8 +74,8 @@ getScheduled xs today = toFilter <$> filter scheduled xs
     scheduled (ScheduledFilter start end _) = start <= today && today <= end
     toFilter (ScheduledFilter _ _ x) = x
 
-type FilterState a b c = { sorted   :: Array (Tuple String a)
-                         , listing  :: Array (Tuple String a)
+type FilterState a b c = { sorted   :: Array { label :: String, obj :: a }
+                         , listing  :: Array { label :: String, obj :: a }
                          , matchAny :: Boolean
                          , filters  :: Array (Filter b)
                          , exclude  :: Array (Filter b)
@@ -85,7 +84,7 @@ type FilterState a b c = { sorted   :: Array (Tuple String a)
                          }
 
 updateListing :: ∀ a b c. (a -> b) -> FilterState a b c -> FilterState a b c
-updateListing f st = st{ listing = filter (match <<< f <<< snd) st.sorted }
+updateListing f st = st{ listing = filter (match <<< f <<< _.obj) st.sorted }
   where
     noSelf = prefer st.prefs ExcludeSelf
     matchFilter x (Filter filt) = filt.match noSelf x
@@ -93,11 +92,13 @@ updateListing f st = st{ listing = filter (match <<< f <<< snd) st.sorted }
            && (null st.filters || (if st.matchAny then any else all)
               (matchFilter x) st.filters)
 
-type FilterList a = Array (Tuple FilterTab (Array (Filter a)))
+type FilterList a = Array { tab :: FilterTab, filters :: Array (Filter a) }
 
 collectFilters :: ∀ a. (Date -> FilterTab -> Array (Filter a)) -> Date 
                -> FilterList a
-collectFilters f today = (identity &&& f today) <$> enumArray
+collectFilters f today = go <$> enumArray
+  where
+    go tab = { tab, filters: f today tab }
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

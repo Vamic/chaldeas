@@ -124,7 +124,7 @@ showBuff target amount = case _ of
         _    -> ""
   where
     n       = show amount
-    (p ^ s) = possessiveAndSubject target
+    {p, s}  = possessiveAndSubject target
     to      = case s of
                   "" -> ""
                   _  -> " to" <> s
@@ -246,7 +246,7 @@ showDebuff target amount = case _ of
     StunBomb     -> "Stun" <> s <> " after 1 turn"
   where
     n          = show amount
-    (p ^ s)    = possessiveAndSubject target
+    {p, s}     = possessiveAndSubject target
     to         = case s of
                      "" -> ""
                      _  -> " to" <> s
@@ -351,12 +351,12 @@ showInstant target amount = case _ of
                 Self -> " for yourself"
                 _    -> ""
   where
-    n     = show amount
-    p ^ s = possessiveAndSubject target
-    to    = case s of
-                "" -> ""
-                _  -> " to" <> s
-    full  = amount == Full
+    n      = show amount
+    {p, s} = possessiveAndSubject target
+    to     = case s of
+                 "" -> ""
+                 _  -> " to" <> s
+    full   = amount == Full
 
 data BonusEffect
     = FriendPoints
@@ -546,32 +546,44 @@ allied Others = true
 allied (AlliesType _) = true
 allied _ = false
 
-possessiveAndSubject :: Target -> Tuple String String
+possessiveAndSubject :: Target -> { p :: String, s :: String }
 possessiveAndSubject = case _ of
-    Someone       -> ""
-                   ^ ""
-    Self          -> " own"
-                   ^ " self"
-    Ally          -> " one ally's"
-                   ^ " one ally"
-    Party         -> " party's"
-                   ^ " party"
-    Enemy         -> " one enemy's"
-                   ^ " one enemy"
-    Enemies       -> " all enemy"
-                   ^ " all enemies"
-    Others        -> " allies' (excluding self)"
-                   ^ " allies (excluding self)"
-    AlliesType t  -> " " <> show t <> " allies'"
-                   ^ " " <> show t <> " allies"
-    EnemyType t   -> " one " <> show t <> " enemy's"
-                   ^ " one " <> show t <> " enemy"
-    EnemiesType t -> " all " <> show t <> " enemy"
-                   ^ " all " <> show t <> " enemies"
-    Killer        -> " killer's"
-                   ^ " killer"
-    Target        -> " target's"
-                   ^ " target"
+    Someone       -> { p: ""
+                     , s: "" 
+                     }
+    Self          -> { p: " own"
+                     , s: " self"
+                     }
+    Ally          -> { p: " one ally's"
+                     , s: " one ally"
+                     }
+    Party         -> { p: " party's"
+                     , s: " party"
+                     }
+    Enemy         -> { p: " one enemy's"
+                     , s: " one enemy"
+                     }
+    Enemies       -> { p: " all enemy"
+                     , s: " all enemies"
+                     }
+    Others        -> { p: " allies' (excluding self)"
+                     , s: " allies (excluding self)"
+                     }
+    AlliesType t  -> { p: " " <> show t <> " allies'"
+                     , s: " " <> show t <> " allies"
+                     }
+    EnemyType t   -> { p: " one " <> show t <> " enemy's"
+                     , s: " one " <> show t <> " enemy"
+                     }
+    EnemiesType t -> { p: " all " <> show t <> " enemy"
+                     , s: " all " <> show t <> " enemies"
+                     }
+    Killer        -> { p: " killer's"
+                     , s: " killer"
+                     }
+    Target        -> { p: " target's"
+                     , s: " target"
+                     }
 
 data RangeInfo = RangeInfo Boolean Number Number
 instance _i_ :: Show RangeInfo where
@@ -583,19 +595,21 @@ instance _j_ :: Eq RangeInfo where
 ranges :: ∀ f. Alternative f => Bind f => f SkillEffect -> f RangeInfo
 ranges = bindFlipped toInfo
   where
-    toInfo eff = uncurry (RangeInfo $ isPercent eff) <$> acc eff
-    isPercent = elem '%' <<< CodeUnits.toCharArray <<< show
-    acc (Grant _ _ _ x) = go x
-    acc (Debuff _ _ _ x) = go x
-    acc (To _ _ x) = go x
-    acc (Bonus _ x) = go x
-    acc (Chance _ ef) = acc ef
-    acc (Chances x y ef) = pure (Int.toNumber x ^ Int.toNumber y) <|> acc ef
-    acc (When _ ef) = acc ef
-    acc (Times _ ef) = acc ef
-    acc (ToMax _ ef) = acc ef
-    go (x ~ y) = pure (x ^ y)
-    go _ = empty
+    toInfo ef              = info (isPercent ef) <$> acc ef
+    isPercent              = elem '%' <<< CodeUnits.toCharArray <<< show
+    info isPerc {from, to} = RangeInfo isPerc from to
+    acc (Grant _ _ _ x)    = go x
+    acc (Debuff _ _ _ x)   = go x
+    acc (To _ _ x)         = go x
+    acc (Bonus _ x)        = go x
+    acc (Chance _ ef)      = acc ef
+    acc (Chances x y ef)   = pure {from: Int.toNumber x, to: Int.toNumber y}
+                             <|> acc ef
+    acc (When _ ef)        = acc ef
+    acc (Times _ ef)       = acc ef
+    acc (ToMax _ ef)       = acc ef
+    go (x ~ y)             = pure {from: x, to: y}
+    go _                   = empty
 
 type Skill = { name   :: String
              , rank   :: Rank

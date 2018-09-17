@@ -67,8 +67,10 @@ import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
 -- Since (^) == `Tuple`, it is recommended that its usage should be surrounded
 -- by parentheses in order to resemble tuple notation in other languages. 
 -- (a ^ b)` is much more reminiscent of `(a, b)` than `a ^ b`.
-infixr 0 Tuple    as ^
-infixr 9 doIf     as ?
+infixr 0 Tuple as ^
+infixr 9 doIf  as ?
+
+-- infixr 4 type Tuple as ^
 
 consAfter :: ∀ a. a -> Array a -> Array a
 consAfter = flip snoc

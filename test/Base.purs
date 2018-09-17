@@ -35,5 +35,5 @@ instance _4_ :: Ord RankedSkill where
 instance _5_ :: Show RankedSkill where
     show (RankedSkill skill _) = skill.name
 
-addRank :: ∀ a. (a -> MaybeRank) -> a -> Tuple MaybeRank a
-addRank f = f &&& identity
+addRank :: ∀ a. (a -> MaybeRank) -> a -> Tuple a MaybeRank
+addRank = (identity &&& _)

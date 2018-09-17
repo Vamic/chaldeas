@@ -9,7 +9,7 @@ import Halogen.HTML.Properties as P
 import Halogen.HTML (HTML)
 
 import Database
-import Database.MyServant
+import MyServant
 import Printing
 
 data ImagePath = ImagePath String String

@@ -27,7 +27,7 @@ import Data.Profunctor.Strong ((&&&))
 import Data.Set (Set)
 import Printing
 import Database
-import Database.MyServant
+import MyServant
 
 data Preference
     = Artorify
@@ -105,8 +105,9 @@ readServant text = do
     ascent      <- Int.fromString showAscent
     let fou      = {atk, hp}
         base     = servant
+        sorted   = Map.empty
     pure <<< recalc $ 
-    MyServant { servant, level, fou, skills, npLvl, base, ascent }
+    MyServant { servant, level, fou, skills, npLvl, base, ascent, sorted }
   where text' = String.split (Pattern delimServant) text
 
 setTeam :: Map Servant MyServant -> Effect Unit

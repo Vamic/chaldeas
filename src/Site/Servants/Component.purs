@@ -1,6 +1,6 @@
 -- | The user interface for Servants and My Servants.
 -- This module is only for functions that render Servants to HTML.
--- Everything else goes in `Database.Servant` and `Database.MyServant`.
+-- Everything else goes in `Database.Servant` and `MyServant`.
 module Site.Servants.Component (Query, Message(..), comp) where
 
 import StandardLibrary
@@ -17,7 +17,8 @@ import Halogen.HTML (HTML)
 import Data.Date (Date)
 
 import Database
-import Database.MyServant
+import MyServant
+import MyServant.Sorting
 import Site.Common
 import Site.ToImage
 import Site.Preferences
@@ -87,7 +88,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       }
     where
       initialMyServs = owned initialTeam <$> servants
-      initialSort = doSort Rarity initialMyServs
+      initialSort = getSort Rarity initialMyServs
       {yes: exclude, no: filters} = partition (exclusive <<< getTab)
                                     initialFilt
 
@@ -176,7 +177,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
           raise $ Message (exclude <> filters) switch
       SetSort  sortBy   a -> a <$ modif \st -> 
           st{ sortBy = sortBy
-            , sorted = doSort sortBy st.myServs
+            , sorted = getSort sortBy st.myServs
             }
       Check t  false    a -> a <$ 
           modif (modExclude $ nub <<< append (getFilters today t))
@@ -203,14 +204,14 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       OnTeam keep myServant a -> a <$  do
           {team}        <- get
           let myServant' = keep ? recalc $ myServant
-              team'      = if keep 
+              team'      = if keep
                            then Map.insert (getBase myServant') myServant' team
                            else Map.delete (getBase myServant') team
               myServs    = owned team' <$> servants
           liftEffect $ setTeam team'
           modif \st -> st{ team    = team'
                          , myServs = myServs
-                         , sorted  = doSort st.sortBy myServs
+                         , sorted  = getSort st.sortBy myServs
                          , focus   = st.focus *> Just myServant'
                          }
     where
@@ -373,7 +374,7 @@ modal prefs ascent focus@(Just ms') = H.div
       ]
     ]
   where
-    MyServant ms@{servant:s'@(Servant s), base:(Servant b)} = ms'
+    MyServant ms@{servant:s'@(Servant s), base:(Servant b), sorted} = ms'
     npRank Unknown = "--"
     npRank x       = show x
     {base} = s.stats
@@ -395,7 +396,7 @@ modal prefs ascent focus@(Just ms') = H.div
                                   , link FilterAlignment d
                                   ]
     alignBox xs = xs >>= \x -> [link FilterAlignment x, H.text " "]
-    calc sort = formatSort sort $ toSort sort s'
+    calc sort = formatSort sort <<< fromMaybe (-1.0) $ Map.lookup sort sorted
     skillBox i ({icon} ^ lvl) = 
         [ H.td_ [ toImage icon ]
         , H.td_ $ _mInt 1 10 lvl \val -> 

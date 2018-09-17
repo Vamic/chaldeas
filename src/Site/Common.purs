@@ -52,8 +52,6 @@ noBreakName doPrettify = doPrettify ? prettify <<<
                        <> String.replaceAll (Pattern " ") (Replacement " ") y
     unBreak xs     = String.joinWith "(" xs
 
-fileName :: String -> String
-fileName = filterOut (Pattern "?:/")
 mode :: Preferences -> String
 mode prefs
   | getPreference prefs NightMode = "dark"
@@ -65,9 +63,6 @@ places' = places 0 <<< Int.toNumber
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
 toCell isPercent = _td <<< (isPercent ? flip append "%") <<< 
                    Format.toString <<< roundTo 2
-
-urlName :: String -> String
-urlName = filterOut (Pattern "  ")
 
 ----------------
 -- ABBREVIATIONS
@@ -115,10 +110,12 @@ _radio label checked =
     , H.label_ $ _txt label
     ]
 
-_checkbox :: ∀ a b. String -> Boolean -> Array (HTML a b)
-_checkbox label checked = 
+_checkbox :: ∀ a b. Maybe (HTML a b) ->  String -> Boolean -> Array (HTML a b)
+_checkbox icon label checked =
     [ H.input [P.type_ P.InputCheckbox, P.checked checked ]
-    , H.label_ $ _txt label
+    , H.label_ case icon of
+                   Nothing -> [H.text label]
+                   Just ic -> [ic, H.text label]
     ]
 
 _int :: ∀ a b. (Unit -> b Unit) -> Int -> Int -> Int 

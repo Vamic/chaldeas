@@ -21,6 +21,7 @@ import Site.Filtering
 import Site.Preferences
 import Site.CraftEssences.Filters
 import Site.CraftEssences.Sorting
+import Printing
 
 type Input = Unit
 data Message = Message (Array (Filter CraftEssence)) (Maybe Servant)
@@ -76,7 +77,7 @@ comp initialFilt initialFocus initialPrefs today = component
       [ H.aside_ $
         [ _h 1 "Settings"
         , H.form_ $ Map.toUnfoldableUnordered st.prefs <#> \(k ^ v) -> 
-          H.p [_click <<< SetPref k $ not v] $ _checkbox (show k) v
+          H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
         , _h 1 "Sort by"
         , H.form_ $ enumArray <#> \sort -> 
           H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
@@ -109,14 +110,15 @@ comp initialFilt initialFocus initialPrefs today = component
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
+      check f'@(Filter f)
+        | exclusive f.tab = f' `notElem` st.exclude
+        | otherwise       = f' `elem`    st.filters
       filterSection (_ ^ []) = []
       filterSection (tab ^ filts) = 
           [ _h 3 $ show tab
-          , H.form_ $ filts <#> \filt -> 
-            H.p [_click $ Toggle filt ] <<< _checkbox (show filt) $
-            if exclusive tab 
-            then filt `notElem` st.exclude 
-            else filt `elem` st.filters
+          , H.form_ $ filts <#> \f'@(Filter f) -> 
+          H.p [_click $ Toggle f' ] <<< 
+          _checkbox (toImage <$> f.icon) f.name $ check f'
           ]
 
   eval :: Query ~> ComponentDSL State Query Message m

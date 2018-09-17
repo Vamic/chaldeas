@@ -872,9 +872,9 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 600,  hp: 0 }
               , max:  { atk: 2400, hp: 0 }
               }
-  , effect:   [ When "defeated by an enemy" $ Debuff Killer 2 SealNP Full
+  , effect:   [ When "defeated by an enemy" $ Debuff Target 2 SealNP Full
               , When "defeated by an enemy" <<<
-                Debuff Killer 10 Curse $ 1000.0 ~ 2000.0
+                Debuff Target 10 Curse $ 1000.0 ~ 2000.0
               ]
   , bond:     Nothing
   , limited:  false

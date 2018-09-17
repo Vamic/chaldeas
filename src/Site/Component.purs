@@ -22,6 +22,7 @@ import Site.Preferences
 import Site.Filtering
 import Database
 import Database.MyServant
+import Printing
 
 type State = { today    :: Date
              , browseCe :: Boolean

@@ -1,11 +1,10 @@
 -- | Sidebars for filtering displayed elements in the list.
 module Site.Filtering
   ( FilterTab(..)
-  , Filter(..)
+  , Filter(..), simpleFilter
   , ScheduledFilter(..), getScheduled
   , FilterList(..), collectFilters
-  , exclusive
-  , getTab
+  , exclusive, getTab
   , updateListing
   ) where
 
@@ -19,6 +18,7 @@ import Data.Profunctor.Strong ((&&&))
 import Printing
 import Database.Skill
 import Site.Preferences
+import Site.ToImage
 
 data FilterTab
     = FilterEventBonus
@@ -46,17 +46,26 @@ instance _a_ :: Show FilterTab where
     show (FilterBuff c) = "Buff (" <> show c <> ")"
     show x              = unCamel <<< String.drop 6 $ G.genericShow x
 
-data Filter a = Filter FilterTab String (Boolean -> a -> Boolean)
+--data Filter a = Filter FilterTab String (Boolean -> a -> Boolean)
+
+newtype Filter a = Filter { tab   :: FilterTab 
+                          , name  :: String
+                          , icon  :: Maybe ImagePath
+                          , match :: Boolean -> a -> Boolean
+                          }
+simpleFilter :: ∀ a. FilterTab -> String -> (Boolean -> a -> Boolean) 
+             -> Filter a
+simpleFilter tab name match = Filter { icon: Nothing, tab, name, match }
 
 getTab :: ∀ a. Filter a -> FilterTab
-getTab (Filter tab _ _) = tab
+getTab (Filter x) = x.tab
 
-instance _c_ :: Eq (Filter a) where
-    eq (Filter tabX x _) (Filter tabY y _) = tabX == tabY && x == y
-instance _d_ :: Ord (Filter a) where
-    compare = compareThen getTab \(Filter _ x _) -> x
-instance _e_ :: Show (Filter a) where
-    show (Filter tab x _) = x
+instance _b_ :: Eq (Filter a) where
+    eq (Filter x) (Filter y) = x.tab == y.tab && x.name == y.name
+instance _c_ :: Ord (Filter a) where
+    compare (Filter x) (Filter y) = compareThen _.tab _.name x y
+instance _d_ :: Show (Filter a) where
+    show (Filter x) = x.name
 
 data ScheduledFilter a = ScheduledFilter Date Date (Filter a)
 
@@ -79,7 +88,7 @@ updateListing :: ∀ a b. FilterState a b -> FilterState a b
 updateListing st = st{ listing = filter (match <<< snd) st.sorted }
   where
     noSelf = getPreference st.prefs ExcludeSelf
-    matchFilter x (Filter _ _ f) = f noSelf x
+    matchFilter x (Filter f) = f.match noSelf x
     match x = (null st.exclude || all (not <<< matchFilter x) st.exclude)
            && (null st.filters || (if st.matchAny then any else all)
               (matchFilter x) st.filters)

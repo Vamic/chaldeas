@@ -24,6 +24,7 @@ import Site.Preferences
 import Site.Filtering
 import Site.Servants.Filters
 import Site.Servants.Sorting
+import Printing
 
 type Input = Unit
 data Message = Message (Array (Filter Servant)) (Maybe CraftEssence)
@@ -84,15 +85,15 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       }
     where 
       initialSort = getSort Map.empty Rarity
-      {yes: exclude, no: filters} = partition (exclusive <<< getTab) 
+      {yes: exclude, no: filters} = partition (exclusive <<< getTab)
                                     initialFilt
 
   render :: State -> ComponentHTML Query
   render st = modal st.prefs st.ascent st.focus
       [ H.aside_ $
         [ _h 1 "Settings"
-        , H.form_ $ Map.toUnfoldableUnordered st.prefs <#> \(Tuple k v) -> 
-          H.p [_click <<< SetPref k $ not v] $ _checkbox (show k) v
+        , H.form_ $ Map.toUnfoldableUnordered st.prefs <#> \(k ^ v) -> 
+          H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
         , _h 1 "Sort by"
         , H.form_ $ enumArray <#> \sort -> 
           H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
@@ -127,20 +128,23 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
           Rarity -> identity
           _      -> reverse
       pref = getPreference st.prefs
-      isMine (Tuple _ s) = any (eq s <<< getBase) st.team
+      isMine (_ ^ s) = any (eq s <<< getBase) st.team
       baseAscend
         | pref MaxAscension = 4
         | otherwise         = 1
       allFilters'
-        | st.mineOnly = allFilters <#> \(Tuple tab filts) -> 
-                        Tuple tab $ filter (\(Filter _ _ f) ->
-                        any (f false <<< getBase) st.team) filts
+        | st.mineOnly = allFilters <#> \(tab ^ filts) -> 
+                        tab ^ filter (\(Filter x) ->
+                        any (x.match false <<< getBase) st.team) filts
         | otherwise   = allFilters
       clearAll
         | null st.filters && null st.exclude = [ P.enabled false ]
         | otherwise = [ P.enabled true, _click ClearAll ]
-      filterSection (Tuple _ []) = []
-      filterSection (Tuple tab filts) = 
+      check f'@(Filter f)
+        | exclusive f.tab = f' `notElem` st.exclude
+        | otherwise       = f' `elem`    st.filters
+      filterSection (_ ^ []) = []
+      filterSection (tab ^ filts) = 
           cons (_h 3 $ show tab) <<< 
           ( (exclusive tab && length filts > 3) ? 
               let checked = length $ filter (eq tab <<< getTab) st.exclude
@@ -148,11 +152,9 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                   [ _button "All" (checked /= 0) $ Check tab true
                   , _button "None" (checked /= length filts) $ Check tab false
                   ]
-          ) <<< Array.singleton <<< H.form_ $ filts <#> \filt -> 
-          H.p [_click $ Toggle filt ] <<< _checkbox (show filt) $ 
-          if exclusive tab 
-          then filt `notElem` st.exclude
-          else filt `elem` st.filters
+          ) <<< Array.singleton <<< H.form_ $ filts <#> \f'@(Filter f) -> 
+          H.p [_click $ Toggle f' ] <<<
+          _checkbox (toImage <$> f.icon) f.name $ check f'
 
   eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
@@ -215,7 +217,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
 
 portrait :: ∀ a. Boolean -> Boolean -> Boolean -> Int -> Tuple String Servant
          -> HTML a (Query Unit)
-portrait big thumbnails artorify ascension (Tuple lab s'@(Servant s))
+portrait big thumbnails artorify ascension (lab ^ s'@(Servant s))
   | thumbnails && not big = H.div [_c "thumb", _click <<< Focus $ Just s']
     [ toThumbnail s' ]
   | otherwise = H.div meta
@@ -246,7 +248,7 @@ modal prefs ascent (Just ms')= H.div
   [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true (pref Thumbnails) (pref Artorify) ascent $ Tuple "" s'
+      [ portrait true (pref Thumbnails) (pref Artorify) ascent $ "" ^ s'
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
@@ -371,7 +373,7 @@ modal prefs ascent (Just ms')= H.div
                                   ]
     alignBox xs = xs >>= \x -> [link FilterAlignment x, H.text " "]
     calc sort = formatSort sort $ toSort sort s'
-    skillBox i (Tuple {icon} lvl) = 
+    skillBox i ({icon} ^ lvl) = 
         [ H.td_ [ toImage icon ]
         , H.td_ $ _mInt 1 10 lvl \val -> 
           alter _{ skills = maybeDo (Array.updateAt i val) ms.skills }
@@ -414,10 +416,10 @@ skillEl showTables active@{name, icon, cd, rank, effect} base =
                   lvlRow <$> nub (ranges base.effect)
 
 passiveEl :: ∀ a. Skill -> HTML a (Query Unit)
-passiveEl {name, rank, icon, effect} = H.section_ $
+passiveEl p@{name, rank, icon, effect} = H.section_ $
     [ toImage icon
     , H.h3_
-      [ H.span [_c "link", _click $ FilterBy [passiveFilter name] ] $ _txt name
+      [ H.span [_c "link", _click $ FilterBy [passiveFilter p] ] $ _txt name
       , H.text $ " " <> show rank
       ]
     ] <> (_p <<< show <$> effect)

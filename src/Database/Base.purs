@@ -79,7 +79,7 @@ data Trait
 instance _b_ :: Show Trait where
     show Brynhild         = "Brynhild's Beloved"
     show DemiServant      = "Demi-servant"
-    show HeavenOrEarth    = "Heaven/Earth"
+    show HeavenOrEarth    = "Heaven or Earth"
     show GreekMythMale    = "Greek Mythology Males"
     show PseudoServant    = "Pseudo-Servant"
     show ThreatToHumanity = "Threat to Humanity"

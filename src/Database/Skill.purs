@@ -114,7 +114,7 @@ showBuff target amount = case _ of
     Overcharge      -> "Overcharge" <> p <> " NP by " <> n <> " stages"
     Resist debuff   -> resist $ G.genericShow debuff <> " debuff"
     StarAbsorb      -> increase "C. Star absorption"
-    StarAffinity c  -> increase $ "C. Star generation" <> against c
+    StarAffinity c  -> increase $ "C. Star drop" <> against c
     StarUp          -> increase "C. Star drop rate"
     Success debuff  -> success $ G.genericShow debuff
     SureHit         -> grant "Sure Hit"

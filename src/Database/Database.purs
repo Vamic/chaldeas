@@ -67,7 +67,7 @@ ceGetAll = flip memoize unit \_ ->
 -- | Retrieves all passive skills defined in `Passive` 
 -- | that at least one `Servant` `has`.
 -- | Memoized for performance.
-getPassives :: Array String
+getPassives :: Array Skill
 getPassives = flip memoize unit \_ -> 
-              sort <<< nub $ 
-              servants >>= \(Servant s) -> _.name <$> s.passives
+              sortBy (comparing _.name) <<< nubBy (comparing _.name) $ 
+              servants >>= \(Servant s) -> s.passives

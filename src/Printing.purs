@@ -1,5 +1,5 @@
 -- | Helper functions for outputting to Strings.
-module Printing (places, roundTo, prettify, unCamel) where
+module Printing (fileName, places, roundTo, prettify, unCamel, urlName) where
 
 import StandardLibrary
 import Data.String.Regex.Flags  as Flags
@@ -19,6 +19,14 @@ places x = format $ Formatter { comma: true
                               , abbreviations: false
                               , sign: false
                               }
+
+-- | Removes illegal special characters from file names.
+fileName :: String -> String
+fileName = filterOut (Pattern "?:/")
+
+-- | Removes spaces from names in order to use them in URLs.
+urlName :: String -> String
+urlName = filterOut (Pattern "  ")
 
 -- | Rounds a `Number` to some decimal precision.
 roundTo :: Int -> Number -> Number

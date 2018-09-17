@@ -38,7 +38,7 @@ data Query a
     | MatchAny  Boolean a
     | SetSort   SortBy a
     | SetPref   Preference Boolean a
-    | Ascend    Int a
+    | Ascend    (Maybe MyServant) Int a
     | OnTeam    Boolean MyServant a
     | MineOnly  Boolean a
     | DoNothing a
@@ -99,9 +99,8 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
           H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
         , _h 1 "Include"
         ] <> (filter (exclusive <<< fst) allFilters' >>= filterSection)
-      , H.section_ <<< maybeReverse $
-        portrait false st.prefs shareTeam baseAscend
-        <$> (st.mineOnly ? filter isMine $ st.listing)
+      , H.section_ <<< maybeReverse $ 
+        doPortrait <$> (st.mineOnly ? filter isMine $ st.listing)
       , H.aside_ $
         [ _h 1 "Browse"
         , _a "Craft Essences" $ Switch Nothing
@@ -127,9 +126,8 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       maybeReverse = case st.sortBy of
           Rarity -> identity
           _      -> reverse
-      shareTeam
-        | st.mineOnly = st.team
-        | otherwise   = Map.empty
+      doPortrait tup@(_ ^ s) = 
+          portrait false st.prefs (Map.lookup s st.team) baseAscend tup
       isMine (_ ^ s) = any (eq s <<< getBase) st.team
       baseAscend
         | prefer st.prefs MaxAscension = 4
@@ -160,8 +158,10 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
 
   eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
+      Ascend (Just (MyServant ms)) ascent a -> eval $ 
+          OnTeam true (MyServant ms{ascent = ascent}) a
+      Ascend Nothing ascent a -> a <$ modify_ _{ ascent = ascent }
       DoNothing       a -> pure a
-      Ascend   ascent a -> a <$ modify_ _{ ascent = ascent }
       MatchAny match  a -> a <$ modif   _{ matchAny = match }
       MineOnly mine   a -> a <$ modif   _{ mineOnly = mine }
       ClearAll        a -> a <$ modif   _{ exclude = [], filters = [] }
@@ -217,9 +217,9 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       hash Nothing  = Hash.setHash "Servants"
       hash (Just s) = Hash.setHash <<< urlName $ show s
 
-portrait :: ∀ a. Boolean -> Preferences -> Map Servant MyServant -> Int 
+portrait :: ∀ a. Boolean -> Preferences -> Maybe MyServant -> Int 
          -> Tuple String Servant -> HTML a (Query Unit)
-portrait big prefs team ascension (lab ^ s'@(Servant s))
+portrait big prefs maybeMine baseAscension (lab ^ s'@(Servant s))
   | not big && prefer prefs Thumbnails = 
       H.div [_c "thumb", _click <<< Focus $ Just s']
       [ toThumbnail s' ]
@@ -239,26 +239,29 @@ portrait big prefs team ascension (lab ^ s'@(Servant s))
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")
     meta       = not big ? (cons <<< _click <<< Focus $ Just s') $
                  [_c $ "portrait stars" <> show s.rarity]
-    prevAscend = _a "<" <<< Ascend $ ascension - 1
-    nextAscend = _a ">" <<< Ascend $ ascension + 1
+    ascension  = case maybeMine of
+                     Just (MyServant ms) -> ms.ascent
+                     Nothing             -> baseAscension
+    prevAscend = _a "<" <<< Ascend maybeMine $ ascension - 1
+    nextAscend = _a ">" <<< Ascend maybeMine $ ascension + 1
     ascent
       | ascension <= 1 = ""
       | otherwise      = " " <> show ascension
-    label = case lab ^ Map.lookup s' team of
+    label = case lab ^ maybeMine of
         "" ^ Just (MyServant ms) | not big -> 
             show ms.level <> "/" <> show (maxLevel s') <> " " 
-            <> String.joinWith "-" (show <$> ms.skills)
+            <> String.joinWith "·" (show <$> ms.skills)
         _ -> ""
 
 modal :: ∀ a. Preferences -> Int -> Maybe MyServant
       -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
 modal prefs _ Nothing = H.div [_c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal prefs ascent (Just ms')= H.div 
+modal prefs ascent focus@(Just ms') = H.div 
   [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true prefs Map.empty ascent $ "" ^ s'
+      [ portrait true prefs (guard (ms.level > 0) *> focus) ascent $ "" ^ s'
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]

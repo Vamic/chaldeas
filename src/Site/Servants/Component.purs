@@ -30,7 +30,7 @@ type Input = Unit
 data Message = Message (Array (Filter Servant)) (Maybe CraftEssence)
 data Query a
     = Switch    (Maybe CraftEssence) a
-    | Focus     (Maybe Servant) a
+    | Focus     (Maybe MyServant) a
     | ClearAll  a
     | Check     FilterTab Boolean a
     | FilterBy  (Array (Filter Servant)) a
@@ -38,7 +38,7 @@ data Query a
     | MatchAny  Boolean a
     | SetSort   SortBy a
     | SetPref   Preference Boolean a
-    | Ascend    (Maybe MyServant) Int a
+    | Ascend    MyServant Int a
     | OnTeam    Boolean MyServant a
     | MineOnly  Boolean a
     | DoNothing a
@@ -51,8 +51,9 @@ type State = { filters  :: Array (Filter Servant)
              , sortBy   :: SortBy
              , prefs    :: Preferences
              , ascent   :: Int
-             , listing  :: Array (Tuple String Servant)
-             , sorted   :: Array (Tuple String Servant)
+             , myServs  :: Array MyServant
+             , sorted   :: Array (Tuple String MyServant)
+             , listing  :: Array (Tuple String MyServant)
              , team     :: Map Servant MyServant
              }
 
@@ -70,7 +71,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
   allFilters = collectFilters getFilters today
 
   initialState :: Input -> State
-  initialState = const $ updateListing 
+  initialState = const $ updateListing getBase
       { filters
       , exclude
       , matchAny: true
@@ -79,12 +80,14 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       , sortBy:   Rarity
       , prefs:    initialPrefs
       , ascent:   1
+      , myServs:  initialMyServs
       , sorted:   initialSort
       , listing:  initialSort
       , team:     initialTeam
       }
-    where 
-      initialSort = getSort Map.empty Rarity
+    where
+      initialMyServs = owned initialTeam <$> servants
+      initialSort = doSort Rarity initialMyServs
       {yes: exclude, no: filters} = partition (exclusive <<< getTab)
                                     initialFilt
 
@@ -126,16 +129,14 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       maybeReverse = case st.sortBy of
           Rarity -> identity
           _      -> reverse
-      doPortrait tup@(lab ^ s) = 
-          let look = Map.lookup s st.team 
-          in case look of
-              Just (MyServant ms) | st.mineOnly && String.null lab -> 
-                  portrait false st.prefs look baseAscend $ 
-                  show ms.level <> "/" <> show (maxLevel s) <> " " 
-                                <> String.joinWith "·" (show <$> ms.skills) 
-                  ^ s
-              _ -> portrait false st.prefs (Map.lookup s st.team) baseAscend tup
-      isMine (_ ^ s) = any (eq s <<< getBase) st.team
+      doPortrait tup@(lab ^ ms'@(MyServant ms))
+          | st.mineOnly && String.null lab =
+                portrait false st.prefs baseAscend $ 
+                show ms.level <> "/" <> show (maxLevel ms.servant) <> " " 
+                              <> String.joinWith "·" (show <$> ms.skills) 
+                ^ ms'
+          | otherwise = portrait false st.prefs baseAscend tup
+      isMine (_ ^ s) = s `elem` st.team
       baseAscend
         | prefer st.prefs MaxAscension = 4
         | otherwise                    = 1
@@ -165,27 +166,29 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
 
   eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
-      Ascend (Just (MyServant ms)) ascent a -> eval $ 
+      Ascend (MyServant {level: 0}) ascent a -> a <$ 
+          modify_ _{ ascent = ascent }
+      Ascend (MyServant ms) ascent a -> eval $ 
           OnTeam true (MyServant ms{ascent = ascent}) a
-      Ascend Nothing ascent a -> a <$ modify_ _{ ascent = ascent }
-      DoNothing       a -> pure a
-      MatchAny match  a -> a <$ modif   _{ matchAny = match }
-      MineOnly mine   a -> a <$ modif   _{ mineOnly = mine }
-      ClearAll        a -> a <$ modif   _{ exclude = [], filters = [] }
-      Check t  true   a -> a <$ do
+      DoNothing         a -> pure a
+      MatchAny matchAny a -> a <$ modif   _{ matchAny = matchAny }
+      MineOnly mineOnly a -> a <$ modif   _{ mineOnly = mineOnly }
+      ClearAll          a -> a <$ modif   _{ exclude = [], filters = [] }
+      Check t  true     a -> a <$ do
           modif <<< modExclude <<< filter $ notEq t <<< getTab
-      Switch   switch a -> a <$ do
+      Switch   switch   a -> a <$ do
           {exclude, filters} <- get
           raise $ Message (exclude <> filters) switch
-      SetSort  sortBy a -> a <$ modif \st -> st{ sortBy = sortBy
-                                               , sorted = getSort st.team sortBy
-                                               }
-      Check t  false  a -> a <$ 
+      SetSort  sortBy   a -> a <$ modif \st -> 
+          st{ sortBy = sortBy
+            , sorted = doSort sortBy st.myServs
+            }
+      Check t  false    a -> a <$ 
           modif (modExclude $ nub <<< append (getFilters today t))
-      Focus    focus  a -> a <$ do
+      Focus    focus    a -> a <$ do
           liftEffect $ hash focus
-          modify_ \st -> st{ focus = owned st.team <$> focus, ascent = 1 }
-      FilterBy filts  a -> a <$ do
+          modify_ _{ focus = focus, ascent = 1 }
+      FilterBy filts    a -> a <$ do
           liftEffect $ hash Nothing
           modif if any (exclusive <<< getTab) filts
                 then _{ exclude = filts
@@ -196,25 +199,27 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                       , filters = filts
                       , focus   = Nothing
                       }
-      SetPref  k v    a -> a <$ do
+      SetPref  k v      a -> a <$ do
           liftEffect $ writePreference k v
           modif (modPrefs $ setPreference k v)
-      Toggle   filt   a
+      Toggle   filt     a
         | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
         | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
       OnTeam keep myServant a -> a <$  do
           {team}        <- get
           let myServant' = keep ? recalc $ myServant
               team'      = if keep 
-                           then Map.insert (getBase myServant) myServant team
-                           else Map.delete (getBase myServant) team
+                           then Map.insert (getBase myServant') myServant' team
+                           else Map.delete (getBase myServant') team
+              myServs    = owned team' <$> servants
           liftEffect $ setTeam team'
-          modif \st -> st{ team   = team'
-                         , sorted = getSort team' st.sortBy
-                         , focus  = st.focus *> Just myServant'
+          modif \st -> st{ team    = team'
+                         , myServs = myServs
+                         , sorted  = doSort st.sortBy myServs
+                         , focus   = st.focus *> Just myServant'
                          }
     where
-      modif = modify_ <<< compose updateListing
+      modif = modify_ <<< compose (updateListing getBase)
       modFilters f st = st{ filters = f st.filters }
       modExclude f st = st{ exclude = f st.exclude }
       modPrefs   f st = st{ prefs   = f st.prefs }
@@ -222,14 +227,14 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
         | x `elem` xs = delete x xs
         | otherwise   = x : xs
       hash Nothing  = Hash.setHash "Servants"
-      hash (Just s) = Hash.setHash <<< urlName $ show s
+      hash (Just s) = Hash.setHash <<< urlName <<< show $ getBase s
 
-portrait :: ∀ a. Boolean -> Preferences -> Maybe MyServant -> Int 
-         -> Tuple String Servant -> HTML a (Query Unit)
-portrait big prefs maybeMine baseAscension (lab ^ s'@(Servant s))
+portrait :: ∀ a. Boolean -> Preferences -> Int 
+         -> Tuple String MyServant -> HTML a (Query Unit)
+portrait big prefs baseAscension (lab ^ ms')
   | not big && prefer prefs Thumbnails = 
-      H.div [_c "thumb", _click <<< Focus $ Just s']
-      [ toThumbnail s' ]
+      H.div [_c "thumb", _click <<< Focus $ Just ms' ]
+      [ toThumbnail ms' ]
   | otherwise =
       H.div meta
       [ _img $ "img/Servant/" <> fileName s.name <> ascent <> ".png"
@@ -242,15 +247,16 @@ portrait big prefs maybeMine baseAscension (lab ^ s'@(Servant s))
         [_span <<< String.joinWith "  " $ replicate s.rarity "★"]
       ]
   where
+    MyServant ms@{servant:Servant s} = ms'
     artorify   = prefer prefs Artorify ? 
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")
-    meta       = not big ? (cons <<< _click <<< Focus $ Just s') $
+    meta       = not big ? (cons <<< _click <<< Focus $ Just ms') $
                  [_c $ "portrait stars" <> show s.rarity]
-    ascension  = case maybeMine of
-                     Just (MyServant ms) -> ms.ascent
-                     Nothing             -> baseAscension
-    prevAscend = _a "<" <<< Ascend maybeMine $ ascension - 1
-    nextAscend = _a ">" <<< Ascend maybeMine $ ascension + 1
+    ascension = case ms.level of
+        0 -> baseAscension
+        _ -> ms.ascent
+    prevAscend = _a "<" <<< Ascend ms' $ ascension - 1
+    nextAscend = _a ">" <<< Ascend ms' $ ascension + 1
     ascent
       | ascension <= 1 = ""
       | otherwise      = " " <> show ascension
@@ -263,7 +269,7 @@ modal prefs ascent focus@(Just ms') = H.div
   [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true prefs (guard (ms.level > 0) *> focus) ascent $ "" ^ s'
+      [ portrait true prefs ascent $ "" ^ ms'
       , _table ["", "ATK", "HP"]
         [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
         , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]

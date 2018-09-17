@@ -9,6 +9,7 @@ import Halogen.HTML.Properties as P
 import Halogen.HTML (HTML)
 
 import Database
+import Database.MyServant
 import Printing
 
 data ImagePath = ImagePath String String
@@ -46,10 +47,13 @@ instance _2_ :: ToImage Class where
 instance _3_ :: ToImage Servant where
     toImagePath = ImagePath "Servant" <<< show
 
-instance _4_ :: ToImage CraftEssence where
+instance _4_ :: ToImage MyServant where
+    toImagePath = toImagePath <<< getBase
+
+instance _5_ :: ToImage CraftEssence where
     toImagePath = ImagePath "CraftEssence" <<< show
 
-instance _5_ :: ToImage Icon where
+instance _6_ :: ToImage Icon where
     toImagePath = ImagePath "Skill" <<< String.drop 4 <<< G.genericShow
 
 instance _10_ :: ToImage BuffEffect where

@@ -75,20 +75,20 @@ getScheduled xs today = toFilter <$> filter scheduled xs
     scheduled (ScheduledFilter start end _) = start <= today && today <= end
     toFilter (ScheduledFilter _ _ x) = x
 
-type FilterState a b = { sorted   :: Array (Tuple String a)
-                       , listing  :: Array (Tuple String a)
-                       , matchAny :: Boolean
-                       , filters  :: Array (Filter a)
-                       , exclude  :: Array (Filter a)
-                       , prefs    :: Preferences
-                       | b
-                       }
+type FilterState a b c = { sorted   :: Array (Tuple String a)
+                         , listing  :: Array (Tuple String a)
+                         , matchAny :: Boolean
+                         , filters  :: Array (Filter b)
+                         , exclude  :: Array (Filter b)
+                         , prefs    :: Preferences
+                         | c
+                         }
 
-updateListing :: ∀ a b. FilterState a b -> FilterState a b
-updateListing st = st{ listing = filter (match <<< snd) st.sorted }
+updateListing :: ∀ a b c. (a -> b) -> FilterState a b c -> FilterState a b c
+updateListing f st = st{ listing = filter (match <<< f <<< snd) st.sorted }
   where
     noSelf = prefer st.prefs ExcludeSelf
-    matchFilter x (Filter f) = f.match noSelf x
+    matchFilter x (Filter filt) = filt.match noSelf x
     match x = (null st.exclude || all (not <<< matchFilter x) st.exclude)
            && (null st.filters || (if st.matchAny then any else all)
               (matchFilter x) st.filters)

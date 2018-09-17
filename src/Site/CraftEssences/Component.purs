@@ -40,8 +40,8 @@ type State = { filters  :: Array (Filter CraftEssence)
              , focus    :: Maybe CraftEssence
              , sortBy   :: SortBy
              , prefs    :: Preferences
-             , listing  :: Array (Tuple String CraftEssence)
              , sorted   :: Array (Tuple String CraftEssence)
+             , listing  :: Array (Tuple String CraftEssence)
              }
 
 comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence 
@@ -57,15 +57,16 @@ comp initialFilt initialFocus initialPrefs today = component
   allFilters = collectFilters getFilters today
 
   initialState :: Input -> State
-  initialState = const $ updateListing { filters
-                                       , exclude
-                                       , matchAny: true
-                                       , focus:    initialFocus
-                                       , sortBy:   Rarity
-                                       , prefs:    initialPrefs
-                                       , sorted:   initialSort
-                                       , listing:  initialSort
-                                       }
+  initialState = const $ updateListing identity 
+      { filters
+      , exclude
+      , matchAny: true
+      , focus:    initialFocus
+      , sortBy:   Rarity
+      , prefs:    initialPrefs
+      , sorted:   initialSort
+      , listing:  initialSort
+      }
     where 
       initialSort = getSort Rarity
       {yes: exclude, no: filters} = partition (exclusive <<< getTab) 
@@ -150,7 +151,7 @@ comp initialFilt initialFocus initialPrefs today = component
         | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
         | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
       where
-      modif = modify_ <<< compose updateListing
+      modif = modify_ <<< compose (updateListing identity)
       modFilters f st = st{ filters = f st.filters }
       modPrefs   f st = st{ prefs   = f st.prefs }
       modExclude f st = st{ exclude = f st.exclude }

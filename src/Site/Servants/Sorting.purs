@@ -1,14 +1,13 @@
 module Site.Servants.Sorting
   ( SortBy(..)
   , toSort
-  , getSort
+  , doSort
   , formatSort
   )where
 
 import StandardLibrary
 import Generic  as G
 import Data.Int as Int
-import Data.Map as Map
 
 import Data.Profunctor.Strong ((&&&))
 
@@ -64,8 +63,8 @@ formatSort StarQuick = places 2
 formatSort StarDeck  = places 2
 formatSort _         = places 0
 
-doSort :: SortBy -> Array MyServant -> Array (Tuple String Servant)
-doSort Rarity = map (Tuple "") <<< sortWith sorter <<< map getBase
+doSort :: SortBy -> Array MyServant -> Array (Tuple String MyServant)
+doSort Rarity = map (Tuple "") <<< sortWith (sorter <<< getBase)
   where
     sorter (Servant s) = show (5 - s.rarity) <> s.name
 doSort x = map showSort <<< sortWith sorter
@@ -73,10 +72,11 @@ doSort x = map showSort <<< sortWith sorter
     sorter (MyServant ms)  = toSort x $ ms.servant
     showSort
       | x `elem` [NPDmg, NPDmgOver, NPSpec, NPSpecOver] = \ms'@(MyServant ms) -> 
-          flip Tuple (getBase ms') $
           "NP" <> show ms.npLvl <> ": " <> (formatSort x <<< abs $ sorter ms')
-      | otherwise = formatSort x <<< abs <<< sorter &&& getBase
+          ^ ms'
+      | otherwise = formatSort x <<< abs <<< sorter &&& identity
 
+{-
 sorted :: Map SortBy (Array (Tuple String Servant))
 sorted = Map.fromFoldable $ go <$> enumArray
   where
@@ -86,6 +86,7 @@ getSort :: Map Servant MyServant -> SortBy -> Array (Tuple String Servant)
 getSort team sorter
   | Map.isEmpty team = fromMaybe [] $ Map.lookup sorter sorted
   | otherwise        = doSort sorter $ owned team <$> servants
+-}
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

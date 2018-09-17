@@ -129,14 +129,9 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       maybeReverse = case st.sortBy of
           Rarity -> identity
           _      -> reverse
-      doPortrait tup@(lab ^ ms'@(MyServant ms))
-          | st.mineOnly && String.null lab =
-                portrait false st.prefs baseAscend $ 
-                show ms.level <> "/" <> show (maxLevel ms.servant) <> " " 
-                              <> String.joinWith "·" (show <$> ms.skills) 
-                ^ ms'
-          | otherwise = portrait false st.prefs baseAscend tup
-      isMine (_ ^ s) = s `elem` st.team
+      doPortrait ("" ^ ms)
+        | st.mineOnly = portrait false st.prefs baseAscend $ showStats ms ^ ms
+      doPortrait tup  = portrait false st.prefs baseAscend tup
       baseAscend
         | prefer st.prefs MaxAscension = 4
         | otherwise                    = 1
@@ -228,6 +223,14 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
         | otherwise   = x : xs
       hash Nothing  = Hash.setHash "Servants"
       hash (Just s) = Hash.setHash <<< urlName <<< show $ getBase s
+
+showStats :: MyServant -> String
+showStats (MyServant ms) = show ms.level <> "/" <> show (maxLevel ms.servant) 
+                           <> " " <> String.joinWith "·" (show <$> ms.skills) 
+
+isMine :: ∀ a. Tuple a MyServant -> Boolean
+isMine (_ ^ (MyServant {level: 0})) = false
+isMine _                            = true
 
 portrait :: ∀ a. Boolean -> Preferences -> Int 
          -> Tuple String MyServant -> HTML a (Query Unit)

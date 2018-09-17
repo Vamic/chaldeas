@@ -126,8 +126,15 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
       maybeReverse = case st.sortBy of
           Rarity -> identity
           _      -> reverse
-      doPortrait tup@(_ ^ s) = 
-          portrait false st.prefs (Map.lookup s st.team) baseAscend tup
+      doPortrait tup@(lab ^ s) = 
+          let look = Map.lookup s st.team 
+          in case look of
+              Just (MyServant ms) | st.mineOnly && String.null lab -> 
+                  portrait false st.prefs look baseAscend $ 
+                  show ms.level <> "/" <> show (maxLevel s) <> " " 
+                                <> String.joinWith "·" (show <$> ms.skills) 
+                  ^ s
+              _ -> portrait false st.prefs (Map.lookup s st.team) baseAscend tup
       isMine (_ ^ s) = any (eq s <<< getBase) st.team
       baseAscend
         | prefer st.prefs MaxAscension = 4
@@ -227,7 +234,7 @@ portrait big prefs maybeMine baseAscension (lab ^ s'@(Servant s))
       H.div meta
       [ _img $ "img/Servant/" <> fileName s.name <> ascent <> ".png"
       , H.div_ [ toImage s.class ]
-      , H.header_ <<< (label /= "") ? append [_span label, H.br_] $
+      , H.header_ <<< (lab /= "") ? append [_span lab, H.br_] $
         [ _span <<< noBreakName big $ artorify s.name ]
       , H.footer_ <<< 
         ((big && ascension > 1) ? cons prevAscend) <<<
@@ -247,11 +254,6 @@ portrait big prefs maybeMine baseAscension (lab ^ s'@(Servant s))
     ascent
       | ascension <= 1 = ""
       | otherwise      = " " <> show ascension
-    label = case lab ^ maybeMine of
-        "" ^ Just (MyServant ms) | not big -> 
-            show ms.level <> "/" <> show (maxLevel s') <> " " 
-            <> String.joinWith "·" (show <$> ms.skills)
-        _ -> ""
 
 modal :: ∀ a. Preferences -> Int -> Maybe MyServant
       -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)

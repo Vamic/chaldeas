@@ -76,7 +76,7 @@ outline :: ∀ a b c d e. SiteState a b d -> Array SortBy -> FilterList a
 outline st sorts allFilters nav content = 
     [ H.aside_ $
       [ _h 1 "Settings"
-      , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) ->
+      , H.form_ $ unfoldPreferences st.prefs <#> \(k : v) ->
         H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
       , _h 1 "Sort by"
       , H.form_ $ sorts <#> \sort ->

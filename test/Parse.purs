@@ -33,16 +33,16 @@ npRank (Servant s) = (if s.name `elem` upgradeNP then Upgrade else Pure)
 
 upgradeSkill :: Array (Tuple String String)
 upgradeSkill =
-    [ "Tamamo-no-Mae" ^ "Fox's Wedding"
+    [ "Tamamo-no-Mae" : "Fox's Wedding"
     ]
 
 uniqueSkill :: Array (Tuple String String)
 uniqueSkill =
-    [ "Brynhild" ^ "Primordial Rune"
-    , "Scathach" ^ "Primordial Rune"
-    , "Euryale"  ^ "Whim of the Goddess"
-    , "Stheno"   ^ "Whim of the Goddess"
-    , "Henry Jekyll & Hyde" ^ "Monstrous Strength"
+    [ "Brynhild" : "Primordial Rune"
+    , "Scathach" : "Primordial Rune"
+    , "Euryale"  : "Whim of the Goddess"
+    , "Stheno"   : "Whim of the Goddess"
+    , "Henry Jekyll & Hyde" : "Monstrous Strength"
     ]
 
 ceNames :: Array String
@@ -51,8 +51,8 @@ ceNames = show <$> craftEssences
 skillRanks :: Servant -> Array (Tuple RankedSkill MaybeRank)
 skillRanks s'@(Servant s) = tuplify <<< go <$> s.skills
   where
-    tuplify ranked@(RankedSkill _ rank) = (ranked ^ rank)
-    flagged x = elem (s.name ^ x.name)
+    tuplify ranked@(RankedSkill _ rank) = (ranked : rank)
+    flagged x = elem (s.name : x.name)
     go x
       | x.name `elem` ceNames    = RankedSkill x { name = x.name <> " (Skill)" }
                                                  $ Pure x.rank

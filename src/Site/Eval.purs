@@ -62,6 +62,6 @@ siteEval title transform getFilters getSort = case _ of
     modExclude f st = st{ exclude = f st.exclude }
     toggleIn x xs
       | x `elem` xs = delete x xs
-      | otherwise   = x : xs
+      | otherwise   = cons x xs
     hash Nothing  = Hash.setHash title
     hash (Just x) = Hash.setHash <<< urlName $ show x

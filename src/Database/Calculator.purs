@@ -165,21 +165,21 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
          <> (firstFs >>= go overStrength)
       where
         go f (Grant t _ buff n)
-          | selfable t = [(buff ^ f n / 100.0)]
+          | selfable t = [(buff : f n / 100.0)]
         go _ _ = []
     debuffs = (skillFs >>= go toMax)
            <> (npFs >>= go npStrength)
            <> (firstFs >>= go overStrength)
       where
         go f (Debuff t _ debuff n)
-          | not $ allied t = [(debuff ^ f n / 100.0)]
+          | not $ allied t = [(debuff : f n / 100.0)]
         go _ _ = []
     instants = (skillFs >>= go toMax)
             <> (npFs    >>= go npStrength)
             <> (overFs  >>= go overStrength)
       where
         go f (To t instant n)
-          | not $ allied t = [(instant ^ f n / 100.0)]
+          | not $ allied t = [(instant : f n / 100.0)]
         go _ _ = []
 
 -- | Obtains all self-granted always-active buff effects from passive skills.
@@ -188,7 +188,7 @@ passiveBuffs :: Servant -> Array (Tuple BuffEffect Number)
 passiveBuffs (Servant {passives}) = passives >>= _.effect >>= go <<< simplify
   where
     go (Grant t _ buff n)
-      | selfable t = [(buff ^ toMax n / 100.0)]
+      | selfable t = [(buff : toMax n / 100.0)]
     go _ = []
 
 -- | Attacker vs. Defender. Currently not in use.
@@ -221,5 +221,5 @@ matchSum :: ∀ a b f. Foldable f => Functor f => Eq a => Semiring b
          => f (Tuple a b) -> a -> b
 matchSum xs k = sum $ go <$> xs
   where
-    go (k1 ^ v) | k == k1 = v
+    go (k1 : v) | k == k1 = v
     go _ = zero

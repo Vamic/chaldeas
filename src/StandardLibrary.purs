@@ -23,7 +23,7 @@ module StandardLibrary
   , module Effect.Aff
   , module Effect.Class
 
-  , (^)
+  , (:)
   , (?), doIf
   , consAfter
   , enumArray
@@ -43,7 +43,7 @@ import Control.Alternative (class Alternative, (<|>))
 import Control.Bind (bindFlipped)
 import Control.MonadZero (guard)
 import Control.Plus (empty)
-import Data.Array (cons, delete, difference, drop, dropWhile, filter, group, groupBy, head, index, init, intersect, last, mapMaybe, nub, nubBy, nubEq, nubByEq, partition, range, replicate, reverse, snoc, sort, sortBy, sortWith, span, tail, take, takeEnd, takeWhile, uncons, union, unionBy, unzip, zip, zipWith, (!!), (..), (:), (\\))
+import Data.Array (cons, delete, difference, drop, dropWhile, filter, group, groupBy, head, index, init, intersect, last, mapMaybe, nub, nubBy, nubEq, nubByEq, partition, range, replicate, reverse, snoc, sort, sortBy, sortWith, span, tail, take, takeEnd, takeWhile, uncons, union, unionBy, unzip, zip, zipWith, (!!), (..), (\\))
 import Data.Either (Either(Left, Right), choose, either, hush, isLeft, isRight)
 import Data.Enum (class BoundedEnum, enumFromTo, toEnum)
 import Data.Foldable (class Foldable, all, and, any, elem, find, fold, foldl, foldr, for_, intercalate, length, maximum, maximumBy, minimum, minimumBy, notElem, null, oneOf, oneOfMap, or, product, sequence_, sum, traverse_)
@@ -66,13 +66,13 @@ import Effect.Class (class MonadEffect, liftEffect)
 
 import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
 
--- Since (^) == `Tuple`, it is recommended that its usage should be surrounded
+-- Since (:) == `Tuple`, it is recommended that its usage should be surrounded
 -- by parentheses in order to resemble tuple notation in other languages.
--- (a ^ b)` is much more reminiscent of `(a, b)` than `a ^ b`.
-infixr 0 Tuple as ^
+-- (a : b)` is much more reminiscent of `(a, b)` than `a : b`.
+infixr 0 Tuple as :
 infixr 9 doIf  as ?
 
--- infixr 4 type Tuple as ^
+-- infixr 4 type Tuple as :
 
 consAfter :: ∀ a. a -> Array a -> Array a
 consAfter = flip snoc
@@ -114,4 +114,4 @@ intersperse :: ∀ a. a -> Array a -> Array a
 intersperse _ x@[_] = x
 intersperse sep xs = case uncons xs of
     Nothing           -> xs
-    Just {head, tail} -> head : sep : intersperse sep tail
+    Just {head, tail} -> cons head <<< cons sep $ intersperse sep tail

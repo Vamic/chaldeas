@@ -30,7 +30,7 @@ doSort x = map showSort <<< sortWith sorter
 sorted :: Map SortBy (Array {label :: String, obj :: CraftEssence})
 sorted = Map.fromFoldable $ go <$> enumArray
   where
-    go sorter = (sorter ^ doSort sorter craftEssences)
+    go sorter = (sorter : doSort sorter craftEssences)
 
 getSort :: SortBy -> Array { label :: String, obj ::  CraftEssence }
 getSort sorter = fromMaybe [] $ Map.lookup sorter sorted

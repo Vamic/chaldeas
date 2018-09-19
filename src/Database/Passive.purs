@@ -15,13 +15,11 @@
 
 module Database.Passive where
 
-import StandardLibrary hiding ((:))
+import StandardLibrary
 import Data.Tuple as Tuple
 
 import Database.Base
 import Database.Skill
-
-infixr 0 Tuple as :
 
 avenger :: Passive
 avenger = passive "Avenger" IconAvenger

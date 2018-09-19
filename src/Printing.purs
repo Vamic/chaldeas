@@ -35,7 +35,9 @@ roundTo x = (_ / zeroes) <<< Math.round <<< (_ * zeroes)
 
 -- | Converts `NightMode` into "Night Mode" etc.
 unCamel :: String -> String
-unCamel = Regex.replace camel "$1 $2" <<< maybeDo unParen
+unCamel = String.replaceAll (Pattern " The ") (Replacement " the ") <<< 
+          String.replaceAll (Pattern " Of ") (Replacement " of ") <<< 
+          Regex.replace camel "$1 $2" <<< maybeDo unParen
   where
     unParen = String.stripPrefix (Pattern "(") >=>
               String.stripSuffix (Pattern ")")

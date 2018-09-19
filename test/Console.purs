@@ -31,7 +31,7 @@ printLive tst = walkSuite runSuiteItem tst
         Console.printLabel label
         Console.print "\n"
         void <<< Console.print $ indent' path
-    runSuiteItem path (Right (label ^ t)) = do
+    runSuiteItem path (Right (label : t)) = do
         result <- Aff.attempt t
         void $ case result of
                   (Right _) -> liftEffect do
@@ -68,7 +68,7 @@ printErrors tests skCount = do
                       <> " tests failed " <> percent <> skMsg <> ":\n\n"
               list errors
     where list = traverse_ printItem
-          printItem (path ^ err) = do
+          printItem (path : err) = do
               printHeader 0 path
               printError err
               Console.print "\n"

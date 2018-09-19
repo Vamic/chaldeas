@@ -314,7 +314,7 @@ modal prefs ascent focus@(Just ms') = H.div
                                   ]
     alignBox xs = xs >>= \x -> [link FilterAlignment x, H.text " "]
     calc sort = formatSort sort <<< fromMaybe infinity $ Map.lookup sort sorted
-    skillBox i ({icon} ^ lvl) =
+    skillBox i ({icon} : lvl) =
         [ H.td_ [ toImage icon ]
         , H.td_ $ _mInt 1 10 lvl \val ->
           alter _{ skills = maybeDo (Array.updateAt i val) ms.skills }

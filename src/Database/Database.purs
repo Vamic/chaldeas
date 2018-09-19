@@ -41,12 +41,12 @@ servants = addUniversal <<< addHeavenOrEarth
         <> sabers
   where
     addUniversal (Servant s) = Servant s
-        { traits   = sortWith show $ Humanoid : s.traits
+        { traits   = sortWith show $ cons Humanoid s.traits
         , passives = sortWith show s.passives
         }
     addHeavenOrEarth s'@(Servant s)
       | s.attr /= Earth && s.attr /= Heaven = s'
-      | otherwise = Servant s {traits = HeavenOrEarth : s.traits}
+      | otherwise = Servant s {traits = cons HeavenOrEarth s.traits}
 
 -- | Retrieves all values of a `Has <a>` Enum
 -- | that at least one `<a>` in the database `has`.

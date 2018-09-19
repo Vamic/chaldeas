@@ -91,7 +91,7 @@ wikiHas mw k obj = maybe false (elem obj <<< map String.toLower) $
                    wikiLookup mw k
 
 testCraftEssence :: Tuple CraftEssence Wiki -> TestSuite
-testCraftEssence (CraftEssence ce ^ mw) = suite ce.name do
+testCraftEssence (CraftEssence ce : mw) = suite ce.name do
     match "id"      <<< prId $ Int.toNumber ce.id
     match "maxatk"    $ show ce.stats.max.atk
     match "maxhp"     $ show ce.stats.max.hp
@@ -110,17 +110,17 @@ testCraftEssence (CraftEssence ce ^ mw) = suite ce.name do
                               }
 
 shouldMatch :: ∀ a. Eq a => Show a => Array a -> Array a -> Test
-shouldMatch x y = case (nubEq x \\ nubEq y ^ nubEq y \\ nubEq x) of
-    ([] ^ []) -> success
-    (xs ^ []) -> failure $ "Missing from Wiki: " <> showAll xs <> "."
-    ([] ^ ys) -> failure $ "Missing from DB: "   <> showAll ys <> "."
-    (xs ^ ys) -> failure $ "Missing from Wiki: " <> showAll xs <> ". \
+shouldMatch x y = case (nubEq x \\ nubEq y : nubEq y \\ nubEq x) of
+    ([] : []) -> success
+    (xs : []) -> failure $ "Missing from Wiki: " <> showAll xs <> "."
+    ([] : ys) -> failure $ "Missing from DB: "   <> showAll ys <> "."
+    (xs : ys) -> failure $ "Missing from Wiki: " <> showAll xs <> ". \
                            \Missing from DB: "   <> showAll ys <> "."
   where
     showAll = String.joinWith ", " <<< map show
 
 testServant :: Tuple Servant Wiki -> TestSuite
-testServant (Servant s ^ mw) = suite (s.name <> ": Info") do
+testServant (Servant s : mw) = suite (s.name <> ": Info") do
     suite "Profile" do
         match "id"            <<< prId $ Int.toNumber s.id
         match "class"           $ show s.class
@@ -174,7 +174,7 @@ testServant (Servant s ^ mw) = suite (s.name <> ": Info") do
                               }
 
 testNP :: Tuple Servant Wiki -> TestSuite
-testNP (Servant s ^ mw) = suite (s.name <> ": NP") do
+testNP (Servant s : mw) = suite (s.name <> ": NP") do
       test "Primary Effects" do
           shouldMatch (effects s.phantasm.effect) $
               wikiRange mw "effect" (0..6) >>= readEffect

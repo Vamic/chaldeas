@@ -23,10 +23,10 @@ import Test.Base (MaybeRank)
 import Test.Parse (translate)
 
 wikiLink :: Regex
-wikiLink = Unsafe.unsafeRegex """\[\[[^\|\]]+\|([^\]]+)\]\]""" Flags.global
+wikiLink = Unsafe.unsafeRegex """\[\[[:\|\]]+\|([:\]]+)\]\]""" Flags.global
 
 wikiTag :: Regex
-wikiTag = Unsafe.unsafeRegex """<[^\s>]+>""" Flags.global
+wikiTag = Unsafe.unsafeRegex """<[:\s>]+>""" Flags.global
 
 wikiRoot :: String
 wikiRoot = "https://grandorder.wiki/index.php?action=raw&title="
@@ -75,12 +75,12 @@ splitAny side xs s = go <$> indices
             <$> String.indexOf (Pattern pattern) s
 
 wiki :: ∀ a. Show a => Tuple a MaybeRank -> Aff (Tuple a Wiki)
-wiki (x ^ mRank) = Tuple x <<< wikify <<<
+wiki (x : mRank) = Tuple x <<< wikify <<<
                    _.body <$> Affjax.get ResponseFormat.string encode
   where
     wikify (Right obj) = toWiki obj mRank
     wikify (Left err)  = Wiki $ Map.fromFoldable
-                         [("err" ^ [Affjax.printResponseFormatError err])]
+                         [("err" : [Affjax.printResponseFormatError err])]
     encode  = append wikiRoot <<< Global.unsafeEncodeURIComponent <<<
               translate $ show x
 

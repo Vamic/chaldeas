@@ -13,6 +13,8 @@ import StandardLibrary
 import Generic     as G
 import Data.String as String
 
+import Printing
+
 -- Note: 'No alignment', as in the case of Nursery Rhyme, is an empty array
 -- rather than a separate alignment.
 data Alignment
@@ -159,6 +161,24 @@ data Icon
     | IconTeeth
     | IconYinYang
 
+data Material
+    = Piece Class
+    | Monument Class
+    | Gem Class
+    | MagicGem Class
+    | SecretGem Class
+    | CrystallizedLore
+    | LampOfEvilSealing
+
+instance _c_ :: Show Material where
+    show (Piece c) = show c <> " Piece"
+    show (Monument c) = show c <> " Monument"
+    show (Gem c) = "Gem of " <> show c
+    show (MagicGem c) = "Magic Gem of " <> show c
+    show (SecretGem c) = "Secret Gem of " <> show c
+    show LampOfEvilSealing = "Lamp of Evil-Sealing"
+    show x = unCamel $ G.genericShow x
+
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------
@@ -177,18 +197,18 @@ instance _5_ :: G.BoundedEnum Trait where
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum
 
-derive instance _13_ :: Eq Class
-derive instance _14_ :: Ord Class
-derive instance _15_ :: G.Generic Class _
-instance _16_ :: Show Class where
+derive instance _10_ :: Eq Class
+derive instance _11_ :: Ord Class
+derive instance _12_ :: G.Generic Class _
+instance _13_ :: Show Class where
     show = G.genericShow
-instance _17_ :: G.Enum Class where
+instance _14_ :: G.Enum Class where
     succ = G.genericSucc
     pred = G.genericPred
-instance _18_ :: G.Bounded Class where
+instance _15_ :: G.Bounded Class where
     top = G.genericTop
     bottom = G.genericBottom
-instance _19_ :: G.BoundedEnum Class where
+instance _16_ :: G.BoundedEnum Class where
     cardinality = G.genericCardinality
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum
@@ -209,50 +229,64 @@ instance _26_ :: G.BoundedEnum Alignment where
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum
 
-derive instance _27_ :: Eq Attribute
-derive instance _28_ :: Ord Attribute
-derive instance _29_ :: G.Generic Attribute _
-instance _30_ :: Show Attribute where
+derive instance _30_ :: Eq Attribute
+derive instance _31_ :: Ord Attribute
+derive instance _32_ :: G.Generic Attribute _
+instance _33_ :: Show Attribute where
     show = G.genericShow
-instance _31_ :: G.Enum Attribute where
+instance _34_ :: G.Enum Attribute where
     succ = G.genericSucc
     pred = G.genericPred
-instance _32_ :: G.Bounded Attribute where
+instance _35_ :: G.Bounded Attribute where
     top = G.genericTop
     bottom = G.genericBottom
-instance _33_ :: G.BoundedEnum Attribute where
+instance _36_ :: G.BoundedEnum Attribute where
     cardinality = G.genericCardinality
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum
 
-derive instance _34_ :: Eq Card
-derive instance _35_ :: Ord Card
-derive instance _36_ :: G.Generic Card _
-instance _37_ :: G.Enum Card where
+derive instance _40_ :: Eq Card
+derive instance _41_ :: Ord Card
+derive instance _42_ :: G.Generic Card _
+instance _43_ :: G.Enum Card where
     succ = G.genericSucc
     pred = G.genericPred
-instance _38_ :: G.Bounded Card where
+instance _44_ :: G.Bounded Card where
     top = G.genericTop
     bottom = G.genericBottom
-instance _39_ :: G.BoundedEnum Card where
+instance _45_ :: G.BoundedEnum Card where
     cardinality = G.genericCardinality
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum
-instance _40_ :: Show Card where
+instance _46_ :: Show Card where
     show = G.genericShow
 
-derive instance _41_ :: G.Generic Icon _
-derive instance _42_ :: Eq Icon
-derive instance _43_ :: Ord Icon
-instance _44_ :: Show Icon where
+derive instance _50_ :: G.Generic Icon _
+derive instance _51_ :: Eq Icon
+derive instance _52_ :: Ord Icon
+instance _53_ :: Show Icon where
     show = String.drop 4 <<< G.genericShow
-instance _45_ :: G.Enum Icon where
+instance _54_ :: G.Enum Icon where
     succ = G.genericSucc
     pred = G.genericPred
-instance _46_ :: G.Bounded Icon where
+instance _55_ :: G.Bounded Icon where
     top = G.genericTop
     bottom = G.genericBottom
-instance _47_ :: G.BoundedEnum Icon where
+instance _56_ :: G.BoundedEnum Icon where
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum
+
+derive instance _60_ :: G.Generic Material _
+derive instance _61_ :: Eq Material
+derive instance _62_ :: Ord Material
+instance _63_ :: G.Enum Material where
+    succ = G.genericSucc
+    pred = G.genericPred
+instance _64_ :: G.Bounded Material where
+    top = G.genericTop
+    bottom = G.genericBottom
+instance _65_ :: G.BoundedEnum Material where
     cardinality = G.genericCardinality
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum

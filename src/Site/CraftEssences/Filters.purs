@@ -60,8 +60,9 @@ getFilters _ f@FilterBonus    = matchFilter f
 getFilters _ f@FilterDebuff   = imageFilter f
                                 <$> ceGetAll :: Array DebuffEffect
 getFilters _ f@(FilterBuff c) = imageFilter f <$> filter (eq c <<< buffCategory)
-                                ceGetAll :: Array BuffEffect
-getFilters _ f@FilterAction   = matchFilter f <$> filter (not <<< isDamage) ceGetAll :: Array InstantEffect
+                                    ceGetAll :: Array BuffEffect
+getFilters _ f@FilterAction   = matchFilter f <$> filter (not <<< isDamage) 
+                                    ceGetAll :: Array InstantEffect
 getFilters _ f@FilterDamage   = matchFilter f <$> filter isDamage
-                                getAll :: Array InstantEffect
+                                    ceGetAll :: Array InstantEffect
 getFilters today f = getExtraFilters today f

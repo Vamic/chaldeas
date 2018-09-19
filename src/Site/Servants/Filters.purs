@@ -95,11 +95,11 @@ getFilters _ f@FilterPassiveSkill = passiveFilter
                                     <$> getPassives
 getFilters _ f@(FilterBuff c)     = imageFilter f
                                     <$> filter (eq c <<< buffCategory)
-                                    getAll :: Array BuffEffect
+                                        getAll :: Array BuffEffect
 getFilters _ f@FilterAction       = matchFilter f
                                     <$> filter (not <<< isDamage)
-                                    getAll :: Array InstantEffect
+                                        getAll :: Array InstantEffect
 getFilters _ f@FilterDamage       = matchFilter f
                                     <$> filter isDamage
-                                    getAll :: Array InstantEffect
+                                        getAll :: Array InstantEffect
 getFilters today f               = getExtraFilters today f

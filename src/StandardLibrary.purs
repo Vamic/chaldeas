@@ -113,5 +113,5 @@ filterOut (Pattern p) = fromCodePointArray <<<
 intersperse :: ∀ a. a -> Array a -> Array a
 intersperse _ x@[_] = x
 intersperse sep xs = case uncons xs of
-    Nothing -> xs
+    Nothing           -> xs
     Just {head, tail} -> head : sep : intersperse sep tail

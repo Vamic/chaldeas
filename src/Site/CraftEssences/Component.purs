@@ -4,23 +4,23 @@
 module Site.CraftEssences.Component (Query, Message(..), comp) where
 
 import StandardLibrary
-import Halogen.HTML            as H
-import Data.String             as String
+import Halogen.HTML as H
+import Data.String  as String
 
 import Data.Date (Date)
 import Halogen (Component, ComponentDSL, ComponentHTML, component)
 import Halogen.HTML (HTML)
 
 import Database
-import Sorting
 import Site.Algebra
 import Site.Common
-import Site.Eval
-import Site.ToImage
-import Site.Filtering
-import Site.Preferences
 import Site.CraftEssences.Filters
 import Site.CraftEssences.Sorting
+import Site.Eval
+import Site.Filtering
+import Site.Preferences
+import Site.ToImage
+import Sorting
 
 type Message = SiteMessage CraftEssence Servant
 type Query = SiteQuery CraftEssence CraftEssence Servant
@@ -101,16 +101,28 @@ modal prefs
         ]
       , toImage ce.icon
       , _h 2 "Effects"
-      ] <> (if base == max then [] else
-      [ H.section_ $ effectEl <<< mapAmount (\x _ -> Flat x) <$> ce.effect
-      , _h 2 "Max Limit Break"
-      ]) <>
-      [ H.section_ $ effectEl <<< mapAmount (\_ y -> Flat y) <$> ce.effect ]
+      ] <> mlbEl <>
+      [ effectsEl \_ y -> Flat y ]
     ]
+  where
+    mlbEl 
+      | base == max = []
+      | otherwise   = [ effectsEl \x _ -> Flat x, _h 2 "Max Limit Break" ] 
+    effectsEl f = H.section_ <<< append bondMsg $ 
+                  effectEl <<< mapAmount f <$> ce.effect
+    bondLink bond = _click <<< Switch $ find (eq bond <<< show) servants
+    bondMsg = case ce.bond of
+                  Nothing   -> []
+                  Just bond -> [ H.em_ 
+                                 [ H.text "If equipped by "
+                                 , H.a [_c "link", bondLink bond] [H.text bond]
+                                 , H.text ": "
+                                 ] 
+                               ]
 
 effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)
 effectEl ef
-  | demerit ef = H.p [_c "demerit"] <<< _txt $ show ef
-  | otherwise  = H.p (maybe [] meta $ skillFilter ef) <<< _txt $ show ef
+  | demerit ef = H.p [_c "demerit"] [H.text $ show ef]
+  | otherwise  = H.p (maybe [] meta $ skillFilter ef) [H.text $ show ef]
   where
     meta filt = [_c "link", _click $ FilterBy [filt] ]

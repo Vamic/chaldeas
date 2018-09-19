@@ -94,7 +94,7 @@ outline st sorts allFilters nav content =
             , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
             ]
           ]
-        , H.button clearAll $ _txt "Reset All"
+        , H.button clearAll [ H.text "Reset All" ]
         ]
       ] <>
         (filter (not exclusive <<< _.tab) allFilters >>= filtersEl)
@@ -149,15 +149,15 @@ _click :: ∀ a b. (Unit -> b Unit) -> IProp ( onClick :: MouseEvent | a ) (b Un
 _click = E.onClick <<< E.input_
 
 _a :: ∀ a b. String -> (Unit -> b Unit) -> HTML a (b Unit)
-_a text click = H.a [_click click] $ _txt text
+_a text click = H.a [_click click] [ H.text text ]
 
 _img :: ∀ a b. String -> HTML a b
 _img src = H.img [_src src]
 
 _button :: ∀ a b. String -> Boolean -> (Unit -> b Unit) -> HTML a (b Unit)
 _button label enable click
-  | enable    = H.button [ _click click, P.enabled enable ] $ _txt label
-  | otherwise = H.button [ P.enabled enable ] $ _txt label
+  | enable    = H.button [ _click click, P.enabled enable ] [ H.text label ]
+  | otherwise = H.button [ P.enabled enable ] [ H.text label ]
 
 _table :: ∀ a b. Array String -> Array (HTML a b) -> HTML a b
 _table headings tbody = H.table_
@@ -172,7 +172,7 @@ _tr x y = H.tr_ [ _th x, H.td_ y ]
 _radio :: ∀ a b. String -> Boolean -> Array (HTML a b)
 _radio label checked =
     [ H.input [ P.type_ P.InputRadio, P.checked checked ]
-    , H.label_ $ _txt label
+    , H.label_ [ H.text label ]
     ]
 
 _checkbox :: ∀ a b. Maybe (HTML a b) ->  String -> Boolean -> Array (HTML a b)

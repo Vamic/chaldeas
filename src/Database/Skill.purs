@@ -478,8 +478,8 @@ instance _g_ :: Show SkillEffect where
 
 uncap :: String -> String
 uncap s = case String.uncons s of
-    Just {head, tail} -> String.toLower (String.singleton head) <> tail
     Nothing           -> s
+    Just {head, tail} -> String.toLower (String.singleton head) <> tail
 
 data Amount
     = Placeholder

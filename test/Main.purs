@@ -80,10 +80,10 @@ app ce servant = Console.log msg *> Aff.launchAff_ do
 
 wikiMatch :: Wiki -> String -> String -> TestSuite
 wikiMatch mw k obj = test k $ case wikiLookup mw k of
-    Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "].") $
-               obj `elem` v
     Nothing -> failure $ "Missing property " <> k <> " in " <> show mw
                        <> maybe "" (append ": ") (wikiLookup mw "err" >>= head)
+    Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "].") $
+               obj `elem` v
 
 
 wikiHas :: Wiki -> String -> String -> Boolean

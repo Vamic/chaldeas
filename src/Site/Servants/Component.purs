@@ -213,24 +213,24 @@ modal prefs ascent focus@(Just ms') = H.div
                               find (\t -> has t false s')
                               [SingleTarget, MultiTarget]
                             ]
-        , _tr "Attribute"   $ [ link FilterAttribute s.attr ]
+        , _tr "Attribute"   [ link FilterAttribute s.attr ]
         , _tr "Alignment"   $ alignBox s.align
-        , _tr "ID"          <<< _txt $ "#" <> show s.id
-        , _tr "Star Weight" <<< _txt $ show s.gen.starWeight
-        , _tr "Star Rate"   <<< _txt $ show s.gen.starRate <> "%"
-        , _tr "NP/Hit"      <<< _txt $ show s.gen.npAtk <> "%"
-        , _tr "NP/Defend"   <<< _txt $ show s.gen.npDef <> "%"
-        , _tr "Death Rate"  <<< _txt $ show s.death
-        --, _tr "Stars/Quick" <<< _txt $ places 2 (starsPer s' Quick)
-        --, _tr "NP/Arts"     <<< _txt $ places 2 (npPer s' Arts) <> "%"
+        , _tr "ID"          [ H.text $ "#" <> show s.id ]
+        , _tr "Star Weight" [ H.text $ show s.gen.starWeight ]
+        , _tr "Star Rate"   [ H.text $ show s.gen.starRate <> "%" ]
+        , _tr "NP/Hit"      [ H.text $ show s.gen.npAtk <> "%" ]
+        , _tr "NP/Defend"   [ H.text $ show s.gen.npDef <> "%" ]
+        , _tr "Death Rate"  [ H.text $ show s.death ]
+        --, _tr "Stars/Quick" [ H.text $ places 2 (starsPer s' Quick) ]
+        --, _tr "NP/Arts"     [ H.text $ places 2 (npPer s' Arts) <> "%" ]
         ]
       , H.form [_i "myservant"] myServantBox
       , _h 2 "Noble Phantasm"
       , H.table [_i "phantasm"]
-        [ _tr "Name" <<< _txt $ s.phantasm.name
-        , _tr "Rank" <<< _txt $ npRank s.phantasm.rank
-        , _tr "Card" $ [ link FilterCard s.phantasm.card ]
-        , _tr "Class" <<< _txt $ s.phantasm.kind
+        [ _tr "Name" [ H.text s.phantasm.name ]
+        , _tr "Rank" [ H.text $ npRank s.phantasm.rank ]
+        , _tr "Card" [ link FilterCard s.phantasm.card ]
+        , _tr "Class" [ H.text s.phantasm.kind ]
         , H.tr_
           [ _th "Effects"
           , H.td_ <<< showTables ? consAfter
@@ -259,15 +259,15 @@ modal prefs ascent focus@(Just ms') = H.div
           [ H.td_
             [ _h 3 "NP Generation"
             , H.table_
-              [ _tr "Per Arts card" <<< _txt $ calc NPArts
-              , _tr "Per full deck" <<< _txt $ calc NPDeck
+              [ _tr "Per Arts card" [ H.text $ calc NPArts ]
+              , _tr "Per full deck" [ H.text $ calc NPDeck ]
               ]
             ]
           , H.td_
             [ _h 3 "NP Damage"
             , H.table_
-              [ _tr "100% Overcharge" <<< _txt $ calc NPDmg
-              , _tr "500% Overcharge" <<< _txt $ calc NPDmgOver
+              [ _tr "100% Overcharge" [ H.text $ calc NPDmg ]
+              , _tr "500% Overcharge" [ H.text $ calc NPDmgOver ]
               ]
             ]
           ]
@@ -275,15 +275,15 @@ modal prefs ascent focus@(Just ms') = H.div
           [ H.td_
             [ _h 3 "Star Generation"
             , H.table_
-              [ _tr "Per Quick card" <<< _txt $ calc StarQuick
-              , _tr "Per full deck"  <<< _txt $ calc StarDeck
+              [ _tr "Per Quick card" [ H.text $ calc StarQuick ]
+              , _tr "Per full deck"  [ H.text $ calc StarDeck ]
               ]
             ]
           , H.td_
             [ _h 3 "NP Special Damage"
             , H.table_
-              [ _tr "100% Overcharge" <<< _txt $ calc NPSpec
-              , _tr "500% Overcharge" <<< _txt $ calc NPSpecOver
+              [ _tr "100% Overcharge" [ H.text $ calc NPSpec ]
+              , _tr "500% Overcharge" [ H.text $ calc NPSpecOver ]
               ]
             ]
           ]
@@ -360,30 +360,27 @@ passiveEl :: ∀ a. Skill -> HTML a (Query Unit)
 passiveEl p@{name, rank, icon, effect} = H.section_ $
     [ toImage icon
     , H.h3_
-      [ H.span [_c "link", _click $ FilterBy [passiveFilter p] ] $ _txt name
+      [ H.span [_c "link", _click $ FilterBy [passiveFilter p] ] [ H.text name ]
       , H.text $ " " <> show rank
       ]
     ] <> (_p <<< show <$> effect)
 
 bondEl :: ∀ a. Maybe CraftEssence -> HTML a (Query Unit)
-bondEl Nothing = H.section_ $ _txt "N/A"
+bondEl Nothing = H.section_ [ H.text "N/A" ]
 bondEl ce@(Just (CraftEssence {name, icon, effect})) = H.section_ $
     [ toImage icon
-    , H.h3 [_c "link", _click $ Switch ce] $ _txt name
+    , H.h3 [_c "link", _click $ Switch ce] [ H.text name ]
     , H.p_
       [                  _span "★★★★ "
       , _strong "ATK: ", _span "100 "
       , _strong "DEF: ", _span "100"
       ]
-    ] <> (_p <<< show <<< nvmEquipped <$> effect)
-  where
-    nvmEquipped (When _ ef) = ef
-    nvmEquipped ef = ef
+    ] <> (_p <<< show <$> effect)
 
 effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)
 effectEl ef
-  | demerit ef = H.p [_c "demerit"] <<< _txt $ show ef
-  | otherwise  = H.p (maybe [] meta $ skillFilter ef) <<< _txt $ show ef
+  | demerit ef = H.p [_c "demerit"] [ H.text $ show ef ]
+  | otherwise  = H.p (maybe [] meta $ skillFilter ef) [ H.text $ show ef ]
   where
     meta filt = [_c "link", _click $ FilterBy [filt]]
 

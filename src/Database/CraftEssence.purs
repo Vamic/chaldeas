@@ -2689,7 +2689,7 @@ craftEssences = CraftEssence <$>
         , stats:    { base: { atk: 100, hp: 100 }
                     , max:  { atk: 100, hp: 100 }
                     }
-        , effect:   When ("equipped by " <> servant) <$> effect
+        , effect
         , bond:     Just servant
         , limited:  false
         }

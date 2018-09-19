@@ -1,15 +1,12 @@
-module Site.CraftEssences.Filters
-  ( skillFilter
-  , getFilters
-  ) where
+module Site.CraftEssences.Filters (getFilters) where
 
 import StandardLibrary
 import Data.String as String
 
 import Data.Date(Date, Month(..))
 
+import Site.Algebra
 import Site.Common
-import Site.ToImage
 import Site.Filtering
 import Database
 
@@ -51,32 +48,6 @@ scheduledFilters =
     [ "Howl at the Moon" ]
   ]
 
-
-matchFilter :: ∀ a. MatchCraftEssence a => FilterTab -> a -> Filter CraftEssence
-matchFilter tab x =
-    Filter { icon:  Nothing
-           , tab
-           , name:  show x
-           , match: ceHas x
-           }
-
-imageFilter :: ∀ a. ToImage a => MatchCraftEssence a
-            => FilterTab -> a -> Filter CraftEssence
-imageFilter tab x =
-    Filter { icon:  Just $ toImagePath x
-           , tab
-           , name:  show x
-           , match: ceHas x
-           }
-
-namedBonus :: FilterTab -> String -> Array String -> Filter CraftEssence
-namedBonus tab name names =
-    Filter { icon: Nothing
-           , tab
-           , name
-           , match: \_ (CraftEssence ce) -> ce.name `elem` names
-           }
-
 getExtraFilters :: Date -> FilterTab -> Array (Filter CraftEssence)
 getExtraFilters today tab =
     filter fromTab $ getScheduled scheduledFilters today <> extraFilters
@@ -94,15 +65,3 @@ getFilters _ f@FilterAction   = matchFilter f <$> filter (not <<< isDamage) ceGe
 getFilters _ f@FilterDamage   = matchFilter f <$> filter isDamage
                                 getAll :: Array InstantEffect
 getFilters today f = getExtraFilters today f
-
-skillFilter :: SkillEffect -> Maybe (Filter CraftEssence)
-skillFilter (Grant _ _ buff _)    = Just $ matchFilter
-                                     (FilterBuff $ buffCategory buff) buff
-skillFilter (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
-skillFilter (To _ action _)       = Just $ matchFilter FilterAction action
-skillFilter (Bonus bonus _)       = Just $ matchFilter FilterBonus bonus
-skillFilter (Chance _ ef')        = skillFilter ef'
-skillFilter (Chances _ _ ef')     = skillFilter ef'
-skillFilter (When _ ef')          = skillFilter ef'
-skillFilter (Times _ ef')         = skillFilter ef'
-skillFilter (ToMax _ ef')         = skillFilter ef'

@@ -1,30 +1,19 @@
-module Site.CraftEssences.Sorting
-  ( SortBy(..)
-  , getSort
-  )where
+module Site.CraftEssences.Sorting (getSort) where
 
 import StandardLibrary
-import Generic  as G
 import Data.Map as Map
 import Data.Int as Int
 
 import Database
 import Printing
-
-data SortBy
-    = Rarity
-    | ID
-    | ATK
-    | HP
-
-instance _a_ :: Show SortBy where
-    show = G.genericShow
+import Sorting
 
 toSort :: SortBy -> CraftEssence -> Number
 toSort ID     (CraftEssence ce) = negate $ Int.toNumber ce.id
 toSort Rarity (CraftEssence ce) = Int.toNumber ce.rarity
 toSort ATK    (CraftEssence ce) = Int.toNumber ce.stats.max.atk
 toSort HP     (CraftEssence ce) = Int.toNumber ce.stats.max.hp
+toSort _      _                 = infinity
 
 doSort :: SortBy -> Array CraftEssence
        -> Array { label :: String, obj :: CraftEssence }
@@ -45,21 +34,3 @@ sorted = Map.fromFoldable $ go <$> enumArray
 
 getSort :: SortBy -> Array { label :: String, obj ::  CraftEssence }
 getSort sorter = fromMaybe [] $ Map.lookup sorter sorted
-
--------------------------------
--- GENERICS BOILERPLATE; IGNORE
--------------------------------
-
-derive instance _7_ :: G.Generic SortBy _
-derive instance _8_ :: Eq SortBy
-derive instance _9_ :: Ord SortBy
-instance _11_ :: G.Enum SortBy where
-    succ = G.genericSucc
-    pred = G.genericPred
-instance _12_ :: G.Bounded SortBy where
-    top = G.genericTop
-    bottom = G.genericBottom
-instance _13_ :: G.BoundedEnum SortBy where
-    cardinality = G.genericCardinality
-    toEnum = G.genericToEnum
-    fromEnum = G.genericFromEnum

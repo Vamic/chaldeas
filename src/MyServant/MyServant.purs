@@ -14,9 +14,9 @@ import Data.Map as Map
 
 import Data.Profunctor.Strong ((&&&))
 
+import Sorting
 import Database
 import MyServant.GrowthCurves
-import MyServant.Sorting
 
 newtype MyServant = MyServant { base    :: Servant
                               , level   :: Int
@@ -31,6 +31,8 @@ instance _0_ :: Eq MyServant where
     eq x y = eq (getBase x) (getBase y)
 instance _1_ :: Ord MyServant where
     compare = comparing getBase
+instance _2_ :: Show MyServant where
+    show = show <<< getBase
 
 getBase :: MyServant -> Servant
 getBase (MyServant {base}) = base
@@ -73,6 +75,21 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = mapSort $ MyServant ms
                        + (maxAmount - minAmount)
                        * (Int.toNumber lvl - 1.0)
                        / 10.0
+
+toSort :: SortBy -> Servant -> Number
+toSort ID         (Servant s) = negate $ Int.toNumber s.id
+toSort Rarity     (Servant s) = Int.toNumber s.rarity
+toSort ATK        (Servant s) = Int.toNumber s.stats.max.atk
+toSort HP         (Servant s) = Int.toNumber s.stats.max.hp
+toSort StarWeight (Servant s) = Int.toNumber s.gen.starWeight
+toSort NPArts              s  = npPer s Arts
+toSort NPDeck              s  = sum $ npPer s <$> getDeck s
+toSort StarQuick           s  = starsPer s Quick
+toSort StarDeck            s  = sum $ starsPer s <$> getDeck s
+toSort NPDmg               s  = npDamage false false s
+toSort NPDmgOver           s  = npDamage false true s
+toSort NPSpec              s  = npDamage true false s
+toSort NPSpecOver          s  = npDamage true true s
 
 mapSort :: MyServant -> MyServant
 mapSort (MyServant ms) = MyServant ms { sorted = sorted }

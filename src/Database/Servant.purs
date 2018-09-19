@@ -9,7 +9,6 @@ module Database.Servant
   , Gen
   , Hits
   , PhantasmType(..)
-  , class MatchServant, has
   , getDeck
   ) where
 
@@ -81,15 +80,6 @@ type Gen = { starWeight :: Int
 getDeck :: Servant -> Array Card
 getDeck (Servant {deck:Deck a b c d e}) = [a, b, c, d, e]
 
-getEffects :: Servant -> Array SkillEffect
-getEffects (Servant s) = filter (not <<< demerit) $ simplify
-                         <$> s.phantasm.effect
-                          <> s.phantasm.over
-                          <> (s.skills >>= _.effect)
-
-phantasmEffects :: NoblePhantasm -> Array SkillEffect
-phantasmEffects {effect, over} = effect <> over
-
 data PhantasmType = SingleTarget | MultiTarget | Support
 instance _01_ :: Show PhantasmType where
       show SingleTarget = "Single-Target"
@@ -104,45 +94,6 @@ maxLevel (Servant {rarity: 2}) = 65
 maxLevel (Servant {rarity: 1}) = 60
 maxLevel (Servant {rarity: _}) = 65
 
-class (G.BoundedEnum a, Show a) <= MatchServant a where
-    has :: a -> Boolean -> Servant -> Boolean
-instance _a_ :: MatchServant BuffEffect where
-    has x noSelf = any match <<< getEffects where
-        match (Grant t _ y _) = x == y && (not noSelf || t /= Self)
-        match _ = false
-instance _b_ :: MatchServant DebuffEffect where
-    has x _ = any match <<< getEffects where
-        match (Debuff t _ y _) = x == y
-        match _ = false
-instance _c_ :: MatchServant InstantEffect where
-    has BecomeHyde _ = const false
-    has x noSelf     = any match <<< getEffects where
-        match (To t y _) = x == y && (not noSelf || t /= Self)
-        match _ = false
-instance _d_ :: MatchServant Trait where
-    has x _ (Servant s) = x `elem` s.traits
-instance _e_ :: MatchServant Alignment where
-    has x _ (Servant s) = x `elem` s.align
-instance _f_ :: MatchServant PhantasmType where
-    has SingleTarget _ (Servant s) = any match $ phantasmEffects s.phantasm
-      where
-        match (To Enemy Damage _) = true
-        match (To Enemy DamageThruDef _) = true
-        match _ = false
-    has MultiTarget _ (Servant s) = any match $ phantasmEffects s.phantasm
-      where
-        match (To Enemies Damage _) = true
-        match (To Enemies DamageThruDef _) = true
-        match _ = false
-    has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
-instance _g_ :: MatchServant Class where
-    has x _ (Servant s) = x == s.class
-instance _h_ :: MatchServant Attribute where
-    has x _ (Servant s) = x == s.attr
-instance _i_ :: MatchServant Deck where
-    has x _ (Servant s) = x == s.deck
-instance _j_ :: MatchServant Card where
-    has x _ (Servant s) = x == s.phantasm.card
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
 -------------------------------

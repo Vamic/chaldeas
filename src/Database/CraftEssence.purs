@@ -3,14 +3,12 @@
 -- Craft Essences are all included in this one file
 -- along with their data model definition.
 module Database.CraftEssence
-  ( class MatchCraftEssence, ceHas
-  , CraftEssence(..)
+  ( CraftEssence(..)
   , craftEssences
   , getBond
   ) where
 
 import StandardLibrary
-import Generic  as G
 import Data.Int as Int
 
 import Database.Base
@@ -2716,29 +2714,6 @@ newtype CraftEssence = CraftEssence { name     :: String
 
 instance _0_ :: Show CraftEssence where
     show (CraftEssence ce) = ce.name
-
-getEffects :: CraftEssence -> Array SkillEffect
-getEffects (CraftEssence ce) = filter (not <<< demerit) $
-                               simplify <$> ce.effect
-
-class (G.BoundedEnum a, Show a) <= MatchCraftEssence a where
-    ceHas :: a -> Boolean -> CraftEssence -> Boolean
-instance _b_ :: MatchCraftEssence BuffEffect where
-    ceHas x noSelf = any match <<< getEffects where
-        match (Grant t _ y _) = x == y && allied t && (not noSelf || t /= Self)
-        match _ = false
-instance _c_ :: MatchCraftEssence DebuffEffect where
-    ceHas x _ = any match <<< getEffects where
-        match (Debuff t _ y _) = x == y && not (allied t)
-        match _ = false
-instance _d_ :: MatchCraftEssence InstantEffect where
-    ceHas x noSelf = any match <<< getEffects where
-        match (To t y _) = x == y && (not noSelf || t /= Self)
-        match _ = false
-instance _e_ :: MatchCraftEssence BonusEffect where
-    ceHas x _ = any match <<< getEffects where
-        match (Bonus y _) = x == y
-        match _ = false
 
 equipped :: Class -> SkillEffect -> SkillEffect
 equipped = When <<< append "equipped by a " <<< show

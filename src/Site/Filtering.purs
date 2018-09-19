@@ -1,70 +1,32 @@
 -- | Sidebars for filtering displayed elements in the list.
 module Site.Filtering
-  ( FilterTab(..)
-  , Filter(..), simpleFilter
+  ( simpleFilter
   , ScheduledFilter(..), getScheduled
   , FilterList(..), collectFilters
-  , exclusive, getTab
+  , getTab
   , updateListing
+  , matchFilter
+  , imageFilter
+  , namedBonus
+  , skillFilter
   ) where
 
 import StandardLibrary
-import Generic     as G
-import Data.String as String
 
 import Data.Date (Date)
 
-import Printing
 import Database.Skill
+import Database.Has
+import Site.Algebra
 import Site.Preferences
 import Site.ToImage
 
-data FilterTab
-    = FilterEventBonus
-    | FilterAvailability
-    | FilterAlignment
-    | FilterTrait
-    | FilterPassiveSkill
-    | FilterBonus | FilterAction | FilterDebuff
-    | FilterBuff BuffCategory
-    | FilterDamage
-    -- Exclusive
-    | FilterSource
-    | FilterPhantasm | FilterCard
-    | FilterClass
-    | FilterDeck
-    | FilterAttribute
-    | FilterRarity
-
-exclusive :: FilterTab -> Boolean
-exclusive = (_ >= FilterSource)
-
-instance _a_ :: Show FilterTab where
-    show FilterPhantasm = "NP Type"
-    show FilterCard     = "NP Card"
-    show (FilterBuff c) = "Buff (" <> show c <> ")"
-    show x              = unCamel <<< String.drop 6 $ G.genericShow x
-
---data Filter a = Filter FilterTab String (Boolean -> a -> Boolean)
-
-newtype Filter a = Filter { tab   :: FilterTab
-                          , name  :: String
-                          , icon  :: Maybe ImagePath
-                          , match :: Boolean -> a -> Boolean
-                          }
 simpleFilter :: ∀ a. FilterTab -> String -> (Boolean -> a -> Boolean)
              -> Filter a
 simpleFilter tab name match = Filter { icon: Nothing, tab, name, match }
 
 getTab :: ∀ a. Filter a -> FilterTab
 getTab (Filter x) = x.tab
-
-instance _b_ :: Eq (Filter a) where
-    eq (Filter x) (Filter y) = x.tab == y.tab && x.name == y.name
-instance _c_ :: Ord (Filter a) where
-    compare (Filter x) (Filter y) = compareThen _.tab _.name x y
-instance _d_ :: Show (Filter a) where
-    show (Filter x) = x.name
 
 data ScheduledFilter a = ScheduledFilter Date Date (Filter a)
 
@@ -74,23 +36,14 @@ getScheduled xs today = toFilter <$> filter scheduled xs
     scheduled (ScheduledFilter start end _) = start <= today && today <= end
     toFilter (ScheduledFilter _ _ x) = x
 
-type FilterState a b c = { sorted   :: Array { label :: String, obj :: a }
-                         , listing  :: Array { label :: String, obj :: a }
-                         , matchAny :: Boolean
-                         , filters  :: Array (Filter b)
-                         , exclude  :: Array (Filter b)
-                         , prefs    :: Preferences
-                         | c
-                         }
-
-updateListing :: ∀ a b c. (a -> b) -> FilterState a b c -> FilterState a b c
+updateListing :: ∀ a b c. (b -> a) -> SiteState a b c -> SiteState a b c
 updateListing f st = st{ listing = filter (match <<< f <<< _.obj) st.sorted }
   where
     noSelf = prefer st.prefs ExcludeSelf
-    matchFilter x (Filter filt) = filt.match noSelf x
-    match x = (null st.exclude || all (not <<< matchFilter x) st.exclude)
+    matches x (Filter filt) = filt.match noSelf x
+    match x = (null st.exclude || all (not <<< matches x) st.exclude)
            && (null st.filters || (if st.matchAny then any else all)
-              (matchFilter x) st.filters)
+              (matches x) st.filters)
 
 type FilterList a = Array { tab :: FilterTab, filters :: Array (Filter a) }
 
@@ -100,20 +53,39 @@ collectFilters f today = go <$> enumArray
   where
     go tab = { tab, filters: f today tab }
 
--------------------------------
--- GENERICS BOILERPLATE; IGNORE
--------------------------------
+matchFilter :: ∀ a b. Has a b => FilterTab -> b -> Filter a
+matchFilter tab x =
+    Filter { icon:  Nothing
+           , tab
+           , name:  show x
+           , match: has x
+           }
 
-derive instance _0_ :: G.Generic FilterTab _
-derive instance _1_ :: Eq FilterTab
-derive instance _2_ :: Ord FilterTab
-instance _4_ :: G.Enum FilterTab where
-    succ = G.genericSucc
-    pred = G.genericPred
-instance _5_ :: G.Bounded FilterTab where
-    top = G.genericTop
-    bottom = G.genericBottom
-instance _6_ :: G.BoundedEnum FilterTab where
-    cardinality = G.genericCardinality
-    toEnum = G.genericToEnum
-    fromEnum = G.genericFromEnum
+imageFilter :: ∀ a b. ToImage b => Has a b
+            => FilterTab -> b -> Filter a
+imageFilter tab x =
+    Filter { icon:  Just $ toImagePath x
+           , tab
+           , name:  show x
+           , match: has x
+           }
+
+namedBonus :: ∀ a. Show a => FilterTab -> String -> Array String -> Filter a
+namedBonus tab name names =
+    Filter { icon: Nothing
+           , tab
+           , name
+           , match: const $ (_ `elem` names) <<< show
+           }
+
+skillFilter :: ∀ a. HasEffects a => SkillEffect -> Maybe (Filter a)
+skillFilter (Grant _ _ buff _)    = Just $ matchFilter
+                               (FilterBuff $ buffCategory buff) buff
+skillFilter (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
+skillFilter (To _ action _)       = Just $ matchFilter FilterAction action
+skillFilter (Bonus bonus _)       = Just $ matchFilter FilterBonus bonus
+skillFilter (Chance _ ef')        = skillFilter ef'
+skillFilter (Chances _ _ ef')     = skillFilter ef'
+skillFilter (When _ ef')          = skillFilter ef'
+skillFilter (Times _ ef')         = skillFilter ef'
+skillFilter (ToMax _ ef')         = skillFilter ef'

@@ -1,12 +1,11 @@
 module Site.Servants.Filters
   ( getFilters
-  , skillFilter
-  , matchFilter
   , passiveFilter
   , singleFilter
   ) where
 
 import Database
+import Site.Algebra
 import Site.Common
 import Site.Filtering
 import Site.ToImage
@@ -55,23 +54,6 @@ scheduledFilters =
     ]
   ]
 
-matchFilter :: ∀ a. MatchServant a => FilterTab -> a -> Filter Servant
-matchFilter tab x =
-    Filter { icon:  Nothing
-           , tab
-           , name:  show x
-           , match: has x
-           }
-
-imageFilter :: ∀ a. ToImage a => MatchServant a
-            => FilterTab -> a -> Filter Servant
-imageFilter tab x =
-    Filter { icon:  Just $ toImagePath x
-           , tab
-           , name:  show x
-           , match: has x
-           }
-
 passiveFilter :: Skill -> Filter Servant
 passiveFilter p =
     Filter { icon: Just $ toImagePath p.icon
@@ -81,15 +63,7 @@ passiveFilter p =
                    any (eq p.name) $ _.name <$>  s.passives
            }
 
-namedBonus :: FilterTab -> String -> Array String -> Filter Servant
-namedBonus tab name names =
-    Filter { icon: Nothing
-           , tab
-           , name
-           , match: \_ (Servant s) -> s.name `elem` names
-           }
-
-singleFilter :: ∀ a. MatchServant a => FilterTab -> a -> Array (Filter Servant)
+singleFilter :: ∀ a. Has Servant a => FilterTab -> a -> Array (Filter Servant)
 singleFilter tab x
   | exclusive tab = matchFilter tab <$> delete x getAll
   | otherwise = [matchFilter tab x]
@@ -129,20 +103,3 @@ getFilters _ f@FilterDamage       = matchFilter f
                                     <$> filter isDamage
                                     getAll :: Array InstantEffect
 getFilters today f               = getExtraFilters today f
-
-plural :: ∀ a. MatchServant a => a -> Maybe a
-plural x
-  | null <<< drop 1 $ filter (has x false) servants = Nothing
-  | otherwise = Just x
-
-skillFilter :: SkillEffect -> Maybe (Filter Servant)
-skillFilter (Grant _ _ buff _)    = Just $ matchFilter
-                                     (FilterBuff $ buffCategory buff) buff
-skillFilter (Debuff _ _ debuff _) = matchFilter FilterDebuff <$> plural debuff
-skillFilter (To _ action _)       = matchFilter FilterAction <$> plural action
-skillFilter (Bonus _ _)           = Nothing
-skillFilter (Chance _ ef')        = skillFilter ef'
-skillFilter (Chances _ _ ef')     = skillFilter ef'
-skillFilter (When _ ef')          = skillFilter ef'
-skillFilter (Times _ ef')         = skillFilter ef'
-skillFilter (ToMax _ ef')         = skillFilter ef'

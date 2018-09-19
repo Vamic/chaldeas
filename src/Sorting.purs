@@ -1,14 +1,8 @@
-module MyServant.Sorting
-  ( SortBy(..)
-  , toSort
-  , formatSort
-  )where
+module Sorting where
 
 import StandardLibrary
-import Generic  as G
-import Data.Int as Int
+import Generic as G
 
-import Database
 import Printing
 
 data SortBy
@@ -36,21 +30,6 @@ instance _a_ :: Show SortBy where
     show NPSpec     = "NP Special Damage"
     show NPSpecOver = "NP Special + Overcharge"
     show x          = unCamel $ G.genericShow x
-
-toSort :: SortBy -> Servant -> Number
-toSort ID         (Servant s) = negate $ Int.toNumber s.id
-toSort Rarity     (Servant s) = Int.toNumber s.rarity
-toSort ATK        (Servant s) = Int.toNumber s.stats.max.atk
-toSort HP         (Servant s) = Int.toNumber s.stats.max.hp
-toSort StarWeight (Servant s) = Int.toNumber s.gen.starWeight
-toSort NPArts              s  = npPer s Arts
-toSort NPDeck              s  = sum $ npPer s <$> getDeck s
-toSort StarQuick           s  = starsPer s Quick
-toSort StarDeck            s  = sum $ starsPer s <$> getDeck s
-toSort NPDmg               s  = npDamage false false s
-toSort NPDmgOver           s  = npDamage false true s
-toSort NPSpec              s  = npDamage true false s
-toSort NPSpecOver          s  = npDamage true true s
 
 formatSort :: SortBy -> Number -> String
 formatSort NPArts    = flip append "%" <<< places 2

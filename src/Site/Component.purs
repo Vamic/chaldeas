@@ -15,9 +15,9 @@ import Halogen.HTML (HTML)
 
 import Site.Servants.Component      as Servants
 import Site.CraftEssences.Component as CraftEssences
+import Site.Algebra
 import Site.Common
 import Site.Preferences
-import Site.Filtering
 import Database
 import MyServant
 import Printing
@@ -78,7 +78,7 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
                   unit $ E.input BrowseCraftEssences
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m
-  eval (BrowseServants (CraftEssences.Message fCe mServant) next) = next <$ do
+  eval (BrowseServants (SiteMessage fCe mServant) next) = next <$ do
       liftEffect $ Hash.setHash "Servants"
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate
@@ -91,7 +91,7 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
                , fCe      = fCe
                , mServant = mServant
                }
-  eval (BrowseCraftEssences (Servants.Message fServant mCe) next) = next <$ do
+  eval (BrowseCraftEssences (SiteMessage fServant mCe) next) = next <$ do
       liftEffect $ Hash.setHash "CraftEssences"
       prefs <- liftEffect getPreferences
       today <- liftEffect getDate

@@ -4,12 +4,14 @@
 module Database
   ( module Database.Model
   , module Database.Calculator
+  , module Database.Has
   , servants, getAll, ceGetAll, getPassives
   ) where
 
 import StandardLibrary
 
 import Database.Model
+import Database.Has
 import Database.Calculator
 import Database.Servant.Archer
 import Database.Servant.Assassin
@@ -46,23 +48,24 @@ servants = addUniversal <<< addHeavenOrEarth
       | s.attr /= Earth && s.attr /= Heaven = s'
       | otherwise = Servant s {traits = HeavenOrEarth : s.traits}
 
--- | Retrieves all values of a `MatchServant` Enum
+-- | Retrieves all values of a `Has <a>` Enum
+-- | that at least one `<a>` in the database `has`.
+genericGetAll :: ∀ a b f. Has a b => Foldable f => f a -> Array b
+genericGetAll xs = sortWith show $ filter exists enumArray
+  where
+    exists eff = any (has eff false) xs
+
+-- | Retrieves all values of a `Has Servant` Enum
 -- | that at least one `Servant` in the database `has`.
 -- | Memoized for performance.
-getAll :: ∀ a. MatchServant a => Array a
-getAll = flip memoize unit \_ ->
-         sortWith show $ filter exists enumArray
-  where
-    exists eff = any (has eff false) servants
+getAll :: ∀ a. Has Servant a => Array a
+getAll = flip memoize unit \_ -> genericGetAll servants
 
--- | Retrieves all values of a `MatchCraftEssence` Enum
--- | that at least one `CraftEssence` in the database `ceHas`.
+-- | Retrieves all values of a `Has CraftEssence` Enum
+-- | that at least one `CraftEssence` in the database `has`.
 -- | Memoized for performance.
-ceGetAll :: ∀ a. MatchCraftEssence a => Array a
-ceGetAll = flip memoize unit \_ ->
-           sortWith show $ filter exists enumArray
-  where
-    exists eff = any (ceHas eff false) craftEssences
+ceGetAll :: ∀ a. Has CraftEssence a => Array a
+ceGetAll = flip memoize unit \_ -> genericGetAll craftEssences
 
 -- | Retrieves all passive skills defined in `Passive`
 -- | that at least one `Servant` `has`.

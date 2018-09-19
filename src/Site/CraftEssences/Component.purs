@@ -5,45 +5,26 @@ module Site.CraftEssences.Component (Query, Message(..), comp) where
 
 import StandardLibrary
 import Halogen.HTML            as H
-import Routing.Hash            as Hash
-import Halogen.HTML.Properties as P
 import Data.String             as String
 
 import Data.Date (Date)
-import Halogen (Component, ComponentDSL, ComponentHTML, component, get, modify_, raise)
+import Halogen (Component, ComponentDSL, ComponentHTML, component)
 import Halogen.HTML (HTML)
 
 import Database
+import Sorting
+import Site.Algebra
 import Site.Common
+import Site.Eval
 import Site.ToImage
 import Site.Filtering
 import Site.Preferences
 import Site.CraftEssences.Filters
 import Site.CraftEssences.Sorting
-import Printing
 
-type Input = Unit
-data Message = Message (Array (Filter CraftEssence)) (Maybe Servant)
-data Query a
-    = Switch    (Maybe Servant) a
-    | Focus     (Maybe CraftEssence) a
-    | ClearAll  a
-    | Check     FilterTab Boolean a
-    | FilterBy  (Array (Filter CraftEssence)) a
-    | Toggle    (Filter CraftEssence) a
-    | MatchAny  Boolean a
-    | SetSort   SortBy a
-    | SetPref   Preference Boolean a
-
-type State = { filters  :: Array (Filter CraftEssence)
-             , exclude  :: Array (Filter CraftEssence)
-             , matchAny :: Boolean
-             , focus    :: Maybe CraftEssence
-             , sortBy   :: SortBy
-             , prefs    :: Preferences
-             , sorted   :: Array { label :: String, obj :: CraftEssence }
-             , listing  :: Array { label :: String, obj :: CraftEssence }
-             }
+type Message = SiteMessage CraftEssence Servant
+type Query = SiteQuery CraftEssence CraftEssence Servant
+type State = SiteState CraftEssence CraftEssence ()
 
 comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence
      -> Preferences -> Date -> Component HTML Query Unit Message m
@@ -57,7 +38,7 @@ comp initialFilt initialFocus initialPrefs today = component
   allFilters :: FilterList CraftEssence
   allFilters = collectFilters getFilters today
 
-  initialState :: Input -> State
+  initialState :: Unit -> State
   initialState = const $ updateListing identity
       { filters
       , exclude
@@ -74,88 +55,14 @@ comp initialFilt initialFocus initialPrefs today = component
                                     initialFilt
 
   render :: State -> ComponentHTML Query
-  render st = modal st.prefs st.focus
-      [ H.aside_ $
-        [ _h 1 "Settings"
-        , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) ->
-          H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
-        , _h 1 "Sort by"
-        , H.form_ $ enumArray <#> \sort ->
-          H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
-        , _h 1 "Include"
-        ] <> (filter (exclusive <<< _.tab) allFilters >>= filtersEl)
-      , H.section_ <<< maybeReverse $
-        portrait false st.prefs <$> st.listing
-      , H.aside_ $
-        [ _h 1 "Browse"
-        , _strong "Craft Essences"
-        , _a "Servants" $ Switch Nothing
-        , _h 1 "Filter"
-        , H.form_
-          [ H.table_
-            [ H.tr_
-              [ _th "Match"
-              , H.td [_click $ MatchAny false] $ _radio "All" (not st.matchAny)
-              , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
-              ]
-            ]
-          , H.button clearAll $ _txt "Reset All"
-          ]
-        ] <> (filter (not exclusive <<< _.tab) allFilters >>= filtersEl)
-      ]
+  render st = modal st.prefs st.focus <<< 
+              outline st [Rarity, ID, ATK, HP] allFilters nav $
+              portrait false st.prefs <$> st.listing
     where
-      maybeReverse = case st.sortBy of
-          Rarity -> identity
-          _      -> reverse
-      clearAll
-        | null st.filters && null st.exclude = [ P.enabled false ]
-        | otherwise = [ P.enabled true, _click ClearAll ]
-      filtersEl { tab, filters } = filterSection Check Toggle st tab filters
+      nav = [ _strong "Craft Essences", _a "Servants" $ Switch Nothing ]
 
   eval :: Query ~> ComponentDSL State Query Message m
-  eval = case _ of
-      Switch    switchTo a -> a <$ do
-          {exclude, filters} <- get
-          raise $ Message (exclude <> filters) switchTo
-      ClearAll           a -> a <$ modif _{ exclude = [], filters = [] }
-      Check t  true      a -> a <$ do
-          modif <<< modExclude <<< filter $ notEq t <<< getTab
-      Check t  false    a -> a <$
-          modif (modExclude $ nub <<< append (getFilters today t))
-      SetSort   sortBy   a -> a <$ modif _{ sortBy = sortBy
-                                          , sorted = getSort sortBy
-                                          }
-      MatchAny  matchAny a -> a <$ modif _{ matchAny = matchAny }
-      Focus     focus    a -> a <$ do
-          liftEffect $ hash focus
-          modify_ _{ focus = focus }
-      FilterBy filts  a -> a <$ do
-          liftEffect $ hash Nothing
-          modif if any (exclusive <<< getTab) filts
-            then _{ exclude = filts
-                  , filters = []
-                  , focus   = Nothing
-                  }
-            else _{ exclude = []
-                  , filters = filts
-                  , focus   = Nothing
-                  }
-      SetPref   k v      a -> a <$ do
-          liftEffect $ writePreference k v
-          modif <<< modPrefs $ setPreference k v
-      Toggle     filt     a
-        | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
-        | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
-      where
-      modif = modify_ <<< compose (updateListing identity)
-      modFilters f st = st{ filters = f st.filters }
-      modPrefs   f st = st{ prefs   = f st.prefs }
-      modExclude f st = st{ exclude = f st.exclude }
-      toggleIn x xs
-        | x `elem` xs = delete x xs
-        | otherwise   = x : xs
-      hash Nothing   = Hash.setHash "CraftEssences"
-      hash (Just ce) = Hash.setHash <<< urlName $ show ce
+  eval = siteEval "CraftEssences" identity (getFilters today) getSort
 
 portrait :: ∀ a. Boolean -> Preferences
          -> { label :: String, obj :: CraftEssence } -> HTML a (Query Unit)

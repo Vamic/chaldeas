@@ -9,17 +9,18 @@ import Halogen.HTML            as H
 import Routing.Hash            as Hash
 import Data.Int                as Int
 import Data.Map                as Map
-import Halogen.HTML.Properties as P
 import Data.String             as String
 
-import Halogen (Component, ComponentDSL, ComponentHTML, component, get, modify_, raise)
+import Halogen (Component, ComponentDSL, ComponentHTML, component, get, modify_)
 import Halogen.HTML (HTML)
 import Data.Date (Date)
 
+import Sorting
 import Database
 import MyServant
-import MyServant.Sorting
+import Site.Algebra
 import Site.Common
+import Site.Eval
 import Site.ToImage
 import Site.Preferences
 import Site.Filtering
@@ -27,36 +28,27 @@ import Site.Servants.Filters
 import Site.Servants.Sorting
 import Printing
 
-type Input = Unit
-data Message = Message (Array (Filter Servant)) (Maybe CraftEssence)
-data Query a
-    = Switch    (Maybe CraftEssence) a
-    | Focus     (Maybe MyServant) a
-    | ClearAll  a
-    | Check     FilterTab Boolean a
-    | FilterBy  (Array (Filter Servant)) a
-    | Toggle    (Filter Servant) a
-    | MatchAny  Boolean a
-    | SetSort   SortBy a
-    | SetPref   Preference Boolean a
-    | Ascend    MyServant Int a
-    | OnTeam    Boolean MyServant a
-    | MineOnly  Boolean a
-    | DoNothing a
-
-type State = { filters  :: Array (Filter Servant)
-             , exclude  :: Array (Filter Servant)
-             , matchAny :: Boolean
-             , mineOnly :: Boolean
-             , focus    :: Maybe MyServant
-             , sortBy   :: SortBy
-             , prefs    :: Preferences
+type Message = SiteMessage Servant CraftEssence
+type Query = SiteQuery Servant MyServant CraftEssence
+{-
+type SiteState a b c
+    = { filters  :: Array (Filter a)
+      , exclude  :: Array (Filter a)
+      , matchAny :: Boolean
+      , focus    :: Maybe b
+      , sortBy   :: SortBy
+      , prefs    :: Preferences
+      , sorted   :: Array { label :: String, obj :: b }
+      , listing  :: Array { label :: String, obj :: b }
+      | c
+      }
+-}
+type State = SiteState Servant MyServant 
+             ( mineOnly :: Boolean
              , ascent   :: Int
              , myServs  :: Array MyServant
-             , sorted   :: Array { label :: String, obj :: MyServant }
-             , listing  :: Array { label :: String, obj :: MyServant }
              , team     :: Map Servant MyServant
-             }
+             )
 
 comp :: ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant
      -> Preferences -> Date -> Map Servant MyServant
@@ -71,7 +63,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
   allFilters :: FilterList Servant
   allFilters = collectFilters getFilters today
 
-  initialState :: Input -> State
+  initialState :: Unit -> State
   initialState = const $ updateListing getBase
       { filters
       , exclude
@@ -93,45 +85,19 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                                     initialFilt
 
   render :: State -> ComponentHTML Query
-  render st = modal st.prefs st.ascent st.focus
-      [ H.aside_ $
-        [ _h 1 "Settings"
-        , H.form_ $ unfoldPreferences st.prefs <#> \(k ^ v) ->
-          H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
-        , _h 1 "Sort by"
-        , H.form_ $ enumArray <#> \sort ->
-          H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
-        , _h 1 "Include"
-        ] <> (filter (exclusive <<< _.tab) allFilters' >>= filtersEl)
-      , H.section_ <<< maybeReverse $
-        doPortrait <$> (st.mineOnly ? filter isMine $ st.listing)
-      , H.aside_ $
-        [ _h 1 "Browse"
-        , _a "Craft Essences" $ Switch Nothing
-        , if st.mineOnly then _a      "Servants" $ MineOnly false
-                         else _strong "Servants"
-        , if st.mineOnly then _strong "My Servants"
-                         else _a      "My Servants" $ MineOnly true
-        , _h 1 "Filter"
-        , H.form_
-          [ H.table_
-            [ H.tr_
-              [ _th "Match"
-              , H.td [_click $ MatchAny false] $ _radio "All" (not st.matchAny)
-              , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
-              ]
-            ]
-          , H.button clearAll $ _txt "Reset All"
-          ]
-        ] <>
-          (filter (not exclusive <<< _.tab) allFilters' >>= filtersEl)
-      ]
+  render st = modal st.prefs st.ascent st.focus <<< 
+              outline st enumArray allFilters' nav $
+              doPortrait <$> (st.mineOnly ? filter isMine $ st.listing)
     where
-      maybeReverse = case st.sortBy of
-          Rarity -> identity
-          _      -> reverse
+      nav = [ _a "Craft Essences" $ Switch Nothing
+            , if st.mineOnly then _a      "Servants" $ MineOnly false
+                             else _strong "Servants"
+            , if st.mineOnly then _strong "My Servants"
+                             else _a      "My Servants" $ MineOnly true
+            ]
       doPortrait {label: "", obj: ms}
-        | st.mineOnly = portrait false st.prefs baseAscend { label: showStats ms, obj: ms }
+        | st.mineOnly = portrait false st.prefs baseAscend 
+                        { label: showStats ms, obj: ms }
       doPortrait info = portrait false st.prefs baseAscend info
       baseAscend
         | prefer st.prefs MaxAscension = 4
@@ -143,10 +109,6 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                               any (x.match false <<< getBase) st.team) filters
                         }
         | otherwise   = allFilters
-      clearAll
-        | null st.filters && null st.exclude = [ P.enabled false ]
-        | otherwise = [ P.enabled true, _click ClearAll ]
-      filtersEl { tab, filters } = filterSection Check Toggle st tab filters
 
   eval :: Query ~> ComponentDSL State Query Message m
   eval = case _ of
@@ -154,41 +116,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
           modify_ _{ ascent = ascent }
       Ascend (MyServant ms) ascent a -> eval $
           OnTeam true (MyServant ms{ascent = ascent}) a
-      DoNothing         a -> pure a
-      MatchAny matchAny a -> a <$ modif   _{ matchAny = matchAny }
       MineOnly mineOnly a -> a <$ modif   _{ mineOnly = mineOnly }
-      ClearAll          a -> a <$ modif   _{ exclude = [], filters = [] }
-      Check t  true     a -> a <$ do
-          modif <<< modExclude <<< filter $ notEq t <<< getTab
-      Check t  false    a -> a <$
-          modif (modExclude $ nub <<< append (getFilters today t))
-      Switch   switch   a -> a <$ do
-          {exclude, filters} <- get
-          raise $ Message (exclude <> filters) switch
-      SetSort  sortBy   a -> a <$ modif \st ->
-          st{ sortBy = sortBy
-            , sorted = getSort sortBy st.myServs
-            }
-      Focus    focus    a -> a <$ do
-          liftEffect $ hash focus
-          modify_ _{ focus = focus, ascent = 1 }
-      FilterBy filts    a -> a <$ do
-          liftEffect $ hash Nothing
-          modif if any (exclusive <<< getTab) filts
-                then _{ exclude = filts
-                      , filters = []
-                      , focus   = Nothing
-                      }
-                else _{ exclude = []
-                      , filters = filts
-                      , focus   = Nothing
-                      }
-      SetPref  k v      a -> a <$ do
-          liftEffect $ writePreference k v
-          modif (modPrefs $ setPreference k v)
-      Toggle   filt     a
-        | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
-        | otherwise               -> a <$ modif (modFilters $ toggleIn filt)
       OnTeam keep myServant a -> a <$  do
           {team}        <- get
           let myServant' = keep ? recalc $ myServant
@@ -202,14 +130,15 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                          , sorted  = getSort st.sortBy myServs
                          , focus   = st.focus *> Just myServant'
                          }
+      Focus    focus    a -> a <$ do
+          liftEffect $ hash focus
+          modify_ _{ focus = focus, ascent = 1 }
+      req -> do
+          {myServs} <- get
+          siteEval "Servants" getBase (getFilters today) (flip getSort myServs) 
+              req
     where
       modif = modify_ <<< compose (updateListing getBase)
-      modFilters f st = st{ filters = f st.filters }
-      modExclude f st = st{ exclude = f st.exclude }
-      modPrefs   f st = st{ prefs   = f st.prefs }
-      toggleIn x xs
-        | x `elem` xs = delete x xs
-        | otherwise   = x : xs
       hash Nothing  = Hash.setHash "Servants"
       hash (Just s) = Hash.setHash <<< urlName <<< show $ getBase s
 
@@ -384,7 +313,7 @@ modal prefs ascent focus@(Just ms') = H.div
                                   , link FilterAlignment d
                                   ]
     alignBox xs = xs >>= \x -> [link FilterAlignment x, H.text " "]
-    calc sort = formatSort sort <<< fromMaybe (-1.0) $ Map.lookup sort sorted
+    calc sort = formatSort sort <<< fromMaybe infinity $ Map.lookup sort sorted
     skillBox i ({icon} ^ lvl) =
         [ H.td_ [ toImage icon ]
         , H.td_ $ _mInt 1 10 lvl \val ->
@@ -472,7 +401,7 @@ overRow (RangeInfo isPercent x y) =
   where
     over = (y - x) / 4.0
 
-link :: ∀ a b. MatchServant a => FilterTab -> a -> HTML b (Query Unit)
+link :: ∀ a b. Has Servant a => FilterTab -> a -> HTML b (Query Unit)
 link tab x =
     H.a
     [_c "link", _click <<< FilterBy $ singleFilter tab x]

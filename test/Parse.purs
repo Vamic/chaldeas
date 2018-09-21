@@ -55,7 +55,7 @@ skillRanks s'@(Servant s) = Multimap.fromFoldable $ go <$> s.skills
   where
     flagged x = elem (s.name : x.name)
     go x
-      | x.name `elem` ceNames    = x { name = x.name <> " (Skill)" } 
+      | x.name `elem` ceNames    = x { name = x.name <> " (Skill)" }
                                      : Pure x.rank
       | x `flagged` upgradeSkill = x : Upgrade x.rank
       | x `flagged` uniqueSkill  = x : Unique s' x.rank

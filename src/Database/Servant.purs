@@ -89,7 +89,7 @@ instance _01_ :: Show PhantasmType where
 
 data Ascension     = Welfare String
                    | Clear String String String String
-                   | Ascension    
+                   | Ascension
                      (Array (Material : Int)) -- 1
                      (Array (Material : Int)) -- 2
                      (Array (Material : Int)) -- 3
@@ -112,7 +112,7 @@ getDeck (Servant {deck:Deck a b c d e}) = [a, b, c, d, e]
 getMaterials :: Servant -> Array Material
 getMaterials (Servant {ascendUp, skillUp}) = nub $ fst <$> ascendUps <> skillUps
   where
-    ascendUps = case ascendUp of 
+    ascendUps = case ascendUp of
         Ascension a b c d -> join [a, b, c, d]
         _                 -> []
     skillUps = case skillUp of

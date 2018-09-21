@@ -11,12 +11,12 @@ import Site.Algebra
 import Site.Filtering
 import Site.Preferences
 
-siteEval :: ∀ a b c d m. Show b => MonadEffect m 
-         => String -> (b -> a) -> (FilterTab -> Array (Filter a)) 
+siteEval :: ∀ a b c d m. Show b => MonadEffect m
+         => String -> (b -> a) -> (FilterTab -> Array (Filter a))
          -> (SortBy -> Array { label :: String, obj :: b })
          -> SiteQuery a b c
-         ~> ComponentDSL (SiteState a b d) 
-                         (SiteQuery a b c) 
+         ~> ComponentDSL (SiteState a b d)
+                         (SiteQuery a b c)
                          (SiteMessage a c) m
 siteEval title transform getFilters getSort = case _ of
     Switch    switchTo a -> a <$ do

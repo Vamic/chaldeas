@@ -25,7 +25,7 @@ class (Show a, G.BoundedEnum b, Show b) <= Has a b where
     has :: b -> Boolean -> a -> Boolean
 
 instance _c_ :: Has Servant Material where
-    has x 
+    has x
       | ignoreMat x = const $ const false
       | otherwise   = const $ elem x <<< getMaterials
 instance _d_ :: Has Servant Trait where
@@ -52,7 +52,7 @@ instance _i_ :: Has Servant Deck where
     has x _ (Servant s) = x == s.deck
 instance _j_ :: Has Servant Card where
     has x _ (Servant s) = x == s.phantasm.card
-    
+
 instance _k_ :: HasEffects a => Has a BuffEffect where
     has x noSelf = any match <<< getEffects where
         match (Grant t _ y _) = x == y && (not noSelf || t /= Self)

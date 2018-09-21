@@ -411,8 +411,8 @@ extras = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
-  , ascendUp: Clear 
-              "Septem" 
+  , ascendUp: Clear
+              "Septem"
               "London pt. 4, Arrow II"
               "Camelot pt. 15, Arrow I"
               "Babylonia"

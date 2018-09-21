@@ -92,7 +92,7 @@ fromString text rank = Wiki fields arrays
         {after} <- splitAround (Pattern "=") entry
         let val  = unSpace <<< String.trim $ after
         pure <<< maybe [val] (cons val) $ parseCol row (col+1) lines
-    maybeSplit pat subtext = maybe {before: subtext, after: ""} 
+    maybeSplit pat subtext = maybe {before: subtext, after: ""}
                             (flip String.splitAt subtext) $
                             String.indexOf pat subtext
     unSpace = String.replaceAll (Pattern " *") (Replacement "*") <<<
@@ -121,23 +121,23 @@ splitAny side xs s = go <$> indices
 scrapeWithRank :: ∀ a f. Ord a => Foldable f => Functor f
        => (a -> String) -> a -> f MaybeRank -> Aff (PairMap a MaybeRank Wiki)
 scrapeWithRank show' x ranks = PairMap.fromFoldable <<< wikify <<<
-           Partial.unsafePartial Either.fromRight <<<  
+           Partial.unsafePartial Either.fromRight <<<
            _.body <$> visitUrl (show' x)
   where
-    visitUrl    = Affjax.get ResponseFormat.string <<< append wikiRoot <<< 
+    visitUrl    = Affjax.get ResponseFormat.string <<< append wikiRoot <<<
                   Global.unsafeEncodeURIComponent <<< translate
     wikify text = ((x : _) &&& fromString text) <$> ranks
 printBool :: Boolean -> String
 printBool true  = "Yes"
 printBool false = "No"
 
-scrape :: ∀ a. Ord a => (a -> String) -> Map a (Set MaybeRank) 
+scrape :: ∀ a. Ord a => (a -> String) -> Map a (Set MaybeRank)
        -> Aff (PairMap a MaybeRank Wiki)
 scrape show' xs = PairMap.unions <$> traverse scrapeOne xs'
   where
     xs' :: List (a : Set MaybeRank)
     xs' = Map.toUnfoldableUnordered xs
-    scrapeOne (x : ranks) = scrapeWithRank show' x 
+    scrapeOne (x : ranks) = scrapeWithRank show' x
                             (Set.toUnfoldable ranks :: List MaybeRank)
 
 range :: Wiki -> String -> Array Int -> Array String

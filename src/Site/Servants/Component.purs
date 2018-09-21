@@ -32,7 +32,7 @@ import Printing
 type Message = SiteMessage Servant CraftEssence
 type Query = SiteQuery Servant MyServant CraftEssence
 
-type State = SiteState Servant MyServant 
+type State = SiteState Servant MyServant
              ( mineOnly :: Boolean
              , ascent   :: Int
              , myServs  :: Array MyServant
@@ -74,7 +74,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                                     initialFilt
 
   render :: State -> ComponentHTML Query
-  render st = modal st.prefs st.ascent st.focus <<< 
+  render st = modal st.prefs st.ascent st.focus <<<
               outline st enumArray allFilters' nav $
               doPortrait <$> (st.mineOnly ? filter isMine $ st.listing)
     where
@@ -85,7 +85,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                              else _a      "My Servants" $ MineOnly true
             ]
       doPortrait {label: "", obj: ms}
-        | st.mineOnly = portrait false st.prefs baseAscend 
+        | st.mineOnly = portrait false st.prefs baseAscend
                         { label: showStats ms, obj: ms }
       doPortrait info = portrait false st.prefs baseAscend info
       baseAscend
@@ -124,7 +124,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
           modify_ _{ focus = focus, ascent = 1 }
       req -> do
           {myServs} <- get
-          siteEval "Servants" getBase (getFilters today) (flip getSort myServs) 
+          siteEval "Servants" getBase (getFilters today) (flip getSort myServs)
               req
     where
       modif = modify_ <<< compose (updateListing getBase)
@@ -241,11 +241,11 @@ modal prefs ascent focus@(Just ms') = H.div
       , _h 2 "Traits"
       , H.section_ <<< intersperse (H.text ", ") $ link FilterTrait <$> s.traits
       , _h 2 "Ascension"
-      , H.table [_c "materials"] $ 
+      , H.table [_c "materials"] $
         flip Array.mapWithIndex (ascendUpEl s.ascendUp) \i el ->
             H.tr_ [_th <<< show $ i + 1, H.td_ $ withCost (ascendCost s' i) el]
       , _h 2 "Skill Reinforcement"
-      , H.table [_c "materials"] $ 
+      , H.table [_c "materials"] $
         flip Array.mapWithIndex (skillUpEl s.skillUp) \i el ->
             H.tr_ [_th <<< show $ i + 2, H.td_ $ withCost (skillCost s' i) el]
       , _h 2 "Calculator"
@@ -339,23 +339,23 @@ modal prefs ascent focus@(Just ms') = H.div
                ]
              ]
 
-withCost :: ∀ a. Int -> Array (HTML a (Query Unit)) 
+withCost :: ∀ a. Int -> Array (HTML a (Query Unit))
          -> Array (HTML a (Query Unit))
 withCost 0    = identity
 withCost cost = cons $ materialEl (QP : cost)
 
 materialEl :: ∀ a. (Material : Int) -> HTML a (Query Unit)
 materialEl (mat : amt) = H.div_ [ imageLink mat, _span $ "x" <> commas amt ]
-  where 
+  where
     imageLink
       | ignoreMat mat = toImage
-      | otherwise     = toImageLink <<< FilterBy $ 
+      | otherwise     = toImageLink <<< FilterBy $
                         singleFilter FilterMaterial mat
 
 ascendUpEl :: ∀ a. Ascension -> Array (Array (HTML a (Query Unit)))
-ascendUpEl (Clear a b c d) = Array.singleton <<< H.text <<< append "Clear " 
+ascendUpEl (Clear a b c d) = Array.singleton <<< H.text <<< append "Clear "
                              <$> [a, b, c, d]
-ascendUpEl (Welfare x) = replicate 4 <<< Array.singleton <<< toImage $ 
+ascendUpEl (Welfare x) = replicate 4 <<< Array.singleton <<< toImage $
                          ImagePath "Material" x
 ascendUpEl (Ascension a b c d) = map materialEl <$> [a, b, c, d]
 

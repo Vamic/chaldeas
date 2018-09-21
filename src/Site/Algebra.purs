@@ -1,4 +1,4 @@
-module Site.Algebra 
+module Site.Algebra
   ( SiteQuery(..), SiteState(..), SiteMessage(..)
   , FilterTab(..), Filter(..), exclusive
   ) where

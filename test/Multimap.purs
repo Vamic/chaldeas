@@ -23,7 +23,7 @@ fromFoldable = foldl (flip $ uncurry insert) Map.empty
 union :: ∀ k v. Ord k => Ord v => Multimap k v -> Multimap k v -> Multimap k v
 union = Map.unionWith Set.union
 
-unions :: ∀ k v f. Ord k => Ord v => Foldable f 
+unions :: ∀ k v f. Ord k => Ord v => Foldable f
        => f (Multimap k v) -> Multimap k v
 unions = foldl union Map.empty
 

@@ -69,9 +69,14 @@ outline :: ∀ a b c d e. SiteState a b d -> Array SortBy -> FilterList a
         -> Array (HTML e (SiteQuery a b c Unit))
         -> Array (HTML e (SiteQuery a b c Unit))
         -> Array (HTML e (SiteQuery a b c Unit))
-outline st sorts allFilters nav content = 
+outline st sorts allFilters nav content =
     [ H.aside_ $
-      [ _h 1 "Settings"
+      [ _h 1 "Links"
+      , H.a [P.href "https://www.reddit.com/message/compose/?to=pareidolist"]
+        [H.text "Send Feedback/Suggestions"]
+      , H.a [P.href "https://github.com/jnbooth/chaldeas"] [H.text "GitHub"]
+      , H.a [P.href "https://grandorder.wiki"] [H.text "GrandOrder Wiki"]
+      , _h 1 "Settings"
       , H.form_ $ unfoldPreferences st.prefs <#> \(k : v) ->
         H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
       , _h 1 "Sort by"

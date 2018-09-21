@@ -889,7 +889,7 @@ sabers = Servant <$>
               [SecretGemOf Saber: 10, OctupletCrystals: 4]
               [OctupletCrystals: 8, DragonFang: 12]
               [DragonFang: 36, SpiritRoot: 8]
-              
+
   }
 , { name:     "Altria Pendragon (Lily)"
   , id:       4

@@ -60,7 +60,7 @@ main = Yargs.runY (usage <> example) $ app
 
 app :: Int -> Int -> Effect Unit
 app ce servant = Console.log msg *> Aff.launchAff_ do
-    ceWiki    <- Wiki.scrape show <<< Multimap.fromFoldable $ 
+    ceWiki    <- Wiki.scrape show <<< Multimap.fromFoldable $
                  (_ : Unranked) <$> (maybeTake ce craftEssences)
     servWiki  <- Wiki.scrape show <<< Multimap.fromFoldable $ servs >>= servNPs
     skillWiki <- Wiki.scrape _.name <<< Multimap.unions $ skillRanks <$> servs
@@ -215,7 +215,7 @@ showAscension (Welfare x)         = replicate 4 [x <> "*1"]
 showAscension (Ascension a b c d) = showMaterials [a, b, c, d]
 
 showReinforcement :: Reinforcement -> Array (Array String)
-showReinforcement (Reinforcement a b c d e f g h) 
+showReinforcement (Reinforcement a b c d e f g h)
     = showMaterials [a, b, c, d, e, f, g, h]
 
 shouldMatch :: ∀ a. Eq a => Show a => Array a -> Array a -> Test

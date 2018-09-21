@@ -55,12 +55,12 @@ archers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
-  , ascendUp: Ascension 
+  , ascendUp: Ascension
               [Piece Archer: 5]
               [Piece Archer: 12, SerpentJewel: 6]
               [Monument Archer: 5, ProofOfHero: 29, Dragon'sReverseScale: 2]
               [ Monument Archer: 12, Dragon'sReverseScale: 4
-              , HeartOfTheForeignGod: 5 
+              , HeartOfTheForeignGod: 5
               ]
   , skillUp:  Reinforcement
               [GemOf Archer: 5]
@@ -755,7 +755,7 @@ archers = Servant <$>
               [Piece Archer: 4]
               [Piece Archer: 10, SerpentJewel: 5]
               [Monument Archer: 4, OctupletCrystals: 8, ShellOfReminiscence: 4]
-              [Monument Archer: 10, ShellOfReminiscence: 8, ClawOfChaos: 6] 
+              [Monument Archer: 10, ShellOfReminiscence: 8, ClawOfChaos: 6]
   , skillUp:  Reinforcement
               [GemOf Archer: 4]
               [GemOf Archer: 10]
@@ -963,7 +963,7 @@ archers = Servant <$>
               [Piece Archer: 4, SeedOfYggdrasil: 3]
               [Monument Archer: 2, ProofOfHero: 10, OctupletCrystals: 2]
               [Monument Archer: 4, OctupletCrystals: 4, Void'sDust: 8]
-  , skillUp:  Reinforcement 
+  , skillUp:  Reinforcement
               [GemOf Archer: 2]
               [GemOf Archer: 4]
               [MagicGemOf Archer: 2]

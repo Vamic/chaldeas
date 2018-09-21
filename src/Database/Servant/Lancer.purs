@@ -213,7 +213,7 @@ lancers = Servant <$>
               [Piece Lancer: 12, PhoenixFeather: 6]
               [Monument Lancer: 5, SeedOfYggdrasil: 12, Warhorse'sYoungHorn: 3]
               [ Monument Lancer: 12, Warhorse'sYoungHorn: 6
-              , ShellOfReminiscence: 12 
+              , ShellOfReminiscence: 12
               ]
   , skillUp:  Reinforcement
               [GemOf Lancer: 5]

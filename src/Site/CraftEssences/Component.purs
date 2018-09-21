@@ -56,7 +56,7 @@ comp initialFilt initialFocus initialPrefs today = component
                                     initialFilt
 
   render :: State -> ComponentHTML Query
-  render st = modal st.prefs st.focus <<< 
+  render st = modal st.prefs st.focus <<<
               outline st [Rarity, ID, ATK, HP] allFilters nav $
               portrait false st.prefs <$> st.listing
     where
@@ -106,19 +106,19 @@ modal prefs
       [ effectsEl \_ y -> Flat y ]
     ]
   where
-    mlbEl 
+    mlbEl
       | base == max = []
-      | otherwise   = [ effectsEl \x _ -> Flat x, _h 2 "Max Limit Break" ] 
-    effectsEl f = H.section_ <<< append bondMsg $ 
+      | otherwise   = [ effectsEl \x _ -> Flat x, _h 2 "Max Limit Break" ]
+    effectsEl f = H.section_ <<< append bondMsg $
                   effectEl <<< mapAmount f <$> ce.effect
     bondLink bond = _click <<< Switch $ find (eq bond <<< show) servants
     bondMsg = case ce.bond of
                   Nothing   -> []
-                  Just bond -> [ H.em_ 
+                  Just bond -> [ H.em_
                                  [ H.text "If equipped by "
                                  , H.a [_c "link", bondLink bond] [H.text bond]
                                  , H.text ": "
-                                 ] 
+                                 ]
                                ]
 
 effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)

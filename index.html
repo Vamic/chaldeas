@@ -51,7 +51,7 @@
         { color: inherit }
       .link:hover, aside a:hover  
         { text-decoration: underline }
-      a, .link              { cursor: pointer }
+      a, .link              { cursor: pointer; text-decoration: none }
       h1, h2, h3            { margin: 0.5em 0 0 0 }
       h2                    { font-size: 1.4em; margin-top: 1em }
       p, h4                 { margin: 0 }
@@ -382,7 +382,10 @@
         { table-layout: fixed
         ; margin-top: 3px
         ; border-spacing: 0
+        ; line-height: 1em
         }
+      article section td, #phantasm td, .materials td
+        { padding-top: 4px }
       .light article section table, .light #phantasm table, .light #myservant,
       .light .materials tr
         { background-color: #eeeeee

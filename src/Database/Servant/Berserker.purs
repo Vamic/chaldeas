@@ -198,7 +198,7 @@ berserkers = Servant <$>
   , ascendUp: Ascension
               [Piece Berserker: 5]
               [Piece Berserker: 12, ProofOfHero: 22]
-              [Monument Berserker: 5, OctupletCrystals: 10, SeedOfYggdrasil: 12]
+              [Monument Berserker: 5, OctupletCrystals: 10, SeedOfYggdrasil: 6]
               [ Monument Berserker: 12, SeedOfYggdrasil: 12
               , HeartOfTheForeignGod: 5
               ]
@@ -1090,7 +1090,7 @@ berserkers = Servant <$>
               [Monument Berserker: 6, SerpentJewel: 4, Void'sDust: 12]
   , skillUp:  Reinforcement
               [GemOf Berserker: 3]
-              [GemOf Berserker: 6, MagicGemOf Berserker: 3]
+              [GemOf Berserker: 6]
               [MagicGemOf Berserker: 3]
               [MagicGemOf Berserker: 6, HomunculusBaby: 3]
               [SecretGemOf Berserker: 3, HomunculusBaby: 5]

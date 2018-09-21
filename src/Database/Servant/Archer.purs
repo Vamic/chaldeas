@@ -132,7 +132,9 @@ archers = Servant <$>
               [Piece Archer: 5]
               [Piece Archer: 12, ShellOfReminiscence: 8]
               [Monument Archer: 5, DragonFang: 24, GreatKnightMedal: 10]
-              [Dragon'sReverseScale: 5]
+              [ Dragon'sReverseScale: 5, Monument Archer: 12
+              , GreatKnightMedal: 20
+              ]
   , skillUp:  Reinforcement
               [GemOf Archer: 5]
               [GemOf Archer: 12]
@@ -680,7 +682,7 @@ archers = Servant <$>
   , ascendUp: Ascension
               [Piece Archer: 4]
               [Piece Archer: 10, PhoenixFeather: 5]
-              [Monument Archer: 4, DragonFang: 32]
+              [Monument Archer: 4, DragonFang: 20, SerpentJewel: 4]
               [Monument Archer: 10, SerpentJewel: 7, SeedOfYggdrasil: 12]
   , skillUp:  Reinforcement
               [GemOf Archer: 4]
@@ -969,7 +971,7 @@ archers = Servant <$>
               [SecretGemOf Archer: 2, ProofOfHero: 10]
               [SecretGemOf Archer: 4, SeedOfYggdrasil: 2]
               [SeedOfYggdrasil: 4, HomunculusBaby: 2]
-              [HomunculusBaby: 2, Void'sDust: 16]
+              [HomunculusBaby: 6, Void'sDust: 16]
   }
 , { name:     "David"
   , id:       63
@@ -1231,7 +1233,7 @@ archers = Servant <$>
               [Piece Archer: 4]
               [Piece Archer: 10, SeedOfYggdrasil: 6]
               [Monument Archer: 4, PhoenixFeather: 3, ProofOfHero: 20]
-              [Monument Archer: 10, SpiritRoot: 4, PhoenixFeather: 5]
+              [Monument Archer: 10, SpiritRoot: 4, PhoenixFeather: 6]
   , skillUp:  Reinforcement
               [GemOf Archer: 4]
               [GemOf Archer: 8]

@@ -65,9 +65,9 @@ fromString text rank = Wiki fields arrays
                  toEnd     <- splitAny Before ["|-|","/onlyinclude"] fromStart
                  pure toEnd
     parseEntry entry = do
-        assignment         <- String.indexOf (Pattern "=") entry
-        let {before, after} = String.splitAt assignment entry
-            afterLines      = String.split (Pattern "<br/>") after
+        assignment      <- String.indexOf (Pattern "=") entry
+        {before, after} <- splitAround (Pattern "=") entry
+        let afterLines   = String.split (Pattern "<br/>") after
         guard <<< not $ String.null before
         pure <<< Tuple (String.trim $ String.toLower before) <<<
         filter (not <<< String.null) $
@@ -78,13 +78,10 @@ fromString text rank = Wiki fields arrays
         maybeDo (String.stripPrefix $ Pattern "=") <$> afterLines
     arrays = Map.fromFoldable $ array text
     array subtext = fromMaybe [] do
-        headerStart   <- String.indexOf (Pattern "== ") subtext
-        let headerFrom = String.splitAt headerStart subtext
-        headerEnd     <- String.indexOf (Pattern " ==") headerFrom.after
-        let headerTo   = String.splitAt headerEnd headerFrom.after
-            header     = String.trim $ filterOut (Pattern "=") headerTo.before
-        sectionEnd    <- String.indexOf (Pattern "}}") headerTo.after
-        let section    = String.splitAt sectionEnd headerTo.after
+        headerStart   <- splitAround (Pattern "==") subtext
+        onHeader      <- splitAround (Pattern "==") headerStart.after
+        let header     = String.trim $ onHeader.before
+            section    = maybeSplit (Pattern "==") onHeader.after
         pure <<< cons (header : parseRows section.before) $ array section.after
     parseRows = fromMaybe [] <<< parseRow 1 <<< String.split (Pattern "\n")
     parseRow row lines = do
@@ -92,12 +89,22 @@ fromString text rank = Wiki fields arrays
         pure <<< maybe [cols] (cons cols) $ parseRow (row+1) lines
     parseCol row col lines = do
         entry <- find (eq ("|" <> show row <> show col) <<< String.take 3) lines
-        assignment <- String.indexOf (Pattern "=") entry
-        let {after} = String.splitAt assignment entry
-            val     = String.trim $ filterOut (Pattern "=") after
+        {after} <- splitAround (Pattern "=") entry
+        let val  = unSpace <<< String.trim $ after
         pure <<< maybe [val] (cons val) $ parseCol row (col+1) lines
+    maybeSplit pat subtext = maybe {before: subtext, after: ""} 
+                            (flip String.splitAt subtext) $
+                            String.indexOf pat subtext
+    unSpace = String.replaceAll (Pattern " *") (Replacement "*") <<<
+              String.replaceAll (Pattern "* ") (Replacement "*")
 
 data Side = Before | After
+
+splitAround :: Pattern -> String -> Maybe {before :: String, after :: String}
+splitAround pat@(Pattern p) s = do
+    i <- String.indexOf pat s
+    let {before, after} = String.splitAt i s
+    pure { before, after: String.drop (String.length p) after }
 
 splitAny :: ∀ m. Foldable m => Monad m
          => Side -> m String -> String -> Maybe String

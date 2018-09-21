@@ -196,7 +196,7 @@ sabers = Servant <$>
               [Piece Saber: 5]
               [Piece Saber: 12, OctupletCrystals: 8]
               [Monument Saber: 5, PhoenixFeather: 4, GhostLantern: 10]
-              [Monument Saber: 12, SeedOfYggdrasil: 15]
+              [Monument Saber: 12, SeedOfYggdrasil: 15, PhoenixFeather: 8]
   , skillUp:  Reinforcement
               [GemOf Saber: 5]
               [GemOf Saber: 12]

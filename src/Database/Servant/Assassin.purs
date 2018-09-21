@@ -1102,8 +1102,8 @@ assassins = Servant <$>
   , ascendUp: Ascension
               [Piece Assassin: 4]
               [Piece Assassin: 8, EvilBone: 15]
-              [Monument Assassin: 4, Fool'sChain: 20, TearstoneOfBlood: 4]
-              [Monument Assassin: 8, TearstoneOfBlood: 4, BlackBeastGrease: 43]
+              [Monument Assassin: 4, Fool'sChain: 20, TearstoneOfBlood: 2]
+              [Monument Assassin: 8, TearstoneOfBlood: 4, BlackBeastGrease: 5]
   , skillUp:  Reinforcement
               [GemOf Assassin: 4]
               [GemOf Assassin: 8]

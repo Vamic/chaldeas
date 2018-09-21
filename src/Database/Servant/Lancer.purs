@@ -899,7 +899,7 @@ lancers = Servant <$>
               [Piece Lancer: 3]
               [Piece Lancer: 6, ClawOfChaos: 3]
               [Monument Lancer: 3, Void'sDust: 10, OctupletCrystals: 3]
-              [Monument Lancer: 41, OctupletCrystals: 5, EvilBone: 18]
+              [Monument Lancer: 6, OctupletCrystals: 5, EvilBone: 18]
   , skillUp:  Reinforcement
               [GemOf Lancer: 3]
               [GemOf Lancer: 6]
@@ -966,19 +966,19 @@ lancers = Servant <$>
   , limited:  false
   , free:     false
   , ascendUp: Ascension
-              [Piece Lancer: 3]
-              [Piece Lancer: 6, ClawOfChaos: 3]
-              [Monument Lancer: 3, Void'sDust: 10, OctupletCrystals: 3]
-              [Monument Lancer: 6, OctupletCrystals: 5, EvilBone: 18]
+              [Piece Lancer: 4]
+              [Piece Lancer: 8, OctupletCrystals: 5]
+              [Monument Lancer: 4, PhoenixFeather: 6, EvilBone: 10]
+              [Monument Lancer: 8, EvilBone: 20, Void'sDust: 16]
   , skillUp:  Reinforcement
-              [GemOf Lancer: 3]
-              [GemOf Lancer: 6]
-              [MagicGemOf Lancer: 3]
-              [MagicGemOf Lancer: 6, Void'sDust: 5]
-              [SecretGemOf Lancer: 3, Void'sDust: 10]
-              [SecretGemOf Lancer: 6, ClawOfChaos: 2]
-              [ClawOfChaos: 3, SerpentJewel: 3]
-              [SerpentJewel: 8, EvilBone: 36]
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 8]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 8, PhoenixFeather: 3]
+              [SecretGemOf Lancer: 4, PhoenixFeather: 6]
+              [SecretGemOf Lancer: 8, OctupletCrystals: 4]
+              [OctupletCrystals: 7, EternalGear: 4]
+              [EternalGear: 12, Void'sDust: 32]
   }
 , { name:     "Hektor"
   , id:       64

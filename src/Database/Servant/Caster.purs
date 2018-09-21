@@ -1101,7 +1101,7 @@ casters = Servant <$>
   , ascendUp: Ascension
               [Piece Caster: 3]
               [Piece Caster: 6, GhostLantern: 4]
-              [Monument Caster: 3, ForbiddenPage: 5]
+              [Monument Caster: 3, ForbiddenPage: 5, HomunculusBaby: 3]
               [Monument Caster: 6, SerpentJewel: 5, HomunculusBaby: 3]
   , skillUp:  Reinforcement
               [GemOf Caster: 3]
@@ -1309,7 +1309,7 @@ casters = Servant <$>
   , ascendUp: Ascension
               [Piece Caster: 4]
               [Piece Caster: 8, SeedOfYggdrasil: 6]
-              [Monument Caster: 31, ClawOfChaos: 2, ForbiddenPage: 7]
+              [Monument Caster: 4, ClawOfChaos: 2, ForbiddenPage: 7]
               [Monument Caster: 8, ClawOfChaos: 4, EternalGear: 8]
   , skillUp:  Reinforcement
               [GemOf Caster: 4]

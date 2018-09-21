@@ -1,5 +1,5 @@
 -- | Prints test results all fancy-like.
-module Test.Console (runTest) where
+module Test.Console (runTest, runTestVerbose) where
 
 import StandardLibrary
 
@@ -43,6 +43,12 @@ printLive tst = walkSuite runSuiteItem tst
                       Console.printFail label
                       Console.print " "
 
+silently :: TestSuite -> Aff TestList
+silently tst = walkSuite runSuiteItem tst
+  where
+    runSuiteItem path (Left label) = pure unit
+    runSuiteItem path (Right (label : t)) = void $ Aff.attempt t
+
 printErrors :: TestList -> Int -> Aff Unit
 printErrors tests skCount = do
     results      <- collectResults tests
@@ -81,8 +87,14 @@ printErrors tests skCount = do
                 Console.printFail $ Exception.message err
                 Console.print "\n"
 
+runTestVerbose :: TestSuite -> Aff TestList
+runTestVerbose suite = do
+    tests <- printLive suite
+    printErrors tests (countSkippedTests suite)
+    pure tests
+
 runTest :: TestSuite -> Aff TestList
 runTest suite = do
-    tests <- printLive suite
+    tests <- silently suite
     printErrors tests (countSkippedTests suite)
     pure tests

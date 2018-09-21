@@ -184,7 +184,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
 
 -- | Obtains all self-granted always-active buff effects from passive skills.
 -- | Returns an array of (Buff, Strength%) pairs.
-passiveBuffs :: Servant -> Array (Tuple BuffEffect Number)
+passiveBuffs :: Servant -> Array (BuffEffect : Number)
 passiveBuffs (Servant {passives}) = passives >>= _.effect >>= go <<< simplify
   where
     go (Grant t _ buff n)
@@ -218,7 +218,7 @@ selfable _      = false
 -- | Sums up all effects of a certain type from a Servant's skills
 -- | in (Effect, Strength%) format.
 matchSum :: ∀ a b f. Foldable f => Functor f => Eq a => Semiring b
-         => f (Tuple a b) -> a -> b
+         => f (a : b) -> a -> b
 matchSum xs k = sum $ go <$> xs
   where
     go (k1 : v) | k == k1 = v

@@ -3,21 +3,20 @@ module Site.Common where
 
 import StandardLibrary
 import Data.Array              as Array
+import Data.DateTime           as DateTime
 import Halogen.HTML.Events     as E
+import Data.Number.Format      as Format
 import Halogen.HTML            as H
+import Data.Int                as Int
+import Data.Maybe              as Maybe
+import Effect.Now              as Now
 import Halogen.HTML.Properties as P
+import Partial.Unsafe          as Partial
+import Data.String             as String
 
 import Data.Date (Date, Month)
-import Halogen.HTML (HTML, ClassName(..))
-
-import Data.DateTime as DateTime
-import Data.Int as Int
-import Data.Number.Format as Format
-import Data.Maybe as Maybe
-import Data.String as String
 import Data.Time.Duration (Hours(..))
-import Partial.Unsafe as Unsafe
-import Effect.Now as Now
+import Halogen.HTML (HTML, ClassName(..))
 import Halogen.HTML.Properties (IProp)
 import Web.UIEvent.MouseEvent (MouseEvent)
 
@@ -31,7 +30,7 @@ import Site.ToImage
 
 -- | Builds a `Date` out of a year, month, and day.
 ymd :: Int -> Month -> Int -> Date
-ymd y m d = Unsafe.unsafePartial Maybe.fromJust do
+ymd y m d = Partial.unsafePartial Maybe.fromJust do
     y' <- toEnum y
     d' <- toEnum d
     DateTime.exactDate y' m d'

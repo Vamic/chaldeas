@@ -23,7 +23,7 @@ module StandardLibrary
   , module Effect.Aff
   , module Effect.Class
 
-  , (:)
+  , (:), type (:)
   , (?), doIf
   , consAfter
   , enumArray
@@ -72,8 +72,7 @@ import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
 -- (a : b)` is much more reminiscent of `(a, b)` than `a : b`.
 infixr 0 Tuple as :
 infixr 9 doIf  as ?
-
--- infixr 4 type Tuple as :
+infixr 4 type Tuple as :
 
 consAfter :: ∀ a. a -> Array a -> Array a
 consAfter = flip snoc
@@ -118,5 +117,5 @@ intersperse sep xs = case uncons xs of
     Just {head, tail} -> cons head <<< cons sep $ intersperse sep tail
 
 -- | Tuple builder from a constructor
-pairWith :: ∀ a b c f. Functor f => a -> (b -> c) -> f b -> f (Tuple c a)
-pairWith val construc = map $ flip Tuple val <<< construc
+pairWith :: ∀ a b c f. Functor f => a -> (b -> c) -> f b -> f (c : a)
+pairWith val construc = map $ (_ : val) <<< construc

@@ -1,16 +1,11 @@
 -- | Utility data structures for testing.
-module Test.Base
-  ( MaybeRank(..), RankedSkill(..)
-  , addRank
-  ) where
+module Test.Base ( MaybeRank(..)) where
 
 import StandardLibrary
 
 import Data.String as String
 
-import Data.Profunctor.Strong ((&&&))
-
-import Database (Rank(..), Servant, Skill)
+import Database (Rank(..), Servant)
 
 data MaybeRank = Unranked
                | Pure     Rank
@@ -27,13 +22,3 @@ instance _2_ :: Show MaybeRank where
     show (Unique s rank)
       | show s == "Henry Jekyll & Hyde" = "Rank" <> show rank <> " (Hyde)"
       | otherwise                       = show s
-
-data RankedSkill = RankedSkill Skill MaybeRank
-derive instance _3_ :: Eq RankedSkill
-instance _4_ :: Ord RankedSkill where
-    compare = compareThen show \(RankedSkill _ rank) -> rank
-instance _5_ :: Show RankedSkill where
-    show (RankedSkill skill _) = skill.name
-
-addRank :: ∀ a. (a -> MaybeRank) -> a -> Tuple a MaybeRank
-addRank = (identity &&& _)

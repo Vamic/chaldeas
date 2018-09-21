@@ -137,7 +137,7 @@ unlimitedManaSupply = passive "Unlimited Mana Supply" IconNobleTurn
 -- INTERNAL
 -----------
 
-data PassiveEffect = Give Target BuffEffect (Array (Tuple Rank Number))
+data PassiveEffect = Give Target BuffEffect (Array (Rank : Number))
 
 type Passive = Rank -> Skill
 

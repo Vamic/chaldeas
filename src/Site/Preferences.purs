@@ -45,7 +45,7 @@ instance _a_ :: Show Preference where
 
 type Preferences = Set Preference
 
-unfoldPreferences :: Preferences -> Array (Tuple Preference Boolean)
+unfoldPreferences :: Preferences -> Array (Preference : Boolean)
 unfoldPreferences prefs = (identity &&& prefer prefs) <$> enumArray
 
 prefer :: Preferences -> Preference -> Boolean

@@ -1047,7 +1047,7 @@ craftEssences = CraftEssence <$>
 , { name:     "Storch Ritter"
   , id:       92
   , rarity:   3
-  , icon:     IconDamageUp
+  , icon:     IconBeamUp
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
@@ -1315,8 +1315,8 @@ craftEssences = CraftEssence <$>
   , id:       156
   , rarity:   5
   , icon:     IconNoble
-  , stats:    { base: { atk: 400,  hp: 250 }
-              , max:  { atk: 1600, hp: 1000 }
+  , stats:    { base: { atk: 250,  hp: 400 }
+              , max:  { atk: 1000, hp: 1600 }
               }
   , effect:   [ To Self GaugeUp $ 50.0 ~ 60.0
               , Grant Self 3 (Performance Arts) $ 15.0 ~ 20.0
@@ -2694,6 +2694,8 @@ craftEssences = CraftEssence <$>
         , limited:  false
         }
 
+equipped :: Class -> SkillEffect -> SkillEffect
+equipped = When <<< append "equipped by a " <<< show
 
 getBond :: Servant -> Maybe CraftEssence
 getBond (Servant s) = go s.name
@@ -2714,6 +2716,5 @@ newtype CraftEssence = CraftEssence { name     :: String
 
 instance _0_ :: Show CraftEssence where
     show (CraftEssence ce) = ce.name
-
-equipped :: Class -> SkillEffect -> SkillEffect
-equipped = When <<< append "equipped by a " <<< show
+derive instance _1_ :: Eq CraftEssence
+derive instance _2_ :: Ord CraftEssence

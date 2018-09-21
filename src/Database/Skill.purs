@@ -721,3 +721,7 @@ instance _44_ :: G.BoundedEnum Rank where
 
 derive instance _46_ :: Ord RangeInfo
 derive instance _47_ :: G.Generic RangeInfo _
+
+derive instance _100_ :: Ord SkillEffect
+derive instance _101_ :: Ord Target
+derive instance _102_ :: Ord Amount

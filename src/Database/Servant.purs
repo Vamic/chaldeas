@@ -85,24 +85,24 @@ instance _01_ :: Show PhantasmType where
       show MultiTarget  = "Multi-Target"
       show Support      = "Support"
 
--- type Item = Array (Tuple Material Int)
+-- type Item = Array (Material : Int)
 
 data Ascension     = Welfare String
                    | Clear String String String String
                    | Ascension    
-                     (Array (Tuple Material Int)) -- 1
-                     (Array (Tuple Material Int)) -- 2
-                     (Array (Tuple Material Int)) -- 3
-                     (Array (Tuple Material Int)) -- 4
+                     (Array (Material : Int)) -- 1
+                     (Array (Material : Int)) -- 2
+                     (Array (Material : Int)) -- 3
+                     (Array (Material : Int)) -- 4
 data Reinforcement = Reinforcement
-                     (Array (Tuple Material Int)) -- 1
-                     (Array (Tuple Material Int)) -- 2
-                     (Array (Tuple Material Int)) -- 3
-                     (Array (Tuple Material Int)) -- 4
-                     (Array (Tuple Material Int)) -- 5
-                     (Array (Tuple Material Int)) -- 6
-                     (Array (Tuple Material Int)) -- 7
-                     (Array (Tuple Material Int)) -- 8
+                     (Array (Material : Int)) -- 1
+                     (Array (Material : Int)) -- 2
+                     (Array (Material : Int)) -- 3
+                     (Array (Material : Int)) -- 4
+                     (Array (Material : Int)) -- 5
+                     (Array (Material : Int)) -- 6
+                     (Array (Material : Int)) -- 7
+                     (Array (Material : Int)) -- 8
                      -- 9 is always [ CrystallizedLore: 1 ]
 
 -- | Returns all `Card`s in a `Servant`'s `Deck`. Does not include NP card.

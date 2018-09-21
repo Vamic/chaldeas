@@ -15,10 +15,12 @@ import StandardLibrary
 import Generic     as G
 import Data.String as String
 
+import Test.Multimap as Multimap
 
 import Printing (prettify)
-import Database (BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), SkillEffect(..), craftEssences)
-import Test.Base (MaybeRank(..), RankedSkill(..))
+import Database (BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), Skill, SkillEffect(..), craftEssences)
+import Test.Base (MaybeRank(..))
+import Test.Multimap (Multimap)
 
 upgradeNP :: Array String
 upgradeNP =
@@ -31,12 +33,12 @@ npRank :: Servant -> MaybeRank
 npRank (Servant s) = (if s.name `elem` upgradeNP then Upgrade else Pure)
                      s.phantasm.rank
 
-upgradeSkill :: Array (Tuple String String)
+upgradeSkill :: Array (String : String)
 upgradeSkill =
     [ "Tamamo-no-Mae" : "Fox's Wedding"
     ]
 
-uniqueSkill :: Array (Tuple String String)
+uniqueSkill :: Array (String : String)
 uniqueSkill =
     [ "Brynhild" : "Primordial Rune"
     , "Scathach" : "Primordial Rune"
@@ -48,17 +50,16 @@ uniqueSkill =
 ceNames :: Array String
 ceNames = show <$> craftEssences
 
-skillRanks :: Servant -> Array (Tuple RankedSkill MaybeRank)
-skillRanks s'@(Servant s) = tuplify <<< go <$> s.skills
+skillRanks :: Servant -> Multimap Skill MaybeRank
+skillRanks s'@(Servant s) = Multimap.fromFoldable $ go <$> s.skills
   where
-    tuplify ranked@(RankedSkill _ rank) = (ranked : rank)
     flagged x = elem (s.name : x.name)
     go x
-      | x.name `elem` ceNames    = RankedSkill x { name = x.name <> " (Skill)" }
-                                                 $ Pure x.rank
-      | x `flagged` upgradeSkill = RankedSkill x $ Upgrade x.rank
-      | x `flagged` uniqueSkill  = RankedSkill x $ Unique s' x.rank
-      | otherwise                = RankedSkill x $ Pure x.rank
+      | x.name `elem` ceNames    = x { name = x.name <> " (Skill)" } 
+                                     : Pure x.rank
+      | x `flagged` upgradeSkill = x : Upgrade x.rank
+      | x `flagged` uniqueSkill  = x : Unique s' x.rank
+      | otherwise                = x : Pure x.rank
 
 translate :: String -> String
 translate "Cheerful-Type Mystic Code" = "Cheerful Model Mystic Code"
@@ -66,7 +67,6 @@ translate "Mugashiki—Shinkuu Myou" = "Mugashiki - Shinkuu Myōu"
 translate "Leonardo da Vinci" = "Leonardo Da Vinci"
 translate "Beautiful Princess (Sea)" = "Princess of Loveliness (Ocean)"
 translate "Treasure Hunt (Sea)" = "Treasure Hunt (Ocean)"
-translate "Glory Is With Me" = "Glory Is With Me!"
 translate x = prettify x
 
 printIcon :: Icon -> String

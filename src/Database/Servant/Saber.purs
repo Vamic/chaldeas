@@ -55,6 +55,20 @@ sabers = Servant <$>
   , align:    [Neutral, Balanced]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 5]
+              [Piece Saber: 12, Void'sDust: 15]
+              [Monument Saber: 5, DragonFang: 24, EternalGear: 5]
+              [Monument Saber: 12, EternalGear: 10, PhoenixFeather: 10]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 5]
+              [GemOf Saber: 12]
+              [MagicGemOf Saber: 5]
+              [MagicGemOf Saber: 12, DragonFang: 12]
+              [SecretGemOf Saber: 5, DragonFang: 24]
+              [SecretGemOf Saber: 12, Void'sDust: 10]
+              [Void'sDust: 20, ClawOfChaos: 4]
+              [ClawOfChaos: 11, PhoenixFeather: 20]
   }
 , { name:     "Altera"
   , id:       8
@@ -108,6 +122,20 @@ sabers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 5]
+              [Piece Saber: 12, Void'sDust: 15]
+              [Monument Saber: 5, ClawOfChaos: 6, MeteorHorseshoe: 5]
+              [Monument Saber: 12, MeteorHorseshoe: 10, HeartOfTheForeignGod: 5]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 5]
+              [GemOf Saber: 12]
+              [MagicGemOf Saber: 5]
+              [MagicGemOf Saber: 12, ClawOfChaos: 3]
+              [SecretGemOf Saber: 5, ClawOfChaos: 6]
+              [SecretGemOf Saber: 12, Void'sDust: 10]
+              [Void'sDust: 20, EvilBone: 18]
+              [EvilBone: 54, HeartOfTheForeignGod: 10]
   }
 , { name:     "Nero Claudius (Bride)"
   , id:       90
@@ -164,6 +192,20 @@ sabers = Servant <$>
   , align:    [Chaotic, Bride]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 5]
+              [Piece Saber: 12, OctupletCrystals: 8]
+              [Monument Saber: 5, PhoenixFeather: 4, GhostLantern: 10]
+              [Monument Saber: 12, SeedOfYggdrasil: 15]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 5]
+              [GemOf Saber: 12]
+              [MagicGemOf Saber: 5]
+              [MagicGemOf Saber: 12, GhostLantern: 5]
+              [SecretGemOf Saber: 5, GhostLantern: 10]
+              [SecretGemOf Saber: 12, OctupletCrystals: 5]
+              [OctupletCrystals: 10, SerpentJewel: 5]
+              [SerpentJewel: 15, EternalGear: 24]
   }
 , { name:     "Mordred"
   , id:       76
@@ -218,6 +260,22 @@ sabers = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 5]
+              [Piece Saber: 12, DragonFang: 18]
+              [Monument Saber: 5, OctupletCrystals: 10, HeartOfTheForeignGod: 2]
+              [ Monument Saber: 12, HeartOfTheForeignGod: 4
+              , Dragon'sReverseScale: 5
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 5]
+              [GemOf Saber: 12]
+              [MagicGemOf Saber: 5]
+              [MagicGemOf Saber: 12, OctupletCrystals: 5]
+              [SecretGemOf Saber: 5, OctupletCrystals: 10]
+              [SecretGemOf Saber: 12, DragonFang: 12]
+              [DragonFang: 24, ClawOfChaos: 4]
+              [ClawOfChaos: 11, Dragon'sReverseScale: 10]
   }
 , { name:     "Ryougi Shiki (Saber)"
   , id:       91
@@ -276,6 +334,20 @@ sabers = Servant <$>
   , align:    [Neutral, Balanced]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 5]
+              [Piece Saber: 12, Void'sDust: 15]
+              [Monument Saber: 5, PhoenixFeather: 8, ClawOfChaos: 3]
+              [Monument Saber: 12, ClawOfChaos: 6, HeartOfTheForeignGod: 5]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 5]
+              [GemOf Saber: 12]
+              [MagicGemOf Saber: 5]
+              [MagicGemOf Saber: 12, PhoenixFeather: 4]
+              [SecretGemOf Saber: 5, PhoenixFeather: 8]
+              [SecretGemOf Saber: 12, Void'sDust: 10]
+              [Void'sDust: 20, OctupletCrystals: 6]
+              [OctupletCrystals: 18, GhostLantern: 24]
   }
 , { name:     "Altria Pendragon"
   , id:       2
@@ -325,6 +397,20 @@ sabers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 5]
+              [Piece Saber: 12, DragonFang: 18]
+              [Monument Saber: 5, ProofOfHero: 29, PhoenixFeather: 4]
+              [Monument Saber: 12, PhoenixFeather: 8, Dragon'sReverseScale: 5]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 5]
+              [GemOf Saber: 12]
+              [MagicGemOf Saber: 5]
+              [MagicGemOf Saber: 12, ProofOfHero: 15]
+              [SecretGemOf Saber: 5, ProofOfHero: 29]
+              [SecretGemOf Saber: 12, DragonFang: 12]
+              [DragonFang: 24, ClawOfChaos: 4]
+              [ClawOfChaos: 11, Dragon'sReverseScale: 10]
   }
 , { name:     "Lancelot (Saber)"
   , id:       121
@@ -380,6 +466,20 @@ sabers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 10, EternalGear: 6]
+              [Monument Saber: 4, GreatKnightMedal: 16, DragonFang: 10]
+              [Monument Saber: 10, DragonFang: 20, Dragon'sReverseScale: 4]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 10]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 10, GreatKnightMedal: 8]
+              [SecretGemOf Saber: 4, GreatKnightMedal: 16]
+              [SecretGemOf Saber: 10, EternalGear: 4]
+              [EternalGear: 8, Void'sDust: 10]
+              [Void'sDust: 30, TearstoneOfBlood: 12]
   }
 , { name:     "Altria Pendragon (Alter)"
   , id:       3
@@ -429,6 +529,22 @@ sabers = Servant <$>
   , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 10, DragonFang: 15]
+              [Monument Saber: 4, ClawOfChaos: 5, Dragon'sReverseScale: 2]
+              [ Monument Saber: 10, Dragon'sReverseScale: 4
+              , HeartOfTheForeignGod: 4
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 10]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 10, ClawOfChaos: 3]
+              [SecretGemOf Saber: 4, ClawOfChaos: 5]
+              [SecretGemOf Saber: 10, DragonFang: 10]
+              [DragonFang: 20, Void'sDust: 10]
+              [Void'sDust: 30, HeartOfTheForeignGod: 8]
   }
 , { name:     "Rama"
   , id:       101
@@ -482,6 +598,20 @@ sabers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 10, SeedOfYggdrasil: 8]
+              [Monument Saber: 4, HeartOfTheForeignGod: 4, OctupletCrystals: 4]
+              [Monument Saber: 10, OctupletCrystals: 8, SpiritRoot: 4]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 10]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 10, HeartOfTheForeignGod: 2]
+              [SecretGemOf Saber: 4, HeartOfTheForeignGod: 4]
+              [SecretGemOf Saber: 10, SeedOfYggdrasil: 5]
+              [SeedOfYggdrasil: 10, ClawOfChaos: 3]
+              [ClawOfChaos: 9, EvilBone: 60]
   }
 , { name:     "Nero Claudius"
   , id:       5
@@ -536,6 +666,20 @@ sabers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 10, OctupletCrystals: 6]
+              [Monument Saber: 4, PhoenixFeather: 7, GhostLantern: 4]
+              [Monument Saber: 10, GhostLantern: 8, EternalGear: 10]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 10]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 10, PhoenixFeather: 4]
+              [SecretGemOf Saber: 4, PhoenixFeather: 7]
+              [SecretGemOf Saber: 10, OctupletCrystals: 4]
+              [OctupletCrystals: 8, DragonFang: 12]
+              [DragonFang: 36, EternalGear: 20]
   }
 , { name:     "Chevalier d'Eon"
   , id:       10
@@ -593,6 +737,20 @@ sabers = Servant <$>
   , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 10, ProofOfHero: 18]
+              [Monument Saber: 4, SeedOfYggdrasil: 10, PhoenixFeather: 4]
+              [Monument Saber: 10, PhoenixFeather: 7, SerpentJewel: 8]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 10]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 10, SeedOfYggdrasil: 5]
+              [SecretGemOf Saber: 4, SeedOfYggdrasil: 10]
+              [SecretGemOf Saber: 10, ProofOfHero: 12]
+              [ProofOfHero: 24, ForbiddenPage: 5]
+              [ForbiddenPage: 15, SerpentJewel: 16]
   }
 , { name:     "Siegfried"
   , id:       6
@@ -646,6 +804,20 @@ sabers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 10, DragonFang: 15]
+              [Monument Saber: 4, SeedOfYggdrasil: 10, ProofOfHero: 12]
+              [Monument Saber: 10, ProofOfHero: 24, Dragon'sReverseScale: 4]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 10]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 10, SeedOfYggdrasil: 5]
+              [SecretGemOf Saber: 4, SeedOfYggdrasil: 10]
+              [SecretGemOf Saber: 10, DragonFang: 10]
+              [DragonFang: 20, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 6, Dragon'sReverseScale: 8]
   }
 , { name:     "Gawain"
   , id:       123
@@ -703,6 +875,21 @@ sabers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 10, OctupletCrystals: 6]
+              [Monument Saber: 4, Dragon'sReverseScale: 4, GreatKnightMedal: 8]
+              [Monument Saber: 10, GreatKnightMedal: 16, ProofOfHero: 30]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 10]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 10, Dragon'sReverseScale: 2]
+              [SecretGemOf Saber: 4, Dragon'sReverseScale: 4]
+              [SecretGemOf Saber: 10, OctupletCrystals: 4]
+              [OctupletCrystals: 8, DragonFang: 12]
+              [DragonFang: 36, SpiritRoot: 8]
+              
   }
 , { name:     "Altria Pendragon (Lily)"
   , id:       4
@@ -752,6 +939,20 @@ sabers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  true
   , free:     true
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 10, ProofOfHero: 18]
+              [Monument Saber: 4, DragonFang: 20, SeedOfYggdrasil: 5]
+              [Monument Saber: 10, SeedOfYggdrasil: 10, Dragon'sReverseScale: 4]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 10]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 10, DragonFang: 10]
+              [SecretGemOf Saber: 4, DragonFang: 20]
+              [SecretGemOf Saber: 10, ProofOfHero: 12]
+              [ProofOfHero: 24, ClawOfChaos: 3]
+              [ClawOfChaos: 9, Dragon'sReverseScale: 8]
   }
 , { name:     "Gaius Julius Caesar"
   , id:       7
@@ -803,6 +1004,20 @@ sabers = Servant <$>
   , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 8, ProofOfHero: 15]
+              [Monument Saber: 4, EternalGear: 7, ForbiddenPage: 4]
+              [Monument Saber: 8, ForbiddenPage: 7, ClawOfChaos: 5]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 8]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 8, EternalGear: 4]
+              [SecretGemOf Saber: 4, EternalGear: 7]
+              [SecretGemOf Saber: 8, ProofOfHero: 10]
+              [ProofOfHero: 20, MeteorHorseshoe: 4]
+              [MeteorHorseshoe: 12, ClawOfChaos: 10]
   }
 , { name:     "Fergus mac Roich"
   , id:       72
@@ -860,6 +1075,20 @@ sabers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 8, ProofOfHero: 15]
+              [Monument Saber: 4, OctupletCrystals: 7, HeartOfTheForeignGod: 2]
+              [Monument Saber: 8, HeartOfTheForeignGod: 3, MeteorHorseshoe: 8]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 8]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 8, OctupletCrystals: 4]
+              [SecretGemOf Saber: 4, OctupletCrystals: 7]
+              [SecretGemOf Saber: 8, ProofOfHero: 10]
+              [ProofOfHero: 20, SeedOfYggdrasil: 5]
+              [SeedOfYggdrasil: 15, MeteorHorseshoe: 16]
   }
 , { name:     "Bedivere"
   , id:       126
@@ -913,6 +1142,20 @@ sabers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     true
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 8, ProofOfHero: 15]
+              [Monument Saber: 4, EternalGear: 4, Void'sDust: 13]
+              [Monument Saber: 8, EternalGear: 7, GreatKnightMedal: 16]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 8]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 8, Void'sDust: 7]
+              [SecretGemOf Saber: 4, Void'sDust: 13]
+              [SecretGemOf Saber: 8, ProofOfHero: 10]
+              [Fool'sChain: 12, ProofOfHero: 20]
+              [Fool'sChain: 36, TearstoneOfBlood: 10]
   }
 , { name:     "Gilles de Rais"
   , id:       9
@@ -964,5 +1207,19 @@ sabers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Saber: 4]
+              [Piece Saber: 8, ProofOfHero: 15]
+              [Monument Saber: 4, Void'sDust: 13, EvilBone: 10]
+              [Monument Saber: 8, EvilBone: 20, HeartOfTheForeignGod: 4]
+  , skillUp:  Reinforcement
+              [GemOf Saber: 4]
+              [GemOf Saber: 8]
+              [MagicGemOf Saber: 4]
+              [MagicGemOf Saber: 8, Void'sDust: 7]
+              [SecretGemOf Saber: 4, Void'sDust: 13]
+              [SecretGemOf Saber: 8, ProofOfHero: 10]
+              [ProofOfHero: 20, GhostLantern: 4]
+              [GhostLantern: 12, HeartOfTheForeignGod: 7]
   }
 ]

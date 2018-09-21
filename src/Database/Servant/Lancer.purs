@@ -62,6 +62,20 @@ lancers = Servant <$>
   , align:    [Neutral, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 5]
+              [Piece Lancer: 12, EvilBone: 22]
+              [Monument Lancer: 5, Void'sDust: 20, ClawOfChaos: 3]
+              [Monument Lancer: 12, ClawOfChaos: 6, HeartOfTheForeignGod: 5]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 5]
+              [GemOf Lancer: 12]
+              [MagicGemOf Lancer: 5]
+              [MagicGemOf Lancer: 12, Void'sDust: 10]
+              [SecretGemOf Lancer: 5, Void'sDust:20]
+              [SecretGemOf Lancer: 12, EvilBone: 15]
+              [EvilBone: 29, PhoenixFeather: 5]
+              [PhoenixFeather: 15, HeartOfTheForeignGod: 10]
   }
 , { name:     "Karna"
   , id:       85
@@ -118,6 +132,20 @@ lancers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 5]
+              [Piece Lancer: 12, OctupletCrystals: 8]
+              [Monument Lancer: 5, EternalGear: 10, PhoenixFeather: 4]
+              [Monument Lancer: 12, PhoenixFeather: 8, HeartOfTheForeignGod: 5]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 5]
+              [GemOf Lancer: 12]
+              [MagicGemOf Lancer: 5]
+              [MagicGemOf Lancer: 12, EternalGear: 5]
+              [SecretGemOf Lancer: 5, EternalGear: 10]
+              [SecretGemOf Lancer: 12, OctupletCrystals: 5]
+              [OctupletCrystals: 10, ProofOfHero: 18]
+              [ProofOfHero: 54, HeartOfTheForeignGod: 10]
   }
 , { name:     "Tamamo-no-Mae (Lancer)"
   , id:       128
@@ -180,6 +208,22 @@ lancers = Servant <$>
   , align:    [Neutral, Summer]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 5]
+              [Piece Lancer: 12, PhoenixFeather: 6]
+              [Monument Lancer: 5, SeedOfYggdrasil: 12, Warhorse'sYoungHorn: 3]
+              [ Monument Lancer: 12, Warhorse'sYoungHorn: 6
+              , ShellOfReminiscence: 12 
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 5]
+              [GemOf Lancer: 12]
+              [MagicGemOf Lancer: 5]
+              [MagicGemOf Lancer: 12, SeedOfYggdrasil: 6]
+              [SecretGemOf Lancer: 5, SeedOfYggdrasil: 12]
+              [SecretGemOf Lancer: 12, PhoenixFeather: 4]
+              [PhoenixFeather: 8, ClawOfChaos: 4]
+              [ClawOfChaos: 11, HeartOfTheForeignGod: 10]
   }
 , { name:     "Brynhild"
   , id:       88
@@ -237,6 +281,20 @@ lancers = Servant <$>
   , align:    [Neutral, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 5]
+              [Piece Lancer: 12, HeartOfTheForeignGod: 3]
+              [Monument Lancer: 5, SeedOfYggdrasil: 12, ProofOfHero:15]
+              [Monument Lancer: 12, ProofOfHero: 29, GhostLantern: 12]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 5]
+              [GemOf Lancer: 12]
+              [MagicGemOf Lancer: 5]
+              [MagicGemOf Lancer: 12, SeedOfYggdrasil: 6]
+              [SecretGemOf Lancer: 5, SeedOfYggdrasil: 12]
+              [SecretGemOf Lancer: 12, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 4, PhoenixFeather: 5]
+              [PhoenixFeather: 15, ClawOfChaos: 15]
   }
 , { name:     "Altria Pendragon (Lancer)"
   , id:       119
@@ -290,6 +348,22 @@ lancers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 5]
+              [Piece Lancer: 12, DragonFang: 18]
+              [Monument Lancer: 5, GreatKnightMedal: 20, Warhorse'sYoungHorn: 3]
+              [ Monument Lancer: 12, Warhorse'sYoungHorn: 6
+              , Dragon'sReverseScale: 5
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 5]
+              [GemOf Lancer: 12]
+              [MagicGemOf Lancer: 5]
+              [MagicGemOf Lancer: 12, GreatKnightMedal: 10]
+              [SecretGemOf Lancer: 5, GreatKnightMedal: 20]
+              [SecretGemOf Lancer: 12, DragonFang: 12]
+              [DragonFang: 24, MeteorHorseshoe: 6]
+              [MeteorHorseshoe: 18, HeartOfTheForeignGod: 10]
   }
 , { name:     "Altria Pendragon (Lancer Alter)"
   , id:       78
@@ -344,6 +418,22 @@ lancers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 10, MeteorHorseshoe: 6]
+              [Monument Lancer: 4, PhoenixFeather: 7, Dragon'sReverseScale: 2]
+              [ Monument Lancer: 10, Dragon'sReverseScale: 4
+              , HeartOfTheForeignGod: 4
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 10]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 10, PhoenixFeather: 4]
+              [SecretGemOf Lancer: 4, PhoenixFeather: 7]
+              [SecretGemOf Lancer: 10, MeteorHorseshoe: 4]
+              [MeteorHorseshoe: 8, DragonFang: 12]
+              [DragonFang: 36, HeartOfTheForeignGod: 8]
   }
 , { name:     "Li Shuwen"
   , id:       102
@@ -401,6 +491,20 @@ lancers = Servant <$>
   , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 10, DragonFang: 15]
+              [Monument Lancer: 4, OctupletCrystals: 8, ClawOfChaos: 3]
+              [Monument Lancer: 10, ClawOfChaos: 5, Dragon'sReverseScale: 4]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 10]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 10, OctupletCrystals: 4]
+              [SecretGemOf Lancer: 4, OctupletCrystals: 8]
+              [SecretGemOf Lancer: 10, DragonFang: 10]
+              [DragonFang: 20, Void'sDust: 10]
+              [Void'sDust: 30, Warhorse'sYoungHorn: 12]
   }
 , { name:     "Kiyohime (Lancer)"
   , id:       134
@@ -455,6 +559,20 @@ lancers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 10, OctupletCrystals: 6]
+              [Monument Lancer: 4, ShellOfReminiscence: 8, BlackBeastGrease: 3]
+              [Monument Lancer: 10, BlackBeastGrease: 5, LampOfEvilSealing: 6]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 10]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 10, ShellOfReminiscence: 4]
+              [SecretGemOf Lancer: 4, ShellOfReminiscence: 8]
+              [SecretGemOf Lancer: 10, OctupletCrystals: 4]
+              [OctupletCrystals: 8, DragonFang: 12]
+              [DragonFang: 36, Dragon'sReverseScale: 8]
   }
 , { name:     "Elisabeth Bathory"
   , id:       18
@@ -504,6 +622,20 @@ lancers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 10, DragonFang: 15]
+              [Monument Lancer: 4, Dragon'sReverseScale: 4, ClawOfChaos: 3]
+              [Monument Lancer: 10, ClawOfChaos: 5, PhoenixFeather: 8]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 10]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 10, Dragon'sReverseScale: 2]
+              [SecretGemOf Lancer: 4, Dragon'sReverseScale: 4]
+              [SecretGemOf Lancer: 10, DragonFang: 10]
+              [DragonFang: 20, ForbiddenPage: 5]
+              [ForbiddenPage: 15, PhoenixFeather: 16]
   }
 , { name:     "Fionn mac Cumhaill"
   , id:       87
@@ -558,6 +690,20 @@ lancers = Servant <$>
   , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 10, PhoenixFeather: 5]
+              [Monument Lancer: 4, EvilBone: 24, ClawOfChaos: 3]
+              [Monument Lancer: 10, ClawOfChaos: 5, Void'sDust: 20]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 10]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 10, EvilBone: 12]
+              [SecretGemOf Lancer: 4, EvilBone: 24]
+              [SecretGemOf Lancer: 10, PhoenixFeather: 4]
+              [PhoenixFeather: 7, OctupletCrystals: 5]
+              [OctupletCrystals: 15, SerpentJewel: 16]
   }
 , { name:     "Cu Chulainn"
   , id:       17
@@ -613,6 +759,20 @@ lancers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 8, ClawOfChaos: 3]
+              [Monument Lancer: 4, SeedOfYggdrasil: 8, OctupletCrystals: 4]
+              [Monument Lancer: 8, OctupletCrystals: 7, PhoenixFeather: 7]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 8]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 8, SeedOfYggdrasil: 4]
+              [SecretGemOf Lancer: 4, SeedOfYggdrasil: 8]
+              [SecretGemOf Lancer: 8, ClawOfChaos: 2]
+              [ClawOfChaos: 4, ProofOfHero: 12]
+              [ProofOfHero: 36, PhoenixFeather: 13]
   }
 , { name:     "Cu Chulainn (Prototype)"
   , id:       20
@@ -668,6 +828,20 @@ lancers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 8, Void'sDust: 10]
+              [Monument Lancer: 4, SeedOfYggdrasil: 8, ClawOfChaos: 2]
+              [Monument Lancer: 8, ClawOfChaos: 4, OctupletCrystals: 8]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 8]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 8, SeedOfYggdrasil: 4]
+              [SecretGemOf Lancer: 4, SeedOfYggdrasil: 8]
+              [SecretGemOf Lancer: 8, Void'sDust: 7]
+              [Void'sDust: 13, ProofOfHero: 12]
+              [ProofOfHero: 36, OctupletCrystals: 16]
   }
 , { name:     "Leonidas I"
   , id:       21
@@ -721,6 +895,20 @@ lancers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 3]
+              [Piece Lancer: 6, ClawOfChaos: 3]
+              [Monument Lancer: 3, Void'sDust: 10, OctupletCrystals: 3]
+              [Monument Lancer: 41, OctupletCrystals: 5, EvilBone: 18]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 3]
+              [GemOf Lancer: 6]
+              [MagicGemOf Lancer: 3]
+              [MagicGemOf Lancer: 6, Void'sDust: 5]
+              [SecretGemOf Lancer: 3, Void'sDust: 10]
+              [SecretGemOf Lancer: 6, ClawOfChaos: 2]
+              [ClawOfChaos: 3, SerpentJewel: 3]
+              [SerpentJewel: 8, EvilBone: 36]
   }
 , { name:     "Romulus"
   , id:       22
@@ -777,6 +965,20 @@ lancers = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 3]
+              [Piece Lancer: 6, ClawOfChaos: 3]
+              [Monument Lancer: 3, Void'sDust: 10, OctupletCrystals: 3]
+              [Monument Lancer: 6, OctupletCrystals: 5, EvilBone: 18]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 3]
+              [GemOf Lancer: 6]
+              [MagicGemOf Lancer: 3]
+              [MagicGemOf Lancer: 6, Void'sDust: 5]
+              [SecretGemOf Lancer: 3, Void'sDust: 10]
+              [SecretGemOf Lancer: 6, ClawOfChaos: 2]
+              [ClawOfChaos: 3, SerpentJewel: 3]
+              [SerpentJewel: 8, EvilBone: 36]
   }
 , { name:     "Hektor"
   , id:       64
@@ -830,6 +1032,20 @@ lancers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 8, MeteorHorseshoe: 5]
+              [Monument Lancer: 4, ProofOfHero: 20, SeedOfYggdrasil: 4]
+              [Monument Lancer: 8, SeedOfYggdrasil: 8, PhoenixFeather: 7]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 8]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 8, ProofOfHero: 10]
+              [SecretGemOf Lancer: 4, ProofOfHero: 20]
+              [SecretGemOf Lancer: 8, MeteorHorseshoe: 4]
+              [MeteorHorseshoe: 7, OctupletCrystals: 4]
+              [OctupletCrystals: 12, PhoenixFeather: 13]
   }
 , { name:     "Musashibou Benkei"
   , id:       19
@@ -881,6 +1097,20 @@ lancers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 3]
+              [Piece Lancer: 6, EvilBone: 11]
+              [Monument Lancer: 3, SeedOfYggdrasil: 6, HomunculusBaby: 3]
+              [Monument Lancer: 6, HomunculusBaby: 5, Void'sDust: 12]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 3]
+              [GemOf Lancer: 6]
+              [MagicGemOf Lancer: 3]
+              [MagicGemOf Lancer: 6, SeedOfYggdrasil: 3]
+              [SecretGemOf Lancer: 3, SeedOfYggdrasil: 6]
+              [SecretGemOf Lancer: 6, EvilBone: 8]
+              [EvilBone: 15, Void'sDust: 6]
+              [Void'sDust: 42]
   }
 , { name:     "Diarmuid Ua Duibhne"
   , id:       71
@@ -935,5 +1165,19 @@ lancers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Lancer: 4]
+              [Piece Lancer: 10, SeedOfYggdrasil: 6]
+              [Monument Lancer: 4, PhoenixFeather: 6, SerpentJewel: 3]
+              [Monument Lancer: 8, SerpentJewel: 6, Void'sDust: 16]
+  , skillUp:  Reinforcement
+              [GemOf Lancer: 4]
+              [GemOf Lancer: 8]
+              [MagicGemOf Lancer: 4]
+              [MagicGemOf Lancer: 8, PhoenixFeather: 3]
+              [SecretGemOf Lancer: 4, PhoenixFeather: 6]
+              [SecretGemOf Lancer: 8, SeedOfYggdrasil: 4]
+              [SeedOfYggdrasil: 8, ProofOfHero: 12]
+              [ProofOfHero: 36, Void'sDust: 32]
   }
 ]

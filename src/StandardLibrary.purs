@@ -31,6 +31,7 @@ module StandardLibrary
   , maybeDo
   , filterOut
   , intersperse
+  , pairWith
   ) where
 
 -----------
@@ -115,3 +116,7 @@ intersperse _ x@[_] = x
 intersperse sep xs = case uncons xs of
     Nothing           -> xs
     Just {head, tail} -> cons head <<< cons sep $ intersperse sep tail
+
+-- | Tuple builder from a constructor
+pairWith :: ∀ a b c f. Functor f => a -> (b -> c) -> f b -> f (Tuple c a)
+pairWith val construc = map $ flip Tuple val <<< construc

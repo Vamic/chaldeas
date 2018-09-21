@@ -9,7 +9,8 @@ module Database.Servant
   , Gen
   , Hits
   , PhantasmType(..)
-  , getDeck
+  , Ascension(..), Reinforcement(..)
+  , getDeck, getMaterials
   ) where
 
 import StandardLibrary
@@ -38,6 +39,8 @@ newtype Servant =
             , align    :: Array Alignment
             , limited  :: Boolean
             , free     :: Boolean
+            , ascendUp :: Ascension
+            , skillUp  :: Reinforcement
             }
 
 instance _0_ :: Show Servant where
@@ -76,15 +79,44 @@ type Gen = { starWeight :: Int
            , npDef      :: Int
            }
 
--- | Returns all `Card`s in a `Servant`'s `Deck`. Does not include NP card.
-getDeck :: Servant -> Array Card
-getDeck (Servant {deck:Deck a b c d e}) = [a, b, c, d, e]
-
 data PhantasmType = SingleTarget | MultiTarget | Support
 instance _01_ :: Show PhantasmType where
       show SingleTarget = "Single-Target"
       show MultiTarget  = "Multi-Target"
       show Support      = "Support"
+
+-- type Item = Array (Tuple Material Int)
+
+data Ascension     = Welfare String
+                   | Clear String String String String
+                   | Ascension    
+                     (Array (Tuple Material Int)) -- 1
+                     (Array (Tuple Material Int)) -- 2
+                     (Array (Tuple Material Int)) -- 3
+                     (Array (Tuple Material Int)) -- 4
+data Reinforcement = Reinforcement
+                     (Array (Tuple Material Int)) -- 1
+                     (Array (Tuple Material Int)) -- 2
+                     (Array (Tuple Material Int)) -- 3
+                     (Array (Tuple Material Int)) -- 4
+                     (Array (Tuple Material Int)) -- 5
+                     (Array (Tuple Material Int)) -- 6
+                     (Array (Tuple Material Int)) -- 7
+                     (Array (Tuple Material Int)) -- 8
+                     -- 9 is always [ CrystallizedLore: 1 ]
+
+-- | Returns all `Card`s in a `Servant`'s `Deck`. Does not include NP card.
+getDeck :: Servant -> Array Card
+getDeck (Servant {deck:Deck a b c d e}) = [a, b, c, d, e]
+
+getMaterials :: Servant -> Array Material
+getMaterials (Servant {ascendUp, skillUp}) = nub $ fst <$> ascendUps <> skillUps
+  where
+    ascendUps = case ascendUp of 
+        Ascension a b c d -> join [a, b, c, d]
+        _                 -> []
+    skillUps = case skillUp of
+        Reinforcement a b c d e f g h -> join [a, b, c, d, e, f, g, h]
 
 maxLevel :: Servant -> Int
 maxLevel (Servant {rarity: 5}) = 90

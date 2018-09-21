@@ -65,6 +65,20 @@ casters = Servant <$>
   , align:    [Neutral, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 5]
+              [Piece Caster: 12, Void'sDust: 15]
+              [Monument Caster: 5, ForbiddenPage: 10, EternalGear: 5]
+              [Monument Caster: 12, EternalGear: 10, PhoenixFeather: 10]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 5]
+              [GemOf Caster: 12]
+              [MagicGemOf Caster: 5]
+              [MagicGemOf Caster: 12, ForbiddenPage: 5]
+              [SecretGemOf Caster: 5, ForbiddenPage: 10]
+              [SecretGemOf Caster: 12, Void'sDust: 10]
+              [Void'sDust: 20, HeartOfTheForeignGod: 3]
+              [HeartOfTheForeignGod: 8, PhoenixFeather: 20]
   }
 , { name:     "Tamamo-no-Mae"
   , id:       62
@@ -120,6 +134,20 @@ casters = Servant <$>
   , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 5]
+              [Piece Caster: 12, GhostLantern: 8]
+              [Monument Caster: 5, EvilBone: 29, HeartOfTheForeignGod: 2]
+              [Monument Caster: 12, HeartOfTheForeignGod: 4, ForbiddenPage: 12]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 5]
+              [GemOf Caster: 12]
+              [MagicGemOf Caster: 5]
+              [MagicGemOf Caster: 12, EvilBone: 15]
+              [SecretGemOf Caster: 5, EvilBone: 29]
+              [SecretGemOf Caster: 12, GhostLantern: 5]
+              [GhostLantern: 10, SeedOfYggdrasil: 8]
+              [SeedOfYggdrasil: 22, ForbiddenPage: 24]
   }
 , { name:     "Xuanzang Sanzang"
   , id:       113
@@ -176,6 +204,20 @@ casters = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 5]
+              [Piece Caster: 12, SeedOfYggdrasil: 9]
+              [Monument Caster: 5, OctupletCrystals: 10, PhoenixFeather: 4]
+              [Monument Caster: 12, PhoenixFeather: 8, SpiritRoot: 5]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 5]
+              [GemOf Caster: 12]
+              [MagicGemOf Caster: 5]
+              [MagicGemOf Caster: 12, OctupletCrystals: 5]
+              [SecretGemOf Caster: 5, OctupletCrystals: 10]
+              [SecretGemOf Caster: 12, SeedOfYggdrasil: 6]
+              [SeedOfYggdrasil: 12, MeteorHorseshoe: 6]
+              [MeteorHorseshoe: 18, ForbiddenPage: 24]
   }
 , { name:     "Leonardo da Vinci"
   , id:       127
@@ -236,6 +278,20 @@ casters = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 5]
+              [Piece Caster: 12, EternalGear: 8]
+              [Monument Caster: 5, PhoenixFeather: 8, SpiritRoot: 2]
+              [Monument Caster: 12, SpiritRoot: 4, ScarabOfWisdom: 5]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 5]
+              [GemOf Caster: 12]
+              [MagicGemOf Caster: 5]
+              [MagicGemOf Caster: 12, PhoenixFeather: 4]
+              [SecretGemOf Caster: 5, PhoenixFeather: 8]
+              [SecretGemOf Caster: 12, EternalGear: 5]
+              [EternalGear: 10, ForbiddenPage: 6]
+              [ForbiddenPage: 18, BlackBeastGrease: 15]
   }
 , { name:     "Illyasviel von Einzbern"
   , id:       136
@@ -294,6 +350,20 @@ casters = Servant <$>
   , align:    [Neutral, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 5]
+              [Piece Caster: 12, SeedOfYggdrasil: 9]
+              [Monument Caster: 5, ForbiddenPage: 10, PhoenixFeather: 4]
+              [Monument Caster: 12, PhoenixFeather: 8, ScarabOfWisdom: 5]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 5]
+              [GemOf Caster: 12]
+              [MagicGemOf Caster: 5]
+              [MagicGemOf Caster: 12, ForbiddenPage: 5]
+              [SecretGemOf Caster: 5, ForbiddenPage: 10]
+              [SecretGemOf Caster: 12, SeedOfYggdrasil: 6]
+              [SeedOfYggdrasil: 12, HomunculusBaby: 6]
+              [HomunculusBaby: 18, SpiritRoot: 10]
   }
 , { name:     "Medea (Lily)"
   , id:       67
@@ -347,6 +417,20 @@ casters = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 10, Void'sDust: 12]
+              [Monument Caster: 4, GhostLantern: 8, PhoenixFeather: 4]
+              [Monument Caster: 10, PhoenixFeather: 7, ForbiddenPage: 10]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 10]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 10, GhostLantern: 4]
+              [SecretGemOf Caster: 4, GhostLantern: 8]
+              [SecretGemOf Caster: 10, Void'sDust: 8]
+              [Void'sDust: 16, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 6, ForbiddenPage: 20]
   }
 , { name:     "Elisabeth Bathory (Halloween)"
   , id:       61
@@ -402,6 +486,16 @@ casters = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  true
   , free:     true
+  , ascendUp: Welfare "Twinkle Candy"
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 10]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 10, GhostLantern: 4]
+              [SecretGemOf Caster: 4, GhostLantern: 8]
+              [SecretGemOf Caster: 10, EvilBone: 12]
+              [DragonFang: 12, EvilBone: 24]
+              [DragonFang: 36, Dragon'sReverseScale: 8]
   }
 , { name:     "Nursery Rhyme"
   , id:       74
@@ -461,6 +555,20 @@ casters = Servant <$>
   , align:    []
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 10, SeedOfYggdrasil: 8]
+              [Monument Caster: 4, ForbiddenPage: 4, GhostLantern: 8]
+              [Monument Caster: 10, ForbiddenPage: 8, PhoenixFeather: 8]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 10]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 10, GhostLantern: 4]
+              [SecretGemOf Caster: 4, GhostLantern: 8]
+              [SecretGemOf Caster: 10, SeedOfYggdrasil: 5]
+              [SeedOfYggdrasil: 10, HomunculusBaby: 5]
+              [HomunculusBaby: 15, PhoenixFeather: 16]
   }
 , { name:     "Helena Blavatsky"
   , id:       100
@@ -518,6 +626,20 @@ casters = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 10, Void'sDust: 12]
+              [Monument Caster: 4, GhostLantern: 8, HomunculusBaby: 4]
+              [Monument Caster: 10, HomunculusBaby: 8, ForbiddenPage: 10]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 10]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 10, GhostLantern: 4]
+              [SecretGemOf Caster: 4, GhostLantern: 8]
+              [SecretGemOf Caster: 10, Void'sDust: 8]
+              [Void'sDust: 16, BlackBeastGrease: 3]
+              [BlackBeastGrease: 9, PhoenixFeather: 16]
   }
 , { name:     "Nitocris"
   , id:       120
@@ -571,6 +693,20 @@ casters = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 10, ForbiddenPage: 6]
+              [Monument Caster: 4, Fool'sChain: 24, ScarabOfWisdom: 2]
+              [Monument Caster: 10, ScarabOfWisdom: 4, LampOfEvilSealing: 6]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 10]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 10, Fool'sChain: 12]
+              [SecretGemOf Caster: 4, Fool'sChain: 24]
+              [SecretGemOf Caster: 10, ForbiddenPage: 4]
+              [ForbiddenPage: 8, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 6, EvilBone: 60]
   }
 , { name:     "Irisviel (Dress of Heaven)"
   , id:       111
@@ -622,6 +758,16 @@ casters = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  true
   , free:     true
+  , ascendUp: Welfare "Crystal Ball"
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 10]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 10, SeedOfYggdrasil: 5]
+              [SecretGemOf Caster: 4, SeedOfYggdrasil: 10]
+              [SecretGemOf Caster: 10, HomunculusBaby: 4]
+              [HomunculusBaby: 8, PhoenixFeather: 4]
+              [PhoenixFeather: 12, SpiritRoot: 8]
   }
 , { name:     "Marie Antoinette (Caster)"
   , id:       130
@@ -679,6 +825,20 @@ casters = Servant <$>
   , align:    [Lawful, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 10, SeedOfYggdrasil: 8]
+              [Monument Caster: 4, PhoenixFeather: 4, ShellOfReminiscence: 8]
+              [Monument Caster: 10, PhoenixFeather: 7, ScarabOfWisdom: 4]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 10]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 10, ShellOfReminiscence: 4]
+              [SecretGemOf Caster: 4, ShellOfReminiscence: 8]
+              [SecretGemOf Caster: 10, SeedOfYggdrasil: 5]
+              [SerpentJewel: 4, SeedOfYggdrasil: 10]
+              [SerpentJewel: 12, EternalGear: 20]
   }
 , { name:     "Thomas Edison"
   , id:       103
@@ -735,6 +895,20 @@ casters = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 10, ForbiddenPage: 6]
+              [Monument Caster: 4, ProofOfHero: 24, EternalGear: 4]
+              [Monument Caster: 10, EternalGear: 8, BlackBeastGrease: 6]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 10]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 10, ProofOfHero: 12]
+              [SecretGemOf Caster: 4, ProofOfHero: 24]
+              [SecretGemOf Caster: 10, ForbiddenPage: 4]
+              [ForbiddenPage: 8, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 6, ClawOfChaos: 12]
   }
 , { name:     "Hans Christian Andersen"
   , id:       33
@@ -790,6 +964,20 @@ casters = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 3]
+              [Piece Caster: 6, ForbiddenPage: 4]
+              [Monument Caster: 3, EternalGear: 3, HomunculusBaby: 5]
+              [Monument Caster: 6, EternalGear: 5, MeteorHorseshoe: 6]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 3]
+              [GemOf Caster: 6]
+              [MagicGemOf Caster: 3]
+              [MagicGemOf Caster: 6, HomunculusBaby: 3]
+              [SecretGemOf Caster: 3, HomunculusBaby: 5]
+              [SecretGemOf Caster: 6, ForbiddenPage: 3]
+              [Void'sDust: 6, ForbiddenPage: 5]
+              [Void'sDust: 18, MeteorHorseshoe: 12]
   }
 , { name:     "Medea"
   , id:       31
@@ -843,6 +1031,20 @@ casters = Servant <$>
   , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 8, DragonFang: 12]
+              [Monument Caster: 4, HeartOfTheForeignGod: 2, Void'sDust: 13]
+              [Monument Caster: 8, HeartOfTheForeignGod: 3, ForbiddenPage: 8]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 8]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 8, Void'sDust: 7]
+              [SecretGemOf Caster: 4, Void'sDust: 13]
+              [SecretGemOf Caster: 8, DragonFang: 8]
+              [GhostLantern: 4, DragonFang: 16]
+              [GhostLantern: 12, ForbiddenPage: 16]
   }
 , { name:     "William Shakespeare"
   , id:       34
@@ -896,6 +1098,20 @@ casters = Servant <$>
   , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 3]
+              [Piece Caster: 6, GhostLantern: 4]
+              [Monument Caster: 3, ForbiddenPage: 5]
+              [Monument Caster: 6, SerpentJewel: 5, HomunculusBaby: 3]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 3]
+              [GemOf Caster: 6]
+              [MagicGemOf Caster: 3]
+              [MagicGemOf Caster: 6, ForbiddenPage: 3]
+              [SecretGemOf Caster: 3, ForbiddenPage: 5]
+              [SecretGemOf Caster: 6, GhostLantern: 3]
+              [Void'sDust: 6, GhostLantern: 5]
+              [Void'sDust: 18, SerpentJewel: 10]
   }
 , { name:     "Wolfgang Amadeus Mozart"
   , id:       36
@@ -950,6 +1166,20 @@ casters = Servant <$>
   , align:    [Neutral, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 2]
+              [Piece Caster: 4, EvilBone: 8]
+              [Monument Caster: 2, EternalGear: 4, ForbiddenPage: 2]
+              [Monument Caster: 4, ForbiddenPage: 4, HeartOfTheForeignGod: 2]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 2]
+              [GemOf Caster: 4]
+              [MagicGemOf Caster: 2]
+              [MagicGemOf Caster: 4, EternalGear: 2]
+              [SecretGemOf Caster: 2, EternalGear: 4]
+              [SecretGemOf Caster: 4, EvilBone: 5]
+              [EvilBone: 10, PhoenixFeather: 2]
+              [PhoenixFeather: 5, HeartOfTheForeignGod: 4]
   }
 , { name:     "Charles Babbage"
   , id:       80
@@ -1005,6 +1235,20 @@ casters = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 8, EternalGear: 5]
+              [Monument Caster: 4, ForbiddenPage: 4, OctupletCrystals: 7]
+              [Monument Caster: 8, ForbiddenPage: 7, Void'sDust: 16]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 8]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 8, OctupletCrystals: 4]
+              [SecretGemOf Caster: 4, OctupletCrystals: 7]
+              [SecretGemOf Caster: 8, EternalGear: 4]
+              [GhostLantern: 4, EternalGear: 7]
+              [Void'sDust: 32, GhostLantern: 12]
   }
 , { name:     "Cu Chulainn (Caster)"
   , id:       38
@@ -1062,6 +1306,20 @@ casters = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     true
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 8, SeedOfYggdrasil: 6]
+              [Monument Caster: 31, ClawOfChaos: 2, ForbiddenPage: 7]
+              [Monument Caster: 8, ClawOfChaos: 4, EternalGear: 8]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 8]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 8, ForbiddenPage: 4]
+              [SecretGemOf Caster: 4, ForbiddenPage: 7]
+              [SecretGemOf Caster: 8, SeedOfYggdrasil: 4]
+              [PhoenixFeather: 4, SeedOfYggdrasil: 8]
+              [PhoenixFeather: 10, EternalGear: 16]
   }
 , { name:     "Mephistopheles"
   , id:       35
@@ -1115,6 +1373,20 @@ casters = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 8, Void'sDust: 10]
+              [Monument Caster: 4, HomunculusBaby: 7, HeartOfTheForeignGod: 2]
+              [Monument Caster: 8, HeartOfTheForeignGod: 3, GhostLantern: 8]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 8]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 8, HomunculusBaby: 4]
+              [SecretGemOf Caster: 4, HomunculusBaby: 7]
+              [SecretGemOf Caster: 8, Void'sDust: 7]
+              [Void'sDust: 13, EternalGear: 4]
+              [EternalGear: 12, GhostLantern: 16]
   }
 , { name:     "Paracelsus von Hohenheim"
   , id:       79
@@ -1164,6 +1436,20 @@ casters = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 8, ForbiddenPage: 5]
+              [Monument Caster: 4, HomunculusBaby: 4, EternalGear: 7]
+              [Monument Caster: 8, HomunculusBaby: 7, EvilBone: 24]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 8]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 8, EternalGear: 4]
+              [SecretGemOf Caster: 4, EternalGear: 7]
+              [SecretGemOf Caster: 8, ForbiddenPage: 4]
+              [Void'sDust: 8, ForbiddenPage: 7]
+              [Void'sDust: 24, EvilBone: 48]
   }
 , { name:     "Geronimo"
   , id:       104
@@ -1217,6 +1503,20 @@ casters = Servant <$>
   , align:    [Neutral, Good]
   , limited:  false
   , free:     true
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 8, ProofOfHero: 15]
+              [Monument Caster: 4, SeedOfYggdrasil: 8, GhostLantern: 4]
+              [Monument Caster: 8, GhostLantern: 7, OctupletCrystals: 8]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 8]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 8, SeedOfYggdrasil: 4]
+              [SecretGemOf Caster: 4, SeedOfYggdrasil: 8]
+              [SecretGemOf Caster: 8, ProofOfHero: 10]
+              [ProofOfHero: 20, EvilBone: 12]
+              [EvilBone: 36, SpiritRoot: 7]
   }
 , { name:     "Gilles de Rais (Caster)"
   , id:       32
@@ -1268,6 +1568,20 @@ casters = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Caster: 4]
+              [Piece Caster: 8, GhostLantern: 5]
+              [Monument Caster: 4, ForbiddenPage: 4, HomunculusBaby: 7]
+              [Monument Caster: 8, ForbiddenPage: 7, HeartOfTheForeignGod: 4]
+  , skillUp:  Reinforcement
+              [GemOf Caster: 4]
+              [GemOf Caster: 8]
+              [MagicGemOf Caster: 4]
+              [MagicGemOf Caster: 8, HomunculusBaby: 4]
+              [SecretGemOf Caster: 4, HomunculusBaby: 7]
+              [SecretGemOf Caster: 8, GhostLantern: 4]
+              [Void'sDust: 8, GhostLantern: 7]
+              [Void'sDust: 24, HeartOfTheForeignGod: 7]
   }
 
 ]

@@ -57,6 +57,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 5]
+              [Piece Assassin: 12, EvilBone: 22]
+              [Monument Assassin: 5, EternalGear: 5, Void'sDust: 20]
+              [Monument Assassin: 12, ClawOfChaos: 8, EternalGear: 10]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 5]
+              [GemOf Assassin: 12]
+              [MagicGemOf Assassin: 5]
+              [MagicGemOf Assassin: 12, Void'sDust: 10]
+              [SecretGemOf Assassin: 5, Void'sDust: 20]
+              [SecretGemOf Assassin: 12, EvilBone: 15]
+              [HeartOfTheForeignGod: 3, EvilBone: 29]
+              [HeartOfTheForeignGod: 8, ClawOfChaos: 15]
   }
 , { name:     "Shuten-Douji"
   , id:       112
@@ -117,6 +131,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 5]
+              [Piece Assassin: 12, EvilBone: 22]
+              [Monument Assassin: 5, SerpentJewel: 8, GhostLantern: 5]
+              [Monument Assassin: 12, GhostLantern: 10, HeartOfTheForeignGod: 5]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 5]
+              [GemOf Assassin: 12]
+              [MagicGemOf Assassin: 5]
+              [MagicGemOf Assassin: 12, SerpentJewel: 4]
+              [SecretGemOf Assassin: 5, SerpentJewel: 8]
+              [SecretGemOf Assassin: 12, EvilBone: 15]
+              [EvilBone: 29, ClawOfChaos: 4]
+              [ClawOfChaos: 11, SpiritRoot: 10]
   }
 , { name:     "Mysterious Heroine X"
   , id:       86
@@ -168,6 +196,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 5]
+              [Piece Assassin: 12, DragonFang: 18]
+              [Monument Assassin: 5, Dragon'sReverseScale: 2, PhoenixFeather: 8]
+              [Monument Assassin: 12, Dragon'sReverseScale: 4, ProofOfHero: 36]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 5]
+              [GemOf Assassin: 12]
+              [MagicGemOf Assassin: 5]
+              [MagicGemOf Assassin: 12, PhoenixFeather: 4]
+              [SecretGemOf Assassin: 5, PhoenixFeather: 8]
+              [SecretGemOf Assassin: 12, DragonFang: 12]
+              [Void'sDust: 12, DragonFang: 24]
+              [Void'sDust: 36, OctupletCrystals: 24]
   }
 , { name:     "Ryougi Shiki (Assassin)"
   , id:       92
@@ -224,6 +266,16 @@ assassins = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  true
   , free:     true
+  , ascendUp: Welfare "Sharp Knife"
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 10]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 10, EvilBone: 12]
+              [SecretGemOf Assassin: 4, EvilBone: 24]
+              [SecretGemOf Assassin: 10, ClawOfChaos: 3]
+              [ClawOfChaos: 5, EternalGear: 5]
+              [EternalGear: 15, HomunculusBaby: 20]
   }
 , { name:     "Carmilla"
   , id:       46
@@ -280,6 +332,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 4]
+              [Piece Assassin: 10, SerpentJewel: 5]
+              [Monument Assassin: 4, HeartOfTheForeignGod: 2, HomunculusBaby: 8]
+              [Monument Assassin: 10, HeartOfTheForeignGod: 4, ClawOfChaos: 6]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 10]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 10, HomunculusBaby: 4]
+              [SecretGemOf Assassin: 4, HomunculusBaby: 8]
+              [SecretGemOf Assassin: 10, SerpentJewel: 4]
+              [EvilBone: 15, SerpentJewel: 7]
+              [EvilBone: 45, ClawOfChaos: 12]
   }
 , { name:     "Emiya (Assassin)"
   , id:       109
@@ -336,6 +402,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 4]
+              [Piece Assassin: 10, ProofOfHero: 18]
+              [Monument Assassin: 4, EvilBone: 24, Void'sDust: 8]
+              [Monument Assassin: 10, Void'sDust: 16, TearstoneOfBlood: 6]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 10]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 10, EvilBone: 12]
+              [SecretGemOf Assassin: 4, EvilBone: 24]
+              [SecretGemOf Assassin: 10, ProofOfHero: 12]
+              [ProofOfHero: 24, HomunculusBaby: 5]
+              [HomunculusBaby: 15, HeartOfTheForeignGod: 8]
   }
 , { name:     "Scathach (Assassin)"
   , id:       133
@@ -391,6 +471,16 @@ assassins = Servant <$>
   , align:    [Neutral, Good]
   , limited:  true
   , free:     true
+  , ascendUp: Welfare "Bell-Ringing Branch"
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 10]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 10, SeedOfYggdrasil: 5]
+              [SecretGemOf Assassin: 4, SeedOfYggdrasil: 10]
+              [SecretGemOf Assassin: 10, ShellOfReminiscence: 4]
+              [ShellOfReminiscence: 8, SpiritRoot: 2]
+              [SpiritRoot: 6, ScarabOfWisdom: 8]
   }
 , { name:     "Stheno"
   , id:       41
@@ -448,6 +538,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 4]
+              [Piece Assassin: 10, SerpentJewel: 5]
+              [Monument Assassin: 4, HeartOfTheForeignGod: 4, Void'sDust: 8]
+              [Monument Assassin: 10, Void'sDust: 16, Dragon'sReverseScale: 4]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 10]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 10, HeartOfTheForeignGod: 2]
+              [SecretGemOf Assassin: 4, HeartOfTheForeignGod: 4]
+              [SecretGemOf Assassin: 10, SerpentJewel: 4]
+              [SerpentJewel: 7, ClawOfChaos: 3]
+              [ClawOfChaos: 9, Dragon'sReverseScale: 8]
   }
 , { name:     "Fuuma \"Evil-wind\" Kotarou"
   , id:       117
@@ -501,6 +605,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 4]
+              [Piece Assassin: 8, EvilBone: 15]
+              [Monument Assassin: 4, Void'sDust: 13, OctupletCrystals: 4]
+              [Monument Assassin: 8, OctupletCrystals: 7, BlackBeastGrease: 5]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 8]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 8, Void'sDust: 7]
+              [SecretGemOf Assassin: 4, Void'sDust: 13]
+              [SecretGemOf Assassin: 8, EvilBone: 10]
+              [EvilBone: 20, SeedOfYggdrasil: 5]
+              [SeedOfYggdrasil: 15, ClawOfChaos: 10]
   }
 , { name:     "Sasaki Kojirou"
   , id:       39
@@ -556,6 +674,20 @@ assassins = Servant <$>
   , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 2]
+              [Piece Assassin: 4, ProofOfHero: 8]
+              [Monument Assassin: 2, EternalGear: 2, Void'sDust: 7]
+              [Monument Assassin: 4, EternalGear: 4, OctupletCrystals: 4]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 2]
+              [GemOf Assassin: 4]
+              [MagicGemOf Assassin: 2]
+              [MagicGemOf Assassin: 4, Void'sDust: 4]
+              [SecretGemOf Assassin: 2, Void'sDust: 7]
+              [SecretGemOf Assassin: 4, ProofOfHero: 5]
+              [ProofOfHero: 10, EvilBone: 6]
+              [OctupletCrystals: 8, EvilBone: 18]
   }
 , { name:     "Hassan of the Cursed Arm"
   , id:       40
@@ -607,6 +739,20 @@ assassins = Servant <$>
   , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 3]
+              [Piece Assassin: 6, EvilBone: 11]
+              [Monument Assassin: 3, EternalGear: 5, Void'sDust: 5]
+              [Monument Assassin: 6, HomunculusBaby: 6, Void'sDust: 10]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 3]
+              [GemOf Assassin: 6]
+              [MagicGemOf Assassin: 3]
+              [MagicGemOf Assassin: 6, EternalGear: 3]
+              [SecretGemOf Assassin: 3, EternalGear: 5]
+              [SecretGemOf Assassin: 6, EvilBone: 8]
+              [GhostLantern: 3, EvilBone: 15]
+              [GhostLantern: 9, HomunculusBaby: 12]
   }
 , { name:     "Henry Jekyll & Hyde"
   , id:       81
@@ -670,6 +816,20 @@ assassins = Servant <$>
   , align:    [Lawful, Good, Chaotic, Evil]
   , limited:  false
   , free:     true
+  , ascendUp: Ascension
+              [Piece Assassin: 4]
+              [EvilBone: 15, Piece Assassin: 8]
+              [Void'sDust: 13, OctupletCrystals: 4, Monument Assassin: 4]
+              [Monument Assassin: 8, OctupletCrystals: 7, HomunculusBaby: 8]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 8]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 8, Void'sDust: 7]
+              [SecretGemOf Assassin: 4, Void'sDust: 13]
+              [SecretGemOf Assassin: 8, EvilBone: 10]
+              [EvilBone: 20, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 5, HomunculusBaby: 16]
   }
 , { name:     "Jing Ke"
   , id:       42
@@ -727,6 +887,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 4]
+              [EvilBone: 15, Piece Assassin: 8]
+              [GhostLantern: 4, OctupletCrystals: 7, Monument Assassin: 4]
+              [GhostLantern: 7, Void'sDust: 16, Monument Assassin: 8]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 8]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 8, OctupletCrystals: 4]
+              [SecretGemOf Assassin: 4, OctupletCrystals: 7]
+              [SecretGemOf Assassin: 8, EvilBone: 10]
+              [PhoenixFeather: 4, EvilBone: 20]
+              [PhoenixFeather: 10, Void'sDust: 32]
   }
 , { name:     "Charles-Henri Sanson"
   , id:       43
@@ -780,6 +954,20 @@ assassins = Servant <$>
   , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 3]
+              [Piece Assassin: 6, EvilBone: 11]
+              [Monument Assassin: 3, HeartOfTheForeignGod: 1, Void'sDust: 10]
+              [Monument Assassin: 6, HeartOfTheForeignGod: 2, HomunculusBaby: 6]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 3]
+              [GemOf Assassin: 6]
+              [MagicGemOf Assassin: 3]
+              [MagicGemOf Assassin: 6, Void'sDust: 5]
+              [SecretGemOf Assassin: 3, Void'sDust: 10]
+              [SecretGemOf Assassin: 6, EvilBone: 8]
+              [ForbiddenPage: 3, EvilBone: 15]
+              [ForbiddenPage: 9, HomunculusBaby: 12]
   }
 , { name:     "Hassan of the Hundred Personas"
   , id:       110
@@ -840,6 +1028,20 @@ assassins = Servant <$>
   , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 4]
+              [Piece Assassin: 8, Void'sDust: 10]
+              [Monument Assassin: 4, OctupletCrystals: 7, SerpentJewel: 3]
+              [Monument Assassin: 4, SerpentJewel: 6, BlackBeastGrease: 5]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 8]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 8, OctupletCrystals: 4]
+              [SecretGemOf Assassin: 4, OctupletCrystals: 7]
+              [SecretGemOf Assassin: 8, Void'sDust: 7]
+              [Void'sDust: 13, EvilBone: 12]
+              [EvilBone: 36, ClawOfChaos: 10]
   }
 , { name:     "Hassan of the Serenity"
   , id:       124
@@ -897,6 +1099,20 @@ assassins = Servant <$>
   , align:    [Lawful, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 4]
+              [Piece Assassin: 8, EvilBone: 15]
+              [Monument Assassin: 4, Fool'sChain: 20, TearstoneOfBlood: 4]
+              [Monument Assassin: 8, TearstoneOfBlood: 4, BlackBeastGrease: 43]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 4]
+              [GemOf Assassin: 8]
+              [MagicGemOf Assassin: 4]
+              [MagicGemOf Assassin: 8, Fool'sChain: 10]
+              [SecretGemOf Assassin: 4, Fool'sChain: 20]
+              [SecretGemOf Assassin: 8, EvilBone: 10]
+              [EvilBone: 20, Void'sDust: 8]
+              [Void'sDust: 10, LampOfEvilSealing: 10]
   }
 , { name:     "Phantom of the Opera"
   , id:       44
@@ -951,6 +1167,20 @@ assassins = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 3]
+              [Piece Assassin: 6, GhostLantern: 4]
+              [Monument Assassin: 3, Void'sDust: 10, EternalGear: 3]
+              [Monument Assassin: 6, EternalGear: 5, EvilBone: 18]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 3]
+              [GemOf Assassin: 6]
+              [MagicGemOf Assassin: 3]
+              [MagicGemOf Assassin: 6, Void'sDust: 5]
+              [SecretGemOf Assassin: 3, Void'sDust: 10]
+              [SecretGemOf Assassin: 6, GhostLantern: 3]
+              [GhostLantern: 5, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 4, EvilBone: 36]
   }
 , { name:     "Mata Hari"
   , id:       45
@@ -1007,5 +1237,19 @@ assassins = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Assassin: 2]
+              [Piece Assassin: 4, PhoenixFeather: 2]
+              [Monument Assassin: 2, EternalGear: 4, GhostLantern: 2]
+              [Monument Assassin: 4, SerpentJewel: 4, GhostLantern: 4]
+  , skillUp:  Reinforcement
+              [GemOf Assassin: 2]
+              [GemOf Assassin: 4]
+              [MagicGemOf Assassin: 2]
+              [MagicGemOf Assassin: 4, EternalGear: 2]
+              [SecretGemOf Assassin: 2, EternalGear: 4]
+              [SecretGemOf Assassin: 4, PhoenixFeather: 2]
+              [HomunculusBaby: 2, PhoenixFeather: 3]
+              [HomunculusBaby: 6, SerpentJewel: 7]
   }
 ]

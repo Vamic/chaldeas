@@ -59,6 +59,22 @@ berserkers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 5]
+              [Piece Berserker: 12, EvilBone: 22]
+              [Monument Berserker: 5, ClawOfChaos: 6, HeartOfTheForeignGod: 2]
+              [ Monument Berserker: 12, HeartOfTheForeignGod: 4
+              , TearstoneOfBlood: 8
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 5]
+              [GemOf Berserker: 12]
+              [MagicGemOf Berserker: 5]
+              [MagicGemOf Berserker: 12, ClawOfChaos: 3]
+              [SecretGemOf Berserker: 5, ClawOfChaos: 6]
+              [SecretGemOf Berserker: 12, EvilBone: 15]
+              [EvilBone: 29, SerpentJewel: 5]
+              [SerpentJewel: 15, Void'sDust: 48]
   }
 , { name:     "Minamoto-no-Raikou"
   , id:       114
@@ -112,6 +128,22 @@ berserkers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 5]
+              [Piece Berserker: 12, ClawOfChaos: 5]
+              [Monument Berserker: 5, EvilBone: 29, TearstoneOfBlood: 3]
+              [ Monument Berserker: 12, TearstoneOfBlood: 6
+              , Dragon'sReverseScale: 5
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 5]
+              [GemOf Berserker: 12]
+              [MagicGemOf Berserker: 5]
+              [MagicGemOf Berserker: 12, EvilBone: 15]
+              [SecretGemOf Berserker: 5, EvilBone: 29]
+              [SecretGemOf Berserker: 12, ClawOfChaos: 3]
+              [ClawOfChaos: 6, OctupletCrystals: 6]
+              [OctupletCrystals: 18, SpiritRoot: 10]
   }
 , { name:     "Sakata Kintoki"
   , id:       51
@@ -163,6 +195,22 @@ berserkers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 5]
+              [Piece Berserker: 12, ProofOfHero: 22]
+              [Monument Berserker: 5, OctupletCrystals: 10, SeedOfYggdrasil: 12]
+              [ Monument Berserker: 12, SeedOfYggdrasil: 12
+              , HeartOfTheForeignGod: 5
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 5]
+              [GemOf Berserker: 12]
+              [MagicGemOf Berserker: 5]
+              [MagicGemOf Berserker: 12, OctupletCrystals: 5]
+              [SecretGemOf Berserker: 5, OctupletCrystals: 10]
+              [SecretGemOf Berserker: 12, ProofOfHero: 15]
+              [ProofOfHero: 29, Void'sDust: 12]
+              [Void'sDust: 36, HeartOfTheForeignGod: 10]
   }
 , { name:     "Vlad III"
   , id:       52
@@ -214,6 +262,20 @@ berserkers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 5]
+              [Piece Berserker: 12, Dragon'sReverseScale: 3]
+              [Monument Berserker: 5, ClawOfChaos: 6, ForbiddenPage: 5]
+              [Monument Berserker: 12, Void'sDust: 24, ForbiddenPage: 10]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 5]
+              [GemOf Berserker: 12]
+              [MagicGemOf Berserker: 5]
+              [MagicGemOf Berserker: 12, ClawOfChaos: 3]
+              [SecretGemOf Berserker: 5, ClawOfChaos: 6]
+              [SecretGemOf Berserker: 12, Dragon'sReverseScale: 2]
+              [Dragon'sReverseScale: 4, EvilBone: 18]
+              [Void'sDust: 48, EvilBone: 54]
   }
 , { name:     "Florence Nightingale"
   , id:       97
@@ -267,6 +329,20 @@ berserkers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 5]
+              [Piece Berserker: 12, PhoenixFeather: 6]
+              [Monument Berserker: 5, SeedOfYggdrasil: 12, ClawOfChaos: 3]
+              [Monument Berserker: 12, ClawOfChaos: 6, HomunculusBaby: 12]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 5]
+              [GemOf Berserker: 12]
+              [MagicGemOf Berserker: 5]
+              [MagicGemOf Berserker: 12, SeedOfYggdrasil: 6]
+              [SecretGemOf Berserker: 5, SeedOfYggdrasil: 12]
+              [SecretGemOf Berserker: 12, PhoenixFeather: 4]
+              [PhoenixFeather: 8, TearstoneOfBlood: 4]
+              [TearstoneOfBlood: 11, GhostLantern: 24]
   }
 , { name:     "Heracles"
   , id:       47
@@ -320,6 +396,20 @@ berserkers = Servant <$>
   , align:    [Chaotic, Mad]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 10, OctupletCrystals: 6]
+              [Monument Berserker: 4, ClawOfChaos: 3, HeartOfTheForeignGod: 4]
+              [Monument Berserker: 10, ClawOfChaos: 5, Dragon'sReverseScale: 4]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 10]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 10, HeartOfTheForeignGod: 2]
+              [SecretGemOf Berserker: 4, HeartOfTheForeignGod: 4]
+              [SecretGemOf Berserker: 10, OctupletCrystals: 4]
+              [ProofOfHero: 15, OctupletCrystals: 8]
+              [ProofOfHero: 45, Dragon'sReverseScale: 8]
   }
 , { name:     "Frankenstein"
   , id:       82
@@ -375,6 +465,20 @@ berserkers = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 10, HomunculusBaby: 6]
+              [Monument Berserker: 4, GhostLantern: 4, EvilBone: 24]
+              [Monument Berserker: 10, GhostLantern: 8, EternalGear: 10]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 10]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 10, EvilBone: 12]
+              [SecretGemOf Berserker: 4, EvilBone: 24]
+              [SecretGemOf Berserker: 10, HomunculusBaby: 5]
+              [OctupletCrystals: 5, HomunculusBaby: 8]
+              [OctupletCrystals: 15, EternalGear: 20]
   }
 , { name:     "Ibaraki-Douji"
   , id:       116
@@ -432,6 +536,23 @@ berserkers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 10, OctupletCrystals: 6]
+              [Monument Berserker: 4, ClawOfChaos: 5, PhoenixFeather: 4]
+              [Monument Berserker: 10, PhoenixFeather: 7
+              , HeartOfTheForeignGod: 4
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 10]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 10, ClawOfChaos: 3]
+              [SecretGemOf Berserker: 4, ClawOfChaos: 5]
+              [SecretGemOf Berserker: 10, OctupletCrystals: 4]
+              [OctupletCrystals: 8, Void'sDust: 10]
+              [Void'sDust: 30, TearstoneOfBlood: 12]
+
   }
 , { name:     "Lancelot"
   , id:       48
@@ -483,6 +604,20 @@ berserkers = Servant <$>
   , align:    [Lawful, Mad]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 10, Dragon'sReverseScale: 3]
+              [Monument Berserker: 4, ClawOfChaos: 5, Void'sDust: 8]
+              [Monument Berserker: 10, DragonFang: 24, Void'sDust: 16]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 10]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 10, ClawOfChaos: 3]
+              [SecretGemOf Berserker: 4, ClawOfChaos: 5]
+              [SecretGemOf Berserker: 10, Dragon'sReverseScale: 2]
+              [MeteorHorseshoe: 5, Dragon'sReverseScale: 4]
+              [MeteorHorseshoe: 15, DragonFang: 48]
   }
 , { name:     "Beowulf"
   , id:       89
@@ -536,6 +671,22 @@ berserkers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 10, ProofOfHero: 18]
+              [ Monument Berserker: 4, Dragon'sReverseScale: 2
+              , OctupletCrystals: 8
+              ]
+              [Monument Berserker: 10, Dragon'sReverseScale: 4, EvilBone: 30]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 10]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 10, OctupletCrystals: 4]
+              [SecretGemOf Berserker: 4, OctupletCrystals: 8]
+              [SecretGemOf Berserker: 10, ProofOfHero: 12]
+              [SeedOfYggdrasil: 6, ProofOfHero: 24]
+              [SeedOfYggdrasil: 18, DragonFang: 48]
   }
 , { name:     "Tamamo Cat"
   , id:       58
@@ -587,6 +738,20 @@ berserkers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 10, GhostLantern: 6]
+              [Monument Berserker: 4, HomunculusBaby: 8, ClawOfChaos: 3]
+              [Monument Berserker: 10, ClawOfChaos: 5, HeartOfTheForeignGod: 4]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 10]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 10, HomunculusBaby: 4]
+              [SecretGemOf Berserker: 4, HomunculusBaby: 8]
+              [SecretGemOf Berserker: 10, GhostLantern: 4]
+              [GhostLantern: 8, OctupletCrystals: 5]
+              [OctupletCrystals: 15, HeartOfTheForeignGod: 8]
   }
 , { name:     "Lu Bu Fengxian"
   , id:       49
@@ -643,6 +808,20 @@ berserkers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 8, MeteorHorseshoe: 5]
+              [Monument Berserker: 4, ClawOfChaos: 2, EvilBone: 20]
+              [Monument Berserker: 8, ClawOfChaos: 4, Void'sDust: 16]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 8]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 8, EvilBone: 10]
+              [SecretGemOf Berserker: 4, EvilBone: 20]
+              [SecretGemOf Berserker: 8, MeteorHorseshoe: 4]
+              [OctupletCrystals: 4, MeteorHorseshoe: 7]
+              [OctupletCrystals: 12, Void'sDust: 32]
   }
 , { name:     "Spartacus"
   , id:       50
@@ -696,6 +875,20 @@ berserkers = Servant <$>
   , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 2]
+              [Piece Berserker: 4, OctupletCrystals: 3]
+              [Monument Berserker: 2, HomunculusBaby: 2, ProofOfHero: 10]
+              [Monument Berserker: 4, HomunculusBaby: 4, EvilBone: 12]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 2]
+              [GemOf Berserker: 4]
+              [MagicGemOf Berserker: 2]
+              [MagicGemOf Berserker: 4, ProofOfHero: 5]
+              [SecretGemOf Berserker: 2, ProofOfHero: 10]
+              [SecretGemOf Berserker: 4, OctupletCrystals: 2]
+              [SeedOfYggdrasil: 3, OctupletCrystals: 4]
+              [SeedOfYggdrasil: 8, EvilBone: 24]
   }
 , { name:     "Asterios"
   , id:       53
@@ -752,6 +945,20 @@ berserkers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 2]
+              [OctupletCrystals: 3, Piece Berserker: 4]
+              [MeteorHorseshoe: 2, ProofOfHero: 10, Monument Berserker: 2]
+              [MeteorHorseshoe: 4, SeedOfYggdrasil: 5, Monument Berserker: 4]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 2]
+              [GemOf Berserker: 4]
+              [MagicGemOf Berserker: 2]
+              [MagicGemOf Berserker: 4, ProofOfHero: 5]
+              [SecretGemOf Berserker: 2, ProofOfHero: 10]
+              [SecretGemOf Berserker: 4, OctupletCrystals: 2]
+              [Void'sDust: 4, OctupletCrystals: 4]
+              [SeedOfYggdrasil: 10, Void'sDust: 12]
   }
 , { name:     "Kiyohime"
   , id:       56
@@ -807,6 +1014,20 @@ berserkers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     true
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 8, GhostLantern: 5]
+              [Monument Berserker: 4, EvilBone: 20, DragonFang: 8]
+              [Monument Berserker: 8, Dragon'sReverseScale: 4, DragonFang: 16]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 8]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 8, EvilBone: 10]
+              [SecretGemOf Berserker: 4, EvilBone: 20]
+              [SecretGemOf Berserker: 8, GhostLantern: 4]
+              [SeedOfYggdrasil: 5, GhostLantern: 7]
+              [SeedOfYggdrasil: 15, Dragon'sReverseScale: 7]
   }
 , { name:     "Eric Bloodaxe"
   , id:       57
@@ -862,6 +1083,20 @@ berserkers = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 3]
+              [Piece Berserker: 6, EvilBone: 11]
+              [Monument Berserker: 3, SerpentJewel: 2, HomunculusBaby: 5]
+              [Monument Berserker: 6, SerpentJewel: 4, Void'sDust: 12]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 3]
+              [GemOf Berserker: 6, MagicGemOf Berserker: 3]
+              [MagicGemOf Berserker: 3]
+              [MagicGemOf Berserker: 6, HomunculusBaby: 3]
+              [SecretGemOf Berserker: 3, HomunculusBaby: 5]
+              [SecretGemOf Berserker: 6, EvilBone: 8]
+              [ClawOfChaos: 2, EvilBone: 15]
+              [ClawOfChaos: 6, Void'sDust: 24]
   }
 , { name:     "Darius III"
   , id:       55
@@ -915,6 +1150,20 @@ berserkers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 4]
+              [Piece Berserker: 8, OctupletCrystals: 5]
+              [Monument Berserker: 4, EvilBone: 10, PhoenixFeather: 6]
+              [Monument Berserker: 8, EvilBone: 20, MeteorHorseshoe: 8]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 4]
+              [GemOf Berserker: 8]
+              [MagicGemOf Berserker: 4]
+              [MagicGemOf Berserker: 8, PhoenixFeather: 3]
+              [SecretGemOf Berserker: 4, PhoenixFeather: 6]
+              [SecretGemOf Berserker: 8, OctupletCrystals: 4]
+              [Void'sDust: 8, OctupletCrystals: 7]
+              [Void'sDust: 24, MeteorHorseshoe: 16]
   }
 , { name:     "Caligula"
   , id:       54
@@ -971,5 +1220,19 @@ berserkers = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Berserker: 3]
+              [Piece Berserker: 6, OctupletCrystals: 4]
+              [Monument Berserker: 3, GhostLantern: 3, SerpentJewel: 4]
+              [Monument Berserker: 6, GhostLantern: 5, ForbiddenPage: 6]
+  , skillUp:  Reinforcement
+              [GemOf Berserker: 3]
+              [GemOf Berserker: 6]
+              [MagicGemOf Berserker: 3]
+              [MagicGemOf Berserker: 6, SerpentJewel: 2]
+              [SecretGemOf Berserker: 3, SerpentJewel: 4]
+              [SecretGemOf Berserker: 6, OctupletCrystals: 3]
+              [MeteorHorseshoe: 3, OctupletCrystals: 5]
+              [MeteorHorseshoe: 9, ForbiddenPage: 12]
   }
 ]

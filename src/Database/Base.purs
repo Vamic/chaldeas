@@ -7,6 +7,7 @@ module Database.Base
   , Stat(..), showStat, addStats
   , Trait(..)
   , Icon(..)
+  , Material(..)
   ) where
 
 import StandardLibrary
@@ -164,18 +165,44 @@ data Icon
 data Material
     = Piece Class
     | Monument Class
-    | Gem Class
-    | MagicGem Class
-    | SecretGem Class
+    | GemOf Class
+    | MagicGemOf Class
+    | SecretGemOf Class
+    | BellRingingBranch
+    | BlackBeastGrease
+    | ClawOfChaos
     | CrystallizedLore
+    | DragonFang
+    | Dragon'sReverseScale
+    | EternalGear
+    | EvilBone
+    | Fool'sChain
+    | ForbiddenPage
+    | GhostLantern
+    | GreatKnightMedal
+    | HeartOfTheForeignGod
+    | HomunculusBaby
     | LampOfEvilSealing
+    | MeteorHorseshoe
+    | OctupletCrystals
+    | PhoenixFeather
+    | ProofOfHero
+    | ScarabOfWisdom
+    | SeedOfYggdrasil
+    | SerpentJewel
+    | SharpKnife
+    | ShellOfReminiscence
+    | SpiritRoot
+    | TearstoneOfBlood
+    | Void'sDust
+    | Warhorse'sYoungHorn
 
 instance _c_ :: Show Material where
     show (Piece c) = show c <> " Piece"
     show (Monument c) = show c <> " Monument"
-    show (Gem c) = "Gem of " <> show c
-    show (MagicGem c) = "Magic Gem of " <> show c
-    show (SecretGem c) = "Secret Gem of " <> show c
+    show (GemOf c) = "Gem of " <> show c
+    show (MagicGemOf c) = "Magic Gem of " <> show c
+    show (SecretGemOf c) = "Secret Gem of " <> show c
     show LampOfEvilSealing = "Lamp of Evil-Sealing"
     show x = unCamel $ G.genericShow x
 

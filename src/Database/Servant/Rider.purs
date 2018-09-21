@@ -60,6 +60,20 @@ riders = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 5]
+              [Piece Rider: 12, Fool'sChain: 22]
+              [Monument Rider: 5, HeartOfTheForeignGod: 2, SerpentJewel: 8]
+              [Monument Rider: 12, HeartOfTheForeignGod: 4, ScarabOfWisdom: 5]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 5]
+              [GemOf Rider: 12]
+              [MagicGemOf Rider: 5]
+              [MagicGemOf Rider: 12, SerpentJewel: 4]
+              [SecretGemOf Rider: 5, SerpentJewel: 8]
+              [SecretGemOf Rider: 12, Fool'sChain: 15]
+              [Fool'sChain: 29, ForbiddenPage: 6]
+              [ForbiddenPage: 18, LampOfEvilSealing: 15]
   }
 , { name:     "Francis Drake"
   , id:       65
@@ -114,6 +128,22 @@ riders = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 5]
+              [Piece Rider: 12, EvilBone: 22]
+              [Monument Rider: 5, Dragon'sReverseScale: 2, DragonFang: 24]
+              [ Monument Rider: 12, Dragon'sReverseScale: 4
+              , HeartOfTheForeignGod: 5
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 5]
+              [GemOf Rider: 12]
+              [MagicGemOf Rider: 5]
+              [MagicGemOf Rider: 12, DragonFang: 12]
+              [SecretGemOf Rider: 5, DragonFang: 24]
+              [SecretGemOf Rider: 12, EvilBone: 15]
+              [GhostLantern: 6, EvilBone: 29]
+              [GhostLantern: 18, HeartOfTheForeignGod: 10]
   }
 , { name:     "Iskandar"
   , id:       108
@@ -165,6 +195,20 @@ riders = Servant <$>
   , align:    [Neutral, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 5]
+              [Piece Rider: 12, MeteorHorseshoe: 8]
+              [Monument Rider: 5, ProofOfHero: 29, OctupletCrystals: 5]
+              [Monument Rider: 12, OctupletCrystals: 10, Warhorse'sYoungHorn: 8]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 5]
+              [GemOf Rider: 12]
+              [MagicGemOf Rider: 5]
+              [MagicGemOf Rider: 12, ProofOfHero: 15]
+              [SecretGemOf Rider: 5, ProofOfHero: 29]
+              [SecretGemOf Rider: 12, MeteorHorseshoe: 5]
+              [MeteorHorseshoe: 10, SeedOfYggdrasil: 8]
+              [SeedOfYggdrasil: 22, PhoenixFeather: 20]
   }
 , { name:     "Queen Medb"
   , id:       99
@@ -220,6 +264,20 @@ riders = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 5]
+              [Piece Rider: 12, SerpentJewel: 6]
+              [Monument Rider: 5, PhoenixFeather: 8, MeteorHorseshoe: 5]
+              [Monument Rider: 12, MeteorHorseshoe: 10, Warhorse'sYoungHorn: 8]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 5]
+              [GemOf Rider: 12]
+              [MagicGemOf Rider: 5]
+              [MagicGemOf Rider: 12, PhoenixFeather: 4]
+              [SecretGemOf Rider: 5, PhoenixFeather: 8]
+              [SecretGemOf Rider: 12, SerpentJewel: 4]
+              [SerpentJewel: 8, GhostLantern: 6]
+              [GhostLantern: 18, HeartOfTheForeignGod: 10]
   }
 , { name:     "Sakata Kintoki (Rider)"
   , id:       115
@@ -273,6 +331,16 @@ riders = Servant <$>
   , align:    [Lawful, Good]
   , limited:  true
   , free:     true
+  , ascendUp: Welfare "Golden Bear Lighter"
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 10]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 10, OctupletCrystals: 4]
+              [SecretGemOf Rider: 4, OctupletCrystals: 8]
+              [SecretGemOf Rider: 10, SeedOfYggdrasil: 5]
+              [SeedOfYggdrasil: 10, MeteorHorseshoe: 5]
+              [MeteorHorseshoe: 15, Warhorse'sYoungHorn: 12]
   }
 , { name:     "Altria Pendragon (Santa Alter)"
   , id:       73
@@ -324,6 +392,16 @@ riders = Servant <$>
   , align:    [Lawful, Good]
   , limited:  true
   , free:     true
+  , ascendUp: Welfare "Bucket of Chicken"
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 10]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 10, DragonFang: 10]
+              [SecretGemOf Rider: 4, DragonFang: 20]
+              [SecretGemOf Rider: 10, MeteorHorseshoe: 4]
+              [MeteorHorseshoe: 8, Dragon'sReverseScale: 2]
+              [Dragon'sReverseScale: 6, HeartOfTheForeignGod: 8]
   }
 , { name:     "Martha"
   , id:       30
@@ -379,6 +457,20 @@ riders = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 10, DragonFang: 15]
+              [Monument Rider: 4, ClawOfChaos: 3, SeedOfYggdrasil: 10]
+              [Monument Rider: 10, ClawOfChaos: 5, Dragon'sReverseScale: 4]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 10]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 10, SeedOfYggdrasil: 5]
+              [SecretGemOf Rider: 4, SeedOfYggdrasil: 10]
+              [SecretGemOf Rider: 10, DragonFang: 10]
+              [PhoenixFeather: 4, DragonFang: 20]
+              [PhoenixFeather: 12, Dragon'sReverseScale: 8]
   }
 , { name:     "Mordred (Rider)"
   , id:       132
@@ -432,6 +524,20 @@ riders = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 10, ShellOfReminiscence: 6]
+              [Monument Rider: 4, GreatKnightMedal: 16, DragonFang: 10]
+              [Monument Rider: 10, DragonFang: 20, Dragon'sReverseScale: 4]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 10]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 10, GreatKnightMedal: 8]
+              [SecretGemOf Rider: 4, GreatKnightMedal: 16]
+              [SecretGemOf Rider: 10, ShellOfReminiscence: 4]
+              [ShellOfReminiscence: 8, HomunculusBaby: 5]
+              [HomunculusBaby: 15, TearstoneOfBlood: 12]
   }
 , { name:     "Marie Antoinette"
   , id:       29
@@ -488,6 +594,20 @@ riders = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 10, PhoenixFeather: 5]
+              [Monument Rider: 4, MeteorHorseshoe: 4, SerpentJewel: 7]
+              [Monument Rider: 10, MeteorHorseshoe: 8, EternalGear: 10]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 10]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 10, SerpentJewel: 4]
+              [SecretGemOf Rider: 4, SerpentJewel: 7]
+              [SecretGemOf Rider: 10, PhoenixFeather: 4]
+              [PhoenixFeather: 7, HeartOfTheForeignGod: 2]
+              [EternalGear: 20, HeartOfTheForeignGod: 6]
   }
 , { name:     "Anne Bonny & Mary Read"
   , id:       66
@@ -539,6 +659,20 @@ riders = Servant <$>
   , align:    [Chaotic, Evil, Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 10, HomunculusBaby: 6]
+              [Monument Rider: 4, GhostLantern:8, EvilBone: 12]
+              [Monument Rider: 10, ClawOfChaos: 6, EvilBone: 24]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 10]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 10, GhostLantern: 4]
+              [SecretGemOf Rider: 4, GhostLantern: 8]
+              [SecretGemOf Rider: 10, HomunculusBaby: 4]
+              [Void'sDust: 10, HomunculusBaby: 8]
+              [Void'sDust: 30, ClawOfChaos: 12]
   }
 , { name:     "Astolfo"
   , id:       94
@@ -593,6 +727,20 @@ riders = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 10, MeteorHorseshoe: 6]
+              [Monument Rider: 4, OctupletCrystals: 8, PhoenixFeather: 4]
+              [Monument Rider: 10, ClawOfChaos: 6, PhoenixFeather: 7]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 10]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 10, OctupletCrystals: 4]
+              [SecretGemOf Rider: 4, OctupletCrystals: 8]
+              [SecretGemOf Rider: 10, MeteorHorseshoe: 4]
+              [ForbiddenPage: 5, MeteorHorseshoe: 8]
+              [ForbiddenPage: 15, SeedOfYggdrasil: 24]
   }
 , { name:     "Georgios"
   , id:       24
@@ -648,6 +796,21 @@ riders = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 3]
+              [Piece Rider: 6, ProofOfHero: 11]
+              [Monument Rider: 3, PhoenixFeather: 4, ForbiddenPage: 3]
+              [Monument Rider: 6, ForbiddenPage: 5, MeteorHorseshoe: 6]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 3]
+              [GemOf Rider: 6]
+              [MagicGemOf Rider: 3]
+              [MagicGemOf Rider: 6, PhoenixFeather: 2]
+              [SecretGemOf Rider: 3, PhoenixFeather: 4]
+              [SecretGemOf Rider: 6, ProofOfHero: 8]
+              [ProofOfHero: 15, EternalGear: 3]
+              [EternalGear: 9, MeteorHorseshoe: 12]
+
   }
 , { name:     "Ushiwakamaru"
   , id:       27
@@ -699,6 +862,20 @@ riders = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 8, ProofOfHero: 15]
+              [Monument Rider: 4, MeteorHorseshoe: 7, GhostLantern: 4]
+              [Monument Rider: 8, GhostLantern: 7, OctupletCrystals: 8]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 8]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 8, MeteorHorseshoe: 4]
+              [SecretGemOf Rider: 4, MeteorHorseshoe: 7]
+              [SecretGemOf Rider: 8, ProofOfHero: 10]
+              [ProofOfHero: 20, EternalGear: 4]
+              [EternalGear: 12, OctupletCrystals: 16]
   }
 , { name:     "Medusa"
   , id:       23
@@ -752,6 +929,20 @@ riders = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 8, SerpentJewel: 4]
+              [Monument Rider: 4, Void'sDust: 13, MeteorHorseshoe: 4]
+              [Monument Rider: 8, MeteorHorseshoe: 7, PhoenixFeather: 7]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 8]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 8, Void'sDust: 7]
+              [SecretGemOf Rider: 4, Void'sDust: 13]
+              [SecretGemOf Rider: 8, SerpentJewel: 3]
+              [SerpentJewel: 6, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 5, PhoenixFeather: 13]
   }
 , { name:     "Edward Teach"
   , id:       25
@@ -811,6 +1002,20 @@ riders = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 3]
+              [Piece Rider: 6, EvilBone: 11]
+              [Monument Rider: 3, OctupletCrystals: 5, ForbiddenPage: 3]
+              [Monument Rider: 6, ForbiddenPage: 5, GhostLantern: 6]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 3]
+              [GemOf Rider: 6]
+              [MagicGemOf Rider: 3]
+              [MagicGemOf Rider: 6, OctupletCrystals: 3]
+              [SecretGemOf Rider: 3, OctupletCrystals: 5]
+              [SecretGemOf Rider: 6, EvilBone: 8]
+              [EvilBone: 15, HomunculusBaby: 3]
+              [HomunculusBaby: 9, GhostLantern: 15]
   }
 , { name:     "Alexander"
   , id:       28
@@ -861,6 +1066,20 @@ riders = Servant <$>
   , align:    [Neutral, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 8, MeteorHorseshoe: 5]
+              [Monument Rider: 4, PhoenixFeather: 3, OctupletCrystals: 7]
+              [Monument Rider: 8, PhoenixFeather: 6, ProofOfHero: 24]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 8]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 8, OctupletCrystals: 4]
+              [SecretGemOf Rider: 4, OctupletCrystals: 7]
+              [SecretGemOf Rider: 8, MeteorHorseshoe: 4]
+              [ClawOfChaos: 3, MeteorHorseshoe: 7]
+              [ClawOfChaos: 8, ProofOfHero: 48]
   }
 , { name:     "Boudica"
   , id:       26
@@ -910,5 +1129,19 @@ riders = Servant <$>
   , align:    [Neutral, Good]
   , limited:  false
   , free:     true
+  , ascendUp: Ascension
+              [Piece Rider: 4]
+              [Piece Rider: 8, PhoenixFeather: 4]
+              [Monument Rider: 4, EvilBone: 20, MeteorHorseshoe: 4]
+              [Monument Rider: 8, MeteorHorseshoe: 7, Void'sDust: 16]
+  , skillUp:  Reinforcement
+              [GemOf Rider: 4]
+              [GemOf Rider: 8]
+              [MagicGemOf Rider: 4]
+              [MagicGemOf Rider: 8, EvilBone: 10]
+              [SecretGemOf Rider: 4, EvilBone: 20]
+              [SecretGemOf Rider: 8, PhoenixFeather: 3]
+              [PhoenixFeather: 6, SerpentJewel: 4]
+              [SerpentJewel: 10, Void'sDust: 32]
   }
 ]

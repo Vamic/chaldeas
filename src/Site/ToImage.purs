@@ -56,6 +56,9 @@ instance _5_ :: ToImage CraftEssence where
 instance _6_ :: ToImage Icon where
     toImagePath = ImagePath "Skill" <<< String.drop 4 <<< G.genericShow
 
+instance _7_ :: ToImage Material where
+    toImagePath = ImagePath "Material" <<< show
+
 instance _10_ :: ToImage BuffEffect where
     toImagePath (AlignAffinity _) = toImagePath AttackUp
     toImagePath (AttackVs _)      = toImagePath AttackUp

@@ -75,14 +75,13 @@ splitAny side xs s = go <$> indices
             <$> String.indexOf (Pattern pattern) s
 
 wiki :: ∀ a. Show a => Tuple a MaybeRank -> Aff (Tuple a Wiki)
-wiki (x : mRank) = Tuple x <<< wikify <<<
-                   _.body <$> Affjax.get ResponseFormat.string encode
+wiki (x : mRank) = Tuple x <<< wikify <<< _.body <$> visitUrl (show x)
   where
+    visitUrl = Affjax.get ResponseFormat.string <<< append wikiRoot <<< 
+               Global.unsafeEncodeURIComponent <<< translate
     wikify (Right obj) = toWiki obj mRank
     wikify (Left err)  = Wiki $ Map.fromFoldable
                          [("err" : [Affjax.printResponseFormatError err])]
-    encode  = append wikiRoot <<< Global.unsafeEncodeURIComponent <<<
-              translate $ show x
 
 printBool :: Boolean -> String
 printBool true  = "Yes"

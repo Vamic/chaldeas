@@ -57,6 +57,20 @@ extras = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              (pairWith 5 Piece    [Saber, Archer, Lancer])
+              (pairWith 5 Piece    [Rider, Caster, Assassin, Berserker])
+              (pairWith 5 Monument [Saber, Archer, Lancer])
+              (pairWith 5 Monument [Rider, Caster, Assassin, Berserker])
+  , skillUp:  Reinforcement
+              (pairWith 5 GemOf       [Saber, Archer, Lancer])
+              (pairWith 5 GemOf       [Rider, Caster, Assassin, Berserker])
+              (pairWith 5 MagicGemOf  [Saber, Archer, Lancer])
+              (pairWith 5 MagicGemOf  [Rider, Caster, Assassin, Berserker])
+              (pairWith 5 SecretGemOf [Saber, Archer, Lancer])
+              (pairWith 5 SecretGemOf [Rider, Caster, Assassin, Berserker])
+              [HeartOfTheForeignGod: 5]
+              [HeartOfTheForeignGod: 15]
   }
 , { name:     "Amakusa Shirou"
   , id:       93
@@ -112,6 +126,20 @@ extras = Servant <$>
   , align:    [Lawful, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              (pairWith 5 Piece    [Lancer, Caster, Assassin])
+              (pairWith 5 Piece    [Saber, Archer, Rider, Berserker])
+              (pairWith 5 Monument [Rider, Caster, Assassin])
+              (pairWith 5 Monument [Saber, Archer, Lancer, Berserker])
+  , skillUp:  Reinforcement
+              (pairWith 5 GemOf       [Rider, Caster, Assassin])
+              (pairWith 5 GemOf       [Saber, Lancer, Archer, Berserker])
+              (pairWith 5 MagicGemOf  [Rider, Caster, Assassin])
+              (pairWith 5 MagicGemOf  [Saber, Lancer, Archer, Berserker])
+              (pairWith 5 SecretGemOf [Rider, Caster, Assassin])
+              (pairWith 5 SecretGemOf [Saber, Lancer, Archer, Berserker])
+              [HeartOfTheForeignGod: 5]
+              [HeartOfTheForeignGod: 15]
   }
 , { name:     "Jeanne d'Arc (Alter)"
   , id:       106
@@ -170,6 +198,20 @@ extras = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [ProofOfHero: 10, Void'sDust: 10]
+              [OctupletCrystals: 10, EternalGear: 10]
+              [PhoenixFeather: 10, ClawOfChaos: 10]
+              [TearstoneOfBlood: 10, HeartOfTheForeignGod: 10]
+  , skillUp:  Reinforcement
+              [DragonFang: 10]
+              [EvilBone: 10]
+              [SeedOfYggdrasil: 12]
+              [ForbiddenPage: 12]
+              [SerpentJewel: 12]
+              [GhostLantern: 15]
+              [Warhorse'sYoungHorn: 15]
+              [HeartOfTheForeignGod: 15]
   }
 , { name:     "Edmond Dantes"
   , id:       96
@@ -227,6 +269,20 @@ extras = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [EvilBone: 10, OctupletCrystals: 10]
+              [SerpentJewel: 10, ForbiddenPage: 10]
+              [Void'sDust: 10, EternalGear: 10]
+              [PhoenixFeather: 10, HeartOfTheForeignGod: 10]
+  , skillUp:  Reinforcement
+              [ProofOfHero: 10]
+              [SeedOfYggdrasil: 10]
+              [DragonFang: 12]
+              [GhostLantern: 12]
+              [MeteorHorseshoe: 12]
+              [HomunculusBaby: 15]
+              [ClawOfChaos: 15]
+              [Dragon'sReverseScale: 15]
   }
 , { name:     "Martha (Ruler)"
   , id:       135
@@ -284,6 +340,20 @@ extras = Servant <$>
   , align:    [Lawful, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              (pairWith 4 Piece [Saber, Rider, Berserker])
+              (pairWith 4 Piece [Archer, Lancer, Caster, Assassin])
+              (pairWith 4 Monument [Saber, Rider, Berserker])
+              (pairWith 4 Monument [Archer, Lancer, Caster, Assassin])
+  , skillUp:  Reinforcement
+              (pairWith 4 GemOf [Saber, Rider, Berserker])
+              (pairWith 4 GemOf [Archer, Lancer, Caster, Assassin])
+              (pairWith 4 MagicGemOf [Saber, Rider, Berserker])
+              (pairWith 4 MagicGemOf [Archer, Lancer, Caster, Assassin])
+              (pairWith 4 SecretGemOf [Saber, Rider, Berserker])
+              (pairWith 4 SecretGemOf [Archer, Lancer, Caster, Assassin])
+              [TearstoneOfBlood: 6]
+              [Dragon'sReverseScale: 12]
   }
 , { name:     "Mash Kyrielight"
   , id:       1
@@ -341,6 +411,20 @@ extras = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Clear 
+              "Septem" 
+              "London pt. 4, Arrow II"
+              "Camelot pt. 15, Arrow I"
+              "Babylonia"
+  , skillUp:  Reinforcement
+              [ProofOfHero: 5]
+              [DragonFang: 5]
+              [SeedOfYggdrasil: 5]
+              [OctupletCrystals: 5]
+              [Void'sDust: 5]
+              [EternalGear: 5]
+              [PhoenixFeather: 5]
+              [Dragon'sReverseScale: 5]
   }
 , { name:     "Angra Mainyu"
   , id:       107
@@ -404,5 +488,19 @@ extras = Servant <$>
   , align:    [Chaotic, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [ProofOfHero: 10, EvilBone: 10]
+              [Void'sDust: 10, BlackBeastGrease: 10]
+              [EternalGear: 10, TearstoneOfBlood: 10]
+              [SpiritRoot: 10, Dragon'sReverseScale: 10]
+  , skillUp:  Reinforcement
+              [ProofOfHero: 10]
+              [Void'sDust: 10]
+              [EvilBone: 12]
+              [HomunculusBaby: 12]
+              [GhostLantern: 12]
+              [EternalGear: 15]
+              [TearstoneOfBlood: 15]
+              [SpiritRoot: 15]
   }
 ]

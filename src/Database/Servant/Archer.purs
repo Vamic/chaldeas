@@ -53,8 +53,24 @@ archers = Servant <$>
   , traits:   [Male, Divine, EnumaElish, King]
   , death:    31.5
   , align:    [Chaotic, Good]
-  , limited: true
-  , free:    false
+  , limited:  true
+  , free:     false
+  , ascendUp: Ascension 
+              [Piece Archer: 5]
+              [Piece Archer: 12, SerpentJewel: 6]
+              [Monument Archer: 5, ProofOfHero: 29, Dragon'sReverseScale: 2]
+              [ Monument Archer: 12, Dragon'sReverseScale: 4
+              , HeartOfTheForeignGod: 5 
+              ]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 5]
+              [GemOf Archer: 12]
+              [MagicGemOf Archer: 5]
+              [MagicGemOf Archer: 12, ProofOfHero: 15]
+              [SecretGemOf Archer: 5, ProofOfHero: 29]
+              [SecretGemOf Archer: 12, SerpentJewel: 4]
+              [SerpentJewel: 8, Void'sDust: 12]
+              [Void'sDust: 36, HeartOfTheForeignGod: 10]
   }
 , { name:     "Altria Pendragon (Archer)"
   , id:       129
@@ -112,6 +128,20 @@ archers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 5]
+              [Piece Archer: 12, ShellOfReminiscence: 8]
+              [Monument Archer: 5, DragonFang: 24, GreatKnightMedal: 10]
+              [Dragon'sReverseScale: 5]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 5]
+              [GemOf Archer: 12]
+              [MagicGemOf Archer: 5]
+              [MagicGemOf Archer: 12, DragonFang: 12]
+              [SecretGemOf Archer: 5, DragonFang: 24]
+              [SecretGemOf Archer: 12, ShellOfReminiscence: 5]
+              [ShellOfReminiscence: 10, Warhorse'sYoungHorn: 4]
+              [Warhorse'sYoungHorn: 11, SpiritRoot: 10]
   }
 , { name:     "Nikola Tesla"
   , id:       77
@@ -170,6 +200,21 @@ archers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 5]
+              [Piece Archer: 12, Void'sDust: 15]
+              [Monument Archer: 5, ForbiddenPage: 10, EternalGear: 5]
+              [Monument Archer: 12, EternalGear: 10, GhostLantern: 12]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 5]
+              [GemOf Archer: 12]
+              [MagicGemOf Archer: 5]
+              [MagicGemOf Archer: 12, ForbiddenPage: 5]
+              [SecretGemOf Archer: 5, ForbiddenPage: 10]
+              [SecretGemOf Archer: 12, Void'sDust: 10]
+              [Void'sDust: 20, PhoenixFeather: 5]
+              [PhoenixFeather: 15, GhostLantern: 24]
+
   }
 , { name:     "Orion"
   , id:       60
@@ -227,6 +272,20 @@ archers = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 5]
+              [Piece Archer: 12, HeartOfTheForeignGod: 3]
+              [Monument Archer: 5, SerpentJewel: 8, ClawOfChaos: 3]
+              [Monument Archer: 12, ClawOfChaos: 6, PhoenixFeather: 10]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 5]
+              [GemOf Archer: 12]
+              [MagicGemOf Archer: 5]
+              [MagicGemOf Archer: 12, SerpentJewel: 4]
+              [SecretGemOf Archer: 5, SerpentJewel: 8]
+              [SecretGemOf Archer: 12, HeartOfTheForeignGod: 2]
+              [HeartOfTheForeignGod: 4, Void'sDust: 12]
+              [Void'sDust: 36, PhoenixFeather: 20]
   }
 , { name:     "Arjuna"
   , id:       84
@@ -284,6 +343,20 @@ archers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 5]
+              [Piece Archer: 12, ProofOfHero: 22]
+              [Monument Archer: 5, PhoenixFeather: 8, SerpentJewel: 4]
+              [Monument Archer: 12, SerpentJewel: 8, HeartOfTheForeignGod: 5]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 5]
+              [GemOf Archer: 12]
+              [MagicGemOf Archer: 5]
+              [MagicGemOf Archer: 12, PhoenixFeather: 4]
+              [SecretGemOf Archer: 5, PhoenixFeather: 8]
+              [SecretGemOf Archer: 12, ProofOfHero: 15]
+              [ProofOfHero: 29, SeedOfYggdrasil: 8]
+              [SeedOfYggdrasil: 22, HeartOfTheForeignGod: 10]
   }
 , { name:     "Chloe von Einzbern"
   , id:       137
@@ -342,6 +415,16 @@ archers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  true
   , free:     true
+  , ascendUp: Welfare "Heart Bracelet"
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 10]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 10, EternalGear: 4]
+              [SecretGemOf Archer: 4, EternalGear: 8]
+              [SecretGemOf Archer: 10, HomunculusBaby: 4]
+              [HomunculusBaby: 8, TearstoneOfBlood: 3]
+              [TearstoneOfBlood: 9, HeartOfTheForeignGod: 8]
   }
 , { name:     "Oda Nobunaga"
   , id:       69
@@ -393,6 +476,16 @@ archers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  true
   , free:     true
+  , ascendUp: Welfare "Golden Skull"
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 10]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 10, EvilBone: 12]
+              [SecretGemOf Archer: 4, EvilBone: 24]
+              [SecretGemOf Archer: 10, OctupletCrystals: 4]
+              [OctupletCrystals: 8, ClawOfChaos: 3]
+              [ClawOfChaos: 9, HeartOfTheForeignGod: 8]
   }
 , { name:     "Tristan"
   , id:       122
@@ -451,6 +544,20 @@ archers = Servant <$>
   , align:    [Lawful, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 10, GreatKnightMedal: 12]
+              [Monument Archer: 4, PhoenixFeather: 7, ForbiddenPage: 4]
+              [Monument Archer: 10, ForbiddenPage: 8, TearstoneOfBlood: 6]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 10]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 10, PhoenixFeather: 4]
+              [SecretGemOf Archer: 4, PhoenixFeather: 7]
+              [SecretGemOf Archer: 10, GreatKnightMedal: 8]
+              [GreatKnightMedal: 16, GhostLantern: 5]
+              [GhostLantern: 15, Fool'sChain: 60]
   }
 , { name:     "EMIYA"
   , id:       11
@@ -505,6 +612,20 @@ archers = Servant <$>
   , align:    [Neutral, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 10, ProofOfHero: 18]
+              [Monument Archer: 4, HeartOfTheForeignGod: 2, EternalGear: 8]
+              [Monument Archer: 10, HeartOfTheForeignGod: 4, Void'sDust: 20]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 10]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 10, EternalGear: 4]
+              [SecretGemOf Archer: 4, EternalGear: 8]
+              [SecretGemOf Archer: 10, ProofOfHero: 12]
+              [PhoenixFeather: 4, ProofOfHero: 24]
+              [PhoenixFeather: 12, Void'sDust: 40]
   }
 , { name:     "Atalante"
   , id:       14
@@ -556,6 +677,20 @@ archers = Servant <$>
   , align:    [Neutral, Evil]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 10, PhoenixFeather: 5]
+              [Monument Archer: 4, DragonFang: 32]
+              [Monument Archer: 10, SerpentJewel: 7, SeedOfYggdrasil: 12]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 10]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 10, DragonFang: 10]
+              [SecretGemOf Archer: 4, DragonFang: 20]
+              [SecretGemOf Archer: 10, PhoenixFeather: 4]
+              [PhoenixFeather: 7, Void'sDust: 10]
+              [Void'sDust: 30, SeedOfYggdrasil: 24]
   }
 , { name:     "Anne Bonny & Mary Read (Archer)"
   , id:       131
@@ -614,6 +749,20 @@ archers = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  true
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 10, SerpentJewel: 5]
+              [Monument Archer: 4, OctupletCrystals: 8, ShellOfReminiscence: 4]
+              [Monument Archer: 10, ShellOfReminiscence: 8, ClawOfChaos: 6] 
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 10]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 10, OctupletCrystals: 4]
+              [SecretGemOf Archer: 4, OctupletCrystals: 8]
+              [SecretGemOf Archer: 10, SerpentJewel: 4]
+              [SerpentJewel: 7, Fool'sChain: 15]
+              [Fool'sChain: 45, BlackBeastGrease: 12]
   }
 , { name:     "Robin Hood"
   , id:       13
@@ -668,6 +817,20 @@ archers = Servant <$>
   , align:    [Neutral, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 8, SeedOfYggdrasil: 6]
+              [Monument Archer: 4, SerpentJewel: 6, DragonFang: 8]
+              [Monument Archer: 8, DragonFang: 16, Void'sDust: 16]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 8]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 8, SerpentJewel: 3]
+              [SecretGemOf Archer: 4, SerpentJewel: 6]
+              [SecretGemOf Archer: 8, SeedOfYggdrasil: 4]
+              [SeedOfYggdrasil: 8, PhoenixFeather: 4]
+              [PhoenixFeather: 10, Void'sDust: 32]
   }
 , { name:     "Euryale"
   , id:       15
@@ -724,6 +887,20 @@ archers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 8, SerpentJewel: 4]
+              [Monument Archer: 4, Dragon'sReverseScale: 3, Void'sDust: 7]
+              [Monument Archer: 8, Void'sDust: 13, HeartOfTheForeignGod: 4]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 8]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 8, Dragon'sReverseScale: 2]
+              [SecretGemOf Archer: 4, Dragon'sReverseScale: 3]
+              [SecretGemOf Archer: 8, SerpentJewel: 3]
+              [SerpentJewel: 6, ClawOfChaos: 3]
+              [ClawOfChaos: 8, HeartOfTheForeignGod: 7]
   }
 , { name:     "Arash"
   , id:       16
@@ -736,7 +913,7 @@ archers = Servant <$>
               , max:   { atk: 5816, hp: 7122 }
               , grail: { atk: 9037, hp: 10979 }
               }
-  , skills:   [ { name:   "Toughness "
+  , skills:   [ { name:   "Toughness"
                 , rank:   EX
                 , icon:   IconShieldUp
                 , cd:     7
@@ -779,6 +956,20 @@ archers = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 2]
+              [Piece Archer: 4, SeedOfYggdrasil: 3]
+              [Monument Archer: 2, ProofOfHero: 10, OctupletCrystals: 2]
+              [Monument Archer: 4, OctupletCrystals: 4, Void'sDust: 8]
+  , skillUp:  Reinforcement 
+              [GemOf Archer: 2]
+              [GemOf Archer: 4]
+              [MagicGemOf Archer: 2]
+              [MagicGemOf Archer: 4, ProofOfHero: 5]
+              [SecretGemOf Archer: 2, ProofOfHero: 10]
+              [SecretGemOf Archer: 4, SeedOfYggdrasil: 2]
+              [SeedOfYggdrasil: 4, HomunculusBaby: 2]
+              [HomunculusBaby: 2, Void'sDust: 16]
   }
 , { name:     "David"
   , id:       63
@@ -835,6 +1026,20 @@ archers = Servant <$>
   , align:    [Lawful, Balanced]
   , limited:  false
   , free:     true
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 8, Void'sDust: 10]
+              [Monument Archer: 4, HomunculusBaby: 7, HeartOfTheForeignGod: 2]
+              [Monument Archer: 8, HeartOfTheForeignGod: 3, OctupletCrystals: 8]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 8]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 8, HomunculusBaby: 4]
+              [SecretGemOf Archer: 4, HomunculusBaby: 7]
+              [SecretGemOf Archer: 8, Void'sDust: 7]
+              [Void'sDust: 13, ProofOfHero: 12]
+              [ProofOfHero: 36, OctupletCrystals: 16]
   }
 , { name:     "Gilgamesh (Child)"
   , id:       95
@@ -888,6 +1093,20 @@ archers = Servant <$>
   , align:    [Chaotic, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 8, SeedOfYggdrasil: 6]
+              [Monument Archer: 4, SerpentJewel: 6, Dragon'sReverseScale: 2]
+              [Monument Archer: 8, Dragon'sReverseScale: 3, ProofOfHero: 24]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 8]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 8, SerpentJewel: 3]
+              [SecretGemOf Archer: 4, SerpentJewel: 6]
+              [SecretGemOf Archer: 8, SeedOfYggdrasil: 4]
+              [SeedOfYggdrasil: 8, Void'sDust: 8]
+              [Void'sDust: 24, PhoenixFeather: 13]
   }
 , { name:     "Billy the Kid"
   , id:       105
@@ -941,6 +1160,20 @@ archers = Servant <$>
   , align:    [Chaotic, Balanced]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 8, MeteorHorseshoe: 5]
+              [Monument Archer: 4, EvilBone: 20, PhoenixFeather: 3]
+              [Monument Archer: 8, PhoenixFeather: 6, ClawOfChaos: 5]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 8]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 8, EvilBone: 10]
+              [SecretGemOf Archer: 4, EvilBone: 20]
+              [SecretGemOf Archer: 8, MeteorHorseshoe: 4]
+              [MeteorHorseshoe: 7, Void'sDust: 8]
+              [Void'sDust: 24, TearstoneOfBlood: 10]
   }
 , { name:     "Tawara Touta"
   , id:       125
@@ -994,5 +1227,20 @@ archers = Servant <$>
   , align:    [Neutral, Good]
   , limited:  false
   , free:     false
+  , ascendUp: Ascension
+              [Piece Archer: 4]
+              [Piece Archer: 10, SeedOfYggdrasil: 6]
+              [Monument Archer: 4, PhoenixFeather: 3, ProofOfHero: 20]
+              [Monument Archer: 10, SpiritRoot: 4, PhoenixFeather: 5]
+  , skillUp:  Reinforcement
+              [GemOf Archer: 4]
+              [GemOf Archer: 8]
+              [MagicGemOf Archer: 4]
+              [MagicGemOf Archer: 8, ProofOfHero: 10]
+              [SecretGemOf Archer: 4, ProofOfHero: 20]
+              [SecretGemOf Archer: 8, SeedOfYggdrasil: 4]
+              [SeedOfYggdrasil: 8, OctupletCrystals: 4]
+              [OctupletCrystals: 12, ScarabOfWisdom: 7]
+
   }
 ]

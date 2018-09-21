@@ -345,7 +345,7 @@ withCost 0    = identity
 withCost cost = cons $ materialEl (QP : cost)
 
 materialEl :: ∀ a. (Material : Int) -> HTML a (Query Unit)
-materialEl (mat : amt) = H.div_ [ imageLink mat, _span $ "x" <> commas amt ]
+materialEl (mat : amt) = H.div_ [ imageLink mat, _span $ "×" <> commas amt ]
   where
     imageLink
       | ignoreMat mat = toImage

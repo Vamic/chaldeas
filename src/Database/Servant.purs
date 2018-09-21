@@ -3,7 +3,7 @@
 -- be found in the [Database.Servant](./Servant) _folder_, which has a
 -- separate file for each Class.
 module Database.Servant
-  ( Servant(..), maxLevel
+  ( Servant(..)
   , Deck(..)
   , NoblePhantasm
   , Gen
@@ -117,14 +117,6 @@ getMaterials (Servant {ascendUp, skillUp}) = nub $ fst <$> ascendUps <> skillUps
         _                 -> []
     skillUps = case skillUp of
         Reinforcement a b c d e f g h -> join [a, b, c, d, e, f, g, h]
-
-maxLevel :: Servant -> Int
-maxLevel (Servant {rarity: 5}) = 90
-maxLevel (Servant {rarity: 4}) = 80
-maxLevel (Servant {rarity: 3}) = 70
-maxLevel (Servant {rarity: 2}) = 65
-maxLevel (Servant {rarity: 1}) = 60
-maxLevel (Servant {rarity: _}) = 65
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

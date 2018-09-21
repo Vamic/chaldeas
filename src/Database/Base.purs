@@ -7,7 +7,7 @@ module Database.Base
   , Stat(..), showStat, addStats
   , Trait(..)
   , Icon(..)
-  , Material(..)
+  , Material(..), ignoreMat
   ) where
 
 import StandardLibrary
@@ -163,12 +163,12 @@ data Icon
     | IconYinYang
 
 data Material
-    = Piece Class
+    = QP
+    | Piece Class
     | Monument Class
     | GemOf Class
     | MagicGemOf Class
     | SecretGemOf Class
-    | BellRingingBranch
     | BlackBeastGrease
     | ClawOfChaos
     | CrystallizedLore
@@ -190,12 +190,22 @@ data Material
     | ScarabOfWisdom
     | SeedOfYggdrasil
     | SerpentJewel
-    | SharpKnife
     | ShellOfReminiscence
     | SpiritRoot
     | TearstoneOfBlood
     | Void'sDust
     | Warhorse'sYoungHorn
+
+-- | Blacklisted `Material`s
+ignoreMat :: Material -> Boolean
+ignoreMat QP               = true
+ignoreMat (Piece _)        = true
+ignoreMat (Monument _)     = true
+ignoreMat (GemOf _)        = true
+ignoreMat (MagicGemOf _)   = true
+ignoreMat (SecretGemOf _)  = true
+ignoreMat CrystallizedLore = true
+ignoreMat _                = false
 
 instance _c_ :: Show Material where
     show (Piece c) = show c <> " Piece"

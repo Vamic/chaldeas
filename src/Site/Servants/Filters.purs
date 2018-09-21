@@ -102,6 +102,6 @@ getFilters _ f@FilterAction       = matchFilter f
 getFilters _ f@FilterDamage       = matchFilter f
                                     <$> filter isDamage
                                         getAll :: Array InstantEffect
-getFilters _ f@FilterMaterial     = matchFilter f
+getFilters _ f@FilterMaterial     = imageFilter f
                                     <$> getAll :: Array Material
 getFilters today f               = getExtraFilters today f

@@ -12,6 +12,7 @@ import Halogen (Component, ComponentDSL, ComponentHTML, component)
 import Halogen.HTML (HTML)
 
 import Database
+import Printing
 import Site.Algebra
 import Site.Common
 import Site.CraftEssences.Filters
@@ -96,8 +97,8 @@ modal prefs
     , H.article_ $
       [ portrait true prefs {label: "", obj: ce'}
       , _table ["", "ATK", "HP"]
-        [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
-        , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
+        [ H.tr_ [ _th "Base",  _td $ commas base.atk,  _td $ commas base.hp ]
+        , H.tr_ [ _th "Max",   _td $ commas max.atk,   _td $ commas max.hp ]
         ]
       , toImage ce.icon
       , _h 2 "Effects"

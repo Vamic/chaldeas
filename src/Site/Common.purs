@@ -61,9 +61,6 @@ mode prefs
   | prefer prefs NightMode = "dark"
   | otherwise              = "light"
 
-places' :: Int -> String
-places' = places 0 <<< Int.toNumber
-
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
 toCell isPercent = _td <<< (isPercent ? flip append "%") <<<
                    Format.toString <<< roundTo 2

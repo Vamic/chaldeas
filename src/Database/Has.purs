@@ -25,12 +25,9 @@ class (Show a, G.BoundedEnum b, Show b) <= Has a b where
     has :: b -> Boolean -> a -> Boolean
 
 instance _c_ :: Has Servant Material where
-    has (Piece _)       = const $ const false
-    has (Monument _)    = const $ const false
-    has (GemOf _)       = const $ const false
-    has (MagicGemOf _)  = const $ const false
-    has (SecretGemOf _) = const $ const false
-    has x               = const $ elem x <<< getMaterials
+    has x 
+      | ignoreMat x = const $ const false
+      | otherwise   = const $ elem x <<< getMaterials
 instance _d_ :: Has Servant Trait where
     has x _ (Servant s) = x `elem` s.traits
 instance _e_ :: Has Servant Alignment where

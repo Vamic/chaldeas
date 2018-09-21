@@ -2,11 +2,12 @@ module Site.ToImage where
 
 import StandardLibrary
 import Generic                 as G
-import Data.String             as String
+import Halogen.HTML.Events     as E
 import Halogen.HTML            as H
 import Halogen.HTML.Properties as P
+import Data.String             as String
 
-import Halogen.HTML (HTML)
+import Halogen.HTML (HTML, ClassName(..))
 
 import Database
 import MyServant
@@ -22,6 +23,17 @@ toImage x =
     ]
     where
       ImagePath dir file = toImagePath x
+
+toImageLink :: ∀ t a b. ToImage t => (Unit -> b Unit) -> t -> HTML a (b Unit)
+toImageLink link x =
+    H.img
+    [ P.src $ "img/" <> dir <> "/" <> fileName file <> ".png"
+    , P.title $ unCamel file
+    , P.class_ $ ClassName "link"
+    , E.onClick $ E.input_ link
+    ]
+  where
+    ImagePath dir file = toImagePath x
 
 toThumbnail :: ∀ t a b. ToImage t => t -> HTML a b
 toThumbnail x =

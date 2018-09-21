@@ -18,6 +18,7 @@ import Data.Date (Date)
 import Sorting
 import Database
 import MyServant
+import MyServant.Leveling
 import Site.Algebra
 import Site.Common
 import Site.Eval
@@ -30,19 +31,7 @@ import Printing
 
 type Message = SiteMessage Servant CraftEssence
 type Query = SiteQuery Servant MyServant CraftEssence
-{-
-type SiteState a b c
-    = { filters  :: Array (Filter a)
-      , exclude  :: Array (Filter a)
-      , matchAny :: Boolean
-      , focus    :: Maybe b
-      , sortBy   :: SortBy
-      , prefs    :: Preferences
-      , sorted   :: Array { label :: String, obj :: b }
-      , listing  :: Array { label :: String, obj :: b }
-      | c
-      }
--}
+
 type State = SiteState Servant MyServant 
              ( mineOnly :: Boolean
              , ascent   :: Int
@@ -192,9 +181,9 @@ modal prefs ascent focus@(Just ms') = H.div
     , H.article_ $
       [ portrait true prefs ascent { label: "", obj: ms' }
       , _table ["", "ATK", "HP"]
-        [ H.tr_ [ _th "Base",  _td $ places' base.atk,  _td $ places' base.hp ]
-        , H.tr_ [ _th "Max",   _td $ places' max.atk,   _td $ places' max.hp ]
-        , H.tr_ [ _th "Grail", _td $ places' grail.atk, _td $ places' grail.hp ]
+        [ H.tr_ [ _th "Base",  _td $ commas base.atk,  _td $ commas base.hp ]
+        , H.tr_ [ _th "Max",   _td $ commas max.atk,   _td $ commas max.hp ]
+        , H.tr_ [ _th "Grail", _td $ commas grail.atk, _td $ commas grail.hp ]
         ]
       , _table ["", "Q", "A", "B", "EX", "NP"]
         [ H.tr_
@@ -221,8 +210,6 @@ modal prefs ascent focus@(Just ms') = H.div
         , _tr "NP/Hit"      [ H.text $ show s.gen.npAtk <> "%" ]
         , _tr "NP/Defend"   [ H.text $ show s.gen.npDef <> "%" ]
         , _tr "Death Rate"  [ H.text $ show s.death ]
-        --, _tr "Stars/Quick" [ H.text $ places 2 (starsPer s' Quick) ]
-        --, _tr "NP/Arts"     [ H.text $ places 2 (npPer s' Arts) <> "%" ]
         ]
       , H.form [_i "myservant"] myServantBox
       , _h 2 "Noble Phantasm"
@@ -253,6 +240,14 @@ modal prefs ascent focus@(Just ms') = H.div
       , bondEl $ getBond s'
       , _h 2 "Traits"
       , H.section_ <<< intersperse (H.text ", ") $ link FilterTrait <$> s.traits
+      , _h 2 "Ascension"
+      , H.table [_c "materials"] $ 
+        flip Array.mapWithIndex (ascendUpEl s.ascendUp) \i el ->
+            H.tr_ [_th <<< show $ i + 1, H.td_ $ withCost (ascendCost s' i) el]
+      , _h 2 "Skill Reinforcement"
+      , H.table [_c "materials"] $ 
+        flip Array.mapWithIndex (skillUpEl s.skillUp) \i el ->
+            H.tr_ [_th <<< show $ i + 2, H.td_ $ withCost (skillCost s' i) el]
       , _h 2 "Calculator"
       , H.table [_i "calc"]
         [ H.tr_
@@ -343,6 +338,30 @@ modal prefs ascent focus@(Just ms') = H.div
                    zipWith skillBox (0..10) $ zip s.skills ms.skills
                ]
              ]
+
+withCost :: ∀ a. Int -> Array (HTML a (Query Unit)) 
+         -> Array (HTML a (Query Unit))
+withCost 0    = identity
+withCost cost = cons $ materialEl (QP : cost)
+
+materialEl :: ∀ a. (Material : Int) -> HTML a (Query Unit)
+materialEl (mat : amt) = H.div_ [ imageLink mat, _span $ "x" <> commas amt ]
+  where 
+    imageLink
+      | ignoreMat mat = toImage
+      | otherwise     = toImageLink <<< FilterBy $ 
+                        singleFilter FilterMaterial mat
+
+ascendUpEl :: ∀ a. Ascension -> Array (Array (HTML a (Query Unit)))
+ascendUpEl (Clear a b c d) = Array.singleton <<< H.text <<< append "Clear " 
+                             <$> [a, b, c, d]
+ascendUpEl (Welfare x) = replicate 4 <<< Array.singleton <<< toImage $ 
+                         ImagePath "Material" x
+ascendUpEl (Ascension a b c d) = map materialEl <$> [a, b, c, d]
+
+skillUpEl :: ∀ a. Reinforcement -> Array (Array (HTML a (Query Unit)))
+skillUpEl (Reinforcement a b c d e f g h) =
+    map materialEl <$> [a, b, c, d, e, f, g, h, [CrystallizedLore: 1]]
 
 skillEl :: ∀ a. Boolean -> Skill -> Skill -> HTML a (Query Unit)
 skillEl showTables active@{name, icon, cd, rank, effect} base =

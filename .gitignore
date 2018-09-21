@@ -7,6 +7,6 @@
 /.psc*
 /.purs*
 /.psa*
-/.vscode/spellright.dict
 /.vscode/tasks.json
+/.vscode/spellright.dict
 .DS_Store

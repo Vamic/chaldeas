@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "docs": "bower list -p > output/resolutions.json && purs publish --manifest bower.json --resolutions output/resolutions.json",
+    "docs": "bower list -p > output/resolutions.json && purs publish --dry-run --manifest bower.json --resolutions output/resolutions.json",
     "bower": "bower install",
     "clean": "rimraf output && rimraf .pulp-cache",
     "test":  "bower install && pulp build --no-check-main --modules Test -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && pulp test",

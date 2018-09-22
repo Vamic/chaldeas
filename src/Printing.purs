@@ -1,5 +1,11 @@
 -- | Helper functions for outputting to Strings.
-module Printing where
+module Printing 
+  ( places, commas
+  , fileName, urlName
+  , roundTo
+  , unCamel
+  , prettify
+  ) where
 
 import StandardLibrary
 import Data.String.Regex.Flags  as Flags

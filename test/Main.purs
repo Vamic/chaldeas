@@ -20,7 +20,7 @@
 -- | Skills:
 -- | cooldown, value ranges, effects
 
-module Test.Main where
+module Test.Main (main) where
 
 import StandardLibrary
 import Effect.Aff             as Aff
@@ -44,7 +44,7 @@ import Test.Wiki     as Wiki
 
 import Database (Alignment(..), Ascension(..), Attribute(..), CraftEssence(..), Material, RangeInfo(..), Reinforcement(..), Servant(..), Skill, craftEssences, ranges, servants)
 
-import Test.Base (MaybeRank(..))
+import Test.MaybeRank (MaybeRank(..))
 import Test.Parse (effects, npRank, printIcon, readEffect, skillRanks)
 import Test.Wiki (Wiki, WikiList)
 

@@ -1,6 +1,6 @@
 -- | A simple Halogen parent component of `Site.Servants.Component` and
 -- | `Site.CraftEssences.Component`.
-module Site.Component where
+module Site.Component (Query, comp) where
 
 import StandardLibrary
 import Halogen.Component.ChildPath as CP

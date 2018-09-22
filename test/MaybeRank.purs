@@ -1,5 +1,5 @@
 -- | Utility data structures for testing.
-module Test.Base ( MaybeRank(..)) where
+module Test.MaybeRank (MaybeRank(..)) where
 
 import StandardLibrary
 

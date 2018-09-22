@@ -2,12 +2,11 @@
 -- | in the form of maps from Strings (property names)
 -- | to String Arrays (list of entries separated by newlines).
 module Test.Wiki
-  ( Wiki(..), WikiList, wikiLink
+  ( Wiki(..), WikiList
   , printBool
   , range
   , scrape
   , lookup, lookupArray
-  , fromString
   ) where
 
 import StandardLibrary
@@ -30,7 +29,7 @@ import Data.Set (Set)
 
 import Test.PairMap  as PairMap
 
-import Test.Base (MaybeRank)
+import Test.MaybeRank (MaybeRank)
 import Test.Parse (translate)
 import Test.PairMap (PairMap)
 

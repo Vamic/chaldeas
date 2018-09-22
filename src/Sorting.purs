@@ -1,4 +1,4 @@
-module Sorting where
+module Sorting (SortBy(..), formatSort) where
 
 import StandardLibrary
 import Generic as G

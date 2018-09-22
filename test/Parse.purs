@@ -19,7 +19,7 @@ import Test.Multimap as Multimap
 
 import Printing (prettify)
 import Database (BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), Skill, SkillEffect(..), craftEssences)
-import Test.Base (MaybeRank(..))
+import Test.MaybeRank (MaybeRank(..))
 import Test.Multimap (Multimap)
 
 upgradeNP :: Array String

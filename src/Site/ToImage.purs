@@ -1,4 +1,8 @@
-module Site.ToImage where
+module Site.ToImage 
+  ( ImagePath(..)
+  , class ToImage, toImagePath
+  , toImage, toImageLink, toThumbnail
+  ) where
 
 import StandardLibrary
 import Generic                 as G

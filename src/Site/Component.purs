@@ -41,6 +41,7 @@ type ChildQuery = Coproduct2 Servants.Query CraftEssences.Query
 
 type ChildSlot = Either Unit (Either Unit Unit)
 
+-- | Halogen component.
 comp :: ∀ m. MonadEffect m => String -> Preferences -> Date
      -> Map Servant MyServant -> Component HTML Query Unit Void m
 comp initialHash initialPrefs initialToday initialTeam = parentComponent

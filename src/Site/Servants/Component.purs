@@ -39,6 +39,7 @@ type State = SiteState Servant MyServant
              , team     :: Map Servant MyServant
              )
 
+-- | Halogen component.
 comp :: ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant
      -> Preferences -> Date -> Map Servant MyServant
      -> Component HTML Query Unit Message m

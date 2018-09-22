@@ -27,6 +27,7 @@ type Message = SiteMessage CraftEssence Servant
 type Query = SiteQuery CraftEssence CraftEssence Servant
 type State = SiteState CraftEssence CraftEssence ()
 
+-- | Halogen component.
 comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence
      -> Preferences -> Date -> Component HTML Query Unit Message m
 comp initialFilt initialFocus initialPrefs today = component

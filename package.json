@@ -1,11 +1,11 @@
 {
   "private": true,
   "scripts": {
+    "docs": "bower list -p > output/resolutions.json && purs publish --manifest bower.json --resolutions output/resolutions.json",
     "bower": "bower install",
     "clean": "rimraf output && rimraf .pulp-cache",
     "test":  "bower install && pulp build --no-check-main --modules Test -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && pulp test",
     "repl":  "pulp repl",
-    "dev":   "bower install && pulp build --no-check-main --modules Export -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && purs bundle \"output/*/*.js\" -o js/chaldeas.js --main Main --module Main --module Export",
     "build": "bower install && pulp build --no-check-main --modules Export -- --stash --censor-codes=WildcardInferredType,ImplicitImport,ImplicitQualifiedImport && purs bundle \"output/*/*.js\" -o js/chaldeas.js --main Main --module Main --module Export && uglifyjs js/chaldeas.js -c -m -o js/chaldeas.js"
   },
   "devDependencies": {

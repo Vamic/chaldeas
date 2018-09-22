@@ -48,10 +48,10 @@ data FilterTab
     | FilterAlignment
     | FilterTrait
     | FilterPassiveSkill
+    | FilterMaterial
     | FilterBonus | FilterAction | FilterDebuff
     | FilterBuff BuffCategory
     | FilterDamage
-    | FilterMaterial
     -- Exclusive
     | FilterSource
     | FilterPhantasm | FilterCard

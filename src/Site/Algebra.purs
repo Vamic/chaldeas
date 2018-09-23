@@ -1,3 +1,4 @@
+-- | Shared Halogen logic.
 module Site.Algebra
   ( SiteQuery(..), SiteState(..), SiteMessage(..)
   , FilterTab(..), Filter(..), exclusive
@@ -13,32 +14,37 @@ import Sorting
 import Site.Preferences
 import Site.ToImage
 
-data SiteQuery a b c d
-    = Switch    (Maybe c) d
-    | Focus     (Maybe b) d
-    | ClearAll  d
-    | Check     FilterTab Boolean d
-    | FilterBy  (Array (Filter a)) d
-    | Toggle    (Filter a) d
-    | MatchAny  Boolean d
-    | SetSort   SortBy d
-    | SetPref   Preference Boolean d
-    | Ascend    b Int d
-    | OnTeam    Boolean b d
-    | MineOnly  Boolean d
-    | DoNothing d
+-- | Commands used in links and `Site.Eval`.
+data SiteQuery inFilters inFocus toAlternate a
+    = Switch    (Maybe toAlternate) a
+    | Focus     (Maybe inFocus) a
+    | ClearAll  a
+    | Check     FilterTab Boolean a
+    | FilterBy  (Array (Filter inFilters)) a
+    | Toggle    (Filter inFilters) a
+    | MatchAny  Boolean a
+    | SetSort   SortBy a
+    | SetPref   Preference Boolean a
+    | Ascend    inFocus Int a
+    | OnTeam    Boolean inFocus a
+    | MineOnly  Boolean a
+    | DoNothing a
 
-data SiteMessage a c = SiteMessage (Array (Filter a)) (Maybe c)
+-- | Switches `Site.Component` between 
+-- | `Site.Servants.Component` and `Site.CraftEssences.Component`.
+data SiteMessage inFilters toAlternate = 
+    SiteMessage (Array (Filter inFilters)) (Maybe toAlternate)
 
-type SiteState a b e
-    = { filters  :: Array (Filter a)
-      , exclude  :: Array (Filter a)
+-- | Basic 
+type SiteState inFilters inFocus e
+    = { filters  :: Array (Filter inFilters)
+      , exclude  :: Array (Filter inFilters)
       , matchAny :: Boolean
-      , focus    :: Maybe b
+      , focus    :: Maybe inFocus
       , sortBy   :: SortBy
       , prefs    :: Preferences
-      , sorted   :: Array { label :: String, obj :: b }
-      , listing  :: Array { label :: String, obj :: b }
+      , sorted   :: Array { label :: String, obj :: inFocus }
+      , listing  :: Array { label :: String, obj :: inFocus }
       | e
       }
 

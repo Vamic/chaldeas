@@ -8,7 +8,13 @@ Bringing order to Fate/Grand Order
 BSD 3-Clause, see [LICENSE](https://github.com/jnbooth/chaldeas/blob/master/LICENSE).
 
 ## Getting Started
-The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [PureScript IDE](https://marketplace.visualstudio.com/items?itemName=nwolverson.ide-purescript) extension. [NPM](https://www.npmjs.com/get-npm) is the package manager. Once NPM is installed, run
+The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [PureScript IDE](https://marketplace.visualstudio.com/items?itemName=nwolverson.ide-purescript) extension. [NPM](https://www.npmjs.com/get-npm) is the package manager. Once NPM is installed, set up the project with
+
+```sh
+npm install
+```
+
+and build the project with
 
 ```sh
 npm run build

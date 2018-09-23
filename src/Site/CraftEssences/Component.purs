@@ -31,7 +31,7 @@ type State = SiteState CraftEssence CraftEssence ()
 comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence
      -> Preferences -> Date -> Component HTML Query Unit Message m
 comp initialFilt initialFocus initialPrefs today = component
-    { initialState
+    { initialState: const initialState
     , render
     , eval
     , receiver: const Nothing
@@ -40,8 +40,8 @@ comp initialFilt initialFocus initialPrefs today = component
   allFilters :: FilterList CraftEssence
   allFilters = collectFilters getFilters today
 
-  initialState :: Unit -> State
-  initialState = const $ updateListing identity
+  initialState :: State
+  initialState =  updateListing identity
       { filters
       , exclude
       , matchAny: true

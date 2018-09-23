@@ -44,7 +44,7 @@ comp :: ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant
      -> Preferences -> Date -> Map Servant MyServant
      -> Component HTML Query Unit Message m
 comp initialFilt initialFocus initialPrefs today initialTeam = component
-    { initialState
+    { initialState: const initialState
     , render
     , eval
     , receiver: const Nothing
@@ -53,8 +53,8 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
   allFilters :: FilterList Servant
   allFilters = collectFilters getFilters today
 
-  initialState :: Unit -> State
-  initialState = const $ updateListing getBase
+  initialState ::State
+  initialState = updateListing getBase
       { filters
       , exclude
       , matchAny: true

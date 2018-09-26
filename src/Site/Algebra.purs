@@ -89,6 +89,7 @@ instance _c_ :: Ord (Filter a) where
     compare (Filter x) (Filter y) = compareThen _.tab _.name x y
 instance _d_ :: Show (Filter a) where
     show (Filter x) = x.name
+derive instance _e_ :: Newtype (Filter a) _
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

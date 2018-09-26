@@ -13,6 +13,7 @@ module StandardLibrary
   , module Data.Function.Memoize
   , module Data.Map
   , module Data.Maybe
+  , module Data.Newtype
   , module Data.Number
   , module Data.Ord
   , module Data.String
@@ -50,6 +51,7 @@ import Data.Enum (class BoundedEnum, enumFromTo, toEnum)
 import Data.Foldable (class Foldable, all, and, any, elem, find, fold, foldl, foldr, for_, intercalate, length, maximum, maximumBy, minimum, minimumBy, notElem, null, oneOf, oneOfMap, or, product, sequence_, sum, traverse_)
 import Data.Maybe (Maybe(Just,Nothing), maybe, fromMaybe, fromMaybe', isJust, isNothing)
 import Data.Map (Map)
+import Data.Newtype (class Newtype, unwrap)
 import Data.Number (infinity)
 import Data.Ord (abs, signum)
 import Data.String (Pattern(..), Replacement(..))

@@ -35,15 +35,7 @@ extraFilters = join
 
 scheduledFilters :: Array (ScheduledFilter Servant)
 scheduledFilters =
-  [ ScheduledFilter (ymd 2018 September 11) (ymd 2018 September 11) $
-    simpleFilter FilterAvailability "Rate-Up"
-    \_ (Servant s) -> not s.limited && s.class == Berserker
-
-  ------------
-  -- NERO FEST
-  ------------
-
-  , ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
+  [ ScheduledFilter (ymd 2018 September 13) (ymd 2018 September 26) $
     namedBonus FilterAvailability "Limited to Event"
     [ "Nero Claudius (Bride)" ]
 
@@ -51,6 +43,43 @@ scheduledFilters =
     namedBonus FilterAvailability "Rate-Up"
     [ "Nero Claudius (Bride)", "Nero Claudius"
     , "Gaius Julius Caesar", "Romulus", "Boudica"
+    ]
+
+  , ScheduledFilter (ymd 2018 September 26) (ymd 2018 September 26) $
+    namedBonus FilterAvailability "Rate-Up"
+    [ "Altria Pendragon", "Altria Pendragon (Alter)", "EMIYA", "Heracles"
+    , "Cu Chulainn", "Medusa", "Medea", "Cu Chulainn (Caster)"
+    ]
+  , ScheduledFilter (ymd 2018 September 27) (ymd 2018 September 27) $
+    namedBonus FilterAvailability "Rate-Up"
+    [ "Jeanne d'Arc", "Siegfried", "Chevalier d'Eon", "Gilles de Rais"
+    , "Gilles de Rais (Caster)"
+    , "Kiyohime"
+    ]
+  , ScheduledFilter (ymd 2018 September 28) (ymd 2018 September 28) $
+    namedBonus FilterAvailability "Rate-Up"
+    [ "Altera", "Nero Claudius", "Gaius Julius Caesar", "Romulus", "Boudica" ]
+  , ScheduledFilter (ymd 2018 September 29) (ymd 2018 September 29) $
+    namedBonus FilterAvailability "Rate-Up"
+    [ "Francis Drake", "Anne Bonny & Mary Read", "Medea (Lily)", "Euryale"
+    , "David", "Hektor"
+    ]
+  , ScheduledFilter (ymd 2018 September 30) (ymd 2018 September 30) $
+    namedBonus FilterAvailability "Rate-Up"
+    [ "Mordred", "Nikola Tesla", "Altria Pendragon (Lancer Alter)"
+    , "Nursery Rhyme", "Frankenstein", "Henry Jekyll & Hyde"
+    , "Paracelsus von Hohenheim", "Charlies Babbage"
+    ]
+  , ScheduledFilter (ymd 2018 October 1) (ymd 2018 October 1) $
+    namedBonus FilterAvailability "Rate-Up"
+    [ "Queen Medb", "Florence Nightingale", "Cu Chulainn (Alter)", "Rama"
+    , "Li Shuwen", "Helena Blavatsky", "Thomas Edison", "Billy the Kid"
+    , "Geronimo"
+    ]
+  , ScheduledFilter (ymd 2018 October 2) (ymd 2018 October 2) $
+    namedBonus FilterAvailability "Rate-Up"
+    [ "Altria Pendragon (Lancer)", "Ozymandias", "Gawain", "Lancelot", "Tristan"
+    , "Nitocris", "Bedivere", "Tawara Touta", "Hassan of the Serenity"
     ]
   ]
 

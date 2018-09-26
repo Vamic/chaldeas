@@ -14,16 +14,13 @@ module Site.Filtering
 import StandardLibrary
 
 import Data.Date (Date)
+import Data.Array.NonEmpty as NonEmpty
 
 import Database.Skill
 import Database.Has
 import Site.Algebra
 import Site.Preferences
 import Site.ToImage
-
-simpleFilter :: ∀ a. FilterTab -> String -> (Boolean -> a -> Boolean)
-             -> Filter a
-simpleFilter tab name match = Filter { icon: Nothing, tab, name, match }
 
 getTab :: ∀ a. Filter a -> FilterTab
 getTab (Filter x) = x.tab
@@ -51,7 +48,19 @@ collectFilters :: ∀ a. (Date -> FilterTab -> Array (Filter a)) -> Date
                -> FilterList a
 collectFilters f today = go <$> enumArray
   where
-    go tab = { tab, filters: f today tab }
+    go tab = { tab, filters: reduceFilters $ f today tab }
+
+reduceFilters :: ∀ a. Array (Filter a) -> Array (Filter a)
+reduceFilters = map go <<< group <<< sort
+  where
+    go :: NonEmpty.NonEmptyArray (Filter a) -> Filter a
+    go xs = Filter (unwrap <<< _.head $ NonEmpty.uncons xs) { match = match' }
+      where
+        match' a b = any (\(Filter f) -> f.match a b) xs
+
+simpleFilter :: ∀ a. FilterTab -> String -> (Boolean -> a -> Boolean)
+             -> Filter a
+simpleFilter tab name match = Filter { icon: Nothing, tab, name, match }
 
 matchFilter :: ∀ a b. Has a b => FilterTab -> b -> Filter a
 matchFilter tab x =

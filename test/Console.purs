@@ -76,11 +76,13 @@ printErrors tests skCount = do
               printHeader 0 path
               printError err
               Console.print "\n"
+          printHeader level (path List.: List.Nil) = do
+              Console.print $ "\n   " <> path <> ": "
           printHeader level path = case List.uncons path of
               Nothing -> pure unit
               Just {head, tail} -> do
-                  when (null tail) $ Console.print "\n   "
-                  Console.print $ head <> ": "
+                  Console.print head
+                  when (length tail /= 1) $ Console.print " → "
                   printHeader (level + 1) tail
           printError err = do
                 Console.printFail $ Exception.message err

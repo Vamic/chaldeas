@@ -99,7 +99,7 @@ testCraftEssence (CraftEssence ce : _ : mw) = suite ce.name do
                               }
 
 testServant :: Servant : MaybeRank : Wiki -> TestSuite
-testServant (Servant s : Unranked : mw) = suite (s.name <> ": Info") do
+testServant (Servant s : Unranked : mw) = suite (s.name <> " → Info") do
     suite "Profile" do
         match "id"            <<< prId $ Int.toNumber s.id
         match "class"           $ show s.class
@@ -154,7 +154,7 @@ testServant (Servant s : Unranked : mw) = suite (s.name <> ": Info") do
                               , abbreviations: false
                               , sign: false
                               }
-testServant (Servant s : _ : mw) = suite (s.name <> ": NP") do
+testServant (Servant s : _ : mw) = suite (s.name <> " → NP") do
       shouldEq "Name"        s.phantasm.name $ npInfo 0
       shouldEq "Description" s.phantasm.desc $ npInfo 1
       shouldMatch "Primary Effects" (effects s.phantasm.effect) $
@@ -173,7 +173,7 @@ testServant (Servant s : _ : mw) = suite (s.name <> ": NP") do
     
 
 testSkills :: WikiList Skill -> Servant -> TestSuite
-testSkills skills s'@(Servant s) = suite (s.name <> ": Skills") $
+testSkills skills s'@(Servant s) = suite (s.name <> " → Skills") $
     traverse_ go rankedSkills
   where
     rankedSkills :: Array (Skill : MaybeRank)

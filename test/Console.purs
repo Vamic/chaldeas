@@ -8,7 +8,6 @@ import Effect.Exception as Exception
 import Data.Int         as Int
 import Data.List        as List
 
-import Data.List (List)
 import Test.Unit (TestList, TestSuite, collectResults, countSkippedTests, keepErrors, walkSuite)
 import Test.Unit.Console as Console
 
@@ -16,21 +15,20 @@ import Printing (places)
 
 indent :: Int -> String
 indent 0 = mempty
+indent 1 = mempty
 indent n = "  " <> indent (n - 1)
-
-indent' :: forall a. List a -> String
-indent' = indent <<< length
 
 printLive :: TestSuite -> Aff TestList
 printLive tst = walkSuite runSuiteItem tst
   where
     runSuiteItem path (Left label) = liftEffect do
+        let len = length path
         when (null path) $ Console.print "\n"
         Console.print "\n"
-        Console.print $ indent' path
+        Console.print $ indent len
         Console.printLabel label
-        Console.print "\n"
-        void <<< Console.print $ indent' path
+        when (not $ null path) $ Console.print "\n"
+        void <<< Console.print $ indent len
     runSuiteItem path (Right (label : t)) = do
         result <- Aff.attempt t
         void $ case result of
@@ -79,9 +77,10 @@ printErrors tests skCount = do
               printError err
               Console.print "\n"
           printHeader level path = case List.uncons path of
-              Nothing -> Console.print $ indent level
+              Nothing -> pure unit
               Just {head, tail} -> do
-                  Console.print $ indent level <> head <> ":\n"
+                  when (null tail) $ Console.print "\n   "
+                  Console.print $ head <> ": "
                   printHeader (level + 1) tail
           printError err = do
                 Console.printFail $ Exception.message err

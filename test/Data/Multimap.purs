@@ -1,4 +1,4 @@
-module Test.Multimap where
+module Test.Data.Multimap where
 
 import StandardLibrary
 import Data.Map as Map

@@ -27,11 +27,11 @@ import Data.List (List)
 import Data.Profunctor.Strong ((&&&))
 import Data.Set (Set)
 
-import Test.PairMap  as PairMap
+import Test.Data.PairMap as PairMap
 
-import Test.MaybeRank (MaybeRank)
+import Test.Data.MaybeRank (MaybeRank)
 import Test.Parse (translate)
-import Test.PairMap (PairMap)
+import Test.Data.PairMap (PairMap)
 
 type WikiList a = PairMap a MaybeRank Wiki
 
@@ -66,12 +66,12 @@ fromString text rank = Wiki fields arrays
     parseEntry entry = do
         assignment      <- String.indexOf (Pattern "=") entry
         {before, after} <- splitAround (Pattern "=") entry
-        let afterLines   = String.split (Pattern "<br/>") after
+        let afterLines   = splitLines after
         guard <<< not $ String.null before
         pure <<< Tuple (String.trim $ String.toLower before) <<<
         filter (not <<< String.null) $
         maybeDo (String.stripPrefix $ Pattern "#tip-text:") <<< String.trim <<<
-        filterOut (Pattern "%,{}[]()'") <<< Regex.replace wikiTag " " <<<
+        Regex.replace wikiTag " " <<<
         maybeDo (splitAny After  ["EN:"]) <<<
         maybeDo (splitAny Before ["}}","/"]) <<<
         maybeDo (String.stripPrefix $ Pattern "=") <$> afterLines
@@ -82,7 +82,7 @@ fromString text rank = Wiki fields arrays
         let header     = String.trim $ onHeader.before
             section    = maybeSplit (Pattern "==") onHeader.after
         pure <<< cons (header : parseRows section.before) $ array section.after
-    parseRows = fromMaybe [] <<< parseRow 1 <<< String.split (Pattern "\n")
+    parseRows = fromMaybe [] <<< parseRow 1 <<< splitLines
     parseRow row lines = do
         cols <- parseCol row 1 lines
         pure <<< maybe [cols] (cons cols) $ parseRow (row+1) lines
@@ -96,14 +96,13 @@ fromString text rank = Wiki fields arrays
                             String.indexOf pat subtext
     unSpace = String.replaceAll (Pattern " *") (Replacement "*") <<<
               String.replaceAll (Pattern "* ") (Replacement "*")
+    splitLines = String.split (Pattern "<br/>") >=> 
+                 String.split (Pattern "<br>")  >=>
+                 String.split (Pattern "<Br>")  >=>
+                 String.split (Pattern "<Br/>")  >=>
+                 String.split (Pattern "\n")
 
 data Side = Before | After
-
-splitAround :: Pattern -> String -> Maybe {before :: String, after :: String}
-splitAround pat@(Pattern p) s = do
-    i <- String.indexOf pat s
-    let {before, after} = String.splitAt i s
-    pure { before, after: String.drop (String.length p) after }
 
 splitAny :: ∀ m. Foldable m => Monad m
          => Side -> m String -> String -> Maybe String
@@ -140,5 +139,6 @@ scrape show' xs = PairMap.unions <$> traverse scrapeOne xs'
                             (Set.toUnfoldable ranks :: List MaybeRank)
 
 range :: Wiki -> String -> Array Int -> Array String
-range (Wiki mw _) k xs = xs >>= fromMaybe empty <<<
-                         flip Map.lookup mw <<< append k <<< show
+range (Wiki mw _) k xs = xs >>= map (filterOut $ Pattern "%,{}[]()'") <<< 
+                         fromMaybe empty <<< flip Map.lookup mw <<< 
+                         append k <<< show

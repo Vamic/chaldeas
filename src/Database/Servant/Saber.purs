@@ -173,7 +173,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance C, riding B]
   , phantasm: { name:   "Fax Caelestis"
-              , desc:   "Closing Rose That Fames Stars"
+              , desc:   "Ending of the Rose of Prominence"
               , rank:   BPlus
               , card:   Arts
               , kind:   "Anti-Personnel"
@@ -316,7 +316,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance A, connectionRoot A, independentManifestation C]
   , phantasm: { name:   "Amalavijñāna—Boundary of Emptiness"
-              , desc:   "Mukushiki—Kara no Kyoukai"
+              , desc:   "Mukushiki Kara no Kyoukai"
               , rank:   EX
               , card:   Arts
               , kind:   "Anti-Unit"
@@ -448,7 +448,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance B, riding B]
   , phantasm: { name:   "Arondight Overload"
-              , desc:   "Breaking All Restraints - Overloaded Light of the Lake"
+              , desc:   "Severance of the Binding Chains—Lake's Overflowing Light"
               , rank:   A
               , card:   Arts
               , kind:   "Anti-Army"
@@ -582,7 +582,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance A, riding APlus, divinity A]
   , phantasm: { name:   "Brahmastra"
-              , desc:   "Rakshasa-Piercing Immortal"
+              , desc:   "The Rakshasa-Piercing Immortal"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Demon"
@@ -649,7 +649,7 @@ sabers = Servant <$>
                 }
               ]
   , passives: [magicResistance C, riding B]
-  , phantasm: { name:   "Laus Saint Claudius"
+  , phantasm: { name:   "Laus St. Claudius"
               , desc:   "Imperium of the Maiden's Flowery Words"
               , rank:   B
               , card:   Arts
@@ -719,7 +719,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance C, riding B]
   , phantasm: { name:   "Fleur de Lis"
-              , desc:   "Gorgeous Blooming Lillies"
+              , desc:   "Gorgeous Blooming Lilies"
               , rank:   C
               , card:   Arts
               , kind:   "Anti-Army"
@@ -788,7 +788,7 @@ sabers = Servant <$>
               ]
   , passives: [riding B]
   , phantasm: { name:  "Balmung"
-              , desc:   "Phantasmal Greatsword, Felling of the Sky Demon"
+              , desc:   "Illusory Greatsword: Felling of the Sky Demon"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Army"
@@ -923,7 +923,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance B, riding C]
   , phantasm: { name:   "Caliburn"
-              , desc:   "Golden Sword of the Victorious"
+              , desc:   "Golden Sword of Assured Victory"
               , rank:   B
               , card:   Buster
               , kind:   "Anti-Personnel"
@@ -988,7 +988,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance C, riding B, divinity D]
   , phantasm: { name:   "Crocea Mors"
-              , desc:   "Yellow Death"
+              , desc:   "The Yellow Death"
               , rank:   BPlus
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -1057,7 +1057,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance B, riding B]
   , phantasm: { name:   "Caladbolg"
-              , desc:   "Rainbow Sword"
+              , desc:   "Rainbow Blade"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Army"
@@ -1126,7 +1126,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance B, riding A]
   , phantasm: { name:   "Switch On—Airgetlám"
-              , desc:   "Take Up a Sword, Silver-Colored Arm"
+              , desc:   "Be my Sword, Silver Arm"
               , rank:   C
               , card:   Buster
               , kind:   "Anti-Unit"

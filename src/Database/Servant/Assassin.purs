@@ -41,7 +41,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment APlus]
   , phantasm: { name:   "Maria the Ripper"
-              , desc:   "The Holy Mother of Dismemberment"
+              , desc:   "Holy Mother of Dismemberment"
               , rank:   DPlus
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -108,7 +108,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment C, divinity C]
   , phantasm: { name:   "Multicolored Poison—Shinpen Kidoku"
-              , desc:   "Senshibankou—Providential Oni Poison"
+              , desc:   ""
               , rank:   B
               , card:   Arts
               , kind:   "Anti-Army"
@@ -180,7 +180,7 @@ assassins = Servant <$>
               ]
   , passives: [riding EX, cosmoReactor A]
   , phantasm: { name:   "Secret Calibur"
-              , desc:   "Sword of Unsigned Victory"
+              , desc:   "Sword of Unnamed Victory"
               , rank:   EX
               , card:   Quick
               , kind:   "Anti-Unit"
@@ -249,8 +249,8 @@ assassins = Servant <$>
                 }
               ]
   , passives: [presenceConcealment C, independentAction A]
-  , phantasm: { name:   "Vijñāpti-mātratā: Mystic Eyes of Death Perception"
-              , desc:   "Yuishiki—Chokushi no Magan"
+  , phantasm: { name:   "Vijñāpti-mātratā—Mystic Eyes of Death Perception"
+              , desc:   "Yuishiki・Chokushi no Magan"
               , rank:   EX
               , card:   Arts
               , kind:   "Anti-Unit"
@@ -384,7 +384,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment APlus, independentAction A]
   , phantasm: { name:   "Chronos Rose"
-              , desc:   "Pick Ye Rosebuds While Ye May"
+              , desc:   "Gather Ye Rosebuds While Ye May"
               , rank:   B
               , card:   Arts
               , kind:   "Anti-Unit"
@@ -454,8 +454,8 @@ assassins = Servant <$>
                 }
               ]
   , passives: [presenceConcealment E]
-  , phantasm: { name:   "Gae Bolg Alternative"
-              , desc:   "Soaring Spear of Kick-Piercing Death"
+  , phantasm: { name:   "Gáe Bolg Alternative"
+              , desc:   "Soaring Spear of Kicked Piercing Death"
               , rank:   BPlus
               , card:   Quick
               , kind:   "Anti-Army"
@@ -589,7 +589,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment APlus]
   , phantasm: { name:   "Immortal Chaos Brigade"
-              , desc:   "Undying Chaotic Brigade"
+              , desc:   "Fumetsu no Konton Ryodan"
               , rank:   B
               , card:   Quick
               , kind:   "Anti-Army"
@@ -658,7 +658,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment D]
   , phantasm: { name:   "Swallow Reversal"
-              , desc:   "Hidden Blade"
+              , desc:   "Hiken - Tsubame Gaeshi"
               , rank:   Unknown
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -723,7 +723,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment APlus]
   , phantasm: { name:   "Zabaniya"
-              , desc:   "Delusiona Heartbeat"
+              , desc:   "Delusional Heartbeat"
               , rank:   C
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -796,8 +796,8 @@ assassins = Servant <$>
                 }
               ]
   , passives: [presenceConcealment A, madness A]
-  , phantasm: { name:   "Dangerous Game C"
-              , desc:   "Game of Silent Crime"
+  , phantasm: { name:   "Dangerous Game"
+              , desc:   "The Secret Game of Sin"
               , rank:   CPlus
               , card:   Buster
               , kind:   "Anti-Personnel"
@@ -867,7 +867,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment B]
   , phantasm: { name:   "All I Do Is Kill"
-              , desc:   "Unreturning Dagger"
+              , desc:   ""
               , rank:   B
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -1151,7 +1151,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment A]
   , phantasm: { name:   "Christine Christine"
-              , desc:   "My Love Song Shall Resound Through Hell"
+              , desc:   "Love Song Resounding through Hell"
               , rank:   BPlus
               , card:   Arts
               , kind:   "Anti-Army"
@@ -1219,7 +1219,7 @@ assassins = Servant <$>
               ]
   , passives: []
   , phantasm: { name:   "Mata Hari"
-              , desc:   "The Woman with Dazzling Eyes"
+              , desc:   "The Woman with Sunny Eyes"
               , rank:   A
               , card:   Arts
               , kind:   "Anti-Army"

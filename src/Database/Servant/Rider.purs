@@ -314,8 +314,8 @@ riders = Servant <$>
                 }
               ]
   , passives: [divinity C]
-  , phantasm: { name:   "Golden Drive—Good Night"
-              , desc:   "Night Wolf Deadly Nine—Golden Dash"
+  , phantasm: { name:   "Golden Drive, Good Night"
+              , desc:   ""
               , rank:   B
               , card:   Quick
               , kind:   "Anti-Army"
@@ -508,7 +508,7 @@ riders = Servant <$>
               ]
   , passives: [magicResistance B, surfing A]
   , phantasm: { name:   "Prydwen Tube Riding"
-              , desc:   "Kingly Mood of Reining in Surging Waves!"
+              , desc:   ""
               , rank:   A
               , card:   Arts
               , kind:   "Anti-Wave"
@@ -576,7 +576,7 @@ riders = Servant <$>
               ]
   , passives: [magicResistance C, riding APlus]
   , phantasm: { name:   "Guillotine Breaker"
-              , desc:   "Glory to the Crown of Lillies"
+              , desc:   "Glory to the Crown of Lilies"
               , rank:   A
               , card:   Quick
               , kind:   "Anti-Army"
@@ -642,7 +642,7 @@ riders = Servant <$>
                 }
               ]
   , passives: [magicResistance D]
-  , phantasm: { name:   "Carribbean Free Bird"
+  , phantasm: { name:   "Caribbean Free Bird"
               , desc:   "Bond of Lovebirds"
               , rank:   CPlusPlus
               , card:   Quick
@@ -846,7 +846,7 @@ riders = Servant <$>
               ]
   , passives: [magicResistance C, riding APlus]
   , phantasm: { name:   "Dan-No-Ura Eight-Boat Leap"
-              , desc:   "Dan-no-ura • Hassou Tobi"
+              , desc:   "Dan No Ura - Hassoutobi"
               , rank:   C
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -984,7 +984,7 @@ riders = Servant <$>
               ]
   , passives: [magicResistance E]
   , phantasm: { name:   "Queen Anne's Revenge"
-              , desc:   "Revenge of the Queen Anne"
+              , desc:   ""
               , rank:   CPlusPlus
               , card:   Buster
               , kind:   "Anti-Army"
@@ -1113,7 +1113,7 @@ riders = Servant <$>
               ]
   , passives: [magicResistance D, riding A]
   , phantasm: { name:   "Chariot of Boudica"
-              , desc:   "Chariot Without Promised Protection"
+              , desc:   "Chariot of Promised Protection"
               , rank:   BPlus
               , card:   Arts
               , kind:   "Anti-Army"

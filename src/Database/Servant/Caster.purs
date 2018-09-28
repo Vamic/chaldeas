@@ -116,7 +116,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation C, divinity A]
   , phantasm: { name:   "Eightfold Blessings of Amaterasu"
-              , desc:   "on Heavy Stone under the Sunlit Watery Heavens"
+              , desc:   "on the Weight Stone under the Sunlit Watery Heavens"
               , rank:   D
               , card:   Arts
               , kind:   "Anti-Army"
@@ -260,7 +260,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation A, itemConstruction A]
   , phantasm: { name:   "Uomo Universale"
-              , desc:   "The Universal Man"
+              , desc:   "Omnipotent Man"
               , rank:   EX
               , card:   Arts
               , kind:   "Anti-Unit/Anti-Army"
@@ -331,7 +331,7 @@ casters = Servant <$>
               ]
   , passives: [magicResistance B, unlimitedManaSupply C]
   , phantasm: { name:   "Quintett Feuer"
-              , desc:   "Multi-instrumental Saturation Bombardment"
+              , desc:   "Multiple Ensemble Saturated Bombardment"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Unit"
@@ -469,7 +469,7 @@ casters = Servant <$>
                 }
               ]
   , passives: [territoryCreation B, itemConstruction A]
-  , phantasm: { name:   "Bathory Halloween Erzsebet"
+  , phantasm: { name:   "Báthory Halloween Erzsébet"
               , desc:   "First Class Demon Daughter of Fresh Blood"
               , rank:   EMinus
               , card:   Buster
@@ -537,7 +537,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation A]
   , phantasm: { name:   "Nursery Rhyme"
-              , desc:   "A Tale for Somebody's Sake"
+              , desc:   "A Story For Somebody's Sake"
               , rank:   C
               , card:   Arts
               , kind:   "Anti-Personnel"
@@ -677,7 +677,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation A, itemConstruction BPlus, divinity B]
   , phantasm: { name:   "Anpu Neb Ta Djeser"
-              , desc:   "Nether Mirror Thesaurus"
+              , desc:   "Nether Mirror's Precious Bible"
               , rank:   BPlus
               , card:   Arts
               , kind:   "Anti-Army"
@@ -742,7 +742,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation B, coreOfGoddess C]
   , phantasm: { name:   "Song of Grail"
-              , desc:   "Sing Out, O' White Grail"
+              , desc:   "Sing, O White Grail"
               , rank:   B
               , card:   Arts
               , kind:   "Magecraft"
@@ -807,7 +807,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation A, itemConstruction D]
   , phantasm: { name:   "Crystal Dress"
-              , desc:   "Precious Brilliance Everlasting"
+              , desc:   "The Lovable Brilliance, to Eternity"
               , rank:   A
               , card:   Arts
               , kind:   "Anti-Army/Anti-Populace"
@@ -875,8 +875,8 @@ casters = Servant <$>
                 }
               ]
   , passives: [territoryCreation D, itemConstruction D]
-  , phantasm: { name:   "W • F • D"
-              , desc:   "World Faith Domination"
+  , phantasm: { name:   "World Faith Domination"
+              , desc:   "Ｗ・Ｆ・Ｄ"
               , rank:   EX
               , card:   Arts
               , kind:   "Anti-Populace"
@@ -943,7 +943,7 @@ casters = Servant <$>
                 }
               ]
   , passives: [territoryCreation D, itemConstruction C]
-  , phantasm: { name:   "Marchen Meines Lebens"
+  , phantasm: { name:   "Märchen Meines Lebens"
               , desc:   "A Story Just For You"
               , rank:   CPlus
               , card:   Arts
@@ -1013,7 +1013,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation A, itemConstruction A]
   , phantasm: { name:   "Rule Breaker"
-              , desc:   "All Spells Must Be Broken"
+              , desc:   "All Spells Must be Broken"
               , rank:   CPlus
               , card:   Arts
               , kind:   "Anti-Thaumaturgy"
@@ -1082,9 +1082,9 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation C]
   , phantasm: { name:   "First Folio"
-              , desc:   "When the Curtain Rises, There Will be Thunderous Applause"
-              , rank: B
-              , card:  Buster
+              , desc:   "When the Curtain Rises, the Applause Shall Be As Ten Thousand Thunders!"
+              , rank:   B
+              , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   4
               , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
@@ -1219,7 +1219,7 @@ casters = Servant <$>
               ]
   , passives: [itemConstructionFalse A]
   , phantasm: { name:   "Dimension of Steam"
-              , desc:   "Gorgeous World of Ashes"
+              , desc:   "Glorious World of Fiery Desolation"
               , rank:   EX
               , card:   Buster
               , kind:   "Anti-Army"
@@ -1288,7 +1288,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation B, divinity B]
   , phantasm: { name:   "Wicker Man"
-              , desc:   "Flame Cage that Burns All"
+              , desc:   "Cage of Scorching Flames"
               , rank:   B
               , card:   Buster
               , kind:   "Anti-Army"
@@ -1357,7 +1357,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation CPlus, itemConstruction B]
   , phantasm: { name:   "Ticktock Bomb"
-              , desc:   "Slumbering Explosive"
+              , desc:   "Lullaby Explosive"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Army"
@@ -1483,7 +1483,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation B, itemConstruction C]
   , phantasm: { name:   "Tsago Degi Naleya"
-              , desc:   "The One Who Makes the Earth"
+              , desc:   "Creator of The Earth and Its People"
               , rank:   B
               , card:   Arts
               , kind:   "Anti-Army"
@@ -1552,7 +1552,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation B]
   , phantasm: { name:   "Prelati's Spellbook"
-              , desc:   "Text of the Sunken Spiraled City "
+              , desc:   "Textbook of the Spiral Sunken Castle"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Army"

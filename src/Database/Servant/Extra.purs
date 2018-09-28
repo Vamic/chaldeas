@@ -37,7 +37,7 @@ extras = Servant <$>
                 }
               ]
   , passives: [magicResistance EX]
-  , phantasm: { name:   "Luminosite Eternelle"
+  , phantasm: { name:   "Luminosité Eternelle"
               , desc:   "God is Here With Me"
               , rank:   AMinus
               , card:   Arts
@@ -108,7 +108,7 @@ extras = Servant <$>
               ]
   , passives: [magicResistance A]
   , phantasm: { name:   "Twin Arm—Big Crunch"
-              , desc:   "Dual Arm Zero-Order Convergence"
+              , desc:   "Dual Arm, Zero-Order Convergence"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Army"
@@ -180,7 +180,7 @@ extras = Servant <$>
               ]
   , passives: [avenger B, oblivionCorrection A, selfRestoreMagic APlus]
   , phantasm: { name:   "La Grondement Du Haine"
-              , desc:   "How Loudly, My Resentment"
+              , desc:   "Howl Loudly, My Resentment"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Army"
@@ -251,7 +251,7 @@ extras = Servant <$>
               ]
   , passives: [avenger A, oblivionCorrection B, selfRestoreMagic D]
   , phantasm: { name:   "Enfer Château d'If"
-              , desc:   "Tyger, Burning Bright"
+              , desc:   "Tyger, Tyger, Burning Bright"
               , rank:   A
                , card:   Quick
               , kind:   "Anti-Army"
@@ -324,7 +324,7 @@ extras = Servant <$>
               ]
   , passives: [magicResistance EX]
   , phantasm: { name:   "Tarasque"
-              , desc:   "O' Tragic Drake Rage"
+              , desc:   "O Tragic Drake Who Knew Naught of Love"
               , rank:   A
               , card:   Buster
               , kind:   "Anti-Unit/Anti-Dragon"

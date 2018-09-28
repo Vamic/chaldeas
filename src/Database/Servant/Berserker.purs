@@ -41,7 +41,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness C, divinity C]
   , phantasm: { name:   "Curruid Coinchenn"
-              , desc:   "Beast of Crunching Death Fangs"
+              , desc:   "Beast of Crunching Deathtusk"
               , rank:   A
               , card:   Buster
               , kind:   "Anti-Personnel"
@@ -112,7 +112,7 @@ berserkers = Servant <$>
               ]
   , passives: [magicResistance D, madness EX, riding APlus, divinity C]
   , phantasm: { name:   "Vengeful Lightning of the Ox-King"
-              , desc:   "Goou Shourai—Tenmoukaikai"
+              , desc:   "The Inescapable Net of Heaven"
               , rank:   BPlusPlus
               , card:   Buster
               , kind:   "Anti-Army"
@@ -246,7 +246,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness EX]
   , phantasm: { name:   "Kazikli Bey"
-              , desc:   "Bloodstained Demon King"
+              , desc:   "Bloody Monster King"
               , rank:   CPlus
               , card:   Arts
               , kind:   "Anti-Personnel"
@@ -311,7 +311,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness EX]
   , phantasm: { name:   "Nightingale Pledge"
-              , desc:   "I Will Abstain From Whatever Is Deleterious And Mischievous"
+              , desc:   "I Will Abstain From All Poisons and Evils"
               , rank:   C
               , card:   Arts
               , kind:   "Anti-Army"
@@ -380,7 +380,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness B, divinity A]
   , phantasm: { name:   "Nine Lives"
-              , desc:   "Shooting Down a Hundred Heads"
+              , desc:   "Shooting Hundred Heads"
               , rank:   APlus
               , card:   Buster
               , kind:   "Unknown"
@@ -518,7 +518,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness B]
   , phantasm: { name:   "Great Grudge of Rashomon"
-              , desc:   "Rashomon Daiengi"
+              , desc:   "Rashoumon Dai Engi"
               , rank:   B
               , card:   Buster
               , kind:   "Anti-Army"
@@ -588,7 +588,7 @@ berserkers = Servant <$>
               ]
   , passives: [magicResistance E, madness C]
   , phantasm: { name:   "Knight of Owner"
-              , desc:   "A Knight Does Not Die Empty-Handed"
+              , desc:   "A Knight Does Not Die with Empty Hands"
               , rank:   APlusPlus
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -653,7 +653,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness EMinus]
   , phantasm: { name:   "Grendel Buster"
-              , desc:   "Primal Conflict"
+              , desc:   "Conflict Wellspring"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Personnel"
@@ -720,7 +720,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness C]
   , phantasm: { name:   "Napping in the Dazzling Sunshine and Feasting"
-              , desc:   "Sansan Nikkou Hiruyasumi Shuchi Nikurin"
+              , desc:   "Opulence of Sun and Shine and Catnip"
               , rank:   D
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -1132,7 +1132,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness B]
   , phantasm: { name:   "Athanaton Ten Thousand"
-              , desc:   "Ten Thousand Immortals"
+              , desc:   "Immortal Cavalry of Ten Thousand Rank"
               , rank:   A
               , card:   Buster
               , kind:   "Anti-Army"
@@ -1204,7 +1204,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness APlus]
   , phantasm: { name:   "Flucticulus Diana"
-              , desc:   "Moonlight, Devour my Soul"
+              , desc:   "Devour my Heart, Moonlight"
               , rank:   C
               , card:   Arts
               , kind:   "Anti-Army"

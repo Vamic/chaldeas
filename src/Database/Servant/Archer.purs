@@ -37,7 +37,7 @@ archers = Servant <$>
               ]
   , passives: [magicResistance E, independentAction APlus, divinity B]
   , phantasm: { name:   "Enuma Elish"
-              , desc:   "The Star of Creation that Split Heaven and Earth"
+              , desc:   "Star of Creation that Divided Heaven and Earth"
               , rank:   EX
               , card:   Buster
               , kind:   "Anti-World"
@@ -110,7 +110,7 @@ archers = Servant <$>
               ]
   , passives: [magicResistance A, independentAction A, territoryCreation A]
   , phantasm: { name:   "Excalibur Viviane"
-              , desc:   "Sword of Sunlight-Glitter Victory"
+              , desc:   "Shining Sunlight—Sword of Promised Victory"
               , rank:   A
               , card:   Arts
               , kind:   "Anti-Unit"
@@ -183,7 +183,7 @@ archers = Servant <$>
               ]
   , passives: [magicResistance C, independentAction B]
   , phantasm: { name:   "System Keraunos"
-              , desc:   "Legend of Mankind—Advent of Lightning EX"
+              , desc:   "Legend of Mankind: Advent of Lightning"
               , rank:   EX
               , card:   Buster
               , kind:   "Anti-Fortress"
@@ -398,8 +398,8 @@ archers = Servant <$>
                 }
               ]
   , passives: [magicResistance C, independentAction B]
-  , phantasm: { name:   "Kakuyoku San-Ren"
-              , desc:   "Triple-Linked Crane Wings"
+  , phantasm: { name:   "Triple Crane Wings"
+              , desc:   "Kakuyoku San-Ren"
               , rank:   C
               , card:   Arts
               , kind:   "Anti-Unit"
@@ -732,8 +732,8 @@ archers = Servant <$>
                 }
               ]
   , passives: [magicResistance D, independentAction A]
-  , phantasm: { name:   "Carribean Free Bird Act 2"
-              , desc:   "Wings Abreast As If Trees With Entwined Branches"
+  , phantasm: { name:   "Caribbean Free Bird Act 2"
+              , desc:   "Bond of Lovebirds"
               , rank:   CPlusPlus
               , card:   Buster
               , kind:   "Anti-Unit"
@@ -940,7 +940,7 @@ archers = Servant <$>
               ]
   , passives: [magicResistance C, independentAction C]
   , phantasm: { name:   "Stella"
-              , desc:   "Single-Shot Shooting Star"
+              , desc:   "The Streaking Meteor"
               , rank:   A
               , card:   Buster
               , kind:   "Anti-Army"
@@ -1076,7 +1076,7 @@ archers = Servant <$>
               ]
   , passives: [magicResistance E, independentAction A, divinity B]
   , phantasm: { name:   "Gate of Babylon"
-              , desc:   "King's Treasure"
+              , desc:   "King's Treasury"
               , rank:   BPlus
               , card:   Buster
               , kind:   "Anti-Unit"
@@ -1144,7 +1144,7 @@ archers = Servant <$>
               ]
   , passives: [independentAction A, riding CPlus]
   , phantasm: { name:   "Thunderer"
-              , desc:   "Thunderbolt of Broken Sound"
+              , desc:   "Discordant Thunderclap"
               , rank:   CPlus
               , card:   Quick
               , kind:   "Anti-Unit"
@@ -1213,7 +1213,7 @@ archers = Servant <$>
               ]
   , passives: [magicResistance C, independentAction B]
   , phantasm: { name:   "Hachiman Prayer"
-              , desc:   "Hachiman Prayer—Shooting Through a Great Demon"
+              , desc:   "O Great Bodhisattva of Arms, I beseech thy blessing upon this arrow!"
               , rank:   B
               , card:   Buster
               , kind:   "Anti-Army"

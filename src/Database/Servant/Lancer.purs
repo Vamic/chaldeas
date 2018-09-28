@@ -43,8 +43,8 @@ lancers = Servant <$>
                 }
               ]
   , passives: [magicResistance A]
-  , phantasm: { name:   "Gae Bolg Alternative"
-              , desc:   "Soaring Spear of Piercing Death"
+  , phantasm: { name:   "Gáe Bolg Alternative"
+              , desc:   "Soaring Spear that Pierces with Death"
               , rank:   BPlus
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -116,7 +116,7 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance C, divinity A, riding A]
   , phantasm: { name:   "Vasavi Shakti"
-              , desc:   "O' Sun, Abide to Death"
+              , desc:   "O Sun, Abide to Death"
               , rank:   EX
               , card:   Buster
               , kind:   "Anti-Divine"
@@ -192,7 +192,7 @@ lancers = Servant <$>
               ]
   , passives: [riding A, territoryCreation A, divinity APlusPlus]
   , phantasm: { name:   "Tokonatsu Nikkou—Goddess' Love Parasol"
-              , desc:   "Everlasting Summer Sunlight—Hiyoke Kasa Chouai I-Shin"
+              , desc:   ""
               , rank:   C
               , card:   Buster
               , kind:   "Anti-Unit"
@@ -263,7 +263,7 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance B, riding A, divinity E]
   , phantasm: { name:   "Brynhild Romantia"
-              , desc:   "Until Death Divide the Two Apart"
+              , desc:   "Till Death Divides the Two"
               , rank:   B
               , card:   Buster
               , kind:   "Anti-Personnel"
@@ -330,7 +330,7 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance B, riding A]
   , phantasm: { name:   "Rhongomyniad"
-              , desc:   "The Spear That Shines To the Ends of the World"
+              , desc:   "Spear Shining at the End of the World"
               , rank:   APlusPlus
               , card:   Buster
               , kind:   "Anti-Fortress"
@@ -400,7 +400,7 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance A, riding A]
   , phantasm: { name:   "Rhongomyniad"
-              , desc:   "The Spear That Shines To the Ends of the World"
+              , desc:   "Spear that Shines to the End of the World"
               , rank:   EX
               , card:   Buster
               , kind:   "Anti-Fortress"
@@ -473,7 +473,7 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance D]
   , phantasm: { name:   "Shen Qiang Wu Er Da"
-              , desc:   "God Spear, No Second Strike"
+              , desc:   "Divine Spear—No Second Strike"
               , rank:   Unknown
               , card:   Arts
               , kind:   "Anti-Unit"
@@ -541,7 +541,7 @@ lancers = Servant <$>
               ]
   , passives: [madness EX, magicResistance D]
   , phantasm: { name:   "Dojo-ji Bell Form 108—Karyu-nagi"
-              , desc:   "Doujou-ji Kane, Hyakuhachi-shiki—Fire Dragon Mower"
+              , desc:   ""
               , rank:   A
               , card:   Buster
               , kind:   "Anti-Personnel"
@@ -605,8 +605,8 @@ lancers = Servant <$>
                 }
               ]
   , passives: [magicResistance A, territoryCreation B]
-  , phantasm: { name:   "Bathory Erzsebet"
-              , desc:   "Demon Daughter of Fresh Blood"
+  , phantasm: { name:   "Báthory Erzsébet"
+              , desc:   "Fresh Blood Demoness"
               , rank:   EMinus
               , card:   Buster
               , kind:   "Anti-Personnel"
@@ -740,8 +740,8 @@ lancers = Servant <$>
                 }
               ]
   , passives: [magicResistance C, divinity B]
-  , phantasm: { name:   "Gae Bolg"
-              , desc:   "Barbed Spear that Pierces with Death"
+  , phantasm: { name:   "Gáe Bolg"
+              , desc:   "The Spear which Reverses Causality"
               , rank:   B
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -809,7 +809,7 @@ lancers = Servant <$>
                 }
               ]
   , passives: [magicResistance C, divinity B]
-  , phantasm: { name:   "Gae Bolg"
+  , phantasm: { name:   "Gáe Bolg"
               , desc:   "Barbed Spear that Pierces with Death"
               , rank:   B
               , card:   Quick
@@ -877,7 +877,7 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance C]
   , phantasm: { name:   "Thermopylae Enomotia"
-              , desc:   "Guardian of the Flaming Gates"
+              , desc:   "Guardian of the Hot Gates"
               , rank:   B
               , card:   Buster
               , kind:   "Anti-Personnel"
@@ -1081,7 +1081,7 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance CPlus]
   , phantasm: { name:   "Pilgrimage of the Five Hundred Arhat"
-              , desc:   "Gohyaku Rakan Fudarakutokai"
+              , desc:   ""
               , rank:   EX
               , card:   Arts
               , kind:   "Anti-Army"
@@ -1146,8 +1146,8 @@ lancers = Servant <$>
                 }
               ]
   , passives: [magicResistance B]
-  , phantasm: { name:   "Gae Dearg & Gae Buidhe B+"
-              , desc:   "Crimson Rose of Exorcism & Yellow Rose of Mortality"
+  , phantasm: { name:   "Gáe Dearg and Gáe Buidhe"
+              , desc:   "Crimson Rose of Exorcism and Yellow Rose of Mortality"
               , rank:   BPlus
               , card:   Quick
               , kind:   "Anti-Personnel"

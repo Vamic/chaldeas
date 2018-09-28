@@ -35,16 +35,16 @@ import Test.Console           as Test
 import Node.Yargs.Applicative as Yargs
 
 import Data.Formatter.Number (Formatter(..), format)
-import Test.Unit (TestSuite, Test, test, success, suite, failure)
+import Test.Unit (TestSuite, test, success, suite, failure)
 import Test.Unit.Assert (assert)
 
-import Test.Multimap as Multimap
-import Test.PairMap  as PairMap
+import Test.Data.Multimap as Multimap
+import Test.Data.PairMap  as PairMap
 import Test.Wiki     as Wiki
 
 import Database (Alignment(..), Ascension(..), Attribute(..), CraftEssence(..), Material, RangeInfo(..), Reinforcement(..), Servant(..), Skill, craftEssences, ranges, servants)
 
-import Test.MaybeRank (MaybeRank(..))
+import Test.Data.MaybeRank (MaybeRank(..))
 import Test.Parse (effects, npRank, printIcon, readEffect, skillRanks)
 import Test.Wiki (Wiki, WikiList)
 
@@ -155,12 +155,22 @@ testServant (Servant s : Unranked : mw) = suite (s.name <> ": Info") do
                               , sign: false
                               }
 testServant (Servant s : _ : mw) = suite (s.name <> ": NP") do
-      test "Primary Effects" do
-          shouldMatch (effects s.phantasm.effect) $
-              Wiki.range mw "effect" (0..6) >>= readEffect
-      test "Overcharge Effects" do
-          shouldMatch (effects s.phantasm.over) $
-              Wiki.range mw "oceffect" (0..6) >>= readEffect
+      shouldEq "Name"        s.phantasm.name $ npInfo 0
+      shouldEq "Description" s.phantasm.desc $ npInfo 1
+      shouldMatch "Primary Effects" (effects s.phantasm.effect) $
+          Wiki.range mw "effect" (0..6) >>= readEffect
+      shouldMatch "Overcharge Effects" (effects s.phantasm.over) $
+          Wiki.range mw "oceffect" (0..6) >>= readEffect
+  where
+    cleanup      = String.replaceAll (Pattern " - ") (Replacement "—")
+    npTitle      = map cleanup <$> Wiki.lookup mw "skillname"
+    npInfo i     = fromMaybe "" $ npTitle >>= flip index i
+    shouldEq label x y
+      | x == y = test label success
+      | otherwise = suite label do
+          test "From Data" $ failure x
+          test "From Wiki" $ failure y
+    
 
 testSkills :: WikiList Skill -> Servant -> TestSuite
 testSkills skills s'@(Servant s) = suite (s.name <> ": Skills") $
@@ -175,18 +185,18 @@ testSkills skills s'@(Servant s) = suite (s.name <> ": Skills") $
 testSkill :: Skill -> Wiki -> TestSuite
 testSkill skill mw = suite skill.name do
     wikiMatch mw "cooldown1" $ show skill.cd
-    test "values" do
-        shouldMatch (ranges skill.effect) $ wikiRanges mw
-    test "effects" do
-        shouldMatch (effects skill.effect) $
+    shouldMatch "values" (ranges skill.effect) $ wikiRanges mw
+    shouldMatch "effects" (effects skill.effect) $ 
         Wiki.range mw "effect" (0..7) >>= readEffect
 
 wikiMatch :: Wiki -> String -> String -> TestSuite
-wikiMatch mw k obj = test k $ case Wiki.lookup mw k of
+wikiMatch mw k obj = test k $ case cleanup <$> Wiki.lookup mw k of
     Nothing -> failure $ "Missing property " <> k <> " in " <> show mw
                        <> maybe "" (append ": ") (Wiki.lookup mw "err" >>= head)
     Just v  -> assert (obj <> " not in [" <> String.joinWith ", " v <> "].") $
                obj `elem` v
+  where
+    cleanup = map <<< filterOut $ Pattern "%,{}[]()'"
 
 wikiHas :: Wiki -> String -> String -> Boolean
 wikiHas mw k obj = maybe false (elem obj <<< map String.toLower) $
@@ -197,10 +207,11 @@ wikiMatchArray _ k [] = test k $ success
 wikiMatchArray mw k obj = case Wiki.lookupArray mw k of
     Nothing -> test k <<< failure $ "Missing property " <> k
     Just vs -> suite k $
-        for_ lengthRange $ \i -> test ("Level " <> show (i + 1)) $
-            case vs !! i of
-                Nothing -> failure "Level missing from Wiki"
-                Just vsAt -> shouldMatch (fromMaybe [] $ obj !! i) vsAt
+        for_ lengthRange $ \i -> 
+            let label = "Level " <> show (i + 1)
+            in case vs !! i of
+                  Nothing   -> test label $ failure "Level missing from Wiki"
+                  Just vsAt -> shouldMatch label (fromMaybe [] $ obj !! i) vsAt
   where
     lengthRange = 0 .. (length obj - 1)
 
@@ -218,15 +229,16 @@ showReinforcement :: Reinforcement -> Array (Array String)
 showReinforcement (Reinforcement a b c d e f g h)
     = showMaterials [a, b, c, d, e, f, g, h]
 
-shouldMatch :: ∀ a. Eq a => Show a => Array a -> Array a -> Test
-shouldMatch x y = case (nubEq x \\ nubEq y : nubEq y \\ nubEq x) of
-    ([] : []) -> success
-    (xs : []) -> failure $ "Missing from Wiki: " <> showAll xs <> "."
-    ([] : ys) -> failure $ "Missing from DB: "   <> showAll ys <> "."
-    (xs : ys) -> failure $ "Missing from Wiki: " <> showAll xs <> ". \
-                           \Missing from DB: "   <> showAll ys <> "."
+shouldMatch :: ∀ a. Eq a => Show a => String -> Array a -> Array a -> TestSuite
+shouldMatch label x y = suite label do
+    test "Missing from Wiki" <<< diffTest $ x' \\ y'
+    test "Missing from Data" <<< diffTest $ y' \\ x'
   where
     showAll = String.joinWith ", " <<< map show
+    x' = nubEq x
+    y' = nubEq y
+    diffTest [] = success
+    diffTest xs = failure $ showAll xs <> ""
 
 wikiRanges :: Wiki -> Array RangeInfo
 wikiRanges mw = mapMaybe go (0..7)

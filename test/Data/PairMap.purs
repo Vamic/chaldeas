@@ -1,4 +1,4 @@
-module Test.PairMap where
+module Test.Data.PairMap where
 
 import StandardLibrary
 import Data.Map as Map

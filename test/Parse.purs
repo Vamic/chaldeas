@@ -15,12 +15,12 @@ import StandardLibrary
 import Generic     as G
 import Data.String as String
 
-import Test.Multimap as Multimap
+import Test.Data.Multimap as Multimap
 
 import Printing (prettify)
 import Database (BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), Skill, SkillEffect(..), craftEssences)
-import Test.MaybeRank (MaybeRank(..))
-import Test.Multimap (Multimap)
+import Test.Data.MaybeRank (MaybeRank(..))
+import Test.Data.Multimap (Multimap)
 
 upgradeNP :: Array String
 upgradeNP =
@@ -29,9 +29,15 @@ upgradeNP =
     , "Sasaki Kojirou"
     ]
 
+uniqueNP :: Array String
+uniqueNP = 
+    [ "Mash Kyrielight" ]
+
 npRank :: Servant -> MaybeRank
-npRank (Servant s) = (if s.name `elem` upgradeNP then Upgrade else Pure)
-                     s.phantasm.rank
+npRank s'@(Servant s)
+  | s.name `elem` upgradeNP = Upgrade s.phantasm.rank
+  | s.name `elem` uniqueNP  = Unique s' s.phantasm.rank
+  | otherwise               = Pure s.phantasm.rank
 
 upgradeSkill :: Array (String : String)
 upgradeSkill =
@@ -162,8 +168,10 @@ readEffect effect = go
     inWords x = elem x words || elem (x <> "s") words
     match xs = all (any inWords <<< synonyms) xs
     synonyms word = fromMaybe [word] $ find (elem word) synonym
+    -- Since PureScript doesn't yet support where-binding across guard patterns
     go
       | match ["formula"] = []
+      | match ["bonus","increases"] = []
       | match ["end","of","turn"] = []
 
       | match ["reduce","attack","defense","critical","chance","debuff"

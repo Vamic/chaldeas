@@ -33,6 +33,7 @@ module StandardLibrary
   , filterOut
   , intersperse
   , pairWith
+  , splitAround
   ) where
 
 -----------
@@ -45,7 +46,7 @@ import Control.Alternative (class Alternative, (<|>))
 import Control.Bind (bindFlipped)
 import Control.MonadZero (guard)
 import Control.Plus (empty)
-import Data.Array (cons, delete, difference, drop, dropWhile, filter, group, groupBy, head, index, init, intersect, last, mapMaybe, nub, nubBy, nubEq, nubByEq, partition, range, replicate, reverse, snoc, sort, sortBy, sortWith, span, tail, take, takeEnd, takeWhile, uncons, union, unionBy, unzip, zip, zipWith, (!!), (..), (\\))
+import Data.Array (cons, delete, difference, drop, dropWhile, filter, group, groupBy, head, index, init, intersect, last, mapMaybe, nub, nubBy, nubEq, nubByEq, partition, range, replicate, reverse, snoc, sort, sortBy, sortWith, span, tail, take, takeEnd, takeWhile, uncons, unionBy, unzip, zip, zipWith, (!!), (..), (\\))
 import Data.Either (Either(Left, Right), choose, either, hush, isLeft, isRight)
 import Data.Enum (class BoundedEnum, enumFromTo, toEnum)
 import Data.Foldable (class Foldable, all, and, any, elem, find, fold, foldl, foldr, for_, intercalate, length, maximum, maximumBy, minimum, minimumBy, notElem, null, oneOf, oneOfMap, or, product, sequence_, sum, traverse_)
@@ -67,6 +68,7 @@ import Effect.Class (class MonadEffect, liftEffect)
 --- HELPER FUNCTIONS
 --------------------
 
+import Data.String as String
 import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
 
 -- Since (:) == `Tuple`, it is recommended that its usage should be surrounded
@@ -121,3 +123,10 @@ intersperse sep xs = case uncons xs of
 -- | Tuple builder from a constructor
 pairWith :: ∀ a b c f. Functor f => a -> (b -> c) -> f b -> f (c : a)
 pairWith val construc = map $ (_ : val) <<< construc
+
+-- | `String.split` around `String.indexOf`.
+splitAround :: Pattern -> String -> Maybe {before :: String, after :: String}
+splitAround pat@(Pattern p) s = do
+    i <- String.indexOf pat s
+    let {before, after} = String.splitAt i s
+    pure { before, after: String.drop (String.length p) after }

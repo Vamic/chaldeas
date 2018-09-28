@@ -741,7 +741,7 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance C, divinity B]
   , phantasm: { name:   "Gáe Bolg"
-              , desc:   "The Spear which Reverses Causality"
+              , desc:   "Barbed Spear that Pierces with Death"
               , rank:   B
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -810,14 +810,14 @@ lancers = Servant <$>
               ]
   , passives: [magicResistance C, divinity B]
   , phantasm: { name:   "Gáe Bolg"
-              , desc:   "Barbed Spear that Pierces with Death"
+              , desc:   "The Spear which Reverses Causality"
               , rank:   B
               , card:   Quick
               , kind:   "Anti-Personnel"
               , hits:   1
               , effect: [ To Enemy Damage $ 1200.0 ~ 2000.0 ]
               , over:   [ To Enemy Kill $ 50.0 ~ 100.0
-                        , Debuff Enemy 3 DefenseDown $ 50.0 ~ 100.0
+                        , Debuff Enemy 3 DefenseDown $ 10.0 ~ 30.0
                         ]
               , first:  true
               }

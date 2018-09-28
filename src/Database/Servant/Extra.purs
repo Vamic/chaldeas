@@ -114,7 +114,7 @@ extras = Servant <$>
               , kind:   "Anti-Army"
               , hits:   1
               , effect: [ To Enemies RemoveBuffs Full
-                        , To Enemies Damage $ 100.0 ~ 500.0
+                        , To Enemies Damage $ 300.0 ~ 500.0
                         ]
               , over:   [ Debuff Enemies 1 CritChance $ 30.0 ~ 70.0 ]
               , first:  false
@@ -471,7 +471,7 @@ extras = Servant <$>
               ]
   , passives: [avenger A, oblivionCorrection A, selfRestoreMagic E]
   , phantasm: { name:   "Verg Avesta"
-              , desc:   "False Copy of Inscribed Creation"
+              , desc:   "Falsely Transcribed Creation"
               , rank:   CMinus
               , card:   Arts
               , kind:   "Anti-Unit"

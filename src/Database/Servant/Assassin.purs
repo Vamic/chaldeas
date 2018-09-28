@@ -658,7 +658,7 @@ assassins = Servant <$>
               ]
   , passives: [presenceConcealment D]
   , phantasm: { name:   "Swallow Reversal"
-              , desc:   "Hiken - Tsubame Gaeshi"
+              , desc:   "Hiken—Tsubame Gaeshi"
               , rank:   Unknown
               , card:   Quick
               , kind:   "Anti-Personnel"

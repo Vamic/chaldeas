@@ -118,7 +118,7 @@ berserkers = Servant <$>
               , kind:   "Anti-Army"
               , hits:   7
               , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
-              , over:   [ Grant Self 1 StarUp $ 100.0 ~ 500.0 ]
+              , over:   [ Grant Self 1 StarUp $ 100.0 ~ 300.0 ]
               , first:  true
               }
   , gen:      { starWeight: 9, starRate: 4.9, npAtk: 0.46, npDef: 5 }
@@ -720,7 +720,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness C]
   , phantasm: { name:   "Napping in the Dazzling Sunshine and Feasting"
-              , desc:   "Opulence of Sun and Shine and Catnip"
+              , desc:   "Opulence of Sun and Shine and Catnap"
               , rank:   D
               , card:   Quick
               , kind:   "Anti-Personnel"
@@ -996,12 +996,12 @@ berserkers = Servant <$>
               ]
   , passives: [madness EX]
   , phantasm: { name:   "Transforming, Flame-Emitting Meditation"
-              , desc:   "Tenshin Kashou Zanmai"
+              , desc:   "Tenshin Kasyou Zanmai Achieving Acala's Samadhi"
               , rank:   EX
               , card:   Buster
               , kind:   "Anti-Personnel"
               , hits:   3
-              , effect: [ To Enemies Damage $ 100.0 ~ 500.0 ]
+              , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
               , over:   [ Chances 50 80 $ Debuff Enemies 1 Stun Full
                         , Debuff Enemies 10 Burn $ 500.0 ~ 900.0
                         ]
@@ -1065,7 +1065,7 @@ berserkers = Servant <$>
               ]
   , passives: [madness B]
   , phantasm: { name:   "Bloodbath Crown"
-              , desc:   "Bloodstained Coronation"
+              , desc:   "Bloody Coronation"
               , rank:   B
               , card:   Buster
               , kind:   "Anti-Personnel"

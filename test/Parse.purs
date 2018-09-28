@@ -27,11 +27,19 @@ upgradeNP =
     [ "Orion"
     , "Asterios"
     , "Sasaki Kojirou"
+    , "Arjuna"
+    , "Paracelsus von Hohenheim"
+    , "Nikola Tesla"
+    , "Mordred"
+    , "Fergus mac Roich"
     ]
 
 uniqueNP :: Array String
 uniqueNP = 
-    [ "Mash Kyrielight" ]
+    [ "Mash Kyrielight" 
+    , "Frankenstein"
+    , "EMIYA"
+    ]
 
 npRank :: Servant -> MaybeRank
 npRank s'@(Servant s)

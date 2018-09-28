@@ -1013,7 +1013,7 @@ casters = Servant <$>
               ]
   , passives: [territoryCreation A, itemConstruction A]
   , phantasm: { name:   "Rule Breaker"
-              , desc:   "All Spells Must be Broken"
+              , desc:   "All Spells Must Be Broken"
               , rank:   CPlus
               , card:   Arts
               , kind:   "Anti-Thaumaturgy"

@@ -467,7 +467,7 @@ archers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Army"
               , hits:   10
-              , effect: [ To Enemies Damage $ 100.0 ~ 500.0 ]
+              , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
               , over:   [ To Enemies (DamageVs Riding) $ 150.0 ~ 200.0 ]
               , first:  false
               }
@@ -1018,7 +1018,7 @@ archers = Servant <$>
               , effect: [ Grant Self 1 SureHit Full
                         , To Enemy Damage $ 600.0 ~ 1000.0
                         ]
-              , over:   [ Chances 100 500 $ Debuff Enemy 1 SealSkills Full ]
+              , over:   [ Chances 100 200 $ Debuff Enemy 1 SealSkills Full ]
               , first:  false
               }
   , gen:      { starWeight: 153, starRate: 8.0, npAtk: 0.76, npDef: 3 }
@@ -1081,7 +1081,7 @@ archers = Servant <$>
               , card:   Buster
               , kind:   "Anti-Unit"
               , hits:   10
-              , effect: [ To Enemies Damage $ 100.0 ~ 500.0 ]
+              , effect: [ To Enemies Damage $ 300.0 ~ 500.0 ]
               , over:   [ Debuff Enemies 1 NPDown $ 50.0 ~ 90.0
                         , Debuff Enemies 1 CritDown $ 50.0 ~ 90.0
                         , Debuff Enemies 1 DebuffVuln $ 20.0 ~ 40.0

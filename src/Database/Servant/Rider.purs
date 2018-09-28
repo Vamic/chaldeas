@@ -846,7 +846,7 @@ riders = Servant <$>
               ]
   , passives: [magicResistance C, riding APlus]
   , phantasm: { name:   "Dan-No-Ura Eight-Boat Leap"
-              , desc:   "Dan No Ura - Hassoutobi"
+              , desc:   "Dan No Ura—Hassoutobi"
               , rank:   C
               , card:   Quick
               , kind:   "Anti-Personnel"

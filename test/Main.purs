@@ -161,6 +161,10 @@ testServant (Servant s : _ : mw) = suite (s.name <> " → NP") do
           Wiki.range mw "effect" (0..6) >>= readEffect
       shouldMatch "Overcharge Effects" (effects s.phantasm.over) $
           Wiki.range mw "oceffect" (0..6) >>= readEffect
+      shouldMatch "Primary Values" (ranges s.phantasm.effect) $
+          wikiRanges mw "leveleffect" false
+      shouldMatch "Overcharge Values" (ranges s.phantasm.over) $
+          wikiRanges mw "overcharge" false
   where
     cleanup      = String.replaceAll (Pattern " - ") (Replacement "—")
     npTitle      = map cleanup <$> Wiki.lookup mw "skillname"
@@ -185,7 +189,7 @@ testSkills skills s'@(Servant s) = suite (s.name <> " → Skills") $
 testSkill :: Skill -> Wiki -> TestSuite
 testSkill skill mw = suite skill.name do
     wikiMatch mw "cooldown1" $ show skill.cd
-    shouldMatch "values" (ranges skill.effect) $ wikiRanges mw
+    shouldMatch "values" (ranges skill.effect) $ wikiRanges mw "e" true
     shouldMatch "effects" (effects skill.effect) $ 
         Wiki.range mw "effect" (0..7) >>= readEffect
 
@@ -240,12 +244,20 @@ shouldMatch label x y = suite label do
     diffTest [] = success
     diffTest xs = failure $ showAll xs <> ""
 
-wikiRanges :: Wiki -> Array RangeInfo
-wikiRanges mw = mapMaybe go (0..7)
+wikiRanges :: Wiki -> String -> Boolean -> Array RangeInfo
+wikiRanges mw pref isSkill = mapMaybe go (0..7)
   where
+    showI 1
+      | isSkill   = show 1
+      | otherwise = ""
+    showI i = show i
+    maxLvl
+      | isSkill   = 10
+      | otherwise = 5
     go i = do
-        from <- Wiki.lookup mw ("e" <> show i <> "-lvl1") >>= head
-        to   <- Wiki.lookup mw ("e" <> show i <> "-lvl10") >>= head
+        from <- Wiki.lookup mw (pref <> showI i <> "-lvl1") >>= head
+        to   <- Wiki.lookup mw (pref <> showI i <> "-lvl" <> show maxLvl) >>= 
+                head
         let isPercent = String.contains (Pattern "%") from
             stripFrom = maybeDo (String.stripSuffix $ Pattern "%") from
             stripTo   = maybeDo (String.stripSuffix $ Pattern "%") to

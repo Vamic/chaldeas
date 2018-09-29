@@ -1057,7 +1057,7 @@ sabers = Servant <$>
               ]
   , passives: [magicResistance B, riding B]
   , phantasm: { name:   "Caladbolg"
-              , desc:   "Rainbow Blade"
+              , desc:   "Rainbow Sword"
               , rank:   APlus
               , card:   Buster
               , kind:   "Anti-Army"

@@ -41,9 +41,10 @@ type State = SiteState Servant MyServant
 
 -- | Halogen component.
 comp :: ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant
-     -> Preferences -> Date -> Map Servant MyServant
+     -> Preferences -> Date -> Map Servant MyServant -> Boolean
      -> Component HTML Query Unit Message m
-comp initialFilt initialFocus initialPrefs today initialTeam = component
+comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly = 
+    component
     { initialState: const initialState
     , render
     , eval
@@ -53,12 +54,12 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
   allFilters :: FilterList Servant
   allFilters = collectFilters getFilters today
 
-  initialState ::State
+  initialState :: State
   initialState = updateListing getBase
       { filters
       , exclude
       , matchAny: true
-      , mineOnly: false
+      , mineOnly: initialMineOnly
       , focus:    owned initialTeam <$> initialFocus
       , sortBy:   Rarity
       , prefs:    initialPrefs
@@ -75,9 +76,8 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                                     initialFilt
 
   render :: State -> ComponentHTML Query
-  render st = modal st.prefs st.ascent st.focus <<<
-              outline st enumArray allFilters' nav $
-              doPortrait <$> (st.mineOnly ? filter isMine $ st.listing)
+  render st = modal st.prefs st.ascent st.focus $
+              outline st enumArray allFilters' nav content
     where
       nav = [ _a "Craft Essences" $ Switch Nothing
             , if st.mineOnly then _a      "Servants" $ MineOnly false
@@ -85,6 +85,14 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
             , if st.mineOnly then _strong "My Servants"
                              else _a      "My Servants" $ MineOnly true
             ]
+      content
+        | st.mineOnly = let mine = filter isMine st.listing
+                        in (doPortrait <$> mine) <> 
+                        [ _h 2 "Total Ascension Materials Required"
+                        , H.footer [_c "materials"] $ 
+                          materialEl <$> ascendWishlist (_.obj <$> mine)  
+                        ]
+        | otherwise   = doPortrait <$> st.listing
       doPortrait {label: "", obj: ms}
         | st.mineOnly = portrait false st.prefs baseAscend
                         { label: showStats ms, obj: ms }
@@ -106,7 +114,9 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
           modify_ _{ ascent = ascent }
       Ascend (MyServant ms) ascent a -> eval $
           OnTeam true (MyServant ms{ascent = ascent}) a
-      MineOnly mineOnly a -> a <$ modif   _{ mineOnly = mineOnly }
+      MineOnly mineOnly a -> a <$ do
+          liftEffect $ hash mineOnly Nothing
+          modif _{ mineOnly = mineOnly }
       OnTeam keep myServant a -> a <$  do
           {team}        <- get
           let myServant' = keep ? recalc $ myServant
@@ -121,7 +131,8 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
                          , focus   = st.focus *> Just myServant'
                          }
       Focus    focus    a -> a <$ do
-          liftEffect $ hash focus
+          {mineOnly} <- get
+          liftEffect $ hash mineOnly focus
           modify_ _{ focus = focus, ascent = 1 }
       req -> do
           {myServs} <- get
@@ -129,8 +140,9 @@ comp initialFilt initialFocus initialPrefs today initialTeam = component
               req
     where
       modif = modify_ <<< compose (updateListing getBase)
-      hash Nothing  = Hash.setHash "Servants"
-      hash (Just s) = Hash.setHash <<< urlName <<< show $ getBase s
+      hash true  Nothing = Hash.setHash "MyServants"
+      hash false Nothing = Hash.setHash "Servants"
+      hash _ (Just s)    = Hash.setHash <<< urlName <<< show $ getBase s
 
 showStats :: MyServant -> String
 showStats (MyServant ms) = show ms.level <> "/" <> show (maxLevel ms.servant)

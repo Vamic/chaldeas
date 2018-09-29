@@ -7,9 +7,11 @@ module StandardLibrary
   , module Control.MonadZero
   , module Control.Plus
   , module Data.Array
+  , module Data.Array.NonEmpty.Internal
   , module Data.Either
   , module Data.Enum
   , module Data.Foldable
+  , module Data.Function
   , module Data.Function.Memoize
   , module Data.Map
   , module Data.Maybe
@@ -50,9 +52,11 @@ import Data.Array (cons, delete, difference, drop, dropWhile, filter, group, gro
 import Data.Either (Either(Left, Right), choose, either, hush, isLeft, isRight)
 import Data.Enum (class BoundedEnum, enumFromTo, toEnum)
 import Data.Foldable (class Foldable, all, and, any, elem, find, fold, foldl, foldr, for_, intercalate, length, maximum, maximumBy, minimum, minimumBy, notElem, null, oneOf, oneOfMap, or, product, sequence_, sum, traverse_)
+import Data.Function (on)
 import Data.Maybe (Maybe(Just,Nothing), maybe, fromMaybe, fromMaybe', isJust, isNothing)
 import Data.Map (Map)
 import Data.Newtype (class Newtype, unwrap)
+import Data.Array.NonEmpty.Internal (NonEmptyArray)
 import Data.Number (infinity)
 import Data.Ord (abs, signum)
 import Data.String (Pattern(..), Replacement(..))

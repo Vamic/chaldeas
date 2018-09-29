@@ -131,13 +131,20 @@
         ; margin: 1px -1px 4px 0
         }
       .materials div
-        { display: inline }
+        { display: inline 
+        ; text-align: left
+        }
       .materials span
         { display: inline-block 
         ; width: 2.25em
         }
-      .materials div:first-child span
+      article .materials div:first-child span
         { width: 6em }
+      footer.materials
+        { display: flex 
+        ; flex-wrap: wrap
+        ; padding: 0 20px
+        }
       #phantasm table
         { margin-bottom: 5px }
       #phantasm th

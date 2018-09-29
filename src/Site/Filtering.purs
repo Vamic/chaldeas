@@ -53,7 +53,7 @@ collectFilters f today = go <$> enumArray
 reduceFilters :: ∀ a. Array (Filter a) -> Array (Filter a)
 reduceFilters = map go <<< group <<< sort
   where
-    go :: NonEmpty.NonEmptyArray (Filter a) -> Filter a
+    go :: NonEmptyArray (Filter a) -> Filter a
     go xs = Filter (unwrap <<< _.head $ NonEmpty.uncons xs) { match = match' }
       where
         match' a b = any (\(Filter f) -> f.match a b) xs

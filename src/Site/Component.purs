@@ -75,8 +75,10 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
                   (CraftEssences.comp fCe mCe prefs today)
                   unit $ E.input BrowseServants
     | otherwise = H.slot' CP.cp1 unit
-                  (Servants.comp fServant mServant prefs today team)
+                  (Servants.comp fServant mServant prefs today team mineOnly)
                   unit $ E.input BrowseCraftEssences
+    where
+      mineOnly = withHash == "MyServants"
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m
   eval (BrowseServants (SiteMessage fCe mServant) next) = next <$ do

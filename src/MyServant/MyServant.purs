@@ -130,4 +130,3 @@ newServant servant@(Servant s) = MyServant
 owned :: Map Servant MyServant -> Servant -> MyServant
 owned team servant = fromMaybe (unowned servant) $
                      Map.lookup servant team
-

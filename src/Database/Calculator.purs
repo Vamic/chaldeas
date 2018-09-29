@@ -135,8 +135,8 @@ npDamage addSkills special maxOver
     cardMod = matchSum buffs $ Performance card
     atkMod = (_ + matchSum buffs AttackUp) <<< fromMaybe 0.0 <<< maximum $
              matchSum buffs <<< AttackVs <$> specials
-    defMod = matchSum debuffs DefenseDown
-    specialDefMod = 0.0
+    defMod = -1.0 * matchSum debuffs DefenseDown
+    specialDefMod = -0.0
     powerMod = 0.0
     selfDamageMod = 0.0
     isCrit = 0.0

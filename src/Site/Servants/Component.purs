@@ -90,7 +90,7 @@ comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly =
         | st.mineOnly = let mine = filter isMine st.listing
                             mats = ascendWishlist $ _.obj <$> mine
                         in not (null mats) ? flip append
-                        [ _h 2 "Total Ascension Materials Required"
+                        [ _h 2 "Total Ascension Materials Needed"
                         , H.footer [_c "materials"] $ 
                           materialEl <$> mats
                         ] $ 

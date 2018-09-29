@@ -87,11 +87,13 @@ comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly =
             ]
       content
         | st.mineOnly = let mine = filter isMine st.listing
-                        in (doPortrait <$> mine) <> 
-                        [ _h 2 "Total Ascension Materials Required"
-                        , H.footer [_c "materials"] $ 
-                          materialEl <$> ascendWishlist (_.obj <$> mine)  
-                        ]
+                            mats = ascendWishlist $ _.obj <$> mine
+                        in not (null mats) ? flip append
+                          [ _h 2 "Total Ascension Materials Required"
+                          , H.footer [_c "materials"] $ 
+                          materialEl <$> mats
+                          ] $ doPortrait <$> mine
+                        
         | otherwise   = doPortrait <$> st.listing
       doPortrait {label: "", obj: ms}
         | st.mineOnly = portrait false st.prefs baseAscend

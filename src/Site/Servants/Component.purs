@@ -71,7 +71,8 @@ comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly =
       }
     where
       initialMyServs = owned initialTeam <$> servants
-      initialSort = getSort Rarity initialMyServs
+      initialSort    = getSort (prefer initialPrefs AddSkills) Rarity 
+                       initialMyServs
       {yes: exclude, no: filters} = partition (exclusive <<< getTab)
                                     initialFilt
 
@@ -89,10 +90,11 @@ comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly =
         | st.mineOnly = let mine = filter isMine st.listing
                             mats = ascendWishlist $ _.obj <$> mine
                         in not (null mats) ? flip append
-                          [ _h 2 "Total Ascension Materials Required"
-                          , H.footer [_c "materials"] $ 
+                        [ _h 2 "Total Ascension Materials Required"
+                        , H.footer [_c "materials"] $ 
                           materialEl <$> mats
-                          ] $ doPortrait <$> mine
+                        ] $ 
+                        doPortrait <$> mine
                         
         | otherwise   = doPortrait <$> st.listing
       doPortrait {label: "", obj: ms}
@@ -129,18 +131,28 @@ comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly =
           liftEffect $ setTeam team'
           modif \st -> st{ team    = team'
                          , myServs = myServs
-                         , sorted  = getSort st.sortBy myServs
+                         , sorted  = getSort (prefer st.prefs AddSkills) 
+                                     st.sortBy myServs
                          , focus   = st.focus *> Just myServant'
                          }
       Focus    focus    a -> a <$ do
           {mineOnly} <- get
           liftEffect $ hash mineOnly focus
           modify_ _{ focus = focus, ascent = 1 }
+      SetPref AddSkills v a -> a <$ do
+        liftEffect $ writePreference AddSkills v
+        modif \st -> 
+            let prefs' = setPreference AddSkills v st.prefs
+            in st { prefs  = prefs'
+                  , sorted = sorter st.myServs prefs' st.sortBy
+                  }
       req -> do
-          {myServs} <- get
-          siteEval "Servants" getBase (getFilters today) (flip getSort myServs)
+          {myServs, prefs} <- get
+          siteEval "Servants" getBase (getFilters today) (sorter myServs prefs) 
               req
     where
+      sorter myServs prefs sortBy = 
+          getSort (prefer prefs AddSkills) sortBy myServs
       modif = modify_ <<< compose (updateListing getBase)
       hash true  Nothing = Hash.setHash "MyServants"
       hash false Nothing = Hash.setHash "Servants"
@@ -323,7 +335,11 @@ modal prefs ascent focus@(Just ms') = H.div
                                   , link FilterAlignment d
                                   ]
     alignBox xs = xs >>= \x -> [link FilterAlignment x, H.text " "]
-    calc sort = formatSort sort <<< fromMaybe infinity $ Map.lookup sort sorted
+    calcWith
+      | prefer prefs AddSkills = fst
+      | otherwise              = snd
+    calc sort = formatSort sort <<< fromMaybe infinity $ calcWith <$> 
+                Map.lookup sort sorted
     skillBox i ({icon} : lvl) =
         [ H.td_ [ toImage icon ]
         , H.td_ $ _mInt 1 10 lvl \val ->

@@ -60,8 +60,9 @@ starsPer s'@(Servant s) card = Int.toNumber s.hits.quick
     buffs            = passiveBuffs s'
 
 -- | Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3309-How-is-damage-calculated)
-npDamage :: Boolean -> Boolean -> Servant -> Number
-npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
+npDamage :: Boolean -> Boolean -> Boolean -> Servant -> Number
+npDamage addSkills special maxOver 
+(Servant s@{phantasm:{card, effect, over, first}}) =
     case npDamageMultiplier of
         0.0 -> 0.0
         _   -> servantAtk
@@ -155,8 +156,10 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
     overStrength
       | maxOver   = toMax
       | otherwise = toMin
-    skillFs = simplify <$> (s.skills >>= _.effect)
-                        <> (s.passives >>= _.effect)
+    skillFs
+      | addSkills = simplify <$> (s.skills   >>= _.effect)
+                              <> (s.passives >>= _.effect)
+      | otherwise = simplify <$> (s.passives >>= _.effect)
     npFs    = simplify <$> effect
     overFs  = simplify <$> over
     firstFs = Array.fromFoldable $ guard first *> head overFs

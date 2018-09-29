@@ -24,7 +24,7 @@ newtype MyServant = MyServant { base    :: Servant
                               , skills  :: Array Int
                               , npLvl   :: Int
                               , ascent  :: Int
-                              , sorted  :: Map SortBy Number
+                              , sorted  :: Map SortBy (Number : Number)
                               , servant :: Servant
                               }
 instance _0_ :: Eq MyServant where
@@ -76,26 +76,27 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = mapSort $ MyServant ms
                        * (Int.toNumber lvl - 1.0)
                        / 10.0
 
-toSort :: SortBy -> Servant -> Number
-toSort ID         (Servant s) = negate $ Int.toNumber s.id
-toSort Rarity     (Servant s) = Int.toNumber s.rarity
-toSort ATK        (Servant s) = Int.toNumber s.stats.max.atk
-toSort HP         (Servant s) = Int.toNumber s.stats.max.hp
-toSort StarWeight (Servant s) = Int.toNumber s.gen.starWeight
-toSort NPArts              s  = npPer s Arts
-toSort NPDeck              s  = sum $ npPer s <$> getDeck s
-toSort StarQuick           s  = starsPer s Quick
-toSort StarDeck            s  = sum $ starsPer s <$> getDeck s
-toSort NPDmg               s  = npDamage false false s
-toSort NPDmgOver           s  = npDamage false true s
-toSort NPSpec              s  = npDamage true false s
-toSort NPSpecOver          s  = npDamage true true s
+toSort :: Boolean -> SortBy -> Servant -> Number
+toSort _ ID         (Servant s) = negate $ Int.toNumber s.id
+toSort _ Rarity     (Servant s) = Int.toNumber s.rarity
+toSort _ ATK        (Servant s) = Int.toNumber s.stats.max.atk
+toSort _ HP         (Servant s) = Int.toNumber s.stats.max.hp
+toSort _ StarWeight (Servant s) = Int.toNumber s.gen.starWeight
+toSort _ NPArts              s  = npPer s Arts
+toSort _ NPDeck              s  = sum $ npPer s <$> getDeck s
+toSort _ StarQuick           s  = starsPer s Quick
+toSort _ StarDeck            s  = sum $ starsPer s <$> getDeck s
+toSort b NPDmg               s  = npDamage b false false s
+toSort b NPDmgOver           s  = npDamage b false true s
+toSort b NPSpec              s  = npDamage b true false s
+toSort b NPSpecOver          s  = npDamage b true true s
 
 mapSort :: MyServant -> MyServant
 mapSort (MyServant ms) = MyServant ms { sorted = sorted }
   where
-    sorted = Map.fromFoldable $
-             (identity &&& flip toSort ms.servant) <$> enumArray
+    sorted    = Map.fromFoldable $ go <$> enumArray
+    go sorter = sorter : 
+                (toSort true sorter ms.servant : toSort false sorter ms.servant)
 
 makeUnowned :: Servant -> MyServant
 makeUnowned servant@(Servant s) = mapSort $ MyServant

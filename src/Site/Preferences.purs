@@ -35,13 +35,19 @@ data Preference
     | ShowTables
     | ExcludeSelf
     | MaxAscension
+    | AddSkills
     | Thumbnails
 
 instance _a_ :: Show Preference where
-    show ExcludeSelf = "Exclude self-applied effects"
+    show ExcludeSelf  = "Exclude self-applied effects"
     show MaxAscension = "Show all at max ascension"
-    show ShowTables = "Show skill and NP tables"
-    show x = unCamel $ G.genericShow x
+    show ShowTables   = "Show skill and NP tables"
+    show AddSkills    = "Add skills to NP damage"
+    show x            = unCamel $ G.genericShow x
+
+prefDefault :: Preference -> Boolean
+prefDefault AddSkills = true
+prefDefault _         = false
 
 type Preferences = Set Preference
 
@@ -62,8 +68,11 @@ writePreference pref set = HTML.window >>= Window.localStorage
 getPreferences :: Effect Preferences
 getPreferences = Set.unions <$> traverse go enumArray
   where
-    fromFlag (Just "true") = Set.singleton
-    fromFlag _             = const Set.empty
+    fromFlag Nothing x
+      | prefDefault x        = Set.singleton x
+      | otherwise            = Set.empty
+    fromFlag (Just "true") x = Set.singleton x
+    fromFlag _             _ = Set.empty
     go k = map (_ $ k) $
            HTML.window >>= Window.localStorage >>=
            Storage.getItem (G.genericShow k) >>= pure <<< fromFlag

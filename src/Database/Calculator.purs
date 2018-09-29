@@ -125,7 +125,7 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
                          special ? cons LastStand $
                          [Damage, DamageThruDef]
     superEffectiveModifier = (_ + 1.0 + matchSum instants DamagePoison) <<<
-                              fromMaybe 0.0 <<< maximum $
+                             fromMaybe 0.0 <<< maximum $
                              matchSum instants <<< DamageVs <$> specials
     isSuperEffective = 1.0
     -------------
@@ -150,8 +150,8 @@ npDamage special maxOver (Servant s@{phantasm:{card, effect, over, first}}) =
       | special   = enumArray
       | otherwise = []
     npStrength
-      | s.free || s.rarity < 4 = toMax
-      | otherwise              = toMin
+      | s.free || (s.rarity <= 3 && s.rarity > 0) = toMax
+      | otherwise                                 = toMin
     overStrength
       | maxOver   = toMax
       | otherwise = toMin

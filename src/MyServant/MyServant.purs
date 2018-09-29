@@ -104,7 +104,7 @@ makeUnowned servant@(Servant s) = mapSort $ MyServant
     , level:  0
     , fou:    {atk: 990, hp: 990}
     , skills: [10, 10, 10]
-    , npLvl:  if s.rarity <= 3 || s.free then 5 else 1
+    , npLvl:  if s.free || (s.rarity <= 3 && s.rarity > 0) then 5 else 1
     , ascent: 1
     , sorted: Map.empty
     }

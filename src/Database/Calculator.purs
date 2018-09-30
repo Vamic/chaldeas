@@ -122,8 +122,8 @@ npDamage addSkills special maxOver
     ---------------------
     -- FROM NP PROPERTIES
     ---------------------
-    npDamageMultiplier = sum $ map (matchSum instants) <<<
-                         special ? cons LastStand $
+    npDamageMultiplier = sum $ map (matchSum instants) $
+                         (special ? cons LastStand)
                          [Damage, DamageThruDef]
     superEffectiveModifier = (_ + 1.0 + matchSum instants DamagePoison) <<<
                              fromMaybe 0.0 <<< maximum $

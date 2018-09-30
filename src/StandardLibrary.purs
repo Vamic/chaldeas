@@ -79,7 +79,7 @@ import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
 -- by parentheses in order to resemble tuple notation in other languages.
 -- (a : b)` is much more reminiscent of `(a, b)` than `a : b`.
 infixr 0 Tuple as :
-infixr 9 doIf  as ?
+infixr 0 doIf  as ?
 infixr 4 type Tuple as :
 
 consAfter :: ∀ a. a -> Array a -> Array a

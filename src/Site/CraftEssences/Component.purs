@@ -58,7 +58,8 @@ comp today = component
 
   render :: State -> ComponentHTML Query
   render st = modal st.prefs st.focus <<<
-              outline st [Rarity, ID, ATK, HP] allFilters nav $
+              outline st [Rarity, ID, ATK, HP] allFilters nav <<<
+              (st.sortBy /= Rarity ? reverse) $
               portrait false st.prefs <$> st.listing
     where
       nav = [ _strong "Craft Essences", _a "Servants" $ Switch Nothing ]
@@ -75,15 +76,15 @@ portrait big prefs {label, obj: ce'@(CraftEssence ce)}
   | otherwise =
       H.div meta
       [ toImage ce'
-      , H.header_ <<< (label /= "") ? append
-        [_span $ noBreakName big label, H.br_] $
+      , H.header_ <<< (label /= "" ? append
+        [_span $ noBreakName big label, H.br_]) $
         [ _span <<< noBreakName big $ artorify ce.name ]
       , H.footer_ [_span <<< String.joinWith "  " $ replicate ce.rarity "★"]
       ]
   where
     artorify   = prefer prefs Artorify ?
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")
-    meta       = not big ? (cons <<< _click <<< Focus $ Just ce') $
+    meta       = (not big ? cons <<< _click <<< Focus $ Just ce')
                  [_c $ "portrait stars" <> show ce.rarity]
     doArtorify = String.replaceAll (Pattern "Altria") (Replacement "Artoria")
 

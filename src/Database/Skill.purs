@@ -214,7 +214,7 @@ showInstant target amount = case _ of
     RemoveMental
       -> "Remove" <> p <> " mental debuffs"
     Kill
-      -> not full ? append (n <> "% chance to ") $ "Instant-Kill " <> s
+      -> (not full ? append $ n <> "% chance to ") $ "Instant-Kill " <> s
     GainStars
       -> "Gain " <> n <> " critical stars"
          <> case target of

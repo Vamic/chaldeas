@@ -47,7 +47,7 @@ lvlRow (RangeInfo isPercent x y) =
     step = (y - x) / 10.0
 
 noBreakName :: Boolean -> String -> String
-noBreakName doPrettify = doPrettify ? prettify <<<
+noBreakName doPrettify = (doPrettify ? prettify) <<<
     String.replaceAll (Pattern "Anne Bonny") (Replacement "Anne Bonny") <<<
     String.replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
     unBreak <<< String.split (Pattern "(")
@@ -84,7 +84,7 @@ outline st sorts allFilters nav content =
         H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
       , _h 1 "Include"
       ] <> (filter (exclusive <<< _.tab) allFilters >>= filtersEl)
-    , H.section_ $ maybeReverse content
+    , H.section_ content
     , H.aside_ <<< cons (_h 1 "Browse") <<< append nav $
       [ _h 1 "Filter"
       , H.form_
@@ -101,9 +101,6 @@ outline st sorts allFilters nav content =
         (filter (not exclusive <<< _.tab) allFilters >>= filtersEl)
     ]
   where
-    maybeReverse = case st.sortBy of
-        Rarity -> identity
-        _      -> reverse
     clearAll
       | null st.filters && null st.exclude = [ P.enabled false ]
       | otherwise = [ P.enabled true, _click ClearAll ]

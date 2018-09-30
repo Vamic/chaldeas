@@ -84,17 +84,19 @@ comp today =
             , if st.mineOnly then _strong "My Servants"
                              else _a      "My Servants" $ MineOnly true
             ]
+      portraits = case st.sortBy of
+          Rarity -> map doPortrait
+          _      -> reverse <<< map doPortrait
       content
         | st.mineOnly = let mine = filter isMine st.listing
                             mats = ascendWishlist $ _.obj <$> mine
-                        in not (null mats) ? flip append
+                        in (not (null mats) ? flip append
                         [ _h 2 "Total Ascension Materials Needed"
                         , H.footer [_c "materials"] $ 
                           materialEl <$> mats
-                        ] $ 
-                        doPortrait <$> mine
-                        
-        | otherwise   = doPortrait <$> st.listing
+                        ]) $ 
+                        portraits mine
+        | otherwise   = portraits st.listing
       doPortrait {label: "", obj: ms}
         | st.mineOnly = portrait false st.prefs baseAscend
                         { label: showStats ms, obj: ms }
@@ -121,7 +123,7 @@ comp today =
           modif _{ mineOnly = mineOnly }
       OnTeam keep myServant a -> a <$  do
           {team}        <- get
-          let myServant' = keep ? recalc $ myServant
+          let myServant' = (keep ? recalc) myServant
               team'      = if keep
                            then Map.insert (getBase myServant') myServant' team
                            else Map.delete (getBase myServant') team
@@ -162,18 +164,18 @@ portrait big prefs baseAscension { label, obj: ms' }
       H.div meta
       [ _img $ "img/Servant/" <> fileName s.name <> ascent <> ".png"
       , H.div_ [ toImage s.class ]
-      , H.header_ <<< (label /= "") ? append [_span label, H.br_] $
+      , H.header_ $ (label /= "" ? append [_span label, H.br_])
         [ _span <<< noBreakName big $ artorify s.name ]
       , H.footer_ <<<
-        ((big && ascension > 1) ? cons prevAscend) <<<
-        ((big && ascension < 4) ? consAfter nextAscend) $
+        (big && ascension > 1 ? cons prevAscend) $
+        (big && ascension < 4 ? consAfter nextAscend)
         [_span <<< String.joinWith "  " $ replicate s.rarity "★"]
       ]
   where
     MyServant ms@{servant:Servant s} = ms'
     artorify   = prefer prefs Artorify ?
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")
-    meta       = not big ? (cons <<< _click <<< Focus $ Just ms') $
+    meta       = (not big ? cons <<< _click <<< Focus $ Just ms')
                  [_c $ "portrait stars" <> show s.rarity]
     ascension = case ms.level of
         0 -> baseAscension
@@ -240,19 +242,15 @@ modal prefs ascent focus@(Just ms') = H.div
         , _tr "Class" [ H.text s.phantasm.kind ]
         , H.tr_
           [ _th "Effects"
-          , H.td_ <<< showTables ? consAfter
-              ( _table
-                (append "NP" <<< show <$> 1..5) $
-                npRow <$> nub (ranges b.phantasm.effect)
-              ) $ effectEl <$> s.phantasm.effect
+          , H.td_ <<< 
+            showTable (append "NP" <<< show) b.phantasm.effect $ 
+            effectEl <$> s.phantasm.effect
           ]
         , H.tr_
           [ _th "Overcharge"
-          , H.td overMeta <<< showTables ? consAfter
-              ( _table 
-                (flip append "%" <<< show <<< (_ * 100) <$> 1..5) $
-                overRow <$> nub (ranges b.phantasm.over)
-              ) $ effectEl <$> s.phantasm.over
+          , H.td_ <<< 
+            showTable (flip append "%" <<< show <<< (_ * 100)) b.phantasm.over $ 
+            effectEl <$> s.phantasm.over
           ]
         ]
       , _h 2 "Active Skills"]
@@ -314,6 +312,11 @@ modal prefs ascent focus@(Just ms') = H.div
     {base} = s.stats
     {max, grail} = b.stats
     showTables = prefer prefs ShowTables
+    showTable showCol effects
+      | showTables = consAfter $ _table
+                     (showCol <$> 1..5) $
+                     npRow <$> nub (ranges effects)
+      | otherwise  = identity
     overMeta
       | s.phantasm.first = [_c "activates"]
       | otherwise        = []
@@ -391,11 +394,11 @@ skillUpEl (Reinforcement a b c d e f g h) =
 
 skillEl :: ∀ a. Boolean -> Skill -> Skill -> HTML a (Query Unit)
 skillEl showTables active@{name, icon, cd, rank, effect} base =
-    H.section_ <<< showTables ? consAfter effectTable $
+    H.section_ <<< (showTables ? consAfter effectTable) $
     [ toImage icon
     , _h 3 $ name <> show rank
     , _strong "CD: "
-    , H.text <<< (active == base) ? (_ <> "~" <> show (cd - 2)) $ show cd
+    , H.text <<< (active == base ? (_ <> "~" <> show (cd - 2))) $ show cd
     ] <> (effectEl <$> effect)
   where
     effectTable = _table (show <$> 1..10) $

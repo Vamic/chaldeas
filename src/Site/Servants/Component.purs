@@ -192,38 +192,45 @@ modal prefs ascent focus@(Just ms') = H.div
   [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $
-      [ portrait true prefs ascent { label: "", obj: ms' }
-      , _table ["", "ATK", "HP"]
-        [ H.tr_ [ _th "Base",  _td $ commas base.atk,  _td $ commas base.hp ]
-        , H.tr_ [ _th "Max",   _td $ commas max.atk,   _td $ commas max.hp ]
-        , H.tr_ [ _th "Grail", _td $ commas grail.atk, _td $ commas grail.hp ]
+      [ H.div_
+        [ portrait true prefs ascent { label: "", obj: ms' }
+        , H.div_
+          [ _table ["", "ATK", "HP"]
+            [ H.tr_ 
+              [ _th "Base",  _td $ commas base.atk,  _td $ commas base.hp ]
+            , H.tr_ 
+              [ _th "Max",   _td $ commas max.atk,   _td $ commas max.hp ]
+            , H.tr_ 
+              [ _th "Grail", _td $ commas grail.atk, _td $ commas grail.hp ]
+            ]
+          , _table ["", "Q", "A", "B", "EX", "NP"]
+            [ H.tr_
+              [ _th "Hits"
+              , _td $ show s.hits.quick
+              , _td $ show s.hits.arts
+              , _td $ show s.hits.buster
+              , _td $ show s.hits.ex
+              , _td $ show s.phantasm.hits
+              ]
+            ]
+          , H.table_
+            [ _tr "Class"       [ link FilterClass s.class ]
+            , _tr "Deck"        [ link FilterDeck s.deck ]
+            , _tr "NP Type"     [ link FilterPhantasm <<< fromMaybe Support $
+                                  find (\t -> has t false s')
+                                  [SingleTarget, MultiTarget]
+                                ]
+            , _tr "Attribute"   [ link FilterAttribute s.attr ]
+            , _tr "Alignment"   $ alignBox s.align
+            , _tr "ID"          [ H.text $ "#" <> show s.id ]
+            , _tr "Star Weight" [ H.text $ show s.gen.starWeight ]
+            , _tr "Star Rate"   [ H.text $ show s.gen.starRate <> "%" ]
+            , _tr "NP/Hit"      [ H.text $ show s.gen.npAtk <> "%" ]
+            , _tr "NP/Defend"   [ H.text $ show s.gen.npDef <> "%" ]
+            , _tr "Death Rate"  [ H.text $ show s.death ]
+            ]
         ]
-      , _table ["", "Q", "A", "B", "EX", "NP"]
-        [ H.tr_
-          [ _th "Hits"
-          , _td $ show s.hits.quick
-          , _td $ show s.hits.arts
-          , _td $ show s.hits.buster
-          , _td $ show s.hits.ex
-          , _td $ show s.phantasm.hits
-          ]
-        ]
-      , H.table_
-        [ _tr "Class"       [ link FilterClass s.class ]
-        , _tr "Deck"        [ link FilterDeck s.deck ]
-        , _tr "NP Type"     [ link FilterPhantasm <<< fromMaybe Support $
-                              find (\t -> has t false s')
-                              [SingleTarget, MultiTarget]
-                            ]
-        , _tr "Attribute"   [ link FilterAttribute s.attr ]
-        , _tr "Alignment"   $ alignBox s.align
-        , _tr "ID"          [ H.text $ "#" <> show s.id ]
-        , _tr "Star Weight" [ H.text $ show s.gen.starWeight ]
-        , _tr "Star Rate"   [ H.text $ show s.gen.starRate <> "%" ]
-        , _tr "NP/Hit"      [ H.text $ show s.gen.npAtk <> "%" ]
-        , _tr "NP/Defend"   [ H.text $ show s.gen.npDef <> "%" ]
-        , _tr "Death Rate"  [ H.text $ show s.death ]
-        ]
+      ]
       , H.form [_i "myservant"] myServantBox
       , _h 2 "Noble Phantasm"
       , H.table [_i "phantasm"]
@@ -234,14 +241,16 @@ modal prefs ascent focus@(Just ms') = H.div
         , H.tr_
           [ _th "Effects"
           , H.td_ <<< showTables ? consAfter
-              ( _table (append "NP" <<< show <$> 1..5) $
+              ( _table
+                (append "NP" <<< show <$> 1..5) $
                 npRow <$> nub (ranges b.phantasm.effect)
               ) $ effectEl <$> s.phantasm.effect
           ]
         , H.tr_
           [ _th "Overcharge"
           , H.td overMeta <<< showTables ? consAfter
-              ( _table (flip append "%" <<< show <<< (_ * 100) <$> 1..5) $
+              ( _table 
+                (flip append "%" <<< show <<< (_ * 100) <$> 1..5) $
                 overRow <$> nub (ranges b.phantasm.over)
               ) $ effectEl <$> s.phantasm.over
           ]

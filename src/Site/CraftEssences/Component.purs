@@ -95,16 +95,22 @@ modal prefs
 (Just ce'@(CraftEssence ce@{stats:{base, max}})) = H.div
     [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
-    , H.article_ $
-      [ portrait true prefs {label: "", obj: ce'}
-      , _table ["", "ATK", "HP"]
-        [ H.tr_ [ _th "Base",  _td $ commas base.atk,  _td $ commas base.hp ]
-        , H.tr_ [ _th "Max",   _td $ commas max.atk,   _td $ commas max.hp ]
+    , H.article_
+      [ H.div_
+        [ portrait true prefs {label: "", obj: ce'}
+        , H.div_ $
+          [ _table ["", "ATK", "HP"]
+            [ H.tr_ 
+              [ _th "Base",  _td $ commas base.atk,  _td $ commas base.hp ]
+            , H.tr_ 
+              [ _th "Max",   _td $ commas max.atk,   _td $ commas max.hp ]
+            ]
+          , toImage ce.icon
+          , _h 2 "Effects"
+          ] <> mlbEl <>
+          [ effectsEl \_ y -> Flat y ]
         ]
-      , toImage ce.icon
-      , _h 2 "Effects"
-      ] <> mlbEl <>
-      [ effectsEl \_ y -> Flat y ]
+      ]
     ]
   where
     mlbEl

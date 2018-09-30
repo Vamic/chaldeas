@@ -167,6 +167,7 @@ _table headings tbody = H.table_
   , H.thead_ [ H.tr_ $ H.th_ <<< _txt <$> headings ]
   , H.tbody_ tbody
   ]
+  
 
 _tr :: ∀ a b. String -> Array (HTML a b) -> HTML a b
 _tr x y = H.tr_ [ _th x, H.td_ y ]

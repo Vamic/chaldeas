@@ -35,7 +35,7 @@
         { font-style: italic }
       span, p, table, br, h1, h2, h3, h4, h5, ul, ol, a, strong
         { line-height: 1.31em }
-      article > table > tr > th
+      article table > tr > th
         { min-width: 6em
         ; vertical-align: top
         }
@@ -105,20 +105,23 @@
         ; max-width: 100%
         ; margin-top: 5px
         }
-      article > table 
-        { width: 220px 
-        ; margin-top: -1px
+      article table 
+        { margin-top: -1px
         ; margin-bottom: 12px
-        ; position: relative
-        ; left: -10px
+        ; width: 100%
         }
-      article table#phantasm, article table#calc
-        { width: 100% 
-        ; padding-right: 10px
+      article table table
+        { width: auto }
+      article > div:first-child
+        { display: flex 
+        ; margin-bottom: -2px
+        }
+      article > div > div:last-child
+        { flex-grow: 1 
+        ; margin-right: 10px
         }
       article table.materials
-        { width: 100% 
-        ; padding-left: 20px
+        { padding: 0 10px
         }
       .materials th
         { min-width: initial
@@ -150,12 +153,8 @@
       #phantasm table
         { margin-bottom: 5px }
       #phantasm th
-        { width: 104px 
+        { width: 90px 
         ; vertical-align: text-top
-        }
-      #calc
-        { padding-left: 10px 
-        ; table-layout: fixed
         }
       #calc h3
         { text-align: center 
@@ -253,8 +252,6 @@
         { top:-10px;left:-4px; display: none }
       article .portrait div img
         { width: 50px }
-      article .portrait
-        { float: left }
       article .portrait header
         { bottom: 21px
         ; margin-right: 10px
@@ -324,7 +321,9 @@
         ; text-align: center
         }
       article .portrait 
-        { margin-top: -2px }
+        { margin-top: -2px 
+        ; display: table
+        }
       .light article
         { background-color: #ffffff
         ; border: 1px solid #aaaaaa
@@ -341,8 +340,6 @@
         { padding: 0 10px }
       article h2 
         { text-align: center }
-      article > img
-        { margin-top: -10px }
       #myservant
         { clear: both 
         ; margin-top: -9px
@@ -384,6 +381,8 @@
         ; right: 0
         ; bottom: 1px
         }
+      article div > img
+        { margin-bottom: -10px }
       article section img
         { float: left 
         ; width: 35px
@@ -450,9 +449,6 @@
           article .portrait > img       { width: 130px; min-height: unset }
           form p                        { margin-left: 15px }
           article .portrait header span { font-size: 11px }
-          article table#phantasm        { width: auto }
-          article table#calc            { width: auto }
-          #phantasm th                  { width: initial }
           aside p input
             { position: relative
             ; bottom: 3px
@@ -460,11 +456,11 @@
             ; float: left
             ; margin: 1px 0 -1em -20px
             }
-          article > table:nth-child(2), article > table:nth-child(3)
+          article table:nth-child(2), article table:nth-child(3)
             { float: left
             ; max-width: 36% 
             }
-          article > table:nth-child(4) 
+          article table:nth-child(4) 
             { max-width: 33% }
           article section
             { max-width: 35em

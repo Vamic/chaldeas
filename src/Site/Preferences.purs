@@ -70,9 +70,9 @@ getPreferences = Set.unions <$> traverse go enumArray
   where
     fromFlag Nothing x
       | prefDefault x        = Set.singleton x
-      | otherwise            = Set.empty
+      | otherwise            = mempty
     fromFlag (Just "true") x = Set.singleton x
-    fromFlag _             _ = Set.empty
+    fromFlag _             _ = mempty
     go k = map (_ $ k) $
            HTML.window >>= Window.localStorage >>=
            Storage.getItem (G.genericShow k) >>= pure <<< fromFlag
@@ -114,7 +114,7 @@ readServant text = do
     ascent      <- Int.fromString showAscent
     let fou      = {atk, hp}
         base     = servant
-        sorted   = Map.empty
+        sorted   = mempty
     pure <<< recalc $
     MyServant { servant, level, fou, skills, npLvl, base, ascent, sorted }
   where text' = String.split (Pattern delimServant) text

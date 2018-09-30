@@ -18,14 +18,14 @@ insert k v = Map.alter (Just <<< go) k
 
 fromFoldable :: ∀ k v f. Ord k => Ord v => Foldable f
              => f (k : v) -> Multimap k v
-fromFoldable = foldl (flip $ uncurry insert) Map.empty
+fromFoldable = foldl (flip $ uncurry insert) mempty
 
 union :: ∀ k v. Ord k => Ord v => Multimap k v -> Multimap k v -> Multimap k v
 union = Map.unionWith Set.union
 
 unions :: ∀ k v f. Ord k => Ord v => Foldable f
        => f (Multimap k v) -> Multimap k v
-unions = foldl union Map.empty
+unions = foldl union mempty
 
 toUnfoldable :: ∀ k v f. Ord k => Ord v => Unfoldable f
              => Multimap k v -> f (k : v)

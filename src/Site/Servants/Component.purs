@@ -1,7 +1,7 @@
 -- | The user interface for Servants and My Servants.
 -- This module is only for functions that render Servants to HTML.
 -- Everything else goes in `Database.Servant` and `MyServant`.
-module Site.Servants.Component (Query, Message(..), comp) where
+module Site.Servants.Component (Query, Message(..), State, comp) where
 
 import StandardLibrary
 import Data.Array              as Array
@@ -30,22 +30,26 @@ import Site.Servants.Sorting
 import Printing
 
 type Message = SiteMessage Servant CraftEssence
-type Query = SiteQuery Servant MyServant CraftEssence
 
-type State = SiteState Servant MyServant
+type State = SiteState Servant MyServant 
              ( mineOnly :: Boolean
              , ascent   :: Int
              , myServs  :: Array MyServant
              , team     :: Map Servant MyServant
              )
 
+type Query = SiteQuery Servant MyServant CraftEssence
+
+reSort :: State -> State
+reSort st = 
+    st { sorted = getSort (prefer st.prefs AddSkills) st.sortBy st.myServs }
+
 -- | Halogen component.
-comp :: ∀ m. MonadEffect m => Array (Filter Servant) -> Maybe Servant
-     -> Preferences -> Date -> Map Servant MyServant -> Boolean
-     -> Component HTML Query Unit Message m
-comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly = 
+comp :: ∀ m. MonadEffect m 
+     => Date -> Component HTML Query (State -> State) Message m
+comp today = 
     component
-    { initialState: const initialState
+    { initialState: initialState
     , render
     , eval
     , receiver: const Nothing
@@ -54,27 +58,21 @@ comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly =
   allFilters :: FilterList Servant
   allFilters = collectFilters getFilters today
 
-  initialState :: State
-  initialState = updateListing getBase
-      { filters
-      , exclude
+  initialState :: (State -> State) -> State
+  initialState f = updateListing getBase <<< reSort $ f
+      { filters:  mempty
+      , exclude:  mempty
       , matchAny: true
-      , mineOnly: initialMineOnly
-      , focus:    owned initialTeam <$> initialFocus
+      , mineOnly: false
+      , focus:    Nothing
       , sortBy:   Rarity
-      , prefs:    initialPrefs
+      , prefs:    mempty
       , ascent:   1
-      , myServs:  initialMyServs
-      , sorted:   initialSort
-      , listing:  initialSort
-      , team:     initialTeam
+      , myServs:  unowned <$> servants
+      , sorted:   mempty
+      , listing:  mempty
+      , team:     mempty
       }
-    where
-      initialMyServs = owned initialTeam <$> servants
-      initialSort    = getSort (prefer initialPrefs AddSkills) Rarity 
-                       initialMyServs
-      {yes: exclude, no: filters} = partition (exclusive <<< getTab)
-                                    initialFilt
 
   render :: State -> ComponentHTML Query
   render st = modal st.prefs st.ascent st.focus $
@@ -129,30 +127,18 @@ comp initialFilt initialFocus initialPrefs today initialTeam initialMineOnly =
                            else Map.delete (getBase myServant') team
               myServs    = owned team' <$> servants
           liftEffect $ setTeam team'
-          modif \st -> st{ team    = team'
-                         , myServs = myServs
-                         , sorted  = getSort (prefer st.prefs AddSkills) 
-                                     st.sortBy myServs
-                         , focus   = st.focus *> Just myServant'
-                         }
+          modif $ reSort <<< \st -> st { team    = team'
+                                       , myServs = myServs
+                                       , focus   = st.focus *> Just myServant'
+                                       }
       Focus    focus    a -> a <$ do
           {mineOnly} <- get
           liftEffect $ hash mineOnly focus
           modify_ _{ focus = focus, ascent = 1 }
-      SetPref AddSkills v a -> a <$ do
-        liftEffect $ writePreference AddSkills v
-        modif \st -> 
-            let prefs' = setPreference AddSkills v st.prefs
-            in st { prefs  = prefs'
-                  , sorted = sorter st.myServs prefs' st.sortBy
-                  }
       req -> do
           {myServs, prefs} <- get
-          siteEval "Servants" getBase (getFilters today) (sorter myServs prefs) 
-              req
+          siteEval "Servants" getBase (getFilters today) reSort req
     where
-      sorter myServs prefs sortBy = 
-          getSort (prefer prefs AddSkills) sortBy myServs
       modif = modify_ <<< compose (updateListing getBase)
       hash true  Nothing = Hash.setHash "MyServants"
       hash false Nothing = Hash.setHash "Servants"

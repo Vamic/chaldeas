@@ -1,7 +1,7 @@
 -- | The user interface for Craft Essences.
 -- This module is only for functions that render Craft Essences to HTML.
 -- Everything else goes in `Database.CraftEssence`.
-module Site.CraftEssences.Component (Query, Message(..), comp) where
+module Site.CraftEssences.Component (Query, Message(..), State, comp) where
 
 import StandardLibrary
 import Halogen.HTML as H
@@ -24,14 +24,18 @@ import Site.ToImage
 import Sorting
 
 type Message = SiteMessage CraftEssence Servant
-type Query = SiteQuery CraftEssence CraftEssence Servant
 type State = SiteState CraftEssence CraftEssence ()
+type Query = SiteQuery CraftEssence CraftEssence Servant
+
+-- | Recalculate the 'sorted' field of component's 'State'.  
+reSort :: State -> State
+reSort st = st { sorted = getSort st.sortBy }
 
 -- | Halogen component.
-comp :: ∀ m. MonadEffect m => Array (Filter CraftEssence) -> Maybe CraftEssence
-     -> Preferences -> Date -> Component HTML Query Unit Message m
-comp initialFilt initialFocus initialPrefs today = component
-    { initialState: const initialState
+comp :: ∀ m. MonadEffect m 
+     => Date -> Component HTML Query (State -> State) Message m
+comp today = component
+    { initialState: initialState
     , render
     , eval
     , receiver: const Nothing
@@ -40,21 +44,17 @@ comp initialFilt initialFocus initialPrefs today = component
   allFilters :: FilterList CraftEssence
   allFilters = collectFilters getFilters today
 
-  initialState :: State
-  initialState =  updateListing identity
-      { filters
-      , exclude
+  initialState :: (State -> State) -> State
+  initialState f = updateListing identity <<< reSort $ f
+      { filters:  mempty
+      , exclude:  mempty
       , matchAny: true
-      , focus:    initialFocus
+      , focus:    Nothing
       , sortBy:   Rarity
-      , prefs:    initialPrefs
-      , sorted:   initialSort
-      , listing:  initialSort
+      , prefs:    mempty
+      , sorted:   getSort Rarity
+      , listing:  mempty
       }
-    where
-      initialSort = getSort Rarity
-      {yes: exclude, no: filters} = partition (exclusive <<< getTab)
-                                    initialFilt
 
   render :: State -> ComponentHTML Query
   render st = modal st.prefs st.focus <<<
@@ -64,7 +64,7 @@ comp initialFilt initialFocus initialPrefs today = component
       nav = [ _strong "Craft Essences", _a "Servants" $ Switch Nothing ]
 
   eval :: Query ~> ComponentDSL State Query Message m
-  eval = siteEval "CraftEssences" identity (getFilters today) getSort
+  eval = siteEval "CraftEssences" identity (getFilters today) reSort
 
 portrait :: ∀ a. Boolean -> Preferences
          -> { label :: String, obj :: CraftEssence } -> HTML a (Query Unit)

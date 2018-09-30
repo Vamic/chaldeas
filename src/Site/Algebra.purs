@@ -33,7 +33,7 @@ data SiteQuery inFilters inFocus toAlternate a
 -- | Switches `Site.Component` between 
 -- | `Site.Servants.Component` and `Site.CraftEssences.Component`.
 data SiteMessage inFilters toAlternate = 
-    SiteMessage (Array (Filter inFilters)) (Maybe toAlternate)
+    SiteMessage SortBy (Array (Filter inFilters)) (Maybe toAlternate)
 
 -- | Basic 
 type SiteState inFilters inFocus e

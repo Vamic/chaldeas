@@ -16,21 +16,27 @@ import Halogen.HTML (HTML)
 import Site.Servants.Component      as Servants
 import Site.CraftEssences.Component as CraftEssences
 import Site.Algebra
-import Site.Common
 import Site.Preferences
 import Database
+import Site.Filtering
+import Sorting
 import MyServant
 import Printing
 
-type State = { today    :: Date
-             , browseCe :: Boolean
-             , withHash :: String
-             , prefs    :: Preferences
-             , team     :: Map Servant MyServant
-             , mServant :: Maybe Servant
-             , mCe      :: Maybe CraftEssence
-             , fServant :: Array (Filter Servant)
-             , fCe      :: Array (Filter CraftEssence)
+type ChildState a = { sortBy  :: SortBy 
+                    , filters :: Array (Filter a)
+                    , focus   :: Maybe a
+                    }
+
+initChild :: ∀ a. Maybe a -> ChildState a
+initChild = { filters: mempty, sortBy: Rarity, focus: _ }
+
+type State = { browseCe  :: Boolean
+             , withHash  :: String
+             , prefs     :: Preferences
+             , team      :: Map Servant MyServant
+             , ceSt      :: ChildState CraftEssence
+             , servantSt :: ChildState Servant
              }
 
 data Query a
@@ -44,7 +50,7 @@ type ChildSlot = Either Unit (Either Unit Unit)
 -- | Halogen component.
 comp :: ∀ m. MonadEffect m => String -> Preferences -> Date
      -> Map Servant MyServant -> Component HTML Query Unit Void m
-comp initialHash initialPrefs initialToday initialTeam = parentComponent
+comp initialHash initialPrefs today initialTeam = parentComponent
     { initialState: const initialState
     , render
     , eval
@@ -53,15 +59,12 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
   where
 
   initialState :: State
-  initialState = { today:    initialToday
-                 , withHash: initialHash
-                 , prefs:    initialPrefs
-                 , team:     initialTeam
-                 , browseCe: initialHash == "CraftEssences" || isJust mCe
-                 , fServant: []
-                 , fCe:      []
-                 , mServant
-                 , mCe
+  initialState = { withHash:  initialHash
+                 , prefs:     initialPrefs
+                 , team:      initialTeam
+                 , browseCe:  initialHash == "CraftEssences" || isJust mCe
+                 , servantSt: initChild mServant
+                 , ceSt:      initChild mCe
                  }
     where
       fromHash :: ∀ f a. Foldable f => Show a => f a -> Maybe a
@@ -69,39 +72,54 @@ comp initialHash initialPrefs initialToday initialTeam = parentComponent
       mCe      = fromHash craftEssences
       mServant = fromHash servants
 
+  ceState :: State -> CraftEssences.State -> CraftEssences.State
+  ceState st = updateListing identity <<<
+      _{ sortBy  = st.ceSt.sortBy
+       , filters = st.ceSt.filters
+       , focus   = st.ceSt.focus
+       , prefs   = st.prefs 
+       }
+
+  servantState :: State -> Servants.State -> Servants.State
+  servantState st = updateListing getBase <<<
+      _{ sortBy   = st.servantSt.sortBy 
+       , filters  = st.servantSt.filters
+       , focus    = owned st.team <$> st.servantSt.focus
+
+       , prefs    = st.prefs 
+       , mineOnly = st.withHash == "MyServants"
+       , team     = st.team
+       , myServs  = owned st.team <$> servants
+       }
+
+  ceComp = CraftEssences.comp today
+  servantComp = Servants.comp today
+
   render :: State -> ParentHTML Query ChildQuery ChildSlot m
-  render {browseCe, withHash, prefs, fServant, fCe, mServant, mCe, team, today}
-    | browseCe  = H.slot' CP.cp2 unit
-                  (CraftEssences.comp fCe mCe prefs today)
-                  unit $ E.input BrowseServants
-    | otherwise = H.slot' CP.cp1 unit
-                  (Servants.comp fServant mServant prefs today team mineOnly)
-                  unit $ E.input BrowseCraftEssences
-    where
-      mineOnly = withHash == "MyServants"
+  render st@{browseCe}
+    | browseCe  = H.slot' CP.cp2 unit ceComp (ceState st) $ 
+                  E.input BrowseServants
+    | otherwise = H.slot' CP.cp1 unit servantComp (servantState st) $ 
+                  E.input BrowseCraftEssences
 
   eval :: Query ~> ParentDSL State Query ChildQuery ChildSlot Void m
-  eval (BrowseServants (SiteMessage fCe mServant) next) = next <$ do
+  eval (BrowseServants (SiteMessage sortBy filters focus) a) = a <$ do
       liftEffect $ Hash.setHash "Servants"
       prefs <- liftEffect getPreferences
-      today <- liftEffect getDate
       team  <- liftEffect getTeam
       modify_ _{ browseCe = false
                , withHash = "Servants"
                , prefs    = prefs
                , team     = team
-               , today    = today
-               , fCe      = fCe
-               , mServant = mServant
+               , ceSt      { sortBy = sortBy, filters = filters }
+               , servantSt { focus = focus }
                }
-  eval (BrowseCraftEssences (SiteMessage fServant mCe) next) = next <$ do
+  eval (BrowseCraftEssences (SiteMessage sortBy filters focus) a) = a <$ do
       liftEffect $ Hash.setHash "CraftEssences"
       prefs <- liftEffect getPreferences
-      today <- liftEffect getDate
       modify_ _{ browseCe = true
                , withHash = "CraftEssences"
                , prefs    = prefs
-               , today    = today
-               , fServant = fServant
-               , mCe      = mCe
+               , ceSt      { focus = focus }
+               , servantSt { sortBy = sortBy, filters = filters }
                }

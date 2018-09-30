@@ -16,7 +16,7 @@ insert (a : b) c = Map.alter (Just <<< go) a
 
 fromFoldable :: ∀ a b c f. Ord a => Ord b => Foldable f
              => f ((a : b) : c) -> PairMap a b c
-fromFoldable = foldl (flip $ uncurry insert) Map.empty
+fromFoldable = foldl (flip $ uncurry insert) mempty
 
 lookup :: ∀ a b c. Ord a => Ord b => a -> b -> PairMap a b c -> Maybe c
 lookup a b pm = Map.lookup a pm >>= Map.lookup b
@@ -27,7 +27,7 @@ union = Map.unionWith Map.union
 
 unions :: ∀ a b c f. Ord a => Ord b => Foldable f
        => f (PairMap a b c) -> PairMap a b c
-unions = foldl union Map.empty
+unions = foldl union mempty
 
 flatten :: ∀ a b c. Ord a => Ord b => PairMap a b c -> List (a : b : c)
 flatten xs = do

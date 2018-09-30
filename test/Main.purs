@@ -134,7 +134,7 @@ testServant (Servant s : Unranked : mw) = suite (s.name <> " → Info") do
   where
     match = wikiMatch mw
     matchArray = wikiMatchArray mw
-    showAlign[] = "Changes per Master"
+    showAlign [] = "Changes per Master"
     showAlign [Neutral, Neutral] = "True Neutral"
     showAlign [x, Mad] = show x <> " Madness"
     showAlign xs = String.joinWith " " $ show <$> xs

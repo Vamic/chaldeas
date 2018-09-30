@@ -6,30 +6,28 @@ import Routing.Hash as Hash
 import Halogen (ComponentDSL, modify_, get, raise)
 
 import Printing
-import Sorting
 import Site.Algebra
 import Site.Filtering
 import Site.Preferences
 
-siteEval :: ∀ a b c d m. Show b => MonadEffect m
-         => String -> (b -> a) -> (FilterTab -> Array (Filter a))
-         -> (SortBy -> Array { label :: String, obj :: b })
-         -> SiteQuery a b c
-         ~> ComponentDSL (SiteState a b d)
-                         (SiteQuery a b c)
-                         (SiteMessage a c) m
-siteEval title transform getFilters getSort = case _ of
+siteEval :: ∀ inFilters inFocus toAlternate e m. Show inFocus => MonadEffect m
+         => String -> (inFocus -> inFilters) 
+         -> (FilterTab -> Array (Filter inFilters))
+         -> (SiteState inFilters inFocus e -> SiteState inFilters inFocus e)
+         -> SiteQuery inFilters inFocus toAlternate
+         ~> ComponentDSL (SiteState inFilters inFocus e)
+                         (SiteQuery inFilters inFocus toAlternate)
+                         (SiteMessage inFilters toAlternate) m
+siteEval title transform getFilters reSort = case _ of
     Switch    switchTo a -> a <$ do
-        {exclude, filters} <- get
-        raise $ SiteMessage (exclude <> filters) switchTo
-    ClearAll           a -> a <$ modif _{ exclude = [], filters = [] }
+        {exclude, filters, sortBy} <- get
+        raise $ SiteMessage sortBy (exclude <> filters) switchTo
+    ClearAll           a -> a <$ modif _{ exclude = mempty, filters = mempty }
     Check t  true      a -> a <$ do
         modif <<< modExclude <<< filter $ notEq t <<< getTab
     Check t  false    a -> a <$
         modif (modExclude $ nub <<< append (getFilters t))
-    SetSort   sortBy   a -> a <$ modif _{ sortBy = sortBy
-                                        , sorted = getSort sortBy
-                                        }
+    SetSort   sortBy   a -> a <$ modif (reSort <<< _{ sortBy = sortBy })
     MatchAny  matchAny a -> a <$ modif _{ matchAny = matchAny }
     Focus     focus    a -> a <$ do
         liftEffect $ hash focus
@@ -47,7 +45,7 @@ siteEval title transform getFilters getSort = case _ of
                 }
     SetPref   k v      a -> a <$ do
         liftEffect $ writePreference k v
-        modif <<< modPrefs $ setPreference k v
+        modif $ reSort <<< modPrefs (setPreference k v)
     Toggle     filt     a
       | exclusive $ getTab filt -> a <$ modif (modExclude $ toggleIn filt)
       | otherwise               -> a <$ modif (modFilters $ toggleIn filt)

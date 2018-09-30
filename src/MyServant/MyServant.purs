@@ -107,7 +107,7 @@ makeUnowned servant@(Servant s) = mapSort $ MyServant
     , skills: [10, 10, 10]
     , npLvl:  if s.free || (s.rarity <= 3 && s.rarity > 0) then 5 else 1
     , ascent: 1
-    , sorted: Map.empty
+    , sorted: mempty
     }
 
 unowneds :: Map Servant MyServant
@@ -125,7 +125,7 @@ newServant servant@(Servant s) = MyServant
     , skills: [1, 1, 1]
     , npLvl:  1
     , ascent: 1
-    , sorted: Map.empty
+    , sorted: mempty
     }
 
 owned :: Map Servant MyServant -> Servant -> MyServant

@@ -65,10 +65,10 @@ toCell :: ∀ a b. Boolean -> Number -> HTML a b
 toCell isPercent = _td <<< (isPercent ? flip append "%") <<<
                    Format.toString <<< roundTo 2
 
-outline :: ∀ a b c d e. SiteState a b d -> Array SortBy -> FilterList a
-        -> Array (HTML e (SiteQuery a b c Unit))
-        -> Array (HTML e (SiteQuery a b c Unit))
-        -> Array (HTML e (SiteQuery a b c Unit))
+outline :: ∀ a b c d f. SiteState a b d -> Array SortBy -> FilterList a
+        -> Array (HTML f (SiteQuery a b c Unit))
+        -> Array (HTML f (SiteQuery a b c Unit))
+        -> Array (HTML f (SiteQuery a b c Unit))
 outline st sorts allFilters nav content =
     [ H.aside_ $
       [ _h 1 "Links"
@@ -109,7 +109,8 @@ outline st sorts allFilters nav content =
       | otherwise = [ P.enabled true, _click ClearAll ]
     filtersEl { tab, filters } = filterSection st tab filters
 
-filterSection :: ∀ a b c e f. {exclude :: Array (Filter a), filters :: Array (Filter a) | e}
+filterSection :: ∀ a b c e f. 
+                 {exclude :: Array (Filter a), filters :: Array (Filter a) | e}
               -> FilterTab -> Array (Filter a)
               -> Array (HTML f (SiteQuery a b c Unit))
 filterSection _ _ [] = []

@@ -68,5 +68,5 @@ instance _m_ :: HasEffects a => Has a InstantEffect where
         match _ = false
 instance _n_ :: HasEffects a => Has a BonusEffect where
     has x _ = any match <<< getEffects where
-        match (Bonus y _) = x == y
+        match (Bonus y _ _) = x == y
         match _ = false

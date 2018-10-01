@@ -415,7 +415,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 50,  hp: 50 }
               , max:  { atk: 50, hp: 50 }
               }
-  , effect:   [ Bonus FriendPoints $ Flat 75.0 ]
+  , effect:   [ Bonus FriendPoints false $ Flat 75.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -910,7 +910,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 200,  hp: 0 }
               , max:  { atk: 1000, hp: 0 }
               }
-  , effect:   [ Bonus QuestQuartz $ 2017.0 ~ 2018.0 ]
+  , effect:   [ Bonus QPQuest false $ 2017.0 ~ 2018.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -935,7 +935,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Bonus QPGain $ 2.0 ~ 10.0 ]
+  , effect:   [ Bonus QPDrop true $ 2.0 ~ 10.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1130,7 +1130,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1141,7 +1141,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1152,7 +1152,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1163,7 +1163,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1174,7 +1174,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1185,7 +1185,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1196,7 +1196,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1207,7 +1207,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1218,7 +1218,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1229,7 +1229,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500, hp: 500 }
               , max:  { atk: 500, hp: 500 }
               }
-  , effect:   [ Bonus Bond $ Flat 50.0 ]
+  , effect:   [ Bonus Bond false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1560,7 +1560,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 250,  hp: 400 }
               , max:  { atk: 1000, hp: 1600 }
               }
-  , effect:   [ Bonus EXPPerc $ 2.0 ~ 10.0 ]
+  , effect:   [ Bonus EXP true $ 2.0 ~ 10.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -1929,7 +1929,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 500,  hp: 0 }
               , max:  { atk: 2000, hp: 0 }
               }
-  , effect:   [ Bonus MysticCode $ Flat 2.0 ]
+  , effect:   [ Bonus MysticCode true $ Flat 2.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -2492,6 +2492,17 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  true
   }
+, { name:     "Chaldea Lunchtime"
+  , id:       330
+  , rarity:   5
+  , icon:     IconRainbow
+  , stats:    { base: { atk: 250,  hp: 400 } 
+              , max:  { atk: 1000, hp: 1600 }
+              }
+  , effect:   [ Bonus Bond true $ 2.0 ~ 10.0 ]
+  , bond:     Nothing
+  , limited:  true
+  }
 , bond 334 "Indomitableness" "Florence Nightingale" IconBusterUp
   [ party' Buster 10, party HealingReceived 20 ]
 , bond 335 "One-Man War" "Cu Chulainn (Alter)" IconKneel
@@ -2552,7 +2563,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
-  , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , effect:   [ Bonus EXP false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -2563,7 +2574,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
-  , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , effect:   [ Bonus EXP false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -2574,7 +2585,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
-  , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , effect:   [ Bonus EXP false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -2585,7 +2596,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
-  , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , effect:   [ Bonus EXP false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -2596,7 +2607,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
-  , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , effect:   [ Bonus EXP false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -2607,7 +2618,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
-  , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , effect:   [ Bonus EXP false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }
@@ -2670,7 +2681,7 @@ craftEssences = CraftEssence <$>
   , stats:    { base: { atk: 100, hp: 100 }
               , max:  { atk: 100, hp: 100 }
               }
-  , effect:   [ Bonus EXP $ Flat 50.0 ]
+  , effect:   [ Bonus EXP false $ Flat 50.0 ]
   , bond:     Nothing
   , limited:  true
   }

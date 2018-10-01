@@ -107,10 +107,10 @@ exportEffect = export <<< go
         , amount: exportAmount amount
         , chance: {from: 100, to: 100}
         }
-    go (DB.Bonus bonus amount) =
+    go (DB.Bonus bonus isPerc amount) =
         { target: show DB.Self
         , duration: 0
-        , effect: show bonus
+        , effect: (isPerc ? flip append "%") $ show bonus
         , amount: exportAmount amount
         , chance: {from: 100, to: 100}
         }

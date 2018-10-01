@@ -35,13 +35,12 @@ import Database.Base
 import Printing
 
 data BonusEffect
-    = FriendPoints
-    | QuestQuartz
-    | QPGain
+    = Bond
     | EXP
-    | EXPPerc
+    | FriendPoints
     | MysticCode
-    | Bond
+    | QPDrop
+    | QPQuest
 
 data InstantEffect
     = Avenge
@@ -139,26 +138,27 @@ data BuffEffect
     | Taunt
 
 instance _c_ :: Show BonusEffect where
-    show = showBonus Placeholder
+    show = showBonus Placeholder false
 
-showBonus :: Amount -> BonusEffect -> String
-showBonus amount = case _ of
+showBonus :: Amount -> Boolean -> BonusEffect -> String
+showBonus amount isPerc = case _ of
+    Bond
+      -> gain "Bond Points"
+    EXP
+      -> gain "Master EXP"
     FriendPoints
       -> "Friend Points obtained from support becomes +" <> n
-    QuestQuartz
-      -> "Increase QP earned from completing quests by " <> n
-    QPGain
-      -> "Increase QP from enemy drops by " <> n <> "%"
-    EXP
-      -> "Increase Master EXP gain by " <> n
-    EXPPerc
-      -> "Increase Master EXP gain by " <> n <> "%"
     MysticCode
-      -> "Increase Mystic Code EXP gain by " <> n
-    Bond
-      -> "Increase Bond Points gain by " <> n
+      -> gain "Mystic Code EXP"
+    QPDrop
+      -> "Increase QP from completing quests by " <> n
+    QPQuest
+      -> "Increase QP from enemy drops by " <> n
   where
-    n = show amount
+    n 
+      | isPerc    = show amount <> "%"
+      | otherwise = show amount
+    gain x = "Increase " <> x <> " gained by " <> n
 
 instance _d_ :: Show InstantEffect where
     show = showInstant Someone Placeholder
@@ -396,7 +396,7 @@ data SkillEffect
     = Grant Target Int BuffEffect Amount
     | Debuff Target Int DebuffEffect Amount
     | To Target InstantEffect Amount
-    | Bonus BonusEffect Amount
+    | Bonus BonusEffect Boolean Amount
     | Chance Int SkillEffect
     | Chances Int Int SkillEffect
     | When String SkillEffect
@@ -417,7 +417,7 @@ mapAmount f eff = go eff
     go (Grant a b c d)  = Grant a b c $ f' d
     go (Debuff a b c d) = Debuff a b c $ f' d
     go (To a b c)       = To a b $ f' c
-    go (Bonus a b)      = Bonus a $ f' b
+    go (Bonus a b c)    = Bonus a b $ f' c
     go (Chance a b)     = Chance a $ go b
     go (When a b)       = When a $ go b
     go (Times a b)      = Times a $ go b
@@ -447,7 +447,7 @@ demerit (To _ DemeritGauge _) = true
 demerit (To _ DemeritHealth _) = true
 demerit (To _ DemeritKill _) = true
 demerit (To _ _ _) = false
-demerit (Bonus _ _) = false
+demerit (Bonus _ _ _) = false
 demerit (Chance _ ef) = demerit ef
 demerit (Chances _ _ ef) = demerit ef
 demerit (When _ ef) = demerit ef
@@ -461,7 +461,7 @@ instance _g_ :: Show SkillEffect where
             Grant t dur buff amt -> showBuff t amt buff <> turns dur
             Debuff t dur deb amt -> showDebuff t amt deb <> turns dur
             To t instant amt     -> showInstant t amt instant
-            Bonus bonus amt      -> showBonus amt bonus
+            Bonus bonus perc amt -> showBonus amt perc bonus
             Chance 0 ef          -> "Chance to " <> uncap (go ef)
             Chance per ef        -> show per <> "% chance to " <> uncap (go ef)
             Chances x y ef       -> show x <> "~" <> show y <> "% chance to "
@@ -604,7 +604,7 @@ ranges = bindFlipped toInfo
     acc (Grant _ _ _ x)    = go x
     acc (Debuff _ _ _ x)   = go x
     acc (To _ _ x)         = go x
-    acc (Bonus _ x)        = go x
+    acc (Bonus _ _ x)      = go x
     acc (Chance _ ef)      = acc ef
     acc (Chances x y ef)   = pure {from: Int.toNumber x, to: Int.toNumber y}
                              <|> acc ef

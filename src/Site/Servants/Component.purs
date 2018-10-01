@@ -398,7 +398,8 @@ skillEl showTables active@{name, icon, cd, rank, effect} base =
     [ toImage icon
     , _h 3 $ name <> show rank
     , _strong "CD: "
-    , H.text <<< (active == base ? (_ <> "~" <> show (cd - 2))) $ show cd
+    , H.text <<< (active == base ? flip append $ "~" <> show (cd - 2)) $ 
+      show cd
     ] <> (effectEl <$> effect)
   where
     effectTable = _table (show <$> 1..10) $

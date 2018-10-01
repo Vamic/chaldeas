@@ -92,7 +92,7 @@ skillFilter (Grant _ _ buff _)    = Just $ matchFilter
                                (FilterBuff $ buffCategory buff) buff
 skillFilter (Debuff _ _ debuff _) = Just $ matchFilter FilterDebuff debuff
 skillFilter (To _ action _)       = Just $ matchFilter FilterAction action
-skillFilter (Bonus bonus _)       = Just $ matchFilter FilterBonus bonus
+skillFilter (Bonus bonus _ _)     = Just $ matchFilter FilterBonus bonus
 skillFilter (Chance _ ef')        = skillFilter ef'
 skillFilter (Chances _ _ ef')     = skillFilter ef'
 skillFilter (When _ ef')          = skillFilter ef'

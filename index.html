@@ -440,17 +440,21 @@
       .demerit::after                 { content: " [Demerit]" }
       @media (min-device-width: 800px) and (max-width: 890px)
         { body                          { font-size: 12px }
-        section .portrait > img         { width: 100px; min-height: unset } 
         section .portrait header span   { font-size: 10px; word-break: normal }
         .fade article                   { font-size: 14px }
         }
-      @media (max-device-width: 800px) 
+      @media (max-width: 800px) 
         { body                          { font-size: 8px }
           aside td                      { display: block }
           section .portrait > img       { width: 75px }
           section .portrait header span { font-size: 9px }
           form p                        { margin-left: 15px }
           article .portrait header span { font-size: 11px }
+          section .portrait > img
+              { width: 100px
+              ; min-height: unset
+              ; height: unset
+              }
           article .portrait > img       
               { width: 130px
               ; min-height: unset 

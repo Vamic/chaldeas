@@ -25,7 +25,7 @@
       .dark #bg  { background-color: #111111 }
       #bg        
         { position: fixed
-        ; top:0; left:0; right:0; bottom:0 
+        ; top:0;left:0;right:0;bottom:0 
         ; z-index: -1
         }
       .light .activates p:first-child::after, .light .demerit::after
@@ -173,6 +173,7 @@
       body > div:last-child
         { display: flex 
         ; position: absolute
+        ; top:0;bottom:0;left:0;right:0
         }
       body > div > aside 
         { overflow-y: scroll
@@ -470,32 +471,37 @@
           aside button                  { min-width: 7em }
           body > div > section          { flex: 6 1 0 }
           section .portrait > img
-              { width: 100px
-              ; min-height: 141px
-              }
+            { width: 100px
+            ; min-height: 141px
+            }
         }
       @media (min-device-width: 800px) and (max-width: 890px)
         { body > div > section          { flex: 6 1 0 } }
       @media (max-device-width: 800px) 
         { body > div:last-child         { position: unset }
           body                          { font-size: 8px }
-          section .portrait > img       { width: 75px; min-height: 104px }
+          section .portrait > img       { width: 75px; min-height: 103px }
           section .portrait div img     { width: 15px }
           section .portrait header span { font-size: 9px }
           form p                        { margin-left: 15px }
           article .portrait header span { font-size: 11px }
           body > div > aside            { display: none }
           body > div > aside:last-child:nth-child(4) 
-              { display: block 
-              ; font-size: 16px
-              ; margin: 0 1em
-              ; overflow: unset
-              }
+            { display: block 
+            ; font-size: 16px
+            ; margin: 0 1em
+            ; overflow: unset
+            }
+          article 
+            { max-height: unset
+            ; max-width: unset
+            ; margin: 0 6%
+            }
           article .portrait > img       
-              { width: 130px
-              ; min-height: unset 
-              ; height: unset
-              }
+            { width: 130px
+            ; min-height: unset 
+            ; height: unset
+            }
           article table:nth-child(2), article table:nth-child(3)
             { float: left
             ; max-width: 36% 

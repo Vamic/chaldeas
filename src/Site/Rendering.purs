@@ -82,7 +82,7 @@ site st@{section: Nothing} sorts allFilters nav content =
       <> renderSection SectionInclude 
     , H.section_ content
     , H.aside_ $ cons (_h 1 "Browse") nav <> renderSection SectionFilter
-    , H.div_ $ enumArray <#> \section -> 
+    , H.footer_ $ enumArray <#> \section -> 
         _button (show section) true <<< ToSection $ Just section
     ]
   where

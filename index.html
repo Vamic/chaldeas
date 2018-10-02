@@ -171,7 +171,9 @@
         { min-width: 6em
         }
       body > div:last-child
-        { display: flex }
+        { display: flex 
+        ; position: absolute
+        }
       body > div > aside 
         { overflow-y: scroll
         ; padding: 0.5em 1em
@@ -181,7 +183,8 @@
       body > div > aside:last-child
         { flex: 3 1 0 }
       body > div > footer
-        { position: fixed 
+        { display: none
+        ; position: fixed 
         ; bottom: 0
         ; width: 100%
         ; text-align: center
@@ -459,14 +462,6 @@
         { margin-bottom: 6px }
       .activates p:first-child::after { content: " [Activates first]" }
       .demerit::after                 { content: " [Demerit]" }
-      @media (min-device-width: 800px) 
-        { body > div:last-child
-            { position: absolute
-            ; top:0;left:0;right:0;bottom:0
-            }
-          body > div > footer 
-            { display: none } 
-        }
       @media (max-width: 890px)
         { body                          { font-size: 12px }
           section .portrait header span { font-size: 10px; word-break: normal }
@@ -482,8 +477,10 @@
       @media (min-device-width: 800px) and (max-width: 890px)
         { body > div > section          { flex: 6 1 0 } }
       @media (max-device-width: 800px) 
-        { body                          { font-size: 8px }
+        { body > div:last-child         { position: unset }
+          body                          { font-size: 8px }
           section .portrait > img       { width: 75px; min-height: 104px }
+          section .portrait div img     { width: 15px }
           section .portrait header span { font-size: 9px }
           form p                        { margin-left: 15px }
           article .portrait header span { font-size: 11px }

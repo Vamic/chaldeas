@@ -476,15 +476,14 @@
           body > div > section          { flex: 6 1 0 }
           section .portrait > img
               { width: 100px
-              ; min-height: unset
-              ; height: unset
+              ; min-height: 141px
               }
         }
       @media (min-device-width: 800px) and (max-width: 890px)
         { body > div > section          { flex: 6 1 0 } }
       @media (max-device-width: 800px) 
         { body                          { font-size: 8px }
-          section .portrait > img       { width: 75px; height: 105px }
+          section .portrait > img       { width: 75px; min-height: 104px }
           section .portrait header span { font-size: 9px }
           form p                        { margin-left: 15px }
           article .portrait header span { font-size: 11px }

@@ -47,13 +47,15 @@ lvlRow (RangeInfo isPercent x y) =
     step = (y - x) / 10.0
 
 noBreakName :: Boolean -> String -> String
-noBreakName doPrettify = (doPrettify ? prettify) <<<
+noBreakName shouldPrettify = (shouldPrettify ? prettify) <<<
     String.replaceAll (Pattern "Anne Bonny") (Replacement "Anne Bonny") <<<
     String.replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
     unBreak <<< String.split (Pattern "(")
   where
-    unBreak [x, y] = x <> "("
-                       <> String.replaceAll (Pattern " ") (Replacement " ") y
+    unBreak [x, y]
+      | shouldPrettify = String.trim x
+      | otherwise      = x <> "("
+                         <> String.replaceAll (Pattern " ") (Replacement " ") y
     unBreak xs     = String.joinWith "(" xs
 
 mode :: Preferences -> String

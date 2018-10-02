@@ -467,7 +467,7 @@
           body > div > footer 
             { display: none } 
         }
-      @media (min-device-width: 800px) and (max-width: 890px)
+      @media (max-width: 890px)
         { body                          { font-size: 12px }
           section .portrait header span { font-size: 10px; word-break: normal }
           .fade article                 { font-size: 14px }
@@ -480,6 +480,8 @@
               ; height: unset
               }
         }
+      @media (min-device-width: 800px) and (max-width: 890px)
+        { body > div > section          { flex: 6 1 0 } }
       @media (max-device-width: 800px) 
         { body                          { font-size: 8px }
           section .portrait > img       { width: 75px; height: 105px }

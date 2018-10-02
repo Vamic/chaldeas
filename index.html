@@ -474,6 +474,19 @@
             { width: 100px
             ; min-height: 141px
             }
+          #calc td
+            { display: table 
+            ; box-sizing: border-box
+            ; margin: auto
+            }
+          #calc td table
+            { min-width: 100% }
+          #calc td tr
+            { display: table }
+          #calc th 
+            { vertical-align: unset
+            ; width: unset
+            } 
         }
       @media (min-device-width: 800px) and (max-width: 890px)
         { body > div > section          { flex: 6 1 0 } }
@@ -481,7 +494,7 @@
         { body > div:last-child         { position: unset }
           body > div > footer           { display: block }
           body                          { font-size: 8px }
-          section .portrait > img       { width: 75px; min-height: 103px }
+          section .portrait > img       { width: 75px; min-height: 104px }
           section .portrait div img     { width: 15px }
           section .portrait header span { font-size: 9px }
           form p                        { margin-left: 15px }

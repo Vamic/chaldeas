@@ -19,13 +19,14 @@
         ; font-size: 14px
         ; line-height: 0
         }
-      .light
-        { background-color: #e6e6e6 
-        ; color: #585858
-        }
-      .dark
-        { background-color: #111111 
-        ; color: #c0c0c0
+      .light     { color: #585858 }
+      .dark      { color: #c0c0c0 }
+      .light #bg { background-color: #e6e6e6 }
+      .dark #bg  { background-color: #111111 }
+      #bg        
+        { position: fixed
+        ; top:0; left:0; right:0; bottom:0 
+        ; z-index: -1
         }
       .light .activates p:first-child::after, .light .demerit::after
         { color: #585858 }
@@ -170,10 +171,7 @@
         { min-width: 6em
         }
       body > div:last-child
-        { display: flex
-        ; position: absolute
-        ; top:0;left:0;right:0;bottom:0
-        }
+        { display: flex }
       body > div > aside 
         { overflow-y: scroll
         ; padding: 0.5em 1em
@@ -182,6 +180,29 @@
         }
       body > div > aside:last-child
         { flex: 3 1 0 }
+      body > div > div
+        { position: fixed 
+        ; bottom: 0
+        ; width: 100%
+        ; text-align: center
+        ; background: #eee
+        ; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)
+        ; border-top: 1px solid #aaa
+        }
+      body > div > div button 
+        { font-size: 15px
+        ; margin: 6px 5px
+        ; padding: 3px 15px
+        }
+      body > div > aside button:first-child
+        { position: absolute
+        ; top: 0.5em
+        ; right: 1.5em
+        ; width: 2em
+        ; padding: 0
+        ; font-weight: bold
+        ; font-size: 14px
+        }
       aside > nav span
         { display: block }
       body > div > section
@@ -438,18 +459,33 @@
         { margin-bottom: 6px }
       .activates p:first-child::after { content: " [Activates first]" }
       .demerit::after                 { content: " [Demerit]" }
-      @media (min-device-width: 800px) and (max-width: 890px)
+      @media (min-device-width: 8000px) 
+        { body > div:last-child
+            { position: absolute
+            ; top:0;left:0;right:0;bottom:0
+            }
+          body > div > div 
+            { display: none } 
+        }
+      @media (min-device-width: 8000px) and (max-width: 890px)
         { body                          { font-size: 12px }
-        section .portrait header span   { font-size: 10px; word-break: normal }
-        .fade article                   { font-size: 14px }
+          section .portrait header span { font-size: 10px; word-break: normal }
+          .fade article                 { font-size: 14px }
+          aside td                      { display: block }
         }
       @media (max-width: 800px) 
         { body                          { font-size: 8px }
-          aside td                      { display: block }
           section .portrait > img       { width: 75px }
           section .portrait header span { font-size: 9px }
           form p                        { margin-left: 15px }
           article .portrait header span { font-size: 11px }
+          body > div > aside            { display: none }
+          body > div > aside:last-child:nth-child(4) 
+              { display: block 
+              ; font-size: 13px
+              ; overflow: unset
+              ; 
+              }
           section .portrait > img
               { width: 100px
               ; min-height: unset
@@ -460,13 +496,6 @@
               ; min-height: unset 
               ; height: unset
               }
-          aside p input
-            { position: relative
-            ; bottom: 3px
-            ; max-height: 1em
-            ; float: left
-            ; margin: 1px 0 -1em -20px
-            }
           article table:nth-child(2), article table:nth-child(3)
             { float: left
             ; max-width: 36% 
@@ -480,6 +509,12 @@
           article section img
             { width: 20px
             ; margin-top: 2px
+            }
+        }
+      @media(max-width: 520px)
+        { body > div > div button
+            { margin: 6px 4px
+            ; padding: 2px 3px
             }
         }
       @media(max-width:471px)

@@ -1,6 +1,7 @@
 -- | Shared Halogen logic.
 module Site.Algebra
-  ( SiteQuery(..), SiteState(..), SiteMessage(..)
+  ( Section(..)
+  , SiteQuery(..), SiteState(..), SiteMessage(..)
   , FilterTab(..), Filter(..), exclusive
   ) where
 
@@ -14,9 +15,20 @@ import Sorting
 import Site.Preferences
 import Site.ToImage
 
+-- | Parts of the site.
+data Section 
+    = SectionBrowse 
+    | SectionSettings 
+    | SectionSortBy 
+    | SectionInclude 
+    | SectionFilter
+instance _a_ :: Show Section where
+    show = unCamel <<< String.drop 7 <<< G.genericShow
+
 -- | Commands used in links and `Site.Eval`.
 data SiteQuery inFilters inFocus toAlternate a
     = Switch    (Maybe toAlternate) a
+    | ToSection (Maybe Section) a
     | Focus     (Maybe inFocus) a
     | ClearAll  a
     | Check     FilterTab Boolean a
@@ -35,18 +47,19 @@ data SiteQuery inFilters inFocus toAlternate a
 data SiteMessage inFilters toAlternate = 
     SiteMessage SortBy (Array (Filter inFilters)) (Maybe toAlternate)
 
--- | Basic 
-type SiteState inFilters inFocus e
-    = { filters  :: Array (Filter inFilters)
-      , exclude  :: Array (Filter inFilters)
-      , matchAny :: Boolean
-      , focus    :: Maybe inFocus
-      , sortBy   :: SortBy
-      , prefs    :: Preferences
-      , sorted   :: Array { label :: String, obj :: inFocus }
-      , listing  :: Array { label :: String, obj :: inFocus }
-      | e
-      }
+-- | Halogen state.
+type SiteState inFilters inFocus e =
+    { section  :: Maybe Section
+    , filters  :: Array (Filter inFilters)
+    , exclude  :: Array (Filter inFilters)
+    , matchAny :: Boolean
+    , focus    :: Maybe inFocus
+    , sortBy   :: SortBy
+    , prefs    :: Preferences
+    , sorted   :: Array { label :: String, obj :: inFocus }
+    , listing  :: Array { label :: String, obj :: inFocus }
+    | e
+    }
 
 data FilterTab
     = FilterEventBonus
@@ -69,7 +82,7 @@ data FilterTab
 exclusive :: FilterTab -> Boolean
 exclusive = (_ >= FilterSource)
 
-instance _a_ :: Show FilterTab where
+instance _b_ :: Show FilterTab where
     show FilterPhantasm = "NP Type"
     show FilterCard     = "NP Card"
     show (FilterBuff c) = "Buff (" <> show c <> ")"
@@ -83,13 +96,13 @@ newtype Filter a = Filter { tab   :: FilterTab
                           , match :: Boolean -> a -> Boolean
                           }
 
-instance _b_ :: Eq (Filter a) where
+instance _c_ :: Eq (Filter a) where
     eq (Filter x) (Filter y) = x.tab == y.tab && x.name == y.name
-instance _c_ :: Ord (Filter a) where
+instance _d_ :: Ord (Filter a) where
     compare (Filter x) (Filter y) = compareThen _.tab _.name x y
-instance _d_ :: Show (Filter a) where
+instance _e_ :: Show (Filter a) where
     show (Filter x) = x.name
-derive instance _e_ :: Newtype (Filter a) _
+derive instance _f_ :: Newtype (Filter a) _
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE
@@ -105,6 +118,20 @@ instance _5_ :: G.Bounded FilterTab where
     top = G.genericTop
     bottom = G.genericBottom
 instance _6_ :: G.BoundedEnum FilterTab where
+    cardinality = G.genericCardinality
+    toEnum = G.genericToEnum
+    fromEnum = G.genericFromEnum
+
+derive instance _10_ :: G.Generic Section _
+derive instance _11_ :: Eq Section
+derive instance _12_ :: Ord Section
+instance _13_ :: G.Enum Section where
+    succ = G.genericSucc
+    pred = G.genericPred
+instance _14_ :: G.Bounded Section where
+    top = G.genericTop
+    bottom = G.genericBottom
+instance _15_ :: G.BoundedEnum Section where
     cardinality = G.genericCardinality
     toEnum = G.genericToEnum
     fromEnum = G.genericFromEnum

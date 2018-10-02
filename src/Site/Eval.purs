@@ -22,6 +22,7 @@ siteEval title transform getFilters reSort = case _ of
     Switch    switchTo a -> a <$ do
         {exclude, filters, sortBy} <- get
         raise $ SiteMessage sortBy (exclude <> filters) switchTo
+    ToSection section  a -> a <$ modify_ _{ section = section }
     ClearAll           a -> a <$ modif _{ exclude = mempty, filters = mempty }
     Check t  true      a -> a <$ do
         modif <<< modExclude <<< filter $ notEq t <<< getTab

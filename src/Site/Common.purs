@@ -2,7 +2,6 @@
 module Site.Common where
 
 import StandardLibrary
-import Data.Array              as Array
 import Data.DateTime           as DateTime
 import Halogen.HTML.Events     as E
 import Data.Number.Format      as Format
@@ -22,11 +21,7 @@ import Web.UIEvent.MouseEvent (MouseEvent)
 
 import Database
 import Printing
-import Sorting
-import Site.Algebra
 import Site.Preferences
-import Site.Filtering
-import Site.ToImage
 
 -- | Builds a `Date` out of a year, month, and day.
 ymd :: Int -> Month -> Int -> Date
@@ -66,69 +61,6 @@ mode prefs
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
 toCell isPercent = _td <<< (isPercent ? flip append "%") <<<
                    Format.toString <<< roundTo 2
-
-outline :: ∀ a b c d f. SiteState a b d -> Array SortBy -> FilterList a
-        -> Array (HTML f (SiteQuery a b c Unit))
-        -> Array (HTML f (SiteQuery a b c Unit))
-        -> Array (HTML f (SiteQuery a b c Unit))
-outline st sorts allFilters nav content =
-    [ H.aside_ $
-      [ _h 1 "Links"
-      , H.a [P.href "https://www.reddit.com/message/compose/?to=pareidolist"]
-        [H.text "Send Feedback/Suggestions"]
-      , H.a [P.href "https://github.com/jnbooth/chaldeas"] [H.text "GitHub"]
-      , H.a [P.href "https://grandorder.wiki"] [H.text "GrandOrder Wiki"]
-      , _h 1 "Settings"
-      , H.form_ $ unfoldPreferences st.prefs <#> \(k : v) ->
-        H.p [_click <<< SetPref k $ not v] $ _checkbox Nothing (show k) v
-      , _h 1 "Sort by"
-      , H.form_ $ sorts <#> \sort ->
-        H.p [_click $ SetSort sort] $ _radio (show sort) (st.sortBy == sort)
-      , _h 1 "Include"
-      ] <> (filter (exclusive <<< _.tab) allFilters >>= filtersEl)
-    , H.section_ content
-    , H.aside_ <<< cons (_h 1 "Browse") <<< append nav $
-      [ _h 1 "Filter"
-      , H.form_
-        [ H.table_
-          [ H.tr_
-            [ _th "Match"
-            , H.td [_click $ MatchAny false] $ _radio "All" (not st.matchAny)
-            , H.td [_click $ MatchAny true]  $ _radio "Any"      st.matchAny
-            ]
-          ]
-        , H.button clearAll [ H.text "Reset All" ]
-        ]
-      ] <>
-        (filter (not exclusive <<< _.tab) allFilters >>= filtersEl)
-    ]
-  where
-    clearAll
-      | null st.filters && null st.exclude = [ P.enabled false ]
-      | otherwise = [ P.enabled true, _click ClearAll ]
-    filtersEl { tab, filters } = filterSection st tab filters
-
-filterSection :: ∀ a b c e f. 
-                 {exclude :: Array (Filter a), filters :: Array (Filter a) | e}
-              -> FilterTab -> Array (Filter a)
-              -> Array (HTML f (SiteQuery a b c Unit))
-filterSection _ _ [] = []
-filterSection st tab filts =
-    cons (_h 3 $ show tab) <<<
-    ( (exclusive tab && length filts > 3) ?
-        let checked = length $ filter (eq tab <<< getTab) st.exclude
-        in append
-            [ _button "All" (checked /= 0) $ Check tab true
-            , _button "None" (checked /= length filts) $ Check tab false
-            ]
-    ) <<< Array.singleton <<< H.form_ $ filts <#> \f'@(Filter f) ->
-    H.p [_click $ Toggle f' ] <<<
-    _checkbox (toImage <$> f.icon) f.name $ checker f'
-  where
-    checker :: Filter a -> Boolean
-    checker f'@(Filter f)
-        | exclusive f.tab = f' `notElem` st.exclude
-        | otherwise       = f' `elem`    st.filters
 
 ----------------
 -- ABBREVIATIONS

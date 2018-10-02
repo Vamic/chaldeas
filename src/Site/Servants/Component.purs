@@ -25,6 +25,7 @@ import Site.Eval
 import Site.ToImage
 import Site.Preferences
 import Site.Filtering
+import Site.Rendering
 import Site.Servants.Filters
 import Site.Servants.Sorting
 import Printing
@@ -60,7 +61,8 @@ comp today =
 
   initialState :: (State -> State) -> State
   initialState f = updateListing getBase <<< reSort $ f
-      { filters:  mempty
+      { section:  Nothing
+      , filters:  mempty
       , exclude:  mempty
       , matchAny: true
       , mineOnly: false
@@ -75,8 +77,8 @@ comp today =
       }
 
   render :: State -> ComponentHTML Query
-  render st = modal st.prefs st.ascent st.focus $
-              outline st enumArray allFilters' nav content
+  render st = popup st.prefs st.ascent st.focus $
+              site st enumArray allFilters' nav content
     where
       nav = [ _a "Craft Essences" $ Switch Nothing
             , if st.mineOnly then _a      "Servants" $ MineOnly false
@@ -186,11 +188,11 @@ portrait big prefs baseAscension { label, obj: ms' }
       | ascension <= 1 = ""
       | otherwise      = " " <> show ascension
 
-modal :: ∀ a. Preferences -> Int -> Maybe MyServant
+popup :: ∀ a. Preferences -> Int -> Maybe MyServant
       -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
-modal prefs _ Nothing = H.div [_c $ mode prefs] <<< append
+popup prefs _ Nothing = H.div [_c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal prefs ascent focus@(Just ms') = H.div
+popup prefs ascent focus@(Just ms') = H.div
   [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []
     , H.article_ $

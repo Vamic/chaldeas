@@ -20,6 +20,7 @@ import Site.CraftEssences.Sorting
 import Site.Eval
 import Site.Filtering
 import Site.Preferences
+import Site.Rendering
 import Site.ToImage
 import Sorting
 
@@ -46,7 +47,8 @@ comp today = component
 
   initialState :: (State -> State) -> State
   initialState f = updateListing identity <<< reSort $ f
-      { filters:  mempty
+      { section:  Nothing
+      , filters:  mempty
       , exclude:  mempty
       , matchAny: true
       , focus:    Nothing
@@ -57,8 +59,8 @@ comp today = component
       }
 
   render :: State -> ComponentHTML Query
-  render st = modal st.prefs st.focus <<<
-              outline st [Rarity, ID, ATK, HP] allFilters nav <<<
+  render st = popup st.prefs st.focus <<<
+              site st [Rarity, ID, ATK, HP] allFilters nav <<<
               (st.sortBy /= Rarity ? reverse) $
               portrait false st.prefs <$> st.listing
     where
@@ -88,11 +90,11 @@ portrait big prefs {label, obj: ce'@(CraftEssence ce)}
                  [_c $ "portrait stars" <> show ce.rarity]
     doArtorify = String.replaceAll (Pattern "Altria") (Replacement "Artoria")
 
-modal :: ∀ a. Preferences -> Maybe CraftEssence
+popup :: ∀ a. Preferences -> Maybe CraftEssence
       -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
-modal prefs Nothing = H.div [_c $ mode prefs] <<< append
+popup prefs Nothing = H.div [_c $ mode prefs] <<< append
   [ H.div [_i "cover", _click $ Focus Nothing] [], H.article_ [] ]
-modal prefs
+popup prefs
 (Just ce'@(CraftEssence ce@{stats:{base, max}})) = H.div
     [_c $ "fade " <> mode prefs] <<< append
     [ H.div [_i "cover", _click $ Focus Nothing] []

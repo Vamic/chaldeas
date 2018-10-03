@@ -81,6 +81,7 @@ translate "Mugashiki—Shinkuu Myou" = "Mugashiki - Shinkuu Myōu"
 translate "Leonardo da Vinci" = "Leonardo Da Vinci"
 translate "Beautiful Princess (Sea)" = "Princess of Loveliness (Ocean)"
 translate "Treasure Hunt (Sea)" = "Treasure Hunt (Ocean)"
+translate "Jack-o'-lantern" = "Jack-o'-Lantern"
 translate x = prettify x
 
 printIcon :: Icon -> String
@@ -140,7 +141,7 @@ effects = map showEffect
     showEffect (To _ ef _) = G.genericShow ef
     showEffect (Grant _ _ ef _) = G.genericShow ef
     showEffect (Debuff _ _ ef _) = G.genericShow ef
-    showEffect (Bonus ef _) = G.genericShow ef
+    showEffect (Bonus ef _ _) = G.genericShow ef
     showEffect (Chances _ _ ef) = showEffect ef
     showEffect (Chance _ ef) = showEffect ef
     showEffect (Times _ ef) = showEffect ef

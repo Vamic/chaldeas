@@ -561,7 +561,7 @@ craftEssences = CraftEssence <$>
   , bond:     Nothing
   , limited:  false
   }
-, { name:     "Jack-o'-Lantern"
+, { name:     "Jack-o'-lantern"
   , id:       49
   , rarity:   3
   , icon:     IconDamageUp
@@ -2709,11 +2709,11 @@ equipped :: Class -> SkillEffect -> SkillEffect
 equipped = When <<< append "equipped by a " <<< show
 
 getBond :: Servant -> Maybe CraftEssence
-getBond (Servant s) = go s.name
-  where
-    go = memoize \name ->
-         let match (CraftEssence ce) = ce.bond == Just name
-         in find match craftEssences
+getBond (Servant s) = getBondFromName s.name
+
+getBondFromName :: String -> Maybe CraftEssence
+getBondFromName = memoize \name -> 
+    find (\(CraftEssence ce) -> ce.bond == Just name) craftEssences
 
 newtype CraftEssence = CraftEssence { name     :: String
                                     , id       :: Int

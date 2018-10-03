@@ -457,6 +457,9 @@ demerit (ToMax _ ef) = demerit ef
 instance _g_ :: Show SkillEffect where
     show = flip append "." <<< go
       where
+        uncap s = case String.uncons s of
+            Nothing -> s
+            Just {head, tail} -> String.toLower (String.singleton head) <> tail
         go = case _ of
             Grant t dur buff amt -> showBuff t amt buff <> turns dur
             Debuff t dur deb amt -> showDebuff t amt deb <> turns dur
@@ -475,11 +478,6 @@ instance _g_ :: Show SkillEffect where
         turns 0   = ""
         turns 1   = " for 1 turn"
         turns dur = " for " <> show dur <> " turns"
-
-uncap :: String -> String
-uncap s = case String.uncons s of
-    Nothing           -> s
-    Just {head, tail} -> String.toLower (String.singleton head) <> tail
 
 data Amount
     = Placeholder
@@ -590,8 +588,10 @@ possessiveAndSubject = case _ of
 
 data RangeInfo = RangeInfo Boolean Number Number
 instance _i_ :: Show RangeInfo where
-    show (RangeInfo true  from to) = places 2 from <> "% ~ " <> places 2 to <> "%"
-    show (RangeInfo false from to) = places 2 from <>  " ~ " <> places 2 to
+    show (RangeInfo true  from to) = 
+        places 2 from <> "% ~ " <> places 2 to <> "%"
+    show (RangeInfo false from to) = 
+        places 2 from <>  " ~ " <> places 2 to
 instance _j_ :: Eq RangeInfo where
     eq (RangeInfo _ a1 a2) (RangeInfo _ b1 b2) = a1 == b1 && a2 == b2
 

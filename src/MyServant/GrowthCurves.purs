@@ -11,12 +11,10 @@ lvlStats (Servant {curve, stats:{base, max}}) lvl = { atk: go base.atk max.atk
                                                     , hp:  go base.hp  max.hp
                                                     }
   where
-    go :: Int -> Int -> Int
     go baseVal maxVal = add baseVal <<< Int.floor $
                         Int.toNumber (maxVal - baseVal) * modifier / 1000.0
-    modifier :: Number
-    modifier    = Int.toNumber <<< fromMaybe 0 $
-                  index growthCurves curve >>= flip index lvl
+    modifier          = Int.toNumber <<< fromMaybe 0 $
+                        index growthCurves curve >>= flip index lvl
 
 growthCurves :: Array (Array Int)
 growthCurves = [

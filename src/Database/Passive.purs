@@ -143,11 +143,11 @@ type Passive = Rank -> Skill
 
 passive :: String -> Icon -> Array PassiveEffect -> Passive
 passive name icon effects rank = { name
-                                     , rank
-                                     , icon
-                                     , cd:     0
-                                     , effect: skill <$> effects
-                                     }
+                                 , rank
+                                 , icon
+                                 , cd: 0
+                                 , effect: skill <$> effects
+                                 }
   where
     skill (Give targ buff ranks) = Grant targ 0 buff <<< fromMaybe Placeholder $
                                    Flat <$> Tuple.lookup rank ranks

@@ -71,6 +71,8 @@ site st@{section: Just x} sorts allFilters nav _ =
     ]
 site st@{section: Nothing} sorts allFilters nav content =
     [ H.div [_i "bg"] []
+    , H.footer_ $ enumArray <#> \section -> 
+        _button (show section) true <<< ToSection $ Just section
     , H.aside_ $
       [ _h 1 "Links"
       , H.a [P.href "https://www.reddit.com/message/compose/?to=pareidolist"]
@@ -82,8 +84,6 @@ site st@{section: Nothing} sorts allFilters nav content =
       <> renderSection SectionInclude 
     , H.section_ content
     , H.aside_ $ cons (_h 1 "Browse") nav <> renderSection SectionFilter
-    , H.footer_ $ enumArray <#> \section -> 
-        _button (show section) true <<< ToSection $ Just section
     ]
   where
     renderSection x = render x st sorts allFilters nav

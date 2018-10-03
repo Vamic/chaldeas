@@ -31,11 +31,11 @@ commas = places 0 <<< Int.toNumber
 
 -- | Removes illegal special characters from file names.
 fileName :: String -> String
-fileName = filterOut (Pattern "?:/")
+fileName = memoize $ filterOut (Pattern "?:/")
 
 -- | Removes spaces from names in order to use them in URLs.
 urlName :: String -> String
-urlName = filterOut (Pattern "  ")
+urlName = memoize $ filterOut (Pattern "  ")
 
 -- | Rounds a `Number` to some decimal precision.
 roundTo :: Int -> Number -> Number
@@ -44,7 +44,8 @@ roundTo x = (_ / zeroes) <<< Math.round <<< (_ * zeroes)
 
 -- | Converts `NightMode` into "Night Mode" etc.
 unCamel :: String -> String
-unCamel = String.replaceAll (Pattern " The ") (Replacement " the ") <<<
+unCamel = memoize $
+          String.replaceAll (Pattern " The ") (Replacement " the ") <<<
           String.replaceAll (Pattern " Of ") (Replacement " of ") <<<
           Regex.replace camel "$1 $2" <<< maybeDo unParen
   where

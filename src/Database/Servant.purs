@@ -87,23 +87,25 @@ instance _01_ :: Show PhantasmType where
 
 -- type Item = Array (Material : Int)
 
-data Ascension     = Welfare String
-                   | Clear String String String String
-                   | Ascension
-                     (Array (Material : Int)) -- 1
-                     (Array (Material : Int)) -- 2
-                     (Array (Material : Int)) -- 3
-                     (Array (Material : Int)) -- 4
-data Reinforcement = Reinforcement
-                     (Array (Material : Int)) -- 1
-                     (Array (Material : Int)) -- 2
-                     (Array (Material : Int)) -- 3
-                     (Array (Material : Int)) -- 4
-                     (Array (Material : Int)) -- 5
-                     (Array (Material : Int)) -- 6
-                     (Array (Material : Int)) -- 7
-                     (Array (Material : Int)) -- 8
-                     -- 9 is always [ CrystallizedLore: 1 ]
+data Ascension     
+    = Welfare String
+    | Clear String String String String
+    | Ascension
+      (Array (Material : Int)) -- 1
+      (Array (Material : Int)) -- 2
+      (Array (Material : Int)) -- 3
+      (Array (Material : Int)) -- 4
+data Reinforcement 
+    = Reinforcement
+      (Array (Material : Int)) -- 1
+      (Array (Material : Int)) -- 2
+      (Array (Material : Int)) -- 3
+      (Array (Material : Int)) -- 4
+      (Array (Material : Int)) -- 5
+      (Array (Material : Int)) -- 6
+      (Array (Material : Int)) -- 7
+      (Array (Material : Int)) -- 8
+      -- 9 is always [ CrystallizedLore: 1 ]
 
 -- | Returns all `Card`s in a `Servant`'s `Deck`. Does not include NP card.
 getDeck :: Servant -> Array Card

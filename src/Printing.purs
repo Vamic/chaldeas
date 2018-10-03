@@ -31,11 +31,11 @@ commas = places 0 <<< Int.toNumber
 
 -- | Removes illegal special characters from file names.
 fileName :: String -> String
-fileName = memoize $ filterOut (Pattern "?:/")
+fileName = filterOut (Pattern "?:/")
 
 -- | Removes spaces from names in order to use them in URLs.
 urlName :: String -> String
-urlName = memoize $ filterOut (Pattern "  ")
+urlName = filterOut (Pattern "  ")
 
 -- | Rounds a `Number` to some decimal precision.
 roundTo :: Int -> Number -> Number

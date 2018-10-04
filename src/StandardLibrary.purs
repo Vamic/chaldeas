@@ -73,7 +73,7 @@ import Effect.Class (class MonadEffect, liftEffect)
 --------------------
 
 import Data.String as String
-import Data.String.CodePoints (fromCodePointArray, toCodePointArray)
+import Data.String.CodePoints as CodePoints
 
 -- Since (:) == `Tuple`, it is recommended that its usage should be surrounded
 -- by parentheses in order to resemble tuple notation in other languages.
@@ -110,11 +110,11 @@ compareThen f g x y = case compare (f x) (f y) of
 
 -- | Removes all characters in a `Pattern` from a `String`.
 filterOut :: Pattern -> String -> String
-filterOut (Pattern p) = fromCodePointArray <<<
+filterOut (Pattern p) = CodePoints.fromCodePointArray <<<
                         filter (flip notElem ps) <<<
-                        toCodePointArray
+                        CodePoints.toCodePointArray
   where
-    ps = toCodePointArray p
+    ps = CodePoints.toCodePointArray p
 
 -- | Adds an element between every element in an
 -- | `intersperse 0 [1,2,3] == [1,0,2,0,3]`

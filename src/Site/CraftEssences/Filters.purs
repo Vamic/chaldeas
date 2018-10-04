@@ -42,7 +42,7 @@ scheduledFilters =
     namedBonus FilterEventBonus "+1~2 Sweet Candle"
     [ "Jack-o'-lantern" ]
   , ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
-    namedBonus FilterEventBonus "+3~4 Mischievous Bat"
+    namedBonus FilterEventBonus "+3~4 Petit Cake"
     [ "Trick or Treat" ]
   , ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
     namedBonus FilterAvailability "Rate-Up"

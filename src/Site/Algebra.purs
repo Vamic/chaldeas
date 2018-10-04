@@ -6,8 +6,9 @@ module Site.Algebra
   ) where
 
 import StandardLibrary
-import Generic     as G
-import Data.String as String
+import Data.String.CodeUnits as CodeUnits
+import Generic               as G
+import Data.String           as String
 
 import Database
 import Printing
@@ -99,7 +100,13 @@ newtype Filter a = Filter { tab   :: FilterTab
 instance _c_ :: Eq (Filter a) where
     eq (Filter x) (Filter y) = x.tab == y.tab && x.name == y.name
 instance _d_ :: Ord (Filter a) where
-    compare (Filter x) (Filter y) = compareThen _.tab _.name x y
+    compare (Filter x) (Filter y) = compareThen _.tab trimName x y
+      where
+        trimName {name} = fromMaybe name do
+            {head} <- CodeUnits.uncons name
+            guard $ head == '+'
+            {before, after} <- splitAround (Pattern " ") name
+            pure $ after <> before
 instance _e_ :: Show (Filter a) where
     show (Filter x) = x.name
 derive instance _f_ :: Newtype (Filter a) _

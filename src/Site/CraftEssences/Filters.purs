@@ -27,19 +27,22 @@ extraFilters = join
 scheduledFilters :: Array (ScheduledFilter CraftEssence)
 scheduledFilters =
   [ ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
-    namedBonus FilterEventBonus "+1 Pumpkin Lantern"
+    namedBonus FilterEventBonus "+1~2 Pumpkin Lantern"
     [ "Little Halloween Devil" ]
   , ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
-    namedBonus FilterEventBonus "+1~2 Mischievous Bat"
-    [ "Maid in Halloween", "Halloween Arrangement" ]
+    namedBonus FilterEventBonus "+2~3 Mischievous Bat"
+    [ "Maid in Halloween" ]
   , ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
-    namedBonus FilterEventBonus "+1 Sweet Candle"
+    namedBonus FilterEventBonus "+1~2 Mischievous Bat"
+    [ "Halloween Arrangement" ]
+  , ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
+    namedBonus FilterEventBonus "+2~3 Sweet Candle"
     [ "Halloween Princess" ]
   , ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
-    namedBonus FilterEventBonus "+2 Sweet Candle"
+    namedBonus FilterEventBonus "+1~2 Sweet Candle"
     [ "Jack-o'-lantern" ]
   , ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
-    namedBonus FilterEventBonus "+3 Petit Cake"
+    namedBonus FilterEventBonus "+3~4 Mischievous Bat"
     [ "Trick or Treat" ]
   , ScheduledFilter (ymd 2018 October 4) (ymd 2018 October 17) $
     namedBonus FilterAvailability "Rate-Up"

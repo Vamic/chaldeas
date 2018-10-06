@@ -489,9 +489,9 @@
             ; width: unset
             } 
         }
-      @media (min-device-width: 800px) and (max-width: 890px)
+      @media (min-width: 800px) and (max-width: 890px)
         { body > div > section          { flex: 6 1 0 } }
-      @media (max-device-width: 800px) 
+      @media (max-width: 800px) 
         { body > div:last-child         { position: unset }
           body > div > footer           { display: block }
           body                          { font-size: 8px }
@@ -513,18 +513,30 @@
             ; bottom: 0
             ; left: 6%
             ; right: 6%
+            ; max-height: unset
             }
-          article .portrait > img       
-            { width: 130px
-            ; min-height: unset 
-            ; height: unset
+          article .portrait 
+            { display: none }
+          article > div:first-child
+            { display: inline-block }
+          article > div > div > table
+            { float: right
+            ; clear: right
+            ; width: unset
             }
+          article > div > div > table:last-child
+            { float: none }
+          article > div > div > table:first-child, 
+          article > div > div > table:last-child
+            { clear: none }
+            /*
           article table:nth-child(2), article table:nth-child(3)
             { float: left
             ; max-width: 36% 
             }
           article table:nth-child(4) 
             { max-width: 33% }
+            */
           article section
             { max-width: 35em
             ; margin: auto

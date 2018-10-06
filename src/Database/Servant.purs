@@ -4,18 +4,19 @@
 -- separate file for each Class.
 module Database.Servant
   ( Servant(..)
-  , Deck(..)
+  , Deck(..), getDeck
   , NoblePhantasm
   , Gen
   , Hits
   , PhantasmType(..)
   , Ascension(..), Reinforcement(..)
-  , getDeck, getMaterials
+  , getAscensions, getReinforcements, getMaterials, reduceMats
   ) where
 
 import StandardLibrary
 import Data.String.CodeUnits as CodeUnits
 import Generic               as G
+import Data.Array.NonEmpty   as NonEmpty
 
 import Database.Base
 import Database.Skill
@@ -111,14 +112,21 @@ data Reinforcement
 getDeck :: Servant -> Array Card
 getDeck (Servant {deck:Deck a b c d e}) = [a, b, c, d, e]
 
-getMaterials :: Servant -> Array Material
-getMaterials (Servant {ascendUp, skillUp}) = nub $ fst <$> ascendUps <> skillUps
+reduceMats :: Array (Array (Material : Int)) -> Array (Material : Int)
+reduceMats = map reduce <<< groupBy (eq `on` fst) <<< sortWith fst <<< join
   where
-    ascendUps = case ascendUp of
-        Ascension a b c d -> join [a, b, c, d]
-        _                 -> []
-    skillUps = case skillUp of
-        Reinforcement a b c d e f g h -> join [a, b, c, d, e, f, g, h]
+    reduce xs = fst (NonEmpty.head xs) : sum (snd <$> xs)
+
+getAscensions :: Servant -> Array (Array (Material : Int))
+getAscensions (Servant {ascendUp: Ascension a b c d}) = [a, b, c, d]
+getAscensions _ = []
+
+getReinforcements :: Servant -> Array (Array (Material : Int))
+getReinforcements (Servant {skillUp: Reinforcement a b c d e f g h}) = 
+    [a, b, c, d, e, f, g, h, [CrystallizedLore: 1]]
+
+getMaterials :: Servant -> Array Material
+getMaterials s = nub $ fst <$> join (getAscensions s <> getReinforcements s)
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

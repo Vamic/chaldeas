@@ -163,15 +163,15 @@ data Icon
     | IconYinYang
 
 data Material
-    = QP
+    = CrystallizedLore
     | Piece Class
     | Monument Class
     | GemOf Class
     | MagicGemOf Class
     | SecretGemOf Class
+    | QP
     | BlackBeastGrease
     | ClawOfChaos
-    | CrystallizedLore
     | DragonFang
     | Dragon'sReverseScale
     | EternalGear
@@ -198,23 +198,16 @@ data Material
 
 -- | Blacklisted `Material`s
 ignoreMat :: Material -> Boolean
-ignoreMat QP               = true
-ignoreMat (Piece _)        = true
-ignoreMat (Monument _)     = true
-ignoreMat (GemOf _)        = true
-ignoreMat (MagicGemOf _)   = true
-ignoreMat (SecretGemOf _)  = true
-ignoreMat CrystallizedLore = true
-ignoreMat _                = false
+ignoreMat = (_ <= QP)
 
 instance _c_ :: Show Material where
-    show (Piece c) = show c <> " Piece"
-    show (Monument c) = show c <> " Monument"
-    show (GemOf c) = "Gem of " <> show c
-    show (MagicGemOf c) = "Magic Gem of " <> show c
-    show (SecretGemOf c) = "Secret Gem of " <> show c
+    show (Piece c)         = show c <> " Piece"
+    show (Monument c)      = show c <> " Monument"
+    show (GemOf c)         = "Gem of " <> show c
+    show (MagicGemOf c)    = "Magic Gem of " <> show c
+    show (SecretGemOf c)   = "Secret Gem of " <> show c
     show LampOfEvilSealing = "Lamp of Evil-Sealing"
-    show x = unCamel $ G.genericShow x
+    show x                 = unCamel $ G.genericShow x
 
 -------------------------------
 -- GENERICS BOILERPLATE; IGNORE

@@ -90,14 +90,16 @@ comp today =
           Rarity -> map doPortrait
           _      -> reverse <<< map doPortrait
       content
-        | st.mineOnly = let mine = filter isMine st.listing
-                            mats = ascendWishlist $ _.obj <$> mine
-                        in (not (null mats) ? flip append
-                        [ _h 2 "Total Ascension Materials Needed"
-                        , H.footer [_c "materials"] $ 
-                          materialEl <$> mats
-                        ]) $ 
-                        portraits mine
+        | st.mineOnly = portraits mine 
+                        <> getMats "Ascension" ascendWishlist 
+                        <> getMats "Skill" skillWishlist
+          where
+            mine = filter isMine st.listing
+            getMats label f = case f $ _.obj <$> mine of
+                []   -> []
+                mats -> [_h 2 $ "Total " <> label <> " Materials Needed"
+                        , H.footer [_c "materials"] $ materialEl <$> mats
+                        ]
         | otherwise   = portraits st.listing
       doPortrait {label: "", obj: ms}
         | st.mineOnly = portrait false st.prefs baseAscend

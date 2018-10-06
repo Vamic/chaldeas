@@ -2,12 +2,11 @@
 module MyServant.Leveling 
   ( maxLevel
   , ascendCost
-  , ascendWishlist
+  , ascendWishlist, skillWishlist
   , skillCost
   ) where
 
 import StandardLibrary
-import Data.Array.NonEmpty as NonEmpty
 
 import MyServant
 import Database
@@ -29,15 +28,6 @@ ascendCost (Servant {rarity}) = (_ * 1000) <<< fromMaybe 0 <<< index costs
                 4 -> [ 50, 150,  500, 1500]
                 5 -> [100, 300, 1000, 3000]
                 _ -> [15, 45, 150, 450]
-
-ascendMats :: Servant -> Int -> Array (Material : Int)
-ascendMats (Servant {ascendUp: Ascension a b c d}) i = join $ case i of
-    0 -> [a, b, c, d]
-    1 -> [b, c, d]
-    2 -> [c, d]
-    3 -> [d]
-    _ -> []
-ascendMats _ _ = []
 
 atAscension :: MyServant -> Int
 atAscension (MyServant {level, base:(Servant {rarity})}) = case rarity of
@@ -72,12 +62,17 @@ atAscension (MyServant {level, base:(Servant {rarity})}) = case rarity of
       | level <= 55 -> 3
       | otherwise   -> 4
 
+skillWishlist :: Array MyServant -> Array (Material : Int)
+skillWishlist xs = reduceMats do
+    MyServant ms <- xs
+    let reinforce = getReinforcements ms.base
+    skillLvl     <- ms.skills
+    drop (skillLvl - 1) reinforce
+
 ascendWishlist :: Array MyServant -> Array (Material : Int)
-ascendWishlist xs = map reduce <<< groupBy (eq `on` fst) <<< sortWith fst $
-                    xs >>= go
-  where
-    go x       = ascendMats (getBase x) $ atAscension x
-    reduce xss = fst (NonEmpty.head xss) : sum (snd <$> xss)
+ascendWishlist xs = reduceMats do
+    ms <- xs
+    drop (atAscension ms) <<< getAscensions $ getBase ms
 
 skillCost :: Servant -> Int -> Int
 skillCost (Servant {rarity}) = (_ * 1000) <<< fromMaybe 0 <<< index costs

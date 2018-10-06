@@ -169,13 +169,14 @@ portrait big prefs baseAscension { label, obj: ms' }
       [ _img $ "img/Servant/" <> fileName s.name <> ascent <> ".png"
       , H.div_ [ toImage s.class ]
       , H.header_ $ (label /= "" ? append [_span label, H.br_])
-        [ _span <<< noBreakName big $ artorify s.name ]
+        [ _span <<< noBreak $ artorify s.name ]
       , H.footer_ <<<
         (big && ascension > 1 ? cons prevAscend) $
         (big && ascension < 4 ? consAfter nextAscend)
         [_span <<< String.joinWith "  " $ replicate s.rarity "★"]
       ]
   where
+    noBreak    = noBreakName big $ prefer prefs HideClasses
     MyServant ms@{servant:Servant s} = ms'
     artorify   = prefer prefs Artorify ?
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")

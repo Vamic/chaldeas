@@ -41,19 +41,33 @@ lvlRow (RangeInfo isPercent x y) =
   where
     step = (y - x) / 10.0
 
-noBreakName :: Boolean -> String -> String
+noBreakName :: Boolean -> Boolean -> String -> String
 noBreakName = memoize go
   where
-    go shouldPrettify = (shouldPrettify ? prettify) <<<
-        String.replaceAll (Pattern "Anne Bonny") (Replacement "Anne Bonny") <<<
-        String.replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read") <<<
-        unBreak <<< String.split (Pattern "(")
+    go shouldPrettify hideClasses = 
+        (shouldPrettify ? prettify) <<< 
+        replacePirates <<< unBreak <<< String.split (Pattern "(")
       where
         unBreak [x, y]
-          | shouldPrettify = String.trim x
-          | otherwise = x <> "("
-                          <> String.replaceAll (Pattern " ") (Replacement " ") y
-        unBreak xs     = String.joinWith "(" xs
+          | shouldPrettify  = x
+          | not hideClasses = x <> "(" <> replaceSpaces y
+          | otherwise       = x <> case unWords y of
+              Nothing -> 
+                  "(" <> replaceSpaces y
+              Just {head, tail} | head `notElem` classNames -> 
+                  "(" <> replaceSpaces y
+              Just {head, tail: []} -> 
+                  ""
+              Just {head, tail} -> 
+                  "(" <> replaceSpaces (String.joinWith " " tail) <> ")"
+        unBreak xs = String.joinWith "(" xs
+    classNames = show <$> enumArray :: Array Class
+    unWords    = String.stripSuffix (Pattern ")") >=> 
+                 uncons <<< String.split (Pattern " ")
+    replaceSpaces  = String.replaceAll (Pattern " ") (Replacement " ")
+    replacePirates = 
+        String.replaceAll (Pattern "Anne Bonny")  (Replacement "Anne Bonny") <<<
+        String.replaceAll (Pattern "& Mary Read") (Replacement "& Mary Read")
 
 mode :: Preferences -> String
 mode prefs

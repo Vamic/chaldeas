@@ -79,11 +79,12 @@ portrait big prefs {label, obj: ce'@(CraftEssence ce)}
       H.div meta
       [ toImage ce'
       , H.header_ <<< (label /= "" ? append
-        [_span $ noBreakName big label, H.br_]) $
-        [ _span <<< noBreakName big $ artorify ce.name ]
+        [_span $ noBreak label, H.br_]) $
+        [ _span <<< noBreak $ artorify ce.name ]
       , H.footer_ [_span <<< String.joinWith "  " $ replicate ce.rarity "★"]
       ]
   where
+    noBreak    = noBreakName big false
     artorify   = prefer prefs Artorify ?
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")
     meta       = (not big ? cons <<< _click <<< Focus $ Just ce')

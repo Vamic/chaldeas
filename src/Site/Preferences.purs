@@ -32,17 +32,19 @@ import MyServant
 data Preference
     = Artorify
     | NightMode
+    | Thumbnails
     | ShowTables
     | ExcludeSelf
     | MaxAscension
     | AddSkills
-    | Thumbnails
+    | HideClasses
 
 instance _a_ :: Show Preference where
     show ExcludeSelf  = "Exclude self-applied effects"
     show MaxAscension = "Show all at max ascension"
     show ShowTables   = "Show skill and NP tables"
     show AddSkills    = "Add skills to NP damage"
+    show HideClasses  = "Hide (Class) in names"
     show x            = unCamel $ G.genericShow x
 
 prefDefault :: Preference -> Boolean

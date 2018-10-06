@@ -2708,6 +2708,7 @@ craftEssences = CraftEssence <$>
 equipped :: Class -> SkillEffect -> SkillEffect
 equipped = When <<< append "equipped by a " <<< show
 
+-- | Retrieves the corresponding Bond CE. Memoized for performance.
 getBond :: Servant -> Maybe CraftEssence
 getBond (Servant s) = getBondFromName s.name
 

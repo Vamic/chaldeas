@@ -78,8 +78,8 @@ namedBonus tab name names =
     , match = always <| .name >> flip List.member names
     }
 
-skillFilter : (a -> List SkillEffect) -> SkillEffect -> Maybe (Filter a)
-skillFilter getEffects a = case a of
+skillFilter : SkillEffect -> (a -> List SkillEffect) -> Maybe (Filter a)
+skillFilter a getEffects = case a of
   Grant _ _ buff _ -> Just <| matchFilter 
       (Just toImageBuffEffect) 
       (hasBuffEffect getEffects)
@@ -100,8 +100,8 @@ skillFilter getEffects a = case a of
       (hasBonusEffect getEffects)
       FilterBonus
       bonus
-  Chance _ b    -> skillFilter getEffects b
-  Chances _ _ b -> skillFilter getEffects b
-  When _ b      -> skillFilter getEffects b
-  Times _ b     -> skillFilter getEffects b
-  ToMax _ b     -> skillFilter getEffects b
+  Chance _ b    -> skillFilter b getEffects
+  Chances _ _ b -> skillFilter b getEffects
+  When _ b      -> skillFilter b getEffects
+  Times _ b     -> skillFilter b getEffects
+  ToMax _ b     -> skillFilter b getEffects

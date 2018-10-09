@@ -87,12 +87,12 @@ noBreakName shouldPrettify hideClasses =
 mode : Preferences -> String
 mode prefs = if prefer prefs NightMode then "dark" else "light"
 
-effectEl : (a -> List SkillEffect) -> SkillEffect -> Html (SiteMsg a b c)
+effectEl : Maybe (a -> List SkillEffect) -> SkillEffect -> Html (SiteMsg a b c)
 effectEl getEffects ef = 
     flip H.p [H.text <| showSkillEffect ef] <|
     if demerit ef then
       [P.class "demerit"]
-    else case skillFilter getEffects ef of
+    else case getEffects |> Maybe.andThen (skillFilter ef) of
       Nothing     -> []
       Just filter -> [P.class "link", E.onClick <| FilterBy [filter]]
 

@@ -118,7 +118,7 @@ popup prefs a = case a of
                       ]
       effectsEl f = 
           H.section [] << (++) bondMsg <| 
-          List.map (mapAmount f >> effectEl .effect) ce.effect
+          List.map (mapAmount f >> effectEl (Just .effect)) ce.effect
       mlbEl = 
         if base == max then 
           [] 

@@ -36208,7 +36208,7 @@ var author$project$Site$ToImage$toImageDebuffEffect = function (a) {
 	}
 };
 var author$project$Site$Filtering$skillFilter = F2(
-	function (getEffects, a) {
+	function (a, getEffects) {
 		skillFilter:
 		while (true) {
 			switch (a.$) {
@@ -36251,38 +36251,38 @@ var author$project$Site$Filtering$skillFilter = F2(
 							bonus));
 				case 'Chance':
 					var b = a.b;
-					var $temp$getEffects = getEffects,
-						$temp$a = b;
-					getEffects = $temp$getEffects;
+					var $temp$a = b,
+						$temp$getEffects = getEffects;
 					a = $temp$a;
+					getEffects = $temp$getEffects;
 					continue skillFilter;
 				case 'Chances':
 					var b = a.c;
-					var $temp$getEffects = getEffects,
-						$temp$a = b;
-					getEffects = $temp$getEffects;
+					var $temp$a = b,
+						$temp$getEffects = getEffects;
 					a = $temp$a;
+					getEffects = $temp$getEffects;
 					continue skillFilter;
 				case 'When':
 					var b = a.b;
-					var $temp$getEffects = getEffects,
-						$temp$a = b;
-					getEffects = $temp$getEffects;
+					var $temp$a = b,
+						$temp$getEffects = getEffects;
 					a = $temp$a;
+					getEffects = $temp$getEffects;
 					continue skillFilter;
 				case 'Times':
 					var b = a.b;
-					var $temp$getEffects = getEffects,
-						$temp$a = b;
-					getEffects = $temp$getEffects;
+					var $temp$a = b,
+						$temp$getEffects = getEffects;
 					a = $temp$a;
+					getEffects = $temp$getEffects;
 					continue skillFilter;
 				default:
 					var b = a.b;
-					var $temp$getEffects = getEffects,
-						$temp$a = b;
-					getEffects = $temp$getEffects;
+					var $temp$a = b,
+						$temp$getEffects = getEffects;
 					a = $temp$a;
+					getEffects = $temp$getEffects;
 					continue skillFilter;
 			}
 		}
@@ -36305,7 +36305,10 @@ var author$project$Site$Common$effectEl = F2(
 							elm$html$Html$Attributes$class('demerit')
 						]);
 				} else {
-					var _n0 = A2(author$project$Site$Filtering$skillFilter, getEffects, ef);
+					var _n0 = A2(
+						elm$core$Maybe$andThen,
+						author$project$Site$Filtering$skillFilter(ef),
+						getEffects);
 					if (_n0.$ === 'Nothing') {
 						return _List_Nil;
 					} else {
@@ -36502,9 +36505,10 @@ var author$project$Site$CraftEssence$Component$popup = F2(
 							elm$core$Basics$composeR,
 							author$project$Database$Skill$mapAmount(f),
 							author$project$Site$Common$effectEl(
-								function ($) {
-									return $.effect;
-								})),
+								elm$core$Maybe$Just(
+									function ($) {
+										return $.effect;
+									}))),
 						ce.effect));
 			};
 			var _n1 = ce.stats;
@@ -45479,10 +45483,7 @@ var author$project$Site$Servant$Component$bondEl = function (a) {
 								]),
 							A2(
 								elm$core$List$map,
-								A2(
-									elm$core$Basics$composeR,
-									author$project$Database$Skill$showSkillEffect,
-									author$project$Site$Common$text_(elm$html$Html$p)),
+								author$project$Site$Common$effectEl(elm$core$Maybe$Nothing),
 								ce.effect)))
 					]))
 			]);
@@ -45671,7 +45672,8 @@ var author$project$Site$Servant$Component$skillEl = F3(
 					]),
 				A2(
 					elm$core$List$map,
-					author$project$Site$Common$effectEl(author$project$Database$Has$sEffects),
+					author$project$Site$Common$effectEl(
+						elm$core$Maybe$Just(author$project$Database$Has$sEffects)),
 					sk.effect)));
 	});
 var author$project$Site$Servant$Component$skillUpEl = function (_n0) {
@@ -46333,7 +46335,8 @@ var author$project$Site$Servant$Component$popup = F3(
 													b.phantasm.effect),
 												A2(
 													elm$core$List$map,
-													author$project$Site$Common$effectEl(author$project$Database$Has$sEffects),
+													author$project$Site$Common$effectEl(
+														elm$core$Maybe$Just(author$project$Database$Has$sEffects)),
 													s.phantasm.effect)),
 												A3(
 												elm$core$Basics$composeL,
@@ -46350,7 +46353,8 @@ var author$project$Site$Servant$Component$popup = F3(
 													b.phantasm.over),
 												A2(
 													elm$core$List$map,
-													author$project$Site$Common$effectEl(author$project$Database$Has$sEffects),
+													author$project$Site$Common$effectEl(
+														elm$core$Maybe$Just(author$project$Database$Has$sEffects)),
 													s.phantasm.over))
 											])),
 										A2(author$project$Site$Common$h_, 2, 'Active Skills')

@@ -21,7 +21,7 @@ type alias ToImage a = a -> ImagePath
 imageEl : ImagePath -> Html b
 imageEl {dir, file} =
     H.img
-    [ P.src <| "/img/" ++ dir ++ "/" ++ fileName file ++ ".png" 
+    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png" 
     , P.title <| unCamel file
     ]
     []
@@ -29,7 +29,7 @@ imageEl {dir, file} =
 thumbnailEl : ImagePath -> Html b
 thumbnailEl {dir, file} =
     H.img
-    [ P.src <| "/img/" ++ dir ++ "/" ++ fileName file ++ " Thumbnail.png" 
+    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ " Thumbnail.png" 
     , P.title <| unCamel file
     ]
     []
@@ -37,7 +37,7 @@ thumbnailEl {dir, file} =
 imageLink : b -> ImagePath -> Html b
 imageLink link {dir, file} =
     H.img
-    [ P.src <| "/img/" ++ dir ++ "/" ++ fileName file ++ ".png" 
+    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png" 
     , P.title <| unCamel file
     , P.class "link"
     , E.onClick link

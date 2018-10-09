@@ -34882,7 +34882,7 @@ var author$project$Site$ToImage$imageEl = function (_n0) {
 		_List_fromArray(
 			[
 				elm$html$Html$Attributes$src(
-				'/img/' + (dir + ('/' + (author$project$Printing$fileName(file) + '.png')))),
+				'/chaldeas/img/' + (dir + ('/' + (author$project$Printing$fileName(file) + '.png')))),
 				elm$html$Html$Attributes$title(
 				author$project$Printing$unCamel(file))
 			]),
@@ -34896,7 +34896,7 @@ var author$project$Site$ToImage$thumbnailEl = function (_n0) {
 		_List_fromArray(
 			[
 				elm$html$Html$Attributes$src(
-				'/img/' + (dir + ('/' + (author$project$Printing$fileName(file) + ' Thumbnail.png')))),
+				'/chaldeas/img/' + (dir + ('/' + (author$project$Printing$fileName(file) + ' Thumbnail.png')))),
 				elm$html$Html$Attributes$title(
 				author$project$Printing$unCamel(file))
 			]),
@@ -45363,7 +45363,7 @@ var author$project$Site$ToImage$imageLink = F2(
 			_List_fromArray(
 				[
 					elm$html$Html$Attributes$src(
-					'/img/' + (dir + ('/' + (author$project$Printing$fileName(file) + '.png')))),
+					'/chaldeas/img/' + (dir + ('/' + (author$project$Printing$fileName(file) + '.png')))),
 					elm$html$Html$Attributes$title(
 					author$project$Printing$unCamel(file)),
 					elm$html$Html$Attributes$class('link'),

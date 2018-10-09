@@ -8,7 +8,9 @@ Bringing order to Fate/Grand Order
 BSD 3-Clause, see [LICENSE](https://github.com/jnbooth/chaldeas/blob/master/LICENSE).
 
 ## Getting Started
-Install [Elm](https://guide.elm-lang.org/install.html). The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [Elm IDE](https://marketplace.visualstudio.com/items/sbrink.elm) extension. To build the project, run:
+Install [Elm](https://guide.elm-lang.org/install.html). The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [Elm IDE](https://marketplace.visualstudio.com/items/sbrink.elm) extension. 
+
+To build the project, run:
 
 ```sh
 elm make src/Main.elm --output=js/chaldeas.js

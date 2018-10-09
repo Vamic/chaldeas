@@ -33460,7 +33460,10 @@ var author$project$Site$Common$setPath = F2(
 		return A2(
 			elm$browser$Browser$Navigation$pushUrl,
 			key,
-			A2(elm$url$Url$Builder$absolute, path, _List_Nil));
+			A2(
+				elm$url$Url$Builder$absolute,
+				A2(elm$core$List$cons, 'chaldeas', path),
+				_List_Nil));
 	});
 var author$project$Site$Algebra$Switch = function (a) {
 	return {$: 'Switch', a: a};

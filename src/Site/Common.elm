@@ -22,7 +22,8 @@ scrollToTop : String -> Cmd (SiteMsg a b c)
 scrollToTop id = Task.attempt (always DoNothing) <| Dom.setViewportOf id 0 0
 
 setPath : Navigation.Key -> List String -> Cmd msg
-setPath key path = Navigation.pushUrl key <| Url.absolute path []
+setPath key path = 
+    Navigation.pushUrl key <| Url.absolute ("chaldeas" :: path) []
 
 setFocus : Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b c)
 setFocus key root a = case a of

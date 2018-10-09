@@ -48,7 +48,7 @@ app sStore ceStore =
     init flags url key = 
       let
         viewing = 
-          if String.startsWith "CraftEssences" url.path then
+          if String.contains "CraftEssences" url.path then
             CraftEssences
           else
             Servants

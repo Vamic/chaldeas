@@ -47119,7 +47119,7 @@ var author$project$Site$Application$app = F2(
 		var ceChild = author$project$Site$CraftEssence$Component$component(ceStore);
 		var init = F3(
 			function (flags, url, key) {
-				var viewing = A2(elm$core$String$startsWith, 'CraftEssences', url.path) ? author$project$Site$Application$CraftEssences : author$project$Site$Application$Servants;
+				var viewing = A2(elm$core$String$contains, 'CraftEssences', url.path) ? author$project$Site$Application$CraftEssences : author$project$Site$Application$Servants;
 				var path = A3(
 					elm$core$Basics$composeR,
 					elm$core$List$reverse,

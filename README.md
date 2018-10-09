@@ -33,4 +33,4 @@ elm make src/Main.elm --output chaldeas/js/chaldeas.js && elm reactor
 and access it at [http://localhost:8000/index.html](http://localhost:8000/index.html).
 
 ## Skill Effects
-Skill effects are enumerated at the top of [Database.Skill](src/Database/Skill.purs). Before adding a new skill effect, make sure it isn't already on the list.
+Skill effects are enumerated at the top of [Database.Skill](src/Database/Skill.elm). Before adding a new skill effect, make sure it isn't already on the list.

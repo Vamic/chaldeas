@@ -1,1 +1,0 @@
-The website itself, rendered in Halogen. Files and functions for [CraftEssences](CraftEssences/) and [Servants](Servants/) follow the same naming conventions and basic outline, although their implementations differ.

@@ -1,7 +1,6 @@
 ---
 permalink: /404.html
 ---
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +16,21 @@ permalink: /404.html
     <title>CHALDEAS</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
+      #error 
+        { position: absolute
+        ; z-index: 1000
+        ; left: 0
+        ; right: 0
+        ; max-width: 600px
+        ; bottom: 10px
+        ; line-height: 1.2em
+        ; margin: auto
+        ; color: #d00
+        ; background-color: #fff
+        ; padding: 10px
+        ; font-size: 16px
+        ; border: 1px solid #d00
+        }
       body
         { margin: 0; padding: 0
         ; font-family: Helvetica,Arial,sans-serif
@@ -590,5 +604,27 @@ permalink: /404.html
     <script type="text/javascript" src="js/chaldeas.js"></script>
   </head>
   <body>
+      <script type="text/javascript">
+        function getValue(key) {
+          var stored = localStorage.getItem(key);
+          if (stored === null) {
+            return null;
+          } else {
+            return JSON.parse(stored);
+          }
+        }
+        var app = Elm.Main.init({
+          flags: {
+            today: Date.now(),
+            preferences: getValue("preferences"),
+            team: getValue("team") || []
+          }
+        });
+        var test;
+        app.ports.store.subscribe(function(pair) {
+          test = pair[1];
+          localStorage.setItem(pair[0], JSON.stringify(pair[1]));
+        });
+      </script>
   </body>
 </html>

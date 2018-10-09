@@ -249,7 +249,7 @@ popup prefs ascent a = case a of
           ]
       myServantBox = List.singleton <| case ms.level of
         0 -> 
-            a_ "+Add to Servants" << OnTeam True <| newServant s
+            a_ "+Add to My Servants" << OnTeam True <| newServant s
         _ -> 
             H.table []
             [ H.tr []

@@ -70,8 +70,7 @@ matchFilter tab x =
            , match: has x
            }
 
-imageFilter :: ∀ a b. ToImage b => Has a b
-            => FilterTab -> b -> Filter a
+imageFilter :: ∀ a b. Has a b => ToImage b => FilterTab -> b -> Filter a
 imageFilter tab x =
     Filter { icon:  Just $ toImagePath x
            , tab

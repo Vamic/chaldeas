@@ -84,12 +84,11 @@ portrait big prefs {label, obj: ce'@(CraftEssence ce)}
       , H.footer_ [_span <<< String.joinWith "  " $ replicate ce.rarity "★"]
       ]
   where
-    noBreak    = noBreakName big false
-    artorify   = prefer prefs Artorify ?
+    noBreak  = noBreakName big false
+    artorify = prefer prefs Artorify ?
                  String.replaceAll (Pattern "Altria") (Replacement "Artoria")
-    meta       = (not big ? cons <<< _click <<< Focus $ Just ce')
-                 [_c $ "portrait stars" <> show ce.rarity]
-    doArtorify = String.replaceAll (Pattern "Altria") (Replacement "Artoria")
+    meta     = (not big ? cons <<< _click <<< Focus $ Just ce')
+               [_c $ "portrait stars" <> show ce.rarity]
 
 popup :: ∀ a. Preferences -> Maybe CraftEssence
       -> Array (HTML a (Query Unit)) -> HTML a (Query Unit)
@@ -131,10 +130,3 @@ popup prefs
                                  , H.text ": "
                                  ]
                                ]
-
-effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)
-effectEl ef
-  | demerit ef = H.p [_c "demerit"] [H.text $ show ef]
-  | otherwise  = H.p (maybe [] meta $ skillFilter ef) [H.text $ show ef]
-  where
-    meta filt = [_c "link", _click $ FilterBy [filt] ]

@@ -16,16 +16,6 @@ import Sorting
 import Site.Preferences
 import Site.ToImage
 
--- | Parts of the site.
-data Section 
-    = SectionBrowse 
-    | SectionSettings 
-    | SectionSortBy 
-    | SectionInclude 
-    | SectionFilter
-instance _a_ :: Show Section where
-    show = unCamel <<< String.drop 7 <<< G.genericShow
-
 -- | Commands used in links and `Site.Eval`.
 data SiteQuery inFilters inFocus toAlternate a
     = Switch    (Maybe toAlternate) a
@@ -61,6 +51,16 @@ type SiteState inFilters inFocus e =
     , listing  :: Array { label :: String, obj :: inFocus }
     | e
     }
+
+-- | Parts of the site.
+data Section 
+    = SectionBrowse 
+    | SectionSettings 
+    | SectionSortBy 
+    | SectionInclude 
+    | SectionFilter
+instance _a_ :: Show Section where
+    show = unCamel <<< String.drop 7 <<< G.genericShow
 
 data FilterTab
     = FilterEventBonus

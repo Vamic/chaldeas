@@ -27,7 +27,7 @@ ascendCost (Servant {rarity}) = (_ * 1000) <<< fromMaybe 0 <<< index costs
                 3 -> [ 30, 100,  300,  900]
                 4 -> [ 50, 150,  500, 1500]
                 5 -> [100, 300, 1000, 3000]
-                _ -> [15, 45, 150, 450]
+                _ -> [ 15,  45,  150,  450]
 
 atAscension :: MyServant -> Int
 atAscension (MyServant {level, base:(Servant {rarity})}) = case rarity of

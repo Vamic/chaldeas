@@ -5,8 +5,8 @@
 -- as is the `Range` infix syntax `a ~ b`.
 module Database.Model (module Export) where
 
-import Database.Passive      as Export
 import Database.Base         as Export
-import Database.Servant      as Export
 import Database.Skill        as Export
+import Database.Passive      as Export
+import Database.Servant      as Export
 import Database.CraftEssence as Export

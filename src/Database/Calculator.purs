@@ -1,5 +1,5 @@
 -- | Calculates information for sorting based on datamined formulas.
-module Database.Calculator (npPer, starsPer, npDamage, matchSum) where
+module Database.Calculator (npPer, starsPer, npDamage) where
 
 import StandardLibrary
 import Data.Array as Array

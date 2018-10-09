@@ -10,6 +10,7 @@ module Database.CraftEssence
 
 import StandardLibrary
 import Data.Int as Int
+import Data.Map as Map
 
 import Database.Base
 import Database.Servant
@@ -2690,7 +2691,7 @@ craftEssences = CraftEssence <$>
     np30        = Grant Self 0 NPUp $ Flat 30.0
     gutsPercent = Times 1 <<< Grant Self 0 GutsPercent <<< Flat <<< Int.toNumber
     party buff  = Grant Party 0 buff <<< Flat <<< Int.toNumber
-    party' card = party (Performance card)
+    party' card = party $ Performance card
     atkChance chance = When "attacking" <<< Chance chance
     bond id name servant icon effect =
         { name
@@ -2710,11 +2711,12 @@ equipped = When <<< append "equipped by a " <<< show
 
 -- | Retrieves the corresponding Bond CE. Memoized for performance.
 getBond :: Servant -> Maybe CraftEssence
-getBond (Servant s) = getBondFromName s.name
+getBond (Servant s) = Map.lookup s.name bondMap
 
-getBondFromName :: String -> Maybe CraftEssence
-getBondFromName = memoize \name -> 
-    find (\(CraftEssence ce) -> ce.bond == Just name) craftEssences
+bondMap :: Map String CraftEssence
+bondMap = Map.fromFoldable <<< catMaybes $ go <$> craftEssences
+  where
+    go ce'@(CraftEssence ce) = (_ : ce') <$> ce.bond
 
 newtype CraftEssence = CraftEssence { name     :: String
                                     , id       :: Int

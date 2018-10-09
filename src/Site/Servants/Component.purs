@@ -427,16 +427,9 @@ bondEl ce@(Just (CraftEssence {name, icon, effect})) = H.section_ $
     , H.p_
       [                  _span "★★★★ "
       , _strong "ATK: ", _span "100 "
-      , _strong "DEF: ", _span "100"
+      , _strong "HP: ", _span "100"
       ]
     ] <> (_p <<< show <$> effect)
-
-effectEl :: ∀ a. SkillEffect -> HTML a (Query Unit)
-effectEl ef
-  | demerit ef = H.p [_c "demerit"] [ H.text $ show ef ]
-  | otherwise  = H.p (maybe [] meta $ skillFilter ef) [ H.text $ show ef ]
-  where
-    meta filt = [_c "link", _click $ FilterBy [filt]]
 
 npRow :: ∀ a b. RangeInfo -> HTML a b
 npRow (RangeInfo isPercent x y) =

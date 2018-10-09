@@ -17,7 +17,7 @@ import Data.String as String
 
 import Test.Data.Multimap as Multimap
 
-import Printing (prettify)
+import Printing (filterOut, prettify)
 import Database (BuffEffect(..), Card(..), DebuffEffect(..), Icon(..), InstantEffect(..), Servant(..), Skill, SkillEffect(..), craftEssences)
 import Test.Data.MaybeRank (MaybeRank(..))
 import Test.Data.Multimap (Multimap)

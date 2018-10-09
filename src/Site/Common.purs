@@ -21,7 +21,9 @@ import Web.UIEvent.MouseEvent (MouseEvent)
 
 import Database
 import Printing
+import Site.Algebra
 import Site.Preferences
+import Site.Filtering
 
 -- | Builds a `Date` out of a year, month, and day.
 ymd :: Int -> Month -> Int -> Date
@@ -77,6 +79,14 @@ mode prefs
 toCell :: ∀ a b. Boolean -> Number -> HTML a b
 toCell isPercent = _td <<< (isPercent ? flip append "%") <<<
                    Format.toString <<< roundTo 2
+
+effectEl :: ∀ a b c d. HasEffects b 
+         => SkillEffect -> HTML a (SiteQuery b c d Unit)
+effectEl ef
+  | demerit ef = H.p [_c "demerit"] [H.text $ show ef]
+  | otherwise  = H.p (maybe [] meta $ skillFilter ef) [H.text $ show ef]
+  where
+    meta filt = [_c "link", _click $ FilterBy [filt]]
 
 ----------------
 -- ABBREVIATIONS

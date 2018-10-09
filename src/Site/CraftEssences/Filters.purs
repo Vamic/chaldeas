@@ -3,12 +3,12 @@ module Site.CraftEssences.Filters (getFilters) where
 import StandardLibrary
 import Data.String as String
 
-import Data.Date(Date, Month(..))
+import Data.Date (Date, Month(..))
 
+import Database
 import Site.Algebra
 import Site.Common
 import Site.Filtering
-import Database
 
 extraFilters :: Array (Filter CraftEssence)
 extraFilters = join
@@ -19,8 +19,8 @@ extraFilters = join
     , simpleFilter FilterSource "Bond"
       \_ (CraftEssence ce) -> isJust ce.bond
     ]
-  , reverse (1..5) <#> \rarity
-    -> simpleFilter FilterRarity (String.joinWith "" $ replicate rarity "★")
+  , reverse (1..5) <#> \rarity -> 
+    simpleFilter FilterRarity (String.joinWith "" $ replicate rarity "★")
     \_ (CraftEssence ce) -> rarity == ce.rarity
   ]
 

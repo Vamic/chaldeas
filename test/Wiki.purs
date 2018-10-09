@@ -27,6 +27,8 @@ import Data.List (List)
 import Data.Profunctor.Strong ((&&&))
 import Data.Set (Set)
 
+import Printing (filterOut)
+
 import Test.Data.PairMap as PairMap
 
 import Test.Data.MaybeRank (MaybeRank)

@@ -79,7 +79,8 @@ site st@{section: Nothing} sorts allFilters nav content =
         [H.text "Send Feedback/Suggestions"]
       , H.a [P.href "https://github.com/jnbooth/chaldeas"] [H.text "GitHub"]
       , H.a [P.href "https://grandorder.wiki"] [H.text "GrandOrder Wiki"]
-      ] <> renderSection SectionSettings
+      ] 
+      <> renderSection SectionSettings
       <> renderSection SectionSortBy
       <> renderSection SectionInclude 
     , H.section_ content

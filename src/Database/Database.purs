@@ -42,7 +42,7 @@ servants = addUniversal <<< addHeavenOrEarth
   where
     addUniversal (Servant s) = Servant s
         { traits   = sortWith show $ cons Humanoid s.traits
-        , passives = sortWith show s.passives
+        , passives = sortWith _.name s.passives
         }
     addHeavenOrEarth s'@(Servant s)
       | s.attr /= Earth && s.attr /= Heaven = s'

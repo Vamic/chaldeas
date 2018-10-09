@@ -1,6 +1,7 @@
 -- | Helper functions for outputting to Strings.
 module Printing 
   ( places, commas
+  , filterOut
   , fileName, urlName
   , roundTo
   , unCamel
@@ -8,6 +9,7 @@ module Printing
   ) where
 
 import StandardLibrary
+import Data.String.CodePoints   as CodePoints
 import Data.String.Regex.Flags  as Flags
 import Data.Int                 as Int
 import Math                     as Math
@@ -28,6 +30,14 @@ places x = format $ Formatter { comma: true
 
 commas :: Int -> String
 commas = places 0 <<< Int.toNumber
+
+-- | Removes all characters in a `Pattern` from a `String`.
+filterOut :: Pattern -> String -> String
+filterOut (Pattern p) = CodePoints.fromCodePointArray <<<
+                        filter (flip notElem ps) <<<
+                        CodePoints.toCodePointArray
+  where
+    ps = CodePoints.toCodePointArray p
 
 -- | Removes illegal special characters from file names.
 fileName :: String -> String

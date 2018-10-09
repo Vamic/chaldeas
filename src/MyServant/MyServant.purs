@@ -28,7 +28,7 @@ newtype MyServant = MyServant { base    :: Servant
                               , servant :: Servant
                               }
 instance _0_ :: Eq MyServant where
-    eq x y = eq (getBase x) (getBase y)
+    eq = eq `on` getBase
 instance _1_ :: Ord MyServant where
     compare = comparing getBase
 instance _2_ :: Show MyServant where
@@ -62,9 +62,9 @@ recalc (MyServant ms@{base:s'@(Servant s)}) = mapSort $ MyServant ms
     calcOver minAmount maxAmount = case ms.npLvl of
         1 -> Flat minAmount
         _ -> Range minAmount $ minAmount
-                            + (maxAmount - minAmount)
-                            * (Int.toNumber ms.npLvl - 1.0)
-                            / 4.0
+                             + (maxAmount - minAmount)
+                             * (Int.toNumber ms.npLvl - 1.0)
+                             / 4.0
     calcActives lvl skill = skill { effect = mapAmount calc <$> skill.effect
                                   , cd = skill.cd - (max 2 lvl - 2) / 4
                                   }
@@ -129,5 +129,4 @@ newServant servant@(Servant s) = MyServant
     }
 
 owned :: Map Servant MyServant -> Servant -> MyServant
-owned team servant = fromMaybe (unowned servant) $
-                     Map.lookup servant team
+owned team s = fromMaybe' (\_ -> unowned s) $ Map.lookup s team

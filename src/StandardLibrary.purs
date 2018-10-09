@@ -32,7 +32,6 @@ module StandardLibrary
   , enumArray
   , compareThen
   , maybeDo
-  , filterOut
   , intersperse
   , pairWith
   , splitAround
@@ -48,7 +47,7 @@ import Control.Alternative (class Alternative, (<|>))
 import Control.Bind (bindFlipped)
 import Control.MonadZero (guard)
 import Control.Plus (empty)
-import Data.Array (cons, delete, difference, drop, dropWhile, filter, group, groupBy, head, index, init, intersect, last, mapMaybe, nub, nubBy, nubEq, nubByEq, partition, range, replicate, reverse, snoc, sort, sortBy, sortWith, span, tail, take, takeEnd, takeWhile, uncons, unionBy, unzip, zip, zipWith, (!!), (..), (\\))
+import Data.Array (catMaybes, cons, delete, difference, drop, dropWhile, filter, group, groupBy, head, index, init, intersect, last, mapMaybe, nub, nubBy, nubEq, nubByEq, partition, range, replicate, reverse, snoc, sort, sortBy, sortWith, span, tail, take, takeEnd, takeWhile, uncons, unionBy, unzip, zip, zipWith, (!!), (..), (\\))
 import Data.Either (Either(Left, Right), choose, either, hush, isLeft, isRight)
 import Data.Enum (class BoundedEnum, enumFromTo, toEnum)
 import Data.Foldable (class Foldable, all, and, any, elem, find, fold, foldl, foldr, for_, intercalate, length, maximum, maximumBy, minimum, minimumBy, notElem, null, oneOf, oneOfMap, or, product, sequence_, sum, traverse_)
@@ -73,7 +72,6 @@ import Effect.Class (class MonadEffect, liftEffect)
 --------------------
 
 import Data.String as String
-import Data.String.CodePoints as CodePoints
 
 -- Since (:) == `Tuple`, it is recommended that its usage should be surrounded
 -- by parentheses in order to resemble tuple notation in other languages.
@@ -107,14 +105,6 @@ compareThen :: ∀ a b c. Ord b => Ord c => (a -> b) -> (a -> c) -> a -> a
 compareThen f g x y = case compare (f x) (f y) of
                           EQ -> compare (g x) (g y)
                           a  -> a
-
--- | Removes all characters in a `Pattern` from a `String`.
-filterOut :: Pattern -> String -> String
-filterOut (Pattern p) = CodePoints.fromCodePointArray <<<
-                        filter (flip notElem ps) <<<
-                        CodePoints.toCodePointArray
-  where
-    ps = CodePoints.toCodePointArray p
 
 -- | Adds an element between every element in an
 -- | `intersperse 0 [1,2,3] == [1,0,2,0,3]`

@@ -42,6 +42,7 @@ import Test.Data.Multimap as Multimap
 import Test.Data.PairMap  as PairMap
 import Test.Wiki     as Wiki
 
+import Printing (filterOut)
 import Database (Alignment(..), Ascension(..), Attribute(..), CraftEssence(..), Material, RangeInfo(..), Reinforcement(..), Servant(..), Skill, craftEssences, ranges, servants)
 
 import Test.Data.MaybeRank (MaybeRank(..))

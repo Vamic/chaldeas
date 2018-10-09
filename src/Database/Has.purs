@@ -5,8 +5,12 @@ import Generic as G
 
 import Database.Model
 
-phantasmEffects :: NoblePhantasm -> Array SkillEffect
-phantasmEffects {effect, over} = effect <> over
+phantasmEffects :: Target -> NoblePhantasm -> Boolean
+phantasmEffects target {effect, over} = any match $ effect <> over
+  where
+    match (To x Damage _)        = x == target
+    match (To x DamageThruDef _) = x == target
+    match _                      = false
 
 class Show a <= HasEffects a where
     getEffects :: a -> Array SkillEffect
@@ -33,16 +37,8 @@ instance _d_ :: Has Servant Trait where
 instance _e_ :: Has Servant Alignment where
     has x _ (Servant s) = x `elem` s.align
 instance _f_ :: Has Servant PhantasmType where
-    has SingleTarget _ (Servant s) = any match $ phantasmEffects s.phantasm
-      where
-        match (To Enemy Damage _) = true
-        match (To Enemy DamageThruDef _) = true
-        match _ = false
-    has MultiTarget _ (Servant s) = any match $ phantasmEffects s.phantasm
-      where
-        match (To Enemies Damage _) = true
-        match (To Enemies DamageThruDef _) = true
-        match _ = false
+    has SingleTarget _ (Servant s) = phantasmEffects Enemy s.phantasm
+    has MultiTarget  _ (Servant s) = phantasmEffects Enemies s.phantasm
     has Support x s = not (has SingleTarget x s) && not (has MultiTarget x s)
 instance _g_ :: Has Servant Class where
     has x _ (Servant s) = x == s.class
@@ -59,7 +55,7 @@ instance _k_ :: HasEffects a => Has a BuffEffect where
         match _ = false
 instance _l_ :: HasEffects a => Has a DebuffEffect where
     has x _ = any match <<< getEffects where
-        match (Debuff t _ y _) = x == y
+        match (Debuff _ _ y _) = x == y
         match _ = false
 instance _m_ :: HasEffects a => Has a InstantEffect where
     has BecomeHyde _ = const false

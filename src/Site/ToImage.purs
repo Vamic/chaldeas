@@ -9,7 +9,6 @@ import Generic                 as G
 import Halogen.HTML.Events     as E
 import Halogen.HTML            as H
 import Halogen.HTML.Properties as P
-import Data.String             as String
 
 import Halogen.HTML (HTML, ClassName(..))
 
@@ -70,7 +69,7 @@ instance _5_ :: ToImage CraftEssence where
     toImagePath = ImagePath "CraftEssence" <<< show
 
 instance _6_ :: ToImage Icon where
-    toImagePath = ImagePath "Skill" <<< String.drop 4 <<< G.genericShow
+    toImagePath = ImagePath "Skill" <<< show
 
 instance _7_ :: ToImage Material where
     toImagePath = ImagePath "Material" <<< show

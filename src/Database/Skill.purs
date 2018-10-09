@@ -21,7 +21,7 @@ module Database.Skill
   , SkillEffect(..), demerit, simplify, ranges
   , Skill
   , RangeInfo(..)
-  , apAmount, mapAmount
+  , mapAmount
   ) where
 
 import StandardLibrary
@@ -138,22 +138,16 @@ data BuffEffect
     | Taunt
 
 instance _c_ :: Show BonusEffect where
-    show = showBonus Placeholder false
+    show = showBonus false Placeholder
 
-showBonus :: Amount -> Boolean -> BonusEffect -> String
-showBonus amount isPerc = case _ of
-    Bond
-      -> gain "Bond Points"
-    EXP
-      -> gain "Master EXP"
-    FriendPoints
-      -> "Friend Points obtained from support becomes +" <> n
-    MysticCode
-      -> gain "Mystic Code EXP"
-    QPDrop
-      -> "Increase QP from completing quests by " <> n
-    QPQuest
-      -> "Increase QP from enemy drops by " <> n
+showBonus :: Boolean -> Amount -> BonusEffect -> String
+showBonus isPerc amount = case _ of
+    Bond         -> gain "Bond Points"
+    EXP          -> gain "Master EXP"
+    FriendPoints -> "Friend Points obtained from support becomes +" <> n
+    MysticCode   -> gain "Mystic Code EXP"
+    QPDrop       -> "Increase QP from completing quests by " <> n
+    QPQuest      -> "Increase QP from enemy drops by " <> n
   where
     n 
       | isPerc    = show amount <> "%"
@@ -165,61 +159,41 @@ instance _d_ :: Show InstantEffect where
 
 showInstant :: Target -> Amount -> InstantEffect -> String
 showInstant target amount = case _ of
-    Avenge
-      -> "At the end of the next turn, deal " <> n
-      <> "% of damage taken during that turn" <> to
-    BecomeHyde
-      -> "Transform into Hyde. Class: [Berserker]. \
-         \Star Weight: 9. Star Rate: 5%. NP/Hit: 1.02%. NP/Defend: 5%. \
-         \Alignment: Chaotic Evil. Lose [" <> show Brynhild <> "] trait. \
-         \Skills are more effective"
-    Cooldowns
-      -> "Reduce" <> p <> " cooldowns by " <> n
-    Cure
-      -> "Remove" <> p <> " poison debuffs"
-    Damage
-      -> "Deal " <> n <> "% damage" <> to
-    DamageThruDef
-      -> "Deal " <> n <> "% damage" <> to <> ", ignoring defense"
-    DamageVs t
-      -> "Deal " <> n <> "% extra damage to [" <> show t <> "]"
-    DamagePoison
-      -> "Deal " <> n <> "% extra damage to [Poisoned]"
-    DemeritBuffs
-      -> "Remove" <> p <> " buffs"
-    DemeritCharge
-      -> "Increase" <> s <> " NP gauge by " <> n
-    DemeritGauge
-      -> "Decrease" <> p <> " NP gauge by " <> n <> "%"
-    DemeritDamage
-      -> "Deal " <> n <> " damage" <> to
-    DemeritKill
-      -> "Sacrifice" <> s <> " (can trigger Guts)"
-    DemeritHealth
-      -> "Deal " <> n <> " damage" <> to <> " down to a minimum of 1"
-    GaugeDown
-      -> "Reduce" <> p <> " NP gauge by " <> n
-    GaugeUp
-      -> "Increase" <> p <> " NP gauge by " <> n <> "%"
-    Heal
-      -> "Restore " <> (if full then "all" else n) <> " HP" <> to
-    LastStand
-      -> "Deal up to " <> n <> "% damage based on missing health" <> to
-    OverChance
-      -> "Gain " <> n <> "% chance to apply Overcharge buffs"
-    RemoveBuffs
-      -> "Remove" <> p <> " buffs"
-    RemoveDebuffs
-      -> "Remove" <> p <> " debuffs"
-    RemoveMental
-      -> "Remove" <> p <> " mental debuffs"
-    Kill
-      -> (not full ? append $ n <> "% chance to ") $ "Instant-Kill " <> s
-    GainStars
-      -> "Gain " <> n <> " critical stars"
-         <> case target of
-                Self -> " for yourself"
-                _    -> ""
+    Avenge        -> "At the end of the next turn, deal " <> n
+                     <> "% of damage taken during that turn" <> to
+    BecomeHyde    -> "Transform into Hyde. Class: [Berserker]. \
+                     \Star Weight: 9. Star Rate: 5%. \
+                     \NP/Hit: 1.02%. NP/Defend: 5%. \
+                     \Alignment: Chaotic Evil. \
+                     \Lose [" <> show Brynhild <> "] trait. \
+                     \Skills are more effective"
+    Cooldowns     -> "Reduce" <> p <> " cooldowns by " <> n
+    Cure          -> "Remove" <> p <> " poison debuffs"
+    Damage        -> "Deal " <> n <> "% damage" <> to
+    DamageThruDef -> "Deal " <> n <> "% damage" <> to <> ", ignoring defense"
+    DamageVs t    -> "Deal " <> n <> "% extra damage to [" <> show t <> "]"
+    DamagePoison  -> "Deal " <> n <> "% extra damage to [Poisoned]"
+    DemeritBuffs  -> "Remove" <> p <> " buffs"
+    DemeritCharge -> "Increase" <> s <> " NP gauge by " <> n
+    DemeritGauge  -> "Decrease" <> p <> " NP gauge by " <> n <> "%"
+    DemeritDamage -> "Deal " <> n <> " damage" <> to
+    DemeritKill   -> "Sacrifice" <> s <> " (can trigger Guts)"
+    DemeritHealth -> "Deal " <> n <> " damage" <> to 
+                     <> " down to a minimum of 1"
+    GaugeDown     -> "Reduce" <> p <> " NP gauge by " <> n
+    GaugeUp       -> "Increase" <> p <> " NP gauge by " <> n <> "%"
+    Heal          -> "Restore " <> (if full then "all" else n) <> " HP" <> to
+    LastStand     -> "Deal up to " <> n <> "% damage based on missing health" 
+                     <> to
+    OverChance    -> "Gain " <> n <> "% chance to apply Overcharge buffs"
+    RemoveBuffs   -> "Remove" <> p <> " buffs"
+    RemoveDebuffs -> "Remove" <> p <> " debuffs"
+    RemoveMental  -> "Remove" <> p <> " mental debuffs"
+    Kill          -> (not full ? append $ n <> "% chance to ") $ 
+                     "Instant-Kill " <> s
+    GainStars     -> "Gain " <> n <> " critical stars" <> case target of
+                         Self -> " for yourself"
+                         _    -> ""
   where
     n      = show amount
     {p, s} = possessiveAndSubject target
@@ -315,8 +289,8 @@ showBuff target amount = case _ of
     SureHit         -> grant "Sure Hit"
     Taunt           -> "Draw attention of all enemies" <> to
     StarsPerTurn    -> "Gain " <> n <> " stars every turn" <> case target of
-        Self -> " for yourself"
-        _    -> ""
+                           Self -> " for yourself"
+                           _    -> ""
   where
     n       = show amount
     {p, s}  = possessiveAndSubject target
@@ -383,15 +357,15 @@ buffCategory Taunt             = BuffDefensive
 buffCategory StarsPerTurn      = BuffSupport
 
 isDamage :: InstantEffect -> Boolean
-isDamage Avenge = true
-isDamage Damage = true
+isDamage Avenge        = true
+isDamage Damage        = true
 isDamage DamageThruDef = true
-isDamage (DamageVs _) = true
-isDamage DamagePoison = true
-isDamage LastStand = true
-isDamage _ = false
+isDamage (DamageVs _)  = true
+isDamage DamagePoison  = true
+isDamage LastStand     = true
+isDamage _             = false
 
--- | Int field is duration, Number field is amount
+-- | Int field is duration
 data SkillEffect
     = Grant Target Int BuffEffect Amount
     | Debuff Target Int DebuffEffect Amount
@@ -403,16 +377,10 @@ data SkillEffect
     | Times Int SkillEffect
     | ToMax Amount SkillEffect
 
-apAmount :: (Number -> Number -> Number) -> Amount -> Number
-apAmount f (Range x y) = f x y
-apAmount _ (Flat x) = x
-apAmount _ Placeholder = 0.0
-apAmount _ Full = 0.0
-
 mapAmount :: (Number -> Number -> Amount) -> SkillEffect -> SkillEffect
 mapAmount f eff = go eff
   where
-    f' (Range a b) = f a b
+    f' (Range x y) = f x y
     f' x = x
     go (Grant a b c d)  = Grant a b c $ f' d
     go (Debuff a b c d) = Debuff a b c $ f' d
@@ -464,7 +432,7 @@ instance _g_ :: Show SkillEffect where
             Grant t dur buff amt -> showBuff t amt buff <> turns dur
             Debuff t dur deb amt -> showDebuff t amt deb <> turns dur
             To t instant amt     -> showInstant t amt instant
-            Bonus bonus perc amt -> showBonus amt perc bonus
+            Bonus bonus perc amt -> showBonus perc amt bonus
             Chance 0 ef          -> "Chance to " <> uncap (go ef)
             Chance per ef        -> show per <> "% chance to " <> uncap (go ef)
             Chances x y ef       -> show x <> "~" <> show y <> "% chance to "
@@ -503,7 +471,7 @@ toMax :: Amount -> Number
 toMax Placeholder = 0.0
 toMax Full = 0.0
 toMax (Flat x) = x
-toMax (Range _ b) = b
+toMax (Range _ y) = y
 
 data Rank
     = Unknown | EX
@@ -533,10 +501,11 @@ instance _b_ :: Show Rank where
     show E         = " E"
     show EMinus    = " E-"
 
-data Target = Someone
-            | Self | Ally | Party | Enemy | Enemies | Others
-            | AlliesType Trait | EnemyType Trait | EnemiesType Trait
-            | Killer | Target
+data Target 
+    = Someone
+    | Self | Ally | Party | Enemy | Enemies | Others
+    | AlliesType Trait | EnemyType Trait | EnemiesType Trait
+    | Killer | Target
 derive instance _a_ :: Eq Target
 
 allied :: Target -> Boolean
@@ -588,12 +557,10 @@ possessiveAndSubject = case _ of
 
 data RangeInfo = RangeInfo Boolean Number Number
 instance _i_ :: Show RangeInfo where
-    show (RangeInfo true  from to) = 
-        places 2 from <> "% ~ " <> places 2 to <> "%"
-    show (RangeInfo false from to) = 
-        places 2 from <>  " ~ " <> places 2 to
+    show (RangeInfo isPerc  from to) = (isPerc ? flip append "%") $
+                                       places 2 from <> "% ~ " <> places 2 to
 instance _j_ :: Eq RangeInfo where
-    eq (RangeInfo _ a1 a2) (RangeInfo _ b1 b2) = a1 == b1 && a2 == b2
+    eq (RangeInfo _ x1 x2) (RangeInfo _ y1 y2) = x1 == y1 && x2 == y2
 
 ranges :: ∀ f. Alternative f => Bind f => f SkillEffect -> f RangeInfo
 ranges = bindFlipped toInfo

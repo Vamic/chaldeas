@@ -1,3 +1,0 @@
-{
-  "purescript.censorWarnings": [ "ImplicitImport", "ImplicitQualifiedImport" ],
-}

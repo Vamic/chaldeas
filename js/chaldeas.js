@@ -45861,7 +45861,7 @@ var author$project$Site$Servant$Component$popup = F3(
 					if (!_n10) {
 						return A3(
 							elm$core$Basics$composeL,
-							author$project$Site$Common$a_('+Add to My Servants'),
+							author$project$Site$Common$a_('+Add to Servants'),
 							author$project$Site$Algebra$OnTeam(true),
 							author$project$MyServant$newServant(s));
 					} else {

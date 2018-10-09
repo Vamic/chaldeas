@@ -1,6 +1,3 @@
----
-permalink: /about
----
 # CHALDEAS
 Bringing order to Fate/Grand Order
 
@@ -27,9 +24,9 @@ cp -r img/ chaldeas/img/
 
 Once the staging copy is set up, run the test server with:
 
-``sh
+```sh
 elm make src/Main.elm --output chaldeas/js/chaldeas.js && elm reactor
-``
+```
 
 and access it at [http://localhost:8000/index.html](http://localhost:8000/index.html).
 

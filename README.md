@@ -1,3 +1,6 @@
+---
+permalink: /about
+---
 # CHALDEAS
 Bringing order to Fate/Grand Order
 

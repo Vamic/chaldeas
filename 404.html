@@ -607,10 +607,9 @@
           if (stored !== null) {
             try {
               return JSON.parse(stored);
-            } catch (e) {
-              return null;
-            }
+            } catch (e) {}
           }
+          return null;
         }
         var app = Elm.Main.init({
           flags: {

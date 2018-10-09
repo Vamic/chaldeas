@@ -11,23 +11,27 @@ Bringing order to Fate/Grand Order
 BSD 3-Clause, see [LICENSE](https://github.com/jnbooth/chaldeas/blob/master/LICENSE).
 
 ## Getting Started
-The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [PureScript IDE](https://marketplace.visualstudio.com/items?itemName=nwolverson.ide-purescript) extension. [NPM](https://www.npmjs.com/get-npm) is the package manager. Once NPM is installed, set up the project with
+Install [Elm](https://guide.elm-lang.org/install.html). The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [Elm IDE](https://marketplace.visualstudio.com/items/sbrink.elm) extension. To build the project, run:
 
 ```sh
-npm install
+elm make src/Main.elm --output=js/chaldeas.js
 ```
 
-and build the project with
+For testing purposes, you'll need to set up a staging copy:
 
 ```sh
-npm run build
+mkdir chaldeas
+mkdir chaldeas/js
+cp -r img/ chaldeas/img/
 ```
 
-Similarly, to run tests:
+Once the staging copy is set up, run the test server with:
 
-```sh
-npm run test
-```
+``sh
+elm make src/Main.elm --output chaldeas/js/chaldeas.js && elm reactor
+``
+
+and access it at [http://localhost:8000/index.html](http://localhost:8000/index.html).
 
 ## Skill Effects
 Skill effects are enumerated at the top of [Database.Skill](src/Database/Skill.purs). Before adding a new skill effect, make sure it isn't already on the list.

@@ -33631,6 +33631,13 @@ var author$project$Persist$Preferences$ShowTables = {$: 'ShowTables'};
 var author$project$Persist$Preferences$Thumbnails = {$: 'Thumbnails'};
 var author$project$Persist$Preferences$enumPreference = _List_fromArray(
 	[author$project$Persist$Preferences$Artorify, author$project$Persist$Preferences$NightMode, author$project$Persist$Preferences$Thumbnails, author$project$Persist$Preferences$ShowTables, author$project$Persist$Preferences$ExcludeSelf, author$project$Persist$Preferences$MaxAscension, author$project$Persist$Preferences$AddSkills, author$project$Persist$Preferences$HideClasses]);
+var author$project$Persist$Preferences$prefDefault = function (a) {
+	if (a.$ === 'AddSkills') {
+		return true;
+	} else {
+		return false;
+	}
+};
 var author$project$Persist$Preferences$ordPreference = author$project$StandardLibrary$enumToOrd(author$project$Persist$Preferences$enumPreference);
 var elm$core$Set$Set_elm_builtin = function (a) {
 	return {$: 'Set_elm_builtin', a: a};
@@ -34019,6 +34026,16 @@ var author$project$Persist$Preferences$setPreference = F2(
 				author$project$Persist$Preferences$ordPreference(pref));
 		}
 	});
+var elm$core$Set$empty = elm$core$Set$Set_elm_builtin(elm$core$Dict$empty);
+var author$project$Persist$Preferences$noPreferences = function () {
+	var acc = function (pref) {
+		return A2(
+			author$project$Persist$Preferences$setPreference,
+			pref,
+			author$project$Persist$Preferences$prefDefault(pref));
+	};
+	return A3(elm$core$List$foldl, acc, elm$core$Set$empty, author$project$Persist$Preferences$enumPreference);
+}();
 var elm$core$List$any = F2(
 	function (isOkay, list) {
 		any:
@@ -34049,7 +34066,6 @@ var elm$core$List$member = F2(
 			},
 			xs);
 	});
-var elm$core$Set$empty = elm$core$Set$Set_elm_builtin(elm$core$Dict$empty);
 var elm$json$Json$Decode$list = _Json_decodeList;
 var elm$json$Json$Decode$null = _Json_decodeNull;
 var elm$json$Json$Decode$oneOf = _Json_oneOf;
@@ -34067,7 +34083,7 @@ var author$project$Persist$Flags$decodePreferences = function () {
 		return elm$json$Json$Decode$succeed(
 			function () {
 				if (a.$ === 'Nothing') {
-					return elm$core$Set$empty;
+					return author$project$Persist$Preferences$noPreferences;
 				} else {
 					var prefs = a.a;
 					var acc = function (pref) {
@@ -34567,22 +34583,6 @@ var author$project$Persist$Flags$decodeFlags = A4(
 	A2(elm$json$Json$Decode$field, 'today', author$project$Persist$Flags$decodeDate),
 	A2(elm$json$Json$Decode$field, 'preferences', author$project$Persist$Flags$decodePreferences),
 	A2(elm$json$Json$Decode$field, 'team', author$project$Persist$Flags$decodeTeam));
-var author$project$Persist$Preferences$prefDefault = function (a) {
-	if (a.$ === 'AddSkills') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var author$project$Persist$Preferences$noPreferences = function () {
-	var acc = function (pref) {
-		return A2(
-			author$project$Persist$Preferences$setPreference,
-			pref,
-			author$project$Persist$Preferences$prefDefault(pref));
-	};
-	return A3(elm$core$List$foldl, acc, elm$core$Set$empty, author$project$Persist$Preferences$enumPreference);
-}();
 var elm$json$Json$Decode$decodeValue = _Json_run;
 var author$project$Site$Algebra$siteInit = F4(
 	function (getFilters, val, navKey, extra) {

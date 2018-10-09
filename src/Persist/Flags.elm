@@ -52,7 +52,7 @@ decodePreferences =
   let
     fromList : Maybe (List String) -> D.Decoder Preferences
     fromList a = D.succeed <| case a of
-      Nothing    -> Set.empty
+      Nothing    -> noPreferences
       Just prefs -> 
         let
           acc pref = 

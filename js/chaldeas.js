@@ -33174,8 +33174,8 @@ var elm$core$String$filter = _String_filter;
 var author$project$Printing$urlName = elm$core$String$filter(
 	elm$core$Basics$neq(
 		_Utils_chr(' ')));
-var author$project$Site$Application$focusFromPath = F2(
-	function (path, st) {
+var author$project$Site$Application$focusFromPath = F3(
+	function (path, show, st) {
 		return _Utils_update(
 			st,
 			{
@@ -33186,11 +33186,14 @@ var author$project$Site$Application$focusFromPath = F2(
 						elm_community$list_extra$List$Extra$find,
 						A2(
 							elm$core$Basics$composeR,
-							elm$core$Tuple$first,
+							elm$core$Tuple$second,
 							A2(
 								elm$core$Basics$composeR,
-								author$project$Printing$urlName,
-								elm$core$Basics$eq(path))),
+								show,
+								A2(
+									elm$core$Basics$composeR,
+									author$project$Printing$urlName,
+									elm$core$Basics$eq(path)))),
 						st.listing))
 			});
 	});
@@ -47125,14 +47128,25 @@ var author$project$Site$Application$app = F2(
 						elm$core$List$head,
 						elm$core$Maybe$withDefault('')),
 					A2(elm$core$String$split, '/', url.path));
-				var sModel = A2(
+				var sModel = A3(
 					author$project$Site$Application$focusFromPath,
 					path,
+					A2(
+						elm$core$Basics$composeR,
+						function ($) {
+							return $.base;
+						},
+						function ($) {
+							return $.name;
+						}),
 					A2(sChild.init, flags, key));
 				var mineOnly = A2(elm$core$String$startsWith, 'MyServants', url.path);
-				var ceModel = A2(
+				var ceModel = A3(
 					author$project$Site$Application$focusFromPath,
 					path,
+					function ($) {
+						return $.name;
+					},
 					A2(ceChild.init, flags, key));
 				var _n8 = sModel;
 				var extra = _n8.extra;

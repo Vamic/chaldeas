@@ -31,10 +31,11 @@ type Msg
     | ServantsMsg      Servants.Msg
     | CraftEssencesMsg CraftEssences.Msg
 
-focusFromPath : String -> SiteModel a b c -> SiteModel a b c
-focusFromPath path st = 
+focusFromPath : String -> (b -> String) -> SiteModel a b c -> SiteModel a b c
+focusFromPath path show st =
     { st 
-    | focus = List.find (Tuple.first >> urlName >> (==) path) st.listing 
+    | focus = List.find (Tuple.second >> show >> urlName >> (==) path) 
+              st.listing 
               |> Maybe.map Tuple.second
     }
 
@@ -57,8 +58,8 @@ app sStore ceStore =
             >> List.head
             >> Maybe.withDefault ""
         mineOnly = String.startsWith "MyServants" url.path
-        ceModel  = focusFromPath path <| ceChild.init flags key
-        sModel   = focusFromPath path <| sChild.init flags key
+        ceModel  = focusFromPath path .name <| ceChild.init flags key
+        sModel   = focusFromPath path (.base >> .name) <| sChild.init flags key
         {extra}  = sModel
       in
         pure 

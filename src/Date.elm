@@ -3,8 +3,6 @@ module Date exposing (Date, on, today)
 import Task exposing (Task)
 import Time
 
-import StandardLibrary exposing (..)
-
 type alias Date = 
     { year  : Int 
     , month : Time.Month

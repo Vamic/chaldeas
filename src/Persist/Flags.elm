@@ -19,6 +19,8 @@ import Database.Servant    exposing (..)
 import MyServant           exposing (..)
 import Persist.Preferences exposing (..)
 
+import Class.Show as Show
+
 type alias Flags =
     { today       : Date
     , preferences : Preferences
@@ -44,7 +46,7 @@ encodePreferences =
     Set.toList
     >> List.map encodePref
     >> Maybe.values
-    >> List.map Debug.toString
+    >> List.map Show.preference
     >> E.list E.string
 
 decodePreferences : D.Decoder Preferences
@@ -56,7 +58,7 @@ decodePreferences =
       Just prefs -> 
         let
           acc pref = 
-              setPreference pref <| List.member (Debug.toString pref) prefs
+              setPreference pref <| List.member (Show.preference pref) prefs
         in
           List.foldl acc Set.empty enumPreference
   in

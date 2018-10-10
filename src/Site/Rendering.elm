@@ -10,9 +10,12 @@ import StandardLibrary     exposing (..)
 import Persist.Preferences exposing (..)
 import Sorting             exposing (..)
 import Site.Algebra        exposing (..)
+import Site.Base           exposing (..)
 import Site.Common         exposing (..)
 import Site.Filtering      exposing (..)
-import Site.ToImage        exposing (..)
+
+import Class.Show    as Show
+import Class.ToImage as ToImage
 
 type alias Html a b c = H.Html (SiteMsg a b c)
 
@@ -31,13 +34,13 @@ render a st sorts nav = case a of
     [ h_ 1 "Settings"
     , H.form [] << flip List.map (unfoldPreferences st.prefs) <| \(k, v) ->
         H.p [E.onClick << SetPref k <| not v] <| 
-        checkbox_ Nothing (showPreference k) v
+        checkbox_ Nothing (Show.preference k) v
     ]
   SectionSortBy ->
     [ h_ 1 "Sort by"
     , H.form [] << flip List.map sorts <| \sort ->
         H.p [E.onClick <| SetSort sort] <|
-        radio_ (showSortBy sort) (st.sortBy == sort)
+        radio_ (Show.sortBy sort) (st.sortBy == sort)
     ]
   SectionInclude ->
     List.filter (.tab >> exclusive) st.allFilters 
@@ -82,7 +85,7 @@ siteView st sorts nav content = case st.section of
       showError
       [ H.div [P.id "bg"] [] 
       , H.footer [] << flip List.map enumSection <| \section ->
-          button_ (showSection section) True << ToSection <| Just section
+          button_ (Show.section section) True << ToSection <| Just section
       , H.aside [] <|
         [ h_ 1 "Links" 
         , H.a [P.href "https://www.reddit.com/message/compose/?to=pareidolist"]
@@ -111,12 +114,12 @@ filterSection st {tab, filters} = case filters of
           ]
       filterEl filter = 
           H.p [E.onClick <| Toggle filter] << 
-          checkbox_ (Maybe.map imageEl filter.icon) filter.name <|
+          checkbox_ (Maybe.map ToImage.image filter.icon) filter.name <|
           if exclusive filter.tab then
             not <| List.any (eqFilter filter) st.exclude
           else
             List.any (eqFilter filter) st.filters
     in
-      (::) (h_ 3 <| showFilterTab tab) 
+      (::) (h_ 3 <| Show.filterTab tab) 
       << addAll << List.singleton << H.form []
       <| List.map filterEl filters

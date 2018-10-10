@@ -14,8 +14,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 10
-    , stats     = { base =  { atk = 1865,  hp = 1939 }
-                  , max =   { atk = 12068, hp = 13225 }
+    , stats     = { base  = { atk = 1865,  hp = 1939 }
+                  , max   = { atk = 12068, hp = 13225 }
                   , grail = { atk = 13210, hp = 14489 }
                   }
     , skills    = [ { name  = "Shukuchi"
@@ -38,7 +38,7 @@ sabers =
                              , Grant Self 3 CritUp <| Range 20 40
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance E, riding E]
     , phantasm  = { name   = "Mumyou Sandanzuki"
                   , desc   = "Three-Stage Thrust"
@@ -79,8 +79,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 5
-    , stats     = { base =  { atk = 1907,  hp = 2039 }
-                  , max =   { atk = 12343, hp = 13907 }
+    , stats     = { base  = { atk = 1907,  hp = 2039 }
+                  , max   = { atk = 12343, hp = 13907 }
                   , grail = { atk = 13511, hp = 15236 }
                   }
     , skills    = [ { name  = "Tactics"
@@ -105,7 +105,7 @@ sabers =
                              , To Party GainStars <| Range 5 15
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding A, divinity B]
     , phantasm  = { name   = "Photon Ray"
                   , desc   = "Sword of the God of War"
@@ -146,8 +146,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 30
-    , stats     = { base =  { atk = 1793,  hp = 2089 }
-                  , max =   { atk = 11607, hp = 14284 }
+    , stats     = { base  = { atk = 1793,  hp = 2089 }
+                  , max   = { atk = 11607, hp = 14284 }
                   , grail = { atk = 12706, hp = 15609 }
                   }
     , skills    = [ { name  = "Stars for the Sky"
@@ -172,7 +172,7 @@ sabers =
                              , Grant Ally 3 DefenseUp <| Range 10 20
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, riding B]
     , phantasm  = { name   = "Fax Caelestis"
                   , desc   = "Ending of the Rose of Prominence"
@@ -216,8 +216,8 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 25
-    , stats     = { base =  { atk = 1811,  hp = 2153 }
-                  , max =   { atk = 11723, hp = 14680 }
+    , stats     = { base  = { atk = 1811,  hp = 2153 }
+                  , max   = { atk = 11723, hp = 14680 }
                   , grail = { atk = 12833, hp = 16083 }
                   }
     , skills    = [ { name  = "Mana Burst"
@@ -241,7 +241,7 @@ sabers =
                              , To Self GaugeUp <| Range 10 30
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Clarent Blood Arthur"
                   , desc   = "Rebellion Against My Beautiful Father"
@@ -268,7 +268,7 @@ sabers =
                   [(Monument Saber, 5), (OctupletCrystals, 10), (HeartOfTheForeignGod, 2)]
                   [( Monument Saber, 12), (HeartOfTheForeignGod, 4)
                   , (DragonsReverseScale, 5)
-                ]
+                  ]
     , skillUp   = Reinforcement
                   [(GemOf Saber, 5)]
                   [(GemOf Saber, 12)]
@@ -286,8 +286,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 15
-    , stats     = { base =  { atk = 1656,  hp = 2266 }
-                  , max =   { atk = 10721, hp = 15453 }
+    , stats     = { base  = { atk = 1656,  hp = 2266 }
+                  , max   = { atk = 10721, hp = 15453 }
                   , grail = { atk = 11736, hp = 16929 }
                   }
     , skills    = [ { name  = "Mystic Eyes of Death Perception"
@@ -315,7 +315,7 @@ sabers =
                              , To Self DemeritGauge <| Flat 10
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, connectionRoot A, independentManifestation C]
     , phantasm  = { name   = "Amalavijñāna—Boundary of Emptiness"
                   , desc   = "Mukushiki Kara no Kyoukai"
@@ -358,8 +358,8 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 5
-    , stats     = { base =  { atk = 1734,  hp = 2222 }
-                  , max =   { atk = 11221, hp = 15150 }
+    , stats     = { base  = { atk = 1734,  hp = 2222 }
+                  , max   = { atk = 11221, hp = 15150 }
                   , grail = { atk = 12283, hp = 16597 }
                   }
     , skills    = [ { name  = "Charisma"
@@ -380,7 +380,7 @@ sabers =
                   , cd      = 7
                   , effect = [ To Party GainStars <| Range 5 15 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, riding B]
     , phantasm  = { name   = "Excalibur"
                   , desc   = "Sword of Promised Victory"
@@ -421,8 +421,8 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 14
-    , stats     = { base =  { atk = 1658,  hp = 1854 }
-                  , max =   { atk = 9949, hp = 11589 }
+    , stats     = { base  = { atk = 1658,  hp = 1854 }
+                  , max   = { atk = 9949, hp = 11589 }
                   , grail = { atk = 12046, hp = 14051 }
                   }
     , skills    = [ { name  = "Knight of the Lake"
@@ -447,7 +447,7 @@ sabers =
                              , Grant Self 3 CritUp <| Range 30 50
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Arondight Overload"
                   , desc   = "Severance of the Binding Chains—Lake's Overflowing Light"
@@ -490,8 +490,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 14
-    , stats     = { base =  { atk = 1708,  hp = 1854 }
-                  , max =   { atk = 10248, hp = 11589 }
+    , stats     = { base  = { atk = 1708,  hp = 1854 }
+                  , max   = { atk = 10248, hp = 11589 }
                   , grail = { atk = 12408, hp = 14051 }
                   }
     , skills    = [ { name  = "Mana Burst"
@@ -512,7 +512,7 @@ sabers =
                   , cd      = 7
                   , effect = [ Grant Party 3 AttackUp <| Range 6 12 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B]
     , phantasm  = { name   = "Excalibur Morgan"
                   , desc   = "Sword of Promised Victory"
@@ -537,7 +537,7 @@ sabers =
                   [(Monument Saber, 4), (ClawOfChaos, 5), (DragonsReverseScale, 2)]
                   [( Monument Saber, 10), (DragonsReverseScale, 4)
                   , (HeartOfTheForeignGod, 4)
-                ]
+                  ]
     , skillUp   = Reinforcement
                   [(GemOf Saber, 4)]
                   [(GemOf Saber, 10)]
@@ -555,8 +555,8 @@ sabers =
     , attr      = Heaven
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 24
-    , stats     = { base =  { atk = 1642,  hp = 1901 }
-                  , max =   { atk = 9854, hp = 11882 }
+    , stats     = { base  = { atk = 1642,  hp = 1901 }
+                  , max   = { atk = 9854, hp = 11882 }
                   , grail = { atk = 11931, hp = 14541 }
                   }
     , skills    = [ { name  = "Blessing of Martial Arts"
@@ -581,7 +581,7 @@ sabers =
                              , To Self Heal <| Range 1000 3000
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, riding APlus, divinity A]
     , phantasm  = { name   = "Brahmastra"
                   , desc   = "The Rakshasa-Piercing Immortal"
@@ -622,8 +622,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 15
-    , stats     = { base =  { atk = 1574,  hp = 1880 }
-                  , max =   { atk = 9449, hp = 11753 }
+    , stats     = { base  = { atk = 1574,  hp = 1880 }
+                  , max   = { atk = 9449, hp = 11753 }
                   , grail = { atk = 11441, hp = 14250 }
                   }
     , skills    = [ { name  = "Migraine"
@@ -649,7 +649,7 @@ sabers =
                   , cd      = 12
                   , effect = [ Times 3 << Grant Self 5 Guts <| Range 300 600 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, riding B]
     , phantasm  = { name   = "Laus St. Claudius"
                   , desc   = "Imperium of the Maiden's Flowery Words"
@@ -690,8 +690,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1734,  hp = 2121 }
-                  , max =   { atk = 8765, hp = 13256 }
+    , stats     = { base  = { atk = 1734,  hp = 2121 }
+                  , max   = { atk = 8765, hp = 13256 }
                   , grail = { atk = 10613, hp = 16073 }
                   }
     , skills    = [ { name  = "Mind's Eye (True)"
@@ -718,7 +718,7 @@ sabers =
                              , To Self Heal <| Range 1000 2500
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, riding B]
     , phantasm  = { name   = "Fleur de Lis"
                   , desc   = "Gorgeous Blooming Lilies"
@@ -761,8 +761,8 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1363,  hp = 2266 }
-                  , max =   { atk = 8181, hp = 14165 }
+    , stats     = { base  = { atk = 1363,  hp = 2266 }
+                  , max   = { atk = 8181, hp = 14165 }
                   , grail = { atk = 9905, hp = 17175 }
                   }
     , skills    = [ { name  = "Golden Rule"
@@ -787,7 +787,7 @@ sabers =
                              , Grant Self 3 (DefenseVs Dragon) <| Flat 30
                              ]
                   }
-                ]
+                  ]
     , passives  = [riding B]
     , phantasm  = { name   = "Balmung"
                   , desc   = "Illusory Greatsword: Felling of the Sky Demon"
@@ -828,8 +828,8 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1695,  hp = 1827 }
-                  , max =   { atk = 10173, hp = 11419 }
+    , stats     = { base  = { atk = 1695,  hp = 1827 }
+                  , max   = { atk = 10173, hp = 11419 }
                   , grail = { atk = 12317, hp = 13845 }
                   }
     , skills    = [ { name  = "Numeral of The Saint"
@@ -856,7 +856,7 @@ sabers =
                              , Times 1 << Grant Self 1 Guts <| Range 1000 2000
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Excalibur Galatine"
                   , desc   = "The Reborn Sword of Victory"
@@ -900,8 +900,8 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 14
-    , stats     = { base =  { atk = 1287,  hp = 1699 }
-                  , max =   { atk = 7726, hp = 10623 }
+    , stats     = { base  = { atk = 1287,  hp = 1699 }
+                  , max   = { atk = 7726, hp = 10623 }
                   , grail = { atk = 9355, hp = 12880 }
                   }
     , skills    = [ { name  = "Intuition"
@@ -922,7 +922,7 @@ sabers =
                   , cd      = 7
                   , effect = [ Grant Party 3 NPGen <| Range 10 20 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding C]
     , phantasm  = { name   = "Caliburn"
                   , desc   = "Golden Sword of Assured Victory"
@@ -963,8 +963,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 13
-    , stats     = { base =  { atk = 1392,  hp = 1727 }
-                  , max =   { atk = 7497, hp = 9595 }
+    , stats     = { base  = { atk = 1392,  hp = 1727 }
+                  , max   = { atk = 7497, hp = 9595 }
                   , grail = { atk = 10146, hp = 13009 }
                   }
     , skills    = [ { name  = "Tactics"
@@ -987,7 +987,7 @@ sabers =
                              , Debuff Ally 3 DefenseDown <| Flat 20
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, riding B, divinity D]
     , phantasm  = { name   = "Crocea Mors"
                   , desc   = "The Yellow Death"
@@ -1028,8 +1028,8 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 23
-    , stats     = { base =  { atk = 1385,  hp = 1761 }
-                  , max =   { atk = 7460, hp = 9786 }
+    , stats     = { base  = { atk = 1385,  hp = 1761 }
+                  , max   = { atk = 7460, hp = 9786 }
                   , grail = { atk = 10096, hp = 13268 }
                   }
     , skills    = [ { name  = "Valor"
@@ -1056,7 +1056,7 @@ sabers =
                              , Grant Self 3 DefenseUp <| Range 10 20
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Caladbolg"
                   , desc   = "Rainbow Sword"
@@ -1099,8 +1099,8 @@ sabers =
     , attr      = Star
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 13
-    , stats     = { base =  { atk = 1416,  hp = 1727 }
-                  , max =   { atk = 7627, hp = 9595 }
+    , stats     = { base  = { atk = 1416,  hp = 1727 }
+                  , max   = { atk = 7627, hp = 9595 }
                   , grail = { atk = 10322, hp = 13009 }
                   }
     , skills    = [ { name  = "Tactics"
@@ -1125,7 +1125,7 @@ sabers =
                              , Grant Self 1 DebuffResist <| Range 30 50
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding A]
     , phantasm  = { name   = "Switch On—Airgetlám"
                   , desc   = "Be my Sword, Silver Arm"
@@ -1166,8 +1166,8 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 13
-    , stats     = { base =  { atk = 1228,  hp = 1889 }
-                  , max =   { atk = 6615, hp = 10498 }
+    , stats     = { base  = { atk = 1228,  hp = 1889 }
+                  , max   = { atk = 6615, hp = 10498 }
                   , grail = { atk = 8952, hp = 14234 }
                   }
     , skills    = [ { name  = "Tactics"
@@ -1188,7 +1188,7 @@ sabers =
                   , cd      = 7
                   , effect = [ Grant Self 5 (Performance Buster) <| Range 20 40 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding B, madness EX]
     , phantasm  = { name   = "Saint War Order"
                   , desc   = "Rally Thy War Cries Under the Holy Flag"

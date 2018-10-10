@@ -1,5 +1,5 @@
 module Persist.Preferences exposing 
-  ( Preference(..), enumPreference, ordPreference, showPreference
+  ( Preference(..), enumPreference, ordPreference
   , Preferences, noPreferences
   , prefer
   , setPreference
@@ -9,10 +9,7 @@ module Persist.Preferences exposing
 import Dict exposing (Dict)
 import Set exposing (Set)
 
-
 import StandardLibrary exposing (..)
-import Printing        exposing (..)
-import MyServant       exposing (..)
 
 type Preference
     = Artorify
@@ -40,15 +37,6 @@ type alias OrdPreference = Int
 
 ordPreference : Preference -> OrdPreference
 ordPreference = enumToOrd enumPreference
-
-showPreference : Preference -> String
-showPreference a = case a of
-    ExcludeSelf  -> "Exclude self-applied effects"
-    MaxAscension -> "Show all at max ascension"
-    ShowTables   -> "Show skill and NP tables"
-    AddSkills    -> "Add skills to NP damage"
-    HideClasses  -> "Hide (Class) in names"
-    _            -> unCamel <| Debug.toString a
 
 prefDefault : Preference -> Bool
 prefDefault a = case a of

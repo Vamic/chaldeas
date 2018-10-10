@@ -2,10 +2,9 @@ module Site.Servant.Sorting exposing (getSort)
 
 import Dict exposing (Dict)
 
-import StandardLibrary  exposing  (..)
-import MyServant        exposing (..)
-import Printing         exposing (..)
-import Sorting          exposing (..)
+import StandardLibrary exposing  (..)
+import MyServant       exposing (..)
+import Sorting         exposing (..)
 
 getSort : Bool -> SortBy -> List MyServant -> List (String, MyServant)
 getSort addSkills a = case a of

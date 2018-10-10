@@ -10,11 +10,13 @@ import Date exposing (Date)
 import Time
 
 import StandardLibrary     exposing (..)
-import Database.Has        exposing (..)
 import Database.Skill      exposing (..)
 import Persist.Preferences exposing (..)
 import Site.Algebra        exposing (..)
-import Site.ToImage        exposing (..)
+import Site.Base           exposing (..)
+
+import Class.Has     as Has      exposing (Has)
+import Class.ToImage as ToImage exposing (ToImage)
 
 type alias ScheduledFilter a = 
     { start  : Date 
@@ -81,23 +83,23 @@ namedBonus tab name names =
 skillFilter : SkillEffect -> (a -> List SkillEffect) -> Maybe (Filter a)
 skillFilter a getEffects = case a of
   Grant _ _ buff _ -> Just <| matchFilter 
-      (Just toImageBuffEffect) 
-      (hasBuffEffect getEffects)
+      (Just ToImage.buffEffect) 
+      (Has.buffEffect getEffects)
       (FilterBuff <| buffCategory buff)
       buff
   Debuff _ _ debuff _ -> Just <| matchFilter 
-      (Just toImageDebuffEffect) 
-      (hasDebuffEffect getEffects)
+      (Just ToImage.debuffEffect) 
+      (Has.debuffEffect getEffects)
       FilterDebuff
       debuff
   To _ action _ -> Just <| matchFilter 
       Nothing
-      (hasInstantEffect getEffects)
+      (Has.instantEffect getEffects)
       FilterAction
       action
   Bonus bonus _ _ -> Just <| matchFilter 
       Nothing
-      (hasBonusEffect getEffects)
+      (Has.bonusEffect getEffects)
       FilterBonus
       bonus
   Chance _ b    -> skillFilter b getEffects

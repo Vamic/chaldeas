@@ -14,37 +14,37 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 15
-    , stats     = { base =  { atk = 1637,  hp = 2091 }
-                  , max =   { atk = 10598, hp = 14259 }
+    , stats     = { base  = { atk = 1637,  hp = 2091 }
+                  , max   = { atk = 10598, hp = 14259 }
                   , grail = { atk = 11601, hp = 15621 }
                   }
-    , skills    = [ { name  = "Discerning Eye"
-                  , rank   = A
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Ally 3 CritUp <| Range 20 50
-                             , To Ally GaugeUp <| Flat 30
-                             ]
-                  }
-                  , { name    = "Tactician's Advice"
-                  , rank   = APlus
-                  , icon    = IconShieldUp
-                  , cd      = 8
-                  , effect = [ Grant Party 3 DefenseUp <| Range 20 30
-                             , Grant Party 3 DamageDown <| Range 200 500
-                             , To Party GaugeUp <| Flat 10
-                             ]
-                  }
-                  , { name    = "Tactician's Command"
-                  , rank   = APlus
-                  , icon    = IconSwordUp
-                  , cd      = 8
-                  , effect = [ Grant Party 3 AttackUp <| Range 20 30
-                             , Grant Party 3 DamageUp <| Range 200 500
-                             , To Party GaugeUp <| Flat 10
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Discerning Eye"
+                    , rank   = A
+                    , icon   = IconExclamationUp
+                    , cd     = 7
+                    , effect = [ Grant Ally 3 CritUp <| Range 20 50
+                               , To Ally GaugeUp <| Flat 30
+                               ]
+                    }
+                  , { name   = "Tactician's Advice"
+                    , rank   = APlus
+                    , icon   = IconShieldUp
+                    , cd     = 8
+                    , effect = [ Grant Party 3 DefenseUp <| Range 20 30
+                               , Grant Party 3 DamageDown <| Range 200 500
+                               , To Party GaugeUp <| Flat 10
+                               ]
+                    }
+                  , { name   = "Tactician's Command"
+                    , rank   = APlus
+                    , icon   = IconSwordUp
+                    , cd     = 8
+                    , effect = [ Grant Party 3 AttackUp <| Range 20 30
+                               , Grant Party 3 DamageUp <| Range 200 500
+                               , To Party GaugeUp <| Flat 10
+                               ]
+                    }
+                  ]
     , passives  = [itemConstruction B, territoryCreation A]
     , phantasm  = { name   = "Unreturning Formation"
                   , desc   = "Stone Sentinel Maze"
@@ -52,8 +52,7 @@ casters =
                   , card   = Arts
                   , kind   = "Anti-Army"
                   , hits   = 0
-                  , effect = [ Chance 150 <<
-                          Debuff Enemies 3 DefenseDown <| Range 10 30
+                  , effect = [ Chance 150 << Debuff Enemies 3 DefenseDown <| Range 10 30
                              , Chance 150 << Debuff Enemies 3 Curse <| Flat 500
                              , To Enemies GaugeDown <| Flat 1
                              ]
@@ -89,33 +88,33 @@ casters =
     , attr      = Heaven
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 5
-    , stats     = { base =  { atk = 1629,  hp = 2091 }
-                  , max =   { atk = 10546, hp = 14259 }
+    , stats     = { base  = { atk = 1629,  hp = 2091 }
+                  , max   = { atk = 10546, hp = 14259 }
                   , grail = { atk = 11544, hp = 15621 }
                   }
     , skills    = [ { name  = "Curse"
-                  , rank   = EX
-                  , icon    = IconDarkMagic
-                  , cd      = 7
-                  , effect = [ Chances 80 100 << To Enemy GaugeDown <| Flat 1 ]
-                  }
+                    , rank   = EX
+                    , icon    = IconDarkMagic
+                    , cd      = 7
+                    , effect = [ Chances 80 100 << To Enemy GaugeDown <| Flat 1 ]
+                    }
                   , { name    = "Morph"
-                  , rank   = A
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 10 30
-                             , Grant Self 1 DefenseUp <| Flat 30
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconShieldUp
+                    , cd      = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 10 30
+                               , Grant Self 1 DefenseUp <| Flat 30
+                               ]
+                    }
                   , { name    = "Fox's Wedding"
-                  , rank   = EX
-                  , icon    = IconArtsUp
-                  , cd      = 7
-                  , effect = [ Grant Ally 3 (Performance Arts) <| Range 30 50
-                             , To Ally Heal <| Range 1000 2500
-                             ]
-                  }
-                ]
+                    , rank   = EX
+                    , icon    = IconArtsUp
+                    , cd      = 7
+                    , effect = [ Grant Ally 3 (Performance Arts) <| Range 30 50
+                               , To Ally Heal <| Range 1000 2500
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation C, divinity A]
     , phantasm  = { name   = "Eightfold Blessings of Amaterasu"
                   , desc   = "on the Weight Stone under the Sunlit Watery Heavens"
@@ -158,36 +157,36 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 15
-    , stats     = { base =  { atk = 1801,  hp = 1901 }
-                  , max =   { atk = 11658, hp = 12965 }
+    , stats     = { base  = { atk = 1801,  hp = 1901 }
+                  , max   = { atk = 11658, hp = 12965 }
                   , grail = { atk = 12761, hp = 14204 }
                   }
-    , skills    = [ { name  = "Rapid Sutra Chanting"
-                  , rank   = A
-                  , icon    = IconNoble
-                  , cd      = 9
-                  , effect = [ To Self GaugeUp <| Range 50 80
-                             , Grant Self 1 NPUp <| Range 10 20
-                             ]
-                  }
-                  , { name    = "Captivating Rosy Cheeks"
-                  , rank   = A
-                  , icon    = IconCrosshairUp
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Taunt Full
-                             , Grant Self 1 DamageDown <| Range 500 1500
-                             ]
-                  }
-                  , { name    = "Sanzang's Teachings"
-                  , rank   = A
-                  , icon    = IconNobleUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 NPGen <| Range 10 30
-                             , Grant Party 3 StarUp <| Range 10 30
-                             , Grant Party 1 DebuffResist Full
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Rapid Sutra Chanting"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 9
+                    , effect = [ To Self GaugeUp <| Range 50 80
+                               , Grant Self 1 NPUp <| Range 10 20
+                               ]
+                    }
+                  , { name   = "Captivating Rosy Cheeks"
+                    , rank   = A
+                    , icon   = IconCrosshairUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Taunt Full
+                               , Grant Self 1 DamageDown <| Range 500 1500
+                               ]
+                    }
+                  , { name   = "Sanzang's Teachings"
+                    , rank   = A
+                    , icon   = IconNobleUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 NPGen <| Range 10 30
+                               , Grant Party 3 StarUp <| Range 10 30
+                               , Grant Party 1 DebuffResist Full
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation APlus, divinity D]
     , phantasm  = { name   = "Five Elements Mountain Buddha Palm"
                   , desc   = "Wu Xing Shan: Shijia Rulai Zhang"
@@ -228,38 +227,38 @@ casters =
     , attr      = Star
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 30
-    , stats     = { base =  { atk = 1637,  hp = 2091 }
-                  , max =   { atk = 10598, hp = 14259 }
+    , stats     = { base  = { atk = 1637,  hp = 2091 }
+                  , max   = { atk = 10598, hp = 14259 }
                   , grail = { atk = 11601, hp = 15621 }
                   }
-    , skills    = [ { name  = "Inherent Wisdom"
-                  , rank   = EX
-                  , icon    = IconKneel
-                  , cd      = 7
-                  , effect = [ Times 1 << Grant Self 3 Guts <| Range 1000 3000
-                             , Chance 85 << Grant Self 3 DefenseUp <| Range 20 30
-                             , Chance 85 << Grant Self 3 NPUp <| Range 20 30
-                             ]
-                  }
-                  , { name    = "Golden Rule (Body)"
-                  , rank   = B
-                  , icon    = IconHealTurn
-                  , cd      = 8
-                  , effect = [ Grant Self 2 DebuffResist Full
-                             , Grant Self 3 HealPerTurn <| Range 500 1000
-                             , Grant Self 3 GaugePerTurn <| Flat 10
-                             ]
-                  }
-                  , { name    = "Pioneer of the Stars"
-                  , rank   = EX
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Range 30 50
-                             , Grant Self 3 IgnoreInvinc Full
-                             , To Party GainStars <| Flat 10
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Inherent Wisdom"
+                    , rank   = EX
+                    , icon   = IconKneel
+                    , cd     = 7
+                    , effect = [ Times 1 << Grant Self 3 Guts <| Range 1000 3000
+                               , Chance 85 << Grant Self 3 DefenseUp <| Range 20 30
+                               , Chance 85 << Grant Self 3 NPUp <| Range 20 30
+                               ]
+                    }
+                  , { name   = "Golden Rule (Body)"
+                    , rank   = B
+                    , icon   = IconHealTurn
+                    , cd     = 8
+                    , effect = [ Grant Self 2 DebuffResist Full
+                               , Grant Self 3 HealPerTurn <| Range 500 1000
+                               , Grant Self 3 GaugePerTurn <| Flat 10
+                               ]
+                    }
+                  , { name   = "Pioneer of the Stars"
+                    , rank   = EX
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 30 50
+                               , Grant Self 3 IgnoreInvinc Full
+                               , To Party GainStars <| Flat 10
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation A, itemConstruction A]
     , phantasm  = { name   = "Uomo Universale"
                   , desc   = "Omnipotent Man"
@@ -302,35 +301,34 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 10
-    , stats     = { base =  { atk = 1677,  hp = 2027 }
-                  , max =   { atk = 10857, hp = 13825 }
+    , stats     = { base  = { atk = 1677,  hp = 2027 }
+                  , max   = { atk = 10857, hp = 13825 }
                   , grail = { atk = 11885, hp = 15146 }
                   }
-    , skills    = [ { name  = "Cheerful-Type Mystic Code"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
-                  }
-                  , { name    = "Child of Nature"
-                  , rank   = B
-                  , icon    = IconShield
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Invincibility Full
-                             , Grant Self 3 NPGen <| Range 18 28
-                             ]
-                  }
-                  , { name    = "Suspicious Medicine"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 8
-                  , effect = [ To Ally Heal <| Range 1000 3000
-                             , Chance 70 <| Grant Self 1 DebuffResist Full
-                             , Chance 70 << Times 1 <<
-                            Grant Self 3 Guts <| Flat 1000
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Cheerful-Type Mystic Code"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
+                    }
+                  , { name   = "Child of Nature"
+                    , rank   = B
+                    , icon   = IconShield
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Invincibility Full
+                               , Grant Self 3 NPGen <| Range 18 28
+                               ]
+                    }
+                  , { name   = "Suspicious Medicine"
+                    , rank   = A
+                    , icon   = IconHeal
+                    , cd     = 8
+                    , effect = [ To Ally Heal <| Range 1000 3000
+                               , Chance 70 <| Grant Self 1 DebuffResist Full
+                               , Chance 70 << Times 1 << Grant Self 3 Guts <| Flat 1000
+                               ]
+                    }
+                  ]
     , passives  = [magicResistance B, unlimitedManaSupply C]
     , phantasm  = { name   = "Quintett Feuer"
                   , desc   = "Multiple Ensemble Saturated Bombardment"
@@ -374,8 +372,8 @@ casters =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1294,  hp = 2091 }
-                  , max =   { atk = 7766, hp = 13070 }
+    , stats     = { base  = { atk = 1294, hp = 2091 }
+                  , max   = { atk = 7766, hp = 13070 }
                   , grail = { atk = 9403, hp = 15847 }
                   }
     , skills    = [ { name  = "Rapid Words of Divine"
@@ -398,7 +396,7 @@ casters =
                   , cd      = 10
                   , effect = [ Grant Ally 1 HealingReceived <| Range 50 100 ]
                   }
-                ]
+                  ]
     , passives  = [territoryCreation B, itemConstruction B]
     , phantasm  = { name   = "Pain Breaker"
                   , desc   = "All Flaws Must Be Repaired"
@@ -441,8 +439,8 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1436,  hp = 1824 }
-                  , max =   { atk = 8616, hp = 11404 }
+    , stats     = { base  = { atk = 1436,  hp = 1824 }
+                  , max   = { atk = 8616,  hp = 11404 }
                   , grail = { atk = 10432, hp = 13827 }
                   }
     , skills    = [ { name  = "Innocent Monster"
@@ -453,23 +451,23 @@ casters =
                              , To Self Heal <| Range 1000 2000
                              ]
                   }
-                  , { name    = "Mana Burst (Pumpkin)"
+                , { name   = "Mana Burst (Pumpkin)"
                   , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
+                  , icon   = IconBusterUp
+                  , cd     = 7
                   , effect = [ Grant Self 1 (Performance Buster) <| Range 25 45
                              , Debuff Enemies 10 Burn <| Flat 300
                              ]
                   }
-                  , { name    = "Performance Continuation"
+                , { name   = "Performance Continuation"
                   , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
+                  , icon   = IconKneel
+                  , cd     = 9
                   , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500
                              , To Party GainStars <| Flat 8
                              ]
                   }
-                ]
+                  ]
     , passives  = [territoryCreation B, itemConstruction A]
     , phantasm  = { name   = "Báthory Halloween Erzsébet"
                   , desc   = "First Class Demon Daughter of Fresh Blood"
@@ -506,37 +504,37 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1438,  hp = 1901 }
-                  , max =   { atk = 8629, hp = 11882 }
+    , stats     = { base  = { atk = 1438,  hp = 1901 }
+                  , max   = { atk = 8629,  hp = 11882 }
                   , grail = { atk = 10448, hp = 14407 }
                   }
     , skills    = [ { name  = "Self-Modification"
-                  , rank   = A
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 CritUp <| Range 20 50
-                             , Grant Self 3 StarAbsorb <| Range 300 600
-                             ]
-                  }
-                  , { name    = "Morph"
-                  , rank   = APlus
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 10 30
-                             , Grant Self 1 DefenseUp <| Flat 30
-                             , Grant Self 3 DebuffResist <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Meanwhile"
-                  , rank   = A
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Range 20 40
-                             , To Self Heal <| Range 1000 2000
-                             , To Self RemoveDebuffs Full
-                             ]
-                  }
-                ]
+                    , rank   = A
+                    , icon    = IconExclamationUp
+                    , cd      = 7
+                    , effect = [ Grant Self 3 CritUp <| Range 20 50
+                               , Grant Self 3 StarAbsorb <| Range 300 600
+                               ]
+                    }
+                  , { name   = "Morph"
+                    , rank   = APlus
+                    , icon   = IconShieldUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 10 30
+                               , Grant Self 1 DefenseUp <| Flat 30
+                              , Grant Self 3 DebuffResist <| Range 20 40
+                               ]
+                    } 
+                  , { name   = "Meanwhile"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 20 40
+                               , To Self Heal <| Range 1000 2000
+                               , To Self RemoveDebuffs Full
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation A]
     , phantasm  = { name   = "Nursery Rhyme"
                   , desc   = "A Story For Somebody's Sake"
@@ -579,34 +577,34 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1438,  hp = 1901 }
-                  , max =   { atk = 8629, hp = 11882 }
+    , stats     = { base  = { atk = 1438,  hp = 1901 }
+                  , max   = { atk = 8629,  hp = 11882 }
                   , grail = { atk = 10448, hp = 14407 }
                   }
-    , skills    = [ { name  = "Mana Tuning"
-                  , rank   = C
-                  , icon    = IconNoble
-                  , cd      = 9
-                  , effect = [ To Party GaugeUp <| Range 10 20 ]
-                  }
-                  , { name    = "Mahatma"
-                  , rank   = A
-                  , icon    = IconStarTurn
-                  , cd      = 10
-                  , effect = [ Grant Party 5 StarsPerTurn <| Flat 5
-                             , Chances 60 80 << Grant Self 1 NPUp <| Flat 50
-                             ]
-                  }
+    , skills    = [ { name   = "Mana Tuning"
+                    , rank   = C
+                    , icon   = IconNoble
+                    , cd     = 9
+                    , effect = [ To Party GaugeUp <| Range 10 20 ]
+                    }
+                  , { name   = "Mahatma"
+                    , rank   = A
+                    , icon   = IconStarTurn
+                    , cd     = 10
+                    , effect = [ Grant Party 5 StarsPerTurn <| Flat 5
+                               , Chances 60 80 << Grant Self 1 NPUp <| Flat 50
+                               ]
+                    }
                   , { name    = "Search for the Unknown"
-                  , rank   = B
-                  , icon    = IconAllUp
-                  , cd      = 9
-                  , effect = [ Grant Party 3 (Performance Quick) <| Range 15 20
-                             , Grant Party 3 (Performance Arts) <| Range 15 20
-                             , Grant Party 3 (Performance Buster) <| Range 15 20
-                             ]
-                  }
-                ]
+                    , rank   = B
+                    , icon   = IconAllUp
+                    , cd     = 9
+                    , effect = [ Grant Party 3 (Performance Quick) <| Range 15 20
+                              , Grant Party 3 (Performance Arts) <| Range 15 20
+                              , Grant Party 3 (Performance Buster) <| Range 15 20
+                              ]
+                    }
+                  ]
     , passives  = [territoryCreation A, itemConstruction B]
     , phantasm  = { name   = "Sanat Kumara"
                   , desc   = "Venusian God, Heavenly Lord of the Flame"
@@ -650,33 +648,33 @@ casters =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1510,  hp = 1806 }
-                  , max =   { atk = 9060, hp = 11288 }
+    , stats     = { base  = { atk = 1510,  hp = 1806 }
+                  , max   = { atk = 9060,  hp = 11288 }
                   , grail = { atk = 10970, hp = 13686 }
                   }
-    , skills    = [ { name  = "Egyptian Magecraft"
-                  , rank   = A
-                  , icon    = IconReaperUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 KillUp <| Range 50 100
-                             , To Self Heal <| Range 1000 3000
-                             ]
-                  }
-                  , { name    = "Rapid Words of Divine"
-                  , rank   = B
-                  , icon    = IconNoble
-                  , cd      = 9
-                  , effect = [ To Self GaugeUp <| Range 60 120 ]
-                  }
-                  , { name    = "Affection of the Sky God"
-                  , rank   = B
-                  , icon    = IconKneel
-                  , cd      = 7
-                  , effect = [ Times 1 << Grant Self 3 Guts <| Range 1000 2000
-                             , To Self RemoveDebuffs Full
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Egyptian Magecraft"
+                    , rank   = A
+                    , icon   = IconReaperUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 KillUp <| Range 50 100
+                               , To Self Heal <| Range 1000 3000
+                               ]
+                    }
+                  , { name   = "Rapid Words of Divine"
+                    , rank   = B
+                    , icon   = IconNoble
+                    , cd     = 9
+                    , effect = [ To Self GaugeUp <| Range 60 120 ]
+                    }
+                  , { name   = "Affection of the Sky God"
+                    , rank   = B
+                    , icon   = IconKneel
+                    , cd     = 7
+                    , effect = [ Times 1 << Grant Self 3 Guts <| Range 1000 2000
+                               , To Self RemoveDebuffs Full
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation A, itemConstruction BPlus, divinity B]
     , phantasm  = { name   = "Anpu Neb Ta Djeser"
                   , desc   = "Nether Mirror's Precious Bible"
@@ -717,31 +715,31 @@ casters =
     , attr      = Heaven
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 24
-    , stats     = { base =  { atk = 1372,  hp = 1996 }
-                  , max =   { atk = 8237, hp = 12476 }
+    , stats     = { base  = { atk = 1372, hp = 1996 }
+                  , max   = { atk = 8237, hp = 12476 }
                   , grail = { atk = 9973, hp = 15127 }
                   }
     , skills    = [ { name  = "Sacrificial Resolve"
-                  , rank   = A
-                  , icon    = IconHealUp
-                  , cd      = 9
-                  , effect = [ Grant Self 1 HealUp<| Range 30 50 ]
-                  }
+                    , rank   = A
+                    , icon    = IconHealUp
+                    , cd      = 9
+                    , effect = [ Grant Self 1 HealUp<| Range 30 50 ]
+                    }
                   , { name    = "Child of Nature"
-                  , rank   = A
-                  , icon    = IconShield
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Invincibility Full
-                             , Grant Self 3 NPGen <| Range 20 30
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconShield
+                    , cd      = 8
+                    , effect = [ Grant Self 1 Invincibility Full
+                              , Grant Self 3 NPGen <| Range 20 30
+                              ]
+                    }
                   , { name    = "Magical Healing"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Ally Heal <| Range 2000 3000 ]
-                  }
-                ]
+                    , rank   = A
+                    , icon    = IconHeal
+                    , cd      = 7
+                    , effect = [ To Ally Heal <| Range 2000 3000 ]
+                    }
+                  ]
     , passives  = [territoryCreation B, coreOfGoddess C]
     , phantasm  = { name   = "Song of Grail"
                   , desc   = "Sing, O White Grail"
@@ -778,35 +776,35 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1510,  hp = 1824 }
-                  , max =   { atk = 9060, hp = 11404 }
+    , stats     = { base  = { atk = 1510,  hp = 1824 }
+                  , max   = { atk = 9060,  hp = 11404 }
                   , grail = { atk = 10970, hp = 13827 }
                   }
-    , skills    = [ { name  = "Beach Flower"
-                  , rank   = APlus
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 9.5 19.5
-                             , Grant (AlliesType Male) 3 StarUp <| Range 21 41
-                             ]
-                  }
-                  , { name    = "Sparkling Sunflower"
-                  , rank   = A
-                  , icon    = IconStarTurn
-                  , cd      = 9
-                  , effect = [ Grant Party 3 StarsPerTurn <| Range 5 10
-                             , Grant Self 3 HealPerTurn <| Range 500 1000
-                             ]
-                  }
-                  , { name    = "Beautiful Princess (Sea)"
-                  , rank   = A
-                  , icon    = IconShield
-                  , cd      = 8
-                  , effect = [ Times 3 <| Grant Self 0 Invincibility Full
-                             , Grant Self 3 DebuffResist <| Range 30 50
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Beach Flower"
+                    , rank   = APlus
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 9.5 19.5
+                               , Grant (AlliesType Male) 3 StarUp <| Range 21 41
+                               ]
+                    }
+                  , { name   = "Sparkling Sunflower"
+                    , rank   = A
+                    , icon   = IconStarTurn
+                    , cd     = 9
+                    , effect = [ Grant Party 3 StarsPerTurn <| Range 5 10
+                               , Grant Self 3 HealPerTurn <| Range 500 1000
+                               ]
+                    }
+                  , { name   = "Beautiful Princess (Sea)"
+                    , rank   = A
+                    , icon   = IconShield
+                    , cd     = 8
+                    , effect = [ Times 3 <| Grant Self 0 Invincibility Full
+                               , Grant Self 3 DebuffResist <| Range 30 50
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation A, itemConstruction D]
     , phantasm  = { name   = "Crystal Dress"
                   , desc   = "The Lovable Brilliance, to Eternity"
@@ -849,33 +847,33 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 24
-    , stats     = { base =  { atk = 1325,  hp = 1901 }
-                  , max =   { atk = 7952, hp = 11882 }
+    , stats     = { base  = { atk = 1325, hp = 1901 }
+                  , max   = { atk = 7952, hp = 11882 }
                   , grail = { atk = 9628, hp = 14407 }
                   }
-    , skills    = [ { name  = "Morph"
-                  , rank   = C
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 16 24 ]
-                  }
-                  , { name    = "Mass Production"
-                  , rank   = A
-                  , icon    = IconStarTurn
-                  , cd      = 12
-                  , effect = [ Grant Party 5 StarsPerTurn <| Range 5 10
-                             , Grant Self 5 GaugePerTurn <| Range 5 10
-                             ]
-                  }
-                  , { name    = "Concept Improvement"
-                  , rank   = APlus
-                  , icon    = IconSunUp
-                  , cd      = 8
-                  , effect = [ Grant Ally 1 Overcharge <| Flat 2
-                             , Grant Ally 1 StarUp <| Range 10 30
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Morph"
+                    , rank   = C
+                    , icon   = IconShieldUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 16 24 ]
+                    }
+                  , { name   = "Mass Production"
+                    , rank   = A
+                    , icon   = IconStarTurn
+                    , cd     = 12
+                    , effect = [ Grant Party 5 StarsPerTurn <| Range 5 10
+                               , Grant Self 5 GaugePerTurn <| Range 5 10
+                               ]
+                    }
+                  , { name   = "Concept Improvement"
+                    , rank   = APlus
+                    , icon   = IconSunUp
+                    , cd     = 8
+                    , effect = [ Grant Ally 1 Overcharge <| Flat 2
+                               , Grant Ally 1 StarUp <| Range 10 30
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation D, itemConstruction D]
     , phantasm  = { name   = "World Faith Domination"
                   , desc   = "Ｗ・Ｆ・Ｄ"
@@ -919,31 +917,31 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 12
-    , stats     = { base =  { atk = 1021,  hp = 1597 }
-                  , max =   { atk = 5758, hp = 8484 }
+    , stats     = { base  = { atk = 1021, hp = 1597 }
+                  , max   = { atk = 5758, hp = 8484 }
                   , grail = { atk = 8344, hp = 12244 }
                   }
-    , skills    = [ { name  = "Human Observation"
-                  , rank   = A
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 CritUp <| Range 10 40 ]
-                  }
-                  , { name    = "Rapid Casting"
-                  , rank   = E
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Range 50 75 ]
-                  }
-                  , { name    = "Innocent Monster"
-                  , rank   = D
-                  , icon    = IconStarTurn
-                  , cd      = 7
-                  , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
-                             , Debuff Self 3 DefenseDown <| Flat 14
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Human Observation"
+                    , rank   = A
+                    , icon   = IconExclamationUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 CritUp <| Range 10 40 ]
+                    }
+                  , { name   = "Rapid Casting"
+                    , rank   = E
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 50 75 ]
+                    }
+                  , { name   = "Innocent Monster"
+                    , rank   = D
+                    , icon   = IconStarTurn
+                    , cd     = 7
+                    , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
+                               , Debuff Self 3 DefenseDown <| Flat 14
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation D, itemConstruction C]
     , phantasm  = { name   = "Märchen Meines Lebens"
                   , desc   = "A Story Just For You"
@@ -988,31 +986,31 @@ casters =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 13
-    , stats     = { base =  { atk = 1377,  hp = 1555 }
-                  , max =   { atk = 7418, hp = 8643 }
+    , stats     = { base  = { atk = 1377,  hp = 1555 }
+                  , max   = { atk = 7418,  hp = 8643 }
                   , grail = { atk = 10039, hp = 11719 }
                   }
-    , skills    = [ { name  = "Rapid Words of Divine"
-                  , rank   = A
-                  , icon    = IconNoble
-                  , cd      = 9
-                  , effect = [ To Self GaugeUp <| Range 80 150 ]
-                  }
+    , skills    = [ { name   = "Rapid Words of Divine"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 9
+                    , effect = [ To Self GaugeUp <| Range 80 150 ]
+                    }
                   , { name    = "Argon Coin"
-                  , rank   = Unknown
-                  , icon    = IconHeal
-                  , cd      = 6
-                  , effect = [ To Self Heal <| Range 500 2500 ]
-                  }
-                  , { name    = "Circe's Teaching"
-                  , rank   = A
-                  , icon    = IconBubbles
-                  , cd      = 8
-                  , effect = [ To Ally RemoveDebuffs Full
-                             , Grant Ally 1 NPGen <| Range 30 50
-                             ]
-                  }
-                ]
+                    , rank   = Unknown
+                    , icon    = IconHeal
+                    , cd      = 6
+                    , effect = [ To Self Heal <| Range 500 2500 ]
+                    }
+                  , { name   = "Circe's Teaching"
+                    , rank   = A
+                    , icon   = IconBubbles
+                    , cd     = 8
+                    , effect = [ To Ally RemoveDebuffs Full
+                               , Grant Ally 1 NPGen <| Range 30 50
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation A, itemConstruction A]
     , phantasm  = { name   = "Rule Breaker"
                   , desc   = "All Spells Must Be Broken"
@@ -1055,33 +1053,33 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 12
-    , stats     = { base =  { atk = 1028,  hp = 1520 }
-                  , max =   { atk = 5798, hp = 8080 }
+    , stats     = { base  = { atk = 1028, hp = 1520 }
+                  , max   = { atk = 5798, hp = 8080 }
                   , grail = { atk = 8402, hp = 11661 }
                   }
-    , skills    = [ { name  = "Enchant"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 (Performance Buster) <| Range 20 40 ]
-                  }
-                  , { name    = "Self-Preservation"
-                  , rank   = B
-                  , icon    = IconShield
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Invincibility Full
-                             , To Self Heal <| Range 500 1500
-                             ]
-                  }
-                  , { name    = "King's Men"
-                  , rank   = C
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Ally GaugeUp <| Flat 20
-                             , Grant Ally 1 StarUp <| Range 50 100
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Enchant"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 (Performance Buster) <| Range 20 40 ]
+                    }
+                  , { name   = "Self-Preservation"
+                    , rank   = B
+                    , icon   = IconShield
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Invincibility Full
+                               , To Self Heal <| Range 500 1500
+                               ]
+                    }
+                  , { name   = "King's Men"
+                    , rank   = C
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Ally GaugeUp <| Flat 20
+                               , Grant Ally 1 StarUp <| Range 50 100
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation C]
     , phantasm  = { name   = "First Folio"
                   , desc   = "When the Curtain Rises, the Applause Shall Be As Ten Thousand Thunders!"
@@ -1122,29 +1120,29 @@ casters =
     , attr      = Star
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 1
-    , stats     = { base =  { atk = 944,  hp = 1425 }
-                  , max =   { atk = 5195, hp = 7129 }
+    , stats     = { base  = { atk = 944,  hp = 1425 }
+                  , max   = { atk = 5195, hp = 7129 }
                   , grail = { atk = 8072, hp = 10990 }
                   }
-    , skills    = [ { name  = "Protection of Muse (Fake)"
-                  , rank   = EX
-                  , icon    = IconArtsUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 (Performance Arts) <| Range 22 44 ]
-                  }
-                  , { name    = "Aesthetic Appreciation"
-                  , rank   = B
-                  , icon    = IconBeamDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemy 1 NPDown <| Range 9 18 ]
-                  }
-                  , { name    = "Eine kleine Nachtmusik"
-                  , rank   = EX
-                  , icon    = IconStar
-                  , cd      = 8
-                  , effect = [ To Party GainStars <| Range 20 50 ]
-                  }
-                ]
+    , skills    = [ { name   = "Protection of Muse (Fake)"
+                    , rank   = EX
+                    , icon   = IconArtsUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 (Performance Arts) <| Range 22 44 ]
+                    }
+                  , { name   = "Aesthetic Appreciation"
+                    , rank   = B
+                    , icon   = IconBeamDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemy 1 NPDown <| Range 9 18 ]
+                    }
+                  , { name   = "Eine kleine Nachtmusik"
+                    , rank   = EX
+                    , icon   = IconStar
+                    , cd     = 8
+                    , effect = [ To Party GainStars <| Range 20 50 ]
+                    }
+                  ]
     , passives  = [territoryCreation B]
     , phantasm  = { name   = "Requiem for Death"
                   , desc   = "Funeral Music for the Death God"
@@ -1153,10 +1151,8 @@ casters =
                   , kind   = "Anti-Army"
                   , hits   = 0
                   , effect = [ To Self OverChance <| Range 60 80 ]
-                  , over   = [ Chance 0 <<
-                          Debuff Enemies 3 AttackDown <| Range 20 40
-                             , Chance 0 <<
-                          Debuff Enemies 3 DefenseDown <| Range 20 40
+                  , over   = [ Chance 0 << Debuff Enemies 3 AttackDown <| Range 20 40
+                             , Chance 0 << Debuff Enemies 3 DefenseDown <| Range 20 40
                              , Debuff Enemies 3 Curse <| Range 500 2500
                              ]
                   , first  = False
@@ -1190,35 +1186,35 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 13
-    , stats     = { base =  { atk = 1113,  hp = 1959 }
-                  , max =   { atk = 5996, hp = 10887 }
+    , stats     = { base  = { atk = 1113, hp = 1959 }
+                  , max   = { atk = 5996, hp = 10887 }
                   , grail = { atk = 8115, hp = 14761 }
                   }
-    , skills    = [ { name  = "Concentration"
-                  , rank   = C
-                  , icon    = IconNobleUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 NPGen <| Range 20 30
-                             , Grant Self 1 StarAbsorb <| Range 500 1000
-                             ]
-                  }
-                  , { name    = "Mechanized Armor"
-                  , rank   = EX
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 AttackUp <| Range 15 25
-                             , Grant Self 1 Invincibility Full
-                             ]
-                  }
-                  , { name    = "Overload"
-                  , rank   = D
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 NPUp <| Range 15 25
-                             , Debuff Self 5 Burn <| Flat 300
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Concentration"
+                    , rank   = C
+                    , icon   = IconNobleUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 NPGen <| Range 20 30
+                               , Grant Self 1 StarAbsorb <| Range 500 1000
+                               ]
+                    }
+                  , { name   = "Mechanized Armor"
+                    , rank   = EX
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 AttackUp <| Range 15 25
+                               , Grant Self 1 Invincibility Full
+                               ]
+                    }
+                  , { name   = "Overload"
+                    , rank   = D
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 NPUp <| Range 15 25
+                               , Debuff Self 5 Burn <| Flat 300
+                               ]
+                    }
+                  ]
     , passives  = [itemConstructionFalse A]
     , phantasm  = { name   = "Dimension of Steam"
                   , desc   = "Glorious World of Fiery Desolation"
@@ -1259,35 +1255,35 @@ casters =
     , attr      = Heaven
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 8
-    , stats     = { base =  { atk = 1222,  hp = 1728 }
-                  , max =   { atk = 6580, hp = 9604 }
+    , stats     = { base  = { atk = 1222,  hp = 1728 }
+                  , max   = { atk = 6580, hp = 9604 }
                   , grail = { atk = 8905, hp = 13022 }
                   }
-    , skills    = [ { name  = "Rune Spell"
-                  , rank   = A
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 CritUp <| Range 20 50
-                             , Grant Self 3 DebuffResist <| Range 20 50
-                             ]
-                  }
-                  , { name    = "Divine Protection from Arrows"
-                  , rank   = A
-                  , icon    = IconDodge
-                  , cd      = 7
-                  , effect = [ Times 3 <| Grant Self 0 Evasion Full
-                             , Grant Self 3 DefenseUp <| Range 9 18
-                             ]
-                  }
-                  , { name    = "Disengage"
-                  , rank   = C
-                  , icon    = IconBubbles
-                  , cd      = 7
-                  , effect = [ To Self RemoveDebuffs Full
-                             , To Self Heal <| Range 500 1500
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Rune Spell"
+                    , rank   = A
+                    , icon   = IconExclamationUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 CritUp <| Range 20 50
+                               , Grant Self 3 DebuffResist <| Range 20 50
+                               ]
+                    }
+                  , { name   = "Divine Protection from Arrows"
+                    , rank   = A
+                    , icon   = IconDodge
+                    , cd     = 7
+                    , effect = [ Times 3 <| Grant Self 0 Evasion Full
+                               , Grant Self 3 DefenseUp <| Range 9 18
+                               ]
+                    }
+                  , { name   = "Disengage"
+                    , rank   = C
+                    , icon   = IconBubbles
+                    , cd     = 7
+                    , effect = [ To Self RemoveDebuffs Full
+                               , To Self Heal <| Range 500 1500
+                               ]
+                    }
+                  ]
     , passives  = [territoryCreation B, divinity B]
     , phantasm  = { name   = "Wicker Man"
                   , desc   = "Cage of Scorching Flames"
@@ -1330,8 +1326,8 @@ casters =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 8
-    , stats     = { base =  { atk = 1270,  hp = 1659 }
-                  , max =   { atk = 6839, hp = 9216 }
+    , stats     = { base  = { atk = 1270, hp = 1659 }
+                  , max   = { atk = 6839, hp = 9216 }
                   , grail = { atk = 9255, hp = 12495 }
                   }
     , skills    = [ { name  = "Curse"
@@ -1340,23 +1336,23 @@ casters =
                   , cd      = 7
                   , effect = [ Chances 60 80 << To Enemy GaugeDown <| Flat 1 ]
                   }
-                  , { name    = "Innocent Monster"
+                , { name   = "Innocent Monster"
                   , rank   = B
-                  , icon    = IconStarTurn
-                  , cd      = 7
+                  , icon   = IconStarTurn
+                  , cd     = 7
                   , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
                              , Debuff Self 3 DefenseDown <| Flat 18
                              ]
                   }
-                  , { name    = "Clown's Laughter"
+                , { name   = "Clown's Laughter"
                   , rank   = APlus
-                  , icon    = IconHoodX
-                  , cd      = 8
+                  , icon   = IconHoodX
+                  , cd     = 8
                   , effect = [ Times 3 <| Debuff Enemy 0 BuffBlock Full
                              , Debuff Enemy 5 Curse <| Range 500 1000
                              ]
                   }
-                ]
+                  ]
     , passives  = [territoryCreation CPlus, itemConstruction B]
     , phantasm  = { name   = "Ticktock Bomb"
                   , desc   = "Lullaby Explosive"
@@ -1397,29 +1393,29 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 3
-    , stats     = { base =  { atk = 1246,  hp = 1711 }
-                  , max =   { atk = 6711, hp = 9506 }
+    , stats     = { base  = { atk = 1246, hp = 1711 }
+                  , max   = { atk = 6711, hp = 9506 }
                   , grail = { atk = 9082, hp = 12889 }
                   }
-    , skills    = [ { name  = "Rapid Casting"
-                  , rank   = A
-                  , icon    = IconNoble
-                  , cd      = 10
-                  , effect = [ To Self GaugeUp <| Range 55 80 ]
-                  }
-                  , { name    = "Elemental"
-                  , rank   = APlus
-                  , icon    = IconArtsUp
-                  , cd      = 9
-                  , effect = [ Grant Party 3 (Performance Arts) <| Range 10 20 ]
-                  }
-                  , { name    = "Philosopher's Stone"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 10
-                  , effect = [ Times 1 << Grant Ally 3 Guts <| Range 1000 3000 ]
-                  }
-                ]
+    , skills    = [ { name   = "Rapid Casting"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 10
+                    , effect = [ To Self GaugeUp <| Range 55 80 ]
+                    }
+                  , { name   = "Elemental"
+                    , rank   = APlus
+                    , icon   = IconArtsUp
+                    , cd     = 9
+                    , effect = [ Grant Party 3 (Performance Arts) <| Range 10 20 ]
+                    }
+                  , { name   = "Philosopher's Stone"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 10
+                    , effect = [ Times 1 << Grant Ally 3 Guts <| Range 1000 3000 ]
+                    }
+                  ]
     , passives  = [territoryCreation A, itemConstruction EX]
     , phantasm  = { name   = "Sword of Paracelsus"
                   , desc   = "Magic Sword of the Elementalist"
@@ -1460,29 +1456,29 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 3
-    , stats     = { base =  { atk = 1273,  hp = 1642 }
-                  , max =   { atk = 6857, hp = 9123 }
+    , stats     = { base  = { atk = 1273, hp = 1642 }
+                  , max   = { atk = 6857, hp = 9123 }
                   , grail = { atk = 9280, hp = 12369 }
                   }
-    , skills    = [ { name  = "Bloody Devil"
-                  , rank   = B
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
-                  }
-                  , { name    = "Shamanism"
-                  , rank   = B
-                  , icon    = IconArtsUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Arts) <| Range 30 50 ]
-                  }
-                  , { name    = "Guardian Beast"
-                  , rank   = B
-                  , icon    = IconQuickUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Quick) <| Range 30 50 ]
-                  }
-                ]
+    , skills    = [ { name   = "Bloody Devil"
+                    , rank   = B
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
+                    }
+                  , { name   = "Shamanism"
+                    , rank   = B
+                    , icon   = IconArtsUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Arts) <| Range 30 50 ]
+                    }
+                  , { name   = "Guardian Beast"
+                    , rank   = B
+                    , icon   = IconQuickUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Quick) <| Range 30 50 ]
+                    }
+                  ]
     , passives  = [territoryCreation B, itemConstruction C]
     , phantasm  = { name   = "Tsago Degi Naleya"
                   , desc   = "Creator of The Earth and Its People"
@@ -1527,31 +1523,31 @@ casters =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 13
-    , stats     = { base =  { atk = 1209,  hp = 1711 }
-                  , max =   { atk = 6514, hp = 9506 }
+    , stats     = { base  = { atk = 1209, hp = 1711 }
+                  , max   = { atk = 6514, hp = 9506 }
                   , grail = { atk = 8816, hp = 12889 }
                   }
-    , skills    = [ { name  = "Mental Corruption"
-                  , rank   = A
-                  , icon    = IconStaffUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 MentalSuccess <| Range 5 25
-                             , Grant Self 3 MentalResist <| Range 50 100
-                             ]
-                  }
-                  , { name    = "Aesthetic Appreciation"
-                  , rank   = EMinus
-                  , icon    = IconBeamDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemy 1 NPDown <| Range 5.5 11 ]
-                  }
-                  , { name    = "Evil Eye of the Abyss"
-                  , rank   = C
-                  , icon    = IconStun
-                  , cd      = 10
-                  , effect = [ Debuff Enemies 5 Fear <| Range 30 40 ]
-                  }
-                ]
+    , skills    = [ { name   = "Mental Corruption"
+                    , rank   = A
+                    , icon   = IconStaffUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 MentalSuccess <| Range 5 25
+                               , Grant Self 3 MentalResist <| Range 50 100
+                               ]
+                    }
+                  , { name   = "Aesthetic Appreciation"
+                    , rank   = EMinus
+                    , icon   = IconBeamDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemy 1 NPDown <| Range 5.5 11 ]
+                    }
+                  , { name   = "Evil Eye of the Abyss"
+                    , rank   = C
+                    , icon   = IconStun
+                    , cd     = 10
+                    , effect = [ Debuff Enemies 5 Fear <| Range 30 40 ]
+                    }
+                  ]
     , passives  = [territoryCreation B]
     , phantasm  = { name   = "Prelati's Spellbook"
                   , desc   = "Textbook of the Spiral Sunken Castle"
@@ -1585,5 +1581,4 @@ casters =
                   [(VoidsDust, 8), (GhostLantern, 7)]
                   [(VoidsDust, 24), (HeartOfTheForeignGod, 7)]
     }
-
   ]

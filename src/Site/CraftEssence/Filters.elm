@@ -8,12 +8,14 @@ import StandardLibrary       exposing (..)
 import Database              exposing (..)
 import Database.CraftEssence exposing (..)
 import Database.Skill        exposing (..)
-import Database.Has          exposing (..)
 import Printing              exposing (..)
 import Site.Algebra          exposing (..)
+import Site.Base             exposing (..)
 import Site.Common           exposing (..)
 import Site.Filtering        exposing (..)
-import Site.ToImage          exposing (..)
+
+import Class.Has     as Has
+import Class.ToImage as ToImage
 
 extraFilters : List (Filter CraftEssence)
 extraFilters = List.concat
@@ -72,14 +74,14 @@ getFilters today tab =
         |> List.filter pred
         >> List.map (matchFilter toImage (has .effect) tab)
   in case tab of
-    FilterBonus  -> allEffects hasBonusEffect Nothing <|
+    FilterBonus  -> allEffects Has.bonusEffect Nothing <|
                     always True
-    FilterDebuff -> allEffects hasDebuffEffect (Just toImageDebuffEffect) <| 
+    FilterDebuff -> allEffects Has.debuffEffect (Just ToImage.debuffEffect) <| 
                     always True
-    FilterBuff c -> allEffects hasBuffEffect (Just toImageBuffEffect) <|
+    FilterBuff c -> allEffects Has.buffEffect (Just ToImage.buffEffect) <|
                     buffCategory >> (==) c
-    FilterAction -> allEffects hasInstantEffect Nothing <|
+    FilterAction -> allEffects Has.instantEffect Nothing <|
                     not << isDamage 
-    FilterDamage -> allEffects hasInstantEffect Nothing <|
+    FilterDamage -> allEffects Has.instantEffect Nothing <|
                     isDamage
     _            -> getExtraFilters today tab

@@ -4,7 +4,6 @@ import StandardLibrary       exposing (..)
 import Database.Base         exposing (..)
 import Database.Skill        exposing (..)
 import Database.Servant      exposing (..)
-import Database.CraftEssence exposing (..)
 
 npPer : Servant -> Card -> Float
 npPer s card =

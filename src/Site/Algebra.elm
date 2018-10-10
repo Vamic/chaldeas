@@ -8,15 +8,17 @@ import Html exposing (Html)
 import Time
 
 import StandardLibrary     exposing (..)
+import Class.ToImage exposing (ImagePath)
 import Database.Base       exposing (..)
 import Database.Skill      exposing (..)
 import Database.Servant    exposing (..)
 import MyServant           exposing (..)
 import Persist.Preferences exposing (..)
 import Persist.Flags       exposing (..)
-import Printing            exposing (..)
-import Site.ToImage        exposing (..)
+import Site.Base           exposing (..)
 import Sorting             exposing (..)
+
+import Class.Show as Show
 
 type alias Component model msg =
     { init          : Value -> Navigation.Key -> model
@@ -92,78 +94,6 @@ siteInit getFilters val navKey extra =
     , extra      = extra
     }
 
-type Section
-    =  SectionBrowse 
-    | SectionSettings 
-    | SectionSortBy 
-    | SectionInclude 
-    | SectionFilter
-
-enumSection : List Section
-enumSection =
-    [ SectionBrowse 
-    , SectionSettings
-    , SectionSortBy
-    , SectionInclude
-    , SectionFilter
-    ]
-
-showSection : Section -> String
-showSection = Debug.toString >> String.dropLeft 7 >> unCamel
-
-type FilterTab
-    = FilterEventBonus
-    | FilterAvailability
-    | FilterAlignment
-    | FilterTrait
-    | FilterPassiveSkill
-    | FilterMaterial
-    | FilterBonus | FilterAction | FilterDebuff
-    | FilterBuff BuffCategory
-    | FilterDamage
-    -- Exclusive
-    | FilterSource
-    | FilterPhantasm | FilterCard
-    | FilterClass
-    | FilterDeck
-    | FilterAttribute
-    | FilterRarity
-
-enumFilterTab : List FilterTab
-enumFilterTab =
-    [ FilterEventBonus
-    , FilterAvailability
-    , FilterAlignment
-    , FilterTrait
-    , FilterPassiveSkill
-    , FilterMaterial
-    , FilterBonus,  FilterAction,  FilterDebuff
-    ] ++ List.map FilterBuff enumBuffCategory ++
-    [ FilterDamage
-    -- Exclusive
-    , FilterSource
-    , FilterPhantasm,  FilterCard
-    , FilterClass
-    , FilterDeck
-    , FilterAttribute
-    , FilterRarity
-    ]
-
-type alias OrdFilterTab = Int
-
-ordFilterTab : FilterTab -> OrdFilterTab
-ordFilterTab = enumToOrd enumFilterTab
-
-showFilterTab : FilterTab -> String
-showFilterTab a = case a of
-    FilterPhantasm -> "NP Type"
-    FilterCard     -> "NP Card"
-    FilterBuff c   -> "Buff (" ++ showBuffCategory c ++ ")"
-    _              -> a |> Debug.toString >> String.dropLeft 6 >> unCamel
-
-exclusive : FilterTab -> Bool
-exclusive = on (<=) ordFilterTab FilterSource
-
 type alias Filter a =
     { icon  : Maybe ImagePath
     , tab   : FilterTab 
@@ -178,7 +108,7 @@ type alias OrdFilter = String
 
 ordFilter : Filter a -> OrdFilter
 ordFilter x = 
-    showFilterTab x.tab ++ 
+    Show.filterTab x.tab ++ 
     if x.tab == FilterRarity then
       String.fromInt <| 10 - String.length x.name
     else if String.startsWith "+" x.name then

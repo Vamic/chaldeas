@@ -12,12 +12,14 @@ import StandardLibrary  exposing (..)
 import Database         exposing (..)
 import Database.Servant exposing (..)
 import Database.Skill   exposing (..)
-import Database.Has     exposing (..)
 import Printing         exposing (..)
 import Site.Algebra     exposing (..)
+import Site.Base        exposing (..)
 import Site.Common      exposing (..)
 import Site.Filtering   exposing (..)
-import Site.ToImage     exposing (..)
+
+import Class.Has     as Has     exposing (Has)
+import Class.ToImage as ToImage
 
 extraFilters : List (Filter Servant)
 extraFilters = List.concat
@@ -65,29 +67,29 @@ getFilters : Date -> FilterTab -> List (Filter Servant)
 getFilters today tab = 
   let
     allEffects has toImage pred = 
-        getAll (has sEffects)
+        getAll (has Has.servant)
         |> List.filter pred
-        >> List.map (matchFilter toImage (has sEffects) tab)
+        >> List.map (matchFilter toImage (has Has.servant) tab)
     all has toImage = 
         getAll has
         |> List.map (matchFilter toImage has tab)
   in case tab of
-    FilterAlignment    -> all hasAlignment Nothing
-    FilterAttribute    -> all hasAttribute Nothing
-    FilterCard         -> all hasCard <| Just toImageCard
-    FilterClass        -> all hasClass <| Just toImageClass
-    FilterDeck         -> all hasDeck Nothing
-    FilterPhantasm     -> all hasPhantasmType Nothing
-    FilterTrait        -> all hasTrait Nothing
-    FilterPassiveSkill -> all hasPassive << Just <| toImageIcon << .icon
-    FilterMaterial     -> all hasMaterial <| Just toImageMaterial
+    FilterAlignment    -> all Has.alignment Nothing
+    FilterAttribute    -> all Has.attribute Nothing
+    FilterCard         -> all Has.card <| Just ToImage.card
+    FilterClass        -> all Has.class <| Just ToImage.class
+    FilterDeck         -> all Has.deck Nothing
+    FilterPhantasm     -> all Has.phantasmType Nothing
+    FilterTrait        -> all Has.trait Nothing
+    FilterPassiveSkill -> all Has.passive << Just <| ToImage.icon << .icon
+    FilterMaterial     -> all Has.material <| Just ToImage.material
 
-    FilterDebuff -> allEffects hasDebuffEffect (Just toImageDebuffEffect) <| 
+    FilterDebuff -> allEffects Has.debuffEffect (Just ToImage.debuffEffect) <| 
                     always True
-    FilterBuff c -> allEffects hasBuffEffect (Just toImageBuffEffect) <|
+    FilterBuff c -> allEffects Has.buffEffect (Just ToImage.buffEffect) <|
                     buffCategory >> (==) c
-    FilterAction -> allEffects hasInstantEffect Nothing <|
+    FilterAction -> allEffects Has.instantEffect Nothing <|
                     not << isDamage 
-    FilterDamage -> allEffects hasInstantEffect Nothing <|
+    FilterDamage -> allEffects Has.instantEffect Nothing <|
                     isDamage
     _            -> getExtraFilters today tab

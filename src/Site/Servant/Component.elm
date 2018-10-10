@@ -17,7 +17,6 @@ import StandardLibrary       exposing (..)
 import Database              exposing (..)
 import Database.Base         exposing (..)
 import Database.CraftEssence exposing (..)
-import Database.Has          exposing (..)
 import Database.Servant      exposing (..)
 import Database.Skill        exposing (..)
 import Persist.Flags         exposing (..)
@@ -26,12 +25,16 @@ import Printing              exposing (..)
 import MyServant             exposing (..)
 import MyServant.Leveling    exposing (..)
 import Site.Algebra          exposing (..)
+import Site.Base             exposing (..)
 import Site.Common           exposing (..)
 import Site.Filtering        exposing (..)
 import Site.Rendering        exposing (..)
-import Site.ToImage          exposing (..)
 import Site.Update           exposing (..)
 import Sorting               exposing (..)
+
+import Class.Has     as Has     exposing (Has)
+import Class.ToImage as ToImage exposing (ImagePath)
+import Class.Show    as Show
 
 import Site.Servant.Filters exposing (..)
 import Site.Servant.Sorting exposing (..)
@@ -164,7 +167,7 @@ portrait : Bool -> Preferences -> Int -> (String, MyServant) -> Html Msg
 portrait big prefs baseAscension (label, ms) = 
   if not big && prefer prefs Thumbnails then 
     H.div [P.class "thumb", E.onClick << Focus <| Just ms]
-    [thumbnailEl <| toImageServant ms.base]
+    [ToImage.thumbnail <| ToImage.servant ms.base]
   else
     let
       noBreak  = noBreakName big <| prefer prefs HideClasses
@@ -181,8 +184,8 @@ portrait big prefs baseAscension (label, ms) =
       ascent = if ascension <= 1 then "" else " " ++ String.fromInt ascension
     in
       H.div meta
-      [ imageEl << ImagePath "Servant" <| ms.base.name ++ ascent
-      , H.div [] [ imageEl <| toImageClass ms.base.class ]
+      [ ToImage.image << ImagePath "Servant" <| ms.base.name ++ ascent
+      , H.div [] [ ToImage.image <| ToImage.class ms.base.class ]
       , H.header [] << addLabel <|
         [text_ H.span << noBreak <| artorify ms.base.name]
       , H.footer [] <<
@@ -210,7 +213,7 @@ popup prefs ascent a = case a of
       fou = ms.fou
       npRank rank = case rank of
         Unknown -> "--"
-        _       -> showRank rank
+        _       -> Show.rank rank
       {base} = s.stats
       {max  , grail} = b.stats
       showTables = prefer prefs ShowTables
@@ -219,7 +222,7 @@ popup prefs ascent a = case a of
           table_ (List.map showCol <| List.range 1 5)
           <| List.map npRow (List.uniqueBy ordRangeInfo <| ranges effects)
       overMeta = if s.phantasm.first then [P.class "activates"] else []
-      linkAlignment = link hasAlignment FilterAlignment
+      linkAlignment = link Has.alignment FilterAlignment
       alignBox = case s.align of
         [] -> 
             [H.text "None"]
@@ -242,7 +245,7 @@ popup prefs ascent a = case a of
           >> calcWith
           >> formatSort sort
       skillBox i ({icon}, lvl) =
-          [ H.td [] [imageEl <| toImageIcon icon]
+          [ H.td [] [ToImage.image <| ToImage.icon icon]
           , H.td [] << int_ 1 100 lvl <| \val ->
               OnTeam True 
               { ms | skills = List.updateAt i (always val) ms.skills }
@@ -318,12 +321,12 @@ popup prefs ascent a = case a of
                 ]
                 ]
             , H.table []
-                [ tr_ "Class"       [ link hasClass FilterClass s.class ]
-                , tr_ "Deck"        [ link hasDeck FilterDeck s.deck ]
-                , tr_ "NP Type"     [ link hasPhantasmType FilterPhantasm <| 
+                [ tr_ "Class"       [ link Has.class FilterClass s.class ]
+                , tr_ "Deck"        [ link Has.deck FilterDeck s.deck ]
+                , tr_ "NP Type"     [ link Has.phantasmType FilterPhantasm <| 
                                     phantasmType s.phantasm
                                   ]
-                , tr_ "Attribute"   [ link hasAttribute FilterAttribute s.attr ]
+                , tr_ "Attribute"   [ link Has.attribute FilterAttribute s.attr ]
                 , tr_ "Alignment"   alignBox
                 , tr_ "ID"          [H.text <| "#" ++ String.fromInt s.id]
                 , tr_ "Star Weight" [H.text <| String.fromInt s.gen.starWeight]
@@ -339,16 +342,16 @@ popup prefs ascent a = case a of
         , H.table [P.id "phantasm"]
           [ tr_ "Name" [H.text s.phantasm.name]
           , tr_ "Rank" [H.text <| npRank s.phantasm.rank]
-          , tr_ "Card" [link hasCard FilterCard s.phantasm.card]
+          , tr_ "Card" [link Has.card FilterCard s.phantasm.card]
           , tr_ "Class" [H.text s.phantasm.kind]
           , tr_ "Effects" << 
             showTable (String.fromInt >> (++) "NP") 
             b.phantasm.effect <|
-            List.map (effectEl <| Just sEffects) s.phantasm.effect
+            List.map (effectEl <| Just Has.servant) s.phantasm.effect
           , tr_ "Overcharge" << 
             showTable ((*) 100 >> String.fromInt >> flip (++) "%") 
             b.phantasm.over <|
-            List.map (effectEl <| Just sEffects) s.phantasm.over
+            List.map (effectEl <| Just Has.servant) s.phantasm.over
           ]
         , h_ 2 "Active Skills"
         ] ++ List.map2 (skillEl showTables) s.skills b.skills ++ 
@@ -356,7 +359,7 @@ popup prefs ascent a = case a of
         ] ++ List.map passiveEl s.passives ++ bondEl (getBond s) ++
         [ h_ 2 "Traits"
         , H.section [] << List.intersperse (H.text ", ") <| 
-          List.map (link hasTrait FilterTrait) s.traits
+          List.map (link Has.trait FilterTrait) s.traits
         , h_ 2 "Ascension"
         , H.table [P.class "materials"] <<
           flip List.indexedMap (ascendUpEl s.ascendUp) <| \i el ->
@@ -418,7 +421,7 @@ ascendUpEl x = case x of
         >> List.singleton
     Welfare a -> 
         ImagePath "Material" a
-        |> imageEl
+        |> ToImage.image
         >> List.singleton
         >> List.repeat 4
     Ascension a b c d ->
@@ -440,12 +443,12 @@ materialEl (mat, amt) =
   let
     imageLinkEl = 
       if ignoreMat mat then 
-        imageEl 
+        ToImage.image 
       else
-        imageLink <| FilterBy (singleFilter hasMaterial FilterMaterial mat)
+        ToImage.link <| FilterBy (singleFilter Has.material FilterMaterial mat)
   in
     H.div [] 
-    [ imageLinkEl <| toImageMaterial mat
+    [ imageLinkEl <| ToImage.material mat
     , text_ H.span <| "×" ++ commas (toFloat amt)
     ]
 
@@ -457,28 +460,28 @@ skillEl showTables sk base =
         List.map lvlRow << List.uniqueBy ordRangeInfo <| ranges base.effect
   in
     H.section [] << doIf showTables (consAfter effectTable) <|
-    [ imageEl <| toImageIcon sk.icon 
-    , h_ 3 <| sk.name ++ showRank sk.rank
+    [ ToImage.image <| ToImage.icon sk.icon 
+    , h_ 3 <| sk.name ++ Show.rank sk.rank
     , text_ H.strong "CD: "
     , H.text << 
       doIf (sk == base) (flip (++) <| "~" ++ String.fromInt (sk.cd - 2)) <|
       String.fromInt sk.cd
-    ] ++ List.map (effectEl <| Just sEffects) sk.effect
+    ] ++ List.map (effectEl <| Just Has.servant) sk.effect
 
 passiveEl : Skill -> Html Msg
 passiveEl p = 
   let
     filter = 
-        matchFilter (Just <| .icon >> toImageIcon) hasPassive FilterPassiveSkill
-        p
+        matchFilter (Just <| .icon >> ToImage.icon) Has.passive 
+        FilterPassiveSkill p
   in
     H.section [] <|
-    [  imageEl <| toImageIcon p.icon 
+    [  ToImage.image <| ToImage.icon p.icon 
     , H.h3 []
       [ H.span [P.class "link", E.onClick <| FilterBy [filter]] [H.text p.name]
-      , H.text <| " " ++ showRank p.rank
+      , H.text <| " " ++ Show.rank p.rank
       ]
-    ] ++ List.map (showSkillEffect >> text_ H.p) p.effect
+    ] ++ List.map (Show.skillEffect >> text_ H.p) p.effect
 
 bondEl : Maybe CraftEssence -> List (Html Msg)
 bondEl a = case a of
@@ -486,7 +489,7 @@ bondEl a = case a of
   Just ce -> 
       [ h_ 2 "Max-Bond Craft Essence"
       , H.section []
-        [ imageEl <| toImageIcon ce.icon
+        [ ToImage.image <| ToImage.icon ce.icon
         , H.h3 [P.class "link", E.onClick <| Switch a] [H.text ce.name]
         , H.p [] <|
           [ text_ H.span "★★★★ "

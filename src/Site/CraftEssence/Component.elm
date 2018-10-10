@@ -22,9 +22,11 @@ import Site.Algebra          exposing (..)
 import Site.Common           exposing (..)
 import Site.Filtering        exposing (..)
 import Site.Rendering        exposing (..)
-import Site.ToImage          exposing (..)
 import Site.Update           exposing (..)
 import Sorting               exposing (..)
+
+import Class.Has     as Has
+import Class.ToImage as ToImage
 
 import Site.CraftEssence.Filters exposing (..)
 import Site.CraftEssence.Sorting exposing (..)
@@ -70,7 +72,7 @@ portrait : Bool -> Preferences -> (String, CraftEssence) -> Html Msg
 portrait big prefs (label, ce) = 
   if not big && prefer prefs Thumbnails then 
     H.div [P.class "thumb", E.onClick << Focus <| Just ce]
-    [thumbnailEl <| toImageCraftEssence ce]
+    [ToImage.thumbnail <| ToImage.craftEssence ce]
   else
     let
       noBreak  = noBreakName big False
@@ -83,7 +85,7 @@ portrait big prefs (label, ce) =
           [text_ H.span <| noBreak label, H.br [] []]
     in
       H.div meta
-      [ imageEl <| toImageCraftEssence ce 
+      [ ToImage.image <| ToImage.craftEssence ce 
       , H.header [] << addLabel <|
         [text_ H.span << noBreak <| artorify ce.name]
       , H.footer []
@@ -148,7 +150,7 @@ popup prefs a = case a of
                 , H.td [] <| showInt max.hp 
                 ]
               ]
-            , imageEl <| toImageIcon ce.icon
+            , ToImage.image <| ToImage.icon ce.icon
             , h_ 2 "Effects"
             ] ++ mlbEl ++
             [ effectsEl <| \_ y -> Flat y ]

@@ -11,6 +11,8 @@ import Database.Base    exposing (..)
 import Database.Skill   exposing (..)
 import Database.Servant exposing (..)
 
+import Class.Show as Show
+
 craftEssences : List CraftEssence
 craftEssences = 
   let
@@ -2697,7 +2699,7 @@ craftEssences =
     ]
 
 equipped : Class -> SkillEffect -> SkillEffect
-equipped = When << (++) "equipped by a " << showClass
+equipped = When << (++) "equipped by a " << Show.class
 
 getBond : Servant -> Maybe CraftEssence
 getBond s = Dict.get s.name  bondMap

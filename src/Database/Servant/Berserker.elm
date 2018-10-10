@@ -14,33 +14,33 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 10
-    , stats     = { base =  { atk = 1979,  hp = 1790 }
-                  , max =   { atk = 12805, hp = 12210 }
+    , stats     = { base  = { atk = 1979,  hp = 1790 }
+                  , max   = { atk = 12805, hp = 12210 }
                   , grail = { atk = 14017, hp = 13377 }
                   }
-    , skills    = [ { name  = "Madness of the Spirits"
-                  , rank   = A
-                  , icon    = IconExclamationDown
-                  , cd      = 8
-                  , effect = [ Debuff Enemies 3 AttackDown <| Range 10 20
-                             , Debuff Enemies 3 CritChance <| Range 30 50
-                             ]
-                  }
-                  , { name    = "Protection from Arrows"
-                  , rank   = C
-                  , icon    = IconDodge
-                  , cd      = 7
-                  , effect = [ Times 2 <| Grant Self 0 Evasion Full
-                             , Grant Self 3 DefenseUp <| Range 7 14
-                             ]
-                  }
-                  , { name    = "Battle Continuation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
-                  }
-                ]
+    , skills    = [ { name = "Madness of the Spirits"
+                    , rank   = A
+                    , icon   = IconExclamationDown
+                    , cd     = 8
+                    , effect = [ Debuff Enemies 3 AttackDown <| Range 10 20
+                               , Debuff Enemies 3 CritChance <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Protection from Arrows"
+                    , rank   = C
+                    , icon   = IconDodge
+                    , cd     = 7
+                    , effect = [ Times 2 <| Grant Self 0 Evasion Full
+                               , Grant Self 3 DefenseUp <| Range 7 14
+                               ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
+                    }
+                  ]
     , passives  = [madness C, divinity C]
     , phantasm  = { name   = "Curruid Coinchenn"
                   , desc   = "Beast of Crunching Deathtusk"
@@ -65,9 +65,7 @@ berserkers =
                   [(Piece Berserker, 5)]
                   [(Piece Berserker, 12), (EvilBone, 22)]
                   [(Monument Berserker, 5), (ClawOfChaos, 6), (HeartOfTheForeignGod, 2)]
-                  [( Monument Berserker, 12), (HeartOfTheForeignGod, 4)
-                  , (TearstoneOfBlood, 8)
-                ]
+                  [( Monument Berserker, 12), (HeartOfTheForeignGod, 4), (TearstoneOfBlood, 8)]
     , skillUp   = Reinforcement
                   [(GemOf Berserker, 5)]
                   [(GemOf Berserker, 12)]
@@ -85,33 +83,33 @@ berserkers =
     , attr      = Heaven
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 30
-    , stats     = { base =  { atk = 1786,  hp = 1980 }
-                  , max =   { atk = 11556, hp = 13500 }
+    , stats     = { base  = { atk = 1786,  hp = 1980 }
+                  , max   = { atk = 11556, hp = 13500 }
                   , grail = { atk = 12650, hp = 14790 }
                   }
-    , skills    = [ { name  = "Eternal Arms Mastery"
-                  , rank   = APlus
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 StarAbsorb <| Range 3000 6000 ]
-                  }
-                  , { name    = "Mana Burst (Lightning)"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 8
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 20 30
-                             , Grant Self 1 Evasion Full
-                             ]
-                  }
-                  , { name    = "Mystic Slayer"
-                  , rank   = A
-                  , icon    = IconDamageUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 (AttackVs Demonic) <| Range 30 50
-                             , Grant Self 3 (AttackVs HeavenOrEarth) <| Range 30 50
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Eternal Arms Mastery"
+                    , rank   = APlus
+                    , icon   = IconStarUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarAbsorb <| Range 3000 6000 ]
+                    }
+                  , { name   = "Mana Burst (Lightning)"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 20 30
+                               , Grant Self 1 Evasion Full
+                               ]
+                    }
+                  , { name   = "Mystic Slayer"
+                    , rank   = A
+                    , icon   = IconDamageUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 (AttackVs Demonic) <| Range 30 50
+                               , Grant Self 3 (AttackVs HeavenOrEarth) <| Range 30 50
+                               ]
+                    }
+                  ]
     , passives  = [magicResistance D, madness EX, riding APlus, divinity C]
     , phantasm  = { name   = "Vengeful Lightning of the Ox-King"
                   , desc   = "The Inescapable Net of Heaven"
@@ -134,9 +132,7 @@ berserkers =
                   [(Piece Berserker, 5)]
                   [(Piece Berserker, 12), (ClawOfChaos, 5)]
                   [(Monument Berserker, 5), (EvilBone, 29), (TearstoneOfBlood, 3)]
-                  [( Monument Berserker, 12), (TearstoneOfBlood, 6)
-                  , (DragonsReverseScale, 5)
-                ]
+                  [( Monument Berserker, 12), (TearstoneOfBlood, 6), (DragonsReverseScale, 5)]
     , skillUp   = Reinforcement
                   [(GemOf Berserker, 5)]
                   [(GemOf Berserker, 12)]
@@ -154,31 +150,31 @@ berserkers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1964,  hp = 1782 }
-                  , max =   { atk = 12712, hp = 12150 }
+    , stats     = { base  = { atk = 1964,  hp = 1782 }
+                  , max   = { atk = 12712, hp = 12150 }
                   , grail = { atk = 13915, hp = 13311 }
                   }
-    , skills    = [ { name  = "Monstrous Strength"
-                  , rank   = APlus
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 AttackUp <| Range 30 50 ]
-                  }
-                  , { name    = "Animal Communication"
-                  , rank   = C
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Range 30 50 ]
-                  }
-                  , { name    = "Natural Body"
-                  , rank   = A
-                  , icon    = IconHoodUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 OffensiveResist <| Range 60 120
-                             , To Self Heal <| Range 1000 3000
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Monstrous Strength"
+                    , rank   = APlus
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 AttackUp <| Range 30 50 ]
+                    }
+                  , { name   = "Animal Communication"
+                    , rank   = C
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 30 50 ]
+                    }
+                  , { name   = "Natural Body"
+                    , rank   = A
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 OffensiveResist <| Range 60 120
+                               , To Self Heal <| Range 1000 3000
+                               ]
+                    }
+                  ]
     , passives  = [madness E, divinity D]
     , phantasm  = { name   = "Golden Spark"
                   , desc   = "Golden Impact"
@@ -201,9 +197,7 @@ berserkers =
                   [(Piece Berserker, 5)]
                   [(Piece Berserker, 12), (ProofOfHero, 22)]
                   [(Monument Berserker, 5), (OctupletCrystals, 10), (SeedOfYggdrasil, 6)]
-                  [( Monument Berserker, 12), (SeedOfYggdrasil, 12)
-                  , (HeartOfTheForeignGod, 5)
-                ]
+                  [( Monument Berserker, 12), (SeedOfYggdrasil, 12), (HeartOfTheForeignGod, 5)]
     , skillUp   = Reinforcement
                   [(GemOf Berserker, 5)]
                   [(GemOf Berserker, 12)]
@@ -221,31 +215,31 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 15
-    , stats     = { base =  { atk = 1777,  hp = 2019 }
-                  , max =   { atk = 11499, hp = 13770 }
+    , stats     = { base  = { atk = 1777,  hp = 2019 }
+                  , max   = { atk = 11499, hp = 13770 }
                   , grail = { atk = 12587, hp = 15086 }
                   }
-    , skills    = [ { name  = "Vampirism"
-                  , rank   = A
-                  , icon    = IconDarkMagic
-                  , cd      = 8
-                  , effect = [ Chances 80 100 << To Enemy GaugeDown <| Flat 1
-                             , To Self GaugeUp <| Range 20 30
-                             ]
-                  }
-                  , { name    = "Morph"
-                  , rank   = C
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 16 24 ]
-                  }
-                  , { name    = "Battle Continuation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
-                  }
-                ]
+    , skills    = [ { name   = "Vampirism"
+                    , rank   = A
+                    , icon   = IconDarkMagic
+                    , cd     = 8
+                    , effect = [ Chances 80 100 << To Enemy GaugeDown <| Flat 1
+                               , To Self GaugeUp <| Range 20 30
+                               ]
+                    }
+                  , { name   = "Morph"
+                    , rank   = C
+                    , icon   = IconShieldUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 16 24 ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
+                    }
+                  ]
     , passives  = [madness EX]
     , phantasm  = { name   = "Kazikli Bey"
                   , desc   = "Bloody Monster King"
@@ -286,31 +280,31 @@ berserkers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 30
-    , stats     = { base =  { atk = 1573,  hp = 2232 }
-                  , max =   { atk = 10184, hp = 15221 }
+    , stats     = { base  = { atk = 1573,  hp = 2232 }
+                  , max   = { atk = 10184, hp = 15221 }
                   , grail = { atk = 11148, hp = 16675 }
                   }
-    , skills    = [ { name  = "Nurse of Steel"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Ally Heal <| Range 2000 4000 ]
-                  }
-                  , { name    = "Understanding of the Human Body"
-                  , rank   = A
-                  , icon    = IconDamageUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 (AttackVs Humanoid) <| Range 30 50
-                             , Grant Self 3 (DefenseVs Humanoid) <| Range 15 25
-                             ]
-                  }
-                  , { name    = "Angel's Cry"
-                  , rank   = EX
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Ally 3 (Performance Buster) <| Range 30 50 ]
-                  }
-                ]
+    , skills    = [ { name   = "Nurse of Steel"
+                    , rank   = A
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Ally Heal <| Range 2000 4000 ]
+                    }
+                  , { name   = "Understanding of the Human Body"
+                    , rank   = A
+                    , icon   = IconDamageUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 (AttackVs Humanoid) <| Range 30 50
+                               , Grant Self 3 (DefenseVs Humanoid) <| Range 15 25
+                               ]
+                    }
+                  , { name   = "Angel's Cry"
+                    , rank   = EX
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Ally 3 (Performance Buster) <| Range 30 50 ]
+                    }
+                  ]
     , passives  = [madness EX]
     , phantasm  = { name   = "Nightingale Pledge"
                   , desc   = "I Will Abstain From All Poisons and Evils"
@@ -353,33 +347,33 @@ berserkers =
     , attr      = Heaven
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1775,  hp = 1652 }
-                  , max =   { atk = 10655, hp = 10327 }
+    , stats     = { base  = { atk = 1775,  hp = 1652 }
+                  , max   = { atk = 10655, hp = 10327 }
                   , grail = { atk = 12901, hp = 12521 }
                   }
-    , skills    = [ { name  = "Valor"
-                  , rank   = APlus
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 10.5 31
-                             , Grant Self 3 MentalResist <| Range 21 42
-                             ]
-                  }
-                  , { name    = "Mind's Eye (Fake)"
-                  , rank   = B
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 3 CritUp <| Range 18 36
-                             ]
-                  }
-                  , { name    = "Battle Continuation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
-                  }
-                ]
+    , skills    = [ { name   = "Valor"
+                    , rank   = APlus
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 10.5 31
+                               , Grant Self 3 MentalResist <| Range 21 42
+                               ]
+                    }
+                  , { name   = "Mind's Eye (Fake)"
+                    , rank   = B
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                              , Grant Self 3 CritUp <| Range 18 36
+                              ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
+                    }
+                  ]
     , passives  = [madness B, divinity A]
     , phantasm  = { name   = "Nine Lives"
                   , desc   = "Shooting Hundred Heads"
@@ -420,33 +414,33 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 24
-    , stats     = { base =  { atk = 1573,  hp = 1710 }
-                  , max =   { atk = 9441, hp = 10687 }
+    , stats     = { base  = { atk = 1573,  hp = 1710 }
+                  , max   = { atk = 9441, hp = 10687 }
                   , grail = { atk = 11431, hp = 12958 }
                   }
     , skills    = [ { name  = "Galvanism"
-                  , rank   = B
-                  , icon    = IconNobleUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 NPGen <| Range 25 45 ]
-                  }
+                    , rank   = B
+                    , icon    = IconNobleUp
+                    , cd      = 7
+                    , effect = [ Grant Self 3 NPGen <| Range 25 45 ]
+                    }
                   , { name    = "Wail of the Living Dead"
-                  , rank   = C
-                  , icon    = IconStun
-                  , cd      = 8
-                  , effect = [ Chance 60 <| Debuff Enemy 1 Stun Full
-                             , Debuff Enemy 1 DefenseDown <| Range 20 30
-                             ]
-                  }
+                    , rank   = C
+                    , icon    = IconStun
+                    , cd      = 8
+                    , effect = [ Chance 60 <| Debuff Enemy 1 Stun Full
+                              , Debuff Enemy 1 DefenseDown <| Range 20 30
+                              ]
+                    }
                   , { name    = "Overload"
-                  , rank   = C
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 NPUp <| Range 20 30
-                             , Debuff Self 5 Burn <| Flat 300
-                             ]
-                  }
-                ]
+                    , rank   = C
+                    , icon    = IconBeamUp
+                    , cd      = 7
+                    , effect = [ Grant Self 1 NPUp <| Range 20 30
+                              , Debuff Self 5 Burn <| Flat 300
+                              ]
+                    }
+                  ]
     , passives  = [madness D]
     , phantasm  = { name   = "Blasted Tree"
                   , desc   = "Lightning Tree of Crucifixion"
@@ -489,35 +483,35 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 29
-    , stats     = { base =  { atk = 1606,  hp = 1752 }
-                  , max =   { atk = 9636, hp = 10954 }
+    , stats     = { base  = { atk = 1606,  hp = 1752 }
+                  , max   = { atk = 9636, hp = 10954 }
                   , grail = { atk = 11667, hp = 13282 }
                   }
     , skills    = [ { name  = "Demonic Nature of Oni"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 10 20
-                             , Grant Self 3 NPUp <| Range 20 30
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconSwordUp
+                    , cd      = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10 20
+                              , Grant Self 3 NPUp <| Range 20 30
+                              ]
+                    }
                   , { name    = "Disengage"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Self RemoveDebuffs Full
-                             , To Self Heal <| Range 1000 2500
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconHeal
+                    , cd      = 7
+                    , effect = [ To Self RemoveDebuffs Full
+                              , To Self Heal <| Range 1000 2500
+                              ]
+                    }
                   , { name    = "Morph"
-                  , rank   = A
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 10 30
-                             , Grant Self 1 DefenseUp <| Flat 30
-                             ]
-                  }
-                ]
+                    , rank   = A
+                    , icon    = IconShieldUp
+                    , cd      = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 10 30
+                              , Grant Self 1 DefenseUp <| Flat 30
+                              ]
+                    }
+                  ]
     , passives  = [madness B]
     , phantasm  = { name   = "Great Grudge of Rashomon"
                   , desc   = "Rashoumon Dai Engi"
@@ -542,9 +536,7 @@ berserkers =
                   [(Piece Berserker, 4)]
                   [(Piece Berserker, 10), (OctupletCrystals, 6)]
                   [(Monument Berserker, 4), (ClawOfChaos, 5), (PhoenixFeather, 4)]
-                  [(Monument Berserker, 10), (PhoenixFeather, 7)
-                  , (HeartOfTheForeignGod, 4)
-                ]
+                  [(Monument Berserker, 10), (PhoenixFeather, 7), (HeartOfTheForeignGod, 4)]
     , skillUp   = Reinforcement
                   [(GemOf Berserker, 4)]
                   [(GemOf Berserker, 10)]
@@ -563,31 +555,31 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 14
-    , stats     = { base =  { atk = 1746,  hp = 1652 }
-                  , max =   { atk = 10477, hp = 10327 }
+    , stats     = { base  = { atk = 1746,  hp = 1652 }
+                  , max   = { atk = 10477, hp = 10327 }
                   , grail = { atk = 12685, hp = 12521 }
                   }
-    , skills    = [ { name  = "Eternal Arms Mastery"
-                  , rank   = APlus
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 StarAbsorb <| Range 3000 6000 ]
-                  }
-                  , { name    = "Protection of the Spirits"
-                  , rank   = A
-                  , icon    = IconStarHaloUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 StarUp <| Range 10 30 ]
-                  }
-                  , { name    = "Mana Reversal"
-                  , rank   = A
-                  , icon    = IconNobleUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 NPGen <| Range 50 100
-                             , Grant Self 3 CritUp <| Range 30 50
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Eternal Arms Mastery"
+                    , rank   = APlus
+                    , icon   = IconStarUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarAbsorb <| Range 3000 6000 ]
+                    }
+                  , { name   = "Protection of the Spirits"
+                    , rank   = A
+                    , icon   = IconStarHaloUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarUp <| Range 10 30 ]
+                    }
+                  , { name   = "Mana Reversal"
+                    , rank   = A
+                    , icon   = IconNobleUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 NPGen <| Range 50 100
+                               , Grant Self 3 CritUp <| Range 30 50
+                               ]
+                    }
+                  ]
     , passives  = [magicResistance E, madness C]
     , phantasm  = { name   = "Knight of Owner"
                   , desc   = "A Knight Does Not Die with Empty Hands"
@@ -628,31 +620,31 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1707,  hp = 1652 }
-                  , max =   { atk = 10247, hp = 10327 }
+    , stats     = { base  = { atk = 1707,  hp = 1652 }
+                  , max   = { atk = 10247, hp = 10327 }
                   , grail = { atk = 12407, hp = 12521 }
                   }
     , skills    = [ { name  = "Berserk"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 AttackUp <| Range 20 30
-                             , Grant Self 1 NPUp <| Range 10 20
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconSwordUp
+                    , cd      = 7
+                    , effect = [ Grant Self 1 AttackUp <| Range 20 30
+                              , Grant Self 1 NPUp <| Range 10 20
+                              ]
+                    }
                   , { name    = "Intuition"
-                  , rank   = B
-                  , icon    = IconStar
-                  , cd      = 7
-                  , effect = [ To Party GainStars <| Range 4 14 ]
-                  }
+                    , rank   = B
+                    , icon    = IconStar
+                    , cd      = 7
+                    , effect = [ To Party GainStars <| Range 4 14 ]
+                    }
                   , { name    = "Battle Continuation"
-                  , rank   = B
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 4 Guts <| Range 750 2000 ]
-                  }
-                ]
+                    , rank   = B
+                    , icon    = IconKneel
+                    , cd      = 9
+                    , effect = [ Times 1 << Grant Self 4 Guts <| Range 750 2000 ]
+                    }
+                  ]
     , passives  = [madness EMinus]
     , phantasm  = { name   = "Grendel Buster"
                   , desc   = "Conflict Wellspring"
@@ -676,9 +668,7 @@ berserkers =
     , ascendUp  = Ascension
                   [(Piece Berserker, 4)]
                   [(Piece Berserker, 10), (ProofOfHero, 18)]
-                  [( Monument Berserker, 4), (DragonsReverseScale, 2)
-                  , (OctupletCrystals, 8)
-                ]
+                  [( Monument Berserker, 4), (DragonsReverseScale, 2), (OctupletCrystals, 8)]
                   [(Monument Berserker, 10), (DragonsReverseScale, 4), (EvilBone, 30)]
     , skillUp   = Reinforcement
                   [(GemOf Berserker, 4)]
@@ -697,29 +687,29 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1504,  hp = 1833 }
-                  , max =   { atk = 9026, hp = 11458 }
+    , stats     = { base  = { atk = 1504,  hp = 1833 }
+                  , max   = { atk = 9026,  hp = 11458 }
                   , grail = { atk = 10929, hp = 13893 }
                   }
-    , skills    = [ { name  = "Monstrous Strength"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 2 AttackUp <| Range 10 30 ]
-                  }
-                  , { name    = "Curse"
-                  , rank   = E
-                  , icon    = IconDarkMagic
-                  , cd      = 7
-                  , effect = [ Chances 40 60 << To Enemy GaugeDown <| Flat 1 ]
-                  }
-                  , { name    = "Morph"
-                  , rank   = B
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 18 27 ]
-                  }
-                ]
+    , skills    = [ { name   = "Monstrous Strength"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 2 AttackUp <| Range 10 30 ]
+                    }
+                  , { name   = "Curse"
+                    , rank   = E
+                    , icon   = IconDarkMagic
+                    , cd     = 7
+                    , effect = [ Chances 40 60 << To Enemy GaugeDown <| Flat 1 ]
+                    }
+                  , { name   = "Morph"
+                    , rank   = B
+                    , icon   = IconShieldUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 18 27 ]
+                    }
+                  ]
     , passives  = [madness C]
     , phantasm  = { name   = "Napping in the Dazzling Sunshine and Feasting"
                   , desc   = "Opulence of Sun and Shine and Catnap"
@@ -762,8 +752,8 @@ berserkers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 8
-    , stats     = { base =  { atk = 1507,  hp = 1494 }
-                  , max =   { atk = 8119, hp = 8302 }
+    , stats     = { base  = { atk = 1507,  hp = 1494 }
+                  , max   = { atk = 8119,  hp = 8302 }
                   , grail = { atk = 10988, hp = 11256 }
                   }
     , skills    = [ { name  = "Valor"
@@ -791,7 +781,7 @@ berserkers =
                              , Debuff Others 1 DefenseDown <| Flat 20
                              ]
                   }
-                ]
+                  ]
     , passives  = [madness A]
     , phantasm  = { name   = "God Force"
                   , desc   = "Five Weapons of the War God"
@@ -832,33 +822,33 @@ berserkers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 6
-    , stats     = { base =  { atk = 922,  hp = 1544 }
-                  , max =   { atk = 5073, hp = 7722 }
+    , stats     = { base  = { atk = 922,  hp = 1544 }
+                  , max   = { atk = 5073, hp = 7722 }
                   , grail = { atk = 7883, hp = 11904 }
                   }
-    , skills    = [ { name  = "Honor of Suffering"
-                  , rank   = BPlus
-                  , icon    = IconHealTurn
-                  , cd      = 9
-                  , effect = [ Grant Self 5 HealPerTurn <| Range 500 1500 ]
-                  }
-                  , { name    = "Unyielding Will"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 7
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Flat 1
-                             , To Self GaugeUp <| Range 10 30
-                             ]
-                  }
-                  , { name    = "Triumphant Return of the Sword"
-                  , rank   = B
-                  , icon    = IconBusterUp
-                  , cd      = 8
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 20 40
-                             , To Self Heal <| Range 1000 2000
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Honor of Suffering"
+                    , rank   = BPlus
+                    , icon   = IconHealTurn
+                    , cd     = 9
+                    , effect = [ Grant Self 5 HealPerTurn <| Range 500 1500 ]
+                    }
+                  , { name   = "Unyielding Will"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 7
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Flat 1
+                               , To Self GaugeUp <| Range 10 30
+                               ]
+                    }
+                  , { name   = "Triumphant Return of the Sword"
+                    , rank   = B
+                    , icon   = IconBusterUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 20 40
+                               , To Self Heal <| Range 1000 2000
+                               ]
+                    }
+                  ]
     , passives  = [madness EX]
     , phantasm  = { name   = "Crying Warmonger"
                   , desc   = "Howl of the Wounded Beast"
@@ -899,33 +889,33 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 1
-    , stats     = { base =  { atk = 1097,  hp = 1320 }
-                  , max =   { atk = 6037, hp = 6604 }
+    , stats     = { base  = { atk = 1097, hp = 1320 }
+                  , max   = { atk = 6037, hp = 6604 }
                   , grail = { atk = 9381, hp = 10181 }
                   }
-    , skills    = [ { name  = "Monstrous Strength"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 10 30 ]
-                  }
-                  , { name    = "Natural Demon"
-                  , rank   = APlusPlus
-                  , icon    = IconHoodUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 OffensiveResist <| Range 50 100
-                             , Grant Self 3 DefenseUp <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Labrys of the Abyss"
-                  , rank   = C
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 StarAbsorb <| Range 3000 6000
-                             , Grant Self 1 (Performance Buster) <| Range 20 30
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Monstrous Strength"
+                    , rank   = A
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 10 30 ]
+                    }
+                  , { name   = "Natural Demon"
+                    , rank   = APlusPlus
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 OffensiveResist <| Range 50 100
+                               , Grant Self 3 DefenseUp <| Range 20 40
+                               ]
+                    }
+                  , { name   = "Labrys of the Abyss"
+                    , rank   = C
+                    , icon   = IconStarUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 StarAbsorb <| Range 3000 6000
+                               , Grant Self 1 (Performance Buster) <| Range 20 30
+                               ]
+                    }
+                  ]
     , passives  = [madness B]
     , phantasm  = { name   = "Chaos Labyrinth"
                   , desc   = "Eternally Unchanging Labyrinth"
@@ -969,33 +959,33 @@ berserkers =
     , attr      = Earth
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 3
-    , stats     = { base =  { atk = 1233,  hp = 1649 }
-                  , max =   { atk = 6644, hp = 9166 }
+    , stats     = { base  = { atk = 1233, hp = 1649 }
+                  , max   = { atk = 6644, hp = 9166 }
                   , grail = { atk = 8992, hp = 12428 }
                   }
-    , skills    = [ { name  = "Morph"
-                  , rank   = C
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 16 24 ]
-                  }
-                  , { name    = "Stalking"
-                  , rank   = B
-                  , icon    = IconShieldDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemy 4 DefenseDown <| Range 12 24
-                             , Grant Enemy 3 AttackUp <| Flat 20
-                             ]
-                  }
-                  , { name    = "Flame-Coloured Kiss"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 20 30
-                             , To Self RemoveDebuffs Full
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Morph"
+                    , rank   = C
+                    , icon   = IconShieldUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 16 24 ]
+                    }
+                  , { name   = "Stalking"
+                    , rank   = B
+                    , icon   = IconShieldDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemy 4 DefenseDown <| Range 12 24
+                               , Grant Enemy 3 AttackUp <| Flat 20
+                               ]
+                    }
+                  , { name   = "Flame-Coloured Kiss"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 20 30
+                               , To Self RemoveDebuffs Full
+                               ]
+                    }
+                  ]
     , passives  = [madness EX]
     , phantasm  = { name   = "Transforming, Flame-Emitting Meditation"
                   , desc   = "Tenshin Kasyou Zanmai Achieving Acala's Samadhi"
@@ -1038,33 +1028,33 @@ berserkers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 2
-    , stats     = { base =  { atk = 1116,  hp = 1447 }
-                  , max =   { atk = 6290, hp = 7688 }
+    , stats     = { base  = { atk = 1116, hp = 1447 }
+                  , max   = { atk = 6290, hp = 7688 }
                   , grail = { atk = 9115, hp = 11095 }
                   }
-    , skills    = [ { name  = "Supporting Curse"
-                  , rank   = CPlus
-                  , icon    = IconSwordDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemy 2 AttackDown <| Range 5 15
-                             , Debuff Enemy 2 DefenseDown <| Range 10 30
-                             ]
+    , skills    = [ { name   = "Supporting Curse"
+                    , rank   = CPlus
+                    , icon   = IconSwordDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemy 2 AttackDown <| Range 5 15
+                               , Debuff Enemy 2 DefenseDown <| Range 10 30
+                               ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = B
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 4 Guts <| Range 750 2000 ]
+                    }
+                  , { name   = "Half-Dead Bloodaxe"
+                    , rank   = APlus
+                    , icon   = IconBubbles
+                    , cd     = 8
+                    , effect = [ To Self RemoveDebuffs Full
+                               , Grant Self 3 MaxHP <| Range 1000 3000
+                               ]
                   }
-                  , { name    = "Battle Continuation"
-                  , rank   = B
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 4 Guts <| Range 750 2000 ]
-                  }
-                  , { name    = "Half-Dead Bloodaxe"
-                  , rank   = APlus
-                  , icon    = IconBubbles
-                  , cd      = 8
-                  , effect = [ To Self RemoveDebuffs Full
-                             , Grant Self 3 MaxHP <| Range 1000 3000
-                             ]
-                  }
-                ]
+                  ]
     , passives  = [madness B]
     , phantasm  = { name   = "Bloodbath Crown"
                   , desc   = "Bloody Coronation"
@@ -1107,31 +1097,31 @@ berserkers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 3
-    , stats     = { base =  { atk = 1412,  hp = 1577 }
-                  , max =   { atk = 7608, hp = 8763 }
+    , stats     = { base  = { atk = 1412,  hp = 1577 }
+                  , max   = { atk = 7608,  hp = 8763 }
                   , grail = { atk = 10297, hp = 11881 }
                   }
     , skills    = [ { name  = "Golden Rule"
-                  , rank   = B
-                  , icon    = IconNobleUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 NPGen <| Range 18 45 ]
-                  }
+                    , rank   = B
+                    , icon    = IconNobleUp
+                    , cd      = 8
+                    , effect = [ Grant Self 3 NPGen <| Range 18 45 ]
+                    }
                   , { name    = "Disengage"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Self RemoveDebuffs Full
-                             , To Self Heal <| Range 1000 2500
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconHeal
+                    , cd      = 7
+                    , effect = [ To Self RemoveDebuffs Full
+                              , To Self Heal <| Range 1000 2500
+                              ]
+                    }
                   , { name    = "Battle Continuation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
-                  }
-                ]
+                    , rank   = A
+                    , icon    = IconKneel
+                    , cd      = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
+                    }
+                  ]
     , passives  = [madness B]
     , phantasm  = { name   = "Athanaton Ten Thousand"
                   , desc   = "Immortal Cavalry of Ten Thousand Rank"
@@ -1174,36 +1164,36 @@ berserkers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 12
-    , stats     = { base =  { atk = 1374,  hp = 1211 }
-                  , max =   { atk = 6831, hp = 7303 }
+    , stats     = { base  = { atk = 1374, hp = 1211 }
+                  , max   = { atk = 6831, hp = 7303 }
                   , grail = { atk = 9899, hp = 10540 }
                   }
-    , skills    = [ { name  = "Sadistic Streak"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 10 30
-                             , Debuff Self 3 DefenseDown <| Flat 10
-                             ]
-                  }
-                  , { name    = "Imperial Privilege"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Self Heal <| Range 1000 3000
-                             , Chance 60 << Grant Self 3 AttackUp <| Range 20 40
-                             , Chance 60 << Grant Self 3 DefenseUp <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Glory of Past Days"
-                  , rank   = B
-                  , icon    = IconBusterUp
-                  , cd      = 5
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50
-                             , To Self DemeritHealth <| Flat 500
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Sadistic Streak"
+                    , rank   = A
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 10 30
+                               , Debuff Self 3 DefenseDown <| Flat 10
+                               ]
+                    }
+                  , { name   = "Imperial Privilege"
+                    , rank   = A
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Self Heal <| Range 1000 3000
+                               , Chance 60 << Grant Self 3 AttackUp <| Range 20 40
+                               , Chance 60 << Grant Self 3 DefenseUp <| Range 20 40
+                               ]
+                    }
+                  , { name   = "Glory of Past Days"
+                    , rank   = B
+                    , icon   = IconBusterUp
+                    , cd     = 5
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50
+                               , To Self DemeritHealth <| Flat 500
+                               ]
+                    }
+                  ]
     , passives  = [madness APlus]
     , phantasm  = { name   = "Flucticulus Diana"
                   , desc   = "Devour my Heart, Moonlight"

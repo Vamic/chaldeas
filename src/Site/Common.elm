@@ -18,6 +18,8 @@ import Persist.Preferences exposing (..)
 import Site.Algebra        exposing (..)
 import Site.Filtering      exposing (..)
 
+import Class.Show as Show
+
 scrollToTop : String -> Cmd (SiteMsg a b c)
 scrollToTop id = Task.attempt (always DoNothing) <| Dom.setViewportOf id 0 0
 
@@ -53,7 +55,7 @@ lvlRow r =
 noBreakName : Bool -> Bool -> String -> String
 noBreakName shouldPrettify hideClasses =
   let
-    classNames = List.map showClass enumClass
+    classNames = List.map Show.class enumClass
     replaceSpaces  = String.replace " " " "
     replacePirates = 
         String.replace "Anne Bonny"  "Anne Bonny" >>
@@ -85,7 +87,7 @@ mode prefs = if prefer prefs NightMode then "dark" else "light"
 
 effectEl : Maybe (a -> List SkillEffect) -> SkillEffect -> Html (SiteMsg a b c)
 effectEl getEffects ef = 
-    flip H.p [H.text <| showSkillEffect ef] <|
+    flip H.p [H.text <| Show.skillEffect ef] <|
     if demerit ef then
       [P.class "demerit"]
     else case getEffects |> Maybe.andThen (skillFilter ef) of
@@ -122,8 +124,8 @@ checkbox_ icon label checked =
 
 onChange : (String -> msg) -> H.Attribute msg
 onChange tagger =
-  E.stopPropagationOn "change" <| 
-  Json.map (\x -> (x, True)) (Json.map tagger E.targetValue)
+  E.stopPropagationOn "change" <<
+  Json.map (\x -> (x, True)) <| Json.map tagger E.targetValue
 
 int_ : Int -> Int -> Int -> (Int -> SiteMsg a b c) 
     -> List (Html (SiteMsg a b c))

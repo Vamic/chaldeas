@@ -7,40 +7,40 @@ import Database.Skill exposing (..)
 
 assassins : List Servant
 assassins = 
-  [ { name  =   "Jack the Ripper"
+  [ { name      = "Jack the Ripper"
     , id        = 75
     , rarity    = 5
     , class     = Assassin
     , attr      = Earth
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 25
-    , stats     = { base =  { atk = 1786,  hp = 1862 }
-                  , max =   { atk = 11557, hp = 12696 }
+    , stats     = { base  = { atk = 1786,  hp = 1862 }
+                  , max   = { atk = 11557, hp = 12696 }
                   , grail = { atk = 12651, hp = 13909 }
                   }
-    , skills    = [ { name  = "Murder on a Misty Night"
-                  , rank   = A
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 1 (Performance Quick) <| Range 30 50
-                             ]
-                  }
-                  , { name    = "Information Erasure"
-                  , rank   = B
-                  , icon    = IconCircuits
-                  , cd      = 7
-                  , effect = [ To Enemy RemoveBuffs Full
-                             , Debuff Enemy 3 CritChance <| Range 10 30
-                             ]
-                  }
-                  , { name    = "Surgery"
-                  , rank   = E
-                  , icon    = IconHeal
-                  , cd      = 6
-                  , effect = [ To Ally Heal <| Range 500 2500 ]
-                  }
-                ]
+    , skills    = [ { name   = "Murder on a Misty Night"
+                    , rank   = A
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 1 (Performance Quick) <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Information Erasure"
+                    , rank   = B
+                    , icon   = IconCircuits
+                    , cd     = 7
+                    , effect = [ To Enemy RemoveBuffs Full
+                               , Debuff Enemy 3 CritChance <| Range 10 30
+                               ]
+                    }
+                  , { name   = "Surgery"
+                    , rank   = E
+                    , icon   = IconHeal
+                    , cd     = 6
+                    , effect = [ To Ally Heal <| Range 500 2500 ]
+                    }
+                  ]
     , passives  = [presenceConcealment APlus]
     , phantasm  = { name   = "Maria the Ripper"
                   , desc   = "Holy Mother of Dismemberment"
@@ -81,33 +81,33 @@ assassins =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 25
-    , stats     = { base =  { atk = 1853,  hp = 1881 }
-                  , max =   { atk = 11993, hp = 12825 }
+    , stats     = { base  = { atk = 1853,  hp = 1881 }
+                  , max   = { atk = 11993, hp = 12825 }
                   , grail = { atk = 13128, hp = 14050 }
                   }
-    , skills    = [ { name  = "Intoxicating Aroma of Fruits"
-                  , rank   = A
-                  , icon    = IconHeart
-                  , cd      = 9
-                  , effect = [ Chance 60 <| Debuff Enemies 1 Charm Full
-                             , Debuff Enemies 3 DefenseDown <| Range 10 20
-                             ]
-                  }
-                  , { name    = "Demonic Nature of Oni"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 10 20
-                             , Grant Self 3 NPUp <| Range 20 30
-                             ]
-                  }
-                  , { name    = "Battle Continuation"
-                  , rank   = APlus
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1200 2700 ]
-                  }
-                ]
+    , skills    = [ { name   = "Intoxicating Aroma of Fruits"
+                    , rank   = A
+                    , icon   = IconHeart
+                    , cd     = 9
+                    , effect = [ Chance 60 <| Debuff Enemies 1 Charm Full
+                               , Debuff Enemies 3 DefenseDown <| Range 10 20
+                               ]
+                    }
+                  , { name   = "Demonic Nature of Oni"
+                    , rank   = A
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10 20
+                               , Grant Self 3 NPUp <| Range 20 30
+                               ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = APlus
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1200 2700 ]
+                    }
+                  ]
     , passives  = [presenceConcealment C, divinity C]
     , phantasm  = { name   = "Multicolored Poison—Shinpen Kidoku"
                   , desc   = ""
@@ -155,31 +155,31 @@ assassins =
     , attr      = Star
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 5
-    , stats     = { base =  { atk = 1817,  hp = 1862 }
-                  , max =   { atk = 11761, hp = 12696 }
+    , stats     = { base  = { atk = 1817,  hp = 1862 }
+                  , max   = { atk = 11761, hp = 12696 }
                   , grail = { atk = 12874, hp = 13909 }
                   }
-    , skills    = [ { name  = "Fire Support"
-                  , rank   = EX
-                  , icon    = IconStun
-                  , cd      = 10
-                  , effect = [ Chances 60 80 <| Debuff Enemies 1 StunBomb Full ]
-                  }
-                  , { name    = "Intuition"
-                  , rank   = CPlus
-                  , icon    = IconStar
-                  , cd      = 7
-                  , effect = [ To Party GainStars <| Range 4 14 ]
-                  }
-                  , { name    = "Galactic Meteor Sword"
-                  , rank   = C
-                  , icon    = IconStarHaloUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 (ClassAffinity Saber) <| Range 30 50
-                             , Grant Self 3 (StarAffinity Saber) <| Range 50 100
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Fire Support"
+                    , rank   = EX
+                    , icon   = IconStun
+                    , cd     = 10
+                    , effect = [ Chances 60 80 <| Debuff Enemies 1 StunBomb Full ]
+                    }
+                , { name     = "Intuition"
+                    , rank   = CPlus
+                    , icon   = IconStar
+                    , cd     = 7
+                    , effect = [ To Party GainStars <| Range 4 14 ]
+                    }
+                  , { name   = "Galactic Meteor Sword"
+                    , rank   = C
+                    , icon   = IconStarHaloUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 (ClassAffinity Saber) <| Range 30 50
+                               , Grant Self 3 (StarAffinity Saber) <| Range 50 100
+                               ]
+                    }
+                  ]
     , passives  = [riding EX, cosmoReactor A]
     , phantasm  = { name   = "Secret Calibur"
                   , desc   = "Sword of Unnamed Victory"
@@ -220,36 +220,36 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1477,  hp = 1768 }
-                  , max =   { atk = 8867, hp = 11055 }
+    , stats     = { base  = { atk = 1477,  hp = 1768 }
+                  , max   = { atk = 8867,  hp = 11055 }
                   , grail = { atk = 10736, hp = 13404 }
                   }
-    , skills    = [ { name  = "Mystic Eyes of Death Perception"
-                  , rank   = A
-                  , icon    = IconMystic
-                  , cd      = 7
-                  , effect = [ Grant Self 1 IgnoreInvinc Full
-                             , Grant Self 1 (Performance Arts) <| Range 30 50
-                             , Debuff Enemy 1 DeathDown <| Range 80 100
-                             ]
-                  }
-                  , { name    = "Mind's Eye (Fake)"
-                  , rank   = A
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 3 CritUp <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Yin-Yang"
-                  , rank   = B
-                  , icon    = IconYinYang
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Range 20 30
-                             , To Self DemeritDamage <| Flat 1000
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Mystic Eyes of Death Perception"
+                    , rank   = A
+                    , icon   = IconMystic
+                    , cd     = 7
+                    , effect = [ Grant Self 1 IgnoreInvinc Full
+                               , Grant Self 1 (Performance Arts) <| Range 30 50
+                               , Debuff Enemy 1 DeathDown <| Range 80 100
+                               ]
+                    }
+                  , { name   = "Mind's Eye (Fake)"
+                    , rank   = A
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 3 CritUp <| Range 20 40
+                               ]
+                    }
+                  , { name   = "Yin-Yang"
+                    , rank   = B
+                    , icon   = IconYinYang
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 20 30
+                               , To Self DemeritDamage <| Flat 1000
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment C, independentAction A]
     , phantasm  = { name   = "Vijñāpti-mātratā—Mystic Eyes of Death Perception"
                   , desc   = "Yuishiki・Chokushi no Magan"
@@ -286,33 +286,33 @@ assassins =
     , attr      = Earth
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 14
-    , stats     = { base =  { atk = 1568,  hp = 1675 }
-                  , max =   { atk = 9408, hp = 10473 }
+    , stats     = { base  = { atk = 1568,  hp = 1675 }
+                  , max   = { atk = 9408,  hp = 10473 }
                   , grail = { atk = 11391, hp = 12698 }
                   }
-    , skills    = [ { name  = "Vampirism"
-                  , rank   = C
-                  , icon    = IconDarkMagic
-                  , cd      = 8
-                  , effect = [ Chances 60 80 << To Enemy GaugeDown <| Flat 1
-                             , To Self GaugeUp <| Range 18 27
-                             ]
-                  }
-                  , { name    = "Torture Technique"
-                  , rank   = A
-                  , icon    = IconShieldDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemy 3 DefenseDown <| Range 10 20 ]
-                  }
-                  , { name    = "Bath of Fresh Blood"
-                  , rank   = A
-                  , icon    = IconExclamationDown
-                  , cd      = 8
-                  , effect = [ Debuff Enemy 3 CritChance <| Range 30 50
-                             , Grant Party 3 StarsPerTurn <| Range 5 10
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Vampirism"
+                    , rank   = C
+                    , icon   = IconDarkMagic
+                    , cd     = 8
+                    , effect = [ Chances 60 80 << To Enemy GaugeDown <| Flat 1
+                               , To Self GaugeUp <| Range 18 27
+                               ]
+                    }
+                  , { name   = "Torture Technique"
+                    , rank   = A
+                    , icon   = IconShieldDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemy 3 DefenseDown <| Range 10 20 ]
+                    }
+                  , { name   = "Bath of Fresh Blood"
+                    , rank   = A
+                    , icon   = IconExclamationDown
+                    , cd     = 8
+                    , effect = [ Debuff Enemy 3 CritChance <| Range 30 50
+                               , Grant Party 3 StarsPerTurn <| Range 5 10
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment D]
     , phantasm  = { name   = "Phantom Maiden"
                   , desc   = "Phantasmal Iron Maiden"
@@ -356,34 +356,34 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 24
-    , stats     = { base =  { atk = 1493,  hp = 1786 }
-                  , max =   { atk = 8958, hp = 11168 }
+    , stats     = { base  = { atk = 1493,  hp = 1786 }
+                  , max   = { atk = 8958,  hp = 11168 }
                   , grail = { atk = 10846, hp = 13541 }
                   }
-    , skills    = [ { name  = "Magecraft"
-                  , rank   = B
-                  , icon    = IconArtsUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Arts) <| Range 24 40 ]
-                  }
-                  , { name    = "Affection of the Holy Grail"
-                  , rank   = APlus
-                  , icon    = IconShieldBreak
-                  , cd      = 7
-                  , effect = [ Grant Self 3 IgnoreInvinc Full
-                             , Grant Self 3 CritUp <| Range 30 50
-                             , Debuff Others 3 DebuffVuln <| Flat 20
-                             ]
-                  }
-                  , { name    = "Scapegoat"
-                  , rank   = C
-                  , icon    = IconCrosshairUp
-                  , cd      = 7
-                  , effect = [ Grant Ally 1 Taunt Full
-                             , To Party GainStars <| Range 5 15
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Magecraft"
+                    , rank   = B
+                    , icon   = IconArtsUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Arts) <| Range 24 40 ]
+                    }
+                  , { name   = "Affection of the Holy Grail"
+                    , rank   = APlus
+                    , icon   = IconShieldBreak
+                    , cd     = 7
+                    , effect = [ Grant Self 3 IgnoreInvinc Full
+                               , Grant Self 3 CritUp <| Range 30 50
+                               , Debuff Others 3 DebuffVuln <| Flat 20
+                               ]
+                    }
+                  , { name   = "Scapegoat"
+                    , rank   = C
+                    , icon   = IconCrosshairUp
+                    , cd     = 7
+                    , effect = [ Grant Ally 1 Taunt Full
+                               , To Party GainStars <| Range 5 15
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment APlus, independentAction A]
     , phantasm  = { name   = "Chronos Rose"
                   , desc   = "Gather Ye Rosebuds While Ye May"
@@ -426,35 +426,35 @@ assassins =
     , attr      = Star
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1851,  hp = 1786 }
-                  , max =   { atk = 9049, hp = 11168 }
+    , stats     = { base  = { atk = 1851,  hp = 1786 }
+                  , max   = { atk = 9049,  hp = 11168 }
                   , grail = { atk = 10956, hp = 13541 }
                   }
-    , skills    = [ { name  = "Beach Crisis"
-                  , rank   = APlus
-                  , icon    = IconCrosshairUp
-                  , cd      = 8
-                  , effect = [ Chances 100 300 <| Grant Self 1 Taunt Full
-                             , Grant Self 1 CritUp <| Range 30 50
-                             ]
-                  }
-                  , { name    = "Primordial Rune (Sea)"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 8
-                  , effect = [ To Ally Heal <| Range 1000 3000
-                             , Grant Ally 1 DamageDown <| Range 500 1000
-                             ]
-                  }
-                  , { name    = "Midsummer Mistake"
-                  , rank   = C
-                  , icon    = IconShieldBreak
-                  , cd      = 8
-                  , effect = [ Grant Self 1 IgnoreInvinc Full
-                             , Grant Self 1 (Performance Quick) <| Range 30 50
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Beach Crisis"
+                    , rank   = APlus
+                    , icon   = IconCrosshairUp
+                    , cd     = 8
+                    , effect = [ Chances 100 300 <| Grant Self 1 Taunt Full
+                               , Grant Self 1 CritUp <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Primordial Rune (Sea)"
+                    , rank   = A
+                    , icon   = IconHeal
+                    , cd     = 8
+                    , effect = [ To Ally Heal <| Range 1000 3000
+                               , Grant Ally 1 DamageDown <| Range 500 1000
+                               ]
+                    }
+                  , { name   = "Midsummer Mistake"
+                    , rank   = C
+                    , icon   = IconShieldBreak
+                    , cd     = 8
+                    , effect = [ Grant Self 1 IgnoreInvinc Full
+                               , Grant Self 1 (Performance Quick) <| Range 30 50
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment E]
     , phantasm  = { name   = "Gáe Bolg Alternative"
                   , desc   = "Soaring Spear of Kicked Piercing Death"
@@ -491,34 +491,33 @@ assassins =
     , attr      = Heaven
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1497,  hp = 1843 }
-                  , max =   { atk = 8985, hp = 11518 }
+    , stats     = { base  = { atk = 1497,  hp = 1843 }
+                  , max   = { atk = 8985,  hp = 11518 }
                   , grail = { atk = 10879, hp = 13965 }
                   }
-    , skills    = [ { name  = "Vampirism"
-                  , rank   = C
-                  , icon    = IconDarkMagic
-                  , cd      = 8
-                  , effect = [ Chances 60 80 << To Enemy GaugeDown <| Flat 1
-                             , To Self GaugeUp <| Range 18 27
-                             ]
-                  }
-                  , { name    = "Siren Song"
-                  , rank   = A
-                  , icon    = IconHeart
-                  , cd      = 9
-                  , effect = [ Chances 70 100 <|
-                            Debuff (EnemyType Male) 1 Charm Full ]
-                  }
-                  , { name    = "Whim of the Goddess"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 10 20
-                             , Grant (AlliesType Divine) 3 AttackUp <| Range 10 20
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Vampirism"
+                    , rank   = C
+                    , icon   = IconDarkMagic
+                    , cd     = 8
+                    , effect = [ Chances 60 80 << To Enemy GaugeDown <| Flat 1
+                               , To Self GaugeUp <| Range 18 27
+                               ]
+                    }
+                  , { name   = "Siren Song"
+                    , rank   = A
+                    , icon   = IconHeart
+                    , cd     = 9
+                    , effect = [ Chances 70 100 <| Debuff (EnemyType Male) 1 Charm Full ]
+                    }
+                  , { name   = "Whim of the Goddess"
+                    , rank   = A
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10 20
+                               , Grant (AlliesType Divine) 3 AttackUp <| Range 10 20
+                               ]
+                    }
+                  ]
     , passives  = [magicResistance A, presenceConcealment APlus, coreOfGoddess EX]
     , phantasm  = { name   = "Smile of the Stheno"
                   , desc   = "Goddess' Smile"
@@ -529,8 +528,7 @@ assassins =
                   , effect = [ To (EnemyType Male) Kill <| Range 100 150
                              , Chance 150 << Debuff Enemy 3 DefenseDown <| Flat 20
                              ]
-                  , over   = [ Chances 100 200 <|
-                          Debuff (EnemyType Male) 1 Charm Full ]
+                  , over   = [ Chances 100 200 <| Debuff (EnemyType Male) 1 Charm Full ]
                   , first  = False
                   }
     , gen       = { starWeight = 104, starRate = 25, npAtk = 2.26, npDef = 4 }
@@ -562,33 +560,33 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 8
-    , stats     = { base =  { atk = 1316,  hp = 1592 }
-                  , max =   { atk = 7091, hp = 8844 }
+    , stats     = { base  = { atk = 1316,  hp = 1592 }
+                  , max   = { atk = 7091, hp = 8844 }
                   , grail = { atk = 9597, hp = 11991 }
                   }
-    , skills    = [ { name  = "Sabotage"
-                  , rank   = BPlus
-                  , icon    = IconSwordDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemies 3 AttackDown <| Flat 10
-                             , Debuff Enemies 3 CritChance <| Range 10 20
-                             ]
-                  }
-                  , { name    = "Ninjutsu"
-                  , rank   = APlus
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Ally 1 Evasion Full
-                             , Grant Ally 1 StarUp <| Range 30 50
-                             ]
-                  }
-                  , { name    = "Suspicious Shadow"
-                  , rank   = C
-                  , icon    = IconHoodDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemies 1 DebuffVuln <| Range 50 100 ]
-                  }
-                ]
+    , skills    = [ { name   = "Sabotage"
+                    , rank   = BPlus
+                    , icon   = IconSwordDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemies 3 AttackDown <| Flat 10
+                               , Debuff Enemies 3 CritChance <| Range 10 20
+                               ]
+                    }
+                  , { name   = "Ninjutsu"
+                    , rank   = APlus
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Ally 1 Evasion Full
+                               , Grant Ally 1 StarUp <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Suspicious Shadow"
+                    , rank   = C
+                    , icon   = IconHoodDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemies 1 DebuffVuln <| Range 50 100 ]
+                    }
+                  ]
     , passives  = [presenceConcealment APlus]
     , phantasm  = { name   = "Immortal Chaos Brigade"
                   , desc   = "Fumetsu no Konton Ryodan"
@@ -629,35 +627,35 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 6
-    , stats     = { base =  { atk = 1042,  hp = 1244 }
-                  , max =   { atk = 5735, hp = 6220 }
+    , stats     = { base  = { atk = 1042, hp = 1244 }
+                  , max   = { atk = 5735, hp = 6220 }
                   , grail = { atk = 8912, hp = 9588 }
                   }
-    , skills    = [ { name  = "Mind's Eye (Fake)"
-                  , rank   = A
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 3 CritUp <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Vitrify"
-                  , rank   = BPlus
-                  , icon    = IconBubbles
-                  , cd      = 6
-                  , effect = [ To Self RemoveMental Full
-                             , To Party GainStars <| Range 5 15
-                             ]
-                  }
-                  , { name    = "Knowledge of the Sowa"
-                  , rank   = B
-                  , icon    = IconBullseye
-                  , cd      = 7
-                  , effect = [ Grant Self 3 SureHit Full
-                             , Grant Self 3 StarUp <| Range 10 30
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Mind's Eye (Fake)"
+                    , rank   = A
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 3 CritUp <| Range 20 40
+                               ]
+                    }
+                  , { name   = "Vitrify"
+                    , rank   = BPlus
+                    , icon   = IconBubbles
+                    , cd     = 6
+                    , effect = [ To Self RemoveMental Full
+                               , To Party GainStars <| Range 5 15
+                               ]
+                    }
+                  , { name   = "Knowledge of the Sowa"
+                    , rank   = B
+                    , icon   = IconBullseye
+                    , cd     = 7
+                    , effect = [ Grant Self 3 SureHit Full
+                               , Grant Self 3 StarUp <| Range 10 30
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment D]
     , phantasm  = { name   = "Swallow Reversal"
                   , desc   = "Hiken—Tsubame Gaeshi"
@@ -698,31 +696,31 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 2
-    , stats     = { base =  { atk = 1114,  hp = 1429 }
-                  , max =   { atk = 6280, hp = 7594 }
+    , stats     = { base  = { atk = 1114, hp = 1429 }
+                  , max   = { atk = 6280, hp = 7594 }
                   , grail = { atk = 9100, hp = 10960 }
                   }
-    , skills    = [ { name  = "Throw (Dagger)"
-                  , rank   = B
-                  , icon    = IconStar
-                  , cd      = 6
-                  , effect = [ To Party GainStars <| Range 3 12 ]
-                  }
-                  , { name    = "Self-Modification"
-                  , rank   = C
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 CritUp <| Range 20 50 ]
-                  }
-                  , { name    = "Protection Against the Wind"
-                  , rank   = A
-                  , icon    = IconDodge
-                  , cd      = 7
-                  , effect = [ Times 3 <| Grant Self 0 Evasion Full
-                             , Grant Self 3 StarUp <| Range 10 30
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Throw (Dagger)"
+                    , rank   = B
+                    , icon   = IconStar
+                    , cd     = 6
+                    , effect = [ To Party GainStars <| Range 3 12 ]
+                    }
+                  , { name   = "Self-Modification"
+                    , rank   = C
+                    , icon   = IconExclamationUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 CritUp <| Range 20 50 ]
+                    }
+                  , { name   = "Protection Against the Wind"
+                    , rank   = A
+                    , icon   = IconDodge
+                    , cd     = 7
+                    , effect = [ Times 3 <| Grant Self 0 Evasion Full
+                               , Grant Self 3 StarUp <| Range 10 30
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment APlus]
     , phantasm  = { name   = "Zabaniya"
                   , desc   = "Delusional Heartbeat"
@@ -763,40 +761,36 @@ assassins =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 23
-    , stats     = { base =  { atk = 1173,  hp = 1741 }
-                  , max =   { atk = 6320, hp = 9675 }
+    , stats     = { base  = { atk = 1173, hp = 1741 }
+                  , max   = { atk = 6320, hp = 9675 }
                   , grail = { atk = 8553, hp = 13118 }
                   }
-    , skills    = [ { name  = "Monstrous Strength"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 5 15
-                             , When "transformed into Hyde" <<
-                            Grant Self 3 AttackUp <| Range 25 35
-                             ]
-                  }
-                  , { name    = "Panicky Voice"
-                  , rank   = A
-                  , icon    = IconStun
-                  , cd      = 8
-                  , effect = [ Times 1 <<
-                            Grant Self 0 (Success Stun) <| Range 5 15
-                             , When "transformed into Hyde" << Times 1 <<
-                            Grant Self 0 (Success Stun) <| Range 85 135
-                             , Chance 10 <| Debuff Enemy 1 Stun Full
-                             ]
-                  }
-                  , { name    = "Self-Modification"
-                  , rank   = D
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 CritUp <| Range 5 15
-                             , When "transformed into Hyde" <<
-                            Grant Self 3 CritUp <| Range 25 35
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Monstrous Strength"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 5 15
+                               , When "transformed into Hyde" << Grant Self 3 AttackUp <| Range 25 35
+                               ]
+                    }
+                  , { name   = "Panicky Voice"
+                    , rank   = A
+                    , icon   = IconStun
+                    , cd     = 8
+                    , effect = [ Times 1 << Grant Self 0 (Success Stun) <| Range 5 15
+                               , When "transformed into Hyde" << Times 1 << Grant Self 0 (Success Stun) <| Range 85 135
+                               , Chance 10 <| Debuff Enemy 1 Stun Full
+                               ]
+                    }
+                  , { name   = "Self-Modification"
+                    , rank   = D
+                    , icon   = IconExclamationUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 CritUp <| Range 5 15
+                               , When "transformed into Hyde" << Grant Self 3 CritUp <| Range 25 35
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment A, madness A]
     , phantasm  = { name   = "Dangerous Game"
                   , desc   = "The Secret Game of Sin"
@@ -840,33 +834,33 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 8
-    , stats     = { base =  { atk = 1338,  hp = 1492 }
-                  , max =   { atk = 7207, hp = 8293 }
+    , stats     = { base  = { atk = 1338, hp = 1492 }
+                  , max   = { atk = 7207, hp = 8293 }
                   , grail = { atk = 9754, hp = 11244 }
                   }
-    , skills    = [ { name  = "Restrain"
-                  , rank   = A
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 StarAbsorb <| Flat 200
-                             , To Party GainStars <| Range 5 15
-                             ]
-                  }
-                  , { name    = "Planning"
-                  , rank   = B
-                  , icon    = IconStarHaloUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 StarUp <| Range 10 30 ]
-                  }
-                  , { name    = "Insolent"
-                  , rank   = A
-                  , icon    = IconQuickUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Quick) <| Range 20 30
-                             , Grant Self 1 CritUp <| Range 30 50
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Restrain"
+                    , rank   = A
+                    , icon   = IconStarUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarAbsorb <| Flat 200
+                               , To Party GainStars <| Range 5 15
+                               ]
+                    }
+                  , { name   = "Planning"
+                    , rank   = B
+                    , icon   = IconStarHaloUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarUp <| Range 10 30 ]
+                    }
+                  , { name   = "Insolent"
+                    , rank   = A
+                    , icon   = IconQuickUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Quick) <| Range 20 30
+                               , Grant Self 1 CritUp <| Range 30 50
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment B]
     , phantasm  = { name   = "All I Do Is Kill"
                   , desc   = ""
@@ -911,31 +905,31 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 12
-    , stats     = { base =  { atk = 968,  hp = 1568 }
-                  , max =   { atk = 5456, hp = 8309 }
+    , stats     = { base  = { atk = 968,  hp = 1568 }
+                  , max   = { atk = 5456, hp = 8309 }
                   , grail = { atk = 7906, hp = 11991 }
                   }
-    , skills    = [ { name  = "Executioner"
-                  , rank   = APlusPlus
-                  , icon    = IconDamageUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 (AlignAffinity Evil) <| Range 40 60 ]
-                  }
-                  , { name    = "Medicine"
-                  , rank   = APlus
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Ally Heal <| Range 1000 3000
-                             , To Ally RemoveDebuffs Full
-                             ]
-                  }
-                  , { name    = "Human Study"
-                  , rank   = B
-                  , icon    = IconDamageUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 (AttackVs Human) <| Range 40 60 ]
-                  }
-                ]
+    , skills    = [ { name   = "Executioner"
+                    , rank   = APlusPlus
+                    , icon   = IconDamageUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 (AlignAffinity Evil) <| Range 40 60 ]
+                    }
+                  , { name   = "Medicine"
+                    , rank   = APlus
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Ally Heal <| Range 1000 3000
+                               , To Ally RemoveDebuffs Full
+                               ]
+                    }
+                  , { name   = "Human Study"
+                    , rank   = B
+                    , icon   = IconDamageUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 (AttackVs Human) <| Range 40 60 ]
+                    }
+                  ]
     , passives  = [presenceConcealment D]
     , phantasm  = { name   = "La Mort Espoir"
                   , desc   = "Death is Hope For Tomorrow"
@@ -978,40 +972,37 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 28
-    , stats     = { base =  { atk = 1241,  hp = 1675 }
-                  , max =   { atk = 6686, hp = 9310 }
+    , stats     = { base  = { atk = 1241, hp = 1675 }
+                  , max   = { atk = 6686, hp = 9310 }
                   , grail = { atk = 9049, hp = 12623 }
                   }
-    , skills    = [ { name  = "Librarian of Knowledge"
-                  , rank   = C
-                  , icon    = IconNobleUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 NPGen <| Range 10 20
-                             , Grant Self 3 StarUp <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Wide Specialization"
-                  , rank   = APlus
-                  , icon    = IconAllUp
-                  , cd      = 7
-                  , effect = [ Chances 60 80 <<
-                            Grant Self 3 (Performance Buster) <| Flat 30
-                             , Chances 60 80 <<
-                            Grant Self 3 (Performance Quick) <| Flat 30
-                             , Chances 60 80 <<
-                            Grant Self 3 (Performance Arts) <| Flat 30
-                             , Grant Self 1 Evasion Full
-                             ]
-                  }
-                  , { name    = "Battle Retreat"
-                  , rank   = B
-                  , icon    = IconHeal
-                  , cd      = 8
-                  , effect = [ To Self Heal <| Range 2000 4000
-                             , To Self DemeritBuffs Full
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Librarian of Knowledge"
+                    , rank   = C
+                    , icon   = IconNobleUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 NPGen <| Range 10 20
+                               , Grant Self 3 StarUp <| Range 20 40
+                               ]
+                    }
+                  , { name   = "Wide Specialization"
+                    , rank   = APlus
+                    , icon   = IconAllUp
+                    , cd     = 7
+                    , effect = [ Chances 60 80 << Grant Self 3 (Performance Buster) <| Flat 30
+                               , Chances 60 80 << Grant Self 3 (Performance Quick) <| Flat 30
+                               , Chances 60 80 << Grant Self 3 (Performance Arts) <| Flat 30
+                               , Grant Self 1 Evasion Full
+                               ]
+                    }
+                  , { name   = "Battle Retreat"
+                    , rank   = B
+                    , icon   = IconHeal
+                    , cd     = 8
+                    , effect = [ To Self Heal <| Range 2000 4000
+                               , To Self DemeritBuffs Full
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment A]
     , phantasm  = { name   = "Zabaniya"
                   , desc   = "Delusional Illusion"
@@ -1052,33 +1043,33 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 23
-    , stats     = { base =  { atk = 1232,  hp = 1675 }
-                  , max =   { atk = 6636, hp = 9310 }
+    , stats     = { base  = { atk = 1232, hp = 1675 }
+                  , max   = { atk = 6636, hp = 9310 }
                   , grail = { atk = 8981, hp = 12623 }
                   }
-    , skills    = [ { name  = "Morph (Infiltration)"
-                  , rank   = C
-                  , icon    = IconExclamationDown
-                  , cd      = 9
-                  , effect = [ Debuff Enemy 3 CritChance <| Range 10 20
-                             , To Enemy GaugeDown <| Flat 1
-                             ]
-                  }
-                  , { name    = "Throw (Dagger)"
-                  , rank   = C
-                  , icon    = IconStar
-                  , cd      = 6
-                  , effect = [ To Party GainStars <| Range 2 12 ]
-                  }
-                  , { name    = "Dance of Silence"
-                  , rank   = B
-                  , icon    = IconReaperUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 KillUp <| Range 20 50
-                             , Grant Self 3 DebuffSuccess <| Range 20 50
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Morph (Infiltration)"
+                    , rank   = C
+                    , icon   = IconExclamationDown
+                    , cd     = 9
+                    , effect = [ Debuff Enemy 3 CritChance <| Range 10 20
+                               , To Enemy GaugeDown <| Flat 1
+                               ]
+                    }
+                  , { name   = "Throw (Dagger)"
+                    , rank   = C
+                    , icon   = IconStar
+                    , cd     = 6
+                    , effect = [ To Party GainStars <| Range 2 12 ]
+                    }
+                  , { name   = "Dance of Silence"
+                    , rank   = B
+                    , icon   = IconReaperUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 KillUp <| Range 20 50
+                               , Grant Self 3 DebuffSuccess <| Range 20 50
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment APlus, independentAction A]
     , phantasm  = { name   = "Zabaniya"
                   , desc   = "Delusional Poison Body"
@@ -1123,34 +1114,33 @@ assassins =
     , attr      = Earth
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 2
-    , stats     = { base =  { atk = 1003,  hp = 1580 }
-                  , max =   { atk = 5654, hp = 8393 }
+    , stats     = { base  = { atk = 1003, hp = 1580 }
+                  , max   = { atk = 5654, hp = 8393 }
                   , grail = { atk = 8193, hp = 12112 }
                   }
     , skills    = [ { name  = "Innocent Monster"
-                  , rank   = D
-                  , icon    = IconStarTurn
-                  , cd      = 7
-                  , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
-                             , Debuff Self 3 DefenseDown <| Flat 14
-                             ]
-                  }
-                  , { name    = "Siren Song"
-                  , rank   = B
-                  , icon    = IconHeart
-                  , cd      = 9
-                  , effect = [ Chances 60 90 <|
-                            Debuff (EnemyType Female) 1 Charm Full ]
-                  }
-                  , { name    = "Mental Corruption"
-                  , rank   = A
-                  , icon    = IconStaffUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 MentalSuccess <| Range 5 25
-                             , Grant Self 3 MentalResist <| Range 50 100
-                             ]
-                  }
-                ]
+                    , rank   = D
+                    , icon    = IconStarTurn
+                    , cd      = 7
+                    , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
+                               , Debuff Self 3 DefenseDown <| Flat 14
+                               ]
+                    }
+                  , { name   = "Siren Song"
+                    , rank   = B
+                    , icon   = IconHeart
+                    , cd     = 9
+                    , effect = [ Chances 60 90 <| Debuff (EnemyType Female) 1 Charm Full ]
+                    }
+                  , { name   = "Mental Corruption"
+                    , rank   = A
+                    , icon   = IconStaffUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 MentalSuccess <| Range 5 25
+                               , Grant Self 3 MentalResist <| Range 50 100
+                               ]
+                    }
+                  ]
     , passives  = [presenceConcealment A]
     , phantasm  = { name   = "Christine Christine"
                   , desc   = "Love Song Resounding through Hell"
@@ -1191,34 +1181,33 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 6
-    , stats     = { base =  { atk = 977,  hp = 1313 }
-                  , max =   { atk = 5377, hp = 6565 }
+    , stats     = { base  = { atk = 977,  hp = 1313 }
+                  , max   = { atk = 5377, hp = 6565 }
                   , grail = { atk = 8355, hp = 10120 }
                   }
-    , skills    = [ { name  = "Espionage"
-                  , rank   = APlusPlus
-                  , icon    = IconStarHaloUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 StarUp <| Range 10 30 ]
-                  }
-                  , { name    = "Pheromone"
-                  , rank   = B
-                  , icon    = IconHeart
-                  , cd      = 8
-                  , effect = [ Chances 30 60 <|
-                            Debuff (EnemiesType Male) 1 Charm Full
-                             , Debuff Enemies 3 DefenseDown <| Range 10 20
-                             ]
-                  }
-                  , { name    = "Double-cross"
-                  , rank   = B
-                  , icon    = IconCircuits
-                  , cd      = 8
-                  , effect = [ Debuff Enemy 1 SealSkills Full
-                             , Debuff Enemy 3 DefenseDown <| Range 10 20
-                             ]
-                  }
-                ]
+    , skills    = [ { name   = "Espionage"
+                    , rank   = APlusPlus
+                    , icon   = IconStarHaloUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarUp <| Range 10 30 ]
+                    }
+                  , { name   = "Pheromone"
+                    , rank   = B
+                    , icon   = IconHeart
+                    , cd     = 8
+                    , effect = [ Chances 30 60 <| Debuff (EnemiesType Male) 1 Charm Full
+                               , Debuff Enemies 3 DefenseDown <| Range 10 20
+                               ]
+                    }
+                  , { name   = "Double-cross"
+                    , rank   = B
+                    , icon   = IconCircuits
+                    , cd     = 8
+                    , effect = [ Debuff Enemy 1 SealSkills Full
+                               , Debuff Enemy 3 DefenseDown <| Range 10 20
+                               ]
+                    }
+                  ]
     , passives  = []
     , phantasm  = { name   = "Mata Hari"
                   , desc   = "The Woman with Sunny Eyes"

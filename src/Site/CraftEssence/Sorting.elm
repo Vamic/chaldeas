@@ -4,7 +4,6 @@ import Dict exposing (Dict)
 
 import StandardLibrary       exposing (..)
 import Database.CraftEssence exposing (..)
-import Printing              exposing (..)
 import Sorting               exposing (..)
 
 toSort : SortBy -> CraftEssence -> Float

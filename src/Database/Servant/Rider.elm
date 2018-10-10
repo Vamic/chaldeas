@@ -14,8 +14,8 @@ riders =
     , attr      = Heaven
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 5
-    , stats     = { base =  { atk = 1850,  hp = 1881 }
-                  , max =   { atk = 11971, hp = 12830 }
+    , stats     = { base  = { atk = 1850,  hp = 1881 }
+                  , max   = { atk = 11971, hp = 12830 }
                   , grail = { atk = 13104, hp = 14056 }
                   }
     , skills    = [ { name  = "Charisma"
@@ -41,7 +41,7 @@ riders =
                              , Grant Party 1 BuffUp <| Range 20 40
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding APlus, divinity B]
     , phantasm  = { name   = "Ramesseum Tentyris"
                   , desc   = "The Shining Great Temple Complex"
@@ -84,8 +84,8 @@ riders =
     , attr      = Star
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 10
-    , stats     = { base =  { atk = 1750,  hp = 1881 }
-                  , max =   { atk = 11326, hp = 12830 }
+    , stats     = { base  = { atk = 1750,  hp = 1881 }
+                  , max   = { atk = 11326, hp = 12830 }
                   , grail = { atk = 12398, hp = 14056 }
                   }
     , skills    = [ { name  = "Voyager of the Storm"
@@ -111,7 +111,7 @@ riders =
                              , To Party GainStars <| Flat 10
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance D, riding D]
     , phantasm  = { name   = "Golden Wild Hunt"
                   , desc   = "Golden Stag and the Eventide Tempest"
@@ -136,7 +136,7 @@ riders =
                   [(Monument Rider, 5), (DragonsReverseScale, 2), (DragonFang, 24)]
                   [( Monument Rider, 12), (DragonsReverseScale, 4)
                   , (HeartOfTheForeignGod, 5)
-                ]
+                  ]
     , skillUp   = Reinforcement
                   [(GemOf Rider, 5)]
                   [(GemOf Rider, 12)]
@@ -154,8 +154,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 10
-    , stats     = { base =  { atk = 1786,  hp = 1938 }
-                  , max =   { atk = 11560, hp = 13219 }
+    , stats     = { base  = { atk = 1786,  hp = 1938 }
+                  , max   = { atk = 11560, hp = 13219 }
                   , grail = { atk = 12654, hp = 14482 }
                   }
     , skills    = [ { name  = "Charisma"
@@ -178,7 +178,7 @@ riders =
                              , Grant Self 1 StarUp <| Flat 50
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance D, riding APlus, divinity C]
     , phantasm  = { name   = "Ionioi Hetairoi"
                   , desc   = "Army of the King"
@@ -219,8 +219,8 @@ riders =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 5
-    , stats     = { base =  { atk = 1591,  hp = 2048 }
-                  , max =   { atk = 10296, hp = 13968 }
+    , stats     = { base  = { atk = 1591,  hp = 2048 }
+                  , max   = { atk = 10296, hp = 13968 }
                   , grail = { atk = 11270, hp = 15303 }
                   }
     , skills    = [ { name  = "Golden Rule (Body)"
@@ -245,7 +245,7 @@ riders =
                   , effect = [ Chances 50 80 <|
                             Debuff (EnemyType Male) 1 Charm Full ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding A]
     , phantasm  = { name   = "Chariot My Love"
                   , desc   = "My Dear Iron Chariot"
@@ -288,8 +288,8 @@ riders =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1636,  hp = 1728 }
-                  , max =   { atk = 9819, hp = 10800 }
+    , stats     = { base  = { atk = 1636,  hp = 1728 }
+                  , max   = { atk = 9819, hp = 10800 }
                   , grail = { atk = 11889, hp = 13095 }
                   }
     , skills    = [ { name  = "Long-Distance Dash"
@@ -314,7 +314,7 @@ riders =
                              , To Self Heal <| Range 1000 3000
                              ]
                   }
-                ]
+                  ]
     , passives  = [divinity C]
     , phantasm  = { name   = "Golden Drive, Good Night"
                   , desc   = ""
@@ -351,8 +351,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 29
-    , stats     = { base =  { atk = 1543,  hp = 1805 }
-                  , max =   { atk = 9258, hp = 11286 }
+    , stats     = { base  = { atk = 1543,  hp = 1805 }
+                  , max   = { atk = 9258, hp = 11286 }
                   , grail = { atk = 11209, hp = 13684 }
                   }
     , skills    = [ { name  = "Saint's Gift"
@@ -375,7 +375,7 @@ riders =
                   , cd      = 7
                   , effect = [ Grant Self 1 (Performance Buster) <| Range 25 45 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, riding A]
     , phantasm  = { name   = "Excalibur Morgan"
                   , desc   = "Sword of Promised Victory"
@@ -412,8 +412,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Arts Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1335,  hp = 2090 }
-                  , max =   { atk = 8014, hp = 13068 }
+    , stats     = { base  = { atk = 1335,  hp = 2090 }
+                  , max   = { atk = 8014, hp = 13068 }
                   , grail = { atk = 9703, hp = 15845 }
                   }
     , skills    = [ { name  = "Protection of the Faith"
@@ -440,7 +440,7 @@ riders =
                              , To Enemy RemoveBuffs Full
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, riding APlusPlus, divinity C]
     , phantasm  = { name   = "Tarasque"
                   , desc   = "O Tragic Drake Who Knew Naught of Love"
@@ -481,8 +481,8 @@ riders =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 24
-    , stats     = { base =  { atk = 1535,  hp = 1824 }
-                  , max =   { atk = 9212, hp = 11400 }
+    , stats     = { base  = { atk = 1535,  hp = 1824 }
+                  , max   = { atk = 9212, hp = 11400 }
                   , grail = { atk = 11154, hp = 13822 }
                   }
     , skills    = [ { name  = "Cerulean Ride"
@@ -507,7 +507,7 @@ riders =
                              , To Self GaugeUp <| Range 20 30
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, surfing A]
     , phantasm  = { name   = "Prydwen Tube Riding"
                   , desc   = ""
@@ -548,8 +548,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1382,  hp = 1975 }
-                  , max =   { atk = 8293, hp = 12348 }
+    , stats     = { base  = { atk = 1382,  hp = 1975 }
+                  , max   = { atk = 8293, hp = 12348 }
                   , grail = { atk = 10041, hp = 14972 }
                   }
     , skills    = [ { name  = "Siren Song"
@@ -575,7 +575,7 @@ riders =
                              , To Self Heal <| Range 1000 2500
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, riding APlus]
     , phantasm  = { name   = "Guillotine Breaker"
                   , desc   = "Glory to the Crown of Lilies"
@@ -618,8 +618,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 29
-    , stats     = { base =  { atk = 1504,  hp = 1805 }
-                  , max =   { atk = 9029, hp = 11286 }
+    , stats     = { base  = { atk = 1504,  hp = 1805 }
+                  , max   = { atk = 9029, hp = 11286 }
                   , grail = { atk = 10932, hp = 13684 }
                   }
     , skills    = [ { name  = "Voyage"
@@ -642,7 +642,7 @@ riders =
                              , Grant Self 1 AttackUp <| Range 20 30
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance D]
     , phantasm  = { name   = "Caribbean Free Bird"
                   , desc   = "Bond of Lovebirds"
@@ -683,8 +683,8 @@ riders =
     , attr      = Earth
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 24
-    , stats     = { base =  { atk = 1489,  hp = 1787 }
-                  , max =   { atk = 8937, hp = 11172 }
+    , stats     = { base  = { atk = 1489,  hp = 1787 }
+                  , max   = { atk = 8937, hp = 11172 }
                   , grail = { atk = 10821, hp = 13546 }
                   }
     , skills    = [ { name  = "Monstrous Strength"
@@ -708,7 +708,7 @@ riders =
                              , Chance 65 << Grant Self 3 CritUp <| Range 20 40
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, riding APlus, independentAction B]
     , phantasm  = { name   = "Hippogriff"
                   , desc   = "Otherworldly Phantom Horse"
@@ -751,8 +751,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 2
-    , stats     = { base =  { atk = 929,  hp = 1731 }
-                  , max =   { atk = 5236, hp = 9200 }
+    , stats     = { base  = { atk = 929,  hp = 1731 }
+                  , max   = { atk = 5236, hp = 9200 }
                   , grail = { atk = 7587, hp = 13278 }
                   }
     , skills    = [ { name  = "Guardian Knight"
@@ -777,7 +777,7 @@ riders =
                   , cd      = 9
                   , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, riding B]
     , phantasm  = { name   = "Ascalon"
                   , desc   = "Blessed Sword of Force Subversion"
@@ -821,8 +821,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 8
-    , stats     = { base =  { atk = 1314, hp = 1625 }
-                  , max =   { atk = 7076, hp = 9028 }
+    , stats     = { base  = { atk = 1314, hp = 1625 }
+                  , max   = { atk = 7076, hp = 9028 }
                   , grail = { atk = 9576, hp = 12240 }
                   }
     , skills    = [ { name  = "Tengu's Strategy"
@@ -845,7 +845,7 @@ riders =
                              , Grant Self 1 StarUp <| Range 50 100
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, riding APlus]
     , phantasm  = { name   = "Dan-No-Ura Eight-Boat Leap"
                   , desc   = "Dan No Ura—Hassoutobi"
@@ -886,8 +886,8 @@ riders =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 24
-    , stats     = { base =  { atk = 1337,  hp = 1608 }
-                  , max =   { atk = 7200, hp = 8937 }
+    , stats     = { base  = { atk = 1337,  hp = 1608 }
+                  , max   = { atk = 7200, hp = 8937 }
                   , grail = { atk = 9744, hp = 12117 }
                   }
     , skills    = [ { name  = "Mystic Eyes"
@@ -910,10 +910,10 @@ riders =
                              , Grant Self 3 NPGen <| Range 20 30
                              ]
                   }
-                ]
+                  ]
     , passives  = [ magicResistance B, independentAction C, divinity EMinus
                   , riding APlus
-                ]
+                  ]
     , phantasm  = { name   = "Bellerophon"
                   , desc   = "Bridle of Chivalry"
                   , rank   = APlus
@@ -953,8 +953,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 12
-    , stats     = { base =  { atk = 1097,  hp = 1488 }
-                  , max =   { atk = 6188, hp = 7907 }
+    , stats     = { base  = { atk = 1097,  hp = 1488 }
+                  , max   = { atk = 6188, hp = 7907 }
                   , grail = { atk = 8967, hp = 11411 }
                   }
     , skills    = [ { name  = "Voyager of the Storm"
@@ -983,7 +983,7 @@ riders =
                              , To (AlliesType Nonbinary) Heal <| Range 1000 2000
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance E]
     , phantasm  = { name   = "Queen Anne's Revenge"
                   , desc   = ""
@@ -1026,8 +1026,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 3
-    , stats     = { base =  { atk = 1366,  hp = 1979 }
-                  , max =   { atk = 7356, hp = 8640 }
+    , stats     = { base  = { atk = 1366,  hp = 1979 }
+                  , max   = { atk = 7356, hp = 8640 }
                   , grail = { atk = 9955, hp = 11714 }
                   }
     , skills    = [ { name  = "Charisma"
@@ -1041,7 +1041,7 @@ riders =
                   , icon    = IconHeart
                   , cd      = 9
                   , effect = [ Chances 50 80 <|
-                            Debuff (EnemyType Humanoid) 1 Charm Full ]
+                            Debuff (EnemyType Human) 1 Charm Full ]
                   }
                   , { name    = "Omen of the Conqueror"
                   , rank   = A
@@ -1049,7 +1049,7 @@ riders =
                   , cd      = 7
                   , effect = [ Grant Party 3 (Performance Quick) <| Range 10 20 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance D, divinity E, riding APlus]
     , phantasm  = { name   = "Bucephalus"
                   , desc   = "The Beginning of Trampling Conquest"
@@ -1090,8 +1090,8 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 3
-    , stats     = { base =  { atk = 1168,  hp = 1823 }
-                  , max =   { atk = 6289, hp = 10130 }
+    , stats     = { base  = { atk = 1168,  hp = 1823 }
+                  , max   = { atk = 6289, hp = 10130 }
                   , grail = { atk = 8511, hp = 13735 }
                   }
     , skills    = [ { name  = "Vow to the Goddess"
@@ -1112,7 +1112,7 @@ riders =
                   , cd      = 7
                   , effect = [ Grant Party 3 (Performance Arts) <| Range 10 20 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance D, riding A]
     , phantasm  = { name   = "Chariot of Boudica"
                   , desc   = "Chariot of Promised Protection"

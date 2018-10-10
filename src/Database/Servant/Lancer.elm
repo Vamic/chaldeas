@@ -14,8 +14,8 @@ lancers =
     , attr      = Star
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1758,  hp = 2174 }
-                  , max =   { atk = 11375, hp = 14825 }
+    , stats     = { base  = { atk = 1758,  hp = 2174 }
+                  , max   = { atk = 11375, hp = 14825 }
                   , grail = { atk = 12452, hp = 16241 }
                   }
     , skills    = [ { name  = "Wisdom of Dun Scaith"
@@ -43,7 +43,7 @@ lancers =
                              , Grant Self 1 (AttackVs Undead) <| Range 50 100
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A]
     , phantasm  = { name   = "Gáe Bolg Alternative"
                   , desc   = "Soaring Spear that Pierces with Death"
@@ -86,8 +86,8 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 10
-    , stats     = { base =  { atk = 1850,  hp = 1999 }
-                  , max =   { atk = 11976, hp = 13632 }
+    , stats     = { base  = { atk = 1850,  hp = 1999 }
+                  , max   = { atk = 11976, hp = 13632 }
                   , grail = { atk = 13110, hp = 14934 }
                   }
     , skills    = [ { name  = "Knowledge of the Deprived"
@@ -115,7 +115,7 @@ lancers =
                              , Grant Self 3 CritUp <| Range 20 40
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, divinity A, riding A]
     , phantasm  = { name   = "Vasavi Shakti"
                   , desc   = "O Sun, Abide to Death"
@@ -156,8 +156,8 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 5
-    , stats     = { base =  { atk = 1657,  hp = 2221 }
-                  , max =   { atk = 10726, hp = 15147 }
+    , stats     = { base  = { atk = 1657,  hp = 2221 }
+                  , max   = { atk = 10726, hp = 15147 }
                   , grail = { atk = 11741, hp = 16594 }
                   }
     , skills    = [ { name  = "Beach Flower"
@@ -191,7 +191,7 @@ lancers =
                              , Debuff Self 1 StunBomb Full
                              ]
                   }
-                ]
+                  ]
     , passives  = [riding A, territoryCreation A, divinity APlusPlus]
     , phantasm  = { name   = "Tokonatsu Nikkou—Goddess' Love Parasol"
                   , desc   = ""
@@ -216,7 +216,7 @@ lancers =
                   [(Monument Lancer, 5), (SeedOfYggdrasil, 12), (WarhorsesYoungHorn, 3)]
                   [( Monument Lancer, 12), (WarhorsesYoungHorn, 6)
                   , (ShellOfReminiscence, 12)
-                ]
+                  ]
     , skillUp   = Reinforcement
                   [(GemOf Lancer, 5)]
                   [(GemOf Lancer, 12)]
@@ -234,8 +234,8 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 25
-    , stats     = { base =  { atk = 1766,  hp = 2174 }
-                  , max =   { atk = 11432, hp = 14825 }
+    , stats     = { base  = { atk = 1766,  hp = 2174 }
+                  , max   = { atk = 11432, hp = 14825 }
                   , grail = { atk = 12514, hp = 16241 }
                   }
     , skills    = [ { name  = "Mana Burst (Flame)"
@@ -262,7 +262,7 @@ lancers =
                              , To Ally Heal <| Range 1000 3000
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding A, divinity E]
     , phantasm  = { name   = "Brynhild Romantia"
                   , desc   = "Till Death Divides the Two"
@@ -305,8 +305,8 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 5
-    , stats     = { base =  { atk = 1699,  hp = 2288 }
-                  , max =   { atk = 10995, hp = 15606 }
+    , stats     = { base  = { atk = 1699,  hp = 2288 }
+                  , max   = { atk = 10995, hp = 15606 }
                   , grail = { atk = 12036 , hp = 17097 }
                   }
     , skills    = [ { name  = "Mana Burst"
@@ -329,7 +329,7 @@ lancers =
                              , To Self RemoveDebuffs Full
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding A]
     , phantasm  = { name   = "Rhongomyniad"
                   , desc   = "Spear Shining at the End of the World"
@@ -356,7 +356,7 @@ lancers =
                   [(Monument Lancer, 5), (GreatKnightMedal, 20), (WarhorsesYoungHorn, 3)]
                   [( Monument Lancer, 12), (WarhorsesYoungHorn, 6)
                   , (DragonsReverseScale, 5)
-                ]
+                  ]
     , skillUp   = Reinforcement
                   [(GemOf Lancer, 5)]
                   [(GemOf Lancer, 12)]
@@ -374,8 +374,8 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 29
-    , stats     = { base =  { atk = 1661,  hp = 1881 }
-                  , max =   { atk = 9968, hp = 11761 }
+    , stats     = { base  = { atk = 1661,  hp = 1881 }
+                  , max   = { atk = 9968, hp = 11761 }
                   , grail = { atk = 12069, hp = 14260 }
                   }
     , skills    = [ { name  = "Mana Burst"
@@ -399,7 +399,7 @@ lancers =
                   , cd      = 7
                   , effect = [ Grant Party 3 AttackUp <| Range 6 12 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, riding A]
     , phantasm  = { name   = "Rhongomyniad"
                   , desc   = "Spear that Shines to the End of the World"
@@ -426,7 +426,7 @@ lancers =
                   [(Monument Lancer, 4), (PhoenixFeather, 7), (DragonsReverseScale, 2)]
                   [( Monument Lancer, 10), (DragonsReverseScale, 4)
                   , (HeartOfTheForeignGod, 4)
-                ]
+                  ]
     , skillUp   = Reinforcement
                   [(GemOf Lancer, 4)]
                   [(GemOf Lancer, 10)]
@@ -444,8 +444,8 @@ lancers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 14
-    , stats     = { base =  { atk = 1608,  hp = 1817 }
-                  , max =   { atk = 9653, hp = 11360 }
+    , stats     = { base  = { atk = 1608,  hp = 1817 }
+                  , max   = { atk = 9653, hp = 11360 }
                   , grail = { atk = 11688, hp = 13774 }
                   }
     , skills    = [ { name  = "Chinese Martial Arts (Liu He Da Qiang)"
@@ -472,7 +472,7 @@ lancers =
                              , Grant Self 1 (Performance Arts) <| Range 30 50
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance D]
     , phantasm  = { name   = "Shen Qiang Wu Er Da"
                   , desc   = "Divine Spear—No Second Strike"
@@ -515,8 +515,8 @@ lancers =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1489,  hp = 1899 }
-                  , max =   { atk = 8936, hp = 11870 }
+    , stats     = { base  = { atk = 1489,  hp = 1899 }
+                  , max   = { atk = 8936, hp = 11870 }
                   , grail = { atk = 10820, hp = 14392 }
                   }
     , skills    = [ { name  = "Passionate Summer"
@@ -540,7 +540,7 @@ lancers =
                              , Grant Enemy 3 AttackUp <| Flat 20
                              ]
                   }
-                ]
+                  ]
     , passives  = [madness EX, magicResistance D]
     , phantasm  = { name   = "Dojo-ji Bell Form 108—Karyu-nagi"
                   , desc   = ""
@@ -583,8 +583,8 @@ lancers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 4
-    , stats     = { base =  { atk = 1520,  hp = 1899 }
-                  , max =   { atk = 9122, hp = 11870 }
+    , stats     = { base  = { atk = 1520,  hp = 1899 }
+                  , max   = { atk = 9122, hp = 11870 }
                   , grail = { atk = 11045, hp = 14392 }
                   }
     , skills    = [ { name  = "Charisma"
@@ -605,7 +605,7 @@ lancers =
                   , cd      = 9
                   , effect = [ Times 1 << Grant Self 4 Guts <| Range 750 2000 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance A, territoryCreation B]
     , phantasm  = { name   = "Báthory Erzsébet"
                   , desc   = "Fresh Blood Demoness"
@@ -646,8 +646,8 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 9
-    , stats     = { base =  { atk = 1488,  hp = 2040 }
-                  , max =   { atk = 8930, hp = 12750 }
+    , stats     = { base  = { atk = 1488,  hp = 2040 }
+                  , max   = { atk = 8930, hp = 12750 }
                   , grail = { atk = 10812, hp = 15459 }
                   }
     , skills    = [ { name  = "Clairvoyance"
@@ -671,7 +671,7 @@ lancers =
                   , cd      = 7
                   , effect = [ Grant Self 1 (Performance Arts) <| Range 24 40 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, divinity D]
     , phantasm  = { name   = "Mac an Luin"
                   , desc   = "Undefeated Violet Flower"
@@ -714,8 +714,8 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 8
-    , stats     = { base =  { atk = 1334,  hp = 1726 }
-                  , max =   { atk = 7239, hp = 9593 }
+    , stats     = { base  = { atk = 1334,  hp = 1726 }
+                  , max   = { atk = 7239, hp = 9593 }
                   , grail = { atk = 9797, hp = 13007 }
                   }
     , skills    = [ { name  = "Battle Continuation"
@@ -740,7 +740,7 @@ lancers =
                              , To Self Heal <| Range 500 1500
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, divinity B]
     , phantasm  = { name   = "Gáe Bolg"
                   , desc   = "Barbed Spear that Pierces with Death"
@@ -783,8 +783,8 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 13
-    , stats     = { base =  { atk = 1315,  hp = 1817 }
-                  , max =   { atk = 7082, hp = 10098 }
+    , stats     = { base  = { atk = 1315,  hp = 1817 }
+                  , max   = { atk = 7082, hp = 10098 }
                   , grail = { atk = 9584, hp = 13691 }
                   }
     , skills    = [ { name  = "Rune Spell"
@@ -809,7 +809,7 @@ lancers =
                   , cd      = 7
                   , effect = [ Grant Self 3 (AttackVs Beast) <| Range 40 60 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C, divinity B]
     , phantasm  = { name   = "Gáe Bolg"
                   , desc   = "The Spear which Reverses Causality"
@@ -852,8 +852,8 @@ lancers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 7
-    , stats     = { base =  { atk = 1168,  hp = 1498 }
-                  , max =   { atk = 6583, hp = 7959 }
+    , stats     = { base  = { atk = 1168,  hp = 1498 }
+                  , max   = { atk = 6583, hp = 7959 }
                   , grail = { atk = 9539, hp = 11486 }
                   }
     , skills    = [ { name  = "Rear Guard's Pride"
@@ -876,7 +876,7 @@ lancers =
                   , cd      = 7
                   , effect = [ Grant Party 3 (Performance Buster) <| Range 15 25 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance C]
     , phantasm  = { name   = "Thermopylae Enomotia"
                   , desc   = "Guardian of the Hot Gates"
@@ -919,8 +919,8 @@ lancers =
     , attr      = Star
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 3
-    , stats     = { base =  { atk = 1344,  hp = 1779 }
-                  , max =   { atk = 7239, hp = 9883 }
+    , stats     = { base  = { atk = 1344,  hp = 1779 }
+                  , max   = { atk = 7239, hp = 9883 }
                   , grail = { atk = 9797, hp = 13400 }
                   }
     , skills    = [ { name  = "Natural Body"
@@ -948,7 +948,7 @@ lancers =
                              , Grant Ally 1 (Performance Buster) <| Range 10 30
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B]
     , phantasm  = { name   = "Magna Voluisse Magnum"
                   , desc   = "All Things Lead to My Spear"
@@ -989,8 +989,8 @@ lancers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 3
-    , stats     = { base =  { atk = 1334,  hp = 1726 }
-                  , max =   { atk = 6928 , hp = 10200 }
+    , stats     = { base  = { atk = 1334,  hp = 1726 }
+                  , max   = { atk = 6928 , hp = 10200 }
                   , grail = { atk = 9376, hp = 13829 }
                   }
     , skills    = [ { name  = "Tactics"
@@ -1015,7 +1015,7 @@ lancers =
                              , To Self Heal <| Range 800 2000
                              ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Durindana"
                   , desc   = "Ultimate Unbroken Spear"
@@ -1056,8 +1056,8 @@ lancers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 7
-    , stats     = { base =  { atk = 1029,  hp = 1722 }
-                  , max =   { atk = 5801, hp = 9149 }
+    , stats     = { base  = { atk = 1029,  hp = 1722 }
+                  , max   = { atk = 5801, hp = 9149 }
                   , grail = { atk = 8406, hp = 13204 }
                   }
     , skills    = [ { name  = "Vengeful Spirit Exorcism"
@@ -1080,7 +1080,7 @@ lancers =
                   , cd      = 10
                   , effect = [ Chances 60 80 <| Debuff Enemies 1 SealNP Full ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance CPlus]
     , phantasm  = { name   = "Pilgrimage of the Five Hundred Arhat"
                   , desc   = ""
@@ -1121,8 +1121,8 @@ lancers =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 8
-    , stats     = { base =  { atk = 1277,  hp = 1817 }
-                  , max =   { atk = 6877, hp = 10098 }
+    , stats     = { base  = { atk = 1277,  hp = 1817 }
+                  , max   = { atk = 6877, hp = 10098 }
                   , grail = { atk = 9307, hp = 13691 }
                   }
     , skills    = [ { name  = "Mind's Eye (True)"
@@ -1146,7 +1146,7 @@ lancers =
                   , cd      = 7
                   , effect = [ Grant Self 3 StarUp <| Range 30 50 ]
                   }
-                ]
+                  ]
     , passives  = [magicResistance B]
     , phantasm  = { name   = "Gáe Dearg and Gáe Buidhe"
                   , desc   = "Crimson Rose of Exorcism and Yellow Rose of Mortality"

@@ -1,11 +1,11 @@
 module Database.Servant exposing 
   ( Servant, eqServant, OrdServant, ordServant
-  , Deck(..), showDeck
+  , Deck(..)
   , Ratings
   , NoblePhantasm
   , Hits
   , Gen
-  , PhantasmType(..), showPhantasmType, phantasmType
+  , PhantasmType(..), phantasmType
   , Ascension(..)
   , Reinforcement(..)
   , getDeck
@@ -41,7 +41,6 @@ type alias Servant =
     , skillUp  : Reinforcement
     }
 
-
 type alias OrdServant = Int
 
 ordServant : Servant -> OrdServant
@@ -51,12 +50,6 @@ eqServant : Servant -> Servant -> Bool
 eqServant = on (==) ordServant
 
 type Deck = Deck Card Card Card Card Card
-
-showDeck : Deck -> String
-showDeck (Deck a b c d e) = 
-    [a, b, c, d, e]
-    |> List.map (Debug.toString >> String.left 1)
-    >> String.concat
 
 type alias Ratings = 
     { damage     : Int 
@@ -94,12 +87,6 @@ type alias Gen =
     }
 
 type PhantasmType = SingleTarget | MultiTarget | Support
-
-showPhantasmType : PhantasmType -> String
-showPhantasmType a = case a of
-  SingleTarget -> "Single-Target"
-  MultiTarget  -> "Multi-Target"
-  Support      -> "Support"
 
 type Ascension
     = Welfare String

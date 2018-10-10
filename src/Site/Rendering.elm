@@ -59,7 +59,7 @@ render a st sorts nav = case a of
         else
           [E.onClick ClearAll]
       ] ++
-        ( List.filter (.tab >> exclusive >> not) st.allFilters 
+        ( List.filter (not << exclusive << .tab) st.allFilters 
           |> List.concatMap (filterSection st)
         )
     ]

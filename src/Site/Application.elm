@@ -57,7 +57,7 @@ app sStore ceStore =
             |> List.reverse
             >> List.head
             >> Maybe.withDefault ""
-        mineOnly = String.startsWith "MyServants" url.path
+        mineOnly = String.contains "MyServants" url.path
         ceModel  = focusFromPath path .name <| ceChild.init flags key
         sModel   = focusFromPath path (.base >> .name) <| sChild.init flags key
         {extra}  = sModel

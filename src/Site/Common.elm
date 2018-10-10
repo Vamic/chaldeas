@@ -30,15 +30,11 @@ setFocus key root a = case a of
   Nothing   -> setPath key [root]
   Just name -> Cmd.batch [scrollToTop "focus", setPath key [root, urlName name]]
 
-text : String -> List (Html (SiteMsg a b c))
-text a = [H.text a]
-
 toCell : Bool -> Float -> Html (SiteMsg a b c)
 toCell isPercent =
     places 0 -- TODO
     >> doIf isPercent (flip (++) "%")
-    >> text
-    >> H.td []
+    >> text_ H.td
 
 lvlRow : RangeInfo -> Html (SiteMsg a b c)
 lvlRow r = 
@@ -100,7 +96,7 @@ a_ : String -> SiteMsg a b c -> Html (SiteMsg a b c)
 a_ label click = H.a [E.onClick click] [H.text label]
 
 h_ : Int -> String -> Html (SiteMsg a b c)
-h_ level = (\h -> h [] << text) <| case level of
+h_ level = text_ <| case level of
     1 -> H.h1
     2 -> H.h2
     3 -> H.h3
@@ -165,7 +161,7 @@ table_ headings tbody =
 
 text_ : (List p -> List (Html (SiteMsg a b c)) -> Html (SiteMsg a b c)) 
      -> String -> Html (SiteMsg a b c)
-text_ el = el [] << text
+text_ el txt = el [] [H.text txt]
 
 tr_ : String -> List (Html (SiteMsg a b c)) -> Html (SiteMsg a b c)
 tr_ th td = H.tr [] [text_ H.th th, H.td [] td]

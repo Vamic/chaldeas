@@ -14,8 +14,8 @@ module StandardLibrary exposing
   )
 
 import Dict    exposing (Dict)
-import Json.Encode        as E
-import List.Extra         as List
+import Json.Encode as E
+import List.Extra  as List
 
 type alias Value = E.Value
 
@@ -31,7 +31,7 @@ doIf a = case a of
   False -> always identity
 
 dict : List a -> (a -> (comparable, b)) -> Dict comparable b
-dict xs = Dict.fromList << flip List.map xs
+dict xs = flip List.map xs >> Dict.fromList
 
 enumToOrd : List a -> a -> Int
 enumToOrd xs x = Maybe.withDefault (-1) <| List.findIndex ((==) x) xs

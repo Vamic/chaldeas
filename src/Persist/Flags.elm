@@ -129,7 +129,7 @@ decodeTeam =
     |> D.andThen (List.map keyPair >> Dict.fromList >> D.succeed)
 
 storePreferences : (String -> Value -> Cmd msg) -> Preferences -> Cmd msg
-storePreferences store = store "preferences" << encodePreferences
+storePreferences store = encodePreferences >> store "preferences"
 
 storeTeam : (String -> Value -> Cmd msg) -> Dict OrdServant MyServant -> Cmd msg
-storeTeam store = store "team" << encodeTeam
+storeTeam store = encodeTeam >> store "team"

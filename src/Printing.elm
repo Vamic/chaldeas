@@ -32,8 +32,8 @@ places decimals =
 
 filterOut : String -> String -> String
 filterOut pattern = 
-    String.filter <| 
-    String.fromChar >> flip String.contains pattern >> not
+    String.filter <|
+    not << flip String.contains pattern << String.fromChar
 
 fileName : String -> String
 fileName = filterOut "?:/"

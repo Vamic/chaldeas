@@ -5910,9 +5910,9 @@ var elm$core$Dict$fromList = function (assocs) {
 };
 var author$project$StandardLibrary$dict = function (xs) {
 	return A2(
-		elm$core$Basics$composeL,
-		elm$core$Dict$fromList,
-		A2(author$project$StandardLibrary$flip, elm$core$List$map, xs));
+		elm$core$Basics$composeR,
+		A2(author$project$StandardLibrary$flip, elm$core$List$map, xs),
+		elm$core$Dict$fromList);
 };
 var author$project$MyServant$mapSort = function (ms) {
 	var go = function (sorter) {
@@ -34659,18 +34659,16 @@ var author$project$Site$Common$a_ = F2(
 					elm$html$Html$text(label)
 				]));
 	});
-var author$project$Site$Common$text = function (a) {
-	return _List_fromArray(
-		[
-			elm$html$Html$text(a)
-		]);
-};
-var author$project$Site$Common$text_ = function (el) {
-	return A2(
-		elm$core$Basics$composeL,
-		el(_List_Nil),
-		author$project$Site$Common$text);
-};
+var author$project$Site$Common$text_ = F2(
+	function (el, txt) {
+		return A2(
+			el,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text(txt)
+				]));
+	});
 var elm$core$Dict$member = F2(
 	function (key, dict) {
 		var _n0 = A2(elm$core$Dict$get, key, dict);
@@ -34857,12 +34855,12 @@ var elm$core$String$fromChar = function (_char) {
 var author$project$Printing$filterOut = function (pattern) {
 	return elm$core$String$filter(
 		A2(
-			elm$core$Basics$composeR,
-			elm$core$String$fromChar,
+			elm$core$Basics$composeL,
 			A2(
-				elm$core$Basics$composeR,
-				A2(author$project$StandardLibrary$flip, elm$core$String$contains, pattern),
-				elm$core$Basics$not)));
+				elm$core$Basics$composeL,
+				elm$core$Basics$not,
+				A2(author$project$StandardLibrary$flip, elm$core$String$contains, pattern)),
+			elm$core$String$fromChar));
 };
 var author$project$Printing$fileName = author$project$Printing$filterOut('?:/');
 var elm$html$Html$img = _VirtualDom_node('img');
@@ -36332,12 +36330,7 @@ var elm$html$Html$h4 = _VirtualDom_node('h4');
 var elm$html$Html$h5 = _VirtualDom_node('h5');
 var elm$html$Html$h6 = _VirtualDom_node('h6');
 var author$project$Site$Common$h_ = function (level) {
-	return function (h) {
-		return A2(
-			elm$core$Basics$composeL,
-			h(_List_Nil),
-			author$project$Site$Common$text);
-	}(
+	return author$project$Site$Common$text_(
 		function () {
 			switch (level) {
 				case 1:
@@ -44053,11 +44046,11 @@ var author$project$Site$Rendering$render = F4(
 								A2(
 									elm$core$List$filter,
 									A2(
-										elm$core$Basics$composeR,
+										elm$core$Basics$composeL,
+										A2(elm$core$Basics$composeL, elm$core$Basics$not, author$project$Site$Algebra$exclusive),
 										function ($) {
 											return $.tab;
-										},
-										A2(elm$core$Basics$composeR, author$project$Site$Algebra$exclusive, elm$core$Basics$not)),
+										}),
 									st.allFilters))))
 					]);
 		}
@@ -44218,9 +44211,9 @@ var author$project$Persist$Flags$encodePreferences = function () {
 }();
 var author$project$Persist$Flags$storePreferences = function (store) {
 	return A2(
-		elm$core$Basics$composeL,
-		store('preferences'),
-		author$project$Persist$Flags$encodePreferences);
+		elm$core$Basics$composeR,
+		author$project$Persist$Flags$encodePreferences,
+		store('preferences'));
 };
 var author$project$Site$Algebra$DoNothing = {$: 'DoNothing'};
 var elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
@@ -44578,9 +44571,9 @@ var author$project$Persist$Flags$encodeTeam = A2(
 		elm$json$Json$Encode$list(author$project$Persist$Flags$encodeMyServant)));
 var author$project$Persist$Flags$storeTeam = function (store) {
 	return A2(
-		elm$core$Basics$composeL,
-		store('team'),
-		author$project$Persist$Flags$encodeTeam);
+		elm$core$Basics$composeR,
+		author$project$Persist$Flags$encodeTeam,
+		store('team'));
 };
 var author$project$Site$Algebra$MineOnly = function (a) {
 	return {$: 'MineOnly', a: a};
@@ -45355,10 +45348,10 @@ var elm_community$list_extra$List$Extra$remove = F2(
 var author$project$Site$Servant$Filters$singleFilter = F3(
 	function (has, tab, x) {
 		return author$project$Site$Algebra$exclusive(tab) ? A3(
-			elm$core$Basics$composeL,
+			elm$core$Basics$composeR,
+			elm_community$list_extra$List$Extra$remove(x),
 			elm$core$List$map(
 				A3(author$project$Site$Filtering$matchFilter, elm$core$Maybe$Nothing, has, tab)),
-			elm_community$list_extra$List$Extra$remove(x),
 			author$project$Database$getAll(has)) : _List_fromArray(
 			[
 				A4(author$project$Site$Filtering$matchFilter, elm$core$Maybe$Nothing, has, tab, x)
@@ -45519,10 +45512,7 @@ var author$project$Site$Common$toCell = function (isPercent) {
 				author$project$StandardLibrary$doIf,
 				isPercent,
 				A2(author$project$StandardLibrary$flip, elm$core$Basics$append, '%')),
-			A2(
-				elm$core$Basics$composeR,
-				author$project$Site$Common$text,
-				elm$html$Html$td(_List_Nil))));
+			author$project$Site$Common$text_(elm$html$Html$td)));
 };
 var author$project$Site$Servant$Component$npRow = function (r) {
 	var step = r.max - r.min;
@@ -47144,7 +47134,7 @@ var author$project$Site$Application$app = F2(
 							return $.name;
 						}),
 					A2(sChild.init, flags, key));
-				var mineOnly = A2(elm$core$String$startsWith, 'MyServants', url.path);
+				var mineOnly = A2(elm$core$String$contains, 'MyServants', url.path);
 				var ceModel = A3(
 					author$project$Site$Application$focusFromPath,
 					path,

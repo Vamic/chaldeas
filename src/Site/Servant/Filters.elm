@@ -52,7 +52,7 @@ scheduledFilters =
 singleFilter : Has Servant a -> FilterTab -> a -> List (Filter Servant)
 singleFilter has tab x = 
   if exclusive tab then
-    List.map (matchFilter Nothing has tab) << List.remove x <| getAll has
+    getAll has |> List.remove x >> List.map (matchFilter Nothing has tab)
   else
     [matchFilter Nothing has tab x]
 

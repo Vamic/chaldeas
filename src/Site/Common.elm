@@ -32,13 +32,13 @@ setFocus key root a = case a of
   Nothing   -> setPath key [root]
   Just name -> Cmd.batch [scrollToTop "focus", setPath key [root, urlName name]]
 
-toCell : Bool -> Float -> Html (SiteMsg a b c)
+toCell : Bool -> Float -> Html msg
 toCell isPercent =
     places 0 -- TODO
     >> doIf isPercent (flip (++) "%")
     >> text_ H.td
 
-lvlRow : RangeInfo -> Html (SiteMsg a b c)
+lvlRow : RangeInfo -> Html msg
 lvlRow r = 
   let
     step = (r.max - r.min) / 10
@@ -94,10 +94,10 @@ effectEl getEffects ef =
       Nothing     -> []
       Just filter -> [P.class "link", E.onClick <| FilterBy [filter]]
 
-a_ : String -> SiteMsg a b c -> Html (SiteMsg a b c)
+a_ : String -> msg -> Html msg
 a_ label click = H.a [E.onClick click] [H.text label]
 
-h_ : Int -> String -> Html (SiteMsg a b c)
+h_ : Int -> String -> Html msg
 h_ level = text_ <| case level of
     1 -> H.h1
     2 -> H.h2
@@ -106,15 +106,14 @@ h_ level = text_ <| case level of
     5 -> H.h5
     _ -> H.h6 
 
-button_ : String -> Bool -> SiteMsg a b c -> Html (SiteMsg a b c)
+button_ : String -> Bool -> msg -> Html msg
 button_ label enable click =
   let
     meta = if enable then [E.onClick click] else [P.disabled True]
   in
     H.button meta [H.text label]
 
-checkbox_ : Maybe (Html (SiteMsg a b c)) -> String -> Bool 
-         -> List (Html (SiteMsg a b c))
+checkbox_ : Maybe (Html msg) -> String -> Bool -> List (Html msg)
 checkbox_ icon label checked =
     [ H.input [P.type_ "checkbox", P.checked checked] []
     , H.label [] <| case icon of
@@ -147,13 +146,13 @@ int_ minVal maxVal actualVal changed =
       ] []
     ]
 
-radio_ : String -> Bool -> List (Html (SiteMsg a b c))
+radio_ : String -> Bool -> List (Html msg)
 radio_ label checked =
     [ H.input [P.type_ "radio", P.checked checked] [] 
     , text_ H.label label
     ]
 
-table_ : List String -> List (Html (SiteMsg a b c)) -> Html (SiteMsg a b c)
+table_ : List String -> List (Html msg) -> Html msg
 table_ headings tbody = 
     H.table []
     [ H.colgroup [] <| List.map (always <| H.col [] []) headings
@@ -161,8 +160,7 @@ table_ headings tbody =
     , H.tbody [] tbody
     ]
 
-text_ : (List p -> List (Html (SiteMsg a b c)) -> Html (SiteMsg a b c)) 
-     -> String -> Html (SiteMsg a b c)
+text_ : (List p -> List (Html msg) -> Html msg) -> String -> Html msg
 text_ el txt = el [] [H.text txt]
 
 tr_ : String -> List (Html (SiteMsg a b c)) -> Html (SiteMsg a b c)

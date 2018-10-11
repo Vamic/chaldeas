@@ -70,10 +70,14 @@ atAscension {level, base} = case base.rarity of
     else                     4
 
 skillWishlist : List MyServant -> List (Material, Int)
-skillWishlist xs = reduceMats <<
-    flip List.concatMap xs <| \ms -> 
+skillWishlist xs = 
+  let
+    bind = flip List.concatMap
+  in
+    reduceMats <<
+    bind xs <| \ms -> 
     let reinforce = getReinforcements ms.base in
-    flip List.concatMap ms.skills <| \skillLvl -> 
+    bind ms.skills <| \skillLvl -> 
     List.drop (skillLvl - 1) reinforce
 
 ascendWishlist : List MyServant -> List (Material, Int)

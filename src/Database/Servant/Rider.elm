@@ -18,29 +18,29 @@ riders =
                   , max   = { atk = 11971, hp = 12830 }
                   , grail = { atk = 13104, hp = 14056 }
                   }
-    , skills    = [ { name  = "Charisma"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
-                  }
-                  , { name    = "Imperial Privilege"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Self Heal <| Range 1000 3000
-                             , Chance 60 << Grant Self 3 AttackUp <| Range 20 40
-                             , Chance 60 << Grant Self 3 DefenseUp <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Protection of the Sun God"
-                  , rank   = A
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Party GaugeUp <| Flat 20
-                             , Grant Party 1 BuffUp <| Range 20 40
-                             ]
-                  }
+    , skills    = [ { name   = "Charisma"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
+                    }
+                  , { name   = "Imperial Privilege"
+                    , rank   = A
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Self Heal <| Range 1000 3000
+                               , Chance 60 << Grant Self 3 AttackUp <| Range 20 40
+                               , Chance 60 << Grant Self 3 DefenseUp <| Range 20 40
+                               ]
+                    }
+                  , { name   = "Protection of the Sun God"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Party GaugeUp <| Flat 20
+                               , Grant Party 1 BuffUp <| Range 20 40
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding APlus, divinity B]
     , phantasm  = { name   = "Ramesseum Tentyris"
@@ -88,29 +88,29 @@ riders =
                   , max   = { atk = 11326, hp = 12830 }
                   , grail = { atk = 12398, hp = 14056 }
                   }
-    , skills    = [ { name  = "Voyager of the Storm"
-                  , rank   = APlus
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 NPUp <| Range 8.5 17
-                             , Grant Party 1 AttackUp <| Range 8.5 17
-                             ]
-                  }
-                  , { name    = "Golden Rule"
-                  , rank   = B
-                  , icon    = IconNobleUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 NPGen <| Range 18 45 ]
-                  }
-                  , { name    = "Pioneer of the Stars"
-                  , rank   = EX
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Range 30 50
-                             , Grant Self 3 IgnoreInvinc Full
-                             , To Party GainStars <| Flat 10
-                             ]
-                  }
+    , skills    = [ { name   = "Voyager of the Storm"
+                    , rank   = APlus
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 8.5 17
+                               , Grant Party 1 AttackUp <| Range 8.5 17
+                               ]
+                    }
+                  , { name   = "Golden Rule"
+                    , rank   = B
+                    , icon   = IconNobleUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 NPGen <| Range 18 45 ]
+                    }
+                  , { name   = "Pioneer of the Stars"
+                    , rank   = EX
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 30 50
+                               , Grant Self 3 IgnoreInvinc Full
+                               , To Party GainStars <| Flat 10
+                               ]
+                    }
                   ]
     , passives  = [magicResistance D, riding D]
     , phantasm  = { name   = "Golden Wild Hunt"
@@ -134,9 +134,7 @@ riders =
                   [(Piece Rider, 5)]
                   [(Piece Rider, 12), (EvilBone, 22)]
                   [(Monument Rider, 5), (DragonsReverseScale, 2), (DragonFang, 24)]
-                  [( Monument Rider, 12), (DragonsReverseScale, 4)
-                  , (HeartOfTheForeignGod, 5)
-                  ]
+                  [( Monument Rider, 12), (DragonsReverseScale, 4), (HeartOfTheForeignGod, 5)]
     , skillUp   = Reinforcement
                   [(GemOf Rider, 5)]
                   [(GemOf Rider, 12)]
@@ -158,26 +156,26 @@ riders =
                   , max   = { atk = 11560, hp = 13219 }
                   , grail = { atk = 12654, hp = 14482 }
                   }
-    , skills    = [ { name  = "Charisma"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 10 20 ]
-                  }
-                  , { name    = "Tactics"
-                  , rank   = B
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 NPUp <| Range 9 18 ]
-                  }
-                  , { name    = "Lightning Conqueror"
-                  , rank   = EX
-                  , icon    = IconBusterUp
-                  , cd      = 8
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50
-                             , Grant Self 1 StarUp <| Flat 50
-                             ]
-                  }
+    , skills    = [ { name   = "Charisma"
+                    , rank   = A
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10 20 ]
+                    }
+                  , { name   = "Tactics"
+                    , rank   = B
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 9 18 ]
+                    }
+                  , { name   = "Lightning Conqueror"
+                    , rank   = EX
+                    , icon   = IconBusterUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50
+                               , Grant Self 1 StarUp <| Flat 50
+                               ]
+                    }
                   ]
     , passives  = [magicResistance D, riding APlus, divinity C]
     , phantasm  = { name   = "Ionioi Hetairoi"
@@ -223,28 +221,27 @@ riders =
                   , max   = { atk = 10296, hp = 13968 }
                   , grail = { atk = 11270, hp = 15303 }
                   }
-    , skills    = [ { name  = "Golden Rule (Body)"
-                  , rank   = A
-                  , icon    = IconHealTurn
-                  , cd      = 8
-                  , effect = [ Grant Self 3 DebuffResist Full
-                             , Grant Self 3 HealPerTurn <| Range 500 1000
-                             , Grant Self 3 GaugePerTurn <| Flat 10
-                             ]
-                  }
-                  , { name    = "Charisma"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
-                  }
-                  , { name    = "Siren Song"
-                  , rank   = C
-                  , icon    = IconHeart
-                  , cd      = 9
-                  , effect = [ Chances 50 80 <|
-                            Debuff (EnemyType Male) 1 Charm Full ]
-                  }
+    , skills    = [ { name   = "Golden Rule (Body)"
+                    , rank   = A
+                    , icon   = IconHealTurn
+                    , cd     = 8
+                    , effect = [ Grant Self 3 DebuffResist Full
+                               , Grant Self 3 HealPerTurn <| Range 500 1000
+                               , Grant Self 3 GaugePerTurn <| Flat 10
+                               ]
+                    }
+                  , { name   = "Charisma"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
+                    }
+                  , { name   = "Siren Song"
+                    , rank   = C
+                    , icon   = IconHeart
+                    , cd     = 9
+                    , effect = [ Chances 50 80 <| Debuff (EnemyType Male) 1 Charm Full ]
+                    }
                   ]
     , passives  = [magicResistance B, riding A]
     , phantasm  = { name   = "Chariot My Love"
@@ -289,31 +286,31 @@ riders =
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 9
     , stats     = { base  = { atk = 1636,  hp = 1728 }
-                  , max   = { atk = 9819, hp = 10800 }
+                  , max   = { atk = 9819,  hp = 10800 }
                   , grail = { atk = 11889, hp = 13095 }
                   }
-    , skills    = [ { name  = "Long-Distance Dash"
-                  , rank   = A
-                  , icon    = IconQuickUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 (Performance Quick) <| Range 20 30
-                             , Grant Self 3 StarUp <| Range 30 50
-                             ]
-                  }
-                  , { name    = "Animal Communication"
-                  , rank   = C
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Range 30 50 ]
-                  }
-                  , { name    = "Natural Body"
-                  , rank   = A
-                  , icon    = IconHoodUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 OffensiveResist <| Range 60 120
-                             , To Self Heal <| Range 1000 3000
-                             ]
-                  }
+    , skills    = [ { name   = "Long-Distance Dash"
+                    , rank   = A
+                    , icon   = IconQuickUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 (Performance Quick) <| Range 20 30
+                               , Grant Self 3 StarUp <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Animal Communication"
+                    , rank   = C
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 30 50 ]
+                    }
+                  , { name   = "Natural Body"
+                    , rank   = A
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 OffensiveResist <| Range 60 120
+                               , To Self Heal <| Range 1000 3000
+                               ]
+                    }
                   ]
     , passives  = [divinity C]
     , phantasm  = { name   = "Golden Drive, Good Night"
@@ -352,29 +349,29 @@ riders =
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 29
     , stats     = { base  = { atk = 1543,  hp = 1805 }
-                  , max   = { atk = 9258, hp = 11286 }
+                  , max   = { atk = 9258,  hp = 11286 }
                   , grail = { atk = 11209, hp = 13684 }
                   }
-    , skills    = [ { name  = "Saint's Gift"
-                  , rank   = EX
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Ally Heal <| Range 1500 3500
-                             , Grant Ally 3 StarUp <| Flat 30
-                             ]
-                  }
-                  , { name    = "Intuition"
-                  , rank   = A
-                  , icon    = IconStar
-                  , cd      = 7
-                  , effect = [ To Party GainStars <| Range 5 15 ]
-                  }
-                  , { name    = "Mana Burst"
-                  , rank   = AMinus
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 25 45 ]
-                  }
+    , skills    = [ { name   = "Saint's Gift"
+                    , rank   = EX
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Ally Heal <| Range 1500 3500
+                               , Grant Ally 3 StarUp <| Flat 30
+                               ]
+                    }
+                  , { name   = "Intuition"
+                    , rank   = A
+                    , icon   = IconStar
+                    , cd     = 7
+                    , effect = [ To Party GainStars <| Range 5 15 ]
+                    }
+                  , { name   = "Mana Burst"
+                    , rank   = AMinus
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 25 45 ]
+                    }
                   ]
     , passives  = [magicResistance A, riding A]
     , phantasm  = { name   = "Excalibur Morgan"
@@ -416,30 +413,30 @@ riders =
                   , max   = { atk = 8014, hp = 13068 }
                   , grail = { atk = 9703, hp = 15845 }
                   }
-    , skills    = [ { name  = "Protection of the Faith"
-                  , rank   = A
-                  , icon    = IconHoodUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DebuffResist <| Range 50 100
-                             , To Self Heal <| Range 1000 2500
-                             ]
-                  }
-                  , { name    = "Miracle"
-                  , rank   = DPlus
-                  , icon    = IconHeal
-                  , cd      = 8
-                  , effect = [ To Party Heal <| Range 1000 2000
-                             , To Party RemoveDebuffs Full
-                             ]
-                  }
-                  , { name    = "Oath of the Holy Maiden"
-                  , rank   = C
-                  , icon    = IconShieldDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemy 3 DefenseDown <| Range 10 30
-                             , To Enemy RemoveBuffs Full
-                             ]
-                  }
+    , skills    = [ { name   = "Protection of the Faith"
+                    , rank   = A
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DebuffResist <| Range 50 100
+                               , To Self Heal <| Range 1000 2500
+                               ]
+                    }
+                  , { name   = "Miracle"
+                    , rank   = DPlus
+                    , icon   = IconHeal
+                    , cd     = 8
+                    , effect = [ To Party Heal <| Range 1000 2000
+                               , To Party RemoveDebuffs Full
+                               ]
+                    }
+                  , { name   = "Oath of the Holy Maiden"
+                    , rank   = C
+                    , icon   = IconShieldDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemy 3 DefenseDown <| Range 10 30
+                               , To Enemy RemoveBuffs Full
+                               ]
+                    }
                   ]
     , passives  = [magicResistance A, riding APlusPlus, divinity C]
     , phantasm  = { name   = "Tarasque"
@@ -482,31 +479,31 @@ riders =
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 24
     , stats     = { base  = { atk = 1535,  hp = 1824 }
-                  , max   = { atk = 9212, hp = 11400 }
+                  , max   = { atk = 9212,  hp = 11400 }
                   , grail = { atk = 11154, hp = 13822 }
                   }
-    , skills    = [ { name  = "Cerulean Ride"
-                  , rank   = A
-                  , icon    = IconArtsUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 (Performance Arts) <| Range 20 30 ]
-                  }
-                  , { name    = "Rodeo Flip"
-                  , rank   = APlus
-                  , icon    = IconDodge
-                  , cd      = 9
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 1 StarUp <| Range 30 50
-                             ]
-                  }
-                  , { name    = "Endless Summer"
-                  , rank   = B
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 3 Guts <| Flat 1000
-                             , To Self GaugeUp <| Range 20 30
-                             ]
-                  }
+    , skills    = [ { name   = "Cerulean Ride"
+                    , rank   = A
+                    , icon   = IconArtsUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 (Performance Arts) <| Range 20 30 ]
+                    }
+                  , { name   = "Rodeo Flip"
+                    , rank   = APlus
+                    , icon   = IconDodge
+                    , cd     = 9
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 1 StarUp <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Endless Summer"
+                    , rank   = B
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 3 Guts <| Flat 1000
+                               , To Self GaugeUp <| Range 20 30
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, surfing A]
     , phantasm  = { name   = "Prydwen Tube Riding"
@@ -552,29 +549,28 @@ riders =
                   , max   = { atk = 8293, hp = 12348 }
                   , grail = { atk = 10041, hp = 14972 }
                   }
-    , skills    = [ { name  = "Siren Song"
-                  , rank   = C
-                  , icon    = IconHeart
-                  , cd      = 9
-                  , effect = [ Chances 50 80 <|
-                            Debuff (EnemyType Male) 1 Charm Full ]
-                  }
-                  , { name    = "Beautiful Princess"
-                  , rank   = A
-                  , icon    = IconShield
-                  , cd      = 8
-                  , effect = [ Times 3 <| Grant Self 0 Invincibility Full
-                             , Grant Self 5 HealPerTurn <| Range 200 600
-                             ]
-                  }
-                  , { name    = "God's Grace"
-                  , rank   = B
-                  , icon    = IconStaffUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 MentalSuccess <| Range 10 30
-                             , To Self Heal <| Range 1000 2500
-                             ]
-                  }
+    , skills    = [ { name   = "Siren Song"
+                    , rank   = C
+                    , icon   = IconHeart
+                    , cd     = 9
+                    , effect = [ Chances 50 80 <| Debuff (EnemyType Male) 1 Charm Full ]
+                    }
+                  , { name   = "Beautiful Princess"
+                    , rank   = A
+                    , icon   = IconShield
+                    , cd     = 8
+                    , effect = [ Times 3 <| Grant Self 0 Invincibility Full
+                               , Grant Self 5 HealPerTurn <| Range 200 600
+                               ]
+                    }
+                  , { name   = "God's Grace"
+                    , rank   = B
+                    , icon   = IconStaffUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 MentalSuccess <| Range 10 30
+                               , To Self Heal <| Range 1000 2500
+                               ]
+                    }
                   ]
     , passives  = [magicResistance C, riding APlus]
     , phantasm  = { name   = "Guillotine Breaker"
@@ -619,29 +615,29 @@ riders =
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 29
     , stats     = { base  = { atk = 1504,  hp = 1805 }
-                  , max   = { atk = 9029, hp = 11286 }
+                  , max   = { atk = 9029,  hp = 11286 }
                   , grail = { atk = 10932, hp = 13684 }
                   }
-    , skills    = [ { name  = "Voyage"
-                  , rank   = A
-                  , icon    = IconStarHaloUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 StarUp <| Range 30 50 ]
-                  }
-                  , { name    = "Marksmanship"
-                  , rank   = B
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 CritUp <| Range 50 100 ]
-                  }
-                  , { name    = "Combination"
-                  , rank   = C
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 StarAbsorb <| Range 300 600
-                             , Grant Self 1 AttackUp <| Range 20 30
-                             ]
-                  }
+    , skills    = [ { name   = "Voyage"
+                    , rank   = A
+                    , icon   = IconStarHaloUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 StarUp <| Range 30 50 ]
+                    }
+                  , { name   = "Marksmanship"
+                    , rank   = B
+                    , icon   = IconExclamationUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 CritUp <| Range 50 100 ]
+                    }
+                  , { name   = "Combination"
+                    , rank   = C
+                    , icon   = IconStarUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 StarAbsorb <| Range 300 600
+                               , Grant Self 1 AttackUp <| Range 20 30
+                               ]
+                    }
                   ]
     , passives  = [magicResistance D]
     , phantasm  = { name   = "Caribbean Free Bird"
@@ -684,30 +680,30 @@ riders =
     , deck      = Deck Quick Quick Quick Arts Buster
     , curve     = 24
     , stats     = { base  = { atk = 1489,  hp = 1787 }
-                  , max   = { atk = 8937, hp = 11172 }
+                  , max   = { atk = 8937,  hp = 11172 }
                   , grail = { atk = 10821, hp = 13546 }
                   }
-    , skills    = [ { name  = "Monstrous Strength"
-                  , rank   = CMinus
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 AttackUp <| Range 8 28 ]
-                  }
-                  , { name    = "Trap of Argalia"
-                  , rank   = D
-                  , icon    = IconStun
-                  , cd      = 10
-                  , effect = [ Chances 60 90 <| Debuff Enemy 1 Stun Full ]
-                  }
-                  , { name    = "Evaporation of Reason"
-                  , rank   = D
-                  , icon    = IconStarTurn
-                  , cd      = 10
-                  , effect = [ Chance 65 << Grant Party 3 StarsPerTurn <| Range 5 10
-                             , Chance 65 << Grant Self 3 StarUp <| Range 30 50
-                             , Chance 65 << Grant Self 3 CritUp <| Range 20 40
-                             ]
-                  }
+    , skills    = [ { name   = "Monstrous Strength"
+                    , rank   = CMinus
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 AttackUp <| Range 8 28 ]
+                    }
+                  , { name   = "Trap of Argalia"
+                    , rank   = D
+                    , icon   = IconStun
+                    , cd     = 10
+                    , effect = [ Chances 60 90 <| Debuff Enemy 1 Stun Full ]
+                    }
+                  , { name   = "Evaporation of Reason"
+                    , rank   = D
+                    , icon   = IconStarTurn
+                    , cd     = 10
+                    , effect = [ Chance 65 << Grant Party 3 StarsPerTurn <| Range 5 10
+                               , Chance 65 << Grant Self 3 StarUp <| Range 30 50
+                               , Chance 65 << Grant Self 3 CritUp <| Range 20 40
+                               ]
+                    }
                   ]
     , passives  = [magicResistance A, riding APlus, independentAction B]
     , phantasm  = { name   = "Hippogriff"
@@ -755,28 +751,28 @@ riders =
                   , max   = { atk = 5236, hp = 9200 }
                   , grail = { atk = 7587, hp = 13278 }
                   }
-    , skills    = [ { name  = "Guardian Knight"
-                  , rank   = APlus
-                  , icon    = IconCrosshairUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 Taunt Full
-                             , Grant Self 3 DefenseUp <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Martyr's Soul"
-                  , rank   = BPlus
-                  , icon    = IconHoodUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 MentalResist <| Range 50 100
-                             , To Self Heal <| Range 750 2000
-                             ]
-                  }
-                  , { name    = "Battle Continuation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
-                  }
+    , skills    = [ { name   = "Guardian Knight"
+                    , rank   = APlus
+                    , icon   = IconCrosshairUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 Taunt Full
+                               , Grant Self 3 DefenseUp <| Range 20 40
+                               ]
+                    }
+                  , { name   = "Martyr's Soul"
+                    , rank   = BPlus
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 MentalResist <| Range 50 100
+                               , To Self Heal <| Range 750 2000
+                               ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
+                    }
                   ]
     , passives  = [magicResistance A, riding B]
     , phantasm  = { name   = "Ascalon"
@@ -825,26 +821,26 @@ riders =
                   , max   = { atk = 7076, hp = 9028 }
                   , grail = { atk = 9576, hp = 12240 }
                   }
-    , skills    = [ { name  = "Tengu's Strategy"
-                  , rank   = A
-                  , icon    = IconNobleUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 NPGen <| Range 10 20 ]
-                  }
-                  , { name    = "Charisma"
-                  , rank   = CPlus
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 8.5 17 ]
-                  }
-                  , { name    = "Art of the Swallow"
-                  , rank   = B
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Times 1 <| Grant Self 1 Evasion Full
-                             , Grant Self 1 StarUp <| Range 50 100
-                             ]
-                  }
+    , skills    = [ { name   = "Tengu's Strategy"
+                    , rank   = A
+                    , icon   = IconNobleUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 NPGen <| Range 10 20 ]
+                    }
+                  , { name   = "Charisma"
+                    , rank   = CPlus
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 8.5 17 ]
+                    }
+                  , { name   = "Art of the Swallow"
+                    , rank   = B
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Times 1 <| Grant Self 1 Evasion Full
+                               , Grant Self 1 StarUp <| Range 50 100
+                               ]
+                    }
                   ]
     , passives  = [magicResistance C, riding APlus]
     , phantasm  = { name   = "Dan-No-Ura Eight-Boat Leap"
@@ -886,30 +882,30 @@ riders =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 24
-    , stats     = { base  = { atk = 1337,  hp = 1608 }
+    , stats     = { base  = { atk = 1337, hp = 1608 }
                   , max   = { atk = 7200, hp = 8937 }
                   , grail = { atk = 9744, hp = 12117 }
                   }
-    , skills    = [ { name  = "Mystic Eyes"
-                  , rank   = APlus
-                  , icon    = IconStun
-                  , cd      = 8
-                  , effect = [ Chances 50 100 <| Debuff Enemy 1 Stun Full ]
-                  }
-                  , { name    = "Monstrous Strength"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 2 AttackUp <| Range 10 30 ]
-                  }
-                  , { name    = "Blood Fort Andromeda"
-                  , rank   = B
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Flat 20
-                             , Grant Self 3 NPGen <| Range 20 30
-                             ]
-                  }
+    , skills    = [ { name   = "Mystic Eyes"
+                    , rank   = APlus
+                    , icon   = IconStun
+                    , cd     = 8
+                    , effect = [ Chances 50 100 <| Debuff Enemy 1 Stun Full ]
+                    }
+                  , { name   = "Monstrous Strength"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 2 AttackUp <| Range 10 30 ]
+                    }
+                  , { name   = "Blood Fort Andromeda"
+                    , rank   = B
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Flat 20
+                               , Grant Self 3 NPGen <| Range 20 30
+                               ]
+                    }
                   ]
     , passives  = [ magicResistance B, independentAction C, divinity EMinus
                   , riding APlus
@@ -957,32 +953,32 @@ riders =
                   , max   = { atk = 6188, hp = 7907 }
                   , grail = { atk = 8967, hp = 11411 }
                   }
-    , skills    = [ { name  = "Voyager of the Storm"
-                  , rank   = A
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 NPUp <| Range 8 16
-                             , Grant Party 1 AttackUp <| Range 8 16
-                             ]
-                  }
-                  , { name    = "Pirate's Glory"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 9 27
-                             , Times 1 << Grant Self 0 Guts <| Flat 1
-                             , Debuff Self 3 DebuffVuln <| Flat 50
-                             ]
-                  }
-                  , { name    = "Gentlemanly Love"
-                  , rank   = C
-                  , icon    = IconHeal
-                  , cd      = 8
-                  , effect = [ To Party Heal <| Range 1000 2000
-                             , To (AlliesType Female) Heal <| Range 1000 2000
-                             , To (AlliesType Nonbinary) Heal <| Range 1000 2000
-                             ]
-                  }
+    , skills    = [ { name   = "Voyager of the Storm"
+                    , rank   = A
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 8 16
+                               , Grant Party 1 AttackUp <| Range 8 16
+                               ]
+                    }
+                  , { name   = "Pirate's Glory"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 9 27
+                               , Times 1 << Grant Self 0 Guts <| Flat 1
+                               , Debuff Self 3 DebuffVuln <| Flat 50
+                               ]
+                    }
+                  , { name   = "Gentlemanly Love"
+                    , rank   = C
+                    , icon   = IconHeal
+                    , cd     = 8
+                    , effect = [ To Party Heal <| Range 1000 2000
+                               , To (AlliesType Female) Heal <| Range 1000 2000
+                               , To (AlliesType Nonbinary) Heal <| Range 1000 2000
+                               ]
+                    }
                   ]
     , passives  = [magicResistance E]
     , phantasm  = { name   = "Queen Anne's Revenge"
@@ -1026,29 +1022,28 @@ riders =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 3
-    , stats     = { base  = { atk = 1366,  hp = 1979 }
+    , stats     = { base  = { atk = 1366, hp = 1979 }
                   , max   = { atk = 7356, hp = 8640 }
                   , grail = { atk = 9955, hp = 11714 }
                   }
-    , skills    = [ { name  = "Charisma"
-                  , rank   = C
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 8 16 ]
-                  }
-                  , { name    = "Fair Youth"
-                  , rank   = B
-                  , icon    = IconHeart
-                  , cd      = 9
-                  , effect = [ Chances 50 80 <|
-                            Debuff (EnemyType Human) 1 Charm Full ]
-                  }
-                  , { name    = "Omen of the Conqueror"
-                  , rank   = A
-                  , icon    = IconQuickUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 (Performance Quick) <| Range 10 20 ]
-                  }
+    , skills    = [ { name   = "Charisma"
+                    , rank   = C
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 8 16 ]
+                    }
+                  , { name   = "Fair Youth"
+                    , rank   = B
+                    , icon   = IconHeart
+                    , cd     = 9
+                    , effect = [ Chances 50 80 <| Debuff (EnemyType Human) 1 Charm Full ]
+                    }
+                  , { name   = "Omen of the Conqueror"
+                    , rank   = A
+                    , icon   = IconQuickUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 (Performance Quick) <| Range 10 20 ]
+                    }
                   ]
     , passives  = [magicResistance D, divinity E, riding APlus]
     , phantasm  = { name   = "Bucephalus"
@@ -1094,24 +1089,24 @@ riders =
                   , max   = { atk = 6289, hp = 10130 }
                   , grail = { atk = 8511, hp = 13735 }
                   }
-    , skills    = [ { name  = "Vow to the Goddess"
-                  , rank   = B
-                  , icon    = IconDamageUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 (AttackVs Roman) <| Range 40 60 ]
-                  }
-                  , { name    = "Battle Continuation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
-                  }
-                  , { name    = "Andraste's Protection"
-                  , rank   = A
-                  , icon    = IconArtsUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 (Performance Arts) <| Range 10 20 ]
-                  }
+    , skills    = [ { name   = "Vow to the Goddess"
+                    , rank   = B
+                    , icon   = IconDamageUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 (AttackVs Roman) <| Range 40 60 ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
+                    }
+                  , { name   = "Andraste's Protection"
+                    , rank   = A
+                    , icon   = IconArtsUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 (Performance Arts) <| Range 10 20 ]
+                    }
                   ]
     , passives  = [magicResistance D, riding A]
     , phantasm  = { name   = "Chariot of Boudica"

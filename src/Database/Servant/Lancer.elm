@@ -19,30 +19,30 @@ lancers =
                   , grail = { atk = 12452, hp = 16241 }
                   }
     , skills    = [ { name  = "Wisdom of Dun Scaith"
-                  , rank   = APlus
-                  , icon    = IconDodge
-                  , cd      = 7
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Chance 80 <<
-                            Grant Self 3 CritUp <| Range 30 50
-                             , Chance 80 <<
-                            Grant Self 3 StarAbsorb <| Range 300 500
-                             ]
-                  }
+                    , rank   = APlus
+                    , icon    = IconDodge
+                    , cd      = 7
+                    , effect = [ Grant Self 1 Evasion Full
+                              , Chance 80 <<
+                              Grant Self 3 CritUp <| Range 30 50
+                              , Chance 80 <<
+                              Grant Self 3 StarAbsorb <| Range 300 500
+                              ]
+                    }
                   , { name    = "Primordial Rune"
-                  , rank   = Unknown
-                  , icon    = IconQuickUp
-                  , cd      = 8
-                  , effect = [ Grant Ally 1 (Performance Quick) <| Range 30 50 ]
-                  }
+                    , rank   = Unknown
+                    , icon    = IconQuickUp
+                    , cd      = 8
+                    , effect = [ Grant Ally 1 (Performance Quick) <| Range 30 50 ]
+                    }
                   , { name    = "God-Slayer"
-                  , rank   = B
-                  , icon    = IconDamageUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (AttackVs Divine) <| Range 50 100
-                             , Grant Self 1 (AttackVs Undead) <| Range 50 100
-                             ]
-                  }
+                    , rank   = B
+                    , icon    = IconDamageUp
+                    , cd      = 7
+                    , effect = [ Grant Self 1 (AttackVs Divine) <| Range 50 100
+                              , Grant Self 1 (AttackVs Undead) <| Range 50 100
+                              ]
+                    }
                   ]
     , passives  = [magicResistance A]
     , phantasm  = { name   = "Gáe Bolg Alternative"
@@ -91,30 +91,30 @@ lancers =
                   , grail = { atk = 13110, hp = 14934 }
                   }
     , skills    = [ { name  = "Knowledge of the Deprived"
-                  , rank   = A
-                  , icon    = IconCircuits
-                  , cd      = 8
-                  , effect = [ Debuff Enemy 1 SealNP Full
-                             , Debuff Enemy 1 DebuffVuln <| Range 30 50
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconCircuits
+                    , cd      = 8
+                    , effect = [ Debuff Enemy 1 SealNP Full
+                              , Debuff Enemy 1 DebuffVuln <| Range 30 50
+                              ]
+                    }
                   , { name    = "Mana Burst (Flame)"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 20 30
-                             , Grant Self 1 NPUp <| Range 10 20
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconBusterUp
+                    , cd      = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 20 30
+                              , Grant Self 1 NPUp <| Range 10 20
+                              ]
+                    }
                   , { name    = "Uncrowned Arms Mastership"
-                  , rank   = Unknown
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Flat 25
-                             , Grant Self 3 StarUp <| Range 30 50
-                             , Grant Self 3 CritUp <| Range 20 40
-                             ]
-                  }
+                    , rank   = Unknown
+                    , icon    = IconNoble
+                    , cd      = 8
+                    , effect = [ To Self GaugeUp <| Flat 25
+                              , Grant Self 3 StarUp <| Range 30 50
+                              , Grant Self 3 CritUp <| Range 20 40
+                              ]
+                    }
                   ]
     , passives  = [magicResistance C, divinity A, riding A]
     , phantasm  = { name   = "Vasavi Shakti"
@@ -160,37 +160,37 @@ lancers =
                   , max   = { atk = 10726, hp = 15147 }
                   , grail = { atk = 11741, hp = 16594 }
                   }
-    , skills    = [ { name  = "Beach Flower"
-                  , rank   = EX
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 10 20
-                             , Grant (AlliesType Male) 3 StarUp <| Range 22 42
-                             ]
-                  }
-                  , { name    = "Midsummer Curse"
-                  , rank   = A
-                  , icon    = IconHeart
-                  , cd      = 9
-                  , effect = [ Debuff Enemy 1 Charm Full
-                             , Debuff Enemy 3 DefenseDown <| Range 20 30
-                             , Debuff Enemy 5 Curse <| Range 500 1000
-                             , To Enemy DemeritCharge <| Flat 1
-                             ]
-                  }
-                  , { name    = "Goddess Morph"
-                  , rank   = B
-                  , icon    = IconShield
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Invincibility Full
-                             , Grant Self 1 CritUp <| Range 30 50
-                             , Grant Self 1 StarUp <| Range 30 50
-                             , Grant Self 1 NPGen <| Range 30 50
-                             , Grant Self 1 DebuffResist <| Range 30 50
-                             , Grant Self 1 HealingReceived <| Range 30 50
-                             , Debuff Self 1 StunBomb Full
-                             ]
-                  }
+    , skills    = [ { name   = "Beach Flower"
+                    , rank   = EX
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10 20
+                               , Grant (AlliesType Male) 3 StarUp <| Range 22 42
+                               ]
+                    }
+                  , { name   = "Midsummer Curse"
+                    , rank   = A
+                    , icon   = IconHeart
+                    , cd     = 9
+                    , effect = [ Debuff Enemy 1 Charm Full
+                               , Debuff Enemy 3 DefenseDown <| Range 20 30
+                               , Debuff Enemy 5 Curse <| Range 500 1000
+                               , To Enemy DemeritCharge <| Flat 1
+                               ]
+                    }
+                  , { name   = "Goddess Morph"
+                    , rank   = B
+                    , icon   = IconShield
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Invincibility Full
+                               , Grant Self 1 CritUp <| Range 30 50
+                               , Grant Self 1 StarUp <| Range 30 50
+                               , Grant Self 1 NPGen <| Range 30 50
+                               , Grant Self 1 DebuffResist <| Range 30 50
+                               , Grant Self 1 HealingReceived <| Range 30 50
+                               , Debuff Self 1 StunBomb Full
+                               ]
+                    }
                   ]
     , passives  = [riding A, territoryCreation A, divinity APlusPlus]
     , phantasm  = { name   = "Tokonatsu Nikkou—Goddess' Love Parasol"
@@ -239,29 +239,29 @@ lancers =
                   , grail = { atk = 12514, hp = 16241 }
                   }
     , skills    = [ { name  = "Mana Burst (Flame)"
-                  , rank   = B
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 15 25
-                             , Grant Self 1 NPUp <| Range 8 15
-                             ]
-                  }
+                    , rank   = B
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 15 25
+                               , Grant Self 1 NPUp <| Range 8 15
+                               ]
+                    }
                   , { name    = "Primordial Rune"
-                  , rank   = Unknown
-                  , icon    = IconExclamationDown
-                  , cd      = 8
-                  , effect = [ Debuff Enemy 3 CritChance <| Range 30 50
-                             , Debuff Enemy 1 NPDown <| Range 15 30
-                             ]
-                  }
-                  , { name    = "Hero's Assistant"
-                  , rank   = C
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Ally 3 StarAbsorb <| Range 300 600
-                             , To Ally Heal <| Range 1000 3000
-                             ]
-                  }
+                    , rank   = Unknown
+                    , icon    = IconExclamationDown
+                    , cd      = 8
+                    , effect = [ Debuff Enemy 3 CritChance <| Range 30 50
+                               , Debuff Enemy 1 NPDown <| Range 15 30
+                               ]
+                    }
+                  , { name   = "Hero's Assistant"
+                    , rank   = C
+                    , icon   = IconStarUp
+                    , cd     = 7
+                    , effect = [ Grant Ally 3 StarAbsorb <| Range 300 600
+                               , To Ally Heal <| Range 1000 3000
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding A, divinity E]
     , phantasm  = { name   = "Brynhild Romantia"
@@ -307,28 +307,28 @@ lancers =
     , curve     = 5
     , stats     = { base  = { atk = 1699,  hp = 2288 }
                   , max   = { atk = 10995, hp = 15606 }
-                  , grail = { atk = 12036 , hp = 17097 }
+                  , grail = { atk = 12036, hp = 17097 }
                   }
-    , skills    = [ { name  = "Mana Burst"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
-                  }
-                  , { name    = "Charisma"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
-                  }
-                  , { name    = "Protection of World's End"
-                  , rank   = EX
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Range 30 50
-                             , To Self RemoveDebuffs Full
-                             ]
-                  }
+    , skills    = [ { name   = "Mana Burst"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
+                    }
+                  , { name   = "Charisma"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
+                    }
+                  , { name   = "Protection of World's End"
+                    , rank   = EX
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 30 50
+                               , To Self RemoveDebuffs Full
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding A]
     , phantasm  = { name   = "Rhongomyniad"
@@ -354,9 +354,7 @@ lancers =
                   [(Piece Lancer, 5)]
                   [(Piece Lancer, 12), (DragonFang, 18)]
                   [(Monument Lancer, 5), (GreatKnightMedal, 20), (WarhorsesYoungHorn, 3)]
-                  [( Monument Lancer, 12), (WarhorsesYoungHorn, 6)
-                  , (DragonsReverseScale, 5)
-                  ]
+                  [( Monument Lancer, 12), (WarhorsesYoungHorn, 6), (DragonsReverseScale, 5)]
     , skillUp   = Reinforcement
                   [(GemOf Lancer, 5)]
                   [(GemOf Lancer, 12)]
@@ -375,30 +373,30 @@ lancers =
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 29
     , stats     = { base  = { atk = 1661,  hp = 1881 }
-                  , max   = { atk = 9968, hp = 11761 }
+                  , max   = { atk = 9968,  hp = 11761 }
                   , grail = { atk = 12069, hp = 14260 }
                   }
     , skills    = [ { name  = "Mana Burst"
-                  , rank   = APlus
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 35 55 ]
-                  }
+                    , rank   = APlus
+                    , icon    = IconBusterUp
+                    , cd      = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 35 55 ]
+                    }
                   , { name    = "Protection of World's End"
-                  , rank   = A
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 StarAbsorb <| Range 500 1000
-                             , Grant Self 1 CritUp <| Range 30 50
-                             , To Party GainStars <| Range 5 10
-                             ]
-                  }
+                    , rank   = A
+                    , icon    = IconStarUp
+                    , cd      = 7
+                    , effect = [ Grant Self 1 StarAbsorb <| Range 500 1000
+                              , Grant Self 1 CritUp <| Range 30 50
+                              , To Party GainStars <| Range 5 10
+                              ]
+                    }
                   , { name    = "Charisma"
-                  , rank   = E
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 6 12 ]
-                  }
+                    , rank   = E
+                    , icon    = IconSwordUp
+                    , cd      = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 6 12 ]
+                    }
                   ]
     , passives  = [magicResistance A, riding A]
     , phantasm  = { name   = "Rhongomyniad"
@@ -424,9 +422,7 @@ lancers =
                   [(Piece Lancer, 4)]
                   [(Piece Lancer, 10), (MeteorHorseshoe, 6)]
                   [(Monument Lancer, 4), (PhoenixFeather, 7), (DragonsReverseScale, 2)]
-                  [( Monument Lancer, 10), (DragonsReverseScale, 4)
-                  , (HeartOfTheForeignGod, 4)
-                  ]
+                  [( Monument Lancer, 10), (DragonsReverseScale, 4), (HeartOfTheForeignGod, 4)]
     , skillUp   = Reinforcement
                   [(GemOf Lancer, 4)]
                   [(GemOf Lancer, 10)]
@@ -445,33 +441,33 @@ lancers =
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 14
     , stats     = { base  = { atk = 1608,  hp = 1817 }
-                  , max   = { atk = 9653, hp = 11360 }
+                  , max   = { atk = 9653,  hp = 11360 }
                   , grail = { atk = 11688, hp = 13774 }
                   }
-    , skills    = [ { name  = "Chinese Martial Arts (Liu He Da Qiang)"
-                  , rank   = APlusPlus
-                  , icon    = IconBullseye
-                  , cd      = 8
-                  , effect = [ Grant Self 1 SureHit Full
-                             , Grant Self 1 CritUp <| Range 50 100
-                             ]
-                  }
-                  , { name    = "Sphere Boundary"
-                  , rank   = B
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 1 StarAbsorb <| Range 300 500
-                             ]
-                  }
-                  , { name    = "Juezhao"
-                  , rank   = B
-                  , icon    = IconShieldBreak
-                  , cd      = 8
-                  , effect = [ Grant Self 1 IgnoreInvinc Full
-                             , Grant Self 1 (Performance Arts) <| Range 30 50
-                             ]
-                  }
+    , skills    = [ { name   = "Chinese Martial Arts (Liu He Da Qiang)"
+                    , rank   = APlusPlus
+                    , icon   = IconBullseye
+                    , cd     = 8
+                    , effect = [ Grant Self 1 SureHit Full
+                              , Grant Self 1 CritUp <| Range 50 100
+                              ]
+                    }
+                  , { name   = "Sphere Boundary"
+                    , rank   = B
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 1 StarAbsorb <| Range 300 500
+                               ]
+                    }
+                  , { name   = "Juezhao"
+                    , rank   = B
+                    , icon   = IconShieldBreak
+                    , cd     = 8
+                    , effect = [ Grant Self 1 IgnoreInvinc Full
+                               , Grant Self 1 (Performance Arts) <| Range 30 50
+                               ]
+                    }
                   ]
     , passives  = [magicResistance D]
     , phantasm  = { name   = "Shen Qiang Wu Er Da"
@@ -516,30 +512,29 @@ lancers =
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 4
     , stats     = { base  = { atk = 1489,  hp = 1899 }
-                  , max   = { atk = 8936, hp = 11870 }
+                  , max   = { atk = 8936,  hp = 11870 }
                   , grail = { atk = 10820, hp = 14392 }
                   }
-    , skills    = [ { name  = "Passionate Summer"
-                  , rank   = A
-                  , icon    = IconExclamationDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemies 3 CritChance <| Range 20 30 ]
-                  }
-                  , { name    = "Bath Transformation"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 (Performance Buster) <| Range 20 30 ]
-                  }
-                  , { name    = "Stalking"
-                  , rank   = A
-                  , icon    = IconShieldDown
-                  , cd      = 7
-                  , effect = [ Chance 500 <<
-                            Debuff Enemy 3 DefenseDown <| Range 20 30
-                             , Grant Enemy 3 AttackUp <| Flat 20
-                             ]
-                  }
+    , skills    = [ { name   = "Passionate Summer"
+                    , rank   = A
+                    , icon   = IconExclamationDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemies 3 CritChance <| Range 20 30 ]
+                    }
+                  , { name   = "Bath Transformation"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 (Performance Buster) <| Range 20 30 ]
+                    }
+                  , { name   = "Stalking"
+                    , rank   = A
+                    , icon   = IconShieldDown
+                    , cd     = 7
+                    , effect = [ Chance 500 << Debuff Enemy 3 DefenseDown <| Range 20 30
+                               , Grant Enemy 3 AttackUp <| Flat 20
+                               ]
+                    }
                   ]
     , passives  = [madness EX, magicResistance D]
     , phantasm  = { name   = "Dojo-ji Bell Form 108—Karyu-nagi"
@@ -584,27 +579,27 @@ lancers =
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 4
     , stats     = { base  = { atk = 1520,  hp = 1899 }
-                  , max   = { atk = 9122, hp = 11870 }
+                  , max   = { atk = 9122,  hp = 11870 }
                   , grail = { atk = 11045, hp = 14392 }
                   }
-    , skills    = [ { name  = "Charisma"
-                  , rank   = C
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 8 16 ]
-                  }
-                  , { name    = "Torture Technique"
-                  , rank   = A
-                  , icon    = IconShieldDown
-                  , cd      = 7
-                  , effect = [ Debuff Enemy 3 DefenseDown <| Range 10 20 ]
-                  }
-                  , { name    = "Battle Continuation"
-                  , rank   = B
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 4 Guts <| Range 750 2000 ]
-                  }
+    , skills    = [ { name   = "Charisma"
+                    , rank   = C
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 8 16 ]
+                    }
+                  , { name   = "Torture Technique"
+                    , rank   = A
+                    , icon   = IconShieldDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemy 3 DefenseDown <| Range 10 20 ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = B
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 4 Guts <| Range 750 2000 ]
+                    }
                   ]
     , passives  = [magicResistance A, territoryCreation B]
     , phantasm  = { name   = "Báthory Erzsébet"
@@ -647,30 +642,30 @@ lancers =
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 9
     , stats     = { base  = { atk = 1488,  hp = 2040 }
-                  , max   = { atk = 8930, hp = 12750 }
+                  , max   = { atk = 8930,  hp = 12750 }
                   , grail = { atk = 10812, hp = 15459 }
                   }
-    , skills    = [ { name  = "Clairvoyance"
-                  , rank   = B
-                  , icon    = IconStarHaloUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 StarUp <| Range 19 38 ]
-                  }
-                  , { name    = "Trouble with Women"
-                  , rank   = A
-                  , icon    = IconDodge
-                  , cd      = 12
-                  , effect = [ Chances 60 100 <| Grant Self 1 Evasion Full
-                             , Grant Self 1 Taunt Full
-                             , Debuff Self 3 CharmVuln <| Flat 80
-                             ]
-                  }
-                  , { name    = "Magecraft"
-                  , rank   = B
-                  , icon    = IconArtsUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Arts) <| Range 24 40 ]
-                  }
+    , skills    = [ { name   = "Clairvoyance"
+                    , rank   = B
+                    , icon   = IconStarHaloUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 StarUp <| Range 19 38 ]
+                    }
+                  , { name   = "Trouble with Women"
+                    , rank   = A
+                    , icon   = IconDodge
+                    , cd     = 12
+                    , effect = [ Chances 60 100 <| Grant Self 1 Evasion Full
+                               , Grant Self 1 Taunt Full
+                               , Debuff Self 3 CharmVuln <| Flat 80
+                               ]
+                    }
+                  , { name   = "Magecraft"
+                    , rank   = B
+                    , icon   = IconArtsUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Arts) <| Range 24 40 ]
+                    }
                   ]
     , passives  = [magicResistance B, divinity D]
     , phantasm  = { name   = "Mac an Luin"
@@ -714,32 +709,32 @@ lancers =
     , attr      = Heaven
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 8
-    , stats     = { base  = { atk = 1334,  hp = 1726 }
+    , stats     = { base  = { atk = 1334, hp = 1726 }
                   , max   = { atk = 7239, hp = 9593 }
                   , grail = { atk = 9797, hp = 13007 }
                   }
-    , skills    = [ { name  = "Battle Continuation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
-                  }
-                  , { name    = "Protection from Arrows"
-                  , rank   = B
-                  , icon    = IconDodge
-                  , cd      = 7
-                  , effect = [ Times 3 <| Grant Self 0 Evasion Full
-                             , Grant Self 3 DefenseUp <| Range 8 16
-                             ]
-                  }
-                  , { name    = "Disengage"
-                  , rank   = C
-                  , icon    = IconBubbles
-                  , cd      = 7
-                  , effect = [ To Self RemoveDebuffs Full
-                             , To Self Heal <| Range 500 1500
-                             ]
-                  }
+    , skills    = [ { name   = "Battle Continuation"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
+                    }
+                  , { name   = "Protection from Arrows"
+                    , rank   = B
+                    , icon   = IconDodge
+                    , cd     = 7
+                    , effect = [ Times 3 <| Grant Self 0 Evasion Full
+                               , Grant Self 3 DefenseUp <| Range 8 16
+                               ]
+                    }
+                  , { name   = "Disengage"
+                    , rank   = C
+                    , icon   = IconBubbles
+                    , cd     = 7
+                    , effect = [ To Self RemoveDebuffs Full
+                               , To Self Heal <| Range 500 1500
+                               ]
+                    }
                   ]
     , passives  = [magicResistance C, divinity B]
     , phantasm  = { name   = "Gáe Bolg"
@@ -787,28 +782,28 @@ lancers =
                   , max   = { atk = 7082, hp = 10098 }
                   , grail = { atk = 9584, hp = 13691 }
                   }
-    , skills    = [ { name  = "Rune Spell"
-                  , rank   = B
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 CritUp <| Range 18 45
-                             , Grant Self 3 DebuffResist <| Range 18 45
-                             ]
-                  }
-                  , { name    = "Protection from Arrows"
-                  , rank   = B
-                  , icon    = IconDodge
-                  , cd      = 7
-                  , effect = [ Times 3 <| Grant Self 0 Evasion Full
-                             , Grant Self 3 DefenseUp <| Range 8 16
-                             ]
-                  }
-                  , { name    = "Beast Slayer"
-                  , rank   = BPlus
-                  , icon    = IconDamageUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 (AttackVs Beast) <| Range 40 60 ]
-                  }
+    , skills    = [ { name   = "Rune Spell"
+                    , rank   = B
+                    , icon   = IconExclamationUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 CritUp <| Range 18 45
+                               , Grant Self 3 DebuffResist <| Range 18 45
+                               ]
+                    }
+                  , { name   = "Protection from Arrows"
+                    , rank   = B
+                    , icon   = IconDodge
+                    , cd     = 7
+                    , effect = [ Times 3 <| Grant Self 0 Evasion Full
+                               , Grant Self 3 DefenseUp <| Range 8 16
+                               ]
+                    }
+                  , { name   = "Beast Slayer"
+                    , rank   = BPlus
+                    , icon   = IconDamageUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 (AttackVs Beast) <| Range 40 60 ]
+                    }
                   ]
     , passives  = [magicResistance C, divinity B]
     , phantasm  = { name   = "Gáe Bolg"
@@ -852,30 +847,30 @@ lancers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 7
-    , stats     = { base  = { atk = 1168,  hp = 1498 }
+    , stats     = { base  = { atk = 1168, hp = 1498 }
                   , max   = { atk = 6583, hp = 7959 }
                   , grail = { atk = 9539, hp = 11486 }
                   }
-    , skills    = [ { name  = "Rear Guard's Pride"
-                  , rank   = A
-                  , icon    = IconCrosshairUp
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Taunt Full
-                             , Grant Self 3 NPGen <| Range 50 100
-                             ]
-                  }
-                  , { name    = "Battle Continuation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
-                  }
-                  , { name    = "Warrior's War Cry"
-                  , rank   = B
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 (Performance Buster) <| Range 15 25 ]
-                  }
+    , skills    = [ { name   = "Rear Guard's Pride"
+                    , rank   = A
+                    , icon   = IconCrosshairUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Taunt Full
+                               , Grant Self 3 NPGen <| Range 50 100
+                               ]
+                    }
+                  , { name   = "Battle Continuation"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 5 Guts <| Range 1000 2500 ]
+                    }
+                  , { name   = "Warrior's War Cry"
+                    , rank   = B
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 (Performance Buster) <| Range 15 25 ]
+                    }
                   ]
     , passives  = [magicResistance C]
     , phantasm  = { name   = "Thermopylae Enomotia"
@@ -919,35 +914,35 @@ lancers =
     , attr      = Star
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 3
-    , stats     = { base  = { atk = 1344,  hp = 1779 }
+    , stats     = { base  = { atk = 1344, hp = 1779 }
                   , max   = { atk = 7239, hp = 9883 }
                   , grail = { atk = 9797, hp = 13400 }
                   }
-    , skills    = [ { name  = "Natural Body"
-                  , rank   = C
-                  , icon    = IconHoodUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 OffensiveResist <| Range 50 100
-                             , To Self Heal <| Range 1000 2500
-                             ]
-                  }
-                  , { name    = "Imperial Privilege"
-                  , rank   = EX
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Self Heal <| Range 1200 3400
-                             , Chance 60 << Grant Self 3 AttackUp <| Range 22 44
-                             , Chance 60 << Grant Self 3 DefenseUp <| Range 22 44
-                             ]
-                  }
-                  , { name    = "Seven Hills"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Ally 1 Guts <| Flat 1000
-                             , Grant Ally 1 (Performance Buster) <| Range 10 30
-                             ]
-                  }
+    , skills    = [ { name   = "Natural Body"
+                    , rank   = C
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 OffensiveResist <| Range 50 100
+                               , To Self Heal <| Range 1000 2500
+                               ]
+                    }
+                  , { name   = "Imperial Privilege"
+                    , rank   = EX
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Self Heal <| Range 1200 3400
+                               , Chance 60 << Grant Self 3 AttackUp <| Range 22 44
+                               , Chance 60 << Grant Self 3 DefenseUp <| Range 22 44
+                               ]
+                    }
+                  , { name   = "Seven Hills"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Ally 1 Guts <| Flat 1000
+                               , Grant Ally 1 (Performance Buster) <| Range 10 30
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B]
     , phantasm  = { name   = "Magna Voluisse Magnum"
@@ -989,32 +984,32 @@ lancers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 3
-    , stats     = { base  = { atk = 1334,  hp = 1726 }
-                  , max   = { atk = 6928 , hp = 10200 }
+    , stats     = { base  = { atk = 1334, hp = 1726 }
+                  , max   = { atk = 6928, hp = 10200 }
                   , grail = { atk = 9376, hp = 13829 }
                   }
-    , skills    = [ { name  = "Tactics"
-                  , rank   = CPlus
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 NPUp <| Range 8.5 17 ]
-                  }
-                  , { name    = "Proof of Friendship"
-                  , rank   = C
-                  , icon    = IconDarkMagic
-                  , cd      = 7
-                  , effect = [ Chances 60 80 << To Enemy GaugeDown <| Flat 1
-                             , Chances 60 80 <| Debuff Enemy 1 Stun Full
-                             ]
-                  }
-                  , { name    = "Disengage"
-                  , rank   = B
-                  , icon    = IconBubbles
-                  , cd      = 7
-                  , effect = [ To Self RemoveDebuffs Full
-                             , To Self Heal <| Range 800 2000
-                             ]
-                  }
+    , skills    = [ { name   = "Tactics"
+                    , rank   = CPlus
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 8.5 17 ]
+                    }
+                  , { name   = "Proof of Friendship"
+                    , rank   = C
+                    , icon   = IconDarkMagic
+                    , cd     = 7
+                    , effect = [ Chances 60 80 << To Enemy GaugeDown <| Flat 1
+                               , Chances 60 80 <| Debuff Enemy 1 Stun Full
+                               ]
+                    }
+                  , { name   = "Disengage"
+                    , rank   = B
+                    , icon   = IconBubbles
+                    , cd     = 7
+                    , effect = [ To Self RemoveDebuffs Full
+                               , To Self Heal <| Range 800 2000
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Durindana"
@@ -1056,30 +1051,30 @@ lancers =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 7
-    , stats     = { base  = { atk = 1029,  hp = 1722 }
+    , stats     = { base  = { atk = 1029, hp = 1722 }
                   , max   = { atk = 5801, hp = 9149 }
                   , grail = { atk = 8406, hp = 13204 }
                   }
-    , skills    = [ { name  = "Vengeful Spirit Exorcism"
-                  , rank   = A
-                  , icon    = IconCircuits
-                  , cd      = 7
-                  , effect = [ Chances 50 100 <| Debuff Enemy 1 SealSkills Full ]
-                  }
-                  , { name    = "Imposing Stance"
-                  , rank   = B
-                  , icon    = IconCrosshairUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 Taunt Full
-                             , Grant Self 1 DefenseUp <| Range 30 60
-                             ]
-                  }
-                  , { name    = "Blank Subscription List"
-                  , rank   = Unknown
-                  , icon    = IconCircuits
-                  , cd      = 10
-                  , effect = [ Chances 60 80 <| Debuff Enemies 1 SealNP Full ]
-                  }
+    , skills    = [ { name   = "Vengeful Spirit Exorcism"
+                    , rank   = A
+                    , icon   = IconCircuits
+                    , cd     = 7
+                    , effect = [ Chances 50 100 <| Debuff Enemy 1 SealSkills Full ]
+                    }
+                  , { name   = "Imposing Stance"
+                    , rank   = B
+                    , icon   = IconCrosshairUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 Taunt Full
+                               , Grant Self 1 DefenseUp <| Range 30 60
+                               ]
+                    }
+                  , { name   = "Blank Subscription List"
+                    , rank   = Unknown
+                    , icon   = IconCircuits
+                    , cd     = 10
+                    , effect = [ Chances 60 80 <| Debuff Enemies 1 SealNP Full ]
+                    }
                   ]
     , passives  = [magicResistance CPlus]
     , phantasm  = { name   = "Pilgrimage of the Five Hundred Arhat"
@@ -1121,31 +1116,30 @@ lancers =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Arts Buster
     , curve     = 8
-    , stats     = { base  = { atk = 1277,  hp = 1817 }
+    , stats     = { base  = { atk = 1277, hp = 1817 }
                   , max   = { atk = 6877, hp = 10098 }
                   , grail = { atk = 9307, hp = 13691 }
                   }
-    , skills    = [ { name  = "Mind's Eye (True)"
-                  , rank   = B
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 3 DefenseUp <| Range 9 18
-                             ]
-                  }
-                  , { name    = "Love Spot"
-                  , rank   = C
-                  , icon    = IconSwordDown
-                  , cd      = 7
-                  , effect = [ Debuff (EnemiesType Female) 1 AttackDown <|
-                            Range 30 50 ]
-                  }
-                  , { name    = "Knight's Strategy"
-                  , rank   = B
-                  , icon    = IconStarHaloUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 StarUp <| Range 30 50 ]
-                  }
+    , skills    = [ { name   = "Mind's Eye (True)"
+                    , rank   = B
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 3 DefenseUp <| Range 9 18
+                               ]
+                    }
+                  , { name   = "Love Spot"
+                    , rank   = C
+                    , icon   = IconSwordDown
+                    , cd     = 7
+                    , effect = [ Debuff (EnemiesType Female) 1 AttackDown <| Range 30 50 ]
+                    }
+                  , { name   = "Knight's Strategy"
+                    , rank   = B
+                    , icon   = IconStarHaloUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarUp <| Range 30 50 ]
+                    }
                   ]
     , passives  = [magicResistance B]
     , phantasm  = { name   = "Gáe Dearg and Gáe Buidhe"

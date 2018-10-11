@@ -255,7 +255,7 @@ extras =
     , phantasm  = { name   = "Enfer Château d'If"
                   , desc   = "Tyger, Tyger, Burning Bright"
                   , rank   = A
-                 , card   = Quick
+                  , card   = Quick
                   , kind   = "Anti-Army"
                   , hits   = 8
                   , effect = [ To Enemies Damage <| Range 600 1000 ]
@@ -367,13 +367,13 @@ extras =
                   , max   = { atk = 6791,  hp = 10302 }
                   , grail = { atk = 10575, hp = 15619 }
                   }
-    , skills    = [ { name  = "Honorable Wall of Snowflakes"
+    , skills    = [ { name   = "Honorable Wall of Snowflakes"
                     , rank   = Unknown
-                    , icon    = IconShieldUp
-                    , cd      = 7
+                    , icon   = IconShieldUp
+                    , cd     = 7
                     , effect = [ Grant Party 3 DefenseUp <| Range 15 20
-                              , Times 1 << Grant Party 0 DamageDown <| Flat 2000
-                              ]
+                               , Times 1 << Grant Party 0 DamageDown <| Flat 2000
+                               ]
                     }
                   , { name   = "Obscurant Wall of Chalk"
                     , rank   = Unknown

@@ -55,8 +55,8 @@ unCamel =
 
 camel : Regex
 camel = 
-    Maybe.withDefault Regex.never <| 
     Regex.fromString "([a-z])([A-Z])|([A-Z])([A-Z][a-z])"
+    |> Maybe.withDefault Regex.never
 
 prettify : String -> String
 prettify a = case a of

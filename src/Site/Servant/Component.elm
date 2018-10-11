@@ -2,6 +2,7 @@ module Site.Servant.Component exposing (Model, Msg, component)
 
 import Html.Keyed         as Keyed
 import List.Extra         as List
+import Maybe.Extra        as Maybe
 import Browser.Navigation as Navigation
 import Browser   exposing (Document)
 import Date      exposing (Date)
@@ -104,10 +105,25 @@ component store =
             >> doIf (st.sortBy == Rarity) (List.map withStats)
           else
             st.listing
+        getMats label f = case f <| List.map Tuple.second listing of
+          []   -> []
+          mats -> 
+            [ ( label ++ "H"
+              , h_ 2 <| "Total " ++ label ++ " Materials Needed"
+              )
+            , ( label 
+              , H.footer [P.class "materials"] <| List.map materialEl mats
+              )
+            ]
       in
         listing
         |> List.map (keyedPortrait False st.prefs baseAscend)
         >> doIf (st.sortBy /= Rarity) List.reverse
+        >> doIf (st.sortBy == Rarity && st.extra.mineOnly)
+           ( flip (++) <| 
+             getMats "Ascension" ascendWishlist 
+             ++ getMats "Skill" skillWishlist 
+           )
         >> Keyed.node "section" []
         >> siteView st enumSortBy nav
         >> popup st.prefs st.extra.ascent st.focus
@@ -144,9 +160,7 @@ component store =
             ( relist << reSort <| reTeam
               { st 
               | team    = team
-              , focus   = case st.focus of
-                  Nothing -> Nothing 
-                  Just _  -> Just ms
+              , focus   = Maybe.next st.focus <| Just ms
               }
             , storeTeam store team
             )

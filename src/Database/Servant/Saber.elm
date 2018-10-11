@@ -18,26 +18,26 @@ sabers =
                   , max   = { atk = 12068, hp = 13225 }
                   , grail = { atk = 13210, hp = 14489 }
                   }
-    , skills    = [ { name  = "Shukuchi"
-                  , rank   = B
-                  , icon    = IconQuickUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Quick) <| Range 30 50 ]
-                  }
-                  , { name    = "Weak Constitution"
-                  , rank   = A
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 StarAbsorb <| Range 500 1000 ]
-                  }
-                  , { name    = "Mind's Eye (Fake)"
-                  , rank   = A
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 3 CritUp <| Range 20 40
-                             ]
-                  }
+    , skills    = [ { name   = "Shukuchi"
+                    , rank   = B
+                    , icon   = IconQuickUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Quick) <| Range 30 50 ]
+                    }
+                  , { name   = "Weak Constitution"
+                    , rank   = A
+                    , icon   = IconStarUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 StarAbsorb <| Range 500 1000 ]
+                    }
+                  , { name   = "Mind's Eye (Fake)"
+                    , rank   = A
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 3 CritUp <| Range 20 40
+                               ]
+                    }
                   ]
     , passives  = [magicResistance E, riding E]
     , phantasm  = { name   = "Mumyou Sandanzuki"
@@ -83,28 +83,28 @@ sabers =
                   , max   = { atk = 12343, hp = 13907 }
                   , grail = { atk = 13511, hp = 15236 }
                   }
-    , skills    = [ { name  = "Tactics"
-                  , rank   = B
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 NPUp <| Range 9 18 ]
-                  }
-                  , { name    = "Natural Body"
-                  , rank   = D
-                  , icon    = IconHoodUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 OffensiveResist <| Range 40 80
-                             , To Self Heal <| Range 1000 2500
-                             ]
-                  }
-                  , { name    = "Crest of the Star"
-                  , rank   = EX
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 10 30
-                             , To Party GainStars <| Range 5 15
-                             ]
-                  }
+    , skills    = [ { name   = "Tactics"
+                    , rank   = B
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 9 18 ]
+                    }
+                  , { name   = "Natural Body"
+                    , rank   = D
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 OffensiveResist <| Range 40 80
+                               , To Self Heal <| Range 1000 2500
+                               ]
+                    }
+                  , { name   = "Crest of the Star"
+                    , rank   = EX
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 10 30
+                               , To Party GainStars <| Range 5 15
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding A, divinity B]
     , phantasm  = { name   = "Photon Ray"
@@ -150,28 +150,28 @@ sabers =
                   , max   = { atk = 11607, hp = 14284 }
                   , grail = { atk = 12706, hp = 15609 }
                   }
-    , skills    = [ { name  = "Stars for the Sky"
-                  , rank   = A
-                  , icon    = IconNobleUp
-                  , cd      = 9
-                  , effect = [ Grant Ally 3 NPGen <| Range 35 45 ]
-                  }
-                  , { name    = "Flowers for the Earth"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 8
-                  , effect = [ Grant Ally 3 AttackUp <| Range 30 40
-                             , Grant Ally 3 StarUp <| Range 30 50
-                             ]
-                  }
-                  , { name    = "Love for the People"
-                  , rank   = A
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Ally Heal <| Range 1000 3000
-                             , Grant Ally 3 DefenseUp <| Range 10 20
-                             ]
-                  }
+    , skills    = [ { name   = "Stars for the Sky"
+                    , rank   = A
+                    , icon   = IconNobleUp
+                    , cd     = 9
+                    , effect = [ Grant Ally 3 NPGen <| Range 35 45 ]
+                    }
+                  , { name   = "Flowers for the Earth"
+                    , rank   = A
+                    , icon   = IconSwordUp
+                    , cd     = 8
+                    , effect = [ Grant Ally 3 AttackUp <| Range 30 40
+                               , Grant Ally 3 StarUp <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Love for the People"
+                    , rank   = A
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Ally Heal <| Range 1000 3000
+                               , Grant Ally 3 DefenseUp <| Range 10 20
+                               ]
+                    }
                   ]
     , passives  = [magicResistance C, riding B]
     , phantasm  = { name   = "Fax Caelestis"
@@ -220,27 +220,27 @@ sabers =
                   , max   = { atk = 11723, hp = 14680 }
                   , grail = { atk = 12833, hp = 16083 }
                   }
-    , skills    = [ { name  = "Mana Burst"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
-                  }
-                  , { name    = "Intuition"
-                  , rank   = B
-                  , icon    = IconStar
-                  , cd      = 7
-                  , effect = [ To Party GainStars <| Range 4 14 ]
-                  }
-                  , { name    = "Secret of Pedigree"
-                  , rank   = EX
-                  , icon    = IconShieldUp
-                  , cd      = 8
-                  , effect = [ Grant Self 1 DefenseUp <| Range 30 50
-                             , To Self RemoveDebuffs Full
-                             , To Self GaugeUp <| Range 10 30
-                             ]
-                  }
+    , skills    = [ { name   = "Mana Burst"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
+                    }
+                  , { name   = "Intuition"
+                    , rank   = B
+                    , icon   = IconStar
+                    , cd     = 7
+                    , effect = [ To Party GainStars <| Range 4 14 ]
+                    }
+                  , { name   = "Secret of Pedigree"
+                    , rank   = EX
+                    , icon   = IconShieldUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 DefenseUp <| Range 30 50
+                               , To Self RemoveDebuffs Full
+                               , To Self GaugeUp <| Range 10 30
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Clarent Blood Arthur"
@@ -266,9 +266,7 @@ sabers =
                   [(Piece Saber, 5)]
                   [(Piece Saber, 12), (DragonFang, 18)]
                   [(Monument Saber, 5), (OctupletCrystals, 10), (HeartOfTheForeignGod, 2)]
-                  [( Monument Saber, 12), (HeartOfTheForeignGod, 4)
-                  , (DragonsReverseScale, 5)
-                  ]
+                  [( Monument Saber, 12), (HeartOfTheForeignGod, 4), (DragonsReverseScale, 5)]
     , skillUp   = Reinforcement
                   [(GemOf Saber, 5)]
                   [(GemOf Saber, 12)]
@@ -290,31 +288,31 @@ sabers =
                   , max   = { atk = 10721, hp = 15453 }
                   , grail = { atk = 11736, hp = 16929 }
                   }
-    , skills    = [ { name  = "Mystic Eyes of Death Perception"
-                  , rank   = C
-                  , icon    = IconMystic
-                  , cd      = 7
-                  , effect = [ Grant Self 1 IgnoreInvinc Full
-                             , Grant Self 1 (Performance Arts) <| Range 25 40
-                             , Debuff Enemies 1 DeathDown <| Range 60 80
-                             ]
-                  }
-                  , { name    = "Unyou"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 15 25
-                             , Grant Self 3 MentalResist <| Range 18 36
-                             ]
-                  }
-                  , { name    = "Yin-Yang"
-                  , rank   = A
-                  , icon    = IconYinYang
-                  , cd      = 6
-                  , effect = [ To Self Heal <| Range 2000 5000
-                             , To Self DemeritGauge <| Flat 10
-                             ]
-                  }
+    , skills    = [ { name   = "Mystic Eyes of Death Perception"
+                    , rank   = C
+                    , icon   = IconMystic
+                    , cd     = 7
+                    , effect = [ Grant Self 1 IgnoreInvinc Full
+                               , Grant Self 1 (Performance Arts) <| Range 25 40
+                               , Debuff Enemies 1 DeathDown <| Range 60 80
+                               ]
+                    }
+                  , { name   = "Unyou"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 15 25
+                               , Grant Self 3 MentalResist <| Range 18 36
+                               ]
+                    }
+                  , { name   = "Yin-Yang"
+                    , rank   = A
+                    , icon   = IconYinYang
+                    , cd     = 6
+                    , effect = [ To Self Heal <| Range 2000 5000
+                               , To Self DemeritGauge <| Flat 10
+                               ]
+                    }
                   ]
     , passives  = [magicResistance A, connectionRoot A, independentManifestation C]
     , phantasm  = { name   = "Amalavijñāna—Boundary of Emptiness"
@@ -362,24 +360,24 @@ sabers =
                   , max   = { atk = 11221, hp = 15150 }
                   , grail = { atk = 12283, hp = 16597 }
                   }
-    , skills    = [ { name  = "Charisma"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
-                  }
-                  , { name    = "Mana Burst"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
-                  }
-                  , { name    = "Intuition"
-                  , rank   = A
-                  , icon    = IconStar
-                  , cd      = 7
-                  , effect = [ To Party GainStars <| Range 5 15 ]
-                  }
+    , skills    = [ { name   = "Charisma"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
+                    }
+                  , { name   = "Mana Burst"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
+                    }
+                  , { name   = "Intuition"
+                    , rank   = A
+                    , icon   = IconStar
+                    , cd     = 7
+                    , effect = [ To Party GainStars <| Range 5 15 ]
+                    }
                   ]
     , passives  = [magicResistance A, riding B]
     , phantasm  = { name   = "Excalibur"
@@ -422,31 +420,31 @@ sabers =
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 14
     , stats     = { base  = { atk = 1658,  hp = 1854 }
-                  , max   = { atk = 9949, hp = 11589 }
+                  , max   = { atk = 9949,  hp = 11589 }
                   , grail = { atk = 12046, hp = 14051 }
                   }
-    , skills    = [ { name  = "Knight of the Lake"
-                  , rank   = A
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Flat 30
-                             , To Party GainStars <| Range 10 20
-                             ]
-                  }
-                  , { name    = "Eternal Arms Mastery"
-                  , rank   = APlus
-                  , icon    = IconStarUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 StarAbsorb <| Range 3000 6000 ]
-                  }
-                  , { name    = "Knight of Owner"
-                  , rank   = APlusPlus
-                  , icon    = IconStarTurn
-                  , cd      = 8
-                  , effect = [ Grant Party 3 StarsPerTurn <| Range 5 15
-                             , Grant Self 3 CritUp <| Range 30 50
-                             ]
-                  }
+    , skills    = [ { name   = "Knight of the Lake"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Flat 30
+                               , To Party GainStars <| Range 10 20
+                               ]
+                    }
+                  , { name   = "Eternal Arms Mastery"
+                    , rank   = APlus
+                    , icon   = IconStarUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarAbsorb <| Range 3000 6000 ]
+                    }
+                  , { name   = "Knight of Owner"
+                    , rank   = APlusPlus
+                    , icon   = IconStarTurn
+                    , cd     = 8
+                    , effect = [ Grant Party 3 StarsPerTurn <| Range 5 15
+                               , Grant Self 3 CritUp <| Range 30 50
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Arondight Overload"
@@ -494,24 +492,24 @@ sabers =
                   , max   = { atk = 10248, hp = 11589 }
                   , grail = { atk = 12408, hp = 14051 }
                   }
-    , skills    = [ { name  = "Mana Burst"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
-                  }
-                  , { name    = "Intuition"
-                  , rank   = B
-                  , icon    = IconStar
-                  , cd      = 7
-                  , effect = [ To Party GainStars <| Range 4 14 ]
-                  }
-                  , { name    = "Charisma"
-                  , rank   = E
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 6 12 ]
-                  }
+    , skills    = [ { name   = "Mana Burst"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
+                    }
+                  , { name   = "Intuition"
+                    , rank   = B
+                    , icon   = IconStar
+                    , cd     = 7
+                    , effect = [ To Party GainStars <| Range 4 14 ]
+                    }
+                  , { name   = "Charisma"
+                    , rank   = E
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 6 12 ]
+                    }
                   ]
     , passives  = [magicResistance B]
     , phantasm  = { name   = "Excalibur Morgan"
@@ -535,9 +533,7 @@ sabers =
                   [(Piece Saber, 4)]
                   [(Piece Saber, 10), (DragonFang, 15)]
                   [(Monument Saber, 4), (ClawOfChaos, 5), (DragonsReverseScale, 2)]
-                  [( Monument Saber, 10), (DragonsReverseScale, 4)
-                  , (HeartOfTheForeignGod, 4)
-                  ]
+                  [( Monument Saber, 10), (DragonsReverseScale, 4), (HeartOfTheForeignGod, 4)]
     , skillUp   = Reinforcement
                   [(GemOf Saber, 4)]
                   [(GemOf Saber, 10)]
@@ -556,31 +552,31 @@ sabers =
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 24
     , stats     = { base  = { atk = 1642,  hp = 1901 }
-                  , max   = { atk = 9854, hp = 11882 }
+                  , max   = { atk = 9854,  hp = 11882 }
                   , grail = { atk = 11931, hp = 14541 }
                   }
-    , skills    = [ { name  = "Blessing of Martial Arts"
-                  , rank   = A
-                  , icon    = IconStarUp
-                  , cd      = 6
-                  , effect = [ Grant Self 1 StarAbsorb <| Range 300 500
-                             , Grant Self 1 CritUp <| Range 50 100
-                             ]
-                  }
-                  , { name    = "Charisma"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
-                  }
-                  , { name    = "Curse of Separation"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 9
-                  , effect = [ Times 1 << Grant Self 3 Guts <| Flat 1000
-                             , To Self Heal <| Range 1000 3000
-                             ]
-                  }
+    , skills    = [ { name   = "Blessing of Martial Arts"
+                    , rank   = A
+                    , icon   = IconStarUp
+                    , cd     = 6
+                    , effect = [ Grant Self 1 StarAbsorb <| Range 300 500
+                               , Grant Self 1 CritUp <| Range 50 100
+                               ]
+                    }
+                  , { name   = "Charisma"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 9 18 ]
+                    }
+                  , { name   = "Curse of Separation"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 3 Guts <| Flat 1000
+                               , To Self Heal <| Range 1000 3000
+                               ]
+                    }
                   ]
     , passives  = [magicResistance A, riding APlus, divinity A]
     , phantasm  = { name   = "Brahmastra"
@@ -623,32 +619,32 @@ sabers =
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 15
     , stats     = { base  = { atk = 1574,  hp = 1880 }
-                  , max   = { atk = 9449, hp = 11753 }
+                  , max   = { atk = 9449,  hp = 11753 }
                   , grail = { atk = 11441, hp = 14250 }
                   }
-    , skills    = [ { name  = "Migraine"
-                  , rank   = B
-                  , icon    = IconHoodUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 MentalResist <| Range 50 100
-                             , To Self Heal <| Range 500 2000
-                             ]
-                  }
-                  , { name    = "Imperial Privilege"
-                  , rank   = EX
-                  , icon    = IconHeal
-                  , cd      = 7
-                  , effect = [ To Self Heal <| Range 1200 3400
-                             , Chance 60 << Grant Self 3 AttackUp <| Range 22 44
-                             , Chance 60 << Grant Self 3 DefenseUp <| Range 22 44
-                             ]
-                  }
-                  , { name    = "Invictus Spiritus"
-                  , rank   = A
-                  , icon    = IconKneel
-                  , cd      = 12
-                  , effect = [ Times 3 << Grant Self 5 Guts <| Range 300 600 ]
-                  }
+    , skills    = [ { name   = "Migraine"
+                    , rank   = B
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 MentalResist <| Range 50 100
+                               , To Self Heal <| Range 500 2000
+                               ]
+                    }
+                  , { name   = "Imperial Privilege"
+                    , rank   = EX
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Self Heal <| Range 1200 3400
+                               , Chance 60 << Grant Self 3 AttackUp <| Range 22 44
+                               , Chance 60 << Grant Self 3 DefenseUp <| Range 22 44
+                               ]
+                    }
+                  , { name   = "Invictus Spiritus"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 12
+                    , effect = [ Times 3 << Grant Self 5 Guts <| Range 300 600 ]
+                    }
                   ]
     , passives  = [magicResistance C, riding B]
     , phantasm  = { name   = "Laus St. Claudius"
@@ -691,33 +687,33 @@ sabers =
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 9
     , stats     = { base  = { atk = 1734,  hp = 2121 }
-                  , max   = { atk = 8765, hp = 13256 }
+                  , max   = { atk = 8765,  hp = 13256 }
                   , grail = { atk = 10613, hp = 16073 }
                   }
-    , skills    = [ { name  = "Mind's Eye (True)"
-                  , rank   = C
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 3 DefenseUp <| Range 8 16
-                             ]
-                  }
-                  , { name    = "Self-Suggestion"
-                  , rank   = A
-                  , icon    = IconBubbles
-                  , cd      = 7
-                  , effect = [ To Self RemoveDebuffs Full
-                             , Grant Self 3 DebuffResist <| Range 50 100
-                             ]
-                  }
-                  , { name    = "Beautiful Appearance"
-                  , rank   = C
-                  , icon    = IconFace
-                  , cd      = 7
-                  , effect = [ Grant Self 3 Taunt Full
-                             , To Self Heal <| Range 1000 2500
-                             ]
-                  }
+    , skills    = [ { name   = "Mind's Eye (True)"
+                    , rank   = C
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 3 DefenseUp <| Range 8 16
+                               ]
+                    }
+                  , { name   = "Self-Suggestion"
+                    , rank   = A
+                    , icon   = IconBubbles
+                    , cd     = 7
+                    , effect = [ To Self RemoveDebuffs Full
+                               , Grant Self 3 DebuffResist <| Range 50 100
+                               ]
+                    }
+                  , { name   = "Beautiful Appearance"
+                    , rank   = C
+                    , icon   = IconFace
+                    , cd     = 7
+                    , effect = [ Grant Self 3 Taunt Full
+                               , To Self Heal <| Range 1000 2500
+                               ]
+                    }
                   ]
     , passives  = [magicResistance C, riding B]
     , phantasm  = { name   = "Fleur de Lis"
@@ -761,32 +757,32 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 4
-    , stats     = { base  = { atk = 1363,  hp = 2266 }
+    , stats     = { base  = { atk = 1363, hp = 2266 }
                   , max   = { atk = 8181, hp = 14165 }
                   , grail = { atk = 9905, hp = 17175 }
                   }
-    , skills    = [ { name  = "Golden Rule"
-                  , rank   = CMinus
-                  , icon    = IconNobleUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 NPGen <| Range 15 37.5 ]
-                  }
-                  , { name    = "Disengage"
-                  , rank   = A
-                  , icon    = IconBubbles
-                  , cd      = 7
-                  , effect = [ To Self RemoveDebuffs Full
-                             , To Self Heal <| Range 1000 2500
-                             ]
-                  }
-                  , { name    = "Dragon-Slayer"
-                  , rank   = A
-                  , icon    = IconDamageUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 (AttackVs Dragon) <| Range 50 80
-                             , Grant Self 3 (DefenseVs Dragon) <| Flat 30
-                             ]
-                  }
+    , skills    = [ { name   = "Golden Rule"
+                    , rank   = CMinus
+                    , icon   = IconNobleUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 NPGen <| Range 15 37.5 ]
+                    }
+                  , { name   = "Disengage"
+                    , rank   = A
+                    , icon   = IconBubbles
+                    , cd     = 7
+                    , effect = [ To Self RemoveDebuffs Full
+                               , To Self Heal <| Range 1000 2500
+                               ]
+                    }
+                  , { name   = "Dragon-Slayer"
+                    , rank   = A
+                    , icon   = IconDamageUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 (AttackVs Dragon) <| Range 50 80
+                               , Grant Self 3 (DefenseVs Dragon) <| Flat 30
+                               ]
+                    }
                   ]
     , passives  = [riding B]
     , phantasm  = { name   = "Balmung"
@@ -832,30 +828,29 @@ sabers =
                   , max   = { atk = 10173, hp = 11419 }
                   , grail = { atk = 12317, hp = 13845 }
                   }
-    , skills    = [ { name  = "Numeral of The Saint"
-                  , rank   = EX
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Flat 20
-                             , When "on Open Field with Sunshine" <<
-                            Grant Self 3 (Performance Buster) <| Range 20 30
-                             ]
-                  }
-                  , { name    = "Charisma"
-                  , rank   = E
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 6 12 ]
-                  }
-                  , { name    = "Belt of Bertilak"
-                  , rank   = EX
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Flat 20
-                             , To Party GainStars <| Range 5 10
-                             , Times 1 << Grant Self 1 Guts <| Range 1000 2000
-                             ]
-                  }
+    , skills    = [ { name   = "Numeral of The Saint"
+                    , rank   = EX
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Flat 20
+                               , When "on Open Field with Sunshine" << Grant Self 3 (Performance Buster) <| Range 20 30
+                               ]
+                    }
+                  , { name   = "Charisma"
+                    , rank   = E
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 6 12 ]
+                    }
+                  , { name   = "Belt of Bertilak"
+                    , rank   = EX
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Flat 20
+                               , To Party GainStars <| Range 5 10
+                               , Times 1 << Grant Self 1 Guts <| Range 1000 2000
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Excalibur Galatine"
@@ -900,28 +895,28 @@ sabers =
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 14
-    , stats     = { base  = { atk = 1287,  hp = 1699 }
+    , stats     = { base  = { atk = 1287, hp = 1699 }
                   , max   = { atk = 7726, hp = 10623 }
                   , grail = { atk = 9355, hp = 12880 }
                   }
-    , skills    = [ { name  = "Intuition"
-                  , rank   = B
-                  , icon    = IconStar
-                  , cd      = 7
-                  , effect = [ To Party GainStars <| Range 4 14 ]
-                  }
-                  , { name    = "Mana Burst"
-                  , rank   = A
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
-                  }
-                  , { name    = "Journey of the Flowers"
-                  , rank   = EX
-                  , icon    = IconNobleUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 NPGen <| Range 10 20 ]
-                  }
+    , skills    = [ { name   = "Intuition"
+                    , rank   = B
+                    , icon   = IconStar
+                    , cd     = 7
+                    , effect = [ To Party GainStars <| Range 4 14 ]
+                    }
+                  , { name   = "Mana Burst"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 ]
+                    }
+                  , { name   = "Journey of the Flowers"
+                    , rank   = EX
+                    , icon   = IconNobleUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 NPGen <| Range 10 20 ]
+                    }
                   ]
     , passives  = [magicResistance B, riding C]
     , phantasm  = { name   = "Caliburn"
@@ -964,29 +959,29 @@ sabers =
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 13
     , stats     = { base  = { atk = 1392,  hp = 1727 }
-                  , max   = { atk = 7497, hp = 9595 }
+                  , max   = { atk = 7497,  hp = 9595 }
                   , grail = { atk = 10146, hp = 13009 }
                   }
-    , skills    = [ { name  = "Tactics"
-                  , rank   = B
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 NPUp <| Range 9 18 ]
-                  }
-                  , { name    = "Charisma"
-                  , rank   = C
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Party 3 AttackUp <| Range 8 16 ]
-                  }
-                  , { name    = "Incite"
-                  , rank   = EX
-                  , icon    = IconExclamationUp
-                  , cd      = 7
-                  , effect = [ Grant Ally 3 CritUp <| Range 20 40
-                             , Debuff Ally 3 DefenseDown <| Flat 20
-                             ]
-                  }
+    , skills    = [ { name   = "Tactics"
+                    , rank   = B
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 9 18 ]
+                    }
+                  , { name   = "Charisma"
+                    , rank   = C
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 8 16 ]
+                    }
+                  , { name   = "Incite"
+                    , rank   = EX
+                    , icon   = IconExclamationUp
+                    , cd     = 7
+                    , effect = [ Grant Ally 3 CritUp <| Range 20 40
+                               , Debuff Ally 3 DefenseDown <| Flat 20
+                               ]
+                    }
                   ]
     , passives  = [magicResistance C, riding B, divinity D]
     , phantasm  = { name   = "Crocea Mors"
@@ -1029,33 +1024,33 @@ sabers =
     , deck      = Deck Quick Arts Buster Buster Buster
     , curve     = 23
     , stats     = { base  = { atk = 1385,  hp = 1761 }
-                  , max   = { atk = 7460, hp = 9786 }
+                  , max   = { atk = 7460,  hp = 9786 }
                   , grail = { atk = 10096, hp = 13268 }
                   }
-    , skills    = [ { name  = "Valor"
-                  , rank   = A
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 10 30
-                             , Grant Self 3 MentalResist <| Range 20 40
-                             ]
-                  }
-                  , { name    = "Defiant"
-                  , rank   = B
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 15 25
-                             , Debuff Self 3 BuffFail <| Flat 50
-                             ]
-                  }
-                  , { name    = "Mind's Eye (True)"
-                  , rank   = A
-                  , icon    = IconDodge
-                  , cd      = 8
-                  , effect = [ Grant Self 1 Evasion Full
-                             , Grant Self 3 DefenseUp <| Range 10 20
-                             ]
-                  }
+    , skills    = [ { name   = "Valor"
+                    , rank   = A
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 10 30
+                               , Grant Self 3 MentalResist <| Range 20 40
+                               ]
+                    }
+                  , { name   = "Defiant"
+                    , rank   = B
+                    , icon   = IconShieldUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 15 25
+                               , Debuff Self 3 BuffFail <| Flat 50
+                               ]
+                    }
+                  , { name   = "Mind's Eye (True)"
+                    , rank   = A
+                    , icon   = IconDodge
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Evasion Full
+                               , Grant Self 3 DefenseUp <| Range 10 20
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding B]
     , phantasm  = { name   = "Caladbolg"
@@ -1100,31 +1095,31 @@ sabers =
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 13
     , stats     = { base  = { atk = 1416,  hp = 1727 }
-                  , max   = { atk = 7627, hp = 9595 }
+                  , max   = { atk = 7627,  hp = 9595 }
                   , grail = { atk = 10322, hp = 13009 }
                   }
-    , skills    = [ { name  = "Tactics"
-                  , rank   = C
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 NPUp <| Range 8 16 ]
-                  }
-                  , { name    = "Calm and Collected"
-                  , rank   = B
-                  , icon    = IconNoble
-                  , cd      = 8
-                  , effect = [ To Self GaugeUp <| Flat 30
-                             , Grant Self 3 DebuffResist <| Range 30 50
-                             ]
-                  }
-                  , { name    = "Oath of Protection"
-                  , rank   = B
-                  , icon    = IconShieldUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 DefenseUp <| Flat 30
-                             , Grant Self 1 DebuffResist <| Range 30 50
-                             ]
-                  }
+    , skills    = [ { name   = "Tactics"
+                    , rank   = C
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 8 16 ]
+                    }
+                  , { name   = "Calm and Collected"
+                    , rank   = B
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Flat 30
+                               , Grant Self 3 DebuffResist <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Oath of Protection"
+                    , rank   = B
+                    , icon   = IconShieldUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 DefenseUp <| Flat 30
+                               , Grant Self 1 DebuffResist <| Range 30 50
+                               ]
+                    }
                   ]
     , passives  = [magicResistance B, riding A]
     , phantasm  = { name   = "Switch On—Airgetlám"
@@ -1166,28 +1161,28 @@ sabers =
     , attr      = Mankind
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 13
-    , stats     = { base  = { atk = 1228,  hp = 1889 }
+    , stats     = { base  = { atk = 1228, hp = 1889 }
                   , max   = { atk = 6615, hp = 10498 }
                   , grail = { atk = 8952, hp = 14234 }
                   }
-    , skills    = [ { name  = "Tactics"
-                  , rank   = C
-                  , icon    = IconBeamUp
-                  , cd      = 7
-                  , effect = [ Grant Party 1 NPUp <| Range 8 16 ]
-                  }
-                  , { name    = "Golden Rule"
-                  , rank   = B
-                  , icon    = IconNobleUp
-                  , cd      = 8
-                  , effect = [ Grant Self 3 NPGen <| Range 18 45 ]
-                  }
-                  , { name    = "Prelati's Encouragement"
-                  , rank   = B
-                  , icon    = IconBusterUp
-                  , cd      = 7
-                  , effect = [ Grant Self 5 (Performance Buster) <| Range 20 40 ]
-                  }
+    , skills    = [ { name   = "Tactics"
+                    , rank   = C
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 8 16 ]
+                    }
+                  , { name   = "Golden Rule"
+                    , rank   = B
+                    , icon   = IconNobleUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 NPGen <| Range 18 45 ]
+                    }
+                  , { name   = "Prelati's Encouragement"
+                    , rank   = B
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 5 (Performance Buster) <| Range 20 40 ]
+                    }
                   ]
     , passives  = [magicResistance B, riding B, madness EX]
     , phantasm  = { name   = "Saint War Order"

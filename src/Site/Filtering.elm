@@ -64,9 +64,7 @@ reduceFilters =
 
 matchFilter : Maybe (ToImage b) -> Has a b -> FilterTab -> b -> Filter a
 matchFilter toImage {show, has} tab x =
-    { icon  = case toImage of
-                Nothing -> Nothing
-                Just f  -> Just <| f x
+    { icon  = Maybe.map ((|>) x) toImage
     , tab   = tab
     , name  = show x
     , match = \b -> List.member x << has b

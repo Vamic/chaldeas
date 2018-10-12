@@ -119,7 +119,7 @@ component store =
         listing
         |> List.map (keyedPortrait False st.prefs baseAscend)
         >> doIf (st.sortBy /= Rarity) List.reverse
-        >> doIf (st.sortBy == Rarity && st.extra.mineOnly)
+        >> doIf st.extra.mineOnly
            ( flip (++) <| 
              getMats "Ascension" ascendWishlist 
              ++ getMats "Skill" skillWishlist 

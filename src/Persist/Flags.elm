@@ -60,7 +60,7 @@ decodePreferences =
           acc pref = 
               setPreference pref <| List.member (Show.preference pref) prefs
         in
-          List.foldl acc Set.empty enumPreference
+          List.foldr acc Set.empty enumPreference
   in
     D.list D.string
     |> D.nullable

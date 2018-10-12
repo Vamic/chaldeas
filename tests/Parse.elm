@@ -53,6 +53,9 @@ npRank s =
 ceNames : List String
 ceNames = List.map .name craftEssences
 
+skillNames : Servant -> List Skill
+skillNames s = List.map (skillRank s >> Tuple.first) s.skills
+
 skillRank : Servant -> Skill -> (Skill, MaybeRank)
 skillRank s x =
   let
@@ -73,7 +76,6 @@ translate a = case a of
   "Mugashiki—Shinkuu Myou" -> "Mugashiki - Shinkuu Myōu"
   "Leonardo da Vinci" -> "Leonardo Da Vinci"
   "Beautiful Princess (Sea)" -> "Princess of Loveliness (Ocean)"
-  "Treasure Hunt (Sea)" -> "Treasure Hunt (Ocean)"
   "Jack-o'-lantern" -> "Jack-o'-Lantern"
   _ -> prettify a
 

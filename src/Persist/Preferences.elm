@@ -50,7 +50,7 @@ noPreferences =
   let
     acc pref = setPreference pref <| prefDefault pref
   in
-    List.foldl acc Set.empty enumPreference
+    List.foldr acc Set.empty enumPreference
 
 prefer : Preferences -> Preference -> Bool
 prefer prefs = ordPreference >> flip Set.member prefs

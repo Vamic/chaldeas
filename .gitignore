@@ -1,4 +1,5 @@
 elm-stuff/
 /.vscode
 /chaldeas
+tests/*.js
 .DS_Store

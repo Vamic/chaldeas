@@ -124,9 +124,10 @@ view st =
   in
     H.ul [] <|
     H.li [P.class "progress"] 
-      [H.text <| "Loading " ++ msg ++ "..."]
-    :: (List.map renderTest <| Test.discardSuccesses st.errs) 
-    ++ doIf (loaded) ((::) <|
+      [ H.text <| "Loading " ++ msg ++ "..." 
+      , H.ul [] <| (List.map renderTest <| Test.discardSuccesses st.errs) 
+      ]
+    :: doIf (loaded) ((::) <|
       H.li 
       [ P.class <| 
         if String.fromInt size == String.fromInt numPages then 
@@ -236,6 +237,10 @@ testServant getWiki s =
       in
         [ Wiki.matchOne npWiki "Name" 0 s.phantasm.name 
         , Wiki.matchOne npWiki "Description" 1 s.phantasm.desc
+        , Wiki.matchEffects npWiki "effect" (0, 6) <| 
+          effects s.phantasm.effect
+        , Wiki.matchEffects npWiki "oceffect" (0, 6) <| 
+          effects s.phantasm.over
         ]
     ]
 

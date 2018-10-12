@@ -84,11 +84,16 @@ app sStore ceStore =
         Switch toServant -> 
           let
             {sModel} = st
+            {extra}  = sModel
             focus = Maybe.map (owned sModel.team) toServant
           in
             ( { st 
               | viewing = Servants
-              , sModel  = { sModel | focus = focus } 
+              , sModel  = 
+                  { sModel 
+                  | focus = focus
+                  , extra = { extra | mineOnly = False }
+                  } 
               }
             , setPath sModel.navKey [sModel.root]
             )

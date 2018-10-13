@@ -112,6 +112,8 @@ npDamage addSkills special maxOver s =
         >> (+) (matchSum instants DamagePoison)
         >> (+) 1
     isSuperEffective = 1.0
+    directDamage = 
+        toFloat (max s.stats.base.hp s.stats.max.hp) * matchSum instants Avenge
     -------------
     -- FROM BUFFS
     -------------
@@ -205,6 +207,7 @@ npDamage addSkills special maxOver s =
       + dmgPlusAdd
       + selfDmgCutAdd
       + ( servantAtk * busterChainMod )
+      + directDamage
 
 -- | Obtains all self-granted always-active buff effects from passive skills.
 -- | Returns an array of (Buff, Strength%) pairs.

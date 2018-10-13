@@ -18,10 +18,10 @@ nullable f a = case a of
 
 amount : Amount -> Value
 amount a = E.object <| case a of
-    Flat x -> [("from", E.float x), ("to", E.float x)]
-    Range x y -> [("from", E.float x), ("to", E.float y)]
-    Full -> [("from", E.float 0), ("to", E.float 0)]
-    Placeholder -> [("from", E.float 0), ("to", E.float 0)]
+    Flat x      -> [("from", E.float x), ("to", E.float x)]
+    Range x y   -> [("from", E.float x), ("to", E.float y)]
+    Full        -> []
+    Placeholder -> []
 
 stat : Stat -> Value
 stat x = 
@@ -29,6 +29,13 @@ stat x =
     [ ("atk", E.int x.atk) 
     , ("hp",  E.int x.hp)
     ]
+
+target : Target -> Value
+target =
+    Show.possessiveAndSubject
+    >> .s
+    >> String.trim
+    >> E.string
 
 skillEffect : SkillEffect -> Value 
 skillEffect =
@@ -47,33 +54,26 @@ skillEffect =
           fields ++ 
           [("effect", f_ effect)]
     go a = case a of
-      Grant target duration effect amt ->
-          [ ("target",   E.string << .s <| Show.possessiveAndSubject target) 
+      Grant targ duration effect amt ->
+          [ ("target",   target targ) 
           , ("duration", E.int duration)
           , ("effect",   E.string <| Show.buffEffect Someone Placeholder effect)
           , ("amount",   amount amt)
-          , ("chance",   E.object [("from", E.int 100), ("to", E.int 100)])
           ]
-      Debuff target duration effect amt ->
-          [ ("target",   E.string << .s <| Show.possessiveAndSubject target) 
+      Debuff targ duration effect amt ->
+          [ ("target",   target targ) 
           , ("duration", E.int duration)
           , ("effect",   E.string <| Show.debuffEffect Someone Placeholder effect)
           , ("amount",   amount amt)
-          , ("chance",   E.object [("from", E.int 100), ("to", E.int 100)])
           ]
-      To target effect amt ->
-          [ ("target",   E.string << .s <| Show.possessiveAndSubject target) 
-          , ("duration", E.int 0)
+      To targ effect amt ->
+          [ ("target",   target targ)
           , ("effect",   E.string <| Show.instantEffect Someone Placeholder effect)
           , ("amount",   amount amt)
-          , ("chance",   E.object [("from", E.int 100), ("to", E.int 100)])
           ]
       Bonus effect isPerc amt ->
-          [ ("target",   E.string << .s <| Show.possessiveAndSubject Self) 
-          , ("duration", E.int 0)
-          , ("effect",   E.string <| Show.bonusEffect False Placeholder effect)
+          [ ("effect",   E.string <| Show.bonusEffect isPerc Placeholder effect)
           , ("amount",   amount amt)
-          , ("chance",   E.object [("from", E.int 100), ("to", E.int 100)])
           ]
       Chance x effect ->
           go effect ++
@@ -85,14 +85,11 @@ skillEffect =
           go effect 
           |> modEffect (flip (++) <| " every turn up to " ++ Show.amount x)
       When x effect ->
-          go effect 
-          |> modEffect ((++) <| "If " ++ x ++ ": ")
-      Times 1 effect ->
-          go effect 
-          |> modEffect (flip (++) <| " (1 time)")
+          go effect ++
+          [("condition", E.string x)]
       Times x effect ->
-          go effect 
-          |> modEffect (flip (++) <| " (" ++ String.fromInt x ++ "time)")
+          go effect ++
+          [("times", E.int x)]
   in
     go >> E.object
 

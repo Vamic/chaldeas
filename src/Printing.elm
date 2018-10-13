@@ -36,7 +36,7 @@ filterOut pattern =
     not << flip String.contains pattern << String.fromChar
 
 fileName : String -> String
-fileName = filterOut "?:/"
+fileName = filterOut "?:/'"
 
 urlName : String -> String
 urlName = String.filter <| (/=) ' '

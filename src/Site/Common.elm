@@ -120,7 +120,9 @@ h_ level = text_ <| case level of
 button_ : String -> Bool -> msg -> Html msg
 button_ label enable click =
   let
-    meta = if enable then [E.onClick click] else [P.disabled True]
+    meta = 
+        P.type_ "button" :: 
+        if enable then [E.onClick click] else [P.disabled True]
   in
     H.button meta [H.text label]
 

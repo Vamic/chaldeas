@@ -56,11 +56,9 @@ render a st sorts nav = case a of
           , H.td [E.onClick <| MatchAny True]  <| radio_ "Any" st.matchAny
           ]
          ] 
-      , flip H.button [H.text "Reset All"] <| 
-        if List.isEmpty st.filters && List.isEmpty st.exclude then
-          [P.disabled True]
-        else
-          [E.onClick ClearAll]
+      , button_ "Reset All" 
+        (not <| List.isEmpty st.filters && List.isEmpty st.exclude)
+        ClearAll
       ] ++
         ( List.filter (not << exclusive << .tab) st.allFilters 
           |> List.concatMap (filterSection st)

@@ -624,7 +624,7 @@
           localStorage.setItem(pair[0], JSON.stringify(pair[1]));
         });
         app.ports.analytics.subscribe(function(page) {
-          gtag('config', 'GA_TRACKING_ID', {'page_path': page});
+          gtag('config', 'UA-46060275-3', {'page_path': page});
         });
         var Export = {};
         app.ports.export.subscribe(function(pair) {

@@ -182,7 +182,7 @@ npDamage addSkills special maxOver s =
         ++ List.concatMap (go npStrength) npFs
         ++ List.concatMap (go overStrength) overFs
   in
-    if npDamageMultiplier == 0 then 
+    if npDamageMultiplier + directDamage == 0 then 
       0 
     else 
       servantAtk

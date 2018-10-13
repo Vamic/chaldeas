@@ -298,10 +298,10 @@ type alias RangeInfo =
     , max     : Float
     }
  
-type alias OrdRangeInfo = String
+type alias OrdRangeInfo = Float
 
 ordRangeInfo : RangeInfo -> OrdRangeInfo
-ordRangeInfo r = String.fromFloat r.min ++ String.fromFloat r.max
+ordRangeInfo r = r.max
 
 type alias Skill = { name   : String 
                    , rank   : Rank

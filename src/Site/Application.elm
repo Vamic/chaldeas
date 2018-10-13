@@ -40,10 +40,11 @@ focusFromPath path show st =
               |> Maybe.map Tuple.second
     }
 
-app onInit sStore ceStore = 
+app onInit analytics sAnalytics ceAnalytics sStore ceStore = 
   let
-    sChild  = Servants.component sStore
-    ceChild = CraftEssences.component ceStore
+    
+    sChild  = Servants.component sAnalytics sStore
+    ceChild = CraftEssences.component ceAnalytics ceStore
 
     init : Value -> Url -> Navigation.Key -> (Model, Cmd Msg)
     init flags url key = 
@@ -97,7 +98,7 @@ app onInit sStore ceStore =
                   , extra = { extra | mineOnly = False }
                   } 
               }
-            , setPath sModel.navKey [sModel.root]
+            , setPath analytics sModel.navKey [sModel.root]
             )
         _ -> 
           let
@@ -113,7 +114,7 @@ app onInit sStore ceStore =
               | viewing = CraftEssences
               , ceModel = { ceModel | focus = toCraftEssence } 
               }
-            , setPath ceModel.navKey [ceModel.root]
+            , setPath analytics ceModel.navKey [ceModel.root]
             )
         _ -> 
           let

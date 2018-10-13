@@ -62,8 +62,9 @@ setRoot : Model -> Model
 setRoot st = 
     { st | root = if st.extra.mineOnly then "MyServants" else "Servants" }
 
-component : (String -> Value -> Cmd Msg) -> Component Model Msg
-component store =
+component : (String -> Cmd Msg) -> (String -> Value -> Cmd Msg) 
+         -> Component Model Msg
+component analytics store =
   let
     init : Value -> Navigation.Key -> Model
     init flags navKey =
@@ -143,10 +144,11 @@ component store =
                 setRoot <| 
                 relist { st | extra = { extra | mineOnly = mineOnly } }
           in
-            (newSt, setPath newSt.navKey [newSt.root])
+            (newSt, setPath analytics newSt.navKey [newSt.root])
         Focus focus ->
             ( { st | focus = focus, extra = { extra | ascent = 1 } }
-            , setFocus st.navKey st.root <| Maybe.map (.base >> .name) focus
+            , setFocus analytics st.navKey st.root <| 
+              Maybe.map (.base >> .name) focus
             )
         OnTeam keep msPreCalc -> 
           let
@@ -164,7 +166,7 @@ component store =
               }
             , storeTeam store team
             )
-        _ -> siteUpdate store .base .name reSort a st
+        _ -> siteUpdate analytics store .base .name reSort a st
   in
     { init = init, view = view, update = update }
 

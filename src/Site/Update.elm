@@ -12,7 +12,8 @@ import Site.Filtering      exposing (..)
 import Persist.Flags       exposing (..)
 import Persist.Preferences exposing (..)
 
-siteUpdate : (String -> Value -> Cmd (SiteMsg inFilters inFocus toAlternate))
+siteUpdate : (String -> Cmd (SiteMsg inFilters inFocus toAlternate))
+          -> (String -> Value -> Cmd (SiteMsg inFilters inFocus toAlternate))
           -> (inFocus -> inFilters) 
           -> (inFilters -> String)
           -> (SiteModel inFilters inFocus e -> SiteModel inFilters inFocus e)
@@ -21,7 +22,7 @@ siteUpdate : (String -> Value -> Cmd (SiteMsg inFilters inFocus toAlternate))
           -> ( SiteModel inFilters inFocus e
              , Cmd (SiteMsg inFilters inFocus toAlternate)
              )
-siteUpdate store transform show reSort msg st = 
+siteUpdate analytics store transform show reSort msg st = 
   let
     relist        = updateListing transform
     toggleIn x xs = 
@@ -52,7 +53,7 @@ siteUpdate store transform show reSort msg st =
       let
         name = Maybe.map (transform >> show) focus
       in
-        ({ st | focus = focus }, setFocus st.navKey st.root name)
+        ({ st | focus = focus }, setFocus analytics st.navKey st.root name)
     FilterBy filters -> 
         pure << relist <|
         if List.any (.tab >> exclusive) filters then

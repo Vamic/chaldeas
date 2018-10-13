@@ -23,14 +23,25 @@ import Class.Show as Show
 scrollToTop : String -> Cmd (SiteMsg a b c)
 scrollToTop id = Task.attempt (always DoNothing) <| Dom.setViewportOf id 0 0
 
-setPath : Navigation.Key -> List String -> Cmd msg
-setPath key path = 
-    Navigation.pushUrl key <| Url.absolute ("chaldeas" :: path) []
+setPath : (String -> Cmd msg) -> Navigation.Key -> List String -> Cmd msg
+setPath analytics key path = 
+  let
+    url = Url.absolute ("chaldeas" :: path) []
+  in
+    Cmd.batch
+      [ Navigation.pushUrl key url
+      , analytics url
+      ]
 
-setFocus : Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b c)
-setFocus key root a = case a of
-  Nothing   -> setPath key [root]
-  Just name -> Cmd.batch [scrollToTop "focus", setPath key [root, urlName name]]
+setFocus : (String -> Cmd (SiteMsg a b c)) 
+        -> Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b c)
+setFocus analytics key root a = case a of
+  Nothing   -> setPath analytics key [root]
+  Just name -> 
+      Cmd.batch 
+      [ scrollToTop "focus"
+      , setPath analytics key [root, urlName name]
+      ]
 
 toCell : Bool -> Float -> Html msg
 toCell isPercent =

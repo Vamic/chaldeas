@@ -11,8 +11,9 @@ import Database.CraftEssence exposing (..)
 import Site.Application      exposing (app)
 import Database.Export as Export
 
-port store  : (String, Value) -> Cmd msg
-port export : (String, Value) -> Cmd msg
+port analytics : String -> Cmd msg
+port store     : (String, Value) -> Cmd msg
+port export    : (String, Value) -> Cmd msg
 
 uncurryStore : String -> Value -> Cmd msg
 uncurryStore k v = store (k, v)
@@ -27,5 +28,6 @@ runExports =
     , uncurryExport "craftEssences" <| E.list Export.craftEssence craftEssences
     ]
 
-main = Browser.application <| app runExports uncurryStore uncurryStore
+main = Browser.application <| 
+       app runExports analytics analytics analytics uncurryStore uncurryStore
 

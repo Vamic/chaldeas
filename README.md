@@ -16,13 +16,13 @@ You will also need [npm](https://www.npmjs.com/get-npm) in order to install ugli
 sudo npm install uglify-js --global
 ```
 
-To build the project, run:
+For convenience, `build.sh` contains the build command:
 
 ```sh
 elm make src/Main.elm --output=js/chaldeas.js --optimize && uglifyjs js/chaldeas.js --compress 'pure_funcs="F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output=js/chaldeas.js
 ```
 
-For testing purposes, you'll need to set up a staging copy:
+For development purposes, you'll need to set up a staging copy:
 
 ```sh
 mkdir chaldeas
@@ -30,7 +30,7 @@ mkdir chaldeas/js
 cp -r img/ chaldeas/img/
 ```
 
-Once the staging copy is set up, run the test server with:
+Once the staging copy is set up, run the development server with:
 
 ```sh
 elm make src/Main.elm --output chaldeas/js/chaldeas.js && elm reactor

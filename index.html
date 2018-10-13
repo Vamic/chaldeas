@@ -622,6 +622,10 @@
         app.ports.store.subscribe(function(pair) {
           localStorage.setItem(pair[0], JSON.stringify(pair[1]));
         });
+        app.ports.analytics.subscribe(function(page) {
+          ga('set', 'page', page);
+          ga('send', 'pageview', 'page');
+        });
         var Export = {};
         app.ports.export.subscribe(function(pair) {
           Export[pair[0]] = pair[1];

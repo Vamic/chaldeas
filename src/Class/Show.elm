@@ -1,5 +1,6 @@
 module Class.Show exposing (..)
 
+import StandardLibrary     exposing (..)
 import Database.Base       exposing (..)
 import Database.Skill      exposing (..)
 import Database.Servant    exposing (Deck(..), PhantasmType(..))
@@ -300,8 +301,8 @@ instantEffect target amt a =
       RemoveBuffs   -> "Remove" ++ p ++ " buffs"
       RemoveDebuffs -> "Remove" ++ p ++ " debuffs"
       RemoveMental  -> "Remove" ++ p ++ " mental debuffs"
-      Kill          -> "Instant-Kill " ++ s ++ 
-                       if not full then n ++ "% chance to " else ""
+      Kill          -> doIf (not full) ((++) <| n ++ "% chance to ") <|
+                       "Instant-Kill" ++ s                       
       GainStars     -> "Gain " ++ n ++ " critical stars" ++ case target of
                          Self -> " for yourself"
                          _    -> ""

@@ -623,8 +623,7 @@
           localStorage.setItem(pair[0], JSON.stringify(pair[1]));
         });
         app.ports.analytics.subscribe(function(page) {
-          ga('set', 'page', page);
-          ga('send', 'pageview', 'page');
+          gtag('config', 'GA_TRACKING_ID', {'page_path': page});
         });
         var Export = {};
         app.ports.export.subscribe(function(pair) {

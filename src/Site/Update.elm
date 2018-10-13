@@ -34,7 +34,7 @@ siteUpdate analytics store transform show reSort msg st =
     ToSection section -> 
         pure { st | section = section }
     ClearAll -> 
-        pure { st | exclude = [], filters = [] }
+        pure <| relist { st | exclude = [], filters = [] }
     Check t True ->
         pure { st | exclude = List.filter (.tab >> (/=) t) st.exclude }
     Check t False ->

@@ -148,6 +148,7 @@ phantasmType np =
     match target a = case a of
       To x Damage _        -> x == target
       To x DamageThruDef _ -> x == target
+      To x Avenge _        -> x == target
       _                    -> False
     effects = np.effect ++ np.over
   in 

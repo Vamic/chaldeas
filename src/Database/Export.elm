@@ -17,11 +17,11 @@ nullable f a = case a of
   Just x  -> f x
 
 amount : Amount -> Value
-amount a = E.object <| case a of
-    Flat x      -> [("from", E.float x), ("to", E.float x)]
-    Range x y   -> [("from", E.float x), ("to", E.float y)]
-    Full        -> []
-    Placeholder -> []
+amount a = case a of
+    Flat x      -> E.float x
+    Range x y   -> E.object [("from", E.float x), ("to", E.float y)]
+    Full        -> E.null
+    Placeholder -> E.null
 
 stat : Stat -> Value
 stat x = 

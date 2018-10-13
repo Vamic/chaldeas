@@ -8,6 +8,7 @@ import Html exposing (Html)
 import Url exposing (Url)
 
 import StandardLibrary       exposing (..)
+import Database              exposing (..)
 import Database.CraftEssence exposing (..)
 import MyServant             exposing (..)
 import Printing              exposing (..)
@@ -39,7 +40,7 @@ focusFromPath path show st =
               |> Maybe.map Tuple.second
     }
 
-app sStore ceStore = 
+app onInit sStore ceStore = 
   let
     sChild  = Servants.component sStore
     ceChild = CraftEssences.component ceStore
@@ -62,11 +63,12 @@ app sStore ceStore =
         sModel   = focusFromPath path (.base >> .name) <| sChild.init flags key
         {extra}  = sModel
       in
-        pure 
-          { sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
+        ( { sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
           , ceModel = ceModel
           , viewing = viewing
           }
+        , onInit
+        )
     
     view : Model -> Document Msg
     view st = 

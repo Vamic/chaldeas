@@ -619,10 +619,12 @@
             team: getValue("team") || []
           }
         });
-        var test;
         app.ports.store.subscribe(function(pair) {
-          test = pair[1];
           localStorage.setItem(pair[0], JSON.stringify(pair[1]));
+        });
+        var Export = {};
+        app.ports.export.subscribe(function(pair) {
+          Export[pair[0]] = pair[1];
         });
       </script>
   </body>

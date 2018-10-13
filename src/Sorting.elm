@@ -47,6 +47,8 @@ ordSortBy = enumToOrd enumSortBy
 
 formatSort : SortBy -> Float -> String
 formatSort a = case a of
+  ATK        -> commas
+  HP         -> commas
   NPDmg      -> commas
   NPDmgOver  -> commas
   NPSpec     -> commas

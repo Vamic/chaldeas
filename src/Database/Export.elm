@@ -77,10 +77,10 @@ skillEffect =
           ]
       Chance x effect ->
           go effect ++
-          [ ("chance",   E.object [("from", E.int x), ("to", E.int x)]) ]
+          [("chance", amount << Flat <| toFloat x)]
       Chances x y effect ->
           go effect ++
-          [ ("chance",   E.object [("from", E.int x), ("to", E.int y)]) ]
+          [("chance", amount <| Range (toFloat x) (toFloat y))]
       ToMax x effect ->
           go effect 
           |> modEffect (flip (++) <| " every turn up to " ++ Show.amount x)

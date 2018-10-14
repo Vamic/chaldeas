@@ -1,4 +1,6 @@
-module Database.Export exposing (craftEssence, servant)
+module Class.ToJSON exposing (craftEssence, servant)
+
+{-| Exports internal data to JSON values. -}
 
 import Json.Encode as E
 import List.Extra  as List

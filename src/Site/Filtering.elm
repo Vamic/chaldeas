@@ -5,6 +5,8 @@ module Site.Filtering exposing
   , matchFilter, namedBonus, skillFilter
   )
 
+{-| Sidebars for filtering displayed Servants/Craft Essences. -}
+
 import List.Extra as List
 import Date exposing (Date)
 import Time
@@ -18,12 +20,15 @@ import Site.Base           exposing (..)
 import Class.Has     as Has      exposing (Has)
 import Class.ToImage as ToImage exposing (ToImage)
 
+{-| A filter that only displays during a certain range of time. 
+Useful for event bonuses, weekly rate-ups, etc. -}
 type alias ScheduledFilter a = 
     { start  : Date 
     , end    : Date
     , filter : Filter a
     }
 
+{-| Retrieves all `Filter`s that are visible today. -}
 getScheduled : List (ScheduledFilter a) -> Date -> List (Filter a)
 getScheduled xs today = 
   let
@@ -31,6 +36,8 @@ getScheduled xs today =
   in
     List.map .filter <| List.filter scheduled xs
 
+{-| Updates a `SiteModel`'s `.listing` with its `.sorted`, 
+filtered by its `.exclude` and `.filters`. -}
 updateListing : (b -> a) -> SiteModel a b c -> SiteModel a b c
 updateListing f st = 
   let
@@ -45,14 +52,15 @@ updateListing f st =
         || (if st.matchAny then List.any else List.all) (matches x) st.filters
         )
   in
-    { st
-    | listing = List.filter (Tuple.second >> f >> match) st.sorted
-    }
+    { st | listing = List.filter (Tuple.second >> f >> match) st.sorted }
 
+{-| Organizes all filters visible today into a `FilerList`. -}
 collectFilters : (Date -> FilterTab -> List (Filter a)) -> Date -> FilterList a
 collectFilters f today = flip List.map enumFilterTab <| \tab ->
     { tab = tab, filters = reduceFilters <| f today tab }
 
+{-| Turns multiple filters with the same name into a single filter that 
+matches any of them. -}
 reduceFilters : List (Filter a) -> List (Filter a)
 reduceFilters = 
   let
@@ -62,6 +70,7 @@ reduceFilters =
     >> List.groupWhile eqFilter
     >> List.map go
 
+{-| Creates a `Filter` from a `Has` instance. -}
 matchFilter : Maybe (ToImage b) -> Has a b -> FilterTab -> b -> Filter a
 matchFilter toImage {show, has} tab x =
     { icon  = Maybe.map ((|>) x) toImage
@@ -70,6 +79,7 @@ matchFilter toImage {show, has} tab x =
     , match = \b -> List.member x << has b
     }
 
+{-| Creates a `Filter` that matches a supplied list of `.name`s. -}
 namedBonus : FilterTab -> String -> List String -> Filter { a | name : String }
 namedBonus tab name names =
     { icon  = Nothing 
@@ -78,6 +88,7 @@ namedBonus tab name names =
     , match = always <| .name >> flip List.member names
     }
 
+{-| Creates a `Filter` for a `SkillEffect`. -}
 skillFilter : SkillEffect -> (a -> List SkillEffect) -> Maybe (Filter a)
 skillFilter a getEffects = case a of
   Grant _ _ buff _ -> Just <| matchFilter 

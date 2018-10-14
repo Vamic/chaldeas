@@ -1,4 +1,4 @@
-port module Main exposing (main, store)
+port module Main exposing (main)
 
 import Browser
 import Date exposing (Date)
@@ -9,25 +9,23 @@ import StandardLibrary       exposing (..)
 import Database              exposing (..)
 import Database.CraftEssence exposing (..)
 import Site.Application      exposing (app)
-import Database.Export as Export
+import Class.ToJSON as Export
 
+{-| Updates the analytics webtracker with a new pageview on URL change. -}
 port analytics : String -> Cmd msg
+{-| Saves data to LocalStorage. -}
 port store     : (String, Value) -> Cmd msg
+{-| Exports data to a global JavaScript object. -}
 port export    : (String, Value) -> Cmd msg
 
-uncurryStore : String -> Value -> Cmd msg
-uncurryStore k v = store (k, v)
-
-uncurryExport : String -> Value -> Cmd msg
-uncurryExport k v = export (k, v)
-
+{-| Exports `servants` to `Export.servants` 
+and `craftEssences` to `Export.craftEssences`. -}
 runExports : Cmd msg
 runExports = 
     Cmd.batch 
-    [ uncurryExport "servants"      <| E.list Export.servant servants
-    , uncurryExport "craftEssences" <| E.list Export.craftEssence craftEssences
+    [ export ("servants",      E.list Export.servant servants)
+    , export ("craftEssences", E.list Export.craftEssence craftEssences)
     ]
 
-main = Browser.application <| 
-       app runExports analytics analytics analytics uncurryStore uncurryStore
-
+{-| Runs the website interface. -}
+main = Browser.application <| app runExports analytics (curry store)

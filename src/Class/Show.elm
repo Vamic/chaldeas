@@ -1,5 +1,21 @@
 module Class.Show exposing (..)
 
+{-| String representations.
+
+# `Database.Base`
+@docs alignment, attribute, card, class, stat, trait, icon, material
+# `Database.Servant`
+@docs deck, phantasmType
+# `Database.Skill`
+@docs amount, bonusEffect, buffCategory, buffEffect, debuffEffect, instantEffect, nameBuffEffect, nameDebuffEffect, possessiveAndSubject, rangeInfo, rank, skillEffect
+# `Persist.Preferences`
+@docs preference
+# `Site.Base`
+@docs filterTab, section
+# `Sorting`
+@docs sortBy
+-}
+
 import StandardLibrary     exposing (..)
 import Database.Base       exposing (..)
 import Database.Skill      exposing (..)
@@ -566,7 +582,7 @@ preference a = case a of
     Thumbnails   -> "Thumbnails"
 
 ----------
--- ALGEBRA
+-- Base
 ----------
 
 section : Section -> String

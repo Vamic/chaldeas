@@ -12,6 +12,18 @@ module Database.Skill exposing
   , RangeInfo, OrdRangeInfo, ordRangeInfo
   , mapAmount
   )
+{-| There are three types of skill effects in the game:
+buffs, or positive status effects with a duration;
+debuffs, or negative status effects with a duration;
+and instant actions like gaining stars or reducing an enemy's NP gauge.
+
+In CHALDEAS, Buffs are represented by `BuffEffect`s,
+debuffs by `DebuffEffect`s, and instant actions by `InstantEffect`s.
+This system is also used by passive skills, Noble Phantasm effects,
+and Craft Essences.
+
+For Craft Essences only, there are also `BonusEffect`s that increase gains
+of Quartz Points, Bond, and so on. -}
 
 import Database.Base exposing (..)
 
@@ -187,7 +199,7 @@ isDamage a = case a of
   LastStand     -> True
   _             -> False
 
--- | Int field is duration
+{-| Int field is duration -}
 type SkillEffect
     = Grant Target Int BuffEffect Amount
     | Debuff Target Int DebuffEffect Amount

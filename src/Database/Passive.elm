@@ -1,5 +1,20 @@
 module Database.Passive exposing (..)
 
+{- This module defines passive skills. Unlike active skills, passives with
+the same name and rank will always have identical effects. In other words,
+a `Passive` is a function of type `Rank -> Skill`: it accepts a Rank
+(such as `EX` or `APlus`) and returns a 'Skill'.
+Passive effects use the `BuffEffects` defined in `Database.Skill`. -}
+
+-- The easiest way to define a `Passive` is to use the `passive` helper
+-- function, which accepts a name, an icon, and a mapping of `Skill` effects
+-- to `Rank`s. As usual, mapping is represented in `Tuple` pairs.
+-- For example, since
+-- Avenger A provides 10% Debuff Resistance to the rest of the party,
+-- Avenger B provides 8% Debuff Resistance, and Avenger C provides 6%,
+-- the `avenger` function specifies this mapping as
+-- `[A: 10.0, B: 8.0, C: 6.0]`.
+
 import List.Extra as List
 
 import Database.Base   exposing (..)
@@ -100,6 +115,10 @@ territoryCreation = passive "Territory Creation" IconMagicCircle
 
 unlimitedManaSupply = passive "Unlimited Mana Supply" IconNobleTurn
   [ Give Self GaugePerTurn [ (C, 3) ] ]
+
+-----------
+-- INTERNAL
+-----------
 
 type PassiveEffect = Give Target BuffEffect (List (Rank, Float))
 

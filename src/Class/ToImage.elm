@@ -1,5 +1,21 @@
 module Class.ToImage exposing (..)
 
+{-| Links to the `/img` folder.
+
+# Usage
+@docs ImagePath, ToImage, image, thumbnail, link
+# `Database.Base`
+@docs card, class, icon, material
+# `Database.CraftEssence`
+@docs craftEssence
+# `Database.Servant`
+@docs servant
+# `Database.Skill`
+@docs buffEffect, debuffEffect
+# `MyServant`
+@docs myServant
+-}
+
 import Html            as H exposing (Html)
 import Html.Events     as E
 import Html.Attributes as P

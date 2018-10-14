@@ -4,6 +4,8 @@ module MyServant.Leveling exposing
   , ascendWishlist, skillWishlist
   )
 
+{-| Fixed rates for leveling `Servant`s based on their rarity. -}
+
 import Array
 
 import StandardLibrary  exposing (..)

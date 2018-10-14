@@ -1,5 +1,8 @@
 module Database exposing (servants, getAll, ceGetAll, ranges)
 
+{-| Packages together all information from the Database folder, including 
+a collection of all Servants in the [Database.Servant](./Servant/) folder. -}
+
 import List.Extra as List
 
 import StandardLibrary       exposing (..)
@@ -20,6 +23,13 @@ import Database.Servant.Saber     exposing (sabers)
 
 import Class.Show as Show
 
+{-| All Servants available in EN. Collects the database in 
+[Database/Servant](./Servant/). -}
+-- Note: Names _must_ be true to their EN localization.
+-- GrandOrder.Wiki is only trustworthy for Servants that have been in the game
+-- for a while, especially for skills.
+-- Servants introduced during events and the like should be checked against
+-- the official announcement.
 servants : List Servant
 servants = 
   let
@@ -45,6 +55,8 @@ servants =
     |> List.concat
     >> List.map (addHeavenOrEarth >> addUniversal)
 
+{-| Retrieves all values of a `Has <a>` Enum 
+that at least one `<a>` in the database `has`. -}
 genericGetAll : List a -> Has a b -> List b
 genericGetAll xs {show, has} = 
     xs 

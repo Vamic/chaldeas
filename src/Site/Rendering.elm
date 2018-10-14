@@ -19,8 +19,8 @@ import Class.ToImage as ToImage
 
 type alias Html a b c = H.Html (SiteMsg a b c)
 
-render : Section -> SiteModel a b d -> List SortBy
-      -> List (Html a b c) -> List (Html a b c)
+render : Section -> SiteModel a b d -> List SortBy -> List (Html a b c) 
+      -> List (Html a b c)
 render a st sorts nav = case a of
   SectionBrowse -> 
     h_ 1 "Browse" :: nav ++

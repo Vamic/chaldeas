@@ -7,12 +7,15 @@ module Printing exposing
   , prettify
   )
 
+{-| Helper functions for outputting to `String`s. -}
+
 import Regex exposing (Regex)
 import FormatNumber exposing (format)
 import FormatNumber.Locales exposing (usLocale)
 
 import StandardLibrary exposing (..)
 
+{-| Some number of `"★"`s. -}
 stars : Bool -> Int -> String
 stars padded rarity =
   if padded then
@@ -22,25 +25,30 @@ stars padded rarity =
     |> List.intersperse ' '
     >> String.fromList
 
+{-| Formats a number with commas every 3 digits. -}
 commas : Float -> String
 commas = format { usLocale | decimals = 0 }
 
+{-| Formats a number to a specified decimal precision. -}
 places : Int -> Float -> String
 places decimals =
     format { usLocale | decimals = decimals, thousandSeparator = "" }
 
-
+{-| Removes specified characters from strings. -}
 filterOut : String -> String -> String
 filterOut pattern = 
     String.filter <|
     not << flip String.contains pattern << String.fromChar
 
+{-| Removes characters which are illegal for file names. -}
 fileName : String -> String
 fileName = filterOut "?:/"
 
+{-| Removes spaces from names in order to use them in URLs. -}
 urlName : String -> String
 urlName = String.filter <| (/=) ' '
 
+{-| Converts `NightMode` into "Night Mode" etc. -}
 unCamel : String -> String
 unCamel = 
   let
@@ -58,6 +66,7 @@ camel =
     Regex.fromString "([a-z])([A-Z])|([A-Z])([A-Z][a-z])"
     |> Maybe.withDefault Regex.never
 
+{-| Adds in fancy diacritics to `Servant` and `CraftEssence` names. -}
 prettify : String -> String
 prettify a = case a of
   "Fergus mac Roich" -> "Fergus mac Róich"

@@ -12,6 +12,11 @@ module Database.Servant exposing
   , reduceMats, getAscensions, getReinforcements, getMaterials
   )
 
+{-| This module defines the data structure of Servants. -}
+-- It does not contain actual database information from the game; that can
+-- be found in the [Database.Servant](./Servant) _folder_, which has a
+-- separate file for each Class.
+
 import List.Extra as List
 
 import StandardLibrary exposing (..)
@@ -109,6 +114,7 @@ type Reinforcement
       (List (Material, Int)) -- 8
       -- 9 is always [ (CrystallizedLore: 1) ]
 
+{-| Returns all `Card`s in a `Servant`'s `Deck`. Does not include NP card. -}
 getDeck : Servant -> List Card
 getDeck {deck} = let (Deck a b c d e) = deck in [a, b, c, d, e]
 

@@ -1,10 +1,13 @@
 module Database.Calculator exposing (npPer, starsPer, npDamage)
 
+{-| Calculates information for sorting based on datamined formulas. -}
+
 import StandardLibrary       exposing (..)
 import Database.Base         exposing (..)
 import Database.Skill        exposing (..)
 import Database.Servant      exposing (..)
 
+{-| Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3306-How-much-NP-do-I-get-in-combat) -}
 npPer : Servant -> Card -> Float
 npPer s card =
   let
@@ -29,6 +32,7 @@ npPer s card =
     * criticalModifier
     * overkillModifier
 
+{-| Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3307-How-many-crit-stars-do-I-get-in-combat) -}
 starsPer : Servant -> Card -> Float
 starsPer s card = 
   let
@@ -59,6 +63,7 @@ starsPer s card =
     * overkillModifier
     + overkillAdd
 
+{-| Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3309-How-is-damage-calculated) -}
 npDamage : Bool -> Bool -> Bool -> Servant -> Float
 npDamage addSkills special maxOver s =
   let
@@ -209,8 +214,8 @@ npDamage addSkills special maxOver s =
       + ( servantAtk * busterChainMod )
       + directDamage
 
--- | Obtains all self-granted always-active buff effects from passive skills.
--- | Returns an array of (Buff, Strength%) pairs.
+{-| Obtains all self-granted always-active buff effects from passive skills.
+Returns an array of (Buff, Strength%) pairs. -}
 passiveBuffs : Servant -> List (BuffEffect, Float)
 passiveBuffs s = 
   let
@@ -220,7 +225,7 @@ passiveBuffs s =
   in
     s.passives |> List.concatMap .effect |> List.concatMap (simplify >> go)
 
--- | Attacker vs. Defender. Currently not in use.
+{-| Attacker vs. Defender. Currently not in use. -}
 -- TODO figure out how to use this
 attributeBonus : Attribute -> Attribute -> Float
 attributeBonus a b = case (a, b) of
@@ -237,8 +242,8 @@ attributeBonus a b = case (a, b) of
     -}
     _                  -> 1
 
--- | If a skill's target is not `Self`, `Ally`, or `Party`,
--- | it cannot be self-applied and therefore should not be used in calculations.
+{-| If a skill's target is not `Self`, `Ally`, or `Party`,
+it cannot be self-applied and therefore should not be used in calculations. -}
 selfable : Target -> Bool
 selfable a = case a of
   Self  -> True
@@ -246,8 +251,8 @@ selfable a = case a of
   Party -> True
   _     -> False
 
--- | Sums up all effects of a certain type from a Servant's skills
--- | in (Effect, Strength%) format.
+{-| Sums up all effects of a certain type from a Servant's skills 
+in (Effect, Strength%) format. -}
 matchSum : List (a, Float) -> a -> Float
 matchSum xs k = List.sum << flip List.map xs <| \(k1, v) -> 
     if k == k1 then v else 0

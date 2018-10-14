@@ -1,5 +1,7 @@
 module Site.Common exposing (..)
 
+{-| Utility functions for rendering to HTML. -}
+
 import Browser.Dom        as Dom
 import Json.Decode        as Json
 import Browser.Navigation as Navigation
@@ -20,35 +22,34 @@ import Site.Filtering      exposing (..)
 
 import Class.Show as Show
 
+{-| Scrolls an HTML element to its top. 
+Used when a Servant or Craft Essence is clicked on. -}
 scrollToTop : String -> Cmd (SiteMsg a b c)
 scrollToTop id = Task.attempt (always DoNothing) <| Dom.setViewportOf id 0 0
 
-setPath : (String -> Cmd msg) -> Navigation.Key -> List String -> Cmd msg
-setPath analytics key path = 
-  let
-    url = Url.absolute ("chaldeas" :: path) []
-  in
-    Cmd.batch
-      [ Navigation.pushUrl key url
-      , analytics url
-      ]
+{-| Updates the URL in the address bar and adds an entry to browser history. -}
+setPath : Navigation.Key -> List String -> Cmd msg
+setPath key path = 
+    Navigation.pushUrl key <| Url.absolute ("chaldeas" :: path) []
 
-setFocus : (String -> Cmd (SiteMsg a b c)) 
-        -> Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b c)
-setFocus analytics key root a = case a of
-  Nothing   -> setPath analytics key [root]
+{-| Displays details for a Servant or Craft Essence in the popup. -}
+setFocus : Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b c)
+setFocus key root a = case a of
+  Nothing   -> setPath key [root]
   Just name -> 
       Cmd.batch 
       [ scrollToTop "focus"
-      , setPath analytics key [root, urlName name]
+      , setPath key [root, urlName name]
       ]
 
+{-| Displays a number in a `<td>` element, optionally followed by `'%'`. -}
 toCell : Bool -> Float -> Html msg
 toCell isPercent =
     places 0 -- TODO
     >> doIf isPercent (flip (++) "%")
     >> text_ H.td
 
+{-| Displays a `<tr>` of skill effect values that increase when leveled. -}
 lvlRow : RangeInfo -> Html msg
 lvlRow r = 
   let
@@ -63,6 +64,8 @@ lvlRow r =
     |> List.map go
     >> H.tr []
 
+{-| Converts certain spaces into no-break-spaces in portrait names. 
+For example, parenthesized phrases such as (Lancer Alter) do not break on lines. -}
 noBreakName : Bool -> Bool -> String -> String
 noBreakName shouldPrettify hideClasses =
   let
@@ -93,9 +96,11 @@ noBreakName shouldPrettify hideClasses =
     >> replacePirates
     >> doIf shouldPrettify prettify
 
+{-| `"light"` or `"dark"` depending on `NightMode` preference. -}
 mode : Preferences -> String
 mode prefs = if prefer prefs NightMode then "dark" else "light"
 
+{-| Displays a `SkillEffect` with a link and marks demerits. -}
 effectEl : Maybe (a -> List SkillEffect) -> SkillEffect -> Html (SiteMsg a b c)
 effectEl getEffects ef = 
     flip H.p [H.text <| Show.skillEffect ef] <|
@@ -105,9 +110,11 @@ effectEl getEffects ef =
       Nothing     -> []
       Just filter -> [P.class "link", E.onClick <| FilterBy [filter]]
 
+{-| `<a>` -}
 a_ : String -> msg -> Html msg
 a_ label click = H.a [E.onClick click] [H.text label]
 
+{-| `<h[1-6]>` -}
 h_ : Int -> String -> Html msg
 h_ level = text_ <| case level of
     1 -> H.h1
@@ -117,6 +124,7 @@ h_ level = text_ <| case level of
     5 -> H.h5
     _ -> H.h6 
 
+{-| `<button>` -}
 button_ : String -> Bool -> msg -> Html msg
 button_ label enable click =
   let
@@ -126,6 +134,7 @@ button_ label enable click =
   in
     H.button meta [H.text label]
 
+{-| `<input type="checkbox">` -}
 checkbox_ : Maybe (Html msg) -> String -> Bool -> List (Html msg)
 checkbox_ icon label checked =
     [ H.input [P.type_ "checkbox", P.checked checked] []
@@ -134,11 +143,14 @@ checkbox_ icon label checked =
         Just ic -> [ic, H.text label]
     ]
 
+{-| Fires the `onChange` web event. 
+Unlike `onInput`, ignores events such as backspaces. -}
 onChange : (String -> msg) -> H.Attribute msg
 onChange tagger =
   E.stopPropagationOn "change" <<
   Json.map (\x -> (x, True)) <| Json.map tagger E.targetValue
 
+{-| `<input type="number"> with supplied `min`, `max`, and `value`. -}
 int_ : Int -> Int -> Int -> (Int -> SiteMsg a b c) 
     -> List (Html (SiteMsg a b c))
 int_ minVal maxVal actualVal changed =
@@ -159,12 +171,14 @@ int_ minVal maxVal actualVal changed =
       ] []
     ]
 
+{-| `<input type="radio">` -}
 radio_ : String -> Bool -> List (Html msg)
 radio_ label checked =
     [ H.input [P.type_ "radio", P.checked checked] [] 
     , text_ H.label label
     ]
 
+{-| `<table>` with supplied headings -}
 table_ : List String -> List (Html msg) -> Html msg
 table_ headings tbody = 
     H.table []
@@ -173,8 +187,10 @@ table_ headings tbody =
     , H.tbody [] tbody
     ]
 
+{-| Wraps text in a web element. -}
 text_ : (List p -> List (Html msg) -> Html msg) -> String -> Html msg
 text_ el txt = el [] [H.text txt]
 
+{-| `<tr>` with a supplied `th` and `td` -}
 tr_ : String -> List (Html (SiteMsg a b c)) -> Html (SiteMsg a b c)
 tr_ th td = H.tr [] [text_ H.th th, H.td [] td]

@@ -38,9 +38,8 @@ type alias Msg = SiteMsg CraftEssence CraftEssence Servant
 reSort : Model -> Model
 reSort st = { st | sorted = getSort st.sortBy }
 
-component : (String -> Cmd Msg) -> (String -> Value -> Cmd Msg) 
-         -> Component Model Msg
-component analytics store =
+component : (String -> Value -> Cmd Msg) -> Component Model Msg
+component store =
   let
     init : Value -> Navigation.Key -> Model
     init flags navKey =
@@ -65,7 +64,7 @@ component analytics store =
         >> popup st.prefs st.focus
     
     update : Msg -> Model -> (Model, Cmd Msg)
-    update = siteUpdate analytics store identity .name reSort
+    update = siteUpdate store identity .name reSort
   in
     { init = init, view = view, update = update }
 

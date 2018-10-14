@@ -7,6 +7,8 @@ module Site.Base exposing
 import StandardLibrary exposing (..)
 import Database.Skill exposing (..)
 
+{-| The site's layout is broken up into `Section`s. 
+On mobile, instead of showing `Section`s in sidebars, eachis a separate page. -}
 type Section
     =  SectionBrowse 
     | SectionSettings 
@@ -23,6 +25,7 @@ enumSection =
     , SectionFilter
     ]
 
+{-| The right sidebar is broken up into categories of `Filter`s. -}
 type FilterTab
     = FilterEventBonus
     | FilterAvailability
@@ -66,5 +69,7 @@ type alias OrdFilterTab = Int
 ordFilterTab : FilterTab -> OrdFilterTab
 ordFilterTab = enumToOrd enumFilterTab
 
+{-| Exclusive `FilterTab`s are shown on the left sidebar instead of right
+and have select all/none buttons. -}
 exclusive : FilterTab -> Bool
 exclusive = on (<=) ordFilterTab FilterSource

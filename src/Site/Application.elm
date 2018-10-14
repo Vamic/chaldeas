@@ -18,6 +18,7 @@ import Site.Common           exposing (..)
 import Site.CraftEssence.Component as CraftEssences
 import Site.Servant.Component      as Servants
 
+{-| The page currently being shown. -}
 type Viewing = CraftEssences | Servants
 
 type alias Model =
@@ -32,19 +33,31 @@ type Msg
     | ServantsMsg      Servants.Msg
     | CraftEssencesMsg CraftEssences.Msg
 
+
+{-| If loaded with a url for a particular Servant or Craft Essence, 
+the corresponding Servant/CE is displayed. -}
 focusFromPath : String -> (b -> String) -> SiteModel a b c -> SiteModel a b c
 focusFromPath path show st =
-    { st 
-    | focus = List.find (Tuple.second >> show >> urlName >> (==) path) 
-              st.listing 
-              |> Maybe.map Tuple.second
-    }
-
-app onInit analytics sAnalytics ceAnalytics sStore ceStore = 
   let
-    
-    sChild  = Servants.component sAnalytics sStore
-    ceChild = CraftEssences.component ceAnalytics ceStore
+    match =
+        Tuple.second
+        >> show
+        >> urlName
+        >> (==) path
+  in
+    { st | focus = List.find match st.listing |> Maybe.map Tuple.second }
+
+app onInit analytics store = 
+  let
+    child constr unMsg = constr ((<<) (Cmd.map unMsg) << store)
+        
+    sChild  = child Servants.component <| \a -> case a of
+      ServantsMsg x -> x
+      _             -> DoNothing
+
+    ceChild = child CraftEssences.component <| \a -> case a of
+      CraftEssencesMsg x -> x
+      _                  -> DoNothing
 
     init : Value -> Url -> Navigation.Key -> (Model, Cmd Msg)
     init flags url key = 
@@ -82,7 +95,7 @@ app onInit analytics sAnalytics ceAnalytics sStore ceStore =
     update : Msg -> Model -> (Model, Cmd Msg)
     update parentMsg st = case parentMsg of
       RequestUrl url -> pure st
-      ChangeUrl url -> pure st
+      ChangeUrl url -> (st, analytics url.path)
       CraftEssencesMsg msg -> case msg of
         Switch toServant -> 
           let
@@ -98,7 +111,7 @@ app onInit analytics sAnalytics ceAnalytics sStore ceStore =
                   , extra = { extra | mineOnly = False }
                   } 
               }
-            , setPath analytics sModel.navKey [sModel.root]
+            , setPath sModel.navKey [sModel.root]
             )
         _ -> 
           let
@@ -114,7 +127,7 @@ app onInit analytics sAnalytics ceAnalytics sStore ceStore =
               | viewing = CraftEssences
               , ceModel = { ceModel | focus = toCraftEssence } 
               }
-            , setPath analytics ceModel.navKey [ceModel.root]
+            , setPath ceModel.navKey [ceModel.root]
             )
         _ -> 
           let

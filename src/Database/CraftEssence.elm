@@ -4,6 +4,11 @@ module Database.CraftEssence exposing
   , getBond
   )
 
+{-| All Craft Essences. -}
+-- Unlike Servants, which are divided into multiple subfiles,
+-- Craft Essences are all included in this one file
+-- along with their data model definition.
+
 import Dict exposing (Dict)
 import Maybe.Extra as Maybe
 
@@ -13,6 +18,11 @@ import Database.Servant exposing (..)
 
 import Class.Show as Show
 
+{-| All Craft Essences available in EN. -}
+-- Note: Names _must_ be true to their EN localization.
+-- GrandOrder.Wiki is only trustworthy for CEs that have been in the game
+-- for a while. Craft Essences introduced during events and the like should be
+-- checked against the official announcement.
 craftEssences : List CraftEssence
 craftEssences = 
   let
@@ -2701,9 +2711,11 @@ craftEssences =
 equipped : Class -> SkillEffect -> SkillEffect
 equipped = When << (++) "equipped by a " << Show.class
 
+{-| Retrieves the corresponding Bond CE. Memoized for performance. -}
 getBond : Servant -> Maybe CraftEssence
-getBond s = Dict.get s.name  bondMap
+getBond s = Dict.get s.name bondMap
 
+{-| Memoization table for `getBond`. -}
 bondMap : Dict String CraftEssence
 bondMap = 
   let

@@ -3,6 +3,10 @@ module MyServant exposing
   , recalc
   , unowned, newServant, owned
   )
+{-| CHALDEAS has a "My Servants" feature for users to keep track of levels
+and stats for particular Servants. This module defines the container for
+such information, which is a `Database.Servant` wrapper with additional
+user info such as Fou stats and skill levels. -}
 
 import List.Extra  as List
 import Dict exposing (Dict)

@@ -16,12 +16,12 @@ nullable f a = case a of
   Nothing -> E.null
   Just x  -> f x
 
-amount : Amount -> Value
-amount a = case a of
-    Flat x      -> E.float x
-    Range x y   -> E.object [("from", E.float x), ("to", E.float y)]
-    Full        -> E.null
-    Placeholder -> E.null
+withAmount : Amount -> List (String, Value) -> List (String, Value)
+withAmount a = case a of
+  Placeholder -> identity
+  Full        -> identity
+  Flat x      -> (::) ("amount", E.float x)
+  Range x y   -> (::) ("amount", E.object [("from", E.float x), ("to", E.float y)])
 
 stat : Stat -> Value
 stat x = 
@@ -54,33 +54,32 @@ skillEffect =
           fields ++ 
           [("effect", f_ effect)]
     go a = case a of
-      Grant targ duration effect amt ->
+      Grant targ duration effect amount ->
+          withAmount amount <|
           [ ("target",   target targ) 
           , ("duration", E.int duration)
           , ("effect",   E.string <| Show.buffEffect Someone Placeholder effect)
-          , ("amount",   amount amt)
           ]
-      Debuff targ duration effect amt ->
+      Debuff targ duration effect amount ->
+          withAmount amount <|
           [ ("target",   target targ) 
           , ("duration", E.int duration)
           , ("effect",   E.string <| Show.debuffEffect Someone Placeholder effect)
-          , ("amount",   amount amt)
           ]
-      To targ effect amt ->
+      To targ effect amount ->
+          withAmount amount <|
           [ ("target",   target targ)
           , ("effect",   E.string <| Show.instantEffect Someone Placeholder effect)
-          , ("amount",   amount amt)
           ]
-      Bonus effect isPerc amt ->
-          [ ("effect",   E.string <| Show.bonusEffect isPerc Placeholder effect)
-          , ("amount",   amount amt)
-          ]
+      Bonus effect isPerc amount ->
+          withAmount amount <|
+          [("effect",   E.string <| Show.bonusEffect isPerc Placeholder effect)]
       Chance x effect ->
           go effect ++
-          [("chance", amount << Flat <| toFloat x)]
+          [("chance", E.int x)]
       Chances x y effect ->
           go effect ++
-          [("chance", amount <| Range (toFloat x) (toFloat y))]
+          [("chance", E.object [("from", E.int x), ("to", E.int y)])]
       ToMax x effect ->
           go effect 
           |> modEffect (flip (++) <| " every turn up to " ++ Show.amount x)

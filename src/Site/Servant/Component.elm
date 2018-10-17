@@ -124,7 +124,7 @@ component store =
              getMats "Ascension" ascendWishlist 
              ++ getMats "Skill" skillWishlist 
            )
-        >> Keyed.node "section" []
+        >> Keyed.node "section" [P.id "content"]
         >> siteView st enumSortBy nav
         >> popup st.prefs st.extra.ascent st.focus
     

@@ -24,6 +24,7 @@ siteUpdate : (String -> Value -> Cmd (SiteMsg inFilters inFocus toAlternate))
 siteUpdate store transform show reSort msg st = 
   let
     relist        = updateListing transform
+    goUp x        = (x, scrollToTop "content")
     toggleIn x xs = 
         if List.any (eqFilter x) xs then 
           removeWith eqFilter x xs 
@@ -33,9 +34,9 @@ siteUpdate store transform show reSort msg st =
     ToSection section -> 
         pure { st | section = section }
     ClearAll -> 
-        pure <| relist { st | exclude = [], filters = [] }
+        goUp <| relist { st | exclude = [], filters = [] }
     Check t True ->
-        pure { st | exclude = List.filter (.tab >> (/=) t) st.exclude }
+        goUp { st | exclude = List.filter (.tab >> (/=) t) st.exclude }
     Check t False ->
       let
         filters = 
@@ -43,18 +44,18 @@ siteUpdate store transform show reSort msg st =
             |> Maybe.map .filters
             >> Maybe.withDefault []
       in
-        pure { st | exclude = List.uniqueBy ordFilter <| filters ++ st.exclude }
+        goUp { st | exclude = List.uniqueBy ordFilter <| filters ++ st.exclude }
     SetSort sortBy -> 
-        pure << relist <| reSort { st | sortBy = sortBy }
+        goUp << relist <| reSort { st | sortBy = sortBy }
     MatchAny matchAny -> 
-        pure <| relist { st | matchAny = matchAny }
+        goUp <| relist { st | matchAny = matchAny }
     Focus focus -> 
       let
         name = Maybe.map (transform >> show) focus
       in
         ({ st | focus = focus }, setFocus st.navKey st.root name)
     FilterBy filters -> 
-        pure << relist <|
+        goUp << relist <|
         if List.any (.tab >> exclusive) filters then
           { st 
           | exclude = filters
@@ -75,7 +76,7 @@ siteUpdate store transform show reSort msg st =
         , storePreferences store prefs
         )
     Toggle filter ->
-        pure << relist <| 
+        goUp << relist <| 
         if exclusive filter.tab then
             { st | exclude = toggleIn filter st.exclude }
         else

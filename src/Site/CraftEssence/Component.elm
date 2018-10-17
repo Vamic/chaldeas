@@ -59,7 +59,7 @@ component store =
         st.listing
         |> List.map (keyedPortrait False st.prefs)
         |> doIf (st.sortBy /= Rarity) List.reverse
-        >> Keyed.node "section" []
+        >> Keyed.node "section" [P.id "content"]
         >> siteView st [Rarity, ID, ATK, HP] nav
         >> popup st.prefs st.focus
     

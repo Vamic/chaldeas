@@ -94,8 +94,10 @@ app onInit analytics store =
     
     update : Msg -> Model -> (Model, Cmd Msg)
     update parentMsg st = case parentMsg of
-      RequestUrl url -> pure st
-      ChangeUrl url -> (st, analytics url.path)
+      RequestUrl urlRequest -> case urlRequest of
+        Browser.Internal url  -> pure st
+        Browser.External href -> (st, Navigation.load href)
+      ChangeUrl urlRequest -> (st, analytics urlRequest.path)
       CraftEssencesMsg msg -> case msg of
         Switch toServant -> 
           let

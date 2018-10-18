@@ -2524,6 +2524,41 @@ craftEssences =
       , bond    = Nothing
       , limited = True
       }
+    , { name    = "Fragarach"
+      , id      = 331
+      , rarity  = 3
+      , icon    = IconStarUp
+      , stats   = { base = { atk = 200,  hp = 0 } 
+                  , max  = { atk = 1000, hp = 0 }
+                  }
+      , effect  = [ Grant Self 0 StarUp <| Range 200 300 ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Inverted Moon of the Heavens"
+      , id      = 332
+      , rarity  = 3
+      , icon    = IconStarTurn
+      , stats   = { base = { atk = 0, hp = 300 } 
+                  , max  = { atk = 0, hp = 1500 }
+                  }
+      , effect  = [ Grant Self 0 StarsPerTurn <| Range 1 2 
+                  , Grant Self 0 DebuffResist <| Range 5 10
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Hydra Dagger"
+      , id      = 333
+      , rarity  = 3
+      , icon    = IconReaperUp
+      , stats   = { base = { atk = 200,  hp = 0 } 
+                  , max  = { atk = 1000, hp = 0 }
+                  }
+      , effect  = [ Grant Self 0 KillUp <| Range 5 10 ]
+      , bond    = Nothing
+      , limited = True
+      }
     , bond 334 "Indomitableness" "Florence Nightingale" IconBusterUp
       [ party_ Buster 10, party HealingReceived 20 ]
     , bond 335 "One-Man War" "Cu Chulainn (Alter)" IconKneel

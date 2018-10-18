@@ -19,7 +19,12 @@ import Class.ToImage as ToImage
 
 extraFilters : List (Filter CraftEssence)
 extraFilters = List.concat
-  [ [ Filter Nothing FilterSource "Limited" <|
+  [ [ namedBonus FilterAvailability "New"
+      [ "Hydra Dagger"
+      , "Fragarach"
+      , "Inverted Moon of the Heavens"
+      ]
+    , Filter Nothing FilterSource "Limited" <|
       \_ ce -> ce.limited && Maybe.isNothing ce.bond
     , Filter Nothing FilterSource "Non-Limited" <|
       \_ ce -> not ce.limited && Maybe.isNothing ce.bond
@@ -59,6 +64,9 @@ scheduledFilters =
     [ "Maid in Halloween", "Halloween Princess", "Trick or Treat" 
     , "Little Halloween Devil", "Halloween Arrangement", "Jack-o'-lantern"  
     ]
+  {-, ScheduledFilter (Date 2018 Oct 18) (Date 2018 Oct 24) <|
+    namedBonus FilterAvailability "Rate-Up"
+    [ "Hydra Dagger", "Fragarach", "Inverted Moon of the Heavens" ]-}
   ]
 
 getExtraFilters : Date -> FilterTab -> List (Filter CraftEssence)

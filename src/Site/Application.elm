@@ -51,10 +51,12 @@ app onInit analytics store =
   let
     child constr unMsg = constr ((<<) (Cmd.map unMsg) << store)
         
+    sChild : Component Servants.Model Servants.Msg
     sChild  = child Servants.component <| \a -> case a of
       ServantsMsg x -> x
       _             -> DoNothing
 
+    ceChild : Component CraftEssences.Model CraftEssences.Msg
     ceChild = child CraftEssences.component <| \a -> case a of
       CraftEssencesMsg x -> x
       _                  -> DoNothing
@@ -113,7 +115,10 @@ app onInit analytics store =
                   , extra = { extra | mineOnly = False }
                   } 
               }
-            , setPath sModel.navKey [sModel.root]
+            , Cmd.batch 
+              [ setPath sModel.navKey [sModel.root]
+              , Cmd.map ServantsMsg <| scrollToTop "content"
+              ]
             )
         _ -> 
           let
@@ -129,7 +134,10 @@ app onInit analytics store =
               | viewing = CraftEssences
               , ceModel = { ceModel | focus = toCraftEssence } 
               }
-            , setPath ceModel.navKey [ceModel.root]
+            , Cmd.batch 
+              [ setPath ceModel.navKey [ceModel.root]
+              , Cmd.map CraftEssencesMsg <| scrollToTop "content"
+              ]
             )
         _ -> 
           let

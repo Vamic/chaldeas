@@ -55,7 +55,10 @@ siteUpdate store transform show reSort msg st =
       in
         ({ st | focus = focus }, setFocus st.navKey st.root name)
     FilterBy filters -> 
-        goUp << relist <|
+      let
+        resetPath (x, y) = (x, Cmd.batch [y, setPath st.navKey [st.root]])
+      in
+        resetPath << goUp << relist <|
         if List.any (.tab >> exclusive) filters then
           { st 
           | exclude = filters

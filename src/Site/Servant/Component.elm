@@ -143,7 +143,10 @@ component store =
                 setRoot <| 
                 relist { st | extra = { extra | mineOnly = mineOnly } }
           in
-            (newSt, setPath newSt.navKey [newSt.root])
+            ( newSt
+            , Cmd.batch 
+              [setPath newSt.navKey [newSt.root], scrollToTop "content"]
+            )
         Focus focus ->
             ( { st | focus = focus, extra = { extra | ascent = 1 } }
             , setFocus st.navKey st.root <| 

@@ -89,8 +89,7 @@ component store =
             , if st.extra.mineOnly then
                 text_ H.strong "My Servants"
               else
-                H.a [E.onClick DoNothing] [H.text "To My Servants"]
-                --a_ "My Servants" <| MineOnly True
+                a_ "My Servants" <| MineOnly True
             ]
         baseAscend = if prefer st.prefs MaxAscension then 4 else 1
         doPortrait (label, ms) = 
@@ -540,5 +539,6 @@ overRow r =
 
 link : Has Servant a -> FilterTab -> a -> Html Msg
 link ({show} as has) tab x = 
-    H.a [P.class "link", E.onClick << FilterBy <| singleFilter has tab x]
+    H.a 
+    [P.class "link", P.href "", E.onClick << FilterBy <| singleFilter has tab x]
     [H.text <| show x ]

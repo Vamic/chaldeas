@@ -112,7 +112,7 @@ effectEl getEffects ef =
 
 {-| `<a>` -}
 a_ : String -> msg -> Html msg
-a_ label click = H.a [E.onClick click] [H.text label]
+a_ label click = H.a [E.onClick click, P.href ""] [H.text label]
 
 {-| `<h[1-6]>` -}
 h_ : Int -> String -> Html msg

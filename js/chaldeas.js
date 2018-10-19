@@ -48041,7 +48041,16 @@ var author$project$Site$Servant$Component$component = function (store) {
 				author$project$Site$Common$a_,
 				'Servants',
 				author$project$Site$Algebra$MineOnly(false)) : A2(author$project$Site$Common$text_, elm$html$Html$strong, 'Servants'),
-				st.extra.mineOnly ? A2(author$project$Site$Common$text_, elm$html$Html$strong, 'My Servants') : A2(author$project$Site$Common$a_, 'My Servants', author$project$Site$Algebra$DoNothing)
+				st.extra.mineOnly ? A2(author$project$Site$Common$text_, elm$html$Html$strong, 'My Servants') : A2(
+				elm$html$Html$a,
+				_List_fromArray(
+					[
+						elm$html$Html$Events$onClick(author$project$Site$Algebra$DoNothing)
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text('To My Servants')
+					]))
 			]);
 		var listing = st.extra.mineOnly ? A3(
 			elm$core$Basics$composeR,

@@ -48041,10 +48041,7 @@ var author$project$Site$Servant$Component$component = function (store) {
 				author$project$Site$Common$a_,
 				'Servants',
 				author$project$Site$Algebra$MineOnly(false)) : A2(author$project$Site$Common$text_, elm$html$Html$strong, 'Servants'),
-				st.extra.mineOnly ? A2(author$project$Site$Common$text_, elm$html$Html$strong, 'My Servants') : A2(
-				author$project$Site$Common$a_,
-				'My Servants',
-				author$project$Site$Algebra$MineOnly(true))
+				st.extra.mineOnly ? A2(author$project$Site$Common$text_, elm$html$Html$strong, 'My Servants') : A2(author$project$Site$Common$a_, 'My Servants', author$project$Site$Algebra$DoNothing)
 			]);
 		var listing = st.extra.mineOnly ? A3(
 			elm$core$Basics$composeR,
@@ -48281,7 +48278,6 @@ var elm$browser$Browser$Document = F2(
 		return {body: body, title: title};
 	});
 var elm$browser$Browser$Navigation$load = _Browser_load;
-var elm$core$Debug$log = _Debug_log;
 var elm$core$Platform$Cmd$map = _Platform_map;
 var elm$core$Platform$Sub$batch = _Platform_batch;
 var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
@@ -48379,8 +48375,7 @@ var author$project$Site$Application$app = F3(
 							var href = urlRequest.a;
 							return _Utils_Tuple2(
 								st,
-								elm$browser$Browser$Navigation$load(
-									A2(elm$core$Debug$log, 'href', href)));
+								elm$browser$Browser$Navigation$load(href));
 						}
 					case 'ChangeUrl':
 						var urlRequest = parentMsg.a;

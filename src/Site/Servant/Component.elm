@@ -89,7 +89,7 @@ component store =
             , if st.extra.mineOnly then
                 text_ H.strong "My Servants"
               else
-                a_ "My Servants" <| MineOnly True
+                a_ "My Servants" DoNothing -- <| MineOnly True
             ]
         baseAscend = if prefer st.prefs MaxAscension then 4 else 1
         doPortrait (label, ms) = 

@@ -194,8 +194,6 @@ portrait big prefs baseAscension (label, ms) =
           doIf (label /= "") <| (++)
           [text_ H.span <| noBreak label, H.br [] []]
       ascension = if ms.level /= 0 then ms.ascent else baseAscension
-      prevAscend = a_ "<" << Ascend ms <| ascension - 1
-      nextAscend = a_ ">" << Ascend ms <| ascension + 1
       ascent = if ascension <= 1 then "" else " " ++ String.fromInt ascension
     in
       H.div meta
@@ -203,10 +201,19 @@ portrait big prefs baseAscension (label, ms) =
       , H.div [] [ ToImage.image <| ToImage.class ms.base.class ]
       , H.header [] << addLabel <|
         [text_ H.span << noBreak <| artorify ms.base.name]
-      , H.footer [] <<
+      , if big then 
+          H.footer []
+          [ button_ "<" (ascension > 1) << Ascend ms <| ascension - 1
+          , text_ H.span <| stars True ms.base.rarity
+          , button_ ">" (ascension < 4) << Ascend ms <| ascension + 1
+          ]
+        else
+          H.footer [] [text_ H.span <| stars True ms.base.rarity]
+
+    {-  , H.footer [] <<
         doIf (big && ascension > 1) ((::) prevAscend) <<
         doIf (big && ascension < 4) (consAfter nextAscend) <|
-        [text_ H.span <| stars True ms.base.rarity]
+        [text_ H.span <| stars True ms.base.rarity]-}
       ]
 
 keyedPortrait : Bool -> Preferences -> Int -> (String, MyServant) 
@@ -267,7 +274,7 @@ popup prefs ascent a = case a of
           ]
       myServantBox = List.singleton <| case ms.level of
         0 -> 
-            a_ "+Add to My Servants" << OnTeam True <| newServant s
+            button_ "+Add to My Servants" True << OnTeam True <| newServant s
         _ -> 
             H.table []
             [ H.tr []
@@ -285,7 +292,7 @@ popup prefs ascent a = case a of
                   OnTeam True { ms | fou = { fou | hp = val } }
                 ]
             , H.tr [] << (++)
-                [ H.td [] [a_ "Delete" << OnTeam False <| unowned s]
+                [ H.td [] [button_ "Delete" True << OnTeam False <| unowned s]
                 , H.td [] [text_ H.strong "Skills:"]
                 ] << List.concat << List.map2 skillBox (List.range 0 10) <|
                   List.zip s.skills ms.skills
@@ -540,5 +547,8 @@ overRow r =
 link : Has Servant a -> FilterTab -> a -> Html Msg
 link ({show} as has) tab x = 
     H.a 
-    [P.class "link", P.href "", E.onClick << FilterBy <| singleFilter has tab x]
-    [H.text <| show x ]
+    [ href_ "Servants"
+    , P.class "link"
+    , E.onClick << FilterBy <| singleFilter has tab x
+    ]
+    [H.text <| show x]

@@ -112,7 +112,11 @@ effectEl getEffects ef =
 
 {-| `<a>` -}
 a_ : String -> msg -> Html msg
-a_ label click = H.a [E.onClick click, P.href ""] [H.text label]
+a_ label click = H.a [href_ <| urlName label, E.onClick click] [H.text label]
+
+{-| `href="/chaldeas/..."` -}
+href_ : String -> H.Attribute msg
+href_ = P.href << (++) "/chaldeas/"
 
 {-| `<h[1-6]>` -}
 h_ : Int -> String -> Html msg

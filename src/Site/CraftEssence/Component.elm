@@ -114,7 +114,8 @@ popup prefs a = case a of
         Nothing   -> []
         Just bond -> [ H.em []
                         [ H.text "If equipped by "
-                        , H.a [P.class "link", P.href "", bondLink bond] 
+                        , H.a 
+                          [href_ "CraftEssences", P.class "link", bondLink bond] 
                           [H.text bond]
                         , H.text ": "
                         ]

@@ -50,7 +50,7 @@
         { color: #c0c0c0 }
       .activates p:first-child::after, .demerit::after
         { font-style: italic }
-      span, p, table, br, h1, h2, h3, h4, h5, ul, ol, a, strong
+      span, p, table, br, h1, h2, h3, h4, h5, ul, ol, a, strong, button
         { line-height: 1.31em }
       article table > tr > th
         { min-width: 6em
@@ -85,13 +85,15 @@
       label                 { display: inline-block }
       form p                { margin-left: 20px }
       section, p, td        { text-align: left }
-      footer a:first-child  { left: 20px }
-      footer a:last-child   { right: 20px }
-      footer a
+      footer button
         { position: absolute 
         ; font-size: 16px
         ; bottom: -3px
         }
+      footer button:first-child  
+        { left: 20px }
+      footer button:last-child   
+        { right: 20px }
       thead th, tbody th, tbody td
         { text-align: center }
       .light .link, .light aside a  
@@ -416,13 +418,23 @@
         }
       #myservant td:first-child strong
         { text-align: left }
-      #myservant a
+      article button
+        { font-family: unset 
+        ; background: none
+        ; border: none
+        ; cursor: pointer
+        ; padding: 0
+        }
+      article button:disabled
+        { display: none }
+      #myservant button
         { color: #ff0000 
         ; font-weight: bold
+        ; font-size: unset
         }
-      #myservant > a
+      #myservant > button
         { color: #00a900 }
-      #myservant a:hover
+      #myservant button:hover
         { text-decoration: underline }
       #myservant img 
         { height: 20px

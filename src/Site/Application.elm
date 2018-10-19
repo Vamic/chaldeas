@@ -96,7 +96,7 @@ app onInit analytics store =
     update parentMsg st = case parentMsg of
       RequestUrl urlRequest -> case urlRequest of
         Browser.Internal url  -> pure st
-        Browser.External href -> (st, Navigation.load href)
+        Browser.External href -> (st, Navigation.load <| Debug.log "href" href)
       ChangeUrl urlRequest -> (st, analytics urlRequest.path)
       CraftEssencesMsg msg -> case msg of
         Switch toServant -> 

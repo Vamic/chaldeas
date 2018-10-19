@@ -39,13 +39,39 @@ the corresponding Servant/CE is displayed. -}
 focusFromPath : String -> (b -> String) -> SiteModel a b c -> SiteModel a b c
 focusFromPath path show st =
   let
-    match =
-        Tuple.second
-        >> show
+    snd   = Tuple.second
+    match = 
+        show
         >> urlName
         >> (==) path
-  in
-    { st | focus = List.find match st.listing |> Maybe.map Tuple.second }
+  in case Maybe.map match st.focus of
+    Just True -> st
+    _ -> { st | focus = List.find (snd >> match) st.listing |> Maybe.map snd }
+
+stateFromPath : String -> Model -> Model
+stateFromPath fullPath st =
+  let
+    viewing = 
+      if String.contains "CraftEssences" fullPath then
+        CraftEssences
+      else
+        Servants
+    path = 
+        String.split "/" fullPath
+        |> List.reverse
+        >> List.head
+        >> Maybe.withDefault ""
+    mineOnly = String.contains "MyServants" fullPath
+    ceModel  = doIf (viewing == CraftEssences) (focusFromPath path .name) 
+               st.ceModel
+    sModel   = doIf (viewing == Servants) (focusFromPath path (.base >> .name)) 
+               st.sModel
+    {extra}  = sModel
+      in
+        { sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
+        , ceModel = ceModel
+        , viewing = viewing
+        }  
 
 app onInit analytics store = 
   let
@@ -63,25 +89,10 @@ app onInit analytics store =
 
     init : Value -> Url -> Navigation.Key -> (Model, Cmd Msg)
     init flags url key = 
-      let
-        viewing = 
-          if String.contains "CraftEssences" url.path then
-            CraftEssences
-          else
-            Servants
-        path = 
-            String.split "/" url.path
-            |> List.reverse
-            >> List.head
-            >> Maybe.withDefault ""
-        mineOnly = String.contains "MyServants" url.path
-        ceModel  = focusFromPath path .name <| ceChild.init flags key
-        sModel   = focusFromPath path (.base >> .name) <| sChild.init flags key
-        {extra}  = sModel
-      in
-        ( { sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
-          , ceModel = ceModel
-          , viewing = viewing
+        ( stateFromPath url.path
+          { ceModel = ceChild.init flags key
+          , sModel  = sChild.init flags key
+          , viewing = Servants
           }
         , onInit
         )
@@ -99,13 +110,13 @@ app onInit analytics store =
       RequestUrl urlRequest -> case urlRequest of
         Browser.Internal url  -> pure st
         Browser.External href -> (st, Navigation.load href)
-      ChangeUrl urlRequest -> (st, analytics urlRequest.path)
+      ChangeUrl {path} -> (stateFromPath path st, analytics path)
       CraftEssencesMsg msg -> case msg of
         Switch toServant -> 
           let
             {sModel} = st
             {extra}  = sModel
-            focus = Maybe.map (owned sModel.team) toServant
+            focus    = Maybe.map (owned sModel.team) toServant
           in
             ( { st 
               | viewing = Servants

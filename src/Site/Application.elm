@@ -48,7 +48,7 @@ focusFromPath path show st =
     Just True -> st
     _ -> { st | focus = List.find (snd >> match) st.listing |> Maybe.map snd }
 
-stateFromPath : String -> Model -> Model
+stateFromPath : String -> Model -> (Model, String)
 stateFromPath fullPath st =
   let
     path = 
@@ -58,27 +58,36 @@ stateFromPath fullPath st =
         >> Maybe.withDefault ""
       in
         if String.contains "CraftEssences" fullPath then
-          { viewing = CraftEssences 
-          , ceModel = focusFromPath path .name st.ceModel
-          , sModel  = st.sModel
-          }
+          let
+            ceModel = focusFromPath path .name st.ceModel
+          in
+            ( { viewing = CraftEssences 
+              , ceModel = focusFromPath path .name st.ceModel
+              , sModel  = st.sModel
+              }
+            , Maybe.withDefault "Craft Essences" <| 
+              Maybe.map .name ceModel.focus
+            )
         else 
           let 
             sModel   = focusFromPath path (.base >> .name) st.sModel
             {extra}  = sModel
             mineOnly = String.contains "MyServants" fullPath
           in
-            { viewing = Servants
-            , ceModel = st.ceModel
-            , sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
-            }
+            ( { viewing = Servants
+              , ceModel = st.ceModel
+              , sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
+              }
+            , Maybe.withDefault (doIf mineOnly ((++) "My ") "Servants") <| 
+              Maybe.map (.base >> .name) sModel.focus
+            )
 
-app onInit analytics store = 
+app onInit analytics title store = 
   let
     child constr unMsg = constr ((<<) (Cmd.map unMsg) << store)
         
     sChild : Component Servants.Model Servants.Msg
-    sChild  = child Servants.component <| \a -> case a of
+    sChild = child Servants.component <| \a -> case a of
       ServantsMsg x -> x
       _             -> DoNothing
 
@@ -89,13 +98,14 @@ app onInit analytics store =
 
     init : Value -> Url -> Navigation.Key -> (Model, Cmd Msg)
     init flags url key = 
-        ( stateFromPath url.path
+      let
+        (st, newTitle) = stateFromPath url.path
           { ceModel = ceChild.init flags key
           , sModel  = sChild.init flags key
           , viewing = Servants
           }
-        , onInit
-        )
+      in
+        (st, Cmd.batch [onInit, title newTitle])
     
     view : Model -> Document Msg
     view st = 
@@ -110,7 +120,11 @@ app onInit analytics store =
       RequestUrl urlRequest -> case urlRequest of
         Browser.Internal url  -> pure st
         Browser.External href -> (st, Navigation.load href)
-      ChangeUrl {path} -> (stateFromPath path st, analytics path)
+      ChangeUrl {path} -> 
+        let
+          (newSt, newTitle) = stateFromPath path st
+        in
+          (newSt, Cmd.batch [analytics path, title newTitle])
       CraftEssencesMsg msg -> case msg of
         Switch toServant -> 
           let

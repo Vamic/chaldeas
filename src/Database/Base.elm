@@ -6,7 +6,7 @@ module Database.Base exposing
   , Stat, addStats
   , Trait(..), enumTrait
   , Icon(..)
-  , Material(..), OrdMaterial, ordMaterial, ignoreMat
+  , Material(..), OrdMaterial, enumMaterial, ordMaterial, ignoreMat
   , pairWith
   )
 

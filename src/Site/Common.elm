@@ -30,7 +30,8 @@ scrollToTop id = Task.attempt (always DoNothing) <| Dom.setViewportOf id 0 0
 {-| Updates the URL in the address bar and adds an entry to browser history. -}
 setPath : Navigation.Key -> List String -> Cmd msg
 setPath key path = 
-    Navigation.pushUrl key <| Url.absolute ("chaldeas" :: path) []
+    Navigation.pushUrl key <| 
+    Url.absolute ("chaldeas" :: List.map urlName path) []
 
 {-| Displays details for a Servant or Craft Essence in the popup. -}
 setFocus : Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b c)

@@ -17,6 +17,8 @@ port analytics : String -> Cmd msg
 port store     : (String, Value) -> Cmd msg
 {-| Exports data to a global JavaScript object. -}
 port export    : (String, Value) -> Cmd msg
+{-| Sets the page title. -}
+port title     : String -> Cmd msg
 
 {-| Exports `servants` to `Export.servants` 
 and `craftEssences` to `Export.craftEssences`. -}
@@ -28,4 +30,4 @@ runExports =
     ]
 
 {-| Runs the website interface. -}
-main = Browser.application <| app runExports analytics (curry store)
+main = Browser.application <| app runExports analytics title (curry store)

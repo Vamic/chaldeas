@@ -12,6 +12,7 @@
     <meta charset="utf-8">
     <title>CHALDEAS</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Fate/Grand Order database of EN Servants and Craft Essences.">
     <link rel="icon" href="/chaldeas/img/favicon.png" type="image/x-icon" />
     <style>
       #error 
@@ -641,6 +642,9 @@
         });
         app.ports.analytics.subscribe(function(page) {
           gtag('config', 'UA-46060275-3', {'page_path': page});
+        });
+        app.ports.title.subscribe(function(title) {
+          document.title = title + " - CHALDEAS";
         });
         var Export = {};
         app.ports.export.subscribe(function(pair) {

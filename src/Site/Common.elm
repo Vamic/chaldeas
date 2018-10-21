@@ -37,8 +37,7 @@ setPath key path =
 setFocus : Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b c)
 setFocus key root a = case a of
   Nothing   -> setPath key [root]
-  Just name -> 
-      Cmd.batch [ scrollToTop "focus", setPath key [root, urlName name] ]
+  Just name -> setPath key [root, urlName name]
 
 {-| Displays a number in a `<td>` element, optionally followed by `'%'`. -}
 toCell : Bool -> Float -> Html msg

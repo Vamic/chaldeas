@@ -61,12 +61,6 @@ component store =
         >> popup st.prefs st.focus
 
     unlazyView prefs listing sortBy = 
-      let
-        nav = 
-            [ text_ H.strong "Craft Essences"
-            , a_ "Servants" <| Switch Nothing
-            ]
-      in
         listing
         |> List.map (keyedPortrait False prefs)
         |> doIf (sortBy /= Rarity) List.reverse

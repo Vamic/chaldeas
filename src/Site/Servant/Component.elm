@@ -150,12 +150,11 @@ component store =
           in
             ( newSt
             , Cmd.batch 
-              [setPath newSt.navKey [newSt.root], scrollToTop "content"]
+              [ setPath newSt.navKey [newSt.root], scrollToTop "content" ]
             )
         Focus focus ->
             ( { st | focus = focus, extra = { extra | ascent = 1 } }
-            , setFocus st.navKey st.root <| 
-              Maybe.map (.base >> .name) focus
+            , setFocus st.navKey st.root <| Maybe.map (.base >> .name) focus
             )
         OnTeam keep msPreCalc -> 
           let

@@ -22,16 +22,16 @@ import Site.Servant.Component      as Servants
 type Viewing = CraftEssences | Servants
 
 type alias Model =
-    { sModel      : Servants.Model
-    , ceModel     : CraftEssences.Model
-    , viewing     : Viewing
+    { ceModel : CraftEssences.Model
+    , sModel  : Servants.Model
+    , viewing : Viewing
     }
 
 type Msg
     = RequestUrl UrlRequest
     | ChangeUrl  Url
-    | ServantsMsg      Servants.Msg
     | CraftEssencesMsg CraftEssences.Msg
+    | ServantsMsg      Servants.Msg
 
 
 {-| If loaded with a url for a particular Servant or Craft Essence, 
@@ -61,9 +61,9 @@ stateFromPath fullPath st =
           let
             ceModel = focusFromPath path .name st.ceModel
           in
-            ( { viewing = CraftEssences 
-              , ceModel = focusFromPath path .name st.ceModel
-              , sModel  = st.sModel
+            ( { st
+              | viewing = CraftEssences 
+              , ceModel = ceModel
               }
             , Maybe.withDefault "Craft Essences" <| 
               Maybe.map .name ceModel.focus
@@ -74,8 +74,8 @@ stateFromPath fullPath st =
             {extra}  = sModel
             mineOnly = String.contains "MyServants" fullPath
           in
-            ( { viewing = Servants
-              , ceModel = st.ceModel
+            ( { st
+              | viewing = Servants
               , sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
               }
             , Maybe.withDefault (doIf mineOnly ((++) "My ") "Servants") <| 
@@ -86,15 +86,15 @@ app onInit analytics title store =
   let
     child constr unMsg = constr ((<<) (Cmd.map unMsg) << store)
         
-    sChild : Component Servants.Model Servants.Msg
-    sChild = child Servants.component <| \a -> case a of
-      ServantsMsg x -> x
-      _             -> DoNothing
-
     ceChild : Component CraftEssences.Model CraftEssences.Msg
     ceChild = child CraftEssences.component <| \a -> case a of
       CraftEssencesMsg x -> x
       _                  -> DoNothing
+
+    sChild : Component Servants.Model Servants.Msg
+    sChild = child Servants.component <| \a -> case a of
+      ServantsMsg x -> x
+      _             -> DoNothing
 
     init : Value -> Url -> Navigation.Key -> (Model, Cmd Msg)
     init flags url key = 
@@ -111,9 +111,9 @@ app onInit analytics title store =
     view st = 
         Document "CHALDEAS" <| case st.viewing of
           CraftEssences -> 
-            [ Html.map CraftEssencesMsg (ceChild.view st.ceModel) ]
+            [ Html.map CraftEssencesMsg <| ceChild.view st.ceModel ]
           Servants -> 
-            [ Html.map ServantsMsg (sChild.view st.sModel) ]
+            [ Html.map ServantsMsg <| sChild.view st.sModel ]
     
     update : Msg -> Model -> (Model, Cmd Msg)
     update parentMsg st = case parentMsg of

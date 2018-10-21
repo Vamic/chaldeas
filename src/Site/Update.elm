@@ -50,17 +50,16 @@ siteUpdate store transform show reSort msg st =
     MatchAny matchAny -> 
         goUp <| relist { st | matchAny = matchAny }
     Focus focus -> 
-      let
-        name = Maybe.map (transform >> show) focus
-      in
-        ({ st | focus = focus }, setFocus st.navKey st.root name)
+        ( { st | focus = focus }
+        , setFocus st.navKey st.root <| Maybe.map (transform >> show) focus
+        )
     FilterBy filters -> 
       let
         resetPath (x, y) = (x, Cmd.batch [y, setPath st.navKey [st.root]])
       in
         resetPath << goUp << relist <|
         if List.any (.tab >> exclusive) filters then
-          { st 
+          { st
           | exclude = filters
           , filters = []
           , focus   = Nothing
@@ -84,8 +83,8 @@ siteUpdate store transform show reSort msg st =
             { st | exclude = toggleIn filter st.exclude }
         else
             { st | filters = toggleIn filter st.filters }
-    Ascend _ _ -> pure st 
-    OnTeam _ _ -> pure st
-    MineOnly _ -> pure st
-    Switch _   -> pure st
-    DoNothing  -> pure st
+    Ascend _ _  -> pure st 
+    OnTeam _ _  -> pure st
+    MineOnly _  -> pure st
+    Switch _    -> pure st
+    DoNothing   -> pure st

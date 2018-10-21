@@ -43,7 +43,7 @@ setFocus key root a = case a of
 {-| Displays a number in a `<td>` element, optionally followed by `'%'`. -}
 toCell : Bool -> Float -> Html msg
 toCell isPercent =
-    places 0 -- TODO
+    places 0
     >> doIf isPercent (flip (++) "%")
     >> text_ H.td
 

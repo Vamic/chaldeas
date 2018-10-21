@@ -34,7 +34,7 @@ extras =
                     , rank   = A
                     , icon   = IconStun
                     , cd     = 8
-                  -- TODO only affects Servants?
+                  -- TODO only affects [Servant]s?
                     , effect = [ Chances 70 120 <| Debuff Enemy 1 Stun Full ]
                     }
                   ]
@@ -104,7 +104,7 @@ extras =
                     , rank   = C
                     , icon   = IconStun
                     , cd     = 8
-                  -- TODO only affects [Servants]?
+                  -- TODO only affects [Servant]s?
                     , effect = [ Chances 50 100 <| Debuff Enemy 1 Stun Full ]
                     }
                   ]

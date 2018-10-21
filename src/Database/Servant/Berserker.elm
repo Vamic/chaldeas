@@ -1070,7 +1070,7 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 1.02, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish, King]
+    , traits    = [Male, EnumaElish]
     , death     = 58.5
     , align     = [Chaotic, Balanced]
     , limited   = False

@@ -1134,7 +1134,7 @@ sabers =
                   }
     , gen       = { starWeight = 100, starRate = 10.2, npAtk = 1.11, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 5 }
-    , traits    = [Male, Brynhild, Riding, EnumaElish]
+    , traits    = [Male, Brynhild, EnumaElish]
     , death     = 28
     , align     = [Lawful, Good]
     , limited   = False

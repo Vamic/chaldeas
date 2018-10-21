@@ -51,26 +51,27 @@ focusFromPath path show st =
 stateFromPath : String -> Model -> Model
 stateFromPath fullPath st =
   let
-    viewing = 
-      if String.contains "CraftEssences" fullPath then
-        CraftEssences
-      else
-        Servants
     path = 
         String.split "/" fullPath
         |> List.reverse
         >> List.head
         >> Maybe.withDefault ""
-    mineOnly = String.contains "MyServants" fullPath
-    (ceModel, sModel) = case viewing of
-      CraftEssences -> (focusFromPath path .name st.ceModel, st.sModel)
-      Servants -> (st.ceModel, focusFromPath path (.base >> .name) st.sModel)
-    {extra} = sModel
       in
-        { viewing = viewing 
-        , ceModel = ceModel
-        , sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
-        }
+        if String.contains "CraftEssences" fullPath then
+          { viewing = CraftEssences 
+          , ceModel = focusFromPath path .name st.ceModel
+          , sModel  = st.sModel
+          }
+        else 
+          let 
+            sModel   = focusFromPath path (.base >> .name) st.sModel
+            {extra}  = sModel
+            mineOnly = String.contains "MyServants" fullPath
+          in
+            { viewing = Servants
+            , ceModel = st.ceModel
+            , sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
+            }
 
 app onInit analytics store = 
   let

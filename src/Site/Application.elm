@@ -62,16 +62,15 @@ stateFromPath fullPath st =
         >> List.head
         >> Maybe.withDefault ""
     mineOnly = String.contains "MyServants" fullPath
-    ceModel  = doIf (viewing == CraftEssences) (focusFromPath path .name) 
-               st.ceModel
-    sModel   = doIf (viewing == Servants) (focusFromPath path (.base >> .name)) 
-               st.sModel
-    {extra}  = sModel
+    (ceModel, sModel) = case viewing of
+      CraftEssences -> (focusFromPath path .name st.ceModel, st.sModel)
+      Servants -> (st.ceModel, focusFromPath path (.base >> .name) st.sModel)
+    {extra} = sModel
       in
-        { sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
+        { viewing = viewing 
         , ceModel = ceModel
-        , viewing = viewing
-        }  
+        , sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
+        }
 
 app onInit analytics store = 
   let

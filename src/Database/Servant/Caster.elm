@@ -552,7 +552,7 @@ casters =
     , hits      = { quick = 3, arts = 3, buster = 1, ex = 3 }
     , traits    = [Female, EnumaElish]
     , death     = 36
-    , align     = []
+    , align     = [Neutral, Balanced]
     , limited   = False
     , free      = False
     , ascendUp  = Ascension

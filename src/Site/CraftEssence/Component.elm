@@ -47,7 +47,7 @@ component store =
         |> reSort
         >> updateListing identity
         >> \st -> { st | root = "CraftEssences" }
-
+    
     view : Model -> Html Msg
     view st = 
       let
@@ -56,12 +56,21 @@ component store =
             , a_ "Servants" <| Switch Nothing
             ]
       in
-        st.listing
-        |> List.map (keyedPortrait False st.prefs)
-        |> doIf (st.sortBy /= Rarity) List.reverse
-        >> Keyed.node "section" [P.id "content"]
-        >> siteView st [Rarity, ID, ATK, HP] nav
+        lazy3 unlazyView st.prefs st.listing st.sortBy
+        |> siteView st [Rarity, ID, ATK, HP] nav
         >> popup st.prefs st.focus
+
+    unlazyView prefs listing sortBy = 
+      let
+        nav = 
+            [ text_ H.strong "Craft Essences"
+            , a_ "Servants" <| Switch Nothing
+            ]
+      in
+        listing
+        |> List.map (keyedPortrait False prefs)
+        |> doIf (sortBy /= Rarity) List.reverse
+        >> Keyed.node "section" [P.id "content"]
     
     update : Msg -> Model -> (Model, Cmd Msg)
     update = siteUpdate store identity .name reSort

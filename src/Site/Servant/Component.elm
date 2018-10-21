@@ -91,21 +91,28 @@ component store =
               else
                 a_ "My Servants" <| MineOnly True
             ]
-        baseAscend = if prefer st.prefs MaxAscension then 4 else 1
+      in
+        lazy4 unlazyView st.prefs st.extra.mineOnly st.listing st.sortBy
+        |> siteView st enumSortBy nav
+        >> popup st.prefs st.extra.ascent st.focus
+
+    unlazyView prefs mineOnly listing sortBy = 
+      let
+        baseAscend = if prefer prefs MaxAscension then 4 else 1
         doPortrait (label, ms) = 
-            portrait False st.prefs baseAscend 
-            ( if label == "" && st.extra.mineOnly then showStats ms else label
+            portrait False prefs baseAscend 
+            ( if label == "" && mineOnly then showStats ms else label
             , ms
             )
         withStats (_, ms) = (showStats ms, ms)
-        listing = 
-          if st.extra.mineOnly then
-            st.listing
+        listed = 
+          if mineOnly then
+            listing
             |> List.filter isMine
-            >> doIf (st.sortBy == Rarity) (List.map withStats)
+            >> doIf (sortBy == Rarity) (List.map withStats)
           else
-            st.listing
-        getMats label f = case f <| List.map Tuple.second listing of
+            listing
+        getMats label f = case f <| List.map Tuple.second listed of
           []   -> []
           mats -> 
             [ ( label ++ "H"
@@ -116,17 +123,15 @@ component store =
               )
             ]
       in
-        listing
-        |> List.map (keyedPortrait False st.prefs baseAscend)
-        >> doIf (st.sortBy /= Rarity) List.reverse
-        >> doIf st.extra.mineOnly
+        listed
+        |> List.map (keyedPortrait False prefs baseAscend)
+        >> doIf (sortBy /= Rarity) List.reverse
+        >> doIf mineOnly
            ( flip (++) <| 
              getMats "Ascension" ascendWishlist 
              ++ getMats "Skill" skillWishlist 
            )
         >> Keyed.node "section" [P.id "content"]
-        >> siteView st enumSortBy nav
-        >> popup st.prefs st.extra.ascent st.focus
     
     update : Msg -> Model -> (Model, Cmd Msg)
     update a st = 

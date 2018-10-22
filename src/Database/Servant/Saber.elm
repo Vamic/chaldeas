@@ -412,6 +412,80 @@ sabers =
                   [(DragonFang, 24), (ClawOfChaos, 4)]
                   [(ClawOfChaos, 11), (DragonsReverseScale, 10)]
     }
+    {-TODO
+  , { name      = "Elisabeth Bathory (Brave)"
+    , id        = 138
+    , rarity    = 4
+    , class     = Saber
+    , attr      = Earth
+    , deck      = Deck Quick Arts Arts Buster Buster
+    , curve     = 12
+    , stats     = { base  = { atk = 1649,  hp = 1799 }
+                  , max   = { atk = 9899,  hp = 11248 }
+                  , grail = { atk = 11986, hp = 13638 }
+                  }
+    , skills    = [ { name   = "Heroine's Great Principle"
+                    , rank   = EX
+                    , icon   = IconShield
+                    , cd     = 8
+                    , effect = [ Grant Self 1 NPGen <| Range 30 50 
+                               , Grant Self 1 Invincibility Full
+                               ]
+                    }
+                  , { name   = "Mana Burst (Courage)"
+                    , rank   = D
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| 
+                                 Range 20 40 
+                               , Grant Self 1 DefenseUp <| Flat 20   
+                               ]
+                    }
+                  , { name   = "Legend of the Crimson Heroine"
+                    , rank   = EX
+                    , icon   = IconDamageUp
+                    , cd     = 8
+                    , effect = [ To Self GaugeSpend <| Flat 100 
+                               , To Self ApplyAtRandom <| Flat 1
+                               , Grant Self 3 (Performance Buster) <| 
+                                 Range 30 50 
+                               , Grant Party 1 Invincibility Full
+                               , To Party Heal <| Range 2000 3000
+                               , Grant Party 1 AttackUp <| Range 30 50
+                               , To Party GainStars <| Range 30 50
+                               ]
+                    }
+                  ]
+    , passives  = [magicResistance A, territoryCreation C, doubleClass E]
+    , phantasm  = { name   = "Báthory Brave Erzsébet"
+                  , desc   = "Tornado Demon Daughter of Fresh Blood"
+                  , rank   = B
+                  , card   = Buster
+                  , kind   = "Anti-Army"
+                  , hits   = 7
+                  , effect = [ To Enemy DamageThruDef <| Range 600 1000 ]
+                  , over   = [ Debuff Enemy 5 Burn <| Range 500 2500 ]
+                  , first  = False
+                  }
+    , gen       = { starWeight = 100, starRate = 9.9, npAtk = 0.55, npDef = 3 }
+    , hits      = { quick = 4, arts = 3, buster = 1, ex = 5 }
+    , traits    = [Female, Dragon, EnumaElish, AllyOfJustice]
+    , death     = 28
+    , align     = [Chaotic, Good]
+    , limited   = True
+    , free      = True
+    , ascendUp  = Welfare "Dragon Orb"
+    , skillUp   = Reinforcement
+                  [(GemOf Saber, 4)]
+                  [(GemOf Saber, 10)]
+                  [(MagicGemOf Saber, 4)]
+                  [(MagicGemOf Saber, 10), (ProofOfHero, 12)]
+                  [(SecretGemOf Saber, 4), (ProofOfHero, 24)]
+                  [(SecretGemOf Saber, 10), (DragonFang, 10)]
+                  [(DragonFang, 20), (GreatKnightMedal, 10)]
+                  [(GreatKnightMedal, 30), (DragonsReverseScale, 8)]
+    }
+    -}
   , { name      = "Lancelot (Saber)"
     , id        = 121
     , rarity    = 4

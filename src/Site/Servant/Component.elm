@@ -376,11 +376,11 @@ popup prefs ascent a = case a of
           , tr_ "Effects" << 
             showTable (String.fromInt >> (++) "NP") 
             b.phantasm.effect <|
-            List.map (effectEl <| Just Has.servant) s.phantasm.effect
+            List.map (effectEl servants <| Just Has.servant) s.phantasm.effect
           , tr_ "Overcharge" << 
             showTable ((*) 100 >> String.fromInt >> flip (++) "%") 
             b.phantasm.over <|
-            List.map (effectEl <| Just Has.servant) s.phantasm.over
+            List.map (effectEl servants <| Just Has.servant) s.phantasm.over
           ]
         , h_ 2 "Active Skills"
         ] ++ List.map2 (skillEl showTables) s.skills b.skills ++ 
@@ -495,7 +495,7 @@ skillEl showTables sk base =
     , H.text << 
       doIf (sk == base) (flip (++) <| "~" ++ String.fromInt (sk.cd - 2)) <|
       String.fromInt sk.cd
-    ] ++ List.map (effectEl <| Just Has.servant) sk.effect
+    ] ++ List.map (effectEl servants <| Just Has.servant) sk.effect
 
 passiveEl : Skill -> Html Msg
 passiveEl p = 
@@ -524,7 +524,7 @@ bondEl a = case a of
           [ text_ H.span "★★★★ "
           , text_ H.strong "ATK: ", text_ H.span "100 "
           , text_ H.strong "HP: ", text_ H.span "100"
-          ] ++ List.map (effectEl Nothing) ce.effect
+          ] ++ List.map (effectEl servants Nothing) ce.effect
         ]
       ]
 

@@ -89,30 +89,39 @@ namedBonus tab name names =
     }
 
 {-| Creates a `Filter` for a `SkillEffect`. -}
-skillFilter : SkillEffect -> (a -> List SkillEffect) -> Maybe (Filter a)
-skillFilter a getEffects = case a of
-  Grant _ _ buff _ -> Just <| matchFilter 
-      (Just ToImage.buffEffect) 
-      (Has.buffEffect getEffects)
-      (FilterBuff <| buffCategory buff)
-      buff
-  Debuff _ _ debuff _ -> Just <| matchFilter 
-      (Just ToImage.debuffEffect) 
-      (Has.debuffEffect getEffects)
-      FilterDebuff
-      debuff
-  To _ action _ -> Just <| matchFilter 
-      Nothing
-      (Has.instantEffect getEffects)
-      FilterAction
-      action
-  Bonus bonus _ _ -> Just <| matchFilter 
-      Nothing
-      (Has.bonusEffect getEffects)
-      FilterBonus
-      bonus
-  Chance _ b    -> skillFilter b getEffects
-  Chances _ _ b -> skillFilter b getEffects
-  When _ b      -> skillFilter b getEffects
-  Times _ b     -> skillFilter b getEffects
-  ToMax _ b     -> skillFilter b getEffects
+skillFilter : List a -> SkillEffect -> (a -> List SkillEffect) 
+           -> Maybe (Filter a)
+skillFilter xs a getEffects = 
+  let
+    ifMultiple : Filter a -> Maybe (Filter a)
+    ifMultiple filter = 
+      if List.isEmpty << List.drop 1 <| List.filter (filter.match False) xs then
+        Nothing
+      else
+        Just filter
+  in Maybe.andThen ifMultiple <| case a of
+    Grant _ _ buff _ -> Just <| matchFilter 
+        (Just ToImage.buffEffect) 
+        (Has.buffEffect getEffects)
+        (FilterBuff <| buffCategory buff)
+        buff
+    Debuff _ _ debuff _ -> Just <| matchFilter 
+        (Just ToImage.debuffEffect) 
+        (Has.debuffEffect getEffects)
+        FilterDebuff
+        debuff
+    To _ action _ -> Just <| matchFilter 
+        Nothing
+        (Has.instantEffect getEffects)
+        FilterAction
+        action
+    Bonus bonus _ _ -> Just <| matchFilter 
+        Nothing
+        (Has.bonusEffect getEffects)
+        FilterBonus
+        bonus
+    Chance _ b    -> skillFilter xs b getEffects
+    Chances _ _ b -> skillFilter xs b getEffects
+    When _ b      -> skillFilter xs b getEffects
+    Times _ b     -> skillFilter xs b getEffects
+    ToMax _ b     -> skillFilter xs b getEffects

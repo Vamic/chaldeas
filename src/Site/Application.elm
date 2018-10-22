@@ -140,10 +140,9 @@ app onInit analytics title store =
                   , extra = { extra | mineOnly = False }
                   } 
               }
-            , Cmd.batch 
-              [ setPath sModel.navKey [sModel.root]
-              , Cmd.map ServantsMsg <| scrollToTop "content"
-              ]
+            , Cmd.map ServantsMsg << 
+              setFocus sModel.navKey "Servants" <| 
+              Maybe.map (.base >> .name) focus
             )
         _ -> 
           let
@@ -159,10 +158,9 @@ app onInit analytics title store =
               | viewing = CraftEssences
               , ceModel = { ceModel | focus = toCraftEssence } 
               }
-            , Cmd.batch 
-              [ setPath ceModel.navKey [ceModel.root]
-              , Cmd.map CraftEssencesMsg <| scrollToTop "content"
-              ]
+            , Cmd.map CraftEssencesMsg << 
+              setFocus ceModel.navKey "CraftEssences" <| 
+              Maybe.map .name toCraftEssence
             )
         _ -> 
           let

@@ -77,6 +77,7 @@ prettify a = case a of
   "Cu Chulainn (Alter)" -> "Cú Chulainn (Alter)"
   "Cu Chulainn (Caster)" -> "Cú Chulainn (Caster)"
   "Elisabeth Bathory" -> "Elisabeth Báthory"
+  "Elisabeth Bathory (Brave)" -> "Elisabeth Báthory (Brave)"
   "Elisabeth Bathory (Halloween)" -> "Elisabeth Báthory (Halloween)"
   "Scathach" -> "Scáthach"
   "Scathach (Assassin)" -> "Scáthach (Assassin)"

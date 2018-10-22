@@ -170,6 +170,7 @@ effectMap =
     [ (["formula"], [])
     , (["bonus","increase"], [])
     , (["end","of","turn"], [])
+    , (["can","only","be","used"], [])
 
     , (["reduce","attack","defense","critical","chance","debuff","resist","np","strength"], show [AttackDown, DefenseDown, CritChance, DebuffVuln, NPDown])
     , (["reduce","critical","chance","debuff","resist"], show [CritChance, DebuffVuln])
@@ -225,6 +226,7 @@ effectMap =
     , (["deal","damage","yourself"], show [DemeritDamage])
     , (["reduce","hp"], show [DemeritDamage])
     , (["reduce","enemy","np","gauge","by"], show [GaugeDown])
+    , (["deplete","gauge","on","use"], show [GaugeSpend])
     , (["reduce","own","gauge"], show [DemeritGauge])
     , (["drain","own","gauge"], show [DemeritGauge])
     , (["death","trigger"], show [DemeritKill])

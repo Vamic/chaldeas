@@ -26,43 +26,43 @@ type alias Component model msg =
     , update        : msg -> model -> (model, Cmd msg)
     }
 
-type SiteMsg inFilters inFocus toAlternate
+type SiteMsg filt focus alt
     = ToSection (Maybe Section)
-    | Focus     (Maybe inFocus)
+    | Focus     (Maybe focus)
     | ClearAll
     | Check     FilterTab Bool
-    | FilterBy  (List (Filter inFilters))
-    | Toggle    (Filter inFilters)
+    | FilterBy  (List (Filter filt))
+    | Toggle    (Filter filt)
     | MatchAny  Bool
     | SetSort   SortBy
     | SetPref   Preference Bool
-    | Ascend    inFocus Int
-    | OnTeam    Bool inFocus
+    | Ascend    focus Int
+    | OnTeam    Bool focus
     | MineOnly  Bool
-    | Switch    (Maybe toAlternate)
+    | Switch    (Maybe alt)
     | DoNothing
 
-type alias SiteModel inFilters inFocus extra = 
+type alias SiteModel filt focus extra = 
     { error      : Maybe String
     , today      : Date
     , navKey     : Navigation.Key
     , root       : String
-    , allFilters : FilterList inFilters
+    , allFilters : FilterList filt
     , section    : Maybe Section
-    , filters    : List (Filter inFilters)
-    , exclude    : List (Filter inFilters)
+    , filters    : List (Filter filt)
+    , exclude    : List (Filter filt)
     , matchAny   : Bool
-    , focus      : Maybe inFocus
+    , focus      : Maybe focus
     , sortBy     : SortBy
     , prefs      : Preferences
-    , sorted     : List (String, inFocus)
-    , listing    : List (String, inFocus)
+    , sorted     : List (String, focus)
+    , listing    : List (String, focus)
     , team       : Dict OrdServant MyServant
     , extra      : extra
     }
 
-siteInit : (Date -> FilterList inFilters) -> Value -> Navigation.Key -> extra
-        -> SiteModel inFilters inFocus extra
+siteInit : (Date -> FilterList filt) -> Value -> Navigation.Key -> extra
+        -> SiteModel filt focus extra
 siteInit getFilters val navKey extra = 
   let
     (error, {today, preferences, team}) = 

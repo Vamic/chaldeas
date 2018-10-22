@@ -2741,6 +2741,9 @@ craftEssences =
       , bond    = Nothing
       , limited = True
       }
+    {- TODO , bond 398 "Invitation to Halloween" "Elisabeth Bathory (Brave)" 
+      IconBusterUp
+      [ party_ Buster 20, Debuff Party 0 DefenseDown <| Flat 10 ]-}
     ]
 
 equipped : Class -> SkillEffect -> SkillEffect

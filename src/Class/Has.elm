@@ -92,7 +92,9 @@ instantEffect : (a -> List SkillEffect) -> Has a InstantEffect
 instantEffect = 
     effect (Show.instantEffect Someone Placeholder) <| 
     \noSelf a -> case a of
-      To _ BecomeHyde _ -> Nothing
+      To _ ApplyAtRandom _ -> Nothing
+      To _ BecomeHyde    _ -> Nothing
+      To _ GaugeSpend    _ -> Nothing
       To t y _ -> if not noSelf || t /= Self then Just y else Nothing
       _        -> Nothing
 

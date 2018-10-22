@@ -76,19 +76,19 @@ noBreakName shouldPrettify hideClasses =
         if shouldPrettify then 
           x
         else if not hideClasses then 
-          x ++ "(" ++ y
+          x ++ " (" ++ y
         else x ++ case String.split " " <| stripSuffix ")" y of
-          []      -> "(" ++ replaceSpaces y
+          []      -> " (" ++ replaceSpaces y
           w :: ws -> 
             if not <| List.member w classNames then 
-              "(" ++ replaceSpaces y
+              " (" ++ replaceSpaces y
             else if List.isEmpty ws then 
               ""
             else
-              "(" ++ replaceSpaces (String.join " " ws) ++ ")"
-      ws   -> String.join "(" ws
+              " (" ++ replaceSpaces (String.join " " ws) ++ ")"
+      ws   -> String.join " (" ws
   in
-    String.split "("
+    String.split " ("
     >> unBreak
     >> replacePirates
     >> doIf shouldPrettify prettify
@@ -98,12 +98,13 @@ mode : Preferences -> String
 mode prefs = if prefer prefs NightMode then "dark" else "light"
 
 {-| Displays a `SkillEffect` with a link and marks demerits. -}
-effectEl : Maybe (a -> List SkillEffect) -> SkillEffect -> Html (SiteMsg a b c)
-effectEl getEffects ef = 
+effectEl : List a -> Maybe (a -> List SkillEffect) -> SkillEffect 
+        -> Html (SiteMsg a b c)
+effectEl xs getEffects ef = 
     flip H.p [H.text <| Show.skillEffect ef] <|
     if demerit ef then
       [P.class "demerit"]
-    else case getEffects |> Maybe.andThen (skillFilter ef) of
+    else case getEffects |> Maybe.andThen (skillFilter xs ef) of
       Nothing     -> []
       Just filter -> [P.class "link", E.onClick <| FilterBy [filter]]
 

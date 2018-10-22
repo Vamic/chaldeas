@@ -72,6 +72,7 @@ stat {atk, hp} = "ATK: " ++ String.fromInt atk ++ ", HP: " ++ String.fromInt hp
 
 trait : Trait -> String
 trait a = case a of
+  AllyOfJustice -> "Ally of Justice"
   Arthur -> "Arthur"
   Beast  -> "Beast"
   Brynhild -> "Brynhild's Beloved"
@@ -291,6 +292,8 @@ instantEffect target amt a =
     full = amt == Full
   in
     case a of
+      ApplyAtRandom -> "Apply " ++ n ++ " random effect" 
+                       ++ (if amt /= Flat 1 then "s" else "") ++ " from below:"
       Avenge        -> "At the end of the next turn, deal " ++ n
                        ++ "% of damage taken during that turn" ++ to
       BecomeHyde    -> "Transform into Hyde. Class: [Berserker]. Star Weight: 9. Star Rate: 5%. NP/Hit: 1.02%. NP/Defend: 5%. Alignment: Chaotic Evil. Lose [" ++ trait Brynhild ++ "] trait. Skills are more effective"
@@ -309,6 +312,7 @@ instantEffect target amt a =
       DemeritHealth -> "Deal " ++ n ++ " damage" ++ to 
                       ++ " down to a minimum of 1"
       GaugeDown     -> "Reduce" ++ p ++ " NP gauge by " ++ n
+      GaugeSpend    -> "Costs " ++ n ++ "% of" ++ p ++ " NP gauge to use"
       GaugeUp       -> "Increase" ++ p ++ " NP gauge by " ++ n ++ "%"
       Heal          -> "Restore " ++ (if full then "all" else n) ++ " HP" ++ to
       LastStand     -> "Deal up to " ++ n ++ "% damage based on missing health" 
@@ -498,12 +502,13 @@ nameBuffEffect a = case a of
   StarsPerTurn    -> "StarsPerTurn"
 
 skillEffect : SkillEffect -> String
-skillEffect a = 
+skillEffect = 
   let
     uncap s = case String.uncons s of
       Nothing -> s
       Just (head, tail) -> String.toLower (String.fromChar head) ++ tail
-    go b = case b of
+    addPeriod s = if String.endsWith ":" s then s else s ++ "."
+    go a = case a of
         Grant t dur buff amt -> buffEffect t amt buff ++ turns dur
         Debuff t dur deb amt -> debuffEffect t amt deb ++ turns dur
         To t instant amt     -> instantEffect t amt instant
@@ -520,12 +525,12 @@ skillEffect a =
                                 ++ " times)"
         ToMax amt ef         -> go ef ++ " every turn (max " 
                                 ++ amount amt ++ ")"
-    turns b = case b of
+    turns a = case a of
       0 -> ""
       1 -> " for 1 turn"
-      _ -> " for " ++ String.fromInt b ++ " turns"
+      _ -> " for " ++ String.fromInt a ++ " turns"
   in
-    go a ++ "."
+    go >> addPeriod
 
 possessiveAndSubject : Target -> { p : String, s : String }
 possessiveAndSubject a = case a of

@@ -36,7 +36,8 @@ type BonusEffect
     | QPQuest
 
 type InstantEffect
-    = Avenge
+    = ApplyAtRandom
+    | Avenge
     | BecomeHyde -- is there a better way to do this?
     | Cooldowns
     | Cure
@@ -52,6 +53,7 @@ type InstantEffect
     | DemeritKill
     | GainStars
     | GaugeDown
+    | GaugeSpend
     | GaugeUp
     | Heal
     | Kill

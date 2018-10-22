@@ -46,6 +46,8 @@ divinity = passive "Divine" IconSun
     ]
   ]
 
+doubleClass = passive "Double Class" IconMissing []
+
 independentAction = passive "Independent Action" IconDash
   [ Give Self CritUp 
     [ (EX, 12), (APlus, 11), (A, 10), (B, 8), (C, 6) ] 

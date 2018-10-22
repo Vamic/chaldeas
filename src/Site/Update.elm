@@ -12,16 +12,14 @@ import Site.Filtering      exposing (..)
 import Persist.Flags       exposing (..)
 import Persist.Preferences exposing (..)
 
-siteUpdate : (String -> Value -> Cmd (SiteMsg inFilters inFocus toAlternate))
-          -> (inFocus -> inFilters) 
-          -> (inFilters -> String)
-          -> (SiteModel inFilters inFocus e -> SiteModel inFilters inFocus e)
-          -> SiteMsg inFilters inFocus toAlternate
-          -> SiteModel inFilters inFocus e 
-          -> ( SiteModel inFilters inFocus e
-             , Cmd (SiteMsg inFilters inFocus toAlternate)
-             )
-siteUpdate store transform show reSort msg st = 
+siteUpdate : (String -> Value -> Cmd (SiteMsg filt focus alt))
+          -> (focus -> filt) 
+          -> (filt -> String)
+          -> (SiteModel filt focus extra -> SiteModel filt focus extra)
+          -> SiteMsg filt focus alt
+          -> SiteModel filt focus extra
+          -> (SiteModel filt focus extra, Cmd (SiteMsg filt focus alt))
+siteUpdate store transform show reSort msg st =
   let
     relist        = updateListing transform
     goUp x        = (x, scrollToTop "content")

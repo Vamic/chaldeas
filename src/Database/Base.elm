@@ -56,7 +56,8 @@ addStats x y = { atk = x.atk + y.atk, hp = x.hp + y.hp }
 unlabeled, it can be difficult to figure out which are JP-only and which
 translations are accurate to EN. -}
 type Trait
-    = Arthur
+    = AllyOfJustice
+    | Arthur
     | Beast
     | Brynhild
     | DemiServant
@@ -81,7 +82,8 @@ type Trait
 
 enumTrait : List Trait
 enumTrait = 
-    [ Arthur
+    [ AllyOfJustice
+    , Arthur
     , Beast
     , Brynhild
     , DemiServant

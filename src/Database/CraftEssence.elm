@@ -2177,7 +2177,7 @@ craftEssences =
       , stats   = { base = { atk = 250,  hp = 400 }
                   , max  = { atk = 1000, hp = 1600 }
                   }
-      , effect  = [ Grant Self 0 StarUp <| Range 400 600
+      , effect  = [ Grant Self 0 StarAbsorb <| Range 400 600
                   , Grant Self 0 (Performance Arts) <| Range 10 15
                   ]
       , bond    = Nothing

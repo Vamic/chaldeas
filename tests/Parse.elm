@@ -127,8 +127,8 @@ effects =
       Grant _ _ (ClassAffinity _) _ -> "Special Attack"
       Grant _ _ (DefenseVs _) _ -> "Special Defense"
       Grant _ _ (StarAffinity _) _ -> "Special Stars"
-      Grant _ _ (Success _) _ -> Debug.toString DebuffSuccess
-      Grant _ _ (Resist _) _ -> Debug.toString DebuffResist
+      -- Grant _ _ (Success _) _ -> Debug.toString DebuffSuccess
+      -- Grant _ _ (Resist _) _ -> Debug.toString DebuffResist
       To _ ef _ -> Debug.toString ef
       Grant _ _ ef _ -> Debug.toString ef
       Debuff _ _ ef _ -> Debug.toString ef
@@ -172,6 +172,7 @@ effectMap =
     , (["end","of","turn"], [])
     , (["can","only","be","used"], [])
 
+    , (["increase","card","effectiveness","drop","gather","gain","strength","debuff","rate","resist"], show [Performance Quick, Performance Arts, Performance Buster, StarUp, StarAbsorb, NPGen, NPUp, DebuffSuccess, DebuffResist])
     , (["reduce","attack","defense","critical","chance","debuff","resist","np","strength"], show [AttackDown, DefenseDown, CritChance, DebuffVuln, NPDown])
     , (["reduce","critical","chance","debuff","resist"], show [CritChance, DebuffVuln])
     , (["reduce","defense","critical","chance"], show [DefenseDown, CritChance])
@@ -196,13 +197,16 @@ effectMap =
     , (["special","damage"], ["Special Attack"])
     , (["special","defense"], ["Special Defense"])
     , (["transform","hyde"], show [BecomeHyde])
+    , (["increase","bond","points"], show [Bond])
     , (["nullify"], show [BuffBlock])
     , (["prevent","buff"], show [BuffBlock])
     , (["decrease","attack","success","yourself"], show [BuffFail])
     , (["decrease","buff","success"], show [BuffFail])
     , (["increase","buff","success"], show [BuffUp])
     , (["burn"], show [Burn])
+    , (["increase","charm","resist"], show [Resist Charm])
     , (["charm","resist"], show [CharmVuln])
+    , (["charm","success"], show [Success Charm])
     , (["charm"], show [Charm])
     , (["cooldowns"], show [Cooldowns])
     , (["decrease","critical","chance"], show [CritChance])
@@ -212,6 +216,7 @@ effectMap =
     , (["curse"], show [Curse])
     , (["additional","damage","all","enemies"], show [Damage])
     , (["damage","cut"], show [DamageDown])
+    , (["reduce","incoming","damage"], show [DamageDown])
     , (["reduce","damage","taken"], show [DamageDown])
     , (["deal","damage","defense"], show [DamageThruDef])
     , (["deal","damage","def-ignoring"], show [DamageThruDef])
@@ -223,6 +228,7 @@ effectMap =
     , (["remove","buffs","self"], show [DemeritBuffs])
     , (["charge","enemy","gauge"], show [DemeritCharge])
     , (["decrease","hp","fall"], show [DemeritHealth])
+    , (["reduce","hp","turn"], show [HealthLoss])
     , (["deal","damage","yourself"], show [DemeritDamage])
     , (["reduce","hp"], show [DemeritDamage])
     , (["reduce","enemy","np","gauge","by"], show [GaugeDown])
@@ -232,7 +238,9 @@ effectMap =
     , (["death","trigger"], show [DemeritKill])
     , (["sacrifice"], show [DemeritKill])
     , (["evade"], show [Evasion])
+    , (["increase","master","exp"], show [EXP])
     , (["fear"], show [Fear])
+    , (["friend","points"], show [FriendPoints])
     , (["gain","star","turn"], show [StarsPerTurn])
     , (["gain","stars"], show [GainStars])
     , (["decrease","charge"], show [GaugeDown])
@@ -241,6 +249,8 @@ effectMap =
     , (["restore","gauge"], show [GaugeUp])
     , (["increase","gauge"], show [GaugeUp])
     , (["charge","gauge"], show [GaugeUp])
+    , (["begin","np","charged"], show [GaugeUp])
+    , (["np","charged","by"], show [GaugeUp])
     , (["reduce","np","gauge","by"], show [DemeritGauge])
     , (["guts"], show [Guts])
     , (["increase","healing","effectiveness"], show [HealUp])
@@ -252,6 +262,7 @@ effectMap =
     , (["ignore","invincibility"], show [IgnoreInvinc])
     , (["invincible"], show [Invincibility])
     , (["death","immunity"], show [KillResist])
+    , (["death","resist"], show [KillResist])
     , (["death","success"], show [KillUp])
     , (["increase","death","rate"], show [KillUp])
     , (["death"], show [Kill])
@@ -259,21 +270,24 @@ effectMap =
     , (["increase","mental","success"], show [MentalSuccess])
     , (["decrease","mental","resist"], show [MentalVuln])
     , (["mental","resist"], show [MentalResist])
+    , (["increase","mystic","code"], show [MysticCode])
     , (["decrease","np","strength"], show [NPDown])
     , (["increase","np","gain"], show [NPGen])
     , (["increase","np","strength"], show [NPUp])
     , (["increase","np","damage"], show [NPUp])
-    , (["quick","performance"], show [Performance Quick])
-    , (["arts","performance"], show [Performance Arts])
-    , (["buster","performance"], show [Performance Buster])
     , (["increase","attack","resist"], show [OffensiveResist])
     , (["chance","apply","each"], show [OverChance])
     , (["increase","overcharge"], show [Overcharge])
+    , (["quick","performance"], show [Performance Quick])
+    , (["arts","performance"], show [Performance Arts])
+    , (["buster","performance"], show [Performance Buster])
+    , (["increase","qp","drop"], show [QPDrop])
+    , (["increase","qp","quest"], show [QPQuest])
     , (["remove","mental"], show [RemoveMental])
     , (["remove","mental_debuff"], show [RemoveMental])
     , (["remove","buff"], show [RemoveBuffs])
     , (["remove","debuff"], show [RemoveDebuffs])
-    , (["poison","resist"], show [DebuffResist])
+    , (["poison","resist"], show [Resist Poison])
     , (["poison"], show [Poison])
     , (["star","gather"], show [StarAbsorb])
     , (["seal","np"], show [SealNP])
@@ -281,8 +295,11 @@ effectMap =
     , (["increase","star","generation"], show [StarUp])
     , (["increase","star","drop"], show [StarUp])
     , (["immobilize"], show [Stun])
+    , (["increase","stun","success"], show [Success Stun])
+    , (["increase","stun","resist"], show [Resist Stun])
     , (["stun","later"], show [StunBomb])
     , (["stun","delayed"], show [StunBomb])
+    , (["sure-hit"], show [SureHit])
     , (["sure","hit"], show [SureHit])
     , (["target","focus"], show [Taunt])
 
@@ -305,6 +322,8 @@ effectMap =
     , (["against","buster"], [])
     , (["effect","activates"], [])
     , (["depends"], [])
+    , (["when","defeated","by"], [])
+    , (["when","equipped"], [])
     ]
 
 readEffect : String -> List String

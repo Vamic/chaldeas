@@ -798,7 +798,7 @@ lancers =
                                , Grant Self 3 DefenseUp <| Range 8 16
                                ]
                     }
-                  , { name   = "Beast Slayer"
+                  , { name   = "Beast-Slayer"
                     , rank   = BPlus
                     , icon   = IconDamageUp
                     , cd     = 7

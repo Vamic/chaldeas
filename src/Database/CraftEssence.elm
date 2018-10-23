@@ -460,7 +460,7 @@ craftEssences =
       , stats   = { base = { atk = 400,  hp = 0 }
                   , max  = { atk = 1500, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 StarUp <| Range 600 800 ]
+      , effect  = [ Grant Self 0 StarAbsorb <| Range 600 800 ]
       , bond    = Nothing
       , limited = False
       }
@@ -504,7 +504,10 @@ craftEssences =
       , stats   = { base = { atk = 200,  hp = 0 }
                   , max  = { atk = 1000, hp = 0 }
                   }
-      , effect  = [ Times 1 << Grant Self 0 Guts <| Range 500 1000 ]
+      , effect  = [ Grant Self 0 (Performance Arts) <| Range 3 5 
+                  , Grant Self 0 (Performance Buster) <| Range 3 5
+                  , Grant Self 0 (Performance Quick) <| Range 3 5
+                  ]
       , bond    = Nothing
       , limited = False
       }
@@ -551,7 +554,7 @@ craftEssences =
                   , max  = { atk = 500, hp = 750 }
                   }
       , effect  = [ Grant Self 0 DebuffResist <| Range 5 10
-                  , Grant Self 0 StarUp <| Range 100 200
+                  , Grant Self 0 StarAbsorb <| Range 100 200
                   ]
       , bond    = Nothing
       , limited = False
@@ -720,7 +723,6 @@ craftEssences =
                   , Grant Self 0 NPUp <| Range 1 2
                   , Grant Self 0 DebuffSuccess <| Range 1 2
                   , Grant Self 0 DebuffResist <| Range 1 2
-                  , Grant Self 0 HealingReceived <| Range 1 2
                   ]
       , bond    = Nothing
       , limited = True
@@ -830,7 +832,7 @@ craftEssences =
       , stats   = { base = { atk = 0, hp = 750 }
                   , max  = { atk = 0, hp = 3000 }
                   }
-      , effect  = [ Grant Self 0 StarUp <| Range 100 200
+      , effect  = [ Grant Self 0 StarAbsorb <| Range 100 200
                   , Grant Self 0 HealingReceived <| Range 40 50
                   ]
       , bond    = Nothing
@@ -2531,7 +2533,7 @@ craftEssences =
       , stats   = { base = { atk = 200,  hp = 0 } 
                   , max  = { atk = 1000, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 StarUp <| Range 200 300 ]
+      , effect  = [ Grant Self 0 StarAbsorb <| Range 200 300 ]
       , bond    = Nothing
       , limited = True
       }
@@ -2737,7 +2739,7 @@ craftEssences =
       , stats   = { base = { atk = 100, hp = 100 }
                   , max  = { atk = 100, hp = 100 }
                   }
-      , effect  = [ Bonus EXP False <| Flat 50 ]
+      , effect  = [ Bonus MysticCode False <| Flat 50 ]
       , bond    = Nothing
       , limited = True
       }

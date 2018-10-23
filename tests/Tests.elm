@@ -35,7 +35,7 @@ renderTest a = case a of
     let
       meta = 
         if List.member name pageTitles then 
-          [P.href <| pageUrl False name, P.target "_blank"]
+          [P.href <| pageUrl False name, P.target "wiki"]
         else 
           []
     in
@@ -144,7 +144,7 @@ pageUrl raw title =
     Url.crossOrigin "http://grandorder.wiki"
     ["index.php"]
     [ Url.string "title"  <| translate title
-    , Url.string "action" <| if raw then "raw" else "edit"
+    , Url.string "action" <| if raw then "raw" else "view"
     ]
 
 requestPage : String -> Cmd Msg
@@ -168,6 +168,8 @@ testCraftEssence getWiki ce =
     match = Wiki.match wiki
     matchInt x = match x << String.fromInt
   in
+    doIf (Maybe.isNothing ce.bond) 
+    ((::) << Wiki.matchEffects wiki "effect" (0, 6) <| effects ce.effect)
     [ matchInt "id"           ce.id
     , matchInt "maxatk"       ce.stats.max.atk 
     , matchInt "maxhp"        ce.stats.max.hp
@@ -186,11 +188,10 @@ testServant getWiki s =
     showAttr a = case a of
       Mankind -> "Human"
       _ -> Show.attribute a
-    showAlign xs = case xs of
-      [] -> "Changes per Master"
-      [Neutral, Neutral] -> "True Neutral"
-      [x, Mad] -> Show.alignment x ++ " Madness"
-      _ -> String.join " " <| List.map Show.alignment xs
+    showAlign xs = case (s.name, xs) of
+      ("Nursery Rhyme", _) -> "Changes per Master"
+      (_, [x, Mad])        -> Show.alignment x ++ " Madness"
+      _                    -> String.join " " <| List.map Show.alignment xs
     showHitcount a = case a of
       0 -> "－"
       _ -> String.fromInt a

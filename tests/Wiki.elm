@@ -238,7 +238,7 @@ parseFields text =
     List.filter (not << String.isEmpty) <<
     flip List.map afterLines <|
     stripPrefix "="
-    >> maybeDo (splitAny ["}}","/"] >> Maybe.map Tuple.first)
+    >> maybeDo (splitAny ["}}"," /","/4"] >> Maybe.map Tuple.first)
     >> maybeDo (splitAny ["EN:","tip-text:"] >> Maybe.map Tuple.second)
     >> Regex.replace wikiTag (always " ")
     >> String.trim

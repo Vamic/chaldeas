@@ -625,7 +625,7 @@ lancers =
     , traits    = [Male, King, AllyOfJustice]
     , death     = 24
     , align     = [Lawful,Good]
-    , limited   = True
+    , limited   = False
     , free      = False
     , ascendUp  = Ascension
                   [(Piece Lancer, 4)]

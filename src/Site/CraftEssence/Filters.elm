@@ -39,27 +39,27 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter CraftEssence)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterEventBonus 
     "+25~100% [Skeleton], [Ghost], & [Lamia] spawn"
     [ "Wizard & Priest" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterEventBonus 
     "+25~100% [Insect] & [Golem] spawn"
     [ "Mata Hari's Tavern" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterEventBonus 
     "+25~100% [Beast], [Homunculus], & [Knight] spawn"
     [ "Hero Elly's Adventure" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterEventBonus "+1~2 Copper Sack"
     [ "Count Romani Archaman's Hospitality" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterAvailability "Rate-Up"
-    [ "Wizard & Priest", "Mata Hari's Tavern", "Hero Elly's Adventure"
+    [ "Dangerous Beast", "Witch Under the Moonlight"
     , "Count Romani Archaman's Hospitality"
     ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterAvailability "Limited to Event"
     [ "Wizard & Priest", "Mata Hari's Tavern", "Hero Elly's Adventure"
     , "Count Romani Archaman's Hospitality"

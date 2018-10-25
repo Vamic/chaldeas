@@ -2582,6 +2582,32 @@ craftEssences =
       [ party_ Arts 10, party NPUp 10 ]
     , bond 343 "NEO Difference Engine" "Charles Babbage" IconBusterUp
       [ party_ Buster 20, demeritAll DefenseDown 10 ]
+    , { name    = "Dangerous Beast"
+      , id      = 344
+      , rarity  = 5
+      , icon    = IconQuickUp
+      , stats   = { base = { atk = 500,  hp = 0 }
+                  , max  = { atk = 2000, hp = 0 }
+                  }
+      , effect  = [ Grant Self 0 (Performance Quick) <| Range 15 20 
+                  , To Party GainStars <| Range 3 4
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Witch Under the Moonlight"
+      , id      = 345
+      , rarity  = 4
+      , icon    = IconArtsUp
+      , stats   = { base = { atk = 200, hp = 320 }
+                  , max  = { atk = 750, hp = 1200 }
+                  }
+      , effect  = [ Grant Self 0 (Performance Arts) <| Range 10 15 
+                  , Grant Self 0 NPGen <| Range 5 10
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
     , { name    = "Count Romani Archaman's Hospitality"
       , id      = 346
       , rarity  = 3

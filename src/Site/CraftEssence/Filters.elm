@@ -64,9 +64,6 @@ scheduledFilters =
     [ "Wizard & Priest", "Mata Hari's Tavern", "Hero Elly's Adventure"
     , "Count Romani Archaman's Hospitality"
     ]
-  {-, ScheduledFilter (Date 2018 Oct 18) (Date 2018 Oct 24) <|
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Hydra Dagger", "Fragarach", "Inverted Moon of the Heavens" ]-}
   ]
 
 getExtraFilters : Date -> FilterTab -> List (Filter CraftEssence)

@@ -26,11 +26,12 @@ import Class.Show as Show
 craftEssences : List CraftEssence
 craftEssences = 
   let
-    np30        = Grant Self 0 NPUp <| Flat 30
-    gutsPercent = Times 1 << Grant Self 0 GutsPercent << Flat << toFloat
-    party buff  = Grant Party 0 buff << Flat << toFloat
+    gutsPercent = Times 1 << Grant Self 0 GutsPercent << Flat
+    self buff   = Grant Self 0 buff << Flat
+    party buff  = Grant Party 0 buff << Flat
     party_ card = party (Performance card)
-    atkChance chance = When "attacking" << Chance chance
+    demeritAll debuff = Debuff Party 0 debuff << Flat
+    atkChance chance  = When "attacking" << Chance chance
     bond id name  servant icon effect =
         { name     = name
         , id       = id
@@ -1729,19 +1730,19 @@ craftEssences =
     , bond 192 "Relic of the King" "Zhuge Liang (Lord El-Melloi II)" IconBusterUp
       [ party_ Buster 15 ]
     , bond 193 "Triumph of the Lord Impaler" "Vlad III" IconBeamUp
-      [ np30, atkChance 30 << To Self GaugeUp <| Flat 5 ]
+      [ self NPUp 30, atkChance 30 << To Self GaugeUp <| Flat 5 ]
     , bond 194 "Revelation from Heaven" "Jeanne d'Arc" IconBusterUp
       [ party_ Buster 15 ]
     , bond 195 "Memories of the Dragon" "Altria Pendragon (Alter)" IconBeamUp
-      [ np30, atkChance 30 << Debuff Target 3 DefenseDown <| Flat 5 ]
+      [ self NPUp 30, atkChance 30 << Debuff Target 3 DefenseDown <| Flat 5 ]
     , bond 196 "Hunter of the Red Plains" "EMIYA" IconBeamUp
-      [ np30, atkChance 30 << To Party GainStars <| Flat 5 ]
+      [ self NPUp 30, atkChance 30 << To Party GainStars <| Flat 5 ]
     , bond 197 "Castle of Snow" "Heracles" IconKneel
-      [ Times 3 << Grant Self 0 Guts <| Flat 500 ]
+      [ Times 3 <| self Guts 500 ]
     , bond 198 "Yggdrasil Tree" "Cu Chulainn (Caster)" IconBeamUp
-      [ np30, atkChance 30 << To Self Heal <| Flat 500 ]
+      [ self NPUp 30, atkChance 30 << To Self Heal <| Flat 500 ]
     , bond 199 "Scorching Embrace" "Kiyohime" IconBeamUp
-      [ np30, atkChance 30 << Debuff Target 5 Burn <| Flat 500 ]
+      [ self NPUp 30, atkChance 30 << Debuff Target 5 Burn <| Flat 500 ]
     , bond 200 "Worthless Jewel" "Mata Hari" IconNobleUp
       [ party NPGen 15 ]
     , bond 201 "Eternal Solitude" "Altera" IconSwordUp
@@ -1755,7 +1756,7 @@ craftEssences =
     , bond 205 "Staff He Gave Me" "Martha" IconHealUp
       [ party HealingReceived 30 ]
     , bond 206 "Iron Maiden" "Carmilla" IconBeamUp
-      [ np30, atkChance 10 <| Debuff Target 1 SealNP Full ]
+      [ self NPUp 30, atkChance 10 <| Debuff Target 1 SealNP Full ]
     , bond 207 "Cat Apron" "Tamamo Cat" IconHeal
       [ party MaxHP 2000 ]
     , bond 208 "Thirst for Victory" "Boudica" IconStarHaloUp
@@ -1831,9 +1832,9 @@ craftEssences =
       , limited = True
       }
     , bond 216 "Key of the King's Law" "Gilgamesh" IconBeamUp
-      [ np30, atkChance 30 << Grant Self 3 CritUp <| Flat 10 ]
+      [ self NPUp 30, atkChance 30 << Grant Self 3 CritUp <| Flat 10 ]
     , bond 217 "Golden Glass" "Sakata Kintoki" IconBeamUp
-      [ np30, atkChance 30 << To Self GaugeUp <| Flat 5 ]
+      [ self NPUp 30, atkChance 30 << To Self GaugeUp <| Flat 5 ]
     , bond 218 "Thunderous Applause" "Nero Claudius" IconArtsUp
       [ party_ Arts 15 ]
     , bond 219 "Das Rheingold" "Siegfried" IconNobleUp
@@ -1843,7 +1844,7 @@ craftEssences =
     , bond 221 "Voyage of the Flowers" "Altria Pendragon (Lily)" IconSwordUp
       [ party AttackUp 10, party StarUp 10 ]
     , bond 222 "Ark of the Covenant" "David" IconBeamUp
-      [ np30, atkChance 10 <| To Target Kill Full ]
+      [ self NPUp 30, atkChance 10 <| To Target Kill Full ]
     , bond 223 "Door to Babylon" "Darius III" IconBusterUp
       [ party_ Buster 15 ]
     , bond 224 "Blood-Thirsting Axe" "Eric Bloodaxe" IconExclamationUp
@@ -1908,7 +1909,7 @@ craftEssences =
     , bond 231 "Golden Helm" "Francis Drake" IconBeamUp
       [ party NPUp 20 ]
     , bond 232 "Black Knight's Helmet" "Lancelot" IconBeamUp
-      [ np30, atkChance 30 << Debuff Target 3 CritChance <| Flat 30 ]
+      [ self NPUp 30, atkChance 30 << Debuff Target 3 CritChance <| Flat 30 ]
     , bond 233 "Golden Apple" "Atalante" IconQuickUp
       [ party_ Quick 15 ]
     , bond 234 "Holy Pumpkin Grail" "Elisabeth Bathory (Halloween)" IconHoodUp
@@ -2024,7 +2025,7 @@ craftEssences =
     , bond 251 "Gazing Upon Dun Scaith" "Scathach" IconQuickUp
       [ party_ Quick 15 ]
     , bond 252 "Star of Prophecy" "Cu Chulainn" IconBeamUp
-      [ np30, atkChance 30 << Grant Self 3 CritUp <| Flat 10 ]
+      [ self NPUp 30, atkChance 30 << Grant Self 3 CritUp <| Flat 10 ]
     , bond 253 "Hekate's Staff" "Medea" IconArtsUp
       [ party_ Arts 15 ]
     , bond 254 "Formless Island" "Medusa" IconNobleUp
@@ -2148,7 +2149,7 @@ craftEssences =
     , bond 270 "Usumidori" "Ushiwakamaru" IconQuickUp
       [ party_ Quick 15 ]
     , bond 271 "Etiquette of Nine Guests" "Jing Ke" IconBeamUp
-      [ np30, atkChance 30 << Grant Self 3 KillUp <| Flat 30 ]
+      [ self NPUp 30, atkChance 30 << Grant Self 3 KillUp <| Flat 30 ]
     , bond 272 "Heaven Scorcher Halberd" "Lu Bu Fengxian" IconBusterUp
       [ party_ Buster 15 ]
     , bond 273 "What can be Left Behind" "Georgios" IconShield
@@ -2227,7 +2228,7 @@ craftEssences =
     , bond 281 "Arm of Raiden" "Nikola Tesla" IconBeamUp
       [ party NPUp 20 ]
     , bond 282 "Endowed Hero" "Arjuna" IconBeamUp
-      [ np30, Grant Self 0 StarAbsorb <| Flat 1000 ]
+      [ self NPUp 30, self StarAbsorb 1000 ]
     , bond 283 "Lamp of the Unfortunate" "Karna" IconAllUp
       [ party_ Quick 8, party_ Arts 8, party_ Buster 8 ]
     , bond 284 "Procedure to Humanity" "Frankenstein" IconQuickUp
@@ -2359,7 +2360,7 @@ craftEssences =
     , bond 303 "Bratan of Wisdom" "Fionn mac Cumhaill" IconArtsUp
       [ party_ Arts 10, party NPUp 10 ]
     , bond 304 "Prelati's Spellbook" "Gilles de Rais" IconBusterUp
-      [ party_ Buster 20, Debuff Party 0 DebuffVuln <| Flat 20 ]
+      [ party_ Buster 20, demeritAll DebuffVuln 20 ]
     , bond 305 "Parasitic Bomb" "Mephistopheles" IconBeamUp
       [ party NPUp 20 ]
     , bond 306 "Seethe of a Warrior" "Fergus mac Roich" IconBusterUp
@@ -2367,7 +2368,7 @@ craftEssences =
     , bond 307 "My Loathsome Life" "Charles-Henri Sanson" IconReaperUp
       [ party KillUp 10, party NPGen 10 ]
     , bond 308 "There is No Love Here" "Caligula" IconBusterUp
-      [ party_ Buster 20, Debuff Party 0 DefenseDown <| Flat 10 ]
+      [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , { name    = "Magical Girl of Sapphire"
       , id      = 309
       , rarity  = 5
@@ -2442,7 +2443,7 @@ craftEssences =
     , bond 319 "Red Leather Jacket" "Ryougi Shiki (Assassin)" IconReaperUp
       [ party KillUp 30 ]
     , bond 321 "Letter From a Friend" "Gilles de Rais (Caster)" IconBusterUp
-      [ party_ Buster 20, Debuff Party 0 StarDown <| Flat 20 ]
+      [ party_ Buster 20, demeritAll StarDown 20 ]
     , bond 322 "Hound of Culann" "Cu Chulainn (Prototype)" IconDamageUp
       [ party (Special AttackUp <| VsTrait Beast) 20 ]
     , bond 323 "Radiance of the Goddess (Euryale)" "Euryale" IconArtsUp
@@ -2564,7 +2565,7 @@ craftEssences =
     , bond 334 "Indomitableness" "Florence Nightingale" IconBusterUp
       [ party_ Buster 10, party HealingReceived 20 ]
     , bond 335 "One-Man War" "Cu Chulainn (Alter)" IconKneel
-      [ np30, gutsPercent 20 ]
+      [ self NPUp 30, gutsPercent 20 ]
     , bond 336 "Sacred Spring" "Queen Medb" IconNobleUp
       [ party NPGen 15 ]
     , bond 337 "Indestructible Blade" "Rama" IconExclamationUp
@@ -2580,7 +2581,7 @@ craftEssences =
     , bond 342 "Elemental" "Paracelsus von Hohenheim" IconArtsUp
       [ party_ Arts 10, party NPUp 10 ]
     , bond 343 "NEO Difference Engine" "Charles Babbage" IconBusterUp
-      [ party_ Buster 20, Debuff Party 0 DefenseDown <| Flat 10 ]
+      [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , { name    = "Count Romani Archaman's Hospitality"
       , id      = 346
       , rarity  = 3
@@ -2640,7 +2641,7 @@ craftEssences =
     , bond 351 "Gordian Knot" "Iskandar" IconSwordUp
       [ party AttackUp 15 ]
     , bond 352 "Bai Long" "Xuanzang Sanzang" IconBusterUp
-      [ party_ Buster 20, Debuff Party 0 DefenseDown <| Flat 10 ]
+      [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , bond 353 "The Sun Shines Here" "Emiya (Assassin)" IconArtsQuickUp
       [ party_ Quick 10, party_ Arts 10 ]
     , bond 354 "Dress of Heaven" "Irisviel (Dress of Heaven)" IconHealUp
@@ -2654,7 +2655,7 @@ craftEssences =
     , bond 358 "Library of Hundred Men" "Hassan of the Hundred Personas" IconAllUp
       [ party_ Buster 8, party_ Quick 8, party_ Arts 8 ]
     , bond 359 "Last Splinter" "Angra Mainyu" IconDamageUp
-      [ Grant Self 0 (Special AttackUp <| VsTrait Beast) <| Flat 200, gutsPercent 20 ]
+      [ self (Special AttackUp <| VsTrait Beast) 200, gutsPercent 20 ]
     , { name    = "Fate/EXTELLA"
       , id      = 360
       , rarity  = 4
@@ -2741,7 +2742,7 @@ craftEssences =
     , bond 369 "Ramesseum" "Ozymandias" IconBusterArtsUp
       [ party_ Arts 10, party_ Buster 10 ]
     , bond 370 "Bone Sword (Nameless)" "Ibaraki-Douji" IconBusterUp
-      [ party_ Buster 20, Debuff Party 0 DefenseDown <| Flat 10 ]
+      [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , bond 371 "Unit Golden Bear" "Sakata Kintoki (Rider)" IconStarHaloUp
       [ party StarUp 20 ]
     , bond 372 "Gringolet" "Gawain" IconBusterUp
@@ -2771,7 +2772,7 @@ craftEssences =
     , bond 383 "Prydwen" "Mordred (Rider)" IconBeamUp
       [ party NPUp 20 ]
     , bond 384 "Beach Love Letter (Terror)" "Kiyohime (Lancer)" IconBusterUp
-      [ party_ Buster 20, Debuff Party 0 DefenseDown <| Flat 10 ]
+      [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , bond 385 "My Long Lost Right Arm" "Bedivere" IconBusterUp
       [ party_ Buster 10, party NPGen 10 ]
     , bond 386 "Proof of Existence" "Hassan of the Serenity" IconQuickUp
@@ -2780,12 +2781,18 @@ craftEssences =
       [ party AttackUp 15 ]
     , bond 392 "Phantasmal Summoning (Install)" "Illyasviel von Einzbern" IconAllUp
       [ party_ Buster 8, party_ Quick 8, party_ Arts 8 ]
+    , bond 393 "Serpent of Fate" "Cleopatra" IconBeamUp
+      [ party NPUp 25, demeritAll DefenseDown 10 ]
     , bond 394 "Holy Knuckle" "Martha (Ruler)" IconBusterUp
       [ party_ Buster 15 ]
     , bond 395 "Minimal Prudence" "Scathach (Assassin)" IconQuickUp
       [ party_ Quick 15 ]
     , bond 396 "Sharing of Pain" "Chloe von Einzbern" IconExclamationUp
-      [ party CritUp 30, Debuff Party 0 HealthLoss <| Flat 200 ]
+      [ party CritUp 30, demeritAll HealthLoss 200 ]
+    , bond 397 "Creed at the Bottom of the Earth" "Vlad III (EXTRA)" IconQuickBusterUp
+      [ party_ Quick 10, party_ Buster 10 ]
+    , bond 398 "Invitation to Halloween" "Elisabeth Bathory (Brave)" IconBusterUp
+      [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , { name    = "First Order"
       , id      = 399
       , rarity  = 4
@@ -2797,9 +2804,6 @@ craftEssences =
       , bond    = Nothing
       , limited = True
       }
-    {- TODO , bond 398 "Invitation to Halloween" "Elisabeth Bathory (Brave)" 
-      IconBusterUp
-      [ party_ Buster 20, Debuff Party 0 DefenseDown <| Flat 10 ]-}
     ]
 
 equipped : Class -> SkillEffect -> SkillEffect

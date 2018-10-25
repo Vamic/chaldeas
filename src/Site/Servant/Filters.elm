@@ -43,10 +43,10 @@ extraFilters = List.concat
 scheduledFilters : List (ScheduledFilter Servant)
 scheduledFilters =
   [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    namedBonus FilterEventBonus "+100 ATK"
+    namedBonus FilterEventBonus "+100% ATK"
     [ "Elisabeth Bathory (Brave)" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    namedBonus FilterEventBonus "+50 ATK"
+    namedBonus FilterEventBonus "+50% ATK"
     [ "Cleopatra", "Vlad III (EXTRA)", "Nitocris", "Ibaraki-Douji"
     , "Robin Hood" 
     ]

@@ -43,15 +43,15 @@ scheduledFilters : List (ScheduledFilter CraftEssence)
 scheduledFilters =
   [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterEventBonus 
-    "+25~100% [Skeleton], [Ghost], & [Lamia] spawn"
+    "+25~100% Skeletons, Ghosts, & Lamias"
     [ "Wizard & Priest" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterEventBonus 
-    "+25~100% [Insect] & [Golem] spawn"
+    "+25~100% Insects & Golems"
     [ "Mata Hari's Tavern" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterEventBonus 
-    "+25~100% [Beast], [Homunculus], & [Knight] spawn"
+    "+25~100% Beasts, Homunculi, & Knights"
     [ "Hero Elly's Adventure" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterEventBonus "+1~2 Copper Sack"

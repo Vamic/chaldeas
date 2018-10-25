@@ -49,7 +49,7 @@ scheduledFilters =
   , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
     namedBonus FilterAvailability "Limited to Event"
     [ "Elisabeth Bathory (Halloween)" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 5) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 15) <|
     namedBonus FilterAvailability "Rate-Up"
     [ "Cleopatra", "Vlad III (EXTRA)" ]
   ]

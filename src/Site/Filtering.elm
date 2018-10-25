@@ -32,9 +32,9 @@ type alias ScheduledFilter a =
 getScheduled : List (ScheduledFilter a) -> Date -> List (Filter a)
 getScheduled xs today = 
   let
-    scheduled x = Date.on (<=) x.start today && Date.on (<=) today x.end
+    sched x = Date.compare x.start today /= GT && Date.compare today x.end /= GT
   in
-    List.map .filter <| List.filter scheduled xs
+    List.map .filter <| List.filter sched xs
 
 {-| Updates a `SiteModel`'s `.listing` with its `.sorted`, 
 filtered by its `.exclude` and `.filters`. -}

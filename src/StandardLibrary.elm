@@ -1,6 +1,6 @@
 module StandardLibrary exposing
   ( Value
-  , compareWith
+  , compareThen
   , consAfter
   , curry
   , doIf
@@ -23,9 +23,10 @@ import List.Extra  as List
 
 type alias Value = E.Value
 
-{-| Compares two arguments with the supplied projection function. -}
-compareWith : a -> a -> (a -> comparable) -> Order
-compareWith x y f = on compare f x y
+compareThen : (a -> comparable) -> (a -> a -> Order) -> (a -> a -> Order)
+compareThen first next x y = case on compare first x y of
+  EQ    -> next x y
+  order -> order
 
 {-| Appends an element to the end of a list.
 Useful combined with `doIf` to conditionally append an HTML element. -}

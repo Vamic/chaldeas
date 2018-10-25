@@ -119,8 +119,9 @@ ordFilter x =
       x.name
 
 compareFilter : Filter a -> Filter a -> Order
-compareFilter x y = case compareWith x y <| .tab >> ordFilterTab of
-    EQ -> compareWith x y ordFilter
-    a  -> a
+compareFilter = 
+    compareThen (.tab >> ordFilterTab) << 
+    compareThen ordFilter << 
+    always <| always EQ
 
 type alias FilterList a = List { tab : FilterTab, filters : List (Filter a) }

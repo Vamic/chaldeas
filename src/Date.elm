@@ -1,7 +1,9 @@
-module Date exposing (Date, on, today)
+module Date exposing (Date, compare, today)
 
 import Task exposing (Task)
 import Time
+
+import StandardLibrary exposing (..)
 
 type alias Date = 
     { year  : Int 
@@ -24,9 +26,12 @@ ordMonth a = case a of
   Time.Nov -> 10
   Time.Dec -> 11
 
-on : (Int -> Int -> Bool) -> Date -> Date -> Bool
-on f x y = 
-    f x.year y.year && f (ordMonth x.month) (ordMonth y.month) && f x.day y.day
+compare : Date -> Date -> Order
+compare =
+    compareThen .year <<
+    compareThen (.month >> ordMonth) <<
+    compareThen .day <<
+    always <| always EQ
 
 here : Time.Zone
 here = Time.customZone (-4 * 60) [] 

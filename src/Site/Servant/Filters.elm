@@ -49,9 +49,9 @@ scheduledFilters =
   , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
     namedBonus FilterAvailability "Limited to Event"
     [ "Elisabeth Bathory (Halloween)" ]
-  , ScheduledFilter (Date 2018 Oct 18) (Date 2018 Oct 24) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 5) <|
     namedBonus FilterAvailability "Rate-Up"
-    [ "Jeanne d'Arc (Alter)" ]
+    [ "Cleopatra", "Vlad III (EXTRA)" ]
   ]
 
 singleFilter : Has Servant a -> FilterTab -> a -> List (Filter Servant)

@@ -24,6 +24,8 @@ extraFilters = List.concat
       , "Mata Hari's Tavern"
       , "Hero Elly's Adventure"
       , "Count Romani Archaman's Hospitality"
+      , "Dangerous Beast"
+      , "Witch Under the Moonlight"
       ]
     , Filter Nothing FilterSource "Limited" <|
       \_ ce -> ce.limited && Maybe.isNothing ce.bond
@@ -61,7 +63,8 @@ scheduledFilters =
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterAvailability "Limited to Event"
-    [ "Wizard & Priest", "Mata Hari's Tavern", "Hero Elly's Adventure"
+    [ "Dangerous Beast", "Witch Under the Moonlight"
+    , "Wizard & Priest", "Mata Hari's Tavern", "Hero Elly's Adventure"
     , "Count Romani Archaman's Hospitality"
     ]
   ]

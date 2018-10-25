@@ -57,6 +57,12 @@ scheduledFilters =
     namedBonus FilterEventBonus "+1~2 Copper Sack"
     [ "Count Romani Archaman's Hospitality" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
+    namedBonus FilterEventBonus "+1~2 Silver Sack"
+    [ "Witch Under the Moonlight" ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
+    namedBonus FilterEventBonus "+1~2 Gold Sack"
+    [ "Dangerous Beast" ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     namedBonus FilterAvailability "Rate-Up"
     [ "Dangerous Beast", "Witch Under the Moonlight"
     , "Count Romani Archaman's Hospitality"

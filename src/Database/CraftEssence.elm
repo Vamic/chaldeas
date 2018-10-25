@@ -471,7 +471,7 @@ craftEssences =
       , stats   = { base = { atk = 0, hp = 400 }
                   , max  = { atk = 0, hp = 1500 }
                   }
-      , effect  = [ Grant Self 0 (DefenseVs Male) <| Range 25 35 ]
+      , effect  = [ Grant Self 0 (Special DefenseUp <| VsTrait Male) <| Range 25 35 ]
       , bond    = Nothing
       , limited = False
       }
@@ -1052,7 +1052,7 @@ craftEssences =
       , stats   = { base = { atk = 200,  hp = 0 }
                   , max  = { atk = 1000, hp = 0  }
                   }
-      , effect  = [ Grant Self 0 (ClassAffinity Caster) <| Range 8 10 ]
+      , effect  = [ Grant Self 0 (Special AttackUp <| VsClass Caster) <| Range 8 10 ]
       , bond    = Nothing
       , limited = False
       }
@@ -1096,7 +1096,7 @@ craftEssences =
       , stats   = { base = { atk = 200,  hp = 0 }
                   , max  = { atk = 1000, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 (ClassAffinity Rider) <| Range 8 10 ]
+      , effect  = [ Grant Self 0 (Special AttackUp <| VsClass Rider) <| Range 8 10 ]
       , bond    = Nothing
       , limited = False
       }
@@ -1304,7 +1304,7 @@ craftEssences =
       , stats   = { base = { atk = 0, hp = 750 }
                   , max  = { atk = 0, hp = 3000 }
                   }
-      , effect  = [ Times 3 << Grant Self 0 (DefenseVs Male) <| Flat 100
+      , effect  = [ Times 3 << Grant Self 0 (Special DefenseUp <| VsTrait Male) <| Flat 100
                   , Grant Self 0 StarUp <| Range 10 20
                   ]
       , bond    = Nothing
@@ -1468,8 +1468,8 @@ craftEssences =
       , stats   = { base = { atk = 250,  hp = 400 }
                   , max  = { atk = 1000, hp = 1600 }
                   }
-      , effect  = [ Grant Self 3 (AttackVs Divine) <| Range 80 100
-                  , Grant Self 3 (DefenseVs Divine) <| Range 40 50
+      , effect  = [ Grant Self 3 (Special AttackUp <| VsTrait Divine) <| Range 80 100
+                  , Grant Self 3 (Special DefenseUp <| VsTrait Divine) <| Range 40 50
                   ]
       , bond    = Nothing
       , limited = True
@@ -1524,7 +1524,7 @@ craftEssences =
                   , max  = { atk = 500, hp = 800 }
                   }
       , effect  = [ Grant Party 0 StarsPerTurn <| Range 1 2
-                  , Grant Self 0 (AttackVs Dragon) <| Range 8 10
+                  , Grant Self 0 (Special AttackUp <| VsTrait Dragon) <| Range 8 10
                   ]
       , bond    = Nothing
       , limited = True
@@ -1644,7 +1644,7 @@ craftEssences =
       , stats   = { base = { atk = 400,  hp = 0 }
                   , max  = { atk = 1500, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 (AttackVs Humanoid) <| Range 25 30 ]
+      , effect  = [ Grant Self 0 (Special AttackUp <| VsTrait Humanoid) <| Range 25 30 ]
       , bond    = Nothing
       , limited = False
       }
@@ -1813,7 +1813,7 @@ craftEssences =
       , stats   = { base = { atk = 400,  hp = 0 }
                   , max  = { atk = 1500, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 (AttackVs Male) <| Range 25 30
+      , effect  = [ Grant Self 0 (Special AttackUp <| VsTrait Male) <| Range 25 30
                   , Grant Self 0 DebuffSuccess <| Range 12 15
                   ]
       , bond    = Nothing
@@ -2108,7 +2108,7 @@ craftEssences =
                   , max  = { atk = 2000, hp = 0 }
                   }
       , effect  = [ Grant Self 0 IgnoreInvinc Full
-                  , Grant Self 0 (ClassAffinity Caster) <| Range 35 40
+                  , Grant Self 0 (Special AttackUp <| VsClass Caster) <| Range 35 40
                   ]
       , bond    = Nothing
       , limited = False
@@ -2349,13 +2349,13 @@ craftEssences =
       , limited = True
       }
     , bond 299 "Annihilation List" "Mysterious Heroine X" IconDamageUp
-      [ party (ClassAffinity Saber) 20 ]
+      [ party (Special AttackUp <| VsClass Saber) 20 ]
     , bond 300 "Imperishable Flames" "Brynhild" IconBusterUp
       [ party_ Buster 10, party NPGen 10 ]
     , bond 301 "Ring of Bay Laurel" "Nero Claudius (Bride)" IconArtsUp
       [ party_ Arts 15 ]
     , bond 302 "Final Battle" "Beowulf" IconDamageUp
-      [ party (AttackVs Dragon) 20 ]
+      [ party (Special AttackUp <| VsTrait Dragon) 20 ]
     , bond 303 "Bratan of Wisdom" "Fionn mac Cumhaill" IconArtsUp
       [ party_ Arts 10, party NPUp 10 ]
     , bond 304 "Prelati's Spellbook" "Gilles de Rais" IconBusterUp
@@ -2444,7 +2444,7 @@ craftEssences =
     , bond 321 "Letter From a Friend" "Gilles de Rais (Caster)" IconBusterUp
       [ party_ Buster 20, Debuff Party 0 StarDown <| Flat 20 ]
     , bond 322 "Hound of Culann" "Cu Chulainn (Prototype)" IconDamageUp
-      [ party (AttackVs Beast) 20 ]
+      [ party (Special AttackUp <| VsTrait Beast) 20 ]
     , bond 323 "Radiance of the Goddess (Euryale)" "Euryale" IconArtsUp
       [ party_ Arts 15 ]
     , bond 324 "Hero's Armament" "Hektor" IconBeamUp
@@ -2570,7 +2570,7 @@ craftEssences =
     , bond 337 "Indestructible Blade" "Rama" IconExclamationUp
       [ party CritUp 25 ]
     , bond 338 "Concealed Goddess" "Helena Blavatsky" IconDamageUp
-      [ party (ClassAffinity Assassin) 20 ]
+      [ party (Special AttackUp <| VsClass Assassin) 20 ]
     , bond 339 "Lights of Civilization" "Thomas Edison" IconNobleUp
       [ party NPGen 15 ]
     , bond 340 "Reaching the Zenith of My Skill" "Li Shuwen" IconArtsUp
@@ -2600,7 +2600,7 @@ craftEssences =
     , bond 358 "Library of Hundred Men" "Hassan of the Hundred Personas" IconAllUp
       [ party_ Buster 8, party_ Quick 8, party_ Arts 8 ]
     , bond 359 "Last Splinter" "Angra Mainyu" IconDamageUp
-      [ Grant Self 0 (AttackVs Beast) <| Flat 200, gutsPercent 20 ]
+      [ Grant Self 0 (Special AttackUp <| VsTrait Beast) <| Flat 200, gutsPercent 20 ]
     , { name    = "Fate/EXTELLA"
       , id      = 360
       , rarity  = 4

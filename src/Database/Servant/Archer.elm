@@ -47,7 +47,7 @@ archers =
                   , effect = [ Grant Self 1 NPUp <| Flat 30
                              , To Enemies Damage <| Range 400 600
                              ]
-                  , over   = [ To Enemies (DamageVs EnumaElish) <| Range 150 200 ]
+                  , over   = [ To Enemies (SpecialDamage <| VsTrait EnumaElish) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 153, starRate = 7.9, npAtk = 0.34, npDef = 3 }
@@ -190,7 +190,7 @@ archers =
                              , Chance 40 <| Debuff Enemies 1 Stun Full
                              , To Self DemeritDamage <| Flat 500
                              ]
-                  , over   = [ To Enemies (DamageVs HeavenOrEarth) <| Range 150 200 ]
+                  , over   = [ To Enemies (SpecialDamage <| VsTrait HeavenOrEarth) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 147, starRate = 7.9, npAtk = 0.87, npDef = 3 }
@@ -239,7 +239,7 @@ archers =
                     , rank   = APlus
                     , icon   = IconDamageUp
                     , cd     = 7
-                    , effect = [ Grant Self 1 (AttackVs Male) <| Range 50 100 ]
+                    , effect = [ Grant Self 1 (Special AttackUp <| VsTrait Male) <| Range 50 100 ]
                     }
                   , { name = "Mind's Eye (Fake)"
                     , rank   = BMinus
@@ -446,7 +446,7 @@ archers =
                     , rank   = A
                     , icon   = IconDamageUp
                     , cd     = 7
-                    , effect = [ Grant Self 1 (AttackVs Divine) <| Range 50 100 ]
+                    , effect = [ Grant Self 1 (Special AttackUp <| VsTrait Divine) <| Range 50 100 ]
                     }
                   , { name   = "The Demonic King"
                     , rank   = A
@@ -465,7 +465,7 @@ archers =
                   , kind   = "Anti-Army"
                   , hits   = 10
                   , effect = [ To Enemies Damage <| Range 300 500 ]
-                  , over   = [ To Enemies (DamageVs Riding) <| Range 150 200 ]
+                  , over   = [ To Enemies (SpecialDamage <| VsTrait Riding) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 150, starRate = 7.9, npAtk = 0.43, npDef = 3 }
@@ -871,7 +871,7 @@ archers =
                   , kind   = "Anti-Personnel"
                   , hits   = 1
                   , effect = [ To Enemy Damage <| Flat 1200
-                             , To Enemy (DamageVs Male) <| Range 150 250
+                             , To Enemy (SpecialDamage <| VsTrait Male) <| Range 150 250
                              , Chance 150 << Debuff Enemy 3 AttackDown <| Flat 20
                              ]
                   , over   = [ Chances 100 200 <| Debuff (EnemyType Male) 1 Charm Full ]
@@ -1213,7 +1213,7 @@ archers =
                   , kind   = "Anti-Army"
                   , hits   = 3
                   , effect = [ To Enemies Damage <| Range 300 500 ]
-                  , over   = [ Grant Self 1 (AttackVs Demonic) <| Range 50 100 ]
+                  , over   = [ Grant Self 1 (Special AttackUp <| VsTrait Demonic) <| Range 50 100 ]
                   , first  = True
                   }
     , gen       = { starWeight = 150, starRate = 7.8, npAtk = 0.57, npDef = 3 }

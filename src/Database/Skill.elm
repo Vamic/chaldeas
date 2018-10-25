@@ -1,7 +1,7 @@
 module Database.Skill exposing
   ( Amount(..), toMin, toMax
   , Rank(..)
-  , Target(..), allied
+  , Target(..), Special(..), enumSpecial, allied
   , BuffEffect(..)
   , BuffCategory(..), enumBuffCategory, buffCategory
   , DebuffEffect(..)
@@ -62,6 +62,7 @@ type InstantEffect
     | RemoveBuffs
     | RemoveDebuffs
     | RemoveMental
+    | SpecialDamage Special
 
 type DebuffEffect
     = ApplyTrait Trait
@@ -91,19 +92,15 @@ type DebuffEffect
     | StunBomb
 
 type BuffEffect
-    = AlignAffinity Alignment
-    | AttackUp
-    | AttackVs Trait
+    = AttackUp
     | Performance Card
     | BuffUp
     | CritUp
-    | ClassAffinity Class
     | DamageDown
     | DamageUp
     | DebuffResist
     | DebuffSuccess
     | DefenseUp
-    | DefenseVs Trait
     | Evasion
     | GaugePerTurn
     | Guts
@@ -124,8 +121,8 @@ type BuffEffect
     | OffensiveResist
     | Overcharge
     | Resist DebuffEffect
+    | Special BuffEffect Special
     | StarAbsorb
-    | StarAffinity Class
     | StarUp
     | StarsPerTurn
     | Success DebuffEffect
@@ -151,18 +148,14 @@ enumBuffCategory =
 buffCategory : BuffEffect -> BuffCategory
 buffCategory a = case a of
     AttackUp        -> BuffOffensive
-    AttackVs _      -> BuffSpecialist
-    AlignAffinity _ -> BuffSpecialist
     Performance _   -> BuffOffensive
     BuffUp          -> BuffUtility
     CritUp          -> BuffOffensive
-    ClassAffinity _ -> BuffSpecialist
     DamageDown      -> BuffDefensive
     DamageUp        -> BuffOffensive
     DebuffResist    -> BuffUtility
     DebuffSuccess   -> BuffUtility
     DefenseUp       -> BuffDefensive
-    DefenseVs _     -> BuffSpecialist
     Evasion         -> BuffDefensive
     GaugePerTurn    -> BuffSupport
     Guts            -> BuffDefensive
@@ -183,23 +176,24 @@ buffCategory a = case a of
     OffensiveResist -> BuffUtility
     Overcharge      -> BuffSupport
     Resist _        -> BuffUtility
+    Special _ _     -> BuffSpecialist
     StarAbsorb      -> BuffSupport
-    StarAffinity _  -> BuffSpecialist
     StarUp          -> BuffSupport
+    StarsPerTurn    -> BuffSupport
     Success _       -> BuffUtility
     SureHit         -> BuffOffensive
     Taunt           -> BuffDefensive
-    StarsPerTurn    -> BuffSupport
 
 isDamage : InstantEffect -> Bool
 isDamage a = case a of
-  Avenge        -> True
-  Damage        -> True
-  DamageThruDef -> True
-  DamageVs _    -> True
-  DamagePoison  -> True
-  LastStand     -> True
-  _             -> False
+  Avenge          -> True
+  Damage          -> True
+  DamageThruDef   -> True
+  DamageVs _      -> True
+  DamagePoison    -> True
+  LastStand       -> True
+  SpecialDamage _ -> True
+  _               -> False
 
 {-| Int field is duration -}
 type SkillEffect
@@ -284,14 +278,25 @@ toMax a = case a of
   Range _ y -> y
 
 type Rank
-    = Unknown | EX
+    = Unknown | EX | APlusPlusPlus
     | APlusPlus | APlus | A | AMinus
     | BPlusPlus | BPlus | B | BMinus
     | CPlusPlus | CPlus | C | CMinus
                 | DPlus | D
                 | EPlus | E | EMinus
 
-type Target 
+type Special
+    = VsTrait Trait
+    | VsClass Class
+    | VsAlignment Alignment
+
+enumSpecial : List Special
+enumSpecial = 
+    List.map VsTrait enumTrait 
+    ++ List.map VsClass enumClass
+    ++ List.map VsAlignment enumAlignment
+
+type Target
     = Someone
     | Self | Ally | Party | Enemy | Enemies | Others
     | AlliesType Trait | EnemyType Trait | EnemiesType Trait

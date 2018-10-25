@@ -82,7 +82,7 @@ npDamage addSkills special maxOver s =
                       _         -> 1
     triangleModifier = 
         ifSpecial enumClass
-        |> List.map (ClassAffinity >> matchSum buffs)
+        |> List.map (VsClass >> Special AttackUp >> matchSum buffs)
         >> List.sum
         >> (+) 1
     attributeModifier = 1
@@ -110,8 +110,8 @@ npDamage addSkills special maxOver s =
         >> List.map (matchSum instants)
         >> List.sum
     superEffectiveModifier =
-        ifSpecial enumTrait
-        |> List.map (DamageVs >> matchSum instants)
+        ifSpecial enumSpecial
+        |> List.map (SpecialDamage >> matchSum instants)
         >> List.maximum
         >> Maybe.withDefault 0
         >> (+) (matchSum instants DamagePoison)
@@ -124,8 +124,8 @@ npDamage addSkills special maxOver s =
     -------------
     cardMod = matchSum buffs <| Performance card
     atkMod =
-        ifSpecial enumTrait
-        |> List.map (AttackVs >> matchSum buffs)
+        ifSpecial enumSpecial
+        |> List.map (Special AttackUp >> matchSum buffs)
         >> List.maximum
         >> Maybe.withDefault 0
         >> (+) (matchSum buffs AttackUp)

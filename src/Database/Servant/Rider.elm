@@ -251,7 +251,7 @@ riders =
                   , kind   = "Anti-Army"
                   , hits   = 5
                   , effect = [ To Enemy Damage <| Range 600 1000 ]
-                  , over   = [ To Enemy (DamageVs Male) <| Range 150 200
+                  , over   = [ To Enemy (SpecialDamage <| VsTrait Male) <| Range 150 200
                              , Debuff Enemy 3 MentalVuln <| Range 10 50
                              ]
                   , first  = False
@@ -1093,7 +1093,7 @@ riders =
                     , rank   = B
                     , icon   = IconDamageUp
                     , cd     = 7
-                    , effect = [ Grant Self 3 (AttackVs Roman) <| Range 40 60 ]
+                    , effect = [ Grant Self 3 (Special AttackUp <| VsTrait Roman) <| Range 40 60 ]
                     }
                   , { name   = "Battle Continuation"
                     , rank   = A

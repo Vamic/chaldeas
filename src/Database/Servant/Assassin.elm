@@ -49,7 +49,7 @@ assassins =
                   , kind   = "Anti-Personnel"
                   , hits   = 4
                   , effect = [ To Enemy DamageThruDef <| Range 1400 2200 ]
-                  , over   = [ Grant Self 1 (AttackVs Female) <| Range 50 100 ]
+                  , over   = [ Grant Self 1 (Special AttackUp <| VsTrait Female) <| Range 50 100 ]
                   , first  = True
                   }
     , gen       = { starWeight = 97, starRate = 25.5, npAtk = 1.07, npDef = 4 }
@@ -73,6 +73,80 @@ assassins =
                   [(SecretGemOf Assassin, 12), (EvilBone, 15)]
                   [(HeartOfTheForeignGod, 3), (EvilBone, 29)]
                   [(HeartOfTheForeignGod, 8), (ClawOfChaos, 15)]
+    }
+  , { name      = "Cleopatra"
+    , id        = 139
+    , rarity    = 5
+    , class     = Assassin
+    , attr      = Mankind
+    , deck      = Deck Quick Quick Arts Buster Buster
+    , curve     = 5
+    , stats     = { base  = { atk = 1713,  hp = 1965 } 
+                  , max   = { atk = 11088, hp = 13402 }
+                  , grail = { atk = 12138, hp = 14682 }
+                  }
+    , skills    = [ { name   = "Imperial Privilege"
+                    , rank   = A
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Self Heal <| Range 1000 3000
+                               , Chance 60 << Grant Self 3 AttackUp  <| Range 20 40 
+                               , Chance 60 << Grant Self 3 DefenseUp <| Range 20 40
+                               ]
+                    } 
+                  , { name   = "Golden Rule (Wealth & Body)"
+                    , rank   = B
+                    , icon   = IconNobleTurn
+                    , cd     = 8
+                    , effect = [ Grant Self 3 NPGen <| Range 20 40 
+                               , Grant Self 3 GaugePerTurn <| Flat 10
+                               , Grant Self 3 HealPerTurn <| Range 500 100
+                               ]
+                    }
+                  , { name   = "Protection of the Goddess"
+                    , rank   = C
+                    , icon   = IconShield
+                    , cd     = 8
+                    , effect = [ Grant Self 1 Invincibility Full 
+                               , To Self RemoveDebuffs Full
+                               , To Party GainStars <| Range 10 20 
+                               ]
+                    }
+                  ]
+    , passives  = [presenceConcealment B, divinity D]
+    , phantasm  = { name   = "Uraeus Astrape" 
+                  , desc   = "O, serpent who finishes the time of daybreak, come to me"
+                  , rank   = A
+                  , card   = Buster
+                  , kind   = "Anti-Army"
+                  , hits   = 5
+                  , effect = [ To Enemies Damage <| Range 300 500 
+                             , To Self DemeritDamage <| Flat 1000
+                             ]
+                  , over   = [ Grant Self 1 (Performance Buster) <| Range 30 70 ]
+                  , first  = True
+                  }
+    , gen       = { starWeight = 98, starRate = 25.5, npAtk = 1.06, npDef = 4 }
+    , hits      = { quick = 4, arts = 2, buster = 3, ex = 6 }
+    , traits    = [Female, Divine, EnumaElish, King]
+    , death     = 49.5
+    , align     = [Lawful, Neutral]
+    , limited   = True
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Assassin, 5)]
+                  [(Piece Assassin, 12), (PhoenixFeather, 6)]
+                  [(Monument Assassin, 5), (LampOfEvilSealing, 6), (TearstoneOfBlood, 3)]
+                  [(Monument Assassin, 12), (TearstoneOfBlood, 6), (SerpentJewel, 10)]
+    , skillUp   = Reinforcement
+                  [(GemOf Assassin, 5)]
+                  [(GemOf Assassin, 12)]
+                  [(MagicGemOf Assassin, 5)]
+                  [(MagicGemOf Assassin, 12), (LampOfEvilSealing, 3)]
+                  [(SecretGemOf Assassin, 5), (LampOfEvilSealing, 6)]
+                  [(SecretGemOf Assassin, 12), (PhoenixFeather, 4)]
+                  [(PhoenixFeather, 8), (ShellOfReminiscence, 6)]
+                  [(ShellOfReminiscence, 18), (ScarabOfWisdom, 10)]
     }
   , { name      = "Shuten-Douji"
     , id        = 112
@@ -175,8 +249,8 @@ assassins =
                     , rank   = C
                     , icon   = IconStarHaloUp
                     , cd     = 8
-                    , effect = [ Grant Self 3 (ClassAffinity Saber) <| Range 30 50
-                               , Grant Self 3 (StarAffinity Saber) <| Range 50 100
+                    , effect = [ Grant Self 3 (Special AttackUp <| VsClass Saber) <| Range 30 50
+                               , Grant Self 3 (Special StarUp <| VsClass Saber) <| Range 50 100
                                ]
                     }
                   ]
@@ -188,7 +262,7 @@ assassins =
                   , kind   = "Anti-Unit"
                   , hits   = 12
                   , effect = [ To Enemy Damage <| Range 1600 2400 ]
-                  , over   = [ To Enemy (DamageVs Saberface) <| Range 150 200 ]
+                  , over   = [ To Enemy (SpecialDamage <| VsTrait Saberface) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 98, starRate = 25.6, npAtk = 0.81, npDef = 4 }
@@ -324,7 +398,7 @@ assassins =
                              , To Self Heal <| Flat 2000
                              , Grant Self 3 AttackUp <| Flat 20
                              ]
-                  , over   = [ To Enemy (DamageVs Female) <| Range 120 170 ]
+                  , over   = [ To Enemy (SpecialDamage <| VsTrait Female) <| Range 120 170 ]
                   , first  = False
                   }
     , gen       = { starWeight = 98, starRate = 25.2, npAtk = 2.15, npDef = 4 }
@@ -573,7 +647,7 @@ assassins =
                                ]
                     }
                   , { name   = "Ninjutsu"
-                    , rank   = APlus
+                    , rank   = APlusPlusPlus
                     , icon   = IconDodge
                     , cd     = 8
                     , effect = [ Grant Ally 1 Evasion Full
@@ -913,7 +987,7 @@ assassins =
                     , rank   = APlusPlus
                     , icon   = IconDamageUp
                     , cd     = 7
-                    , effect = [ Grant Self 3 (AlignAffinity Evil) <| Range 40 60 ]
+                    , effect = [ Grant Self 3 (Special AttackUp <| VsAlignment Evil) <| Range 40 60 ]
                     }
                   , { name   = "Medicine"
                     , rank   = APlus
@@ -927,7 +1001,7 @@ assassins =
                     , rank   = B
                     , icon   = IconDamageUp
                     , cd     = 7
-                    , effect = [ Grant Self 3 (AttackVs Human) <| Range 40 60 ]
+                    , effect = [ Grant Self 3 (Special AttackUp <| VsTrait Human) <| Range 40 60 ]
                     }
                   ]
     , passives  = [presenceConcealment D]

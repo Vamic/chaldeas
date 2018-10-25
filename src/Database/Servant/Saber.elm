@@ -250,7 +250,7 @@ sabers =
                   , kind   = "Anti-Army"
                   , hits   = 5
                   , effect = [ To Enemies Damage <| Range 400 600 ]
-                  , over   = [ To Enemies (DamageVs Arthur) <| Range 180 220
+                  , over   = [ To Enemies (SpecialDamage <| VsTrait Arthur) <| Range 180 220
                              , To Self GaugeUp <| Range 20 40
                              ]
                   , first  = False
@@ -412,7 +412,6 @@ sabers =
                   [(DragonFang, 24), (ClawOfChaos, 4)]
                   [(ClawOfChaos, 11), (DragonsReverseScale, 10)]
     }
-    {-TODO
   , { name      = "Elisabeth Bathory (Brave)"
     , id        = 138
     , rarity    = 4
@@ -424,7 +423,7 @@ sabers =
                   , max   = { atk = 9899,  hp = 11248 }
                   , grail = { atk = 11986, hp = 13638 }
                   }
-    , skills    = [ { name   = "Heroine's Great Principle"
+    , skills    = [ { name   = "Hero's Great Principle"
                     , rank   = EX
                     , icon   = IconShield
                     , cd     = 8
@@ -432,7 +431,7 @@ sabers =
                                , Grant Self 1 Invincibility Full
                                ]
                     }
-                  , { name   = "Mana Burst (Courage)"
+                  , { name   = "Mana Burst (Bravery)"
                     , rank   = D
                     , icon   = IconBusterUp
                     , cd     = 7
@@ -441,7 +440,7 @@ sabers =
                                , Grant Self 1 DefenseUp <| Flat 20   
                                ]
                     }
-                  , { name   = "Legend of the Crimson Heroine"
+                  , { name   = "Legendary Crimson Hero"
                     , rank   = EX
                     , icon   = IconDamageUp
                     , cd     = 8
@@ -485,7 +484,6 @@ sabers =
                   [(DragonFang, 20), (GreatKnightMedal, 10)]
                   [(GreatKnightMedal, 30), (DragonsReverseScale, 8)]
     }
-    -}
   , { name      = "Lancelot (Saber)"
     , id        = 121
     , rarity    = 4
@@ -660,7 +658,7 @@ sabers =
                   , kind   = "Anti-Demon"
                   , hits   = 5
                   , effect = [ To Enemy Damage <| Range 600 1000 ]
-                  , over   = [ To Enemy (DamageVs Demonic) <| Range 150 200 ]
+                  , over   = [ To Enemy (SpecialDamage <| VsTrait Demonic) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 100, starRate = 10.2, npAtk = 0.84, npDef = 3 }
@@ -853,8 +851,8 @@ sabers =
                     , rank   = A
                     , icon   = IconDamageUp
                     , cd     = 7
-                    , effect = [ Grant Self 3 (AttackVs Dragon) <| Range 50 80
-                               , Grant Self 3 (DefenseVs Dragon) <| Flat 30
+                    , effect = [ Grant Self 3 (Special AttackUp <| VsTrait Dragon) <| Range 50 80
+                               , Grant Self 3 (Special DefenseUp <| VsTrait Dragon) <| Flat 30
                                ]
                     }
                   ]
@@ -866,7 +864,7 @@ sabers =
                   , kind   = "Anti-Army"
                   , hits   = 1
                   , effect = [ To Enemies Damage <| Range 300 500 ]
-                  , over   = [ To Enemies (DamageVs Dragon) <| Range 150 200 ]
+                  , over   = [ To Enemies (SpecialDamage <| VsTrait Dragon) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 97, starRate = 10, npAtk = 0.83, npDef = 3 }

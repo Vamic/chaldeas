@@ -105,8 +105,8 @@ berserkers =
                     , rank   = A
                     , icon   = IconDamageUp
                     , cd     = 8
-                    , effect = [ Grant Self 3 (AttackVs Demonic) <| Range 30 50
-                               , Grant Self 3 (AttackVs HeavenOrEarth) <| Range 30 50
+                    , effect = [ Grant Self 3 (Special AttackUp <| VsTrait Demonic) <| Range 30 50
+                               , Grant Self 3 (Special AttackUp <| VsTrait HeavenOrEarth) <| Range 30 50
                                ]
                     }
                   ]
@@ -294,8 +294,8 @@ berserkers =
                     , rank   = A
                     , icon   = IconDamageUp
                     , cd     = 8
-                    , effect = [ Grant Self 3 (AttackVs Humanoid) <| Range 30 50
-                               , Grant Self 3 (DefenseVs Humanoid) <| Range 15 25
+                    , effect = [ Grant Self 3 (Special AttackUp <| VsTrait Humanoid) <| Range 30 50
+                               , Grant Self 3 (Special DefenseUp <| VsTrait Humanoid) <| Range 15 25
                                ]
                     }
                   , { name   = "Angel's Cry"

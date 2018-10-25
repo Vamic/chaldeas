@@ -121,12 +121,9 @@ effects =
   let
     showEffect a = case a of
       Debuff _ _ (ApplyTrait _) _ -> "Apply Trait"
-      To _ (DamageVs _) _ -> "Extra Damage"
+      To _ (SpecialDamage _) _ -> "Extra Damage"
       To _ DamagePoison _ -> "Extra Damage"
-      Grant _ _ (AttackVs _) _ -> "Special Attack"
-      Grant _ _ (ClassAffinity _) _ -> "Special Attack"
-      Grant _ _ (DefenseVs _) _ -> "Special Defense"
-      Grant _ _ (StarAffinity _) _ -> "Special Stars"
+      Grant _ _ (Special ef _) _ -> "Special " ++ Debug.toString ef
       -- Grant _ _ (Success _) _ -> Debug.toString DebuffSuccess
       -- Grant _ _ (Resist _) _ -> Debug.toString DebuffResist
       To _ ef _ -> Debug.toString ef
@@ -182,7 +179,7 @@ effectMap =
     , (["reduce","np","strength","critical","strength"], show [NPDown, CritDown])
     , (["increase","attack","defense"], show [AttackUp, DefenseUp])
     , (["remove","debuffs","restore","hp"], show [RemoveDebuffs, Heal])
-    , (["additional","damage","turn"], ["Special Attack"])
+    , (["additional","damage","turn"], ["Special AttackUp"])
     , (["decrease","1000hp","yourself"], show [DemeritDamage])
     , (["damage","previous","hp"], show [Avenge])
     , (["hp","fall"], show [DemeritHealth])
@@ -190,12 +187,13 @@ effectMap =
     , (["confusion"], show [Confusion])
     , (["current","hp"], show [LastStand])
     , (["extra","own","hp"], show [LastStand])
-    , (["against","drop"], ["Special Stars"])
+    , (["against","drop"], ["Special StarUp"])
     , (["apply","trait"], ["Apply Trait"])
     , (["extra","damage"], ["Extra Damage"])
-    , (["special","attack"], ["Special Attack"])
-    , (["special","damage"], ["Special Attack"])
-    , (["special","defense"], ["Special Defense"])
+    , (["deal","special","damage"], ["Extra Damage"])
+    , (["special","attack"], ["Special AttackUp"])
+    , (["special","damage"], ["Special AttackUp"])
+    , (["special","defense"], ["Special DefenseUp"])
     , (["transform","hyde"], show [BecomeHyde])
     , (["increase","bond","points"], show [Bond])
     , (["nullify"], show [BuffBlock])

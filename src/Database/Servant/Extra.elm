@@ -317,9 +317,9 @@ extras =
                   , rank   = B
                   , icon   = IconDamageUp
                   , cd     = 7
-                  , effect = [ Grant Self 1 (AttackVs Demon) <| Range 50 100
-                             , Grant Self 1 (AttackVs Divine) <| Range 50 100
-                             , Grant Self 1 (AttackVs Undead) <| Range 50 100
+                  , effect = [ Grant Self 1 (Special AttackUp <| VsTrait Demon) <| Range 50 100
+                             , Grant Self 1 (Special AttackUp <| VsTrait Divine) <| Range 50 100
+                             , Grant Self 1 (Special AttackUp <| VsTrait Undead) <| Range 50 100
                              ]
                   }
                   ]

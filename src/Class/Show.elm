@@ -7,7 +7,7 @@ module Class.Show exposing (..)
 # `Database.Servant`
 @docs deck, phantasmType
 # `Database.Skill`
-@docs amount, bonusEffect, buffCategory, buffEffect, debuffEffect, instantEffect, nameBuffEffect, nameDebuffEffect, possessiveAndSubject, rangeInfo, rank, skillEffect
+@docs amount, bonusEffect, buffCategory, buffEffect, debuffEffect, instantEffect, nameBuffEffect, nameDebuffEffect, possessiveAndSubject, rangeInfo, rank, skillEffect, special
 # `Persist.Preferences`
 @docs preference
 # `Site.Base`
@@ -241,6 +241,7 @@ rank : Rank -> String
 rank a = case a of
   Unknown   -> ""
   EX        -> " EX"
+  APlusPlusPlus -> " A+++"
   APlusPlus -> " A++"
   APlus     -> " A+"
   A         -> " A"
@@ -262,6 +263,12 @@ rank a = case a of
 rangeInfo : RangeInfo -> String
 rangeInfo r =
     places 2 r.min ++ "% ~ " ++ places 2 r.max ++ if r.percent then "" else "%"
+
+special : Special -> String
+special a = (\s -> "[" ++ s ++ "]") <| case a of
+  VsTrait x     -> trait x
+  VsClass x     -> class x
+  VsAlignment x -> alignment x
 
 bonusEffect : Bool -> Amount -> BonusEffect -> String
 bonusEffect isPerc amt a = 
@@ -326,6 +333,7 @@ instantEffect target amt a =
       GainStars     -> "Gain " ++ n ++ " critical stars" ++ case target of
                          Self -> " for yourself"
                          _    -> ""
+      SpecialDamage x -> "Deal " ++ n ++ "% extra damage to " ++ special x
 
 debuffEffect : Target -> Amount -> DebuffEffect -> String
 debuffEffect target amt a =
@@ -416,18 +424,14 @@ buffEffect target amt a =
   in
     case a of
       AttackUp        -> increase "attack"
-      AttackVs t      -> increase <| "attack" ++ against (trait t)
-      AlignAffinity x -> increase <| "attack" ++ against (alignment x)
       Performance c   -> increase <| card c ++ " performance"
       BuffUp          -> success "buff"
       CritUp          -> increase "critical damage"
-      ClassAffinity c -> increase <| "damage" ++ against (class c)
       DamageDown      -> "Reduce" ++ p ++ " damage taken by " ++ n
       DamageUp        -> "Increase" ++ p ++ " damage by " ++ n
       DebuffResist    -> resist "debuff"
       DebuffSuccess   -> success "debuff"
       DefenseUp       -> increase "defense"
-      DefenseVs t   -> increase <| "defense" ++ against (trait t)
       Evasion         -> grant "Evasion"
       GaugePerTurn    -> "Charge" ++ p ++ " NP gauge" ++ by ++ " every turn"
       Guts            -> "Grant" ++ s ++ " Guts with " ++ n ++ " HP"
@@ -448,8 +452,8 @@ buffEffect target amt a =
       OffensiveResist -> resist "offensive debuff"
       Overcharge      -> "Overcharge" ++ p ++ " NP by " ++ n ++ " stages"
       Resist debuff   -> resist <| nameDebuffEffect debuff
+      Special ef x    -> buffEffect target amt ef ++  " against " ++ special x
       StarAbsorb      -> increase "C. Star absorption"
-      StarAffinity c  -> increase <| "C. Star drop" ++ against (class c)
       StarUp          -> increase "C. Star drop rate"
       Success debuff  -> success <| nameDebuffEffect debuff
       SureHit         -> grant "Sure Hit"
@@ -461,18 +465,14 @@ buffEffect target amt a =
 nameBuffEffect : BuffEffect -> String
 nameBuffEffect a = case a of
   AttackUp        -> "AttackUp"
-  AttackVs _      -> nameBuffEffect AttackUp
-  AlignAffinity x -> nameBuffEffect AttackUp
   Performance c   -> "Performance " ++ card c
   BuffUp          -> "BuffUp"
   CritUp          -> "CritUp"
-  ClassAffinity c -> nameBuffEffect AttackUp
   DamageDown      -> "DamageDown"
   DamageUp        -> "DamageUp"
   DebuffResist    -> "DebuffResist"
   DebuffSuccess   -> "DebuffSuccess"
   DefenseUp       -> "DefenseUp"
-  DefenseVs _     -> nameBuffEffect DefenseUp
   Evasion         -> "Evasion"
   GaugePerTurn    -> "GaugePerTurn"
   Guts            -> "Guts"
@@ -493,8 +493,8 @@ nameBuffEffect a = case a of
   OffensiveResist -> nameBuffEffect DebuffResist
   Overcharge      -> "Overcharge"
   Resist _        -> nameBuffEffect DebuffResist
+  Special ef _    -> nameBuffEffect ef
   StarAbsorb      -> "StarAbsorb"
-  StarAffinity _  -> nameBuffEffect StarUp
   StarUp          -> "StarUp"
   Success _       -> nameBuffEffect DebuffSuccess
   SureHit         -> "SureHit"

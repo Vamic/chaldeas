@@ -39,8 +39,8 @@ lancers =
                     , rank   = B
                     , icon    = IconDamageUp
                     , cd      = 7
-                    , effect = [ Grant Self 1 (AttackVs Divine) <| Range 50 100
-                              , Grant Self 1 (AttackVs Undead) <| Range 50 100
+                    , effect = [ Grant Self 1 (Special AttackUp <| VsTrait Divine) <| Range 50 100
+                              , Grant Self 1 (Special AttackUp <| VsTrait Undead) <| Range 50 100
                               ]
                     }
                   ]
@@ -124,7 +124,7 @@ lancers =
                   , kind   = "Anti-Divine"
                   , hits   = 5
                   , effect = [ To Enemies Damage <| Range 300 500 ]
-                  , over   = [ To Enemies (DamageVs Divine) <| Range 150 200 ]
+                  , over   = [ To Enemies (SpecialDamage <| VsTrait Divine) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 88, starRate = 12.2, npAtk = 0.72, npDef = 4 }
@@ -200,7 +200,7 @@ lancers =
                   , kind   = "Anti-Unit"
                   , hits   = 4
                   , effect = [ To Enemy Damage <| Range 600 1000 ]
-                  , over   = [ To Enemy (DamageVs Male) <| Range 150 200 ]
+                  , over   = [ To Enemy (SpecialDamage <| VsTrait Male) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 91, starRate = 12.2, npAtk = 1.05, npDef = 4 }
@@ -273,7 +273,7 @@ lancers =
                   , effect = [ To Enemy Damage <| Range 600 1000
                              , Grant Party 3 StarUp <| Flat 30
                              ]
-                  , over   = [ To Enemy (DamageVs Brynhild) <| Range 150 200 ]
+                  , over   = [ To Enemy (SpecialDamage <| VsTrait Brynhild) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 87, starRate = 12.2, npAtk = 1.07, npDef = 4 }
@@ -571,6 +571,77 @@ lancers =
                   [(OctupletCrystals, 8), (DragonFang, 12)]
                   [(DragonFang, 36), (DragonsReverseScale, 8)]
     }
+  , { name      = "Vlad III (EXTRA)"
+    , id        = 140
+    , rarity    = 4
+    , class     = Lancer
+    , attr      = Earth
+    , deck      = Deck Quick Quick Arts Buster Buster
+    , curve     = 14
+    , stats     = { base  = { atk = 1462,  hp = 2080 } 
+                  , max   = { atk = 8775,  hp = 13005 }
+                  , grail = { atk = 10625, hp = 15769 }
+                  }
+    , skills    = [ { name   = "Protection of the Faith"
+                    , rank   = APlusPlusPlus
+                    , icon   = IconHoodUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DebuffResist <| Range 50 100 
+                               , To Self Heal <| Range 1000 2500
+                               , Grant Self 1 DefenseUp <| Range 20 40
+                               , Grant Self 3 AttackUp <| Range 10 20
+                               ]
+                    } 
+                  , { name   = "Tactics"
+                    , rank   = B
+                    , icon   = IconBeamUp
+                    , cd     = 7
+                    , effect = [ Grant Party 1 NPUp <| Range 9 18 ]
+                    }
+                  , { name   = "Innocent Monster"
+                    , rank   = A
+                    , icon   = IconStarTurn
+                    , cd     = 7
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9 
+                               , Chances 100 300 <| Grant Self 1 Taunt Full
+                               ]
+                    }
+                  ]
+    , passives  = [magicResistance C]
+    , phantasm  = { name   = "Kazikli Bey"
+                  , desc   = "The Fortress of Impalement"
+                  , rank   = C
+                  , card   = Buster
+                  , kind   = "Anti-Enemy"
+                  , hits   = 6
+                  , effect = [ Grant Self 1 IgnoreInvinc Full 
+                             , To Enemy Damage <| Range 600 1000
+                             ]
+                  , over   = [ To Enemy (SpecialDamage <| VsAlignment Evil) <| Range 150 200 ]
+                  , first  = False
+                  }
+    , gen       = { starWeight = 88, starRate = 11.6, npAtk = 1.1, npDef = 4 }
+    , hits      = { quick = 3, arts = 2, buster = 3, ex = 5 }
+    , traits    = [Male, King, AllyOfJustice]
+    , death     = 24
+    , align     = [Lawful,Good]
+    , limited   = True
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Lancer, 4)]
+                  [(Piece Lancer, 10), (ProofOfHero, 18)]
+                  [(Monument Lancer, 4), (FoolsChain, 24), (BlackBeastGrease, 3)]
+                  [(Monument Lancer, 10), (BlackBeastGrease, 5), (DragonsReverseScale, 4)]
+    , skillUp   = Reinforcement
+                  [(GemOf Lancer, 4)]
+                  [(GemOf Lancer, 10)]
+                  [(MagicGemOf Lancer, 4)]
+                  [(MagicGemOf Lancer, 10), (FoolsChain, 12)]
+                  [(SecretGemOf Lancer, 4), (FoolsChain, 24)]
+                  [(SecretGemOf Lancer, 10), (ProofOfHero, 12)]
+                  [(ProofOfHero, 24), (OctupletCrystals, 5)]
+                  [(OctupletCrystals, 15), (HeartOfTheForeignGod, 8)]
+    }
   , { name      = "Elisabeth Bathory"
     , id        = 18
     , rarity    = 4
@@ -802,7 +873,7 @@ lancers =
                     , rank   = BPlus
                     , icon   = IconDamageUp
                     , cd     = 7
-                    , effect = [ Grant Self 3 (AttackVs Beast) <| Range 40 60 ]
+                    , effect = [ Grant Self 3 (Special AttackUp <| VsTrait Beast) <| Range 40 60 ]
                     }
                   ]
     , passives  = [magicResistance C, divinity B]

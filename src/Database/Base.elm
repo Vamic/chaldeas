@@ -1,5 +1,5 @@
 module Database.Base exposing 
-  ( Alignment(..)
+  ( Alignment(..), enumAlignment
   , Attribute(..)
   , Card(..)
   , Class(..), enumClass
@@ -19,6 +19,12 @@ import StandardLibrary exposing (..)
 type Alignment
     = Lawful | Neutral | Chaotic | Good | Balanced | Evil
     | Mad | Summer | Bride
+
+enumAlignment : List Alignment
+enumAlignment =
+    [ Lawful,  Neutral,  Chaotic,  Good,  Balanced,  Evil
+    , Mad,  Summer,  Bride
+    ]
 
 {-| Determines the "attribute modifier" in `Database.Calculator`.
 Currently used only for filters. -}

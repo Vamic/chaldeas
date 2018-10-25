@@ -85,14 +85,10 @@ material = ImagePath "Material" << Show.material
 
 buffEffect : ToImage BuffEffect
 buffEffect a = case a of
-  AlignAffinity _ -> buffEffect AttackUp
-  AttackVs _      -> buffEffect AttackUp
-  ClassAffinity _ -> buffEffect AttackUp
-  DefenseVs _     -> buffEffect DefenseUp
-  Resist _        -> buffEffect DebuffResist
-  StarAffinity _  -> buffEffect StarUp
-  Success _       -> buffEffect DebuffSuccess
-  _               -> ImagePath "Effect" <| Show.nameBuffEffect a
+  Resist _     -> buffEffect DebuffResist
+  Special ef _ -> buffEffect ef
+  Success _    -> buffEffect DebuffSuccess
+  _            -> ImagePath "Effect" <| Show.nameBuffEffect a
 
 debuffEffect : ToImage DebuffEffect
 debuffEffect a = ImagePath "Effect" <| Show.nameDebuffEffect a

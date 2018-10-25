@@ -20,9 +20,10 @@ import Class.ToImage as ToImage
 extraFilters : List (Filter CraftEssence)
 extraFilters = List.concat
   [ [ namedBonus FilterAvailability "New"
-      [ "Hydra Dagger"
-      , "Fragarach"
-      , "Inverted Moon of the Heavens"
+      [ "Wizard & Priest"
+      , "Mata Hari's Tavern"
+      , "Hero Elly's Adventure"
+      , "Count Romani Archaman's Hospitality"
       ]
     , Filter Nothing FilterSource "Limited" <|
       \_ ce -> ce.limited && Maybe.isNothing ce.bond
@@ -38,31 +39,30 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter CraftEssence)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
-    namedBonus FilterEventBonus "+1~2 Pumpkin Lantern"
-    [ "Little Halloween Devil" ]
-  , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
-    namedBonus FilterEventBonus "+2~3 Mischievous Bat"
-    [ "Maid in Halloween" ]
-  , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
-    namedBonus FilterEventBonus "+1~2 Mischievous Bat"
-    [ "Halloween Arrangement" ]
-  , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
-    namedBonus FilterEventBonus "+2~3 Sweet Candle"
-    [ "Halloween Princess" ]
-  , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
-    namedBonus FilterEventBonus "+1~2 Sweet Candle"
-    [ "Jack-o'-lantern" ]
-  , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
-    namedBonus FilterEventBonus "+3~4 Petit Cake"
-    [ "Trick or Treat" ]
-  , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
+  [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+    namedBonus FilterEventBonus 
+    "+25~100% [Skeleton], [Ghost], & [Lamia] spawn"
+    [ "Wizard & Priest" ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+    namedBonus FilterEventBonus 
+    "+25~100% [Insect] & [Golem] spawn"
+    [ "Mata Hari's Tavern" ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+    namedBonus FilterEventBonus 
+    "+25~100% [Beast], [Homunculus], & [Knight] spawn"
+    [ "Hero Elly's Adventure" ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+    namedBonus FilterEventBonus "+1~2 Copper Sack"
+    [ "Count Romani Archaman's Hospitality" ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     namedBonus FilterAvailability "Rate-Up"
-    [ "Little Halloween Devil", "Halloween Arrangement", "Jack-o'-lantern" ]
-  , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
+    [ "Wizard & Priest", "Mata Hari's Tavern", "Hero Elly's Adventure"
+    , "Count Romani Archaman's Hospitality"
+    ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     namedBonus FilterAvailability "Limited to Event"
-    [ "Maid in Halloween", "Halloween Princess", "Trick or Treat" 
-    , "Little Halloween Devil", "Halloween Arrangement", "Jack-o'-lantern"  
+    [ "Wizard & Priest", "Mata Hari's Tavern", "Hero Elly's Adventure"
+    , "Count Romani Archaman's Hospitality"
     ]
   {-, ScheduledFilter (Date 2018 Oct 18) (Date 2018 Oct 24) <|
     namedBonus FilterAvailability "Rate-Up"

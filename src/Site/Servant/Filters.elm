@@ -24,8 +24,9 @@ import Class.ToImage as ToImage
 extraFilters : List (Filter Servant)
 extraFilters = List.concat
   [ [ namedBonus FilterAvailability "New"
-      [ "Illyasviel von Einzbern"
-      , "Chloe von Einzbern"
+      [ "Elisabeth Bathory (Brave)"
+      , "Cleopatra"
+      , "Vlad III (EXTRA)"
       ]
     , Filter Nothing FilterAvailability "Free" <|
       \_ s -> s.free
@@ -41,15 +42,10 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter Servant)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
-    namedBonus FilterAvailability "Rate-Up"
-    [ "Tamamo-no-Mae", "Carmilla", "Tamamo Cat", "Mephistopheles"
-    , "Darius III" 
-    ]
-  , ScheduledFilter (Date 2018 Oct 4) (Date 2018 Oct 17) <|
+  [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     namedBonus FilterAvailability "Limited to Event"
-    [ "Elisabeth Bathory (Halloween)" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 15) <|
+    [ "Elisabeth Bathory (Brave)", "Cleopatra", "Vlad III (EXTRA)" ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     namedBonus FilterAvailability "Rate-Up"
     [ "Cleopatra", "Vlad III (EXTRA)" ]
   ]

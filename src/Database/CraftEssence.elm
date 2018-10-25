@@ -2581,6 +2581,60 @@ craftEssences =
       [ party_ Arts 10, party NPUp 10 ]
     , bond 343 "NEO Difference Engine" "Charles Babbage" IconBusterUp
       [ party_ Buster 20, Debuff Party 0 DefenseDown <| Flat 10 ]
+    , { name    = "Count Romani Archaman's Hospitality"
+      , id      = 346
+      , rarity  = 3
+      , icon    = IconNobleUp
+      , stats   = { base = { atk = 0, hp = 300 } 
+                  , max  = { atk = 0, hp = 1500 }
+                  }
+      , effect  = [ Grant Self 0 NPGen <| Range 5 10 
+                  , Grant Self 0 DefenseUp <| Range 3 5
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Hero Elly's Adventure"
+      , id      = 347
+      , rarity  = 5
+      , icon    = IconBusterUp
+      , stats   = { base = { atk = 500,  hp = 0 }
+                  , max  = { atk = 2000, hp = 0 }
+                  }
+      , effect  = [ Grant Self 0 (Performance Buster) <| Range 10 15 
+                  , Grant Self 0 NPUp <| Range 20 25
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Wizard & Priest"
+      , id      = 348
+      , rarity  = 4
+      , icon    = IconBeamUp
+      , stats   = { base = { atk = 200, hp = 320 } 
+                  , max  = { atk = 750, hp = 1200 }
+                  }
+      , effect  = [ Grant Self 0 NPUp <| Range 15 20 
+                  , Grant Self 0 HealingReceived <| Range 10 20
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Mata Hari's Tavern"
+      , id      = 349
+      , rarity  = 3
+      , icon    = IconAllUp
+      , stats   = { base = { atk = 200,  hp = 0 } 
+                  , max  = { atk = 1000, hp = 0 }
+                  }
+      , effect  = [ Grant Self 0 (Performance Arts) <| Range 2 3 
+                  , Grant Self 0 (Performance Buster) <| Range 2 3 
+                  , Grant Self 0 (Performance Quick) <| Range 2 3 
+                  , Grant Self 0 CritUp <| Range 5 10
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
     , bond 350 "Hell of Blazing Punishment" "Jeanne d'Arc (Alter)" IconBusterUp
       [ party_ Buster 15 ]
     , bond 351 "Gordian Knot" "Iskandar" IconSwordUp

@@ -37,8 +37,10 @@ places decimals =
 {-| Removes specified characters from strings. -}
 filterOut : String -> String -> String
 filterOut pattern = 
-    String.filter <|
-    not << flip String.contains pattern << String.fromChar
+  let
+    arr = String.toList pattern
+  in
+    String.filter <| not << flip List.member arr
 
 {-| Removes characters which are illegal for file names. -}
 fileName : String -> String
@@ -46,7 +48,7 @@ fileName = filterOut "?:/"
 
 {-| Removes spaces from names in order to use them in URLs. -}
 urlName : String -> String
-urlName = String.filter <| (/=) ' '
+urlName = filterOut " -\""
 
 {-| Converts `NightMode` into "Night Mode" etc. -}
 unCamel : String -> String

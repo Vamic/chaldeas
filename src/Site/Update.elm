@@ -34,7 +34,8 @@ siteUpdate store transform show reSort msg st =
     ClearAll -> 
         goUp <| relist { st | exclude = [], filters = [] }
     Check t True ->
-        goUp { st | exclude = List.filter (.tab >> (/=) t) st.exclude }
+        goUp <| relist 
+        { st | exclude = List.filter (.tab >> (/=) t) st.exclude }
     Check t False ->
       let
         filters = 
@@ -42,7 +43,8 @@ siteUpdate store transform show reSort msg st =
             |> Maybe.map .filters
             >> Maybe.withDefault []
       in
-        goUp { st | exclude = List.uniqueBy ordFilter <| filters ++ st.exclude }
+        goUp <| relist
+        { st | exclude = List.uniqueBy ordFilter <| filters ++ st.exclude }
     SetSort sortBy -> 
         goUp << relist <| reSort { st | sortBy = sortBy }
     MatchAny matchAny -> 

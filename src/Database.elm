@@ -39,7 +39,7 @@ servants =
       _      -> s
     addUniversal s = 
         { s 
-        | traits   = List.sortBy Show.trait <| Humanoid :: s.traits 
+        | traits   = List.sortBy Show.trait <| [Humanoid, s.gender] ++ s.traits 
         , passives = List.sortBy .name s.passives
         }
   in

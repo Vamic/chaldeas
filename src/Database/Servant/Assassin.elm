@@ -54,7 +54,8 @@ assassins =
                   }
     , gen       = { starWeight = 97, starRate = 25.5, npAtk = 1.07, npDef = 4 }
     , hits      = { quick = 5, arts = 2, buster = 2, ex = 4 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 44
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -128,7 +129,8 @@ assassins =
                   }
     , gen       = { starWeight = 98, starRate = 25.5, npAtk = 1.06, npDef = 4 }
     , hits      = { quick = 4, arts = 2, buster = 3, ex = 6 }
-    , traits    = [Female, Divine, EnumaElish, King]
+    , gender    = Female
+    , traits    = [Divine, EnumaElish, King]
     , death     = 49.5
     , align     = [Lawful, Neutral]
     , limited   = True
@@ -202,7 +204,8 @@ assassins =
                   }
     , gen       = { starWeight = 98, starRate = 25, npAtk = 0.55, npDef = 4 }
     , hits      = { quick = 4, arts = 3, buster = 1, ex = 6 }
-    , traits    = [Female, Demonic, EnumaElish, Divine, Dragon]
+    , gender    = Female
+    , traits    = [Demonic, EnumaElish, Divine, Dragon]
     , death     = 31.6
     , align     = [Chaotic, Evil]
     , limited   = True
@@ -267,7 +270,8 @@ assassins =
                   }
     , gen       = { starWeight = 98, starRate = 25.6, npAtk = 0.81, npDef = 4 }
     , hits      = { quick = 4, arts = 2, buster = 1, ex = 4 }
-    , traits    = [Female, Riding, Dragon, Saberface, Arthur, King]
+    , gender    = Female
+    , traits    = [Riding, Dragon, Saberface, Arthur, King]
     , death     = 38.5
     , align     = [Chaotic, Good]
     , limited   = True
@@ -337,7 +341,8 @@ assassins =
                   }
     , gen       = { starWeight = 102, starRate = 25.6, npAtk = 0.8, npDef = 4 }
     , hits      = { quick = 4, arts = 2, buster = 1, ex = 5 }
-    , traits    = [Female, EnumaElish, PseudoServant]
+    , gender    = Female
+    , traits    = [EnumaElish, PseudoServant]
     , death     = 44
     , align     = [Chaotic, Good]
     , limited   = True
@@ -403,7 +408,8 @@ assassins =
                   }
     , gen       = { starWeight = 98, starRate = 25.2, npAtk = 2.15, npDef = 4 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 44
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -473,7 +479,8 @@ assassins =
                   }
     , gen       = { starWeight = 97, starRate = 25.6, npAtk = 0.46, npDef = 4 }
     , hits      = { quick = 4, arts = 2, buster = 6, ex = 8 }
-    , traits    = [Male, Brynhild, EnumaElish]
+    , gender    = Male
+    , traits    = [BrynhildsBeloved, EnumaElish]
     , death     = 44
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -542,7 +549,8 @@ assassins =
                   }
     , gen       = { starWeight = 98, starRate = 25.6, npAtk = 0.71, npDef = 4 }
     , hits      = { quick = 3, arts = 3, buster = 3, ex = 5 }
-    , traits    = [Female, King, EnumaElish]
+    , gender    = Female
+    , traits    = [King, EnumaElish]
     , death     = 44
     , align     = [Neutral, Good]
     , limited   = True
@@ -607,7 +615,8 @@ assassins =
                   }
     , gen       = { starWeight = 104, starRate = 25, npAtk = 2.26, npDef = 4 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Female, Divine, EnumaElish]
+    , gender    = Female
+    , traits    = [Divine, EnumaElish]
     , death     = 27.5
     , align     = [Chaotic, Good]
     , limited   = False
@@ -674,7 +683,8 @@ assassins =
                   }
     , gen       = { starWeight = 100, starRate = 25.6, npAtk = 0.54, npDef = 4 }
     , hits      = { quick = 4, arts = 4, buster = 1, ex = 4 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 38.5
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -743,7 +753,8 @@ assassins =
                   }
     , gen       = { starWeight = 102, starRate = 25.3, npAtk = 1.05, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 55
     , align     = [Neutral, Evil]
     , limited   = False
@@ -808,7 +819,8 @@ assassins =
                   }
     , gen       = { starWeight = 97, starRate = 25.2, npAtk = 1.07, npDef = 4 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 44
     , align     = [Lawful, Evil]
     , limited   = False
@@ -881,7 +893,8 @@ assassins =
                   }
     , gen       = { starWeight = 99, starRate = 25.6, npAtk = 1.05, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish, Brynhild]
+    , gender    = Male
+    , traits    = [EnumaElish, BrynhildsBeloved]
     , death     = 55
     , align     = [Lawful, Good, Chaotic, Evil]
     , limited   = False
@@ -952,7 +965,8 @@ assassins =
                   }
     , gen       = { starWeight = 98, starRate = 25.2, npAtk = 1.05, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 55
     , align     = [Chaotic, Good]
     , limited   = False
@@ -1019,7 +1033,8 @@ assassins =
                   }
     , gen       = { starWeight = 102, starRate = 24.8, npAtk = 1.06, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 49.5
     , align     = [Lawful, Evil]
     , limited   = False
@@ -1090,7 +1105,8 @@ assassins =
                   }
     , gen       = { starWeight = 97, starRate = 25.5, npAtk = 0.48, npDef = 4 }
     , hits      = { quick = 3, arts = 3, buster = 1, ex = 6 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 44
     , align     = [Lawful, Evil]
     , limited   = False
@@ -1161,7 +1177,8 @@ assassins =
                   }
     , gen       = { starWeight = 102, starRate = 25.6, npAtk = 0.53, npDef = 4 }
     , hits      = { quick = 3, arts = 3, buster = 4, ex = 5 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 44
     , align     = [Lawful, Evil]
     , limited   = False
@@ -1228,7 +1245,8 @@ assassins =
                   }
     , gen       = { starWeight = 98, starRate = 25.2, npAtk = 0.71, npDef = 4 }
     , hits      = { quick = 2, arts = 3, buster = 2, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 49.5
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -1297,7 +1315,8 @@ assassins =
                   }
     , gen       = { starWeight = 98, starRate = 24.6, npAtk = 2.1, npDef = 4 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 55
     , align     = [Chaotic, Balanced]
     , limited   = False

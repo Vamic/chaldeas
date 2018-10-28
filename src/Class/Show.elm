@@ -72,23 +72,22 @@ stat {atk, hp} = "ATK: " ++ String.fromInt atk ++ ", HP: " ++ String.fromInt hp
 
 trait : Trait -> String
 trait a = case a of
-  AllyOfJustice -> "Ally of Justice"
   Arthur -> "Arthur"
   Beast  -> "Beast"
-  Brynhild -> "Brynhild's Beloved"
+  BrynhildsBeloved -> "Brynhild's Beloved"
   DemiServant -> "Demi-servant"
   Demon -> "Demon"
   Demonic -> "Demonic"
   Divine -> "Divine"
   Dragon -> "Dragon"
-  HeavenOrEarth -> "Heaven or Earth"
   Female -> "Female"
+  HeavenOrEarth -> "Heaven or Earth"
   GreekMythMale -> "Greek Mythology Male"
   Humanoid -> "Humanoid"
   Human -> "Human"
-  King -> "King"
   Male -> "Male"
   Nonbinary -> "Nonbinary"
+  King -> "King"
   PseudoServant -> "Pseudo-Servant"
   Riding -> "Riding"
   Roman -> "Roman"
@@ -303,7 +302,7 @@ instantEffect target amt a =
                        ++ (if amt /= Flat 1 then "s" else "") ++ " from below:"
       Avenge        -> "At the end of the next turn, deal " ++ n
                        ++ "% of damage taken during that turn" ++ to
-      BecomeHyde    -> "Transform into Hyde. Class: [Berserker]. Star Weight: 9. Star Rate: 5%. NP/Hit: 1.02%. NP/Defend: 5%. Alignment: Chaotic Evil. Lose [" ++ trait Brynhild ++ "] trait. Skills are more effective"
+      BecomeHyde    -> "Transform into Hyde. Class: [Berserker]. Star Weight: 9. Star Rate: 5%. NP/Hit: 1.02%. NP/Defend: 5%. Alignment: Chaotic Evil. Lose [" ++ trait BrynhildsBeloved ++ "] trait. Skills are more effective"
       Cooldowns     -> "Reduce" ++ p ++ " cooldowns by " ++ n
       Cure          -> "Remove" ++ p ++ " poison debuffs"
       Damage        -> "Deal " ++ n ++ "% damage" ++ to

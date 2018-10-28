@@ -54,7 +54,8 @@ extras =
                   }
     , gen       = { starWeight = 99, starRate = 10.1, npAtk = 0.76, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Female, EnumaElish, Saberface]
+    , gender    = Female
+    , traits    = [EnumaElish, Saberface]
     , death     = 21
     , align     = [Lawful, Good]
     , limited   = False
@@ -123,7 +124,8 @@ extras =
                   }
     , gen       = { starWeight = 100, starRate = 10, npAtk = 0.86, npDef = 3 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 7 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 21
     , align     = [Lawful, Good]
     , limited   = True
@@ -195,7 +197,8 @@ extras =
                   }
     , gen       = { starWeight = 29, starRate = 6, npAtk = 0.83, npDef = 5 }
     , hits      = { quick = 3, arts = 2, buster = 4, ex = 7 }
-    , traits    = [Female, EnumaElish, Saberface]
+    , gender    = Female
+    , traits    = [EnumaElish, Saberface]
     , death     = 5.7
     , align     = [Chaotic, Evil]
     , limited   = True
@@ -266,7 +269,8 @@ extras =
                   }
     , gen       = { starWeight = 30, starRate = 5.9, npAtk = 0.62, npDef = 6 }
     , hits      = { quick = 4, arts = 2, buster = 3, ex = 5 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 7
     , align     = [Chaotic, Evil]
     , limited   = True
@@ -336,7 +340,8 @@ extras =
                   }
     , gen       = { starWeight = 102, starRate = 10, npAtk = 0.76, npDef = 3 }
     , hits      = { quick = 4, arts = 3, buster = 1, ex = 5 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 21
     , align     = [Lawful, Good]
     , limited   = True
@@ -407,7 +412,8 @@ extras =
                   }
     , gen       = { starWeight = 99, starRate = 9.9, npAtk = 0.84, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Female, Riding, EnumaElish]
+    , gender    = Female
+    , traits    = [Riding, EnumaElish]
     , death     = 24.5
     , align     = [Lawful, Good]
     , limited   = False
@@ -480,7 +486,8 @@ extras =
                   }
     , gen       = { starWeight = 29, starRate = 6, npAtk = 0.79, npDef = 5 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 4 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 9
     , align     = [Chaotic, Evil]
     , limited   = False

@@ -61,7 +61,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 1.64, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish, Brynhild, PseudoServant]
+    , gender    = Male
+    , traits    = [EnumaElish, BrynhildsBeloved, PseudoServant]
     , death     = 34.5
     , align     = [Neutral, Good]
     , limited   = False
@@ -130,7 +131,8 @@ casters =
                   }
     , gen       = { starWeight = 49, starRate = 11, npAtk = 0.32, npDef = 3 }
     , hits      = { quick = 3, arts = 5, buster = 1, ex = 4 }
-    , traits    = [Female, Divine, EnumaElish]
+    , gender    = Female
+    , traits    = [Divine, EnumaElish]
     , death     = 36
     , align     = [Neutral, Evil]
     , limited   = False
@@ -200,7 +202,8 @@ casters =
                   }
     , gen       = { starWeight = 52, starRate = 11, npAtk = 0.82, npDef = 3 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 6 }
-    , traits    = [Female, Divine, EnumaElish]
+    , gender    = Female
+    , traits    = [Divine, EnumaElish]
     , death     = 34.5
     , align     = [Lawful, Good]
     , limited   = False
@@ -274,7 +277,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 0.54, npDef = 3 }
     , hits      = { quick = 4, arts = 3, buster = 1, ex = 4 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 34.5
     , align     = [Chaotic, Good]
     , limited   = True
@@ -345,7 +349,8 @@ casters =
                   }
     , gen       = { starWeight = 51, starRate = 10.7, npAtk = 0.32, npDef = 3 }
     , hits      = { quick = 3, arts = 5, buster = 1, ex = 5 }
-    , traits    = [Female, PseudoServant, EnumaElish]
+    , gender    = Female
+    , traits    = [PseudoServant, EnumaElish]
     , death     = 42
     , align     = [Neutral, Good]
     , limited   = True
@@ -376,26 +381,26 @@ casters =
                   , max   = { atk = 7766, hp = 13070 }
                   , grail = { atk = 9403, hp = 15847 }
                   }
-    , skills    = [ { name  = "Rapid Words of Divine"
-                  , rank   = A
-                  , icon    = IconNoble
-                  , cd      = 9
-                  , effect = [ To Self GaugeUp <| Range 80 150 ]
-                  }
-                  , { name    = "Poison Resistance"
-                  , rank   = APlusPlus
-                  , icon    = IconBubbles
-                  , cd      = 7
-                  , effect = [ To Party Cure Full
-                             , To Party Heal <| Range 2000 3000
-                             ]
-                  }
-                  , { name    = "Ephemeral Love"
-                  , rank   = B
-                  , icon    = IconHeal
-                  , cd      = 10
-                  , effect = [ Grant Ally 1 HealingReceived <| Range 50 100 ]
-                  }
+    , skills    = [ { name   = "Rapid Words of Divine"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 9
+                    , effect = [ To Self GaugeUp <| Range 80 150 ]
+                    }
+                  , { name   = "Poison Resistance"
+                    , rank   = APlusPlus
+                    , icon   = IconBubbles
+                    , cd     = 7
+                    , effect = [ To Party Cure Full
+                               , To Party Heal <| Range 2000 3000
+                               ]
+                    }
+                  , { name   = "Ephemeral Love"
+                    , rank   = B
+                    , icon   = IconHeal
+                    , cd     = 10
+                    , effect = [ Grant Ally 1 HealingReceived <| Range 50 100 ]
+                    }
                   ]
     , passives  = [territoryCreation B, itemConstruction B]
     , phantasm  = { name   = "Pain Breaker"
@@ -412,7 +417,8 @@ casters =
                   }
     , gen       = { starWeight = 51, starRate = 10.7, npAtk = 0.4, npDef = 3 }
     , hits      = { quick = 4, arts = 4, buster = 3, ex = 5 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 36
     , align     = [Lawful, Good]
     , limited   = False
@@ -481,7 +487,8 @@ casters =
                   }
     , gen       = { starWeight = 49, starRate = 10.8, npAtk = 1.6, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 4 }
-    , traits    = [Female, Dragon, EnumaElish]
+    , gender    = Female
+    , traits    = [Dragon, EnumaElish]
     , death     = 42
     , align     = [Chaotic, Evil]
     , limited   = True
@@ -550,7 +557,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 0.54, npDef = 3 }
     , hits      = { quick = 3, arts = 3, buster = 1, ex = 3 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 36
     , align     = [Neutral, Balanced]
     , limited   = False
@@ -621,7 +629,8 @@ casters =
                   }
     , gen       = { starWeight = 51, starRate = 10.7, npAtk = 0.45, npDef = 3 }
     , hits      = { quick = 6, arts = 3, buster = 1, ex = 3 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 36
     , align     = [Chaotic, Good]
     , limited   = False
@@ -688,7 +697,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 0.54, npDef = 3 }
     , hits      = { quick = 4, arts = 3, buster = 3, ex = 5 }
-    , traits    = [Female, Divine, King, EnumaElish]
+    , gender    = Female
+    , traits    = [Divine, King, EnumaElish]
     , death     = 36
     , align     = [Lawful, Good]
     , limited   = False
@@ -753,7 +763,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 0.42, npDef = 3 }
     , hits      = { quick = 3, arts = 3, buster = 3, ex = 4 }
-    , traits    = [Female, Divine, EnumaElish]
+    , gender    = Female
+    , traits    = [Divine, EnumaElish]
     , death     = 34.5
     , align     = [Chaotic, Good]
     , limited   = True
@@ -820,7 +831,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.9, npAtk = 0.32, npDef = 3 }
     , hits      = { quick = 3, arts = 5, buster = 1, ex = 4 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 36
     , align     = [Lawful, Good]
     , limited   = True
@@ -890,7 +902,8 @@ casters =
                   }
     , gen       = { starWeight = 51, starRate = 10.6, npAtk = 0.51, npDef = 3 }
     , hits      = { quick = 3, arts = 3, buster = 3, ex = 5 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 60
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -959,7 +972,8 @@ casters =
                   }
     , gen       = { starWeight = 48, starRate = 10.8, npAtk = 1.66, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 30
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -1026,7 +1040,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.9, npAtk = 1.64, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 34.5
     , align     = [Neutral, Evil]
     , limited   = False
@@ -1093,7 +1108,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 1.59, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 45
     , align     = [Neutral, Balanced]
     , limited   = False
@@ -1159,7 +1175,8 @@ casters =
                   }
     , gen       = { starWeight = 49, starRate = 11, npAtk = 1.6, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Male, Brynhild]
+    , gender    = Male
+    , traits    = [BrynhildsBeloved]
     , death     = 40.5
     , align     = [Neutral, Good]
     , limited   = False
@@ -1228,7 +1245,8 @@ casters =
                   }
     , gen       = { starWeight = 48, starRate = 10.8, npAtk = 0.91, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 36
     , align     = [Chaotic, Balanced]
     , limited   = False
@@ -1299,7 +1317,8 @@ casters =
                   }
     , gen       = { starWeight = 49, starRate = 10.9, npAtk = 1.6, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Male, Divine, Brynhild, EnumaElish]
+    , gender    = Male
+    , traits    = [Divine, BrynhildsBeloved, EnumaElish]
     , death     = 42
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -1366,7 +1385,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 11, npAtk = 0.81, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 36
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -1429,7 +1449,8 @@ casters =
                   }
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 0.55, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish, Brynhild]
+    , gender    = Male
+    , traits    = [EnumaElish, BrynhildsBeloved]
     , death     = 36
     , align     = [Chaotic, Good]
     , limited   = False
@@ -1496,7 +1517,8 @@ casters =
                   }
     , gen       = { starWeight = 49, starRate = 11, npAtk = 0.9, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 4 }
-    , traits    = [Male, EnumaElish, Brynhild]
+    , gender    = Male
+    , traits    = [EnumaElish, BrynhildsBeloved]
     , death     = 40.5
     , align     = [Neutral, Good]
     , limited   = False
@@ -1561,7 +1583,8 @@ casters =
                   }
     , gen       = { starWeight = 48, starRate = 10.8, npAtk = 1.58, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 48
     , align     = [Chaotic, Evil]
     , limited   = False

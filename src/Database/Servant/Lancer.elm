@@ -59,7 +59,8 @@ lancers =
                   }
     , gen       = { starWeight = 88, starRate = 12.2, npAtk = 0.71, npDef = 4 }
     , hits      = { quick = 2, arts = 3, buster = 6, ex = 7 }
-    , traits    = [Female, EnumaElish, King]
+    , gender    = Female
+    , traits    = [EnumaElish, King]
     , death     = 32
     , align     = [Neutral, Good]
     , limited   = True
@@ -129,7 +130,8 @@ lancers =
                   }
     , gen       = { starWeight = 88, starRate = 12.2, npAtk = 0.72, npDef = 4 }
     , hits      = { quick = 3, arts = 3, buster = 1, ex = 4 }
-    , traits    = [Male, Riding, Brynhild, Divine, EnumaElish]
+    , gender    = Male
+    , traits    = [Riding, BrynhildsBeloved, Divine, EnumaElish]
     , death     = 28
     , align     = [Lawful, Good]
     , limited   = False
@@ -205,7 +207,8 @@ lancers =
                   }
     , gen       = { starWeight = 91, starRate = 12.2, npAtk = 1.05, npDef = 4 }
     , hits      = { quick = 4, arts = 2, buster = 3, ex = 4 }
-    , traits    = [Female, Divine, Riding, EnumaElish]
+    , gender    = Female
+    , traits    = [Divine, Riding, EnumaElish]
     , death     = 40
     , align     = [Neutral, Summer]
     , limited   = True
@@ -273,12 +276,13 @@ lancers =
                   , effect = [ To Enemy Damage <| Range 600 1000
                              , Grant Party 3 StarUp <| Flat 30
                              ]
-                  , over   = [ To Enemy (SpecialDamage <| VsTrait Brynhild) <| Range 150 200 ]
+                  , over   = [ To Enemy (SpecialDamage <| VsTrait BrynhildsBeloved) <| Range 150 200 ]
                   , first  = False
                   }
     , gen       = { starWeight = 87, starRate = 12.2, npAtk = 1.07, npDef = 4 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 5 }
-    , traits    = [Female, Riding, Divine, EnumaElish]
+    , gender    = Female
+    , traits    = [Riding, Divine, EnumaElish]
     , death     = 32
     , align     = [Neutral, Good]
     , limited   = True
@@ -345,7 +349,8 @@ lancers =
                   }
     , gen       = { starWeight = 89, starRate = 12.2, npAtk = 1.1, npDef = 4 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 5 }
-    , traits    = [Female, Arthur, Dragon, King, Riding, Saberface, EnumaElish]
+    , gender    = Female
+    , traits    = [Arthur, Dragon, King, Riding, Saberface, EnumaElish]
     , death     = 24
     , align     = [Lawful, Good]
     , limited   = False
@@ -413,7 +418,8 @@ lancers =
                   }
     , gen       = { starWeight = 88, starRate = 11.8, npAtk = 0.74, npDef = 4 }
     , hits      = { quick = 2, arts = 3, buster = 1, ex = 4 }
-    , traits    = [Female, Riding, Dragon, Saberface, Arthur, EnumaElish, King]
+    , gender    = Female
+    , traits    = [Riding, Dragon, Saberface, Arthur, EnumaElish, King]
     , death     = 23
     , align     = [Lawful, Good]
     , limited   = False
@@ -484,7 +490,8 @@ lancers =
                   }
     , gen       = { starWeight = 87, starRate = 12.2, npAtk = 0.52, npDef = 4 }
     , hits      = { quick = 3, arts = 3, buster = 1, ex = 5 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 40
     , align     = [Neutral, Evil]
     , limited   = False
@@ -551,7 +558,8 @@ lancers =
                   }
     , gen       = { starWeight = 92, starRate = 12, npAtk = 1.05, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 6, ex = 5 }
-    , traits    = [Female, Dragon, EnumaElish]
+    , gender    = Female
+    , traits    = [Dragon, EnumaElish]
     , death     = 40
     , align     = [Chaotic, Evil]
     , limited   = True
@@ -622,7 +630,8 @@ lancers =
                   }
     , gen       = { starWeight = 88, starRate = 11.6, npAtk = 1.1, npDef = 4 }
     , hits      = { quick = 3, arts = 2, buster = 3, ex = 5 }
-    , traits    = [Male, King, AllyOfJustice]
+    , gender    = Male
+    , traits    = [King]
     , death     = 24
     , align     = [Lawful,Good]
     , limited   = False
@@ -685,7 +694,8 @@ lancers =
                   }
     , gen       = { starWeight = 90, starRate = 11.8, npAtk = 1.1, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Female, Dragon, EnumaElish]
+    , gender    = Female
+    , traits    = [Dragon, EnumaElish]
     , death     = 24
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -753,7 +763,8 @@ lancers =
                   }
     , gen       = { starWeight = 89, starRate = 12.3, npAtk = 0.55, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 4 }
-    , traits    = [Male, Divine, EnumaElish]
+    , gender    = Male
+    , traits    = [Divine, EnumaElish]
     , death     = 32
     , align     = [Neutral, Balanced]
     , limited   = False
@@ -822,7 +833,8 @@ lancers =
                   }
     , gen       = { starWeight = 87, starRate = 12.1, npAtk = 1.07, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, Divine, Brynhild, EnumaElish]
+    , gender    = Male
+    , traits    = [Divine, BrynhildsBeloved, EnumaElish]
     , death     = 32
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -891,7 +903,8 @@ lancers =
                   }
     , gen       = { starWeight = 88, starRate = 12.1, npAtk = 1.08, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, Divine, EnumaElish]
+    , gender    = Male
+    , traits    = [Divine, EnumaElish]
     , death     = 28
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -958,7 +971,8 @@ lancers =
                   }
     , gen       = { starWeight = 89, starRate = 11.8, npAtk = 1.07, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish, King]
+    , gender    = Male
+    , traits    = [EnumaElish, King]
     , death     = 32
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -1028,7 +1042,8 @@ lancers =
                   }
     , gen       = { starWeight = 90, starRate = 12.1, npAtk = 1.07, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, Roman, King]
+    , gender    = Male
+    , traits    = [Roman, King]
     , death     = 32
     , align     = [Chaotic, Balanced]
     , limited   = False
@@ -1095,7 +1110,8 @@ lancers =
                   }
     , gen       = { starWeight = 90, starRate = 12.2, npAtk = 1.08, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, Riding, EnumaElish, GreekMythMale]
+    , gender    = Male
+    , traits    = [Riding, EnumaElish, GreekMythMale]
     , death     = 28
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -1160,7 +1176,8 @@ lancers =
                   }
     , gen       = { starWeight = 89, starRate = 11.9, npAtk = 0.79, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish, Brynhild]
+    , gender    = Male
+    , traits    = [EnumaElish, BrynhildsBeloved]
     , death     = 36
     , align     = [Chaotic, Good]
     , limited   = False
@@ -1227,7 +1244,8 @@ lancers =
                   }
     , gen       = { starWeight = 87, starRate = 12.3, npAtk = 0.79, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 2, ex = 4 }
-    , traits    = [Male, EnumaElish, Brynhild]
+    , gender    = Male
+    , traits    = [EnumaElish, BrynhildsBeloved]
     , death     = 36
     , align     = [Lawful, Balanced]
     , limited   = False

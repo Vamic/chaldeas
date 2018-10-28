@@ -58,14 +58,14 @@ type alias Stat = { atk : Int, hp : Int }
 addStats : Stat -> Stat -> Stat
 addStats x y = { atk = x.atk + y.atk, hp = x.hp + y.hp }
 
-{-| Traits are miscellaneous flags attached to Servants. Since many traits are
-unlabeled, it can be difficult to figure out which are JP-only and which
-translations are accurate to EN. -}
+{-| Traits are miscellaneous flags attached to Servants. -}
+-- Note:  Since many traits are unlabeled, 
+-- it can be difficult to figure out which are JP-only and which
+-- translations are accurate to EN. 
 type Trait
-    = AllyOfJustice
-    | Arthur
+    = Arthur
     | Beast
-    | Brynhild
+    | BrynhildsBeloved
     | DemiServant
     | Demon
     | Demonic
@@ -88,10 +88,9 @@ type Trait
 
 enumTrait : List Trait
 enumTrait = 
-    [ AllyOfJustice
-    , Arthur
+    [ Arthur
     , Beast
-    , Brynhild
+    , BrynhildsBeloved
     , DemiServant
     , Demon
     , Demonic

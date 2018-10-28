@@ -37,6 +37,7 @@ type alias Servant =
     , phantasm : NoblePhantasm
     , gen      : Gen
     , hits     : Hits
+    , gender   : Trait
     , traits   : List Trait
     , death    : Float
     , align    : List Alignment

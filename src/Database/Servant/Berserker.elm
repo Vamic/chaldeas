@@ -56,7 +56,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 5.1, npAtk = 0.69, npDef = 5 }
     , hits      = { quick = 4, arts = 3, buster = 3, ex = 5 }
-    , traits    = [Male, Divine, Brynhild, EnumaElish]
+    , gender    = Male
+    , traits    = [Divine, BrynhildsBeloved, EnumaElish]
     , death     = 52
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -123,7 +124,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 0.46, npDef = 5 }
     , hits      = { quick = 3, arts = 4, buster = 1, ex = 5 }
-    , traits    = [Female, Divine, Riding, EnumaElish]
+    , gender    = Female
+    , traits    = [Divine, Riding, EnumaElish]
     , death     = 39
     , align     = [Chaotic, Good]
     , limited   = True
@@ -188,7 +190,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 5, npAtk = 1.03, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, Divine, Brynhild, EnumaElish]
+    , gender    = Male
+    , traits    = [Divine, BrynhildsBeloved, EnumaElish]
     , death     = 52
     , align     = [Lawful, Good]
     , limited   = True
@@ -253,7 +256,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 0.5, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish, Brynhild, King]
+    , gender    = Male
+    , traits    = [EnumaElish, BrynhildsBeloved, King]
     , death     = 45.5
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -320,7 +324,8 @@ berserkers =
                   }
     , gen       = { starWeight = 10, starRate = 5, npAtk = 0.77, npDef = 5 }
     , hits      = { quick = 6, arts = 2, buster = 1, ex = 5 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 56.8
     , align     = [Lawful, Good]
     , limited   = False
@@ -387,7 +392,8 @@ berserkers =
                   }
     , gen       = { starWeight = 10, starRate = 5, npAtk = 1.07, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, Divine, EnumaElish, GreekMythMale]
+    , gender    = Male
+    , traits    = [Divine, EnumaElish, GreekMythMale]
     , death     = 39
     , align     = [Chaotic, Mad]
     , limited   = False
@@ -456,7 +462,8 @@ berserkers =
                   }
     , gen       = { starWeight = 10, starRate = 4.9, npAtk = 0.83, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Female, EnumaElish]
+    , gender    = Female
+    , traits    = [EnumaElish]
     , death     = 58.5
     , align     = [Chaotic, Balanced]
     , limited   = False
@@ -527,7 +534,8 @@ berserkers =
                   }
     , gen       = { starWeight = 10, starRate = 4.9, npAtk = 1.03, npDef = 5 }
     , hits      = { quick = 4, arts = 2, buster = 1, ex = 5 }
-    , traits    = [Female, Demonic, EnumaElish]
+    , gender    = Female
+    , traits    = [Demonic, EnumaElish]
     , death     = 52
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -593,7 +601,8 @@ berserkers =
                   }
     , gen       = { starWeight = 10, starRate = 5, npAtk = 0.5, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 52
     , align     = [Lawful, Mad]
     , limited   = False
@@ -660,7 +669,8 @@ berserkers =
                   }
     , gen       = { starWeight = 10, starRate = 4.9, npAtk = 0.68, npDef = 5 }
     , hits      = { quick = 3, arts = 3, buster = 1, ex = 4 }
-    , traits    = [Male, EnumaElish, Brynhild, King]
+    , gender    = Male
+    , traits    = [EnumaElish, BrynhildsBeloved, King]
     , death     = 58.5
     , align     = [Chaotic, Good]
     , limited   = False
@@ -725,7 +735,8 @@ berserkers =
                   }
     , gen       = { starWeight = 10, starRate = 5, npAtk = 0.71, npDef = 5 }
     , hits      = { quick = 2, arts = 3, buster = 2, ex = 3 }
-    , traits    = [Female, Beast, EnumaElish]
+    , gender    = Female
+    , traits    = [Beast, EnumaElish]
     , death     = 39
     , align     = [Chaotic, Good]
     , limited   = False
@@ -756,31 +767,31 @@ berserkers =
                   , max   = { atk = 8119,  hp = 8302 }
                   , grail = { atk = 10988, hp = 11256 }
                   }
-    , skills    = [ { name  = "Valor"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 AttackUp <| Range 9 27
-                             , Grant Self 3 MentalResist <| Range 18 36
-                             ]
-                  }
-                  , { name    = "Defiant"
-                  , rank   = B
-                  , icon    = IconSwordUp
-                  , cd      = 7
-                  , effect = [ Grant Self 3 DefenseUp <| Range 15 25
-                             , Debuff Self 3 BuffFail <| Flat 50
-                             ]
-                  }
-                  , { name    = "Chaotic Villain"
-                  , rank   = A
-                  , icon    = IconBeamUp
-                  , cd      = 8
-                  , effect = [ Grant Self 1 NPUp <| Range 20 30
-                             , Grant Self 1 StarAbsorb <| Flat 3000
-                             , Debuff Others 1 DefenseDown <| Flat 20
-                             ]
-                  }
+    , skills    = [ { name   = "Valor"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 AttackUp <| Range 9 27
+                               , Grant Self 3 MentalResist <| Range 18 36
+                               ]
+                    }
+                  , { name   = "Defiant"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DefenseUp <| Range 15 25
+                               , Debuff Self 3 BuffFail <| Flat 50
+                               ]
+                    }
+                  , { name   = "Chaotic Villain"
+                    , rank   = A
+                    , icon   = IconBeamUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 NPUp <| Range 20 30
+                               , Grant Self 1 StarAbsorb <| Flat 3000
+                               , Debuff Others 1 DefenseDown <| Flat 20
+                               ]
+                    }
                   ]
     , passives  = [madness A]
     , phantasm  = { name   = "God Force"
@@ -795,7 +806,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 5, npAtk = 1.04, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 50.3
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -862,7 +874,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 1.01, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, Roman, EnumaElish]
+    , gender    = Male
+    , traits    = [Roman, EnumaElish]
     , death     = 65
     , align     = [Neutral, Balanced]
     , limited   = False
@@ -932,7 +945,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 0.68, npDef = 5 }
     , hits      = { quick = 2, arts = 3, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish, GreekMythMale]
+    , gender    = Male
+    , traits    = [EnumaElish, GreekMythMale]
     , death     = 58.5
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -1001,7 +1015,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 2.03, npDef = 5 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
-    , traits    = [Female, Dragon, EnumaElish]
+    , gender    = Female
+    , traits    = [Dragon, EnumaElish]
     , death     = 65
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -1070,7 +1085,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 1.02, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
-    , traits    = [Male, EnumaElish]
+    , gender    = Male
+    , traits    = [EnumaElish]
     , death     = 58.5
     , align     = [Chaotic, Balanced]
     , limited   = False
@@ -1137,6 +1153,7 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 5, npAtk = 0.67, npDef = 5 }
     , hits      = { quick = 2, arts = 3, buster = 1, ex = 3 }
+    , gender    = Male
     , traits    = [Male, EnumaElish, King]
     , death     = 65
     , align     = [Lawful, Balanced]
@@ -1207,7 +1224,8 @@ berserkers =
                   }
     , gen       = { starWeight = 9, starRate = 5, npAtk = 0.68, npDef = 5 }
     , hits      = { quick = 2, arts = 3, buster = 1, ex = 3 }
-    , traits    = [Male, Roman, EnumaElish, King]
+    , gender    = Male
+    , traits    = [Roman, EnumaElish, King]
     , death     = 56.8
     , align     = [Chaotic, Evil]
     , limited   = False

@@ -2,7 +2,7 @@ module Site.Filtering exposing
   ( ScheduledFilter, getScheduled
   , updateListing
   , collectFilters
-  , matchFilter, namedBonus, skillFilter
+  , matchFilter, nameFilter, skillFilter
   )
 
 {-| Sidebars for filtering displayed Servants/Craft Essences. -}
@@ -12,6 +12,7 @@ import Date exposing (Date)
 import Time
 
 import StandardLibrary     exposing (..)
+import Database            exposing (..)
 import Database.Skill      exposing (..)
 import Persist.Preferences exposing (..)
 import Site.Algebra        exposing (..)
@@ -80,11 +81,18 @@ matchFilter toImage {show, has} tab x =
     }
 
 {-| Creates a `Filter` that matches a supplied list of `.name`s. -}
-namedBonus : FilterTab -> String -> List String -> Filter { a | name : String }
-namedBonus tab name names =
+nameFilter : FilterTab -> String -> List String -> Filter { a | name : String }
+nameFilter tab name names =
+  let
+    allNames = List.map .name servants
+    missing  = List.filter (not << flip List.member allNames) names
+    warn     = 
+        doIf (not <| List.isEmpty missing) << flip (++) <| 
+        " INVALID: " ++ String.join ", " missing
+  in
     { icon  = Nothing 
     , tab   = tab
-    , name  = name
+    , name  = warn name
     , match = always <| .name >> flip List.member names
     }
 

@@ -53,7 +53,7 @@ archers =
     , gen       = { starWeight = 153, starRate = 7.9, npAtk = 0.34, npDef = 3 }
     , hits      = { quick = 5, arts = 5, buster = 5, ex = 8 }
     , gender    = Male
-    , traits    = [Divine, EnumaElish, King]
+    , traits    = [Divine, EnumaElish, Royalty]
     , death     = 31.5
     , align     = [Chaotic, Good]
     , limited   = True
@@ -125,7 +125,7 @@ archers =
     , gen       = { starWeight = 153, starRate = 8, npAtk = 0.59, npDef = 3 }
     , hits      = { quick = 4, arts = 3, buster = 3, ex = 5 }
     , gender    = Female
-    , traits    = [EnumaElish, Arthur, Dragon, King, Saberface]
+    , traits    = [EnumaElish, Arthur, Dragon, Royalty, Saberface]
     , death     = 25.8
     , align     = [Lawful, Good]
     , limited   = True
@@ -477,7 +477,7 @@ archers =
     , gen       = { starWeight = 150, starRate = 7.9, npAtk = 0.43, npDef = 3 }
     , hits      = { quick = 2, arts = 4, buster = 4, ex = 5 }
     , gender    = Female
-    , traits    = [EnumaElish, King]
+    , traits    = [EnumaElish]
     , death     = 31.5
     , align     = [Lawful, Balanced]
     , limited   = True
@@ -1033,7 +1033,7 @@ archers =
     , gen       = { starWeight = 153, starRate = 8, npAtk = 0.76, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [EnumaElish, King]
+    , traits    = [EnumaElish, Royalty]
     , death     = 36
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -1100,7 +1100,7 @@ archers =
     , gen       = { starWeight = 153, starRate = 7.9, npAtk = 0.62, npDef = 3 }
     , hits      = { quick = 3, arts = 3, buster = 3, ex = 3 }
     , gender    = Male
-    , traits    = [Divine, EnumaElish, King]
+    , traits    = [Divine, EnumaElish, Royalty]
     , death     = 36
     , align     = [Chaotic, Good]
     , limited   = False

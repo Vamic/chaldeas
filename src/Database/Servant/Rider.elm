@@ -58,7 +58,7 @@ riders =
     , gen       = { starWeight = 205, starRate = 9, npAtk = 0.59, npDef = 3 }
     , hits      = { quick = 5, arts = 3, buster = 1, ex = 5 }
     , gender    = Male
-    , traits    = [BrynhildsBeloved, Divine, Riding, EnumaElish, King]
+    , traits    = [BrynhildsBeloved, Divine, Riding, EnumaElish, Royalty]
     , death     = 30
     , align     = [Chaotic, Balanced]
     , limited   = False
@@ -193,7 +193,7 @@ riders =
     , gen       = { starWeight = 205, starRate = 8.8, npAtk = 0.66, npDef = 3 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 6 }
     , gender    = Male
-    , traits    = [BrynhildsBeloved, Divine, GreekMythMale, King, Riding, EnumaElish]
+    , traits    = [BrynhildsBeloved, Divine, GreekMythMale, Royalty, Riding, EnumaElish]
     , death     = 40
     , align     = [Neutral, Good]
     , limited   = True
@@ -262,7 +262,7 @@ riders =
     , gen       = { starWeight = 208, starRate = 9, npAtk = 0.86, npDef = 3 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 7 }
     , gender    = Female
-    , traits    = [Riding, EnumaElish, King]
+    , traits    = [Riding, EnumaElish, Royalty]
     , death     = 40
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -392,7 +392,7 @@ riders =
     , gen       = { starWeight = 204, starRate = 8.9, npAtk = 0.87, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Female
-    , traits    = [Arthur, Dragon, Riding, Saberface, EnumaElish, King]
+    , traits    = [Arthur, Dragon, Riding, Saberface, EnumaElish, Royalty]
     , death     = 35
     , align     = [Lawful, Good]
     , limited   = True
@@ -596,7 +596,7 @@ riders =
     , gen       = { starWeight = 201, starRate = 9, npAtk = 1, npDef = 3 }
     , hits      = { quick = 2, arts = 1, buster = 1, ex = 3 }
     , gender    = Female
-    , traits    = [Riding, EnumaElish]
+    , traits    = [Riding, EnumaElish, Royalty]
     , death     = 35
     , align     = [Lawful, Good]
     , limited   = False
@@ -1072,7 +1072,7 @@ riders =
     , gen       = { starWeight = 205, starRate = 9, npAtk = 0.86, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [Riding, Divine, EnumaElish, GreekMythMale, King]
+    , traits    = [Riding, Divine, EnumaElish, GreekMythMale, Royalty]
     , death     = 40
     , align     = [Neutral, Good]
     , limited   = False
@@ -1136,7 +1136,7 @@ riders =
     , gen       = { starWeight = 196, starRate = 8.9, npAtk = 0.85, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Female
-    , traits    = [Riding, EnumaElish, King]
+    , traits    = [Riding, EnumaElish, Royalty]
     , death     = 45
     , align     = [Neutral, Good]
     , limited   = False

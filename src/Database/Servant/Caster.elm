@@ -698,7 +698,7 @@ casters =
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 0.54, npDef = 3 }
     , hits      = { quick = 4, arts = 3, buster = 3, ex = 5 }
     , gender    = Female
-    , traits    = [Divine, King, EnumaElish]
+    , traits    = [Divine, Royalty, EnumaElish]
     , death     = 36
     , align     = [Lawful, Good]
     , limited   = False
@@ -832,7 +832,7 @@ casters =
     , gen       = { starWeight = 50, starRate = 10.9, npAtk = 0.32, npDef = 3 }
     , hits      = { quick = 3, arts = 5, buster = 1, ex = 4 }
     , gender    = Female
-    , traits    = [EnumaElish]
+    , traits    = [EnumaElish, Royalty]
     , death     = 36
     , align     = [Lawful, Good]
     , limited   = True

@@ -76,12 +76,12 @@ type Trait
     | GreekMythMale
     | Humanoid
     | Human
-    | King
     | Male
     | Nonbinary
     | PseudoServant
     | Riding
     | Roman
+    | Royalty
     | Saberface
     | Undead
     | EnumaElish
@@ -101,11 +101,11 @@ enumTrait =
     , GreekMythMale
     , Humanoid
     , Human
-    , King
     , Male
     , Nonbinary
     , PseudoServant
     , Riding
+    , Royalty
     , Roman
     , Saberface
     , Undead

@@ -65,7 +65,7 @@ scheduledFilters =
     \_ s -> s.gender /= Female
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     Filter Nothing FilterAvailability "Challenge: Not Royalty" <|
-    \_ s -> not <| List.member King s.traits
+    \_ s -> not <| List.member Royalty s.traits
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     nameFilter FilterAvailability "Challenge: Western"
     [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)" 

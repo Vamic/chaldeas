@@ -64,7 +64,7 @@ scheduledFilters =
     Filter Nothing FilterAvailability "Challenge: Male or Nonbinary" <|
     \_ s -> s.gender /= Female
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    Filter Nothing FilterAvailability "Challenge: Not King" <|
+    Filter Nothing FilterAvailability "Challenge: Not King or Queen" <|
     \_ s -> not <| List.member King s.traits
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     nameFilter FilterAvailability "Challenge: Western"

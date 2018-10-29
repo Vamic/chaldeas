@@ -134,7 +134,7 @@ scheduledFilters =
     , "Edmond Dantes"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: 165 cm"
+    nameFilter FilterAvailability "Challenge: 165 cm or under"
     [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)" 
     , "Nero Claudius", "Altera", "Chevalier d'Eon", "Okita Souji", "Mordred"
     , "Nero Claudius (Bride)", "Ryougi Shiki (Saber)"

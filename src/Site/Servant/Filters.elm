@@ -58,16 +58,16 @@ scheduledFilters =
     nameFilter FilterAvailability "Rate-Up"
     [ "Cleopatra", "Vlad III (EXTRA)" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    Filter Nothing FilterAvailability "Challenge: Female or Nonbinary" <|
+    Filter Nothing FilterEventBonus "Female or Nonbinary" <|
     \_ s -> s.gender /= Male
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    Filter Nothing FilterAvailability "Challenge: Male or Nonbinary" <|
+    Filter Nothing FilterEventBonus "Male or Nonbinary" <|
     \_ s -> s.gender /= Female
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    Filter Nothing FilterAvailability "Challenge: Not King" <|
+    Filter Nothing FilterEventBonus "Not King" <|
     \_ s -> not <| List.member King s.traits
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: Westerner"
+    nameFilter FilterEventBonus "Westerner"
     [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)" 
     , "Nero Claudius", "Siegfried", "Gaius Julius Caesar", "Gilles de Rais"
     , "Chevalier d'Eon", "Fergus mac Roich", "Mordred", "Nero Claudius (Bride)"
@@ -108,7 +108,7 @@ scheduledFilters =
     , "Mash Kyrielight"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: Da Vinci's Selection"
+    nameFilter FilterEventBonus "Da Vinci's Selection"
     [ "Siegfried", "Gaius Julius Caesar", "Gilles de Rais", "Chevalier d'Eon"
     , "Fergus mac Roich", "Rama", "Lancelot (Saber)", "Gawain", "Bedivere"
 
@@ -134,7 +134,7 @@ scheduledFilters =
     , "Edmond Dantes"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: 165 cm or under"
+    nameFilter FilterEventBonus "165 cm or under"
     [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)" 
     , "Nero Claudius", "Altera", "Chevalier d'Eon", "Okita Souji", "Mordred"
     , "Nero Claudius (Bride)", "Ryougi Shiki (Saber)"
@@ -166,7 +166,7 @@ scheduledFilters =
     , "Mash Kyrielight"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: Newcomer"
+    nameFilter FilterEventBonus "Newcomer"
     [ "Gaius Julius Caesar", "Altera", "Gilles de Rais", "Chevalier d'Eon"
     , "Okita Souji", "Fergus mac Roich", "Ryougi Shiki (Saber)", "Rama"
     , "Lancelot (Saber)", "Bedivere", "Elisabeth Bathory (Brave)"
@@ -203,7 +203,7 @@ scheduledFilters =
     , "Mash Kyrielight"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: Ally of Justice"
+    nameFilter FilterEventBonus "Ally of Justice"
     [ "Altria Pendragon", "Altria Pendragon (Lily)", "Mordred", "Siegfried"
     , "Altera", "Gilles de Rais", "Rama", "Lancelot (Saber)", "Gawain"
     , "Bedivere", "Elisabeth Bathory (Brave)"

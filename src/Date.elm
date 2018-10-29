@@ -5,8 +5,8 @@ import Time
 
 import StandardLibrary exposing (..)
 
-type alias Date = 
-    { year  : Int 
+type alias Date =
+    { year  : Int
     , month : Time.Month
     , day   : Int
     }
@@ -29,16 +29,16 @@ ordMonth a = case a of
 compare : Date -> Date -> Order
 compare =
     compareThen .year <<
-    compareThen (.month >> ordMonth) <<
-    compareThen .day <<
-    always <| always EQ
+    compareThen (.month >> ordMonth) <|
+    compareThen .day
+    alwaysEq
 
 here : Time.Zone
-here = Time.customZone (-4 * 60) [] 
+here = Time.customZone (-4 * 60) []
 
 today : Time.Posix -> Date
 today now =
-  let 
+  let
     get f = f here now
-  in 
+  in
     Date (get Time.toYear) (get Time.toMonth) (get Time.toDay)

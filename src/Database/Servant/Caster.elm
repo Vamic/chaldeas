@@ -6,7 +6,7 @@ import Database.Servant exposing (..)
 import Database.Skill exposing (..)
 
 casters : List Servant
-casters = 
+casters =
   [ { name  =   "Zhuge Liang (Lord El-Melloi II)"
     , id        = 37
     , rarity    = 5
@@ -531,7 +531,7 @@ casters =
                                , Grant Self 1 DefenseUp <| Flat 30
                               , Grant Self 3 DebuffResist <| Range 20 40
                                ]
-                    } 
+                    }
                   , { name   = "Meanwhile"
                     , rank   = A
                     , icon   = IconNoble

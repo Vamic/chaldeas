@@ -1,6 +1,6 @@
 module StandardLibrary exposing
   ( Value
-  , compareThen
+  , compareThen, alwaysEq
   , consAfter
   , curry
   , doIf
@@ -28,6 +28,9 @@ compareThen first next x y = case on compare first x y of
   EQ    -> next x y
   order -> order
 
+alwaysEq : a -> a -> Order
+alwaysEq = always <| always EQ
+
 {-| Appends an element to the end of a list.
 Useful combined with `doIf` to conditionally append an HTML element. -}
 consAfter : a -> List a -> List a
@@ -38,7 +41,7 @@ into one that accepts two arguments. -}
 curry : ((a, b) -> c) -> a -> b -> c
 curry f x y = f (x, y)
 
-{-| Conditionally performs a transformation. 
+{-| Conditionally performs a transformation.
 
     doIf True  f x = f x
     doIf False f x = x
@@ -84,16 +87,16 @@ removeWith eq x xs = case xs of
 
 {-| Removes a string from the beginning of another string. -}
 stripPrefix : String -> String -> String
-stripPrefix pattern s = 
+stripPrefix pattern s =
     if String.startsWith pattern s then
       String.dropLeft (String.length pattern) s
-    else 
+    else
       s
 
 {-| Removes a string from the end of another string. -}
 stripSuffix : String -> String -> String
-stripSuffix pattern s = 
+stripSuffix pattern s =
     if String.endsWith pattern s then
       String.dropRight (String.length pattern) s
-    else 
+    else
       s

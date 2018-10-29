@@ -1,4 +1,4 @@
-module Sorting exposing 
+module Sorting exposing
   ( SortBy(..), enumSortBy, OrdSortBy, ordSortBy
   , formatSort
   )
@@ -24,8 +24,8 @@ type SortBy
     | NPSpecOver
 
 enumSortBy : List SortBy
-enumSortBy = 
-    [ Rarity 
+enumSortBy =
+    [ Rarity
     , ID
     , ATK
     , HP

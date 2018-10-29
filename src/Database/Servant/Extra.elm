@@ -6,7 +6,7 @@ import Database.Servant exposing (..)
 import Database.Skill exposing (..)
 
 extras : List Servant
-extras = 
+extras =
   [ { name  =   "Jeanne d'Arc"
     , id        = 59
     , rarity    = 5
@@ -479,7 +479,7 @@ extras =
                   , kind   = "Anti-Unit"
                   , hits   = 1
                   , effect = [ Debuff Self 0 Stun Full
-                             , To Enemy Avenge <| Range 200 300 
+                             , To Enemy Avenge <| Range 200 300
                              ]
                   , over   = [ To Self Heal <| Range 1000 5000 ]
                   , first  = False

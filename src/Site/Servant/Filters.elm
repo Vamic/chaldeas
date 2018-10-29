@@ -1,4 +1,4 @@
-module Site.Servant.Filters exposing 
+module Site.Servant.Filters exposing
   ( getFilters
   , singleFilter
   )
@@ -49,7 +49,7 @@ scheduledFilters =
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     nameFilter FilterEventBonus "+50% ATK"
     [ "Cleopatra", "Vlad III (EXTRA)", "Nitocris", "Ibaraki-Douji"
-    , "Robin Hood" 
+    , "Robin Hood"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     nameFilter FilterAvailability "Limited to Event"
@@ -68,7 +68,7 @@ scheduledFilters =
     \_ s -> not <| List.member King s.traits
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     nameFilter FilterEventBonus "Westerner"
-    [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)" 
+    [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)"
     , "Nero Claudius", "Siegfried", "Gaius Julius Caesar", "Gilles de Rais"
     , "Chevalier d'Eon", "Fergus mac Roich", "Mordred", "Nero Claudius (Bride)"
     , "Lancelot (Saber)", "Gawain", "Bedivere", "Elisabeth Bathory (Brave)"
@@ -102,7 +102,7 @@ scheduledFilters =
     , "Heracles", "Lancelot", "Spartacus", "Vlad III", "Asterios", "Caligula"
     , "Eric Bloodaxe", "Frankenstein", "Beowulf", "Florence Nightingale"
     , "Cu Chulainn (Alter)"
-    
+
     , "Jeanne d'Arc", "Martha (Ruler)"
     , "Edmond Dantes", "Jeanne d'Arc (Alter)"
     , "Mash Kyrielight"
@@ -135,7 +135,7 @@ scheduledFilters =
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
     nameFilter FilterEventBonus "165 cm or under"
-    [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)" 
+    [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)"
     , "Nero Claudius", "Altera", "Chevalier d'Eon", "Okita Souji", "Mordred"
     , "Nero Claudius (Bride)", "Ryougi Shiki (Saber)"
     , "Elisabeth Bathory (Brave)"
@@ -170,15 +170,15 @@ scheduledFilters =
     [ "Gaius Julius Caesar", "Altera", "Gilles de Rais", "Chevalier d'Eon"
     , "Okita Souji", "Fergus mac Roich", "Ryougi Shiki (Saber)", "Rama"
     , "Lancelot (Saber)", "Bedivere", "Elisabeth Bathory (Brave)"
-    
+
     , "Orion", "David", "Oda Nobunaga", "Nikola Tesla", "Arjuna"
     , "Billy the Kid", "Tristan", "Tawara Touta", "Altria Pendragon (Archer)"
     , "Anne Bonny & Mary Read (Archer)", "Chloe von Einzbern"
-    
+
     , "Musashibou Benkei", "Leonidas I", "Romulus", "Hektor", "Scathach"
     , "Altria Pendragon (Lancer Alter)", "Fionn mac Cumhaill"
     , "Altria Pendragon (Lancer)", "Tamamo-no-Mae (Lancer)", "Kiyohime (Lancer)"
-    
+
     , "Georgios", "Edward Teach", "Boudica", "Ushiwakamaru", "Alexander"
     , "Marie Antoinette", "Martha", "Anne Bonny & Mary Read"
     , "Altria Pendragon (Santa Alter)", "Queen Medb", "Sakata Kintoki (Rider)"
@@ -214,7 +214,7 @@ scheduledFilters =
 
     , "Musashibou Benkei", "Scathach", "Altria Pendragon (Lancer Alter)"
     , "Karna", "Brynhild", "Altria Pendragon (Lancer)", "Vlad III (EXTRA)"
-    
+
     , "Medusa", "Georgios", "Boudica", "Alexander", "Marie Antoinette"
     , "Martha", "Altria Pendragon (Santa Alter)", "Astolfo", "Iskandar"
     , "Sakata Kintoki (Rider)", "Mordred (Rider)"
@@ -237,25 +237,25 @@ scheduledFilters =
   ]
 
 singleFilter : Has Servant a -> FilterTab -> a -> List (Filter Servant)
-singleFilter has tab x = 
+singleFilter has tab x =
   if exclusive tab then
     getAll has |> List.remove x >> List.map (matchFilter Nothing has tab)
   else
     [matchFilter Nothing has tab x]
 
 getExtraFilters : Date -> FilterTab -> List (Filter Servant)
-getExtraFilters today tab = 
+getExtraFilters today tab =
     getScheduled scheduledFilters today ++ extraFilters
     |> List.filter (.tab >> (==) tab)
 
 getFilters : Date -> FilterTab -> List (Filter Servant)
-getFilters today tab = 
+getFilters today tab =
   let
-    allEffects has toImage pred = 
+    allEffects has toImage pred =
         getAll (has Has.servant)
         |> List.filter pred
         >> List.map (matchFilter toImage (has Has.servant) tab)
-    all has toImage = 
+    all has toImage =
         getAll has
         |> List.map (matchFilter toImage has tab)
   in case tab of
@@ -269,12 +269,12 @@ getFilters today tab =
     FilterPassiveSkill -> all Has.passive << Just <| ToImage.icon << .icon
     FilterMaterial     -> all Has.material <| Just ToImage.material
 
-    FilterDebuff -> allEffects Has.debuffEffect (Just ToImage.debuffEffect) <| 
+    FilterDebuff -> allEffects Has.debuffEffect (Just ToImage.debuffEffect) <|
                     always True
     FilterBuff c -> allEffects Has.buffEffect (Just ToImage.buffEffect) <|
                     buffCategory >> (==) c
     FilterAction -> allEffects Has.instantEffect Nothing <|
-                    not << isDamage 
+                    not << isDamage
     FilterDamage -> allEffects Has.instantEffect Nothing <|
                     isDamage
     _            -> getExtraFilters today tab

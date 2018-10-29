@@ -1,4 +1,4 @@
-module Persist.Flags exposing 
+module Persist.Flags exposing
   ( Flags, decodeFlags
   , storePreferences, storeTeam
   )
@@ -28,18 +28,18 @@ type alias Flags =
     }
 
 decodeFlags : D.Decoder Flags
-decodeFlags = 
+decodeFlags =
     D.map3 Flags
     (D.field "today" decodeDate)
     (D.field "preferences" decodePreferences)
     (D.field "team" decodeTeam)
 
 decodeDate : D.Decoder Date
-decodeDate = 
+decodeDate =
     D.int |> D.andThen (Time.millisToPosix >> Date.today >> D.succeed)
 
 encodePreferences : Preferences -> Value
-encodePreferences = 
+encodePreferences =
   let
     encodePref x = List.find (ordPreference >> (==) x) enumPreference
   in
@@ -50,14 +50,14 @@ encodePreferences =
     >> E.list E.string
 
 decodePreferences : D.Decoder Preferences
-decodePreferences = 
+decodePreferences =
   let
     fromList : Maybe (List String) -> D.Decoder Preferences
     fromList a = D.succeed <| case a of
       Nothing    -> noPreferences
-      Just prefs -> 
+      Just prefs ->
         let
-          acc pref = 
+          acc pref =
               setPreference pref <| List.member (Show.preference pref) prefs
         in
           List.foldr acc Set.empty enumPreference
@@ -67,9 +67,9 @@ decodePreferences =
     >> D.andThen fromList
 
 encodeStat : Stat -> Value
-encodeStat stat = 
+encodeStat stat =
     E.object
-    [ ("atk", E.int stat.atk) 
+    [ ("atk", E.int stat.atk)
     , ("hp",  E.int stat.hp)
     ]
 
@@ -83,20 +83,20 @@ encodeServant : Servant -> Value
 encodeServant = .name >> E.string
 
 decodeServant : D.Decoder Servant
-decodeServant = 
+decodeServant =
   let
-    fromName name = 
+    fromName name =
         case List.find (.name >> (==) name) servants of
           Nothing -> D.fail <| "Unknown Servant " ++ name
           Just s  -> D.succeed s
-  in 
+  in
     D.string
     |> D.andThen fromName
 
 encodeMyServant : MyServant -> Value
-encodeMyServant ms = 
+encodeMyServant ms =
     E.object
-    [ ("level",   E.int ms.level) 
+    [ ("level",   E.int ms.level)
     , ("fou",     encodeStat ms.fou)
     , ("skills",  E.list E.int ms.skills)
     , ("npLvl",   E.int ms.npLvl)
@@ -123,7 +123,7 @@ encodeTeam =
     >> E.list encodeMyServant
 
 decodeTeam : D.Decoder (Dict OrdServant MyServant)
-decodeTeam = 
+decodeTeam =
   let
     keyPair ms = (ordServant ms.base, recalc ms)
   in

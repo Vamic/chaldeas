@@ -34,13 +34,13 @@ type Msg
     | ServantsMsg      Servants.Msg
 
 
-{-| If loaded with a url for a particular Servant or Craft Essence, 
+{-| If loaded with a url for a particular Servant or Craft Essence,
 the corresponding Servant/CE is displayed. -}
 focusFromPath : String -> (b -> String) -> SiteModel a b c -> SiteModel a b c
 focusFromPath path show st =
   let
     snd   = Tuple.second
-    match = 
+    match =
         show
         >> urlName
         >> (==) path
@@ -51,7 +51,7 @@ focusFromPath path show st =
 stateFromPath : String -> Model -> (Model, String)
 stateFromPath fullPath st =
   let
-    path = 
+    path =
         String.split "/" fullPath
         |> List.reverse
         >> List.head
@@ -62,14 +62,14 @@ stateFromPath fullPath st =
             ceModel = focusFromPath path .name st.ceModel
           in
             ( { st
-              | viewing = CraftEssences 
+              | viewing = CraftEssences
               , ceModel = ceModel
               }
-            , Maybe.withDefault "Craft Essences" <| 
+            , Maybe.withDefault "Craft Essences" <|
               Maybe.map .name ceModel.focus
             )
-        else 
-          let 
+        else
+          let
             sModel   = focusFromPath path (.base >> .name) st.sModel
             {extra}  = sModel
             mineOnly = String.contains "MyServants" fullPath
@@ -78,14 +78,14 @@ stateFromPath fullPath st =
               | viewing = Servants
               , sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
               }
-            , Maybe.withDefault (doIf mineOnly ((++) "My ") "Servants") <| 
+            , Maybe.withDefault (doIf mineOnly ((++) "My ") "Servants") <|
               Maybe.map (.base >> .name) sModel.focus
             )
 
-app onInit analytics title store = 
+app onInit analytics title store =
   let
     child constr unMsg = constr ((<<) (Cmd.map unMsg) << store)
-        
+
     ceChild : Component CraftEssences.Model CraftEssences.Msg
     ceChild = child CraftEssences.component <| \a -> case a of
       CraftEssencesMsg x -> x
@@ -97,7 +97,7 @@ app onInit analytics title store =
       _             -> DoNothing
 
     init : Value -> Url -> Navigation.Key -> (Model, Cmd Msg)
-    init flags url key = 
+    init flags url key =
       let
         (st, newTitle) = stateFromPath url.path
           { ceModel = ceChild.init flags key
@@ -106,63 +106,63 @@ app onInit analytics title store =
           }
       in
         (st, Cmd.batch [onInit, title newTitle])
-    
+
     view : Model -> Document Msg
-    view st = 
+    view st =
         Document "CHALDEAS" <| case st.viewing of
-          CraftEssences -> 
+          CraftEssences ->
             [ Html.map CraftEssencesMsg <| ceChild.view st.ceModel ]
-          Servants -> 
+          Servants ->
             [ Html.map ServantsMsg <| sChild.view st.sModel ]
-    
+
     update : Msg -> Model -> (Model, Cmd Msg)
     update parentMsg st = case parentMsg of
       RequestUrl urlRequest -> case urlRequest of
         Browser.Internal url  -> pure st
         Browser.External href -> (st, Navigation.load href)
-      ChangeUrl {path} -> 
+      ChangeUrl {path} ->
         let
           (newSt, newTitle) = stateFromPath path st
         in
           (newSt, Cmd.batch [analytics path, title newTitle])
       CraftEssencesMsg msg -> case msg of
-        Switch toServant -> 
+        Switch toServant ->
           let
             {sModel} = st
             {extra}  = sModel
             focus    = Maybe.map (owned sModel.team) toServant
           in
-            ( { st 
+            ( { st
               | viewing = Servants
-              , sModel  = 
-                  { sModel 
+              , sModel  =
+                  { sModel
                   | focus = focus
                   , extra = { extra | mineOnly = False }
-                  } 
+                  }
               }
-            , Cmd.map ServantsMsg << 
-              setFocus sModel.navKey "Servants" <| 
+            , Cmd.map ServantsMsg <<
+              setFocus sModel.navKey "Servants" <|
               Maybe.map (.base >> .name) focus
             )
-        _ -> 
+        _ ->
           let
             (model, cmd) = ceChild.update msg st.ceModel
           in
             ({ st | ceModel = model }, Cmd.map CraftEssencesMsg cmd)
       ServantsMsg msg -> case msg of
-        Switch toCraftEssence -> 
+        Switch toCraftEssence ->
           let
             {ceModel} = st
           in
-            ( { st 
+            ( { st
               | viewing = CraftEssences
-              , ceModel = { ceModel | focus = toCraftEssence } 
+              , ceModel = { ceModel | focus = toCraftEssence }
               }
-            , Cmd.map CraftEssencesMsg << 
-              setFocus ceModel.navKey "CraftEssences" <| 
+            , Cmd.map CraftEssencesMsg <<
+              setFocus ceModel.navKey "CraftEssences" <|
               Maybe.map .name toCraftEssence
             )
-        _ -> 
+        _ ->
           let
             (model, cmd) = sChild.update msg st.sModel
           in
@@ -171,7 +171,7 @@ app onInit analytics title store =
     { init          = init
     , view          = view
     , update        = update
-    , subscriptions = always Sub.none 
+    , subscriptions = always Sub.none
     , onUrlRequest  = RequestUrl
     , onUrlChange   = ChangeUrl
     }

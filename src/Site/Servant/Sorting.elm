@@ -8,27 +8,27 @@ import Sorting         exposing (..)
 
 getSort : Bool -> SortBy -> List MyServant -> List (String, MyServant)
 getSort addSkills a = case a of
-  Rarity -> 
+  Rarity ->
     let
       sorter {base} = String.fromInt (5 - base.rarity) ++ base.name
     in
-      List.sortWith (on compare sorter) 
+      List.sortWith (on compare sorter)
       >> List.map (\x -> ("", x))
   _ ->
     let
-      sorter ms = 
+      sorter ms =
           Dict.get (ordSortBy a) ms.sorted
           |> Maybe.withDefault (1/0, 1/0)
           >> if addSkills then Tuple.first else Tuple.second
-      showSort ms = 
-          ( ms 
-            |> sorter 
-            >> abs 
+      showSort ms =
+          ( ms
+            |> sorter
+            >> abs
             >> formatSort a
-            >> doIf (List.member a [NPDmg, NPDmgOver, NPSpec, NPSpecOver]) 
+            >> doIf (List.member a [NPDmg, NPDmgOver, NPSpec, NPSpecOver])
               ((++) <| "NP" ++ String.fromInt ms.npLvl ++ ": ")
           , ms
           )
     in
-      List.sortWith (on compare sorter) 
+      List.sortWith (on compare sorter)
       >> List.map showSort

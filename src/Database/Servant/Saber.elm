@@ -6,7 +6,7 @@ import Database.Servant exposing (..)
 import Database.Skill exposing (..)
 
 sabers : List Servant
-sabers = 
+sabers =
   [ { name  =   "Okita Souji"
     , id        = 68
     , rarity    = 5
@@ -433,7 +433,7 @@ sabers =
                     , rank   = EX
                     , icon   = IconShield
                     , cd     = 8
-                    , effect = [ Grant Self 1 NPGen <| Range 30 50 
+                    , effect = [ Grant Self 1 NPGen <| Range 30 50
                                , Grant Self 1 Invincibility Full
                                ]
                     }
@@ -441,19 +441,19 @@ sabers =
                     , rank   = D
                     , icon   = IconBusterUp
                     , cd     = 7
-                    , effect = [ Grant Self 1 (Performance Buster) <| 
-                                 Range 20 40 
-                               , Grant Self 1 DefenseUp <| Flat 20   
+                    , effect = [ Grant Self 1 (Performance Buster) <|
+                                 Range 20 40
+                               , Grant Self 1 DefenseUp <| Flat 20
                                ]
                     }
                   , { name   = "Legendary Crimson Hero"
                     , rank   = EX
                     , icon   = IconDamageUp
                     , cd     = 8
-                    , effect = [ To Self GaugeSpend <| Flat 100 
+                    , effect = [ To Self GaugeSpend <| Flat 100
                                , To Self ApplyAtRandom <| Flat 1
-                               , Grant Self 3 (Performance Buster) <| 
-                                 Range 30 50 
+                               , Grant Self 3 (Performance Buster) <|
+                                 Range 30 50
                                , Grant Party 1 Invincibility Full
                                , To Party Heal <| Range 2000 3000
                                , Grant Party 1 AttackUp <| Range 30 50

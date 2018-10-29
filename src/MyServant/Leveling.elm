@@ -1,4 +1,4 @@
-module MyServant.Leveling exposing 
+module MyServant.Leveling exposing
   ( maxLevel
   , ascendCost, skillCost
   , ascendWishlist, skillWishlist
@@ -22,7 +22,7 @@ maxLevel {rarity} = case rarity of
   _ -> 65
 
 ascendCost : Servant -> Int -> Int
-ascendCost {name, rarity} = 
+ascendCost {name, rarity} =
   let
     costs = Array.fromList <| case rarity of
       1 -> [ 10,  30,   90,  300]
@@ -72,14 +72,14 @@ atAscension {level, base} = case base.rarity of
     else                     4
 
 skillWishlist : List MyServant -> List (Material, Int)
-skillWishlist xs = 
+skillWishlist xs =
   let
     bind = flip List.concatMap
   in
     reduceMats <<
-    bind xs <| \ms -> 
+    bind xs <| \ms ->
     let reinforce = getReinforcements ms.base in
-    bind ms.skills <| \skillLvl -> 
+    bind ms.skills <| \skillLvl ->
     List.drop (skillLvl - 1) reinforce
 
 ascendWishlist : List MyServant -> List (Material, Int)
@@ -88,7 +88,7 @@ ascendWishlist xs = reduceMats <<
     List.drop (atAscension ms) <| getAscensions ms.base
 
 skillCost : Servant -> Int -> Int
-skillCost {rarity} = 
+skillCost {rarity} =
   let
     costs = Array.fromList <| case rarity of
       1 -> [ 10,  20,   60,   80,  200,  250,   500,   600,  1000]

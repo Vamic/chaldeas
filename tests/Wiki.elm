@@ -1,4 +1,4 @@
-module Wiki exposing 
+module Wiki exposing
   ( Wiki, suite
   , match, matchList, matchOne, matchEffects
   , fromString
@@ -21,8 +21,8 @@ type alias Wiki =
     , lists  : Dict String (List (List String))
     }
 
-suite : Dict String String 
-     -> ((MaybeRank -> Wiki) -> { a | name : String } -> List Test) 
+suite : Dict String String
+     -> ((MaybeRank -> Wiki) -> { a | name : String } -> List Test)
      -> { a | name : String }
      -> Test
 suite pages test x = case Dict.get x.name pages of
@@ -30,13 +30,13 @@ suite pages test x = case Dict.get x.name pages of
       Just page -> Suite x.name <| test (fromString page) x
 
 match : Wiki -> String -> String -> Test
-match wiki k obj = 
+match wiki k obj =
   let
     cleanup = List.map <| filterOut "%,{}[]()'" >> trim0s
   in
     Test k <| case Maybe.map cleanup (Dict.get k wiki.fields) of
       Nothing -> Failure <| "Missing property"
-      Just v  -> 
+      Just v  ->
           Test.assert (obj ++ " not in [" ++ String.join ", " v ++ "].") <|
           List.member obj v
 
@@ -49,13 +49,13 @@ matchList mw k obj = case obj of
       let
         lengthRange = List.range 0 <| List.length obj - 1
       in
-        flip List.map lengthRange <| \i -> 
+        flip List.map lengthRange <| \i ->
             let
               label = "Level " ++ String.fromInt (i + 1)
             in case vs |> List.drop i >> List.head of
-              Nothing -> 
+              Nothing ->
                   Test label <| Failure "missing from Wiki"
-              Just vsAt -> 
+              Just vsAt ->
                 let
                   obAt = obj |> List.drop i >> List.head >> Maybe.withDefault []
                 in
@@ -73,7 +73,7 @@ trim0s x = case String.uncons x of
   _              -> x
 
 shouldMatch : String -> List String -> List String -> Test
-shouldMatch label x y = 
+shouldMatch label x y =
   let
     x_ = List.unique x
     y_ = List.unique y
@@ -82,12 +82,12 @@ shouldMatch label x y =
       _  -> Failure <| String.join ", " xs
   in
     Suite label
-      [ Test "Missing from Wiki" << diffTest <| listDiff x_ y_ 
+      [ Test "Missing from Wiki" << diffTest <| listDiff x_ y_
       , Test "Missing from Data" << diffTest <| listDiff y_ x_
       ]
 
 matchOne : Wiki -> String -> Int -> String -> Test
-matchOne wiki k i x = 
+matchOne wiki k i x =
   let
     y =
         Dict.get "skillname" wiki.fields
@@ -95,7 +95,7 @@ matchOne wiki k i x =
         >> Maybe.map (String.replace " - " "—")
     x_ = if x == "" then Nothing else Just x
   in
-    if x_ == y then 
+    if x_ == y then
       Test k <| Success
     else
       Suite k
@@ -111,15 +111,15 @@ printBool : Bool -> String
 printBool a = if a then "Yes" else "No"
 
 fromString : String -> MaybeRank -> Wiki
-fromString text rank = 
+fromString text rank =
   let
     lists  = Dict.fromList <| parseLists text
-    firstMatch = 
+    firstMatch =
         .submatches
         >> List.head
         >> Maybe.join
         >> Maybe.withDefault ""
-    fields = 
+    fields =
         rankedSection rank text
         |> Regex.replace wikiLink firstMatch
         >> String.split "|"
@@ -145,12 +145,12 @@ range wiki k (from, to) =
     >> List.map (filterOut "%,{}[]()'")
 
 wikiLink : Regex
-wikiLink = 
+wikiLink =
     Regex.fromString "\\[\\[[^\\|\\]]+\\|([^\\]]+)\\]\\]"
     |> Maybe.withDefault Regex.never
 
 wikiTag : Regex
-wikiTag = 
+wikiTag =
     Regex.fromString "<[^\\s>]+>"
     |> Maybe.withDefault Regex.never
 
@@ -170,8 +170,8 @@ splitAround needle haystack = case String.split needle haystack of
   x :: xs -> Just (x, String.join needle xs)
 
 maybeSplit : String -> String -> (String, String)
-maybeSplit needle haystack = 
-    splitAround needle haystack 
+maybeSplit needle haystack =
+    splitAround needle haystack
     |> Maybe.withDefault (haystack, "")
 
 oneOf : List (Maybe a) -> Maybe a
@@ -181,7 +181,7 @@ oneOf a = case a of
   _      :: xs -> oneOf xs
 
 splitAny : List String -> String -> Maybe (String, String)
-splitAny needles haystack = 
+splitAny needles haystack =
     oneOf <| List.map (flip splitAround haystack) needles
 
 -- Notation 2: Monadic Booga-Do
@@ -193,7 +193,7 @@ guard : Bool -> (() -> Maybe a) -> Maybe a
 guard continue = if continue then ((|>) ()) else always Nothing
 
 parseCol : Int -> Int -> List String -> Maybe (List String)
-parseCol row col lines = 
+parseCol row col lines =
     let search = "|" ++ String.fromInt row ++ String.fromInt col in
     bind (List.find (String.left 3 >> (==) search) lines) <| \entry ->
     bind (splitAround "=" entry) <| \(_, after) ->
@@ -212,19 +212,19 @@ parseRow row lines =
     >> Just
 
 parseRows : String -> List (List String)
-parseRows = 
+parseRows =
     splitLines
     >> parseRow 1
     >> Maybe.withDefault []
 
 parseLists : String -> List (String, List (List String))
-parseLists text = 
+parseLists text =
     Maybe.withDefault [] <<
     bind (splitAround "==" text) <| \(_, headerStart) ->
     bind (splitAround "==" headerStart) <| \(beforeHeader, afterHeader) ->
     let header = String.trim beforeHeader in
     let (beforeSection, afterSection) = maybeSplit "==" afterHeader in
-    Just <| 
+    Just <|
     (header, parseRows beforeSection) :: parseLists ("==" ++ afterSection)
 
 parseFields : String -> Maybe (String, List String)
@@ -233,7 +233,7 @@ parseFields text =
     bind (splitAround "=" text) <| \(before, after)  ->
     let afterLines = splitLines after in
     guard (not <| String.isEmpty before) <| \_ ->
-    Just << 
+    Just <<
     (\x -> (String.trim <| String.toLower before, x)) <<
     List.filter (not << String.isEmpty) <<
     flip List.map afterLines <|
@@ -242,9 +242,9 @@ parseFields text =
     >> maybeDo (splitAny ["EN:","tip-text:"] >> Maybe.map Tuple.second)
     >> Regex.replace wikiTag (always " ")
     >> String.trim
-    
+
 rankedSection : MaybeRank -> String -> String
-rankedSection rank text = 
+rankedSection rank text =
     Maybe.withDefault text <<
     bind (splitAny [MaybeRank.show rank ++ "="] text) <|
     Tuple.second >> splitAny ["|-|", "/onlyinclude"] >> Maybe.map Tuple.first

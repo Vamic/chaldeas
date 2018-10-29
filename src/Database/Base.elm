@@ -1,4 +1,4 @@
-module Database.Base exposing 
+module Database.Base exposing
   ( Alignment(..), enumAlignment
   , Attribute(..)
   , Card(..)
@@ -37,7 +37,7 @@ type Attribute = Mankind | Earth | Heaven | Star
 -- occur at the end of a Brave Combo.
 type Card = Quick | Arts | Buster
 
-{-| Determines the "class attack bonus" and "triangle modifier" 
+{-| Determines the "class attack bonus" and "triangle modifier"
 in `Database.Calculator`.-}
 -- Note: MoonCancer and AlterEgo are not represented as they are JP-only.
 type Class
@@ -59,9 +59,9 @@ addStats : Stat -> Stat -> Stat
 addStats x y = { atk = x.atk + y.atk, hp = x.hp + y.hp }
 
 {-| Traits are miscellaneous flags attached to Servants. -}
--- Note:  Since many traits are unlabeled, 
+-- Note:  Since many traits are unlabeled,
 -- it can be difficult to figure out which are JP-only and which
--- translations are accurate to EN. 
+-- translations are accurate to EN.
 type Trait
     = Arthur
     | Beast
@@ -87,7 +87,7 @@ type Trait
     | EnumaElish
 
 enumTrait : List Trait
-enumTrait = 
+enumTrait =
     [ Arthur
     , Beast
     , BrynhildsBeloved

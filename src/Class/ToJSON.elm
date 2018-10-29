@@ -26,9 +26,9 @@ withAmount a = case a of
   Range x y   -> (::) ("amount", E.object [("from", E.float x), ("to", E.float y)])
 
 stat : Stat -> Value
-stat x = 
+stat x =
     E.object
-    [ ("atk", E.int x.atk) 
+    [ ("atk", E.int x.atk)
     , ("hp",  E.int x.hp)
     ]
 
@@ -39,32 +39,32 @@ target =
     >> String.trim
     >> E.string
 
-skillEffect : SkillEffect -> Value 
+skillEffect : SkillEffect -> Value
 skillEffect =
   let
     modEffect f fields = case List.find (Tuple.first >> (==) "effect") fields of
       Nothing -> fields
-      Just (_, effect) -> 
-        let 
-          f_ = 
+      Just (_, effect) ->
+        let
+          f_ =
               E.encode 0
               >> String.dropLeft 1
               >> String.dropRight 1
               >> f
               >> E.string
         in
-          fields ++ 
+          fields ++
           [("effect", f_ effect)]
     go a = case a of
       Grant targ duration effect amount ->
           withAmount amount <|
-          [ ("target",   target targ) 
+          [ ("target",   target targ)
           , ("duration", E.int duration)
           , ("effect",   E.string <| Show.buffEffect Someone Placeholder effect)
           ]
       Debuff targ duration effect amount ->
           withAmount amount <|
-          [ ("target",   target targ) 
+          [ ("target",   target targ)
           , ("duration", E.int duration)
           , ("effect",   E.string <| Show.debuffEffect Someone Placeholder effect)
           ]
@@ -83,7 +83,7 @@ skillEffect =
           go effect ++
           [("chance", E.object [("from", E.int x), ("to", E.int y)])]
       ToMax x effect ->
-          go effect 
+          go effect
           |> modEffect (flip (++) <| " every turn up to " ++ Show.amount x)
       When x effect ->
           go effect ++
@@ -97,7 +97,7 @@ skillEffect =
 skill : Skill -> Value
 skill x =
     E.object
-    [ ("name",   E.string x.name) 
+    [ ("name",   E.string x.name)
     , ("icon",   E.string <| Show.icon x.icon)
     , ("cd",     E.int x.cd)
     , ("effect", E.list skillEffect x.effect)
@@ -106,7 +106,7 @@ skill x =
 noblePhantasm : NoblePhantasm -> Value
 noblePhantasm x =
     E.object
-    [ ("name",           E.string x.name) 
+    [ ("name",           E.string x.name)
     , ("desc",           E.string x.desc)
     , ("rank",           E.string <| Show.rank x.rank)
     , ("card",           E.string <| Show.card x.card)
@@ -120,7 +120,7 @@ noblePhantasm x =
 hits : Hits -> Value
 hits x =
     E.object
-    [ ("quick",  E.int x.quick) 
+    [ ("quick",  E.int x.quick)
     , ("arts",   E.int x.arts)
     , ("buster", E.int x.buster)
     , ("extra",  E.int x.ex)
@@ -131,12 +131,12 @@ craftEssence ce =
   let
     stats x =
         E.object
-        [ ("base",  stat x.base) 
+        [ ("base",  stat x.base)
         , ("max",   stat x.max)
         ]
   in
     E.object
-    [ ("name",    E.string ce.name) 
+    [ ("name",    E.string ce.name)
     , ("id",      E.int ce.id)
     , ("rarity",  E.int ce.rarity)
     , ("icon",    E.string <| Show.icon ce.icon)
@@ -147,17 +147,17 @@ craftEssence ce =
     ]
 
 servant : Servant -> Value
-servant s = 
+servant s =
   let
     stats x =
         E.object
-        [ ("base",  stat x.base) 
+        [ ("base",  stat x.base)
         , ("max",   stat x.max)
         , ("grail", stat x.grail)
         ]
   in
     E.object
-    [ ("name",          E.string s.name) 
+    [ ("name",          E.string s.name)
     , ("id",            E.int s.id)
     , ("rarity",        E.int s.rarity)
     , ("class",         E.string <| Show.class s.class)

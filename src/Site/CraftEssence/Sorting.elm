@@ -16,29 +16,29 @@ toSort a ce = case a of
 
 doSort : SortBy -> List CraftEssence -> List (String, CraftEssence)
 doSort a = case a of
-  Rarity -> 
+  Rarity ->
     let
       sorter ce   = String.fromInt (5 - ce.rarity) ++ ce.name
       showSort ce = (Maybe.withDefault "" ce.bond, ce)
     in
-      List.sortWith (on compare sorter) 
+      List.sortWith (on compare sorter)
       >> List.map showSort
   _ ->
     let
       sorter      = toSort a
-      showSort ce = 
-          ( ce 
-            |> sorter 
-            >> abs 
+      showSort ce =
+          ( ce
+            |> sorter
+            >> abs
             >> formatSort a
           , ce
           )
     in
-      List.sortWith (on compare sorter) 
+      List.sortWith (on compare sorter)
       >> List.map showSort
 
 sorted : Dict OrdSortBy (List (String, CraftEssence))
-sorted = dict enumSortBy <| \sorter -> 
+sorted = dict enumSortBy <| \sorter ->
     (ordSortBy sorter, doSort sorter craftEssences)
 
 getSort : SortBy -> List (String, CraftEssence)

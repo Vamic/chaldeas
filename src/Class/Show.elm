@@ -270,10 +270,10 @@ special a = (\s -> "[" ++ s ++ "]") <| case a of
   VsAlignment x -> alignment x
 
 bonusEffect : Bool -> Amount -> BonusEffect -> String
-bonusEffect isPerc amt a = 
+bonusEffect isPerc amt a =
   let
     n =
-      if isPerc then 
+      if isPerc then
         amount amt ++ "%"
       else
         amount amt
@@ -288,7 +288,7 @@ bonusEffect isPerc amt a =
       QPQuest      -> "Increase QP from enemy drops by " ++ n
 
 instantEffect : Target -> Amount -> InstantEffect -> String
-instantEffect target amt a = 
+instantEffect target amt a =
   let
     n = amount amt
     {p, s} = possessiveAndSubject target
@@ -298,7 +298,7 @@ instantEffect target amt a =
     full = amt == Full
   in
     case a of
-      ApplyAtRandom -> "Apply " ++ n ++ " random effect" 
+      ApplyAtRandom -> "Apply " ++ n ++ " random effect"
                        ++ (if amt /= Flat 1 then "s" else "") ++ " from below:"
       Avenge        -> "At the end of the next turn, deal " ++ n
                        ++ "% of damage taken during that turn" ++ to
@@ -307,7 +307,7 @@ instantEffect target amt a =
       Cure          -> "Remove" ++ p ++ " poison debuffs"
       Damage        -> "Deal " ++ n ++ "% damage" ++ to
       DamageThruDef -> "Deal " ++ n ++ "% damage" ++ to ++ ", ignoring defense"
-      DamageVs t    -> "Deal " ++ n ++ "% extra damage to [" 
+      DamageVs t    -> "Deal " ++ n ++ "% extra damage to ["
                        ++ trait t ++ "]"
       DamagePoison  -> "Deal " ++ n ++ "% extra damage to [Poisoned]"
       DemeritBuffs  -> "Remove" ++ p ++ " buffs"
@@ -315,20 +315,20 @@ instantEffect target amt a =
       DemeritGauge  -> "Decrease" ++ p ++ " NP gauge by " ++ n ++ "%"
       DemeritDamage -> "Deal " ++ n ++ " damage" ++ to
       DemeritKill   -> "Sacrifice" ++ s ++ " (can trigger Guts)"
-      DemeritHealth -> "Deal " ++ n ++ " damage" ++ to 
+      DemeritHealth -> "Deal " ++ n ++ " damage" ++ to
                       ++ " down to a minimum of 1"
       GaugeDown     -> "Reduce" ++ p ++ " NP gauge by " ++ n
       GaugeSpend    -> "Costs " ++ n ++ "% of" ++ p ++ " NP gauge to use"
       GaugeUp       -> "Increase" ++ p ++ " NP gauge by " ++ n ++ "%"
       Heal          -> "Restore " ++ (if full then "all" else n) ++ " HP" ++ to
-      LastStand     -> "Deal up to " ++ n ++ "% damage based on missing health" 
+      LastStand     -> "Deal up to " ++ n ++ "% damage based on missing health"
                        ++ to
       OverChance    -> "Gain " ++ n ++ "% chance to apply Overcharge buffs"
       RemoveBuffs   -> "Remove" ++ p ++ " buffs"
       RemoveDebuffs -> "Remove" ++ p ++ " debuffs"
       RemoveMental  -> "Remove" ++ p ++ " mental debuffs"
       Kill          -> doIf (not full) ((++) <| n ++ "% chance to ") <|
-                       "Instant-Kill" ++ s                       
+                       "Instant-Kill" ++ s
       GainStars     -> "Gain " ++ n ++ " critical stars" ++ case target of
                          Self -> " for yourself"
                          _    -> ""
@@ -404,7 +404,7 @@ nameDebuffEffect a = case a of
   StunBomb     -> "StunBomb"
 
 buffEffect : Target -> Amount -> BuffEffect -> String
-buffEffect target amt a = 
+buffEffect target amt a =
   let
     n       = amount amt
     {p, s}  = possessiveAndSubject target
@@ -501,7 +501,7 @@ nameBuffEffect a = case a of
   StarsPerTurn    -> "StarsPerTurn"
 
 skillEffect : SkillEffect -> String
-skillEffect = 
+skillEffect =
   let
     uncap s = case String.uncons s of
       Nothing -> s
@@ -513,16 +513,16 @@ skillEffect =
         To t instant amt     -> instantEffect t amt instant
         Bonus bonus perc amt -> bonusEffect perc amt bonus
         Chance 0 ef          -> "Chance to " ++ uncap (go ef)
-        Chance per ef        -> String.fromInt per ++ "% chance to " 
+        Chance per ef        -> String.fromInt per ++ "% chance to "
                                 ++ uncap (go ef)
-        Chances x y ef       -> String.fromInt x ++ "~" ++ String.fromInt y 
+        Chances x y ef       -> String.fromInt x ++ "~" ++ String.fromInt y
                                 ++ "% chance to " ++ uncap (go ef)
         When "attacking" ef  -> go ef ++ " when attacking"
         When cond ef         -> "If " ++ cond ++ ": " ++ uncap (go ef)
         Times 1 ef           -> go ef ++ " (1 time)"
-        Times times ef       -> go ef ++ " (" ++ String.fromInt times 
+        Times times ef       -> go ef ++ " (" ++ String.fromInt times
                                 ++ " times)"
-        ToMax amt ef         -> go ef ++ " every turn (max " 
+        ToMax amt ef         -> go ef ++ " every turn (max "
                                 ++ amount amt ++ ")"
     turns a = case a of
       0 -> ""

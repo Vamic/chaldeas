@@ -41,7 +41,7 @@ import Site.Servant.Filters exposing (..)
 import Site.Servant.Sorting exposing (..)
 
 type alias Model = SiteModel Servant MyServant
-    { mineOnly : Bool 
+    { mineOnly : Bool
     , ascent   : Int
     , myServs  : List MyServant
     }
@@ -49,17 +49,17 @@ type alias Model = SiteModel Servant MyServant
 type alias Msg = SiteMsg Servant MyServant CraftEssence
 
 reSort : Model -> Model
-reSort st = 
-    { st 
-    | sorted = getSort (prefer st.prefs AddSkills) st.sortBy st.extra.myServs 
+reSort st =
+    { st
+    | sorted = getSort (prefer st.prefs AddSkills) st.sortBy st.extra.myServs
     }
 
 reTeam : Model -> Model
-reTeam ({extra} as st) = 
+reTeam ({extra} as st) =
     { st | extra = { extra | myServs = List.map (owned st.team) servants } }
 
 setRoot : Model -> Model
-setRoot st = 
+setRoot st =
     { st | root = if st.extra.mineOnly then "MyServants" else "Servants" }
 
 component : (String -> Value -> Cmd Msg) -> Component Model Msg
@@ -78,9 +78,9 @@ component store =
         >> setRoot
 
     view : Model -> Html Msg
-    view st = 
+    view st =
       let
-        nav = 
+        nav =
             [ a_ "Craft Essences" <| Switch Nothing
             , if st.extra.mineOnly then
                 a_ "Servants" <| MineOnly False
@@ -96,16 +96,16 @@ component store =
         |> siteView st enumSortBy nav
         >> popup st.prefs st.extra.ascent st.focus
 
-    unlazyView prefs mineOnly listing sortBy = 
+    unlazyView prefs mineOnly listing sortBy =
       let
         baseAscend = if prefer prefs MaxAscension then 4 else 1
-        doPortrait (label, ms) = 
-            portrait False prefs baseAscend 
+        doPortrait (label, ms) =
+            portrait False prefs baseAscend
             ( if label == "" && mineOnly then showStats ms else label
             , ms
             )
         withStats (_, ms) = (showStats ms, ms)
-        listed = 
+        listed =
           if mineOnly then
             listing
             |> List.filter isMine
@@ -114,11 +114,11 @@ component store =
             listing
         getMats label f = case f <| List.map Tuple.second listed of
           []   -> []
-          mats -> 
+          mats ->
             [ ( label ++ "H"
               , h_ 2 <| "Total " ++ label ++ " Materials Needed"
               )
-            , ( label 
+            , ( label
               , H.footer [P.class "materials"] <| List.map materialEl mats
               )
             ]
@@ -127,14 +127,14 @@ component store =
         |> List.map (keyedPortrait False prefs baseAscend)
         >> doIf (sortBy /= Rarity) List.reverse
         >> doIf mineOnly
-           ( flip (++) <| 
-             getMats "Ascension" ascendWishlist 
-             ++ getMats "Skill" skillWishlist 
+           ( flip (++) <|
+             getMats "Ascension" ascendWishlist
+             ++ getMats "Skill" skillWishlist
            )
         >> Keyed.node "section" [P.id "content"]
-    
+
     update : Msg -> Model -> (Model, Cmd Msg)
-    update a st = 
+    update a st =
       let
         {extra} = st
         relist  = updateListing .base
@@ -142,31 +142,31 @@ component store =
         Ascend ms ascent -> case ms.level of
           0 -> pure { st | extra = { extra | ascent = ascent } }
           _ -> update (OnTeam True { ms | ascent = ascent }) st
-        MineOnly mineOnly -> 
+        MineOnly mineOnly ->
           let
-            newSt = 
-                setRoot <| 
+            newSt =
+                setRoot <|
                 relist { st | extra = { extra | mineOnly = mineOnly } }
           in
             ( newSt
-            , Cmd.batch 
+            , Cmd.batch
               [ setPath newSt.navKey [newSt.root], scrollToTop "content" ]
             )
         Focus focus ->
             ( { st | focus = focus, extra = { extra | ascent = 1 } }
             , setFocus st.navKey st.root <| Maybe.map (.base >> .name) focus
             )
-        OnTeam keep msPreCalc -> 
+        OnTeam keep msPreCalc ->
           let
             ms   = doIf keep recalc msPreCalc
-            team = 
+            team =
               if keep then
                 Dict.insert (ordServant ms.base) ms st.team
               else
                 Dict.remove (ordServant ms.base) st.team
           in
             ( relist << reSort <| reTeam
-              { st 
+              { st
               | team    = team
               , focus   = Maybe.next st.focus <| Just ms
               }
@@ -177,8 +177,8 @@ component store =
     { init = init, view = view, update = update }
 
 showStats : MyServant -> String
-showStats ms = 
-    String.fromInt ms.level ++ "/" 
+showStats ms =
+    String.fromInt ms.level ++ "/"
     ++ String.fromInt (maxLevel ms.servant) ++ " "
     ++ String.join "·" (List.map String.fromInt ms.skills)
 
@@ -186,18 +186,18 @@ isMine : (a, MyServant) -> Bool
 isMine (_, ms) = ms.level /= 0
 
 portrait : Bool -> Preferences -> Int -> (String, MyServant) -> Html Msg
-portrait big prefs baseAscension (label, ms) = 
-  if not big && prefer prefs Thumbnails then 
+portrait big prefs baseAscension (label, ms) =
+  if not big && prefer prefs Thumbnails then
     H.div [P.class "thumb", E.onClick << Focus <| Just ms]
     [ToImage.thumbnail <| ToImage.servant ms.base]
   else
     let
       noBreak  = noBreakName big <| prefer prefs HideClasses
-      artorify = doIf (prefer prefs Artorify) <| 
+      artorify = doIf (prefer prefs Artorify) <|
                  String.replace "Altria" "Artoria"
       meta     = doIf (not big) ((::) (E.onClick << Focus <| Just ms)) <|
                  [P.class <| "portrait stars" ++ String.fromInt ms.base.rarity]
-      addLabel = 
+      addLabel =
           doIf (label /= "") <| (++)
           [text_ H.span <| noBreak label, H.br [] []]
       ascension = if ms.level /= 0 then ms.ascent else baseAscension
@@ -208,7 +208,7 @@ portrait big prefs baseAscension (label, ms) =
       , H.div [] [ ToImage.image <| ToImage.class ms.base.class ]
       , H.header [] << addLabel <|
         [text_ H.span << noBreak <| artorify ms.base.name]
-      , if big then 
+      , if big then
           H.footer []
           [ button_ "<" (ascension > 1) << Ascend ms <| ascension - 1
           , text_ H.span <| stars True ms.base.rarity
@@ -223,14 +223,14 @@ portrait big prefs baseAscension (label, ms) =
         [text_ H.span <| stars True ms.base.rarity]-}
       ]
 
-keyedPortrait : Bool -> Preferences -> Int -> (String, MyServant) 
+keyedPortrait : Bool -> Preferences -> Int -> (String, MyServant)
              -> (String, Html Msg)
 keyedPortrait big prefs baseAscension (label, ms) =
     (ms.base.name, lazy4 portrait big prefs baseAscension (label, ms))
 
 popup : Preferences -> Int -> Maybe MyServant -> List (Html Msg) -> Html Msg
 popup prefs ascent a = case a of
-  Nothing -> 
+  Nothing ->
     H.div [P.class <| mode prefs] << (++)
     [ H.div [P.id "cover", E.onClick <| Focus Nothing] []
     , H.article [P.id "focus"] []
@@ -246,18 +246,18 @@ popup prefs ascent a = case a of
       {base} = s.stats
       {max  , grail} = b.stats
       showTables = prefer prefs ShowTables
-      showTable showCol effects = 
+      showTable showCol effects =
           doIf showTables << consAfter <<
           table_ (List.map showCol <| List.range 1 5)
           <| List.map npRow (List.uniqueBy ordRangeInfo <| ranges effects)
       overMeta = if s.phantasm.first then [P.class "activates"] else []
       linkAlignment = link Has.alignment FilterAlignment
       alignBox = case s.align of
-        [] -> 
+        [] ->
             [H.text "None"]
-        [Neutral, Neutral] -> 
+        [Neutral, Neutral] ->
             [H.text "True ", linkAlignment Neutral]
-        [a1, a2, a3, a4] -> 
+        [a1, a2, a3, a4] ->
             [ linkAlignment a1
             , H.text " "
             , linkAlignment a2
@@ -268,7 +268,7 @@ popup prefs ascent a = case a of
             ]
         _ -> s.align |> List.concatMap (\x -> [linkAlignment x, H.text " "])
       calcWith = if prefer prefs AddSkills then Tuple.first else Tuple.second
-      calc sort = 
+      calc sort =
           Dict.get (ordSortBy sort) ms.sorted
           |> Maybe.withDefault (1/0, 1/0)
           >> calcWith
@@ -276,13 +276,13 @@ popup prefs ascent a = case a of
       skillBox i ({icon}, lvl) =
           [ H.td [] [ToImage.image <| ToImage.icon icon]
           , H.td [] << int_ 1 100 lvl <| \val ->
-              OnTeam True 
+              OnTeam True
               { ms | skills = List.updateAt i (always val) ms.skills }
           ]
       myServantBox = List.singleton <| case ms.level of
-        0 -> 
+        0 ->
             button_ "+Add to My Servants" True << OnTeam True <| newServant s
-        _ -> 
+        _ ->
             H.table []
             [ H.tr []
                 [ H.td [] [text_ H.strong "Level:"]
@@ -304,42 +304,42 @@ popup prefs ascent a = case a of
                 ] << List.concat << List.map2 skillBox (List.range 0 10) <|
                   List.zip s.skills ms.skills
             ]
-      showInt = 
-          toFloat 
+      showInt =
+          toFloat
           >> commas
           >> H.text
           >> List.singleton
-      showPercent = 
-          String.fromFloat 
-          >> flip (++) "%" 
-          >> H.text 
+      showPercent =
+          String.fromFloat
+          >> flip (++) "%"
+          >> H.text
           >> List.singleton
     in
       H.div [P.class <| mode prefs ++ " fade"] << (++)
       [ H.div [P.id "cover", E.onClick <| Focus Nothing] []
       , H.article [P.id "focus"] <|
-        [ H.div [] 
+        [ H.div []
           [ portrait True prefs ascent ("", ms)
           , H.div [] <|
-            [ table_ ["", "ATK", "HP"] 
+            [ table_ ["", "ATK", "HP"]
                 [ H.tr []
                 [ text_ H.th "Base"
                 , H.td [] <| showInt base.atk
-                , H.td [] <| showInt base.hp 
+                , H.td [] <| showInt base.hp
                 ]
                 , H.tr []
                 [ text_ H.th "Max"
                 , H.td [] <| showInt max.atk
-                , H.td [] <| showInt max.hp 
+                , H.td [] <| showInt max.hp
                 ]
                 , H.tr []
                 [ text_ H.th "Grail"
                 , H.td [] <| showInt grail.atk
-                , H.td [] <| showInt grail.hp 
+                , H.td [] <| showInt grail.hp
                 ]
                 ]
             , table_ ["", "Q", "A", "B", "EX", "NP"]
-                [ H.tr [] << 
+                [ H.tr [] <<
                 (::) (text_ H.th "Hits") <|
                 List.map (String.fromInt >> text_ H.td)
                 [ s.hits.quick
@@ -352,7 +352,7 @@ popup prefs ascent a = case a of
             , H.table []
                 [ tr_ "Class"       [ link Has.class FilterClass s.class ]
                 , tr_ "Deck"        [ link Has.deck FilterDeck s.deck ]
-                , tr_ "NP Type"     [ link Has.phantasmType FilterPhantasm <| 
+                , tr_ "NP Type"     [ link Has.phantasmType FilterPhantasm <|
                                     phantasmType s.phantasm
                                   ]
                 , tr_ "Attribute"   [ link Has.attribute FilterAttribute s.attr ]
@@ -373,33 +373,33 @@ popup prefs ascent a = case a of
           , tr_ "Rank" [H.text <| npRank s.phantasm.rank]
           , tr_ "Card" [link Has.card FilterCard s.phantasm.card]
           , tr_ "Class" [H.text s.phantasm.kind]
-          , tr_ "Effects" << 
-            showTable (String.fromInt >> (++) "NP") 
+          , tr_ "Effects" <<
+            showTable (String.fromInt >> (++) "NP")
             b.phantasm.effect <|
             List.map (effectEl servants <| Just Has.servant) s.phantasm.effect
-          , tr_ "Overcharge" << 
-            showTable ((*) 100 >> String.fromInt >> flip (++) "%") 
+          , tr_ "Overcharge" <<
+            showTable ((*) 100 >> String.fromInt >> flip (++) "%")
             b.phantasm.over <|
             List.map (effectEl servants <| Just Has.servant) s.phantasm.over
           ]
         , h_ 2 "Active Skills"
-        ] ++ List.map2 (skillEl showTables) s.skills b.skills ++ 
+        ] ++ List.map2 (skillEl showTables) s.skills b.skills ++
         [ h_ 2 "Passive Skills"
         ] ++ List.map passiveEl s.passives ++ bondEl (getBond s) ++
         [ h_ 2 "Traits"
-        , H.section [] << List.intersperse (H.text ", ") <| 
+        , H.section [] << List.intersperse (H.text ", ") <|
           List.map (link Has.trait FilterTrait) s.traits
         , h_ 2 "Ascension"
         , H.table [P.class "materials"] <<
           flip List.indexedMap (ascendUpEl s.ascendUp) <| \i el ->
-              H.tr [] 
+              H.tr []
                 [ text_ H.th << String.fromInt <| i + 1
                 , H.td [] <| withCost (ascendCost s i) el
                 ]
         , h_ 2 "Skill Reinforcement"
         , H.table [P.class "materials"] <<
           flip List.indexedMap (skillUpEl s.skillUp) <| \i el ->
-              H.tr [] 
+              H.tr []
                 [ text_ H.th << String.fromInt <| i + 2
                 , H.td [] <| withCost (skillCost s i) el
                 ]
@@ -443,12 +443,12 @@ popup prefs ascent a = case a of
 
 ascendUpEl : Ascension -> List (List (Html Msg))
 ascendUpEl x = case x of
-    Clear a b c d -> 
-        flip List.map [a, b, c, d] <| 
+    Clear a b c d ->
+        flip List.map [a, b, c, d] <|
         (++) "Clear"
         >> H.text
         >> List.singleton
-    Welfare a -> 
+    Welfare a ->
         ImagePath "Material" a
         |> ToImage.image
         >> List.singleton
@@ -458,7 +458,7 @@ ascendUpEl x = case x of
         |> List.map (List.map materialEl)
 
 skillUpEl : Reinforcement -> List (List (Html Msg))
-skillUpEl (Reinforcement a b c d e f g h) = 
+skillUpEl (Reinforcement a b c d e f g h) =
     [a, b, c, d, e, f, g, h, [ (CrystallizedLore, 1) ]]
     |> List.map (List.map materialEl)
 
@@ -468,44 +468,44 @@ withCost a = case a of
   _ -> (::) <| materialEl (QP, a)
 
 materialEl : (Material, Int) -> Html Msg
-materialEl (mat, amt) = 
+materialEl (mat, amt) =
   let
-    imageLinkEl = 
-      if ignoreMat mat then 
-        ToImage.image 
+    imageLinkEl =
+      if ignoreMat mat then
+        ToImage.image
       else
         ToImage.link <| FilterBy (singleFilter Has.material FilterMaterial mat)
   in
-    H.div [] 
+    H.div []
     [ imageLinkEl <| ToImage.material mat
     , text_ H.span <| "×" ++ commas (toFloat amt)
     ]
 
 skillEl : Bool -> Skill -> Skill -> Html Msg
-skillEl showTables sk base = 
+skillEl showTables sk base =
   let
-    effectTable = 
+    effectTable =
         table_ (List.map String.fromInt <| List.range 1 10) <<
         List.map lvlRow << List.uniqueBy ordRangeInfo <| ranges base.effect
   in
     H.section [] << doIf showTables (consAfter effectTable) <|
-    [ ToImage.image <| ToImage.icon sk.icon 
+    [ ToImage.image <| ToImage.icon sk.icon
     , h_ 3 <| sk.name ++ Show.rank sk.rank
     , text_ H.strong "CD: "
-    , H.text << 
+    , H.text <<
       doIf (sk == base) (flip (++) <| "~" ++ String.fromInt (sk.cd - 2)) <|
       String.fromInt sk.cd
     ] ++ List.map (effectEl servants <| Just Has.servant) sk.effect
 
 passiveEl : Skill -> Html Msg
-passiveEl p = 
+passiveEl p =
   let
-    filter = 
-        matchFilter (Just <| .icon >> ToImage.icon) Has.passive 
+    filter =
+        matchFilter (Just <| .icon >> ToImage.icon) Has.passive
         FilterPassiveSkill p
   in
     H.section [] <|
-    [  ToImage.image <| ToImage.icon p.icon 
+    [  ToImage.image <| ToImage.icon p.icon
     , H.h3 []
       [ H.span [P.class "link", E.onClick <| FilterBy [filter]] [H.text p.name]
       , H.text <| " " ++ Show.rank p.rank
@@ -515,7 +515,7 @@ passiveEl p =
 bondEl : Maybe CraftEssence -> List (Html Msg)
 bondEl a = case a of
   Nothing -> []
-  Just ce -> 
+  Just ce ->
       [ h_ 2 "Max-Bond Craft Essence"
       , H.section []
         [ ToImage.image <| ToImage.icon ce.icon
@@ -532,7 +532,7 @@ npRow : RangeInfo -> Html Msg
 npRow r =
   let
     step = r.max - r.min
-    col  = 
+    col  =
         (*) step
         >> (+) r.min
         >> toCell r.percent
@@ -540,10 +540,10 @@ npRow r =
     H.tr [] <| List.map col [0, 0.5, 0.75, 0.825, 1.0]
 
 overRow : RangeInfo -> Html Msg
-overRow r = 
+overRow r =
   let
     step = (r.max - r.min) / 4
-    col  = 
+    col  =
         toFloat
         >> (*) step
         >> (+) r.min
@@ -552,8 +552,8 @@ overRow r =
     H.tr [] << List.map col <| List.range 0 4
 
 link : Has Servant a -> FilterTab -> a -> Html Msg
-link ({show} as has) tab x = 
-    H.a 
+link ({show} as has) tab x =
+    H.a
     [ href_ "Servants"
     , P.class "link"
     , E.onClick << FilterBy <| singleFilter has tab x

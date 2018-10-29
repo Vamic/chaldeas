@@ -49,8 +49,8 @@ divinity = passive "Divine" IconSun
 doubleClass = passive "Double Class" IconMissing []
 
 independentAction = passive "Independent Action" IconDash
-  [ Give Self CritUp 
-    [ (EX, 12), (APlus, 11), (A, 10), (B, 8), (C, 6) ] 
+  [ Give Self CritUp
+    [ (EX, 12), (APlus, 11), (A, 10), (B, 8), (C, 6) ]
   ]
 
 independentManifestation = passive "Independent Manifestation" IconDash
@@ -60,7 +60,7 @@ independentManifestation = passive "Independent Manifestation" IconDash
   ]
 
 itemConstruction = passive "Item Construction" IconPotion
-  [ Give Self DebuffSuccess 
+  [ Give Self DebuffSuccess
     [ (EX, 12), (A, 10), (BPlus, 9), (B, 8), (C, 6), (D, 4) ]
   ]
 
@@ -128,15 +128,15 @@ lookup : a -> List (a, b) -> Maybe b
 lookup a = List.find (Tuple.first >> (==) a) >> Maybe.map Tuple.second
 
 passive : String -> Icon -> List PassiveEffect -> Rank -> Skill
-passive name icon effects rank = 
+passive name icon effects rank =
   let
-    skill (Give targ buff ranks) = 
+    skill (Give targ buff ranks) =
         lookup rank ranks
         |> Maybe.map Flat
         >> Maybe.withDefault Placeholder
         >> Grant targ 0 buff
   in
-    { name   = name 
+    { name   = name
     , rank   = rank
     , icon   = icon
     , cd     = 0

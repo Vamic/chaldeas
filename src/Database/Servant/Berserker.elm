@@ -6,7 +6,7 @@ import Database.Servant exposing (..)
 import Database.Skill exposing (..)
 
 berserkers : List Servant
-berserkers = 
+berserkers =
   [ { name  =   "Cu Chulainn (Alter)"
     , id        = 98
     , rarity    = 5

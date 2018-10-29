@@ -42,7 +42,7 @@ type SiteMsg filt focus alt
     | Switch    (Maybe alt)
     | DoNothing
 
-type alias SiteModel filt focus extra = 
+type alias SiteModel filt focus extra =
     { error      : Maybe String
     , today      : Date
     , navKey     : Navigation.Key
@@ -63,12 +63,12 @@ type alias SiteModel filt focus extra =
 
 siteInit : (Date -> FilterList filt) -> Value -> Navigation.Key -> extra
         -> SiteModel filt focus extra
-siteInit getFilters val navKey extra = 
+siteInit getFilters val navKey extra =
   let
-    (error, {today, preferences, team}) = 
+    (error, {today, preferences, team}) =
         case Json.decodeValue decodeFlags val of
           Ok flags -> (Nothing, flags)
-          Err err  -> 
+          Err err  ->
             (Just <| Json.errorToString err
             , { today       = 0 |> Time.millisToPosix >> Date.today
               , preferences = noPreferences
@@ -96,7 +96,7 @@ siteInit getFilters val navKey extra =
 
 type alias Filter a =
     { icon  : Maybe ImagePath
-    , tab   : FilterTab 
+    , tab   : FilterTab
     , name  : String
     , match : Bool -> a -> Bool
     }
@@ -107,22 +107,22 @@ eqFilter x y = x.tab == y.tab && x.name == y.name
 type alias OrdFilter = String
 
 ordFilter : Filter a -> OrdFilter
-ordFilter x = 
-    Show.filterTab x.tab ++ 
+ordFilter x =
+    Show.filterTab x.tab ++
     if x.tab == FilterRarity then
       String.fromInt <| 10 - String.length x.name
     else if String.startsWith "+" x.name then
       case String.split " " x.name of
         []       -> x.name
-        w :: ws  -> "+" ++ String.join " " ws 
+        w :: ws  -> "+" ++ String.join " " ws
                     ++ String.fromInt (String.length w) ++ w
     else
       x.name
 
 compareFilter : Filter a -> Filter a -> Order
-compareFilter = 
-    compareThen (.tab >> ordFilterTab) << 
-    compareThen ordFilter << 
-    always <| always EQ
+compareFilter =
+    compareThen (.tab >> ordFilterTab) <|
+    compareThen ordFilter
+    alwaysEq
 
 type alias FilterList a = List { tab : FilterTab, filters : List (Filter a) }

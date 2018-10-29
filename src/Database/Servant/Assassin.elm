@@ -6,7 +6,7 @@ import Database.Servant exposing (..)
 import Database.Skill exposing (..)
 
 assassins : List Servant
-assassins = 
+assassins =
   [ { name      = "Jack the Ripper"
     , id        = 75
     , rarity    = 5
@@ -82,7 +82,7 @@ assassins =
     , attr      = Mankind
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 5
-    , stats     = { base  = { atk = 1713,  hp = 1965 } 
+    , stats     = { base  = { atk = 1713,  hp = 1965 }
                   , max   = { atk = 11088, hp = 13402 }
                   , grail = { atk = 12138, hp = 14682 }
                   }
@@ -91,15 +91,15 @@ assassins =
                     , icon   = IconHeal
                     , cd     = 7
                     , effect = [ To Self Heal <| Range 1000 3000
-                               , Chance 60 << Grant Self 3 AttackUp  <| Range 20 40 
+                               , Chance 60 << Grant Self 3 AttackUp  <| Range 20 40
                                , Chance 60 << Grant Self 3 DefenseUp <| Range 20 40
                                ]
-                    } 
+                    }
                   , { name   = "Golden Rule (Wealth & Body)"
                     , rank   = B
                     , icon   = IconNobleTurn
                     , cd     = 8
-                    , effect = [ Grant Self 3 NPGen <| Range 20 40 
+                    , effect = [ Grant Self 3 NPGen <| Range 20 40
                                , Grant Self 3 GaugePerTurn <| Flat 10
                                , Grant Self 3 HealPerTurn <| Range 500 100
                                ]
@@ -108,20 +108,20 @@ assassins =
                     , rank   = C
                     , icon   = IconShield
                     , cd     = 8
-                    , effect = [ Grant Self 1 Invincibility Full 
+                    , effect = [ Grant Self 1 Invincibility Full
                                , To Self RemoveDebuffs Full
-                               , To Party GainStars <| Range 10 20 
+                               , To Party GainStars <| Range 10 20
                                ]
                     }
                   ]
     , passives  = [presenceConcealment B, divinity D]
-    , phantasm  = { name   = "Uraeus Astrape" 
+    , phantasm  = { name   = "Uraeus Astrape"
                   , desc   = "O, serpent who finishes the time of daybreak, come to me"
                   , rank   = A
                   , card   = Buster
                   , kind   = "Anti-Army"
                   , hits   = 5
-                  , effect = [ To Enemies Damage <| Range 300 500 
+                  , effect = [ To Enemies Damage <| Range 300 500
                              , To Self DemeritDamage <| Flat 1000
                              ]
                   , over   = [ Grant Self 1 (Performance Buster) <| Range 30 70 ]

@@ -31,15 +31,15 @@ main =
 
 renderTest : Test -> Html msg
 renderTest a = case a of
-  Suite name tests -> 
+  Suite name tests ->
     let
-      meta = 
-        if List.member name pageTitles then 
+      meta =
+        if List.member name pageTitles then
           [P.href <| pageUrl False name, P.target "wiki"]
-        else 
+        else
           []
     in
-      H.li [] 
+      H.li []
       [ H.a meta [H.text name]
       , H.ul [] <| List.map renderTest tests
       ]
@@ -59,7 +59,7 @@ pageTitles =
 numPages : Int
 numPages = List.length pageTitles
 
-type alias Model = 
+type alias Model =
     { pages    : Dict String String
     , progress : Int
     , errs     : List Test
@@ -82,12 +82,12 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg st = case msg of
   ReceivePage title result ->
     let
-      newSt = case result of 
-        Ok page -> 
+      newSt = case result of
+        Ok page ->
             { st | pages = Dict.insert title page st.pages }
-        Err fail ->   
+        Err fail ->
           let
-            err = 
+            err =
                 Debug.toString fail
                 |> maybeDo (String.split " " >> List.head)
                 >> Failure
@@ -100,39 +100,39 @@ update msg st = case msg of
       ({ newSt | progress = st.progress + 1, tests = tests }, Cmd.none)
 
 view : Model -> Html Msg
-view st = 
+view st =
   let
     size   = Dict.size st.pages
     loaded = st.progress == numPages
-    msg    = String.fromInt size ++ "/" ++ String.fromInt numPages 
-    scored = 
+    msg    = String.fromInt size ++ "/" ++ String.fromInt numPages
+    scored =
       if not loaded then
         []
       else
-        let 
+        let
           (passed, total) = Test.score st.tests
           tot = String.fromInt total ++ " tests passed."
         in
           [ if passed == total then
-              H.li [P.class "success"] 
+              H.li [P.class "success"]
               [H.text <| "Yorokobe, shounen! All " ++ tot ]
-            else 
-              H.li [P.class "failure"] 
+            else
+              H.li [P.class "failure"]
               [H.text <| String.fromInt passed ++ "/" ++ tot]
           ]
 
   in
     H.ul [] <|
-    H.li [P.class "progress"] 
-      [ H.text <| "Loading " ++ msg ++ "..." 
-      , H.ul [] <| (List.map renderTest <| Test.discardSuccesses st.errs) 
+    H.li [P.class "progress"]
+      [ H.text <| "Loading " ++ msg ++ "..."
+      , H.ul [] <| (List.map renderTest <| Test.discardSuccesses st.errs)
       ]
     :: doIf (loaded) ((::) <|
-      H.li 
-      [ P.class <| 
-        if String.fromInt size == String.fromInt numPages then 
-          "success" 
-        else 
+      H.li
+      [ P.class <|
+        if String.fromInt size == String.fromInt numPages then
+          "success"
+        else
           "failure"
       ]
       [H.text <| "Loaded " ++ msg ++ "."]
@@ -140,7 +140,7 @@ view st =
     ++ scored
 
 pageUrl : Bool -> String -> String
-pageUrl raw title = 
+pageUrl raw title =
     Url.crossOrigin "http://grandorder.wiki"
     ["index.php"]
     [ Url.string "title"  <| translate title
@@ -148,30 +148,30 @@ pageUrl raw title =
     ]
 
 requestPage : String -> Cmd Msg
-requestPage title = 
+requestPage title =
     pageUrl True title
-    |> Http.getString 
+    |> Http.getString
     >> Http.send (ReceivePage title)
 
 requestAll : Cmd Msg
 requestAll = Cmd.batch <| List.map requestPage pageTitles
 
 runTests : Dict String String -> List Test
-runTests pages = 
+runTests pages =
     List.map (Wiki.suite pages testCraftEssence) craftEssences
     ++ List.map (Wiki.suite pages testServant) servants
 
 testCraftEssence : (MaybeRank -> Wiki) -> CraftEssence -> List Test
-testCraftEssence getWiki ce = 
+testCraftEssence getWiki ce =
   let
     wiki  = getWiki Unranked
     match = Wiki.match wiki
     matchInt x = match x << String.fromInt
   in
-    doIf (Maybe.isNothing ce.bond) 
+    doIf (Maybe.isNothing ce.bond)
     ((::) << Wiki.matchEffects wiki "effect" (0, 6) <| effects ce.effect)
     [ matchInt "id"           ce.id
-    , matchInt "maxatk"       ce.stats.max.atk 
+    , matchInt "maxatk"       ce.stats.max.atk
     , matchInt "maxhp"        ce.stats.max.hp
     , matchInt "minatk"       ce.stats.base.atk
     , matchInt "minhp"        ce.stats.base.hp
@@ -203,7 +203,7 @@ testServant getWiki s =
       , match "attribute"   <| showAttr s.attr
       , match "alignment"   <| showAlign s.align
       , match "deathresist" <| String.fromFloat s.death
-      -- TODO , assert "status" <| 
+      -- TODO , assert "status" <|
       ]
     , Suite "Stats"
       [ matchInt "minatk"   s.stats.base.atk
@@ -236,17 +236,17 @@ testServant getWiki s =
       let
         npWiki = getWiki <| npRank s
       in
-        [ Wiki.matchOne npWiki "Name" 0 s.phantasm.name 
+        [ Wiki.matchOne npWiki "Name" 0 s.phantasm.name
         , Wiki.matchOne npWiki "Description" 1 s.phantasm.desc
-        , Wiki.matchEffects npWiki "effect" (0, 6) <| 
+        , Wiki.matchEffects npWiki "effect" (0, 6) <|
           effects s.phantasm.effect
-        , Wiki.matchEffects npWiki "oceffect" (0, 6) <| 
+        , Wiki.matchEffects npWiki "oceffect" (0, 6) <|
           effects s.phantasm.over
         ]
     ]
 
 showMaterials : List (List (Material, Int)) -> List (List String)
-showMaterials = 
+showMaterials =
     List.map << List.map <| \(mat, count) ->
         Show.material mat ++ "*" ++ String.fromInt count
 

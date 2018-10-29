@@ -6,7 +6,7 @@ import Database.Servant exposing (..)
 import Database.Skill exposing (..)
 
 lancers : List Servant
-lancers = 
+lancers =
   [ { name  =   "Scathach"
     , id        = 70
     , rarity    = 5
@@ -586,7 +586,7 @@ lancers =
     , attr      = Earth
     , deck      = Deck Quick Quick Arts Buster Buster
     , curve     = 14
-    , stats     = { base  = { atk = 1462,  hp = 2080 } 
+    , stats     = { base  = { atk = 1462,  hp = 2080 }
                   , max   = { atk = 8775,  hp = 13005 }
                   , grail = { atk = 10625, hp = 15769 }
                   }
@@ -594,12 +594,12 @@ lancers =
                     , rank   = APlusPlusPlus
                     , icon   = IconHoodUp
                     , cd     = 7
-                    , effect = [ Grant Self 3 DebuffResist <| Range 50 100 
+                    , effect = [ Grant Self 3 DebuffResist <| Range 50 100
                                , To Self Heal <| Range 1000 2500
                                , Grant Self 1 DefenseUp <| Range 20 40
                                , Grant Self 3 AttackUp <| Range 10 20
                                ]
-                    } 
+                    }
                   , { name   = "Tactics"
                     , rank   = B
                     , icon   = IconBeamUp
@@ -610,7 +610,7 @@ lancers =
                     , rank   = A
                     , icon   = IconStarTurn
                     , cd     = 7
-                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9 
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9
                                , Chances 100 300 <| Grant Self 1 Taunt Full
                                ]
                     }
@@ -622,7 +622,7 @@ lancers =
                   , card   = Buster
                   , kind   = "Anti-Enemy"
                   , hits   = 6
-                  , effect = [ Grant Self 1 IgnoreInvinc Full 
+                  , effect = [ Grant Self 1 IgnoreInvinc Full
                              , To Enemy Damage <| Range 600 1000
                              ]
                   , over   = [ To Enemy (SpecialDamage <| VsAlignment Evil) <| Range 150 200 ]

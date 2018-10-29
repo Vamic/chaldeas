@@ -1,4 +1,4 @@
-module Database.Servant exposing 
+module Database.Servant exposing
   ( Servant, eqServant, OrdServant, ordServant
   , Deck(..)
   , Ratings
@@ -23,7 +23,7 @@ import StandardLibrary exposing (..)
 import Database.Base exposing (..)
 import Database.Skill exposing (..)
 
-type alias Servant = 
+type alias Servant =
     { name     : String
     , id       : Int
     , rarity   : Int
@@ -57,8 +57,8 @@ eqServant = on (==) ordServant
 
 type Deck = Deck Card Card Card Card Card
 
-type alias Ratings = 
-    { damage     : Int 
+type alias Ratings =
+    { damage     : Int
     , np         : Int
     , critical   : Int
     , utility    : Int
@@ -78,11 +78,11 @@ type alias NoblePhantasm =
     , first  : Bool
     }
 
-type alias Hits = 
+type alias Hits =
     { arts   : Int
     , buster : Int
     , quick  : Int
-    , ex     : Int 
+    , ex     : Int
     }
 
 type alias Gen =
@@ -120,7 +120,7 @@ getDeck : Servant -> List Card
 getDeck {deck} = let (Deck a b c d e) = deck in [a, b, c, d, e]
 
 reduceMats : List (List (Material, Int)) -> List (Material, Int)
-reduceMats = 
+reduceMats =
   let
     reduce : ((Material, Int), List (Material, Int)) -> (Material, Int)
     reduce ((x, y), xs) = (x, List.sum <| y :: List.map Tuple.second xs)
@@ -134,16 +134,16 @@ getAscensions : Servant -> List (List (Material, Int))
 getAscensions {ascendUp} = case ascendUp of
     Ascension a b c d -> [a, b, c, d]
     _                 -> []
-  
+
 getReinforcements : Servant -> List (List (Material, Int))
-getReinforcements {skillUp} = 
+getReinforcements {skillUp} =
   let
     (Reinforcement a b c d e f g h) = skillUp
-  in 
+  in
     [a, b, c, d, e, f, g, h, [ (CrystallizedLore, 1) ]]
 
 getMaterials : Servant -> List Material
-getMaterials s = 
+getMaterials s =
     getAscensions s ++ getReinforcements s
     |> List.concat
     >> List.map Tuple.first
@@ -158,10 +158,10 @@ phantasmType np =
       To x Avenge _        -> x == target
       _                    -> False
     effects = np.effect ++ np.over
-  in 
-    if List.any (match Enemy) effects then 
+  in
+    if List.any (match Enemy) effects then
       SingleTarget
-    else if List.any (match Enemies) effects then 
+    else if List.any (match Enemies) effects then
       MultiTarget
-    else 
+    else
       Support

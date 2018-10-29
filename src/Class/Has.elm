@@ -14,42 +14,42 @@ type alias Has a b =
     }
 
 material : Has Servant Material
-material = 
+material =
     Has Show.material << always <|
     getMaterials >> List.filter (not << ignoreMat)
 
 trait : Has Servant Trait
-trait = 
-    Has Show.trait << always <| 
+trait =
+    Has Show.trait << always <|
     .traits
 
 alignment : Has Servant Alignment
-alignment = 
-    Has Show.alignment << always <| 
+alignment =
+    Has Show.alignment << always <|
     .align
 
 phantasmType : Has Servant PhantasmType
-phantasmType = 
+phantasmType =
     Has Show.phantasmType << always <|
     .phantasm >> Servant.phantasmType >> List.singleton
 
 class : Has Servant Class
-class = 
-    Has Show.class << always <| 
+class =
+    Has Show.class << always <|
     .class >> List.singleton
 
 attribute : Has Servant Attribute
-attribute = 
-    Has Show.attribute << always <| 
+attribute =
+    Has Show.attribute << always <|
     .attr >> List.singleton
 
 deck : Has Servant Deck
 deck =
-    Has Show.deck << always <| 
+    Has Show.deck << always <|
     .deck >> List.singleton
 
 card : Has Servant Card
-card = 
+card =
     Has Show.card << always <|
     .phantasm >> .card >> List.singleton
 
@@ -59,13 +59,13 @@ passive =
     .passives
 
 servant : Servant -> List SkillEffect
-servant s = 
-    s.phantasm.effect 
-    ++ s.phantasm.over 
+servant s =
+    s.phantasm.effect
+    ++ s.phantasm.over
     ++ List.concatMap .effect s.skills
 
 effect : (b -> String) -> (Bool -> SkillEffect -> Maybe b)
-         -> (a -> List SkillEffect) 
+         -> (a -> List SkillEffect)
          -> Has a b
 effect show match f = Has show <| \noSelf x ->
     f x
@@ -75,22 +75,22 @@ effect show match f = Has show <| \noSelf x ->
     >> Maybe.values
 
 buffEffect : (a -> List SkillEffect) -> Has a BuffEffect
-buffEffect = 
-    effect (Show.buffEffect Someone Placeholder) <| 
+buffEffect =
+    effect (Show.buffEffect Someone Placeholder) <|
     \noSelf a -> case a of
       Grant t _ y _ -> if not noSelf || t /= Self then Just y else Nothing
       _             -> Nothing
 
 debuffEffect : (a -> List SkillEffect) -> Has a DebuffEffect
-debuffEffect = 
-    effect (Show.debuffEffect Someone Placeholder) <| 
+debuffEffect =
+    effect (Show.debuffEffect Someone Placeholder) <|
     \_ a -> case a of
       Debuff _ _ y _ -> Just y
       _              -> Nothing
 
 instantEffect : (a -> List SkillEffect) -> Has a InstantEffect
-instantEffect = 
-    effect (Show.instantEffect Someone Placeholder) <| 
+instantEffect =
+    effect (Show.instantEffect Someone Placeholder) <|
     \noSelf a -> case a of
       To _ ApplyAtRandom _ -> Nothing
       To _ BecomeHyde    _ -> Nothing
@@ -99,8 +99,8 @@ instantEffect =
       _        -> Nothing
 
 bonusEffect : (a -> List SkillEffect) -> Has a BonusEffect
-bonusEffect = 
-    effect (Show.bonusEffect False Placeholder) <| 
+bonusEffect =
+    effect (Show.bonusEffect False Placeholder) <|
     \_ a -> case a of
       Bonus y _ _ -> Just y
       _           -> Nothing

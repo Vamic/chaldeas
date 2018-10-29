@@ -1,4 +1,4 @@
-module Site.Base exposing 
+module Site.Base exposing
   ( Section(..), enumSection
   , FilterTab(..), enumFilterTab, ordFilterTab
   , exclusive
@@ -7,18 +7,18 @@ module Site.Base exposing
 import StandardLibrary exposing (..)
 import Database.Skill exposing (..)
 
-{-| The site's layout is broken up into `Section`s. 
+{-| The site's layout is broken up into `Section`s.
 On mobile, instead of showing `Section`s in sidebars, eachis a separate page. -}
 type Section
-    =  SectionBrowse 
-    | SectionSettings 
-    | SectionSortBy 
-    | SectionInclude 
+    =  SectionBrowse
+    | SectionSettings
+    | SectionSortBy
+    | SectionInclude
     | SectionFilter
 
 enumSection : List Section
 enumSection =
-    [ SectionBrowse 
+    [ SectionBrowse
     , SectionSettings
     , SectionSortBy
     , SectionInclude

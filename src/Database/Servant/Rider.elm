@@ -6,7 +6,7 @@ import Database.Servant exposing (..)
 import Database.Skill exposing (..)
 
 riders : List Servant
-riders = 
+riders =
   [ { name  =   "Ozymandias"
     , id        = 118
     , rarity    = 5

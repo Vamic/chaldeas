@@ -1,6 +1,6 @@
-module Printing exposing 
+module Printing exposing
   ( stars
-  , places, commas 
+  , places, commas
   , filterOut
   , fileName, urlName
   , unCamel
@@ -19,7 +19,7 @@ import StandardLibrary exposing (..)
 stars : Bool -> Int -> String
 stars padded rarity =
   if padded then
-    String.join "  " <| List.repeat rarity "★" 
+    String.join "  " <| List.repeat rarity "★"
   else
     List.repeat rarity '★'
     |> List.intersperse ' '
@@ -36,7 +36,7 @@ places decimals =
 
 {-| Removes specified characters from strings. -}
 filterOut : String -> String -> String
-filterOut pattern = 
+filterOut pattern =
   let
     arr = String.toList pattern
   in
@@ -52,19 +52,19 @@ urlName = filterOut " -\""
 
 {-| Converts `NightMode` into "Night Mode" etc. -}
 unCamel : String -> String
-unCamel = 
+unCamel =
   let
     replacer : Regex.Match -> String
     replacer {match, submatches} = case submatches of
       Just x :: Just y :: _ -> x ++ " " ++ y
       _                     -> match
-  in 
+  in
     Regex.replace camel replacer
     >> String.replace " The " " the "
     >> String.replace " Of " " of "
 
 camel : Regex
-camel = 
+camel =
     Regex.fromString "([a-z])([A-Z])|([A-Z])([A-Z][a-z])"
     |> Maybe.withDefault Regex.never
 

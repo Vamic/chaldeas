@@ -1,4 +1,4 @@
-module Persist.Preferences exposing 
+module Persist.Preferences exposing
   ( Preference(..), enumPreference, ordPreference
   , Preferences, noPreferences
   , prefer
@@ -22,7 +22,7 @@ type Preference
     | HideClasses
 
 enumPreference : List Preference
-enumPreference = 
+enumPreference =
     [ Artorify
     , NightMode
     , Thumbnails
@@ -46,7 +46,7 @@ prefDefault a = case a of
 type alias Preferences = Set OrdPreference
 
 noPreferences : Preferences
-noPreferences = 
+noPreferences =
   let
     acc pref = setPreference pref <| prefDefault pref
   in
@@ -61,5 +61,5 @@ setPreference pref a = case a of
   False -> Set.remove <| ordPreference pref
 
 unfoldPreferences : Preferences -> List (Preference, Bool)
-unfoldPreferences prefs = flip List.map enumPreference <| \pref -> 
+unfoldPreferences prefs = flip List.map enumPreference <| \pref ->
     (pref, prefer prefs pref)

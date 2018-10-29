@@ -22,15 +22,15 @@ import Site.Filtering      exposing (..)
 
 import Class.Show as Show
 
-{-| Scrolls an HTML element to its top. 
+{-| Scrolls an HTML element to its top.
 Used when a Servant or Craft Essence is clicked on. -}
 scrollToTop : String -> Cmd (SiteMsg a b c)
 scrollToTop id = Task.attempt (always DoNothing) <| Dom.setViewportOf id 0 0
 
 {-| Updates the URL in the address bar and adds an entry to browser history. -}
 setPath : Navigation.Key -> List String -> Cmd msg
-setPath key path = 
-    Navigation.pushUrl key <| 
+setPath key path =
+    Navigation.pushUrl key <|
     Url.absolute ("chaldeas" :: List.map urlName path) []
 
 {-| Displays details for a Servant or Craft Essence in the popup. -}
@@ -48,10 +48,10 @@ toCell isPercent =
 
 {-| Displays a `<tr>` of skill effect values that increase when leveled. -}
 lvlRow : RangeInfo -> Html msg
-lvlRow r = 
+lvlRow r =
   let
     step = (r.max - r.min) / 10
-    go   = 
+    go   =
         toFloat
         >> (*) step
         >> (+) r.min
@@ -61,28 +61,28 @@ lvlRow r =
     |> List.map go
     >> H.tr []
 
-{-| Converts certain spaces into no-break-spaces in portrait names. 
+{-| Converts certain spaces into no-break-spaces in portrait names.
 For example, parenthesized phrases such as (Lancer Alter) do not break on lines. -}
 noBreakName : Bool -> Bool -> String -> String
 noBreakName shouldPrettify hideClasses =
   let
     classNames = List.map Show.class enumClass
     replaceSpaces  = String.replace " " " "
-    replacePirates = 
+    replacePirates =
         String.replace "Anne Bonny"  "Anne Bonny" >>
         String.replace "& Mary Read" "& Mary Read"
     unBreak xs = case xs of
-      [x, y] -> 
-        if shouldPrettify then 
+      [x, y] ->
+        if shouldPrettify then
           x
-        else if not hideClasses then 
+        else if not hideClasses then
           x ++ " (" ++ y
         else x ++ case String.split " " <| stripSuffix ")" y of
           []      -> " (" ++ replaceSpaces y
-          w :: ws -> 
-            if not <| List.member w classNames then 
+          w :: ws ->
+            if not <| List.member w classNames then
               " (" ++ replaceSpaces y
-            else if List.isEmpty ws then 
+            else if List.isEmpty ws then
               ""
             else
               " (" ++ replaceSpaces (String.join " " ws) ++ ")"
@@ -98,9 +98,9 @@ mode : Preferences -> String
 mode prefs = if prefer prefs NightMode then "dark" else "light"
 
 {-| Displays a `SkillEffect` with a link and marks demerits. -}
-effectEl : List a -> Maybe (a -> List SkillEffect) -> SkillEffect 
+effectEl : List a -> Maybe (a -> List SkillEffect) -> SkillEffect
         -> Html (SiteMsg a b c)
-effectEl xs getEffects ef = 
+effectEl xs getEffects ef =
     flip H.p [H.text <| Show.skillEffect ef] <|
     if demerit ef then
       [P.class "demerit"]
@@ -124,14 +124,14 @@ h_ level = text_ <| case level of
     3 -> H.h3
     4 -> H.h4
     5 -> H.h5
-    _ -> H.h6 
+    _ -> H.h6
 
 {-| `<button>` -}
 button_ : String -> Bool -> msg -> Html msg
 button_ label enable click =
   let
-    meta = 
-        P.type_ "button" :: 
+    meta =
+        P.type_ "button" ::
         if enable then [E.onClick click] else [P.disabled True]
   in
     H.button meta [H.text label]
@@ -145,7 +145,7 @@ checkbox_ icon label checked =
         Just ic -> [ic, H.text label]
     ]
 
-{-| Fires the `onChange` web event. 
+{-| Fires the `onChange` web event.
 Unlike `onInput`, ignores events such as backspaces. -}
 onChange : (String -> msg) -> H.Attribute msg
 onChange tagger =
@@ -153,7 +153,7 @@ onChange tagger =
   Json.map (\x -> (x, True)) <| Json.map tagger E.targetValue
 
 {-| `<input type="number"> with supplied `min`, `max`, and `value`. -}
-int_ : Int -> Int -> Int -> (Int -> SiteMsg a b c) 
+int_ : Int -> Int -> Int -> (Int -> SiteMsg a b c)
     -> List (Html (SiteMsg a b c))
 int_ minVal maxVal actualVal changed =
     [ H.input
@@ -165,24 +165,24 @@ int_ minVal maxVal actualVal changed =
       , onChange  <| \val ->
           case String.toInt val of
             Nothing -> DoNothing
-            Just intVal -> 
-              if intVal >= minVal && intVal <= maxVal then 
+            Just intVal ->
+              if intVal >= minVal && intVal <= maxVal then
                 changed intVal
               else
-                DoNothing      
+                DoNothing
       ] []
     ]
 
 {-| `<input type="radio">` -}
 radio_ : String -> Bool -> List (Html msg)
 radio_ label checked =
-    [ H.input [P.type_ "radio", P.checked checked] [] 
+    [ H.input [P.type_ "radio", P.checked checked] []
     , text_ H.label label
     ]
 
 {-| `<table>` with supplied headings -}
 table_ : List String -> List (Html msg) -> Html msg
-table_ headings tbody = 
+table_ headings tbody =
     H.table []
     [ H.colgroup [] <| List.map (always <| H.col [] []) headings
     , H.thead [] [H.tr [] <| List.map (text_ H.th) headings]

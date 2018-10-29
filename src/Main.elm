@@ -20,11 +20,11 @@ port export    : (String, Value) -> Cmd msg
 {-| Sets the page title. -}
 port title     : String -> Cmd msg
 
-{-| Exports `servants` to `Export.servants` 
+{-| Exports `servants` to `Export.servants`
 and `craftEssences` to `Export.craftEssences`. -}
 runExports : Cmd msg
-runExports = 
-    Cmd.batch 
+runExports =
+    Cmd.batch
     [ export ("servants",      E.list Export.servant servants)
     , export ("craftEssences", E.list Export.craftEssence craftEssences)
     ]

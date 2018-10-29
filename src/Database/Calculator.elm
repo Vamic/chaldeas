@@ -34,7 +34,7 @@ npPer s card =
 
 {-| Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3307-How-many-crit-stars-do-I-get-in-combat) -}
 starsPer : Servant -> Card -> Float
-starsPer s card = 
+starsPer s card =
   let
     baseStarRate     = s.gen.starRate / 100
     firstCardBonus   = 0.2
@@ -80,7 +80,7 @@ npDamage addSkills special maxOver s =
                       Caster    -> 0.9
                       Assassin  -> 0.9
                       _         -> 1
-    triangleModifier = 
+    triangleModifier =
         ifSpecial enumClass
         |> List.map (VsClass >> Special AttackUp >> matchSum buffs)
         >> List.sum
@@ -104,7 +104,7 @@ npDamage addSkills special maxOver s =
     ---------------------
     -- FROM NP PROPERTIES
     ---------------------
-    npDamageMultiplier = 
+    npDamageMultiplier =
         [Damage, DamageThruDef]
         |> doIf special ((::) LastStand)
         >> List.map (matchSum instants)
@@ -117,7 +117,7 @@ npDamage addSkills special maxOver s =
         >> (+) (matchSum instants DamagePoison)
         >> (+) 1
     isSuperEffective = 1.0
-    directDamage = 
+    directDamage =
         toFloat (max s.stats.base.hp s.stats.max.hp) * matchSum instants Avenge
     -------------
     -- FROM BUFFS
@@ -137,7 +137,7 @@ npDamage addSkills special maxOver s =
     critDamageMod = 0
     isNP          = 1
     npDamageMod   = matchSum buffs NPUp
-    dmgPlusAdd    = 
+    dmgPlusAdd    =
         100 * (matchSum buffs DamageUp + matchSum debuffs DamageVuln)
     selfDmgCutAdd = 0
     -----------
@@ -149,7 +149,7 @@ npDamage addSkills special maxOver s =
     maxIf x      = if x then toMax else toMin
     npStrength   = maxIf <| s.free || (s.rarity <= 3 && s.rarity > 0)
     overStrength = maxIf maxOver
-    skillFs      = 
+    skillFs      =
         s.passives
         |> doIf addSkills ((++) s.skills)
         >> List.concatMap .effect
@@ -157,7 +157,7 @@ npDamage addSkills special maxOver s =
     npFs        = List.map simplify effect
     overFs      = List.map simplify over
     firstFs     = if first then List.take 1 overFs else []
-    buffs       = 
+    buffs       =
       let
         go f a = case a of
           Grant t _ buff n -> if selfable t then [(buff, f n / 100)] else []
@@ -166,20 +166,20 @@ npDamage addSkills special maxOver s =
         List.concatMap (go toMax) skillFs
         ++ List.concatMap (go npStrength) npFs
         ++ List.concatMap (go overStrength) firstFs
-    debuffs     = 
+    debuffs     =
       let
         go f a = case a of
-          Debuff t _ debuff n -> 
+          Debuff t _ debuff n ->
               if not (allied t) then [(debuff, f n / 100)] else []
           _ -> []
       in
         List.concatMap (go toMax) skillFs
         ++ List.concatMap (go npStrength) npFs
         ++ List.concatMap (go overStrength) firstFs
-    instants    = 
+    instants    =
       let
         go f a = case a of
-          To t instant n -> 
+          To t instant n ->
               if not (allied t) then [(instant, f n / 100)] else []
           _ -> []
       in
@@ -187,9 +187,9 @@ npDamage addSkills special maxOver s =
         ++ List.concatMap (go npStrength) npFs
         ++ List.concatMap (go overStrength) overFs
   in
-    if npDamageMultiplier + directDamage == 0 then 
-      0 
-    else 
+    if npDamageMultiplier + directDamage == 0 then
+      0
+    else
       servantAtk
       * npDamageMultiplier
       * ( firstCardBonus + (cardDamageValue * (1.0 + cardMod)) )
@@ -217,7 +217,7 @@ npDamage addSkills special maxOver s =
 {-| Obtains all self-granted always-active buff effects from passive skills.
 Returns an array of (Buff, Strength%) pairs. -}
 passiveBuffs : Servant -> List (BuffEffect, Float)
-passiveBuffs s = 
+passiveBuffs s =
   let
     go a = case a of
       Grant t _ buff n -> if selfable t then [(buff, toMax n / 100)] else []
@@ -251,8 +251,8 @@ selfable a = case a of
   Party -> True
   _     -> False
 
-{-| Sums up all effects of a certain type from a Servant's skills 
+{-| Sums up all effects of a certain type from a Servant's skills
 in (Effect, Strength%) format. -}
 matchSum : List (a, Float) -> a -> Float
-matchSum xs k = List.sum << flip List.map xs <| \(k1, v) -> 
+matchSum xs k = List.sum << flip List.map xs <| \(k1, v) ->
     if k == k1 then v else 0

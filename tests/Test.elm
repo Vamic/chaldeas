@@ -12,7 +12,7 @@ type Outcome = Success | Failure String
 type Test = Test String Outcome | Suite String (List Test)
 
 score : List Test -> (Int, Int)
-score = 
+score =
   let
     tupleSum (x1, x2) (y1, y2) = (x1 + y1, x2 + y2)
     scoreOne x = case x of
@@ -24,12 +24,12 @@ score =
 
 
 discardSuccesses : List Test -> List Test
-discardSuccesses xs = 
+discardSuccesses xs =
     Maybe.values <<
     flip List.map xs <| \x -> case x of
       Test _ (Failure _) -> Just x
       Test _ Success     -> Nothing
-      Suite name tests   -> 
+      Suite name tests   ->
         case discardSuccesses tests of
           []       -> Nothing
           newTests -> Just <| Suite name newTests

@@ -1,6 +1,6 @@
 module Database exposing (servants, getAll, ceGetAll, ranges)
 
-{-| Packages together all information from the Database folder, including 
+{-| Packages together all information from the Database folder, including
 a collection of all Servants in the [Database.Servant](./Servant/) folder. -}
 
 import List.Extra as List
@@ -23,7 +23,7 @@ import Database.Servant.Saber     exposing (sabers)
 
 import Class.Show as Show
 
-{-| All Servants available in EN. Collects the database in 
+{-| All Servants available in EN. Collects the database in
 [Database/Servant](./Servant/). -}
 -- Note: Names _must_ be true to their EN localization.
 -- GrandOrder.Wiki is only trustworthy for Servants that have been in the game
@@ -31,15 +31,15 @@ import Class.Show as Show
 -- Servants introduced during events and the like should be checked against
 -- the official announcement.
 servants : List Servant
-servants = 
+servants =
   let
     addHeavenOrEarth s = case s.attr of
       Earth  -> { s | traits = HeavenOrEarth :: s.traits }
       Heaven -> { s | traits = HeavenOrEarth :: s.traits }
       _      -> s
-    addUniversal s = 
-        { s 
-        | traits   = List.sortBy Show.trait <| [Humanoid, s.gender] ++ s.traits 
+    addUniversal s =
+        { s
+        | traits   = List.sortBy Show.trait <| [Humanoid, s.gender] ++ s.traits
         , passives = List.sortBy .name s.passives
         }
   in
@@ -51,19 +51,19 @@ servants =
     , lancers
     , riders
     , sabers
-    ] 
+    ]
     |> List.concat
     >> List.map (addHeavenOrEarth >> addUniversal)
 
-{-| Retrieves all values of a `Has <a>` Enum 
+{-| Retrieves all values of a `Has <a>` Enum
 that at least one `<a>` in the database `has`. -}
 genericGetAll : List a -> Has a b -> List b
-genericGetAll xs {show, has} = 
-    xs 
+genericGetAll xs {show, has} =
+    xs
     |> List.concatMap (has False)
     >> List.sortBy show
     >> List.uniqueBy show
-    
+
 getAll : Has Servant a -> List a
 getAll = genericGetAll servants
 
@@ -71,7 +71,7 @@ ceGetAll : Has CraftEssence a -> List a
 ceGetAll = genericGetAll craftEssences
 
 ranges : List SkillEffect -> List RangeInfo
-ranges = 
+ranges =
   let
     toInfo ef              = List.map (info <| isPercent ef) <| acc ef
     isPercent              = Show.skillEffect >> String.contains "%"
@@ -82,7 +82,7 @@ ranges =
       To _ _ x       -> go x
       Bonus _ _ x    -> go x
       Chance _ ef    -> acc ef
-      Chances x y ef -> {from = Basics.toFloat x, to = Basics.toFloat y} 
+      Chances x y ef -> {from = Basics.toFloat x, to = Basics.toFloat y}
                         :: acc ef
       When _ ef      -> acc ef
       Times _ ef     -> acc ef
@@ -90,5 +90,5 @@ ranges =
     go a = case a of
       Range x y -> [{from = x, to = y}]
       _         -> []
-  in 
+  in
     List.concatMap toInfo

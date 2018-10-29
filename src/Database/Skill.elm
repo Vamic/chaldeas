@@ -137,7 +137,7 @@ type BuffCategory
     | BuffSpecialist
 
 enumBuffCategory : List BuffCategory
-enumBuffCategory = 
+enumBuffCategory =
     [ BuffOffensive
     , BuffDefensive
     , BuffSupport
@@ -208,7 +208,7 @@ type SkillEffect
     | ToMax Amount SkillEffect
 
 mapAmount : (Float -> Float -> Amount) -> SkillEffect -> SkillEffect
-mapAmount f eff = 
+mapAmount f eff =
   let
     f_ x = case x of
       Range a b -> f a b
@@ -291,8 +291,8 @@ type Special
     | VsAlignment Alignment
 
 enumSpecial : List Special
-enumSpecial = 
-    List.map VsTrait enumTrait 
+enumSpecial =
+    List.map VsTrait enumTrait
     ++ List.map VsClass enumClass
     ++ List.map VsAlignment enumAlignment
 
@@ -311,18 +311,18 @@ allied a = case a of
   AlliesType _ -> True
   _            -> False
 
-type alias RangeInfo = 
+type alias RangeInfo =
     { percent : Bool
     , min     : Float
     , max     : Float
     }
- 
+
 type alias OrdRangeInfo = Float
 
 ordRangeInfo : RangeInfo -> OrdRangeInfo
 ordRangeInfo r = r.max
 
-type alias Skill = { name   : String 
+type alias Skill = { name   : String
                    , rank   : Rank
                    , icon   : Icon
                    , cd     : Int

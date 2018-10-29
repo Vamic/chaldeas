@@ -13,7 +13,7 @@ import Persist.Flags       exposing (..)
 import Persist.Preferences exposing (..)
 
 siteUpdate : (String -> Value -> Cmd (SiteMsg filt focus alt))
-          -> (focus -> filt) 
+          -> (focus -> filt)
           -> (filt -> String)
           -> (SiteModel filt focus extra -> SiteModel filt focus extra)
           -> SiteMsg filt focus alt
@@ -23,37 +23,37 @@ siteUpdate store transform show reSort msg st =
   let
     relist        = updateListing transform
     goUp x        = (x, scrollToTop "content")
-    toggleIn x xs = 
-        if List.any (eqFilter x) xs then 
-          removeWith eqFilter x xs 
-        else 
+    toggleIn x xs =
+        if List.any (eqFilter x) xs then
+          removeWith eqFilter x xs
+        else
           x :: xs
   in case msg of
-    ToSection section -> 
+    ToSection section ->
         pure { st | section = section }
-    ClearAll -> 
+    ClearAll ->
         goUp <| relist { st | exclude = [], filters = [] }
     Check t True ->
-        goUp <| relist 
+        goUp <| relist
         { st | exclude = List.filter (.tab >> (/=) t) st.exclude }
     Check t False ->
       let
-        filters = 
+        filters =
             List.find (.tab >> (==) t) st.allFilters
             |> Maybe.map .filters
             >> Maybe.withDefault []
       in
         goUp <| relist
         { st | exclude = List.uniqueBy ordFilter <| filters ++ st.exclude }
-    SetSort sortBy -> 
+    SetSort sortBy ->
         goUp << relist <| reSort { st | sortBy = sortBy }
-    MatchAny matchAny -> 
+    MatchAny matchAny ->
         goUp <| relist { st | matchAny = matchAny }
-    Focus focus -> 
+    Focus focus ->
         ( { st | focus = focus }
         , setFocus st.navKey st.root <| Maybe.map (transform >> show) focus
         )
-    FilterBy filters -> 
+    FilterBy filters ->
       let
         resetPath (x, y) = (x, Cmd.batch [y, setPath st.navKey [st.root]])
       in
@@ -70,7 +70,7 @@ siteUpdate store transform show reSort msg st =
           , filters = filters
           , focus   = Nothing
           }
-    SetPref k v -> 
+    SetPref k v ->
       let
         prefs = setPreference k v st.prefs
       in
@@ -78,12 +78,12 @@ siteUpdate store transform show reSort msg st =
         , storePreferences store prefs
         )
     Toggle filter ->
-        goUp << relist <| 
+        goUp << relist <|
         if exclusive filter.tab then
             { st | exclude = toggleIn filter st.exclude }
         else
             { st | filters = toggleIn filter st.filters }
-    Ascend _ _  -> pure st 
+    Ascend _ _  -> pure st
     OnTeam _ _  -> pure st
     MineOnly _  -> pure st
     Switch _    -> pure st

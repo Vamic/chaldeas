@@ -6,21 +6,21 @@ import Database.Base    exposing (..)
 import Database.Servant exposing (..)
 
 lvlStats : Servant -> Int -> Stat
-lvlStats {curve, stats} level = 
+lvlStats {curve, stats} level =
   let
-    modifier = 
+    modifier =
         Array.get curve growthCurves
         |> Maybe.andThen (Array.get level)
         >> Maybe.withDefault 0
         >> toFloat
-    go baseVal maxVal = 
+    go baseVal maxVal =
         toFloat (maxVal - baseVal) * modifier / 1000
         |> floor
         >> (+) baseVal
   in
     case level of
       0 -> stats.max
-      _ -> { atk = go stats.base.atk stats.max.atk 
+      _ -> { atk = go stats.base.atk stats.max.atk
            , hp  = go stats.base.hp  stats.max.hp
            }
 

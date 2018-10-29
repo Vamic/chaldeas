@@ -29,7 +29,7 @@ import Database.Skill        exposing (..)
 
 import Class.Show as Show
 
-type alias ImagePath = 
+type alias ImagePath =
     { dir  : String
     , file : String
     }
@@ -39,7 +39,7 @@ type alias ToImage a = a -> ImagePath
 image : ImagePath -> Html b
 image {dir, file} =
     H.img
-    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png" 
+    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png"
     , P.title <| unCamel file
     ]
     []
@@ -47,7 +47,7 @@ image {dir, file} =
 thumbnail : ImagePath -> Html b
 thumbnail {dir, file} =
     H.img
-    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ " Thumbnail.png" 
+    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ " Thumbnail.png"
     , P.title <| unCamel file
     ]
     []
@@ -55,7 +55,7 @@ thumbnail {dir, file} =
 link : b -> ImagePath -> Html b
 link href {dir, file} =
     H.img
-    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png" 
+    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png"
     , P.title <| unCamel file
     , P.class "link"
     , E.onClick href

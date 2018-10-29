@@ -1,4 +1,4 @@
-module MyServant exposing 
+module MyServant exposing
   ( MyServant
   , recalc
   , unowned, newServant, owned
@@ -40,7 +40,7 @@ recalc ms =
     s         = ms.base
     stats     = s.stats
     calcStats = addStats ms.fou <| lvlStats s ms.level
-    calcNP minAmount maxAmount = 
+    calcNP minAmount maxAmount =
         Flat <| minAmount + (maxAmount - minAmount) * case ms.npLvl of
           1 -> 0
           2 -> 0.5
@@ -53,7 +53,7 @@ recalc ms =
                             + (maxAmount - minAmount)
                             * (toFloat ms.npLvl - 1)
                             / 4
-    calcActives lvl skill = 
+    calcActives lvl skill =
       let
         calc minAmount maxAmount = case lvl of
           10 -> Flat maxAmount
@@ -62,20 +62,20 @@ recalc ms =
                       * (toFloat lvl - 1)
                       / 10
       in
-        { skill 
+        { skill
         | effect = List.map (mapAmount calc) skill.effect
         , cd     = skill.cd - (max 2 lvl - 2) // 4
         }
   in
     mapSort
-    { ms 
-    | servant = 
+    { ms
+    | servant =
       { s
-      | stats    = let x = s.stats 
+      | stats    = let x = s.stats
                    in { x | base = calcStats, max = calcStats }
-      , phantasm = let x = s.phantasm 
-                   in { x 
-                      | effect = List.map (mapAmount calcNP) s.phantasm.effect 
+      , phantasm = let x = s.phantasm
+                   in { x
+                      | effect = List.map (mapAmount calcNP) s.phantasm.effect
                       , over   = case ms.level of
                           0 -> s.phantasm.over
                           _ -> List.map (mapAmount calcOver) s.phantasm.over
@@ -102,17 +102,17 @@ toSort addSkills sortBy s = case sortBy of
 mapSort : MyServant -> MyServant
 mapSort ms =
   let
-    go sorter = 
-      let 
+    go sorter =
+      let
         doSort addSkills = toSort addSkills sorter ms.servant
-      in 
+      in
         (ordSortBy sorter, (doSort True, doSort False))
   in
     { ms | sorted = dict enumSortBy go }
 
 makeUnowned : Servant -> MyServant
-makeUnowned s = mapSort <| 
-    { servant = s 
+makeUnowned s = mapSort <|
+    { servant = s
     , base    = s
     , level   = 0
     , fou     = { atk = 990, hp = 990 }
@@ -131,8 +131,8 @@ unowned s = case Dict.get (ordServant s) unowneds of
     Nothing -> makeUnowned s -- But if this actually happens, something is weird
 
 newServant : Servant -> MyServant
-newServant s = 
-    { servant = s 
+newServant s =
+    { servant = s
     , base    = s
     , level   = 1
     , fou     = { atk = 0, hp = 0 }

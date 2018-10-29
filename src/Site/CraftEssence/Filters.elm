@@ -42,15 +42,15 @@ extraFilters = List.concat
 scheduledFilters : List (ScheduledFilter CraftEssence)
 scheduledFilters =
   [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus 
+    nameFilter FilterEventBonus
     "+25~100% Skeletons, Ghosts, & Lamias"
     [ "Wizard & Priest" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus 
+    nameFilter FilterEventBonus
     "+25~100% Insects & Golems"
     [ "Mata Hari's Tavern" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus 
+    nameFilter FilterEventBonus
     "+25~100% Beasts, Homunculi, & Knights"
     [ "Hero Elly's Adventure" ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
@@ -76,26 +76,26 @@ scheduledFilters =
   ]
 
 getExtraFilters : Date -> FilterTab -> List (Filter CraftEssence)
-getExtraFilters today tab = 
+getExtraFilters today tab =
     getScheduled scheduledFilters today ++ extraFilters
     |> List.filter (.tab >> (==) tab)
 
 getFilters : Date -> FilterTab -> List (Filter CraftEssence)
-getFilters today tab = 
+getFilters today tab =
   let
-    allEffects has toImage pred = 
+    allEffects has toImage pred =
         ceGetAll (has .effect)
         |> List.filter pred
         >> List.map (matchFilter toImage (has .effect) tab)
   in case tab of
     FilterBonus  -> allEffects Has.bonusEffect Nothing <|
                     always True
-    FilterDebuff -> allEffects Has.debuffEffect (Just ToImage.debuffEffect) <| 
+    FilterDebuff -> allEffects Has.debuffEffect (Just ToImage.debuffEffect) <|
                     always True
     FilterBuff c -> allEffects Has.buffEffect (Just ToImage.buffEffect) <|
                     buffCategory >> (==) c
     FilterAction -> allEffects Has.instantEffect Nothing <|
-                    not << isDamage 
+                    not << isDamage
     FilterDamage -> allEffects Has.instantEffect Nothing <|
                     isDamage
     _            -> getExtraFilters today tab

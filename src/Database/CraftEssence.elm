@@ -1,4 +1,4 @@
-module Database.CraftEssence exposing 
+module Database.CraftEssence exposing
   ( CraftEssence
   , craftEssences
   , getBond
@@ -24,7 +24,7 @@ import Class.Show as Show
 -- for a while. Craft Essences introduced during events and the like should be
 -- checked against the official announcement.
 craftEssences : List CraftEssence
-craftEssences = 
+craftEssences =
   let
     gutsPercent = Times 1 << Grant Self 0 GutsPercent << Flat
     self buff   = Grant Self 0 buff << Flat
@@ -505,7 +505,7 @@ craftEssences =
       , stats   = { base = { atk = 200,  hp = 0 }
                   , max  = { atk = 1000, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 (Performance Arts) <| Range 3 5 
+      , effect  = [ Grant Self 0 (Performance Arts) <| Range 3 5
                   , Grant Self 0 (Performance Buster) <| Range 3 5
                   , Grant Self 0 (Performance Quick) <| Range 3 5
                   ]
@@ -2520,7 +2520,7 @@ craftEssences =
       , id      = 330
       , rarity  = 5
       , icon    = IconRainbow
-      , stats   = { base = { atk = 250,  hp = 400 } 
+      , stats   = { base = { atk = 250,  hp = 400 }
                   , max  = { atk = 1000, hp = 1600 }
                   }
       , effect  = [ Bonus Bond True <| Range 2 10 ]
@@ -2531,7 +2531,7 @@ craftEssences =
       , id      = 331
       , rarity  = 3
       , icon    = IconStarUp
-      , stats   = { base = { atk = 200,  hp = 0 } 
+      , stats   = { base = { atk = 200,  hp = 0 }
                   , max  = { atk = 1000, hp = 0 }
                   }
       , effect  = [ Grant Self 0 StarAbsorb <| Range 200 300 ]
@@ -2542,10 +2542,10 @@ craftEssences =
       , id      = 332
       , rarity  = 3
       , icon    = IconStarTurn
-      , stats   = { base = { atk = 0, hp = 300 } 
+      , stats   = { base = { atk = 0, hp = 300 }
                   , max  = { atk = 0, hp = 1500 }
                   }
-      , effect  = [ Grant Self 0 StarsPerTurn <| Range 1 2 
+      , effect  = [ Grant Self 0 StarsPerTurn <| Range 1 2
                   , Grant Self 0 DebuffResist <| Range 5 10
                   ]
       , bond    = Nothing
@@ -2555,7 +2555,7 @@ craftEssences =
       , id      = 333
       , rarity  = 3
       , icon    = IconReaperUp
-      , stats   = { base = { atk = 200,  hp = 0 } 
+      , stats   = { base = { atk = 200,  hp = 0 }
                   , max  = { atk = 1000, hp = 0 }
                   }
       , effect  = [ Grant Self 0 KillUp <| Range 5 10 ]
@@ -2589,7 +2589,7 @@ craftEssences =
       , stats   = { base = { atk = 500,  hp = 0 }
                   , max  = { atk = 2000, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 (Performance Quick) <| Range 15 20 
+      , effect  = [ Grant Self 0 (Performance Quick) <| Range 15 20
                   , To Party GainStars <| Range 3 4
                   ]
       , bond    = Nothing
@@ -2602,7 +2602,7 @@ craftEssences =
       , stats   = { base = { atk = 200, hp = 320 }
                   , max  = { atk = 750, hp = 1200 }
                   }
-      , effect  = [ Grant Self 0 (Performance Arts) <| Range 10 15 
+      , effect  = [ Grant Self 0 (Performance Arts) <| Range 10 15
                   , Grant Self 0 NPGen <| Range 5 10
                   ]
       , bond    = Nothing
@@ -2612,10 +2612,10 @@ craftEssences =
       , id      = 346
       , rarity  = 3
       , icon    = IconNobleUp
-      , stats   = { base = { atk = 0, hp = 300 } 
+      , stats   = { base = { atk = 0, hp = 300 }
                   , max  = { atk = 0, hp = 1500 }
                   }
-      , effect  = [ Grant Self 0 NPGen <| Range 5 10 
+      , effect  = [ Grant Self 0 NPGen <| Range 5 10
                   , Grant Self 0 DefenseUp <| Range 3 5
                   ]
       , bond    = Nothing
@@ -2628,7 +2628,7 @@ craftEssences =
       , stats   = { base = { atk = 500,  hp = 0 }
                   , max  = { atk = 2000, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 (Performance Buster) <| Range 10 15 
+      , effect  = [ Grant Self 0 (Performance Buster) <| Range 10 15
                   , Grant Self 0 NPUp <| Range 20 25
                   ]
       , bond    = Nothing
@@ -2638,10 +2638,10 @@ craftEssences =
       , id      = 348
       , rarity  = 4
       , icon    = IconBeamUp
-      , stats   = { base = { atk = 200, hp = 320 } 
+      , stats   = { base = { atk = 200, hp = 320 }
                   , max  = { atk = 750, hp = 1200 }
                   }
-      , effect  = [ Grant Self 0 NPUp <| Range 15 20 
+      , effect  = [ Grant Self 0 NPUp <| Range 15 20
                   , Grant Self 0 HealingReceived <| Range 10 20
                   ]
       , bond    = Nothing
@@ -2651,12 +2651,12 @@ craftEssences =
       , id      = 349
       , rarity  = 3
       , icon    = IconAllUp
-      , stats   = { base = { atk = 200,  hp = 0 } 
+      , stats   = { base = { atk = 200,  hp = 0 }
                   , max  = { atk = 1000, hp = 0 }
                   }
-      , effect  = [ Grant Self 0 (Performance Arts) <| Range 2 3 
-                  , Grant Self 0 (Performance Buster) <| Range 2 3 
-                  , Grant Self 0 (Performance Quick) <| Range 2 3 
+      , effect  = [ Grant Self 0 (Performance Arts) <| Range 2 3
+                  , Grant Self 0 (Performance Buster) <| Range 2 3
+                  , Grant Self 0 (Performance Quick) <| Range 2 3
                   , Grant Self 0 CritUp <| Range 5 10
                   ]
       , bond    = Nothing
@@ -2841,7 +2841,7 @@ getBond s = Dict.get s.name bondMap
 
 {-| Memoization table for `getBond`. -}
 bondMap : Dict String CraftEssence
-bondMap = 
+bondMap =
   let
     go ce = case ce.bond of
         Nothing   -> Nothing

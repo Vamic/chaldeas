@@ -24,8 +24,8 @@ upgradeNP =
     ]
 
 uniqueNP : List String
-uniqueNP = 
-    [ "Mash Kyrielight" 
+uniqueNP =
+    [ "Mash Kyrielight"
     , "Frankenstein"
     , "EMIYA"
     ]
@@ -117,7 +117,7 @@ printIcon a = case a of
   _ -> unCamel <| Show.icon a
 
 effects : List SkillEffect -> List String
-effects = 
+effects =
   let
     showEffect a = case a of
       Debuff _ _ (ApplyTrait _) _ -> "Apply Trait"
@@ -139,7 +139,7 @@ effects =
     List.map showEffect
 
 synonym : List (List String)
-synonym = 
+synonym =
     [ ["special","against"]
     , ["increase", "increasing"]
     , ["reduce", "decrease", "down"]
@@ -316,7 +316,7 @@ effectMap =
     , (["deal","damage"], show [Damage])
     , (["stun"], show [Stun])
     , (["high","chance","status"], show [Charm])
-    
+
     , (["against","buster"], [])
     , (["effect","activates"], [])
     , (["depends"], [])
@@ -325,8 +325,8 @@ effectMap =
     ]
 
 readEffect : String -> List String
-readEffect s = 
-  if 
+readEffect s =
+  if
     String.startsWith "<!--" s && String.endsWith "-->" s then
       []
   else

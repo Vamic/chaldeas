@@ -2,5 +2,5 @@
 
 set -e
 cd sitemap
-elm make Sitemap.elm --output=sitemap.js
+elm make Sitemap.elm
 elm reactor

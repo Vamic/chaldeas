@@ -3,4 +3,4 @@ elm-stuff/
 /chaldeas
 tests/*.js
 .DS_Store
-sitemap.js
+sitemap/index.html

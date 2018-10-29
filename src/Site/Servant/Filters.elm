@@ -203,7 +203,7 @@ scheduledFilters =
     , "Mash Kyrielight"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: Hero of Justice"
+    nameFilter FilterAvailability "Challenge: Ally of Justice"
     [ "Altria Pendragon", "Altria Pendragon (Lily)", "Mordred", "Siegfried"
     , "Altera", "Gilles de Rais", "Rama", "Lancelot (Saber)", "Gawain"
     , "Bedivere", "Elisabeth Bathory (Brave)"

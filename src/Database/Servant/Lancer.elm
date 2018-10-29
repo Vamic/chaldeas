@@ -60,7 +60,7 @@ lancers =
     , gen       = { starWeight = 88, starRate = 12.2, npAtk = 0.71, npDef = 4 }
     , hits      = { quick = 2, arts = 3, buster = 6, ex = 7 }
     , gender    = Female
-    , traits    = [EnumaElish, Royalty]
+    , traits    = [EnumaElish, King]
     , death     = 32
     , align     = [Neutral, Good]
     , limited   = True
@@ -350,7 +350,7 @@ lancers =
     , gen       = { starWeight = 89, starRate = 12.2, npAtk = 1.1, npDef = 4 }
     , hits      = { quick = 3, arts = 2, buster = 1, ex = 5 }
     , gender    = Female
-    , traits    = [Arthur, Dragon, Royalty, Riding, Saberface, EnumaElish]
+    , traits    = [Arthur, Dragon, King, Riding, Saberface, EnumaElish]
     , death     = 24
     , align     = [Lawful, Good]
     , limited   = False
@@ -419,7 +419,7 @@ lancers =
     , gen       = { starWeight = 88, starRate = 11.8, npAtk = 0.74, npDef = 4 }
     , hits      = { quick = 2, arts = 3, buster = 1, ex = 4 }
     , gender    = Female
-    , traits    = [Riding, Dragon, Saberface, Arthur, EnumaElish, Royalty]
+    , traits    = [Riding, Dragon, Saberface, Arthur, EnumaElish, King]
     , death     = 23
     , align     = [Lawful, Good]
     , limited   = False
@@ -631,7 +631,7 @@ lancers =
     , gen       = { starWeight = 88, starRate = 11.6, npAtk = 1.1, npDef = 4 }
     , hits      = { quick = 3, arts = 2, buster = 3, ex = 5 }
     , gender    = Male
-    , traits    = [Royalty]
+    , traits    = [King]
     , death     = 24
     , align     = [Lawful,Good]
     , limited   = False
@@ -972,7 +972,7 @@ lancers =
     , gen       = { starWeight = 89, starRate = 11.8, npAtk = 1.07, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [EnumaElish, Royalty]
+    , traits    = [EnumaElish, King]
     , death     = 32
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -1043,7 +1043,7 @@ lancers =
     , gen       = { starWeight = 90, starRate = 12.1, npAtk = 1.07, npDef = 4 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [Roman, Royalty]
+    , traits    = [Roman, King]
     , death     = 32
     , align     = [Chaotic, Balanced]
     , limited   = False

@@ -121,7 +121,7 @@ sabers =
     , gen       = { starWeight = 102, starRate = 10.1, npAtk = 0.84, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Female
-    , traits    = [Riding, Divine, EnumaElish, Royalty]
+    , traits    = [Riding, Divine, EnumaElish, King]
     , death     = 24.5
     , align     = [Chaotic, Good]
     , limited   = False
@@ -192,7 +192,7 @@ sabers =
     , gen       = { starWeight = 102, starRate = 10.1, npAtk = 0.7, npDef = 3 }
     , hits      = { quick = 3, arts = 3, buster = 1, ex = 5 }
     , gender    = Female
-    , traits    = [Riding, Saberface, Roman, EnumaElish, Royalty]
+    , traits    = [Riding, Saberface, Roman, EnumaElish, King]
     , death     = 35
     , align     = [Chaotic, Bride]
     , limited   = True
@@ -398,7 +398,7 @@ sabers =
     , gen       = { starWeight = 102, starRate = 10, npAtk = 0.86, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Female
-    , traits    = [Riding, Dragon, Saberface, Arthur, EnumaElish, Royalty]
+    , traits    = [Riding, Dragon, Saberface, Arthur, EnumaElish, King]
     , death     = 21
     , align     = [Lawful, Good]
     , limited   = False
@@ -605,7 +605,7 @@ sabers =
     , gen       = { starWeight = 99, starRate = 9.9, npAtk = 0.86, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Female
-    , traits    = [Dragon, Saberface, Arthur, EnumaElish, Royalty]
+    , traits    = [Dragon, Saberface, Arthur, EnumaElish, King]
     , death     = 19.2
     , align     = [Lawful, Evil]
     , limited   = False
@@ -742,7 +742,7 @@ sabers =
     , gen       = { starWeight = 102, starRate = 10.1, npAtk = 0.84, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 5 }
     , gender    = Female
-    , traits    = [Riding, Roman, Saberface, EnumaElish, Royalty]
+    , traits    = [Riding, Roman, Saberface, EnumaElish, King]
     , death     = 24.5
     , align     = [Chaotic, Good]
     , limited   = False
@@ -1018,7 +1018,7 @@ sabers =
     , gen       = { starWeight = 102, starRate = 10, npAtk = 0.86, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Female
-    , traits    = [Riding, Dragon, Saberface, Arthur, EnumaElish, Royalty]
+    , traits    = [Riding, Dragon, Saberface, Arthur, EnumaElish, King]
     , death     = 21
     , align     = [Lawful, Good]
     , limited   = True
@@ -1084,7 +1084,7 @@ sabers =
     , gen       = { starWeight = 99, starRate = 10, npAtk = 1.1, npDef = 3 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [Riding, BrynhildsBeloved, Roman, Divine, EnumaElish, Royalty]
+    , traits    = [Riding, BrynhildsBeloved, Roman, Divine, EnumaElish, King]
     , death     = 31.5
     , align     = [Neutral, Balanced]
     , limited   = False

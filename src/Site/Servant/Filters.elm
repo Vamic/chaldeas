@@ -64,10 +64,10 @@ scheduledFilters =
     Filter Nothing FilterAvailability "Challenge: Male or Nonbinary" <|
     \_ s -> s.gender /= Female
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    Filter Nothing FilterAvailability "Challenge: Not Royalty" <|
-    \_ s -> not <| List.member Royalty s.traits
+    Filter Nothing FilterAvailability "Challenge: Not King" <|
+    \_ s -> not <| List.member King s.traits
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: Western"
+    nameFilter FilterAvailability "Challenge: Westerner"
     [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)" 
     , "Nero Claudius", "Siegfried", "Gaius Julius Caesar", "Gilles de Rais"
     , "Chevalier d'Eon", "Fergus mac Roich", "Mordred", "Nero Claudius (Bride)"
@@ -108,7 +108,7 @@ scheduledFilters =
     , "Mash Kyrielight"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: Da Vinci's List"
+    nameFilter FilterAvailability "Challenge: Da Vinci's Selection"
     [ "Siegfried", "Gaius Julius Caesar", "Gilles de Rais", "Chevalier d'Eon"
     , "Fergus mac Roich", "Rama", "Lancelot (Saber)", "Gawain", "Bedivere"
 
@@ -134,7 +134,7 @@ scheduledFilters =
     , "Edmond Dantes"
     ]
   , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Challenge: Under 165cm"
+    nameFilter FilterAvailability "Challenge: 165 cm"
     [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)" 
     , "Nero Claudius", "Altera", "Chevalier d'Eon", "Okita Souji", "Mordred"
     , "Nero Claudius (Bride)", "Ryougi Shiki (Saber)"

@@ -257,7 +257,7 @@ berserkers =
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 0.5, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [EnumaElish, BrynhildsBeloved, Royalty]
+    , traits    = [EnumaElish, BrynhildsBeloved, King]
     , death     = 45.5
     , align     = [Chaotic, Evil]
     , limited   = False
@@ -1086,7 +1086,7 @@ berserkers =
     , gen       = { starWeight = 9, starRate = 4.9, npAtk = 1.02, npDef = 5 }
     , hits      = { quick = 2, arts = 2, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [EnumaElish, Royalty]
+    , traits    = [EnumaElish, King]
     , death     = 58.5
     , align     = [Chaotic, Balanced]
     , limited   = False
@@ -1154,7 +1154,7 @@ berserkers =
     , gen       = { starWeight = 9, starRate = 5, npAtk = 0.67, npDef = 5 }
     , hits      = { quick = 2, arts = 3, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [Male, EnumaElish, Royalty]
+    , traits    = [Male, EnumaElish, King]
     , death     = 65
     , align     = [Lawful, Balanced]
     , limited   = False
@@ -1225,7 +1225,7 @@ berserkers =
     , gen       = { starWeight = 9, starRate = 5, npAtk = 0.68, npDef = 5 }
     , hits      = { quick = 2, arts = 3, buster = 1, ex = 3 }
     , gender    = Male
-    , traits    = [Roman, EnumaElish, Royalty]
+    , traits    = [Roman, EnumaElish, King]
     , death     = 56.8
     , align     = [Chaotic, Evil]
     , limited   = False

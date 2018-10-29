@@ -130,7 +130,7 @@ assassins =
     , gen       = { starWeight = 98, starRate = 25.5, npAtk = 1.06, npDef = 4 }
     , hits      = { quick = 4, arts = 2, buster = 3, ex = 6 }
     , gender    = Female
-    , traits    = [Divine, EnumaElish, Royalty]
+    , traits    = [Divine, EnumaElish, King]
     , death     = 49.5
     , align     = [Lawful, Neutral]
     , limited   = True
@@ -271,7 +271,7 @@ assassins =
     , gen       = { starWeight = 98, starRate = 25.6, npAtk = 0.81, npDef = 4 }
     , hits      = { quick = 4, arts = 2, buster = 1, ex = 4 }
     , gender    = Female
-    , traits    = [Riding, Dragon, Saberface, Arthur, Royalty]
+    , traits    = [Riding, Dragon, Saberface, Arthur, King]
     , death     = 38.5
     , align     = [Chaotic, Good]
     , limited   = True
@@ -550,7 +550,7 @@ assassins =
     , gen       = { starWeight = 98, starRate = 25.6, npAtk = 0.71, npDef = 4 }
     , hits      = { quick = 3, arts = 3, buster = 3, ex = 5 }
     , gender    = Female
-    , traits    = [EnumaElish, Royalty]
+    , traits    = [EnumaElish, King]
     , death     = 44
     , align     = [Neutral, Good]
     , limited   = True

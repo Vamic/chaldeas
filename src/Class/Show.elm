@@ -90,7 +90,7 @@ trait a = case a of
   PseudoServant -> "Pseudo-Servant"
   Riding -> "Riding"
   Roman -> "Roman"
-  Royalty -> "Royalty"
+  King -> "King"
   Saberface -> "Saberface"
   Undead -> "Undead"
   EnumaElish -> "Weak to Enuma Elish"

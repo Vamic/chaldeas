@@ -28,6 +28,7 @@ update _ st = pure st
 view : Model -> Html Msg
 view st = 
     H.div [] << List.concatMap (flip (::) <| [H.br [] []]) << List.map H.text << 
+    List.sort <<
     List.map ((++) "https://jnbooth.github.io/chaldeas/") <|
     ["Servants", "CraftEssences"]
     ++ List.map (.name >> urlName >> ((++) "Servants/")) servants

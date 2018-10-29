@@ -16,11 +16,7 @@ You will also need [npm](https://www.npmjs.com/get-npm) in order to install ugli
 sudo npm install uglify-js --global
 ```
 
-For convenience, `scripts/build.sh` contains the build command:
-
-```sh
-elm make src/Main.elm --output=js/chaldeas.js --optimize && uglifyjs js/chaldeas.js --compress 'pure_funcs="F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output=js/chaldeas.js
-```
+Once you've done all that, build the site with  `scripts/build.sh`.
 
 For development purposes, you'll need to set up a staging copy:
 
@@ -32,9 +28,7 @@ cp -r img/ chaldeas/img/
 
 Once the staging copy is set up, run the development server with `scripts/run.sh` and access it at [http://localhost:8000/index.html](http://localhost:8000/index.html).
 
-If you get any weird errors while compiling, try deleting the `elm-stuff` folder to force a clean rebuild.
-
-To test the database against the server, run `scripts/test.sh`.
+To test the database's information against [GrandOrder.Wiki](https://grandorder.wiki), run `scripts/test.sh`.
 
 ## Skill Effects
 Skill effects are enumerated at the top of [Database.Skill](src/Database/Skill.elm). Before adding a new skill effect, make sure it isn't already on the list.

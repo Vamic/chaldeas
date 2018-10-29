@@ -114,7 +114,8 @@ ordFilter x =
     else if String.startsWith "+" x.name then
       case String.split " " x.name of
         []       -> x.name
-        w :: ws  -> String.join " " ws ++ w
+        w :: ws  -> "+" ++ String.join " " ws 
+                    ++ String.fromInt (String.length w) ++ w
     else
       x.name
 

@@ -471,13 +471,16 @@ materialEl : (Material, Int) -> Html Msg
 materialEl (mat, amt) =
   let
     imageLinkEl =
-      if ignoreMat mat then
-        ToImage.image
-      else
-        ToImage.link <| FilterBy (singleFilter Has.material FilterMaterial mat)
+      doIf (not <| ignoreMat mat) ((++) 
+      [ P.class "link"
+      , E.onClick << FilterBy <| singleFilter Has.material FilterMaterial mat
+      ])
+      [ ToImage.src <| ToImage.material mat
+      , P.title <| Show.material mat
+      ]
   in
     H.div []
-    [ imageLinkEl <| ToImage.material mat
+    [ H.img imageLinkEl []
     , text_ H.span <| "×" ++ commas (toFloat amt)
     ]
 

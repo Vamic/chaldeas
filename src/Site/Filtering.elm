@@ -11,12 +11,13 @@ import List.Extra as List
 import Date exposing (Date)
 import Time
 
-import StandardLibrary     exposing (..)
-import Database            exposing (..)
-import Database.Skill      exposing (..)
-import Persist.Preferences exposing (..)
-import Site.Algebra        exposing (..)
-import Site.Base           exposing (..)
+import StandardLibrary       exposing (..)
+import Database              exposing (..)
+import Database.CraftEssence exposing (..)
+import Database.Skill        exposing (..)
+import Persist.Preferences   exposing (..)
+import Site.Algebra          exposing (..)
+import Site.Base             exposing (..)
 
 import Class.Has     as Has      exposing (Has)
 import Class.ToImage as ToImage exposing (ToImage)
@@ -84,7 +85,7 @@ matchFilter toImage {show, has} tab x =
 nameFilter : FilterTab -> String -> List String -> Filter { a | name : String }
 nameFilter tab name names =
   let
-    allNames = List.map .name servants
+    allNames = List.map .name servants ++ List.map .name craftEssences
     missing  = List.filter (not << flip List.member allNames) names
     warn     =
         doIf (not <| List.isEmpty missing) << flip (++) <|

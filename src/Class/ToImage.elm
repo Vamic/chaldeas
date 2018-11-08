@@ -36,29 +36,18 @@ type alias ImagePath =
 
 type alias ToImage a = a -> ImagePath
 
-image : ImagePath -> Html b
-image {dir, file} =
-    H.img
-    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png"
-    , P.title <| unCamel file
-    ]
-    []
+src : ImagePath -> H.Attribute a
+src {dir, file} = 
+    P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png"
 
-thumbnail : ImagePath -> Html b
-thumbnail {dir, file} =
-    H.img
-    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ " Thumbnail.png"
-    , P.title <| unCamel file
-    ]
-    []
+image : ImagePath -> Html a
+image path = H.img [src path] []
 
-link : b -> ImagePath -> Html b
-link href {dir, file} =
+thumbnail : ImagePath -> Html a
+thumbnail path =
     H.img
-    [ P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png"
-    , P.title <| unCamel file
-    , P.class "link"
-    , E.onClick href
+    [ src { path | file = path.file ++ " Thumbnail" }
+    , P.title <| unCamel path.file
     ]
     []
 

@@ -171,6 +171,7 @@ int_ minVal maxVal actualVal changed =
               else
                 DoNothing
       ] []
+    , text_ H.span <| "/" ++ String.fromInt maxVal
     ]
 
 {-| `<input type="radio">` -}

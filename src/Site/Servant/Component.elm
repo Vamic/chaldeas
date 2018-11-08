@@ -240,19 +240,19 @@ popup prefs ascent a = case a of
       b   = ms.base
       s   = ms.servant
       fou = ms.fou
-      npRank rank = case rank of
+      npRank rank   = case rank of
         Unknown -> "--"
         _       -> Show.rank rank
-      {base} = s.stats
-      {max  , grail} = b.stats
-      showTables = prefer prefs ShowTables
+      {base}        = s.stats
+      {max, grail}  = b.stats
+      showTables    = prefer prefs ShowTables
       showTable showCol effects =
           doIf showTables << consAfter <<
           table_ (List.map showCol <| List.range 1 5)
           <| List.map npRow (List.uniqueBy ordRangeInfo <| ranges effects)
-      overMeta = if s.phantasm.first then [P.class "activates"] else []
+      overMeta      = if s.phantasm.first then [P.class "activates"] else []
       linkAlignment = link Has.alignment FilterAlignment
-      alignBox = case s.align of
+      alignBox      = case s.align of
         [] ->
             [H.text "None"]
         [Neutral, Neutral] ->

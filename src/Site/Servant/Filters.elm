@@ -43,30 +43,35 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter Servant)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterEventBonus "+100% ATK"
     [ "Elisabeth Bathory (Brave)" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterEventBonus "+50% ATK"
     [ "Cleopatra", "Vlad III (EXTRA)", "Nitocris", "Ibaraki-Douji"
     , "Robin Hood"
     ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterAvailability "Limited to Event"
     [ "Elisabeth Bathory (Brave)", "Cleopatra", "Vlad III (EXTRA)" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterAvailability "Rate-Up"
     [ "Cleopatra", "Vlad III (EXTRA)" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Nov 8) (Date 2018 Nov 10) <|
+    nameFilter FilterAvailability "Rate-Up"
+    [ "Altria Pendragon", "Mordred", "Altria Pendragon (Lancer)"
+    , "Altria Pendragon (Lancer Alter)", "Lancelot (Saber)", "Gawain", "Tristan"
+    , "Altria Pendragon (Lancer Alter)", "Lancelot" ]
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     Filter Nothing FilterEventBonus "Female or Nonbinary" <|
     \_ s -> s.gender /= Male
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     Filter Nothing FilterEventBonus "Male or Nonbinary" <|
     \_ s -> s.gender /= Female
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     Filter Nothing FilterEventBonus "Not King" <|
     \_ s -> not <| List.member King s.traits
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterEventBonus "Westerner"
     [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)"
     , "Nero Claudius", "Siegfried", "Gaius Julius Caesar", "Gilles de Rais"
@@ -107,7 +112,7 @@ scheduledFilters =
     , "Edmond Dantes", "Jeanne d'Arc (Alter)"
     , "Mash Kyrielight"
     ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterEventBonus "Da Vinci's Selection"
     [ "Siegfried", "Gaius Julius Caesar", "Gilles de Rais", "Chevalier d'Eon"
     , "Fergus mac Roich", "Rama", "Lancelot (Saber)", "Gawain", "Bedivere"
@@ -133,7 +138,7 @@ scheduledFilters =
     , "Amakusa Shirou"
     , "Edmond Dantes"
     ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterEventBonus "165 cm or under"
     [ "Altria Pendragon", "Altria Pendragon (Alter)", "Altria Pendragon (Lily)"
     , "Nero Claudius", "Altera", "Chevalier d'Eon", "Okita Souji", "Mordred"
@@ -165,7 +170,7 @@ scheduledFilters =
     , "Jeanne d'Arc (Alter)"
     , "Mash Kyrielight"
     ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterEventBonus "Newcomer"
     [ "Gaius Julius Caesar", "Altera", "Gilles de Rais", "Chevalier d'Eon"
     , "Okita Souji", "Fergus mac Roich", "Ryougi Shiki (Saber)", "Rama"
@@ -202,7 +207,7 @@ scheduledFilters =
     , "Edmond Dantes", "Jeanne d'Arc (Alter)"
     , "Mash Kyrielight"
     ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 17) <|
+  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
     nameFilter FilterEventBonus "Ally of Justice"
     [ "Altria Pendragon", "Altria Pendragon (Lily)", "Mordred", "Siegfried"
     , "Altera", "Gilles de Rais", "Rama", "Lancelot (Saber)", "Gawain"

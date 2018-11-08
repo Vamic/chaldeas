@@ -1,8 +1,10 @@
 module Site.Application exposing (app)
 
 import List.Extra         as List
+import Browser.Dom        as Dom
 import Browser.Navigation as Navigation
 
+import Task
 import Browser exposing (Document, UrlRequest)
 import Html exposing (Html)
 import Url exposing (Url)
@@ -28,10 +30,11 @@ type alias Model =
     }
 
 type Msg
-    = RequestUrl UrlRequest
-    | ChangeUrl  Url
+    = RequestUrl       UrlRequest
+    | ChangeUrl        Url
     | CraftEssencesMsg CraftEssences.Msg
     | ServantsMsg      Servants.Msg
+    | OnError          (Result Dom.Error ())
 
 
 {-| If loaded with a url for a particular Servant or Craft Essence,
@@ -82,6 +85,9 @@ stateFromPath fullPath st =
               Maybe.map (.base >> .name) sModel.focus
             )
 
+resetPopup : Cmd Msg
+resetPopup = Task.attempt OnError <| Dom.setViewportOf "focus" 0 0
+
 app onInit analytics title store =
   let
     child constr unMsg = constr ((<<) (Cmd.map unMsg) << store)
@@ -117,6 +123,7 @@ app onInit analytics title store =
 
     update : Msg -> Model -> (Model, Cmd Msg)
     update parentMsg st = case parentMsg of
+      OnError err           -> pure st -- placeholder in case needed later
       RequestUrl urlRequest -> case urlRequest of
         Browser.Internal url  -> pure st
         Browser.External href -> (st, Navigation.load href)
@@ -124,7 +131,7 @@ app onInit analytics title store =
         let
           (newSt, newTitle) = stateFromPath path st
         in
-          (newSt, Cmd.batch [analytics path, title newTitle])
+          (newSt, Cmd.batch [analytics path, title newTitle, resetPopup])
       CraftEssencesMsg msg -> case msg of
         Switch toServant ->
           let

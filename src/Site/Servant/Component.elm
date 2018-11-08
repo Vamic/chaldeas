@@ -275,7 +275,7 @@ popup prefs ascent a = case a of
           >> formatSort sort
       skillBox i ({icon}, lvl) =
           [ H.td [] [ToImage.image <| ToImage.icon icon]
-          , H.td [] << int_ 1 100 lvl <| \val ->
+          , H.td [] << int_ 1 10 lvl <| \val ->
               OnTeam True
               { ms | skills = List.updateAt i (always val) ms.skills }
           ]

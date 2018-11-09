@@ -85,15 +85,19 @@ matchFilter toImage {show, has} tab x =
 nameFilter : FilterTab -> String -> List String -> Filter { a | name : String }
 nameFilter tab name names =
   let
-    allNames = List.map .name servants ++ List.map .name craftEssences
-    missing  = List.filter (not << flip List.member allNames) names
-    warn     =
-        doIf (not <| List.isEmpty missing) << flip (++) <|
-        " INVALID: " ++ String.join ", " missing
+    valid = List.map .name servants ++ List.map .name craftEssences
+    warn label f =
+      let
+        xs = f names
+      in
+        doIf (not <| List.isEmpty xs) << flip (++) <|
+        label ++ ": " ++ String.join ", " xs
   in
     { icon  = Nothing
     , tab   = tab
-    , name  = warn name
+    , name  = name 
+              |> warn "DUPLICATE" duplicates
+              >> warn "INVALID" (List.filter <| not << flip List.member valid)
     , match = always <| .name >> flip List.member names
     }
 

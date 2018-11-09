@@ -36,11 +36,8 @@ places decimals =
 
 {-| Removes specified characters from strings. -}
 filterOut : String -> String -> String
-filterOut pattern =
-  let
-    arr = String.toList pattern
-  in
-    String.filter <| not << flip List.member arr
+filterOut pattern = 
+    String.filter <| not << flip List.member (String.toList pattern)
 
 {-| Removes characters which are illegal for file names. -}
 fileName : String -> String

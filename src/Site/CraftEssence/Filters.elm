@@ -41,38 +41,7 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter CraftEssence)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus
-    "+25~100% Skeletons, Ghosts, & Lamias"
-    [ "Wizard & Priest" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus
-    "+25~100% Insects & Golems"
-    [ "Mata Hari's Tavern" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus
-    "+25~100% Beasts, Homunculi, & Knights"
-    [ "Hero Elly's Adventure" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus "+1~2 Copper Sack"
-    [ "Count Romani Archaman's Hospitality" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus "+1~2 Silver Sack"
-    [ "Witch Under the Moonlight" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterEventBonus "+1~2 Gold Sack"
-    [ "Dangerous Beast" ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Dangerous Beast", "Witch Under the Moonlight"
-    , "Count Romani Archaman's Hospitality"
-    ]
-  , ScheduledFilter (Date 2018 Oct 25) (Date 2018 Nov 8) <|
-    nameFilter FilterAvailability "Limited to Event"
-    [ "Dangerous Beast", "Witch Under the Moonlight"
-    , "Wizard & Priest", "Mata Hari's Tavern", "Hero Elly's Adventure"
-    , "Count Romani Archaman's Hospitality"
-    ]
+  [ 
   ]
 
 getExtraFilters : Date -> FilterTab -> List (Filter CraftEssence)

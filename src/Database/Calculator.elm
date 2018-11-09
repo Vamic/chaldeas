@@ -258,5 +258,4 @@ selfable a = case a of
 {-| Sums up all effects of a certain type from a Servant's skills
 in (Effect, Strength%) format. -}
 matchSum : List (a, Float) -> a -> Float
-matchSum xs k = List.sum << flip List.map xs <| \(k1, v) ->
-    if k == k1 then v else 0
+matchSum xs k = List.sum <| List.map (\(k1, v) -> if k == k1 then v else 0) xs

@@ -5,6 +5,7 @@ module StandardLibrary exposing
   , curry
   , doIf
   , dict
+  , duplicates
   , enumToOrd
   , flip
   , maybeDo
@@ -54,6 +55,11 @@ doIf a = case a of
 {-| Creates a `Dict` using a function that generates (key, value) pairs. -}
 dict : List a -> (a -> (comparable, b)) -> Dict comparable b
 dict xs = flip List.map xs >> Dict.fromList
+
+{-| Returns all elements of a List that it contains more than once. -}
+duplicates : List comparable -> List comparable
+duplicates xs = 
+    List.filter (\x -> List.member x <| List.remove x xs) <| List.unique xs
 
 {-| Creates a comparable projection function for enumerated types. -}
 enumToOrd : List a -> (a -> Int)

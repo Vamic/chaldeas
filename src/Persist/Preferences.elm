@@ -61,5 +61,4 @@ setPreference pref a = case a of
   False -> Set.remove <| ordPreference pref
 
 unfoldPreferences : Preferences -> List (Preference, Bool)
-unfoldPreferences prefs = flip List.map enumPreference <| \pref ->
-    (pref, prefer prefs pref)
+unfoldPreferences prefs = List.map (\x -> (x, prefer prefs x)) enumPreference

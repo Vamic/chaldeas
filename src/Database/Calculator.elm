@@ -145,21 +145,18 @@ npDamage addSkills special maxOver s =
     -----------
     {card, effect, over, first} = s.phantasm
 
-    isRandom ef  = case ef of
-      To _ ApplyAtRandom _ -> True
-      _                    -> False
-    isAtk    ef  = case ef of
-      Grant _ _ AttackUp _ -> True
-      _                    -> False
+    costsCharge ef = case ef of
+      To _ GaugeSpend _ -> True
+      _                 -> False
+    unCost efs   = if List.any costsCharge efs then [] else efs
     ifSpecial    = if special then identity else always []
     maxIf x      = if x then toMax else toMin
     npStrength   = maxIf <| s.free || (s.rarity <= 3 && s.rarity > 0)
     overStrength = maxIf maxOver
-    unRand efs   = doIf (List.any isRandom efs) (List.filter isAtk) efs
     skillFs      =
         s.passives
         |> List.concatMap .effect
-        >> doIf addSkills ((++) <| List.concatMap (.effect >> unRand) s.skills)
+        >> doIf addSkills ((++) <| List.concatMap (.effect >> unCost) s.skills)
         >> List.map simplify
     npFs        = List.map simplify effect
     overFs      = List.map simplify over

@@ -16,19 +16,11 @@ You will also need [npm](https://www.npmjs.com/get-npm) in order to install ugli
 sudo npm install uglify-js --global
 ```
 
-Once you've done all that, build the site with  `scripts/build.sh`.
+Once you've done all that, build the site with  [scripts/build.sh]. In the `publish` directory, you can run the site in developer mode with `elm reactor` and publish it with [scripts/publish.sh].
 
-For development purposes, you'll need to set up a staging copy:
+To test the database's information against [GrandOrder.Wiki](https://grandorder.wiki), run [scripts/test.sh].
 
-```sh
-mkdir chaldeas
-mkdir chaldeas/js
-cp -r img/ chaldeas/img/
-```
-
-Once the staging copy is set up, run the development server with `scripts/run.sh` and access it at [http://localhost:8000/index.html](http://localhost:8000/index.html).
-
-To test the database's information against [GrandOrder.Wiki](https://grandorder.wiki), run `scripts/test.sh`.
+To generate the sitemap, run [scripts/sitemap.sh], go to [http://localhost:8000/index.html], and copy and paste the content into [publish/sitemap.txt].
 
 ## Skill Effects
 Skill effects are enumerated at the top of [Database.Skill](src/Database/Skill.elm). Before adding a new skill effect, make sure it isn't already on the list.

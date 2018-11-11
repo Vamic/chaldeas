@@ -38,7 +38,7 @@ type alias ToImage a = a -> ImagePath
 
 src : ImagePath -> H.Attribute a
 src {dir, file} = 
-    P.src <| "/chaldeas/img/" ++ dir ++ "/" ++ fileName file ++ ".png"
+    P.src <| "/img/" ++ dir ++ "/" ++ fileName file ++ ".png"
 
 image : ImagePath -> Html a
 image path = H.img [src path] []

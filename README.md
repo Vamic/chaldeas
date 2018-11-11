@@ -16,7 +16,7 @@ You will also need [npm](https://www.npmjs.com/get-npm) in order to install ugli
 sudo npm install uglify-js --global
 ```
 
-Once you've done all that, build the site with  [scripts/build.sh](scripts/build.sh). In the `publish` directory, you can run the site in developer mode with `elm reactor` and publish it with [scripts/publish.sh](scripts/publish.sh).
+Once you've done all that, build the site with  [scripts/build.sh](scripts/build.sh). In the [publish](publish/) directory, you can run the site in developer mode with `elm reactor` and publish it with [scripts/publish.sh](scripts/publish.sh).
 
 To test the database's information against [GrandOrder.Wiki](https://grandorder.wiki), run [scripts/test.sh](scripts/test.sh).
 

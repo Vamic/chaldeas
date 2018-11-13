@@ -4,3 +4,4 @@ elm-stuff/
 tests/*.js
 .DS_Store
 sitemap/index.html
+node_modules/

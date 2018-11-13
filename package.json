@@ -1,0 +1,31 @@
+{
+  "name": "chaldeas",
+  "version": "1.0.0",
+  "description": "Bringing order to Fate/Grand Order",
+  "main": "publish/js/chaldeas.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "set -e; rimraf elm-stuff; elm make src/Main.elm --output=publish/js/chaldeas.js --optimize; uglifyjs publish/js/chaldeas.js --compress 'pure_funcs=\"F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9\",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output=publish/js/chaldeas.js",
+    "dev": "set -e; cd publish; (sleep 2; opener http://localhost:8000/200.html) & elm reactor",
+    "sitemap": "set -e; cd sitemap; elm make Sitemap.elm --output=sitemap.js; (sleep 2; opener http://localhost:8000/sitemap.html) & elm reactor",
+    "test": "set -e; cd tests; elm make Tests.elm --output=tests.js; (sleep 2; opener http://localhost:8000/tests.html) & elm reactor"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnbooth/chaldeas.git"
+  },
+  "author": "joshua.n.booth@gmail.com",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/jnbooth/chaldeas/issues"
+  },
+  "homepage": "https://github.com/jnbooth/chaldeas#readme",
+  "devDependencies": {
+    "opener": "^1.5.1",
+    "rimraf": "^2.6.2",
+    "surge": "^0.20.1",
+    "uglify-js": "^3.4.9"
+  }
+}

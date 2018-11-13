@@ -1,3 +1,2 @@
-language: node_js 
-node_js: - "0.12" 
+language: node_js
 after_success: - surge --project ./publish --domain chaldeas.surge.sh 

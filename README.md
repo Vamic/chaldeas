@@ -20,7 +20,7 @@ Once you've done all that, build the site with `npm run build`. To run a local d
 
 Pushing your commits to the repository automatically uploads your latest build to the server.
 
-To test the database's information against [GrandOrder.Wiki](https://grandorder.wiki), run `npm run test`. The page will only work if you temporarily disable Cross-Origin security policies, which is easiest to do with a browser extension like [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/) or [this one for Chrome](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en),
+To test the database's information against [GrandOrder.Wiki](https://grandorder.wiki), run `npm run tests`. The page will only work if you temporarily disable Cross-Origin security policies, which is easiest to do with a browser extension like [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/) or [this one for Chrome](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en),
 
 ## Skill Effects
 Skill effects are enumerated at the top of [Database.Skill](src/Database/Skill.elm). If you aren't sure what an effect means, check its text description in [Class.Show](src/Class/Show.elm). Before adding a new skill effect, make sure it isn't already on the list.

@@ -190,7 +190,7 @@
       #calc th:first-child
         { min-width: 8em
         }
-      body > div:last-child
+      #elm
         { display: flex 
         ; position: absolute
         ; top:0;bottom:0;left:0;right:0
@@ -376,7 +376,7 @@
         ; padding: 7px 0
         ; text-align: center
         }
-      article .portrait 
+      article .portrait
         { margin-top: -2px 
         ; display: table
         }
@@ -536,7 +536,7 @@
       @media (min-device-width: 800px) and (max-width: 890px)
         { body > div > section          { flex: 6 1 0 } }
       @media (max-device-width: 800px) 
-        { body > div:last-child         { position: unset }
+        { #elm         { position: unset }
           body > div > footer           { display: block }
           body                          { font-size: 8px }
           section .portrait > img       { width: 75px; min-height: 106px }

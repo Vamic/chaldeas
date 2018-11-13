@@ -104,7 +104,7 @@ keyedPortrait big prefs (label, ce) =
 popup : Preferences -> Maybe CraftEssence -> List (Html Msg) -> Html Msg
 popup prefs a = case a of
   Nothing ->
-    H.div [P.class <| mode prefs] << (++)
+    H.div [P.id "elm", P.class <| mode prefs] << (++)
     [ H.div [P.id "cover", E.onClick <| Focus Nothing] []
     , H.article [P.id "focus"] []
     ]
@@ -139,7 +139,7 @@ popup prefs a = case a of
           >> H.text
           >> List.singleton
     in
-      H.div [P.class <| mode prefs ++ " fade"] << (++)
+      H.div [P.id "elm", P.class <| mode prefs ++ " fade"] << (++)
       [ H.div [P.id "cover", E.onClick <| Focus Nothing] []
       , H.article [P.id "focus"]
         [ H.div []

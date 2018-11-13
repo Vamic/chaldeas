@@ -8,15 +8,9 @@ Bringing order to Fate/Grand Order
 BSD 3-Clause, see [LICENSE](https://github.com/jnbooth/chaldeas/blob/master/LICENSE).
 
 ## Getting Started
-Install [Elm](https://guide.elm-lang.org/install.html). The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [Elm IDE](https://marketplace.visualstudio.com/items/sbrink.elm) extension. 
+Install [Elm](https://guide.elm-lang.org/install.html) and [npm](https://www.npmjs.com/get-npm). The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [Elm IDE](https://marketplace.visualstudio.com/items/sbrink.elm) extension. 
 
-You will also need [npm](https://www.npmjs.com/get-npm) in order to install [Uglify](https://www.npmjs.com/package/uglify-js) and [Surge](https://www.npmjs.com/package/surge):
-
-```sh
-sudo npm install --global uglify-js surge
-```
-
-Once you've done all that, build the site with `npm run build`. To run a local development instance of the site, use `npm run dev`. To generate the sitemap, run `npm run sitemap` and copy and paste the content from the browser window to [publish/sitemap.txt](publish/sitemap.txt).
+Build the site with `npm run build`. To run a local development instance of the site, use `npm run dev`. To generate the sitemap, run `npm run sitemap` and copy and paste the content from the browser window to [publish/sitemap.txt](publish/sitemap.txt).
 
 Pushing your commits to the repository automatically uploads your latest build to the server.
 

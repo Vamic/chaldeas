@@ -89,6 +89,24 @@ scheduledFilters =
     , "Altria Pendragon (Alter)", "Lancelot (Saber)", "Gawain", "Tristan"
     , "Altria Pendragon (Lancer Alter)", "Lancelot"
     ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterAvailability "Rate-Up"
+    [ "Jack the Ripper", "Nursery Rhyme", "Marie Antoinette", "Robin Hood", "Jing Ke" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterAvailability "Limited to Event"
+    [ "Altria Pendragon (Santa Alter)" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterEventBonus "+4 Magical Stocking"
+    [ "Altria Pendragon (Santa Alter)" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterEventBonus "+3 Magical Stocking"
+    [ "Jack the Ripper" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterEventBonus "+2 Magical Stocking"
+    [ "Marie Antoinette", "Martha", "Nursery Rhyme" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterEventBonus "+1 Magical Stocking"
+    [ "Gaius Julius Caesar", "Robin Hood", "Jing Ke", "Darius III", "David", "Phantom of the Opera" ]
   ]
 
 singleFilter : Has Servant a -> FilterTab -> a -> List (Filter Servant)

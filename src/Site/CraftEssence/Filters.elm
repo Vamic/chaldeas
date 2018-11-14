@@ -41,7 +41,21 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter CraftEssence)
 scheduledFilters =
-  [ 
+  [ ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterAvailability "Rate-Up"
+    [ "Present For My Master", "March of the Saint", "Lightning Reindeer" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterEventBonus "+20~40% Magical Stocking"
+    [ "Holy Night Sign" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterEventBonus "+1~2 Gold Star"
+    [ "Present For My Master" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterEventBonus "+1~2 Silver Bell"
+    [ "March of the Saint" ]
+  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+    nameFilter FilterEventBonus "+1~2 Mini Ribbon"
+    [ "Lightning Reindeer" ]
   ]
 
 getExtraFilters : Date -> FilterTab -> List (Filter CraftEssence)

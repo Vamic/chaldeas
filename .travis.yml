@@ -3,4 +3,5 @@ node_js:
     - "node"
 cache: npm
 after_success: 
+    - surge --project publish --domain chaldeas.surge.sh
     - surge --project publish --domain chaldeas.surge.sh 

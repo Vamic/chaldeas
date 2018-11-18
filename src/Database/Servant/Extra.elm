@@ -47,7 +47,7 @@ extras =
                   , hits   = 0
                   , effect = [ Grant Party 3 DefenseUp <| Range 5 25
                              , Grant Party 1 Invincibility Full
-                             , Debuff Self 2 Stun Full
+                             , Chance 500 <| Debuff Self 2 Stun Full
                              ]
                   , over   = [ Grant Party 2 HealPerTurn <| Range 1000 3000 ]
                   , first  = False

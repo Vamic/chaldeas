@@ -1103,7 +1103,7 @@ casters =
                   , kind   = "Anti-Personnel"
                   , hits   = 4
                   , effect = [ To Enemies Damage <| Range 300 500 ]
-                  , over   = [ Debuff Enemies 1 Stun <| Range 30 50 ]
+                  , over   = [ Chances 30 50 <| Debuff Enemies 1 Stun Full ]
                   , first  = False
                   }
     , gen       = { starWeight = 50, starRate = 10.8, npAtk = 1.59, npDef = 3 }

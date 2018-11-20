@@ -430,7 +430,7 @@ sabers =
                   , max   = { atk = 9899,  hp = 11248 }
                   , grail = { atk = 11986, hp = 13638 }
                   }
-    , skills    = [ { name   = "Hero's Great Principle"
+    , skills    = [ { name   = "Hero's Great Principles"
                     , rank   = EX
                     , icon   = IconShield
                     , cd     = 8
@@ -438,7 +438,7 @@ sabers =
                                , Grant Self 1 Invincibility Full
                                ]
                     }
-                  , { name   = "Mana Burst (Bravery)"
+                  , { name   = "Mana Burst (Courage)"
                     , rank   = D
                     , icon   = IconBusterUp
                     , cd     = 7
@@ -447,7 +447,7 @@ sabers =
                                , Grant Self 1 DefenseUp <| Flat 20
                                ]
                     }
-                  , { name   = "Legendary Crimson Hero"
+                  , { name   = "Legend of the Crimson Hero"
                     , rank   = EX
                     , icon   = IconDamageUp
                     , cd     = 8

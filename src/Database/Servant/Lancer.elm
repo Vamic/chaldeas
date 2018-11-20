@@ -617,7 +617,7 @@ lancers =
                   ]
     , passives  = [magicResistance C]
     , phantasm  = { name   = "Kazikli Bey"
-                  , desc   = "The Fortress of Impalement"
+                  , desc   = "Citadel of Impalement"
                   , rank   = C
                   , card   = Buster
                   , kind   = "Anti-Enemy"

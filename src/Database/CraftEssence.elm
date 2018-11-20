@@ -2590,7 +2590,7 @@ craftEssences =
                   , max  = { atk = 2000, hp = 0 }
                   }
       , effect  = [ Grant Self 0 (Performance Quick) <| Range 15 20
-                  , To Party GainStars <| Range 3 4
+                  , Grant Party 0 StarsPerTurn <| Range 3 4
                   ]
       , bond    = Nothing
       , limited = True

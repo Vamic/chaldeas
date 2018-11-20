@@ -116,7 +116,7 @@ assassins =
                   ]
     , passives  = [presenceConcealment B, divinity D]
     , phantasm  = { name   = "Uraeus Astrape"
-                  , desc   = "O, serpent who finishes the time of daybreak, come to me"
+                  , desc   = "Here Stand The Snakes, At The Dawn's End"
                   , rank   = A
                   , card   = Buster
                   , kind   = "Anti-Army"

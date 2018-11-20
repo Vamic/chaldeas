@@ -80,18 +80,23 @@ decodeStat =
     (D.field "hp"  D.int)
 
 encodeServant : Servant -> Value
-encodeServant = .name >> E.string
+encodeServant = .id >> E.int
 
 decodeServant : D.Decoder Servant
 decodeServant =
   let
-    fromName name =
-        case List.find (.name >> (==) name) servants of
-          Nothing -> D.fail <| "Unknown Servant " ++ name
-          Just s  -> D.succeed s
+    fromId id = case List.find (.id >> (==) id) servants of
+      Nothing -> D.fail <| "Unknown Servant #" ++ String.fromInt id
+      Just s  -> D.succeed s
+    -- Backward compatibility
+    fromName name = case List.find (.name >> (==) name) servants of
+      Nothing -> D.fail <| "Unknown Servant " ++ name
+      Just s  -> D.succeed s
   in
-    D.string
-    |> D.andThen fromName
+    D.oneOf
+    [ D.int    |> D.andThen fromId
+    , D.string |> D.andThen fromName
+    ]
 
 encodeMyServant : MyServant -> Value
 encodeMyServant ms =

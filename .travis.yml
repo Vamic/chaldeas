@@ -6,3 +6,4 @@ deploy:
   provider: surge
   project: ./publish/
   domain: chaldeas.surge.sh
+  skip-cleanup: true

@@ -2,6 +2,7 @@ language: node_js
 node_js: 
     - "node"
 cache: npm
-after_success:
-    - travis_retry surge --project publish --domain chaldeas.surge.sh
-    - travis_retry surge --project publish --domain chaldeas.surge.sh
+deploy:
+  provider: surge
+  project: ./publish/
+  domain: chaldeas.surge.sh

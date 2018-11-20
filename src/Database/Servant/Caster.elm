@@ -687,11 +687,13 @@ casters =
     , passives  = [territoryCreation A, itemConstruction BPlus, divinity B]
     , phantasm  = { name   = "Anpu Neb Ta Djeser"
                   , desc   = "Nether Mirror's Precious Bible"
-                  , rank   = BPlus
+                  , rank   = BPlusPlus
                   , card   = Arts
                   , kind   = "Anti-Army"
                   , hits   = 3
-                  , effect = [ To Enemies Damage <| Range 450 750 ]
+                  , effect = [ To Enemies Damage <| Range 600 900 
+                             , Debuff Enemies 3 CritChance <| Flat 20
+                             ]
                   , over   = [ To Enemies Kill <| Range 50 100 ]
                   , first  = True
                   }

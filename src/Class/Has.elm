@@ -2,8 +2,8 @@ module Class.Has exposing (..)
 
 import Maybe.Extra as Maybe
 
-import Database.Base         exposing (..)
-import Database.Skill        exposing (..)
+import Database.Base  exposing (..)
+import Database.Skill exposing (..)
 import Database.Servant as Servant exposing (Deck, PhantasmType, Servant, getMaterials)
 
 import Class.Show as Show
@@ -65,8 +65,7 @@ servant s =
     ++ List.concatMap .effect s.skills
 
 effect : (b -> String) -> (Bool -> SkillEffect -> Maybe b)
-         -> (a -> List SkillEffect)
-         -> Has a b
+         -> (a -> List SkillEffect) -> Has a b
 effect show match f = Has show <| \noSelf x ->
     f x
     |> List.map simplify

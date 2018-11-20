@@ -458,8 +458,8 @@ buffEffect target amt a =
       SureHit         -> grant "Sure Hit"
       Taunt           -> "Draw attention of all enemies" ++ to
       StarsPerTurn    -> "Gain " ++ n ++ " stars every turn" ++ case target of
-                           Self -> " for yourself"
-                           _    -> ""
+                            Self -> " for yourself"
+                            _    -> ""
 
 nameBuffEffect : BuffEffect -> String
 nameBuffEffect a = case a of
@@ -504,26 +504,24 @@ skillEffect : SkillEffect -> String
 skillEffect =
   let
     uncap s = case String.uncons s of
-      Nothing -> s
+      Nothing           -> s
       Just (head, tail) -> String.toLower (String.fromChar head) ++ tail
     addPeriod s = if String.endsWith ":" s then s else s ++ "."
     go a = case a of
-        Grant t dur buff amt -> buffEffect t amt buff ++ turns dur
-        Debuff t dur deb amt -> debuffEffect t amt deb ++ turns dur
-        To t instant amt     -> instantEffect t amt instant
-        Bonus bonus perc amt -> bonusEffect perc amt bonus
-        Chance 0 ef          -> "Chance to " ++ uncap (go ef)
-        Chance per ef        -> String.fromInt per ++ "% chance to "
-                                ++ uncap (go ef)
-        Chances x y ef       -> String.fromInt x ++ "~" ++ String.fromInt y
-                                ++ "% chance to " ++ uncap (go ef)
-        When "attacking" ef  -> go ef ++ " when attacking"
-        When cond ef         -> "If " ++ cond ++ ": " ++ uncap (go ef)
-        Times 1 ef           -> go ef ++ " (1 time)"
-        Times times ef       -> go ef ++ " (" ++ String.fromInt times
-                                ++ " times)"
-        ToMax amt ef         -> go ef ++ " every turn (max "
-                                ++ amount amt ++ ")"
+      Grant t dur buff amt -> buffEffect t amt buff ++ turns dur
+      Debuff t dur deb amt -> debuffEffect t amt deb ++ turns dur
+      To t instant amt     -> instantEffect t amt instant
+      Bonus bonus perc amt -> bonusEffect perc amt bonus
+      Chance 0 ef          -> "Chance to " ++ uncap (go ef)
+      Chance per ef        -> String.fromInt per ++ "% chance to "
+                              ++ uncap (go ef)
+      Chances x y ef       -> String.fromInt x ++ "~" ++ String.fromInt y
+                              ++ "% chance to " ++ uncap (go ef)
+      When "attacking" ef  -> go ef ++ " when attacking"
+      When cond ef         -> "If " ++ cond ++ ": " ++ uncap (go ef)
+      Times 1 ef           -> go ef ++ " (1 time)"
+      Times times ef       -> go ef ++ " (" ++ String.fromInt times ++ " times)"
+      ToMax amt ef         -> go ef ++ " every turn (max " ++ amount amt ++ ")"
     turns a = case a of
       0 -> ""
       1 -> " for 1 turn"
@@ -576,14 +574,14 @@ possessiveAndSubject a = case a of
 
 preference : Preference -> String
 preference a = case a of
-    AddSkills    -> "Add skills to NP damage"
-    Artorify     -> "Artorify"
-    ExcludeSelf  -> "Exclude self-applied effects"
-    HideClasses  -> "Hide (Class) in names"
-    MaxAscension -> "Show all at max ascension"
-    NightMode    -> "Night Mode"
-    ShowTables   -> "Show skill and NP tables"
-    Thumbnails   -> "Thumbnails"
+  AddSkills    -> "Add skills to NP damage"
+  Artorify     -> "Artorify"
+  ExcludeSelf  -> "Exclude self-applied effects"
+  HideClasses  -> "Hide (Class) in names"
+  MaxAscension -> "Show all at max ascension"
+  NightMode    -> "Night Mode"
+  ShowTables   -> "Show skill and NP tables"
+  Thumbnails   -> "Thumbnails"
 
 ----------
 -- Base

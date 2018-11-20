@@ -186,8 +186,10 @@ riders =
                   , card   = Buster
                   , kind   = "Anti-Army"
                   , hits   = 8
-                  , effect = [ To Enemies Damage <| Range 300 500 ]
-                  , over   = [ Debuff Enemies 3 DefenseDown <| Range 10 30 ]
+                  , effect = [ To Enemies Damage <| Range 400 600 ]
+                  , over   = [ Debuff Enemies 3 DefenseDown <| Range 10 30 
+                             , Debuff Enemies 3 CritChance <| Range 10 50
+                             ]
                   , first  = False
                   }
     , gen       = { starWeight = 205, starRate = 8.8, npAtk = 0.66, npDef = 3 }

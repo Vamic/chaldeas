@@ -30,11 +30,13 @@ archers =
                     , cd     = 8
                     , effect = [ Grant Self 3 NPGen <| Range 20 50 ]
                     }
-                  , { name   = "Collector"
+                  , { name   = "Treasury of Babylon"
                     , rank   = EX
                     , icon   = IconStarUp
                     , cd     = 7
-                    , effect = [ Grant Self 3 StarAbsorb <| Range 300 600 ]
+                    , effect = [ Grant Self 3 StarAbsorb <| Range 300 600 
+                               , To Self GaugeUp <| Range 20 30
+                               ]
                     }
                   ]
     , passives  = [magicResistance E, independentAction APlus, divinity B]
@@ -1086,11 +1088,11 @@ archers =
     , passives  = [magicResistance E, independentAction A, divinity B]
     , phantasm  = { name   = "Gate of Babylon"
                   , desc   = "King's Treasury"
-                  , rank   = BPlus
+                  , rank   = BPlusPlus
                   , card   = Buster
                   , kind   = "Anti-Unit"
                   , hits   = 10
-                  , effect = [ To Enemies Damage <| Range 300 500 ]
+                  , effect = [ To Enemies Damage <| Range 400 600 ]
                   , over   = [ Debuff Enemies 1 NPDown <| Range 50 90
                              , Debuff Enemies 1 CritDown <| Range 50 90
                              , Debuff Enemies 1 DebuffVuln <| Range 20 40

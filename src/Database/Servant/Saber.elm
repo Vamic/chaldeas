@@ -91,11 +91,12 @@ sabers =
                     , effect = [ Grant Party 1 NPUp <| Range 9 18 ]
                     }
                   , { name   = "Natural Body"
-                    , rank   = D
+                    , rank   = EX
                     , icon   = IconHoodUp
                     , cd     = 7
-                    , effect = [ Grant Self 3 OffensiveResist <| Range 40 80
-                               , To Self Heal <| Range 1000 2500
+                    , effect = [ Grant Self 3 OffensiveResist <| Range 60 120
+                               , To Self Heal <| Range 1000 3000
+                               , Grant Self 1 StarAbsorb <| Range 100 300 
                                ]
                     }
                   , { name   = "Crest of the Star"

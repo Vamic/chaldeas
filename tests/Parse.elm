@@ -21,6 +21,7 @@ upgradeNP =
     , "Nikola Tesla"
     , "Mordred"
     , "Fergus mac Roich"
+    , "Iskandar"
     ]
 
 uniqueNP : List String

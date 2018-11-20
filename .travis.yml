@@ -2,7 +2,6 @@ language: node_js
 node_js: 
     - "node"
 cache: npm
-after_success: # Because travis_retry doesn't handle Surge properly
-    - surge --project publish --domain chaldeas.surge.sh
-    - surge --project publish --domain chaldeas.surge.sh
-    - surge --project publish --domain chaldeas.surge.sh 
+after_success:
+    - travis_retry surge --project publish --domain chaldeas.surge.sh
+    - travis_retry surge --project publish --domain chaldeas.surge.sh

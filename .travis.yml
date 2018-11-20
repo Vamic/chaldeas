@@ -2,7 +2,8 @@ language: node_js
 node_js: 
     - "node"
 cache: npm
-install: npm run build
+before_deploy: 
+  - npm run build
 deploy:
   provider: surge
   project: ./publish/

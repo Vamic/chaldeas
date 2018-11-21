@@ -367,7 +367,7 @@ extras =
     , class     = Shielder
     , attr      = Earth
     , deck      = Deck Quick Arts Arts Buster Buster
-    , curve     = 11
+    , curve     = 3
     , stats     = { base  = { atk = 1261,  hp = 1854 }
                   , max   = { atk = 6791,  hp = 10302 }
                   , grail = { atk = 10575, hp = 15619 }

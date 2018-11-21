@@ -1544,6 +1544,19 @@ craftEssences =
       , bond    = Nothing
       , limited = True
       }
+    , { name    = "[Heaven's Feel]"
+      , id      = 174
+      , rarity  = 4
+      , icon    = IconQuickUp
+      , stats   = { base = { atk = 100, hp = 100 }
+                  , max  = { atk = 100, hp = 100 }
+                  }
+      , effect  = [ Grant Self 0 (Performance Quick) <| Flat 10
+                  , To Self GaugeUp <| Flat 40
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
     , { name    = "Ideal Holy King"
       , id      = 175
       , rarity  = 5

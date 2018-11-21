@@ -343,6 +343,7 @@ https://chaldeas.surge.sh/CraftEssences/Wonderland
 https://chaldeas.surge.sh/CraftEssences/WorthlessJewel
 https://chaldeas.surge.sh/CraftEssences/YggdrasilTree
 https://chaldeas.surge.sh/CraftEssences/ZungaZunga!
+https://chaldeas.surge.sh/CraftEssences/[Heaven'sFeel]
 https://chaldeas.surge.sh/Servants
 https://chaldeas.surge.sh/Servants/Alexander
 https://chaldeas.surge.sh/Servants/Altera

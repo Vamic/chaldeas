@@ -10,7 +10,7 @@ BSD 3-Clause, see [LICENSE](https://github.com/jnbooth/chaldeas/blob/master/LICE
 ## Getting Started
 Install [Elm](https://guide.elm-lang.org/install.html) and [npm](https://www.npmjs.com/get-npm). The recommended development environment is [Visual Studio Code](code.visualstudio.com) with the [Elm IDE](https://marketplace.visualstudio.com/items/sbrink.elm) extension. 
 
-Build the site with `npm run build`. To run a local development instance of the site, use `npm run dev`. To generate the sitemap, run `npm run sitemap` and copy and paste the content from the browser window to [publish/sitemap.txt](publish/sitemap.txt).
+To run a local development instance of the site, use `npm run dev`. To generate the sitemap, run `npm run sitemap` and copy and paste the content from the browser window to [publish/sitemap.txt](publish/sitemap.txt). **Always regenerate the sitemap if you add a Craft Essence or Servant.**
 
 Pushing your commits to the repository automatically uploads your latest build to the server. It takes [Travis CI](https://travis-ci.com/) a few minutes to deploy everything up through [Surge](surgee.sh), so changes will not be reflected immediately.
 

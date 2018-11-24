@@ -1,35 +1,29 @@
+port module Main exposing (main)
+
 import Browser
 
 import Html as H exposing (Html)
+import Platform exposing (worker)
 
 import StandardLibrary       exposing (..)
 import Database              exposing (..)
 import Database.CraftEssence exposing (..)
 import Printing              exposing (..)
 
-main =
-    Browser.element
-      { init          = init
-      , update        = update
-      , subscriptions = always Sub.none
-      , view          = view
-      }
-
-type alias Model = ()
-
-init : () -> (Model, Cmd Msg)
-init _ = pure ()
-
-type alias Msg = ()
-
-update : Msg -> Model -> (Model, Cmd Msg)
-update _ st = pure st
-
-view : Model -> Html Msg
-view st = 
-    H.div [] << List.concatMap (flip (::) <| [H.br [] []]) << List.map H.text << 
+output : String
+output =
+    String.join "\n" <<
     List.sort <<
     List.map ((++) "https://chaldeas.surge.sh/") <| 
     ["Servants", "CraftEssences"]
     ++ List.map (.name >> urlName >> ((++) "Servants/")) servants
     ++ List.map (.name >> urlName >> ((++) "CraftEssences/")) craftEssences
+
+port print : String -> Cmd msg
+
+main : Program () () Never
+main = worker
+    { init = \_ -> ((), print output)
+    , update = \_ _ -> pure ()
+    , subscriptions = \_ -> Sub.none
+    }

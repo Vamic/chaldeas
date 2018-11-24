@@ -2,6 +2,5 @@ elm-stuff/
 /.vscode
 /chaldeas
 .DS_Store
-sitemap/index.html
 node_modules/
 *.js

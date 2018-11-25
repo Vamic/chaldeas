@@ -9,8 +9,8 @@ module Printing exposing
 
 {-| Helper functions for outputting to `String`s. -}
 
-import Regex exposing (Regex)
-import FormatNumber exposing (format)
+import Regex                exposing (Regex)
+import FormatNumber         exposing (format)
 import FormatNumber.Locales exposing (usLocale)
 
 import StandardLibrary exposing (..)

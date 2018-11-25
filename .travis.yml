@@ -4,6 +4,8 @@ node_js:
 cache: npm
 before_deploy: 
   - npm run build
+  - npm run uglify
+  - npm run sitemap
 deploy:
   provider: surge
   project: ./publish/

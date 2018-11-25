@@ -9,7 +9,8 @@
   "scripts": {
     "test": "ls publish",
     "sitemap": "set -e; cd sitemap; elm make Main.elm --optimize --output=main.js; node -e \"require('./main.js').Elm.Main.init().ports.print.subscribe(console.log)\" > ../publish/sitemap.txt",
-    "build": "mkdir publish/js; set -e; rimraf elm-stuff; elm make src/Main.elm --output=publish/js/chaldeas.js --optimize; uglifyjs publish/js/chaldeas.js --compress 'pure_funcs=\"F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9\",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output=publish/js/chaldeas.js; npm run sitemap",
+    "build": "mkdir publish/js; set -e; rimraf elm-stuff; elm make src/Main.elm --output=publish/js/chaldeas.js --optimize",
+    "uglify": "uglifyjs publish/js/chaldeas.js --compress 'pure_funcs=\"F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9\",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output=publish/js/chaldeas.js",
     "dev": "set -e; npm run build; cd publish; (sleep 2; opener http://localhost:8000/200.html) & elm reactor",
     "tests": "set -e; cd tests; elm make Tests.elm --output=tests.js; (sleep 2; opener http://localhost:8000/tests.html) & elm reactor"
   },

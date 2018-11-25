@@ -18,7 +18,7 @@ module StandardLibrary exposing
 {-| A "classy prelude" that fills in holes in `Basic`,
 including several functions that were removed in Elm 0.19. -}
 
-import Dict    exposing (Dict)
+import Dict exposing (Dict)
 import Json.Encode as E
 import List.Extra  as List
 

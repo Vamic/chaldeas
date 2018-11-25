@@ -1,8 +1,6 @@
 module Site.Update exposing (siteUpdate)
 
-import Browser.Navigation as Navigation
-import List.Extra         as List
-import Date exposing (Date)
+import List.Extra as List
 
 import StandardLibrary     exposing (..)
 import Site.Algebra        exposing (..)
@@ -12,13 +10,13 @@ import Site.Filtering      exposing (..)
 import Persist.Flags       exposing (..)
 import Persist.Preferences exposing (..)
 
-siteUpdate : (String -> Value -> Cmd (SiteMsg filt focus alt))
+siteUpdate : (String -> Value -> Cmd (SiteMsg filt focus))
           -> (focus -> filt)
           -> (filt -> String)
           -> (SiteModel filt focus extra -> SiteModel filt focus extra)
-          -> SiteMsg filt focus alt
+          -> SiteMsg filt focus
           -> SiteModel filt focus extra
-          -> (SiteModel filt focus extra, Cmd (SiteMsg filt focus alt))
+          -> (SiteModel filt focus extra, Cmd (SiteMsg filt focus))
 siteUpdate store transform show reSort msg st =
   let
     relist        = updateListing transform
@@ -84,7 +82,5 @@ siteUpdate store transform show reSort msg st =
         else
             { st | filters = toggleIn filter st.filters }
     Ascend _ _  -> pure st
-    OnTeam _ _  -> pure st
-    MineOnly _  -> pure st
-    Switch _    -> pure st
+    OnMine _ _  -> pure st
     DoNothing   -> pure st

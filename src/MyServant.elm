@@ -8,7 +8,6 @@ and stats for particular Servants. This module defines the container for
 such information, which is a `Database.Servant` wrapper with additional
 user info such as Fou stats and skill levels. -}
 
-import List.Extra  as List
 import Dict exposing (Dict)
 
 import StandardLibrary        exposing (..)
@@ -143,6 +142,6 @@ newServant s =
     }
 
 owned : Dict OrdServant MyServant -> Servant -> MyServant
-owned team s = case Dict.get (ordServant s) team of
+owned mine s = case Dict.get (ordServant s) mine of
   Just ms -> ms
   Nothing -> unowned s

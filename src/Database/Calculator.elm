@@ -2,10 +2,10 @@ module Database.Calculator exposing (npPer, starsPer, npDamage)
 
 {-| Calculates information for sorting based on datamined formulas. -}
 
-import StandardLibrary       exposing (..)
-import Database.Base         exposing (..)
-import Database.Skill        exposing (..)
-import Database.Servant      exposing (..)
+import StandardLibrary  exposing (..)
+import Database.Base    exposing (..)
+import Database.Skill   exposing (..)
+import Database.Servant exposing (..)
 
 {-| Formula source: [Beast's Lair: Mining for Bits, by Kyte](http://blogs.nrvnqsr.com/entry.php/3306-How-much-NP-do-I-get-in-combat) -}
 npPer : Servant -> Card -> Float

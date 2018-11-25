@@ -9,7 +9,6 @@ module Site.Filtering exposing
 
 import List.Extra as List
 import Date exposing (Date)
-import Time
 
 import StandardLibrary       exposing (..)
 import Database              exposing (..)

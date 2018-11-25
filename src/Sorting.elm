@@ -3,8 +3,6 @@ module Sorting exposing
   , formatSort
   )
 
-import List.Extra as List
-
 import StandardLibrary exposing (..)
 import Printing        exposing (..)
 

@@ -17,7 +17,6 @@ module Class.ToImage exposing (..)
 -}
 
 import Html            as H exposing (Html)
-import Html.Events     as E
 import Html.Attributes as P
 
 import MyServant             exposing (..)

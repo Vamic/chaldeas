@@ -246,6 +246,7 @@
       .portrait
         { position: relative 
         ; display: inline-block
+        ; line-height: 0
         }
       .portrait > img 
         { border-style: solid }
@@ -353,7 +354,6 @@
       #cover
         { position: absolute 
         ; top:0;bottom:0;left:0;right:0
-        ; cursor: pointer
         }
       article, #cover 
         { display: none }
@@ -638,9 +638,10 @@
         }
         var app = Elm.Main.init({
           flags: {
-            today: Date.now(),
             preferences: getValue("preferences"),
-            team: getValue("team") || []
+            team:        getValue("team") || [],
+            teams:       getValue("teams") || [],
+            today:       Date.now()
           }
         });
         app.ports.store.subscribe(function(pair) {

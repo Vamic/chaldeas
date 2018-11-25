@@ -1,8 +1,6 @@
 port module Main exposing (main)
 
 import Browser
-import Date exposing (Date)
-import Time exposing (Month(..))
 import Json.Encode as E
 
 import StandardLibrary       exposing (..)

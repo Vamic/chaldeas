@@ -5,7 +5,6 @@ a collection of all Servants in the [Database.Servant](./Servant/) folder. -}
 
 import List.Extra as List
 
-import StandardLibrary       exposing (..)
 import Class.Has             exposing (..)
 import Database.Base         exposing (..)
 import Database.Skill        exposing (..)

@@ -24,7 +24,7 @@ import Class.Show as Show
 
 {-| Scrolls an HTML element to its top.
 Used when a Servant or Craft Essence is clicked on. -}
-scrollToTop : String -> Cmd (SiteMsg a b c)
+scrollToTop : String -> Cmd (SiteMsg a b)
 scrollToTop id = Task.attempt (always DoNothing) <| Dom.setViewportOf id 0 0
 
 {-| Updates the URL in the address bar and adds an entry to browser history. -}
@@ -33,7 +33,7 @@ setPath key path =
     Navigation.pushUrl key <| Url.absolute (List.map urlName path) []
 
 {-| Displays details for a Servant or Craft Essence in the popup. -}
-setFocus : Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b c)
+setFocus : Navigation.Key -> String -> Maybe String -> Cmd (SiteMsg a b)
 setFocus key root a = case a of
   Nothing   -> setPath key [root]
   Just name -> setPath key [root, urlName name]
@@ -98,7 +98,7 @@ mode prefs = if prefer prefs NightMode then "dark" else "light"
 
 {-| Displays a `SkillEffect` with a link and marks demerits. -}
 effectEl : List a -> Maybe (a -> List SkillEffect) -> SkillEffect
-        -> Html (SiteMsg a b c)
+        -> Html (SiteMsg a b)
 effectEl xs getEffects ef =
     flip H.p [H.text <| Show.skillEffect ef] <|
     if demerit ef then
@@ -108,12 +108,13 @@ effectEl xs getEffects ef =
       Just filter -> [P.class "link", E.onClick <| FilterBy [filter]]
 
 {-| `<a>` -}
-a_ : String -> msg -> Html msg
-a_ label click = H.a [href_ <| urlName label, E.onClick click] [H.text label]
-
-{-| `href="/..."` -}
-href_ : String -> H.Attribute msg
-href_ = P.href << (++) "/"
+a_ : List String -> Html msg
+a_ path = 
+  let
+    last = Maybe.withDefault "" << List.head <| List.reverse path
+  in
+    H.a [P.href << (++) "/" << String.join "/" <| List.map urlName path] 
+    [H.text last]
 
 {-| `<h[1-6]>` -}
 h_ : Int -> String -> Html msg
@@ -152,8 +153,7 @@ onChange tagger =
   Json.map (\x -> (x, True)) <| Json.map tagger E.targetValue
 
 {-| `<input type="number"> with supplied `min`, `max`, and `value`. -}
-int_ : Int -> Int -> Int -> (Int -> SiteMsg a b c)
-    -> List (Html (SiteMsg a b c))
+int_ : Int -> Int -> Int -> (Int -> SiteMsg a b) -> List (Html (SiteMsg a b))
 int_ minVal maxVal actualVal changed =
     [ H.input
       [ P.type_      "number"
@@ -194,5 +194,5 @@ text_ : (List p -> List (Html msg) -> Html msg) -> String -> Html msg
 text_ el txt = el [] [H.text txt]
 
 {-| `<tr>` with a supplied `th` and `td` -}
-tr_ : String -> List (Html (SiteMsg a b c)) -> Html (SiteMsg a b c)
+tr_ : String -> List (Html (SiteMsg a b)) -> Html (SiteMsg a b)
 tr_ th td = H.tr [] [text_ H.th th, H.td [] td]

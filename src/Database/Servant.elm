@@ -20,8 +20,8 @@ module Database.Servant exposing
 import List.Extra as List
 
 import StandardLibrary exposing (..)
-import Database.Base exposing (..)
-import Database.Skill exposing (..)
+import Database.Base   exposing (..)
+import Database.Skill  exposing (..)
 
 type alias Servant =
     { name     : String

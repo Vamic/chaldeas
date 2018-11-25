@@ -4,19 +4,16 @@ module Site.Servant.Filters exposing
   )
 
 import List.Extra  as List
-import Maybe.Extra as Maybe
 import Date exposing (Date)
 import Time exposing (Month(..))
 
 import StandardLibrary  exposing (..)
 import Database         exposing (..)
-import Database.Base    exposing (..)
 import Database.Servant exposing (..)
 import Database.Skill   exposing (..)
 import Printing         exposing (..)
 import Site.Algebra     exposing (..)
 import Site.Base        exposing (..)
-import Site.Common      exposing (..)
 import Site.Filtering   exposing (..)
 
 import Class.Has     as Has     exposing (Has)

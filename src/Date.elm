@@ -1,6 +1,5 @@
 module Date exposing (Date, compare, today)
 
-import Task exposing (Task)
 import Time
 
 import StandardLibrary exposing (..)

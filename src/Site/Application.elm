@@ -1,32 +1,46 @@
 module Site.Application exposing (app)
 
+import Html            as H exposing (Html)
+import Html.Attributes as P
+
 import List.Extra         as List
 import Browser.Dom        as Dom
 import Browser.Navigation as Navigation
+import Json.Decode        as Json
 
-import Task
 import Browser exposing (Document, UrlRequest)
-import Html exposing (Html)
-import Url exposing (Url)
+import Date
+import Dict    exposing (Dict)
+import Url     exposing (Url)
+import Task
+import Time
 
-import StandardLibrary       exposing (..)
-import Database              exposing (..)
-import Database.CraftEssence exposing (..)
-import MyServant             exposing (..)
-import Printing              exposing (..)
-import Site.Algebra          exposing (..)
-import Site.Common           exposing (..)
+import StandardLibrary     exposing (..)
+import Persist.Flags       exposing (..)
+import Persist.Preferences exposing (..)
+import Printing            exposing (..)
+import Site.Algebra        exposing (..)
 
 import Site.CraftEssence.Component as CraftEssences
 import Site.Servant.Component      as Servants
 
 {-| The page currently being shown. -}
-type Viewing = CraftEssences | Servants
+type Viewing = CraftEssences | Servants | Teams
+
+showViewing : Viewing -> String
+showViewing a = case a of
+  CraftEssences -> "CraftEssences"
+  Servants      -> "Servants"
+  Teams         -> "Teams"
 
 type alias Model =
-    { ceModel : CraftEssences.Model
-    , sModel  : Servants.Model
+    { error   : Maybe String
+    , navKey  : Navigation.Key
+    , teams   : List Team
+    , onTeam  : Maybe (Team, Int)
     , viewing : Viewing
+    , ceModel : CraftEssences.Model
+    , sModel  : Servants.Model
     }
 
 type Msg
@@ -36,6 +50,9 @@ type Msg
     | ServantsMsg      Servants.Msg
     | OnError          (Result Dom.Error ())
 
+printError : Dom.Error -> String
+printError a = case a of
+  Dom.NotFound id -> "Element #" ++ id ++ " not found!"
 
 {-| If loaded with a url for a particular Servant or Craft Essence,
 the corresponding Servant/CE is displayed. -}
@@ -79,7 +96,8 @@ stateFromPath fullPath st =
           in
             ( { st
               | viewing = Servants
-              , sModel  = { sModel | extra = { extra | mineOnly = mineOnly } }
+              , sModel  = Servants.setRoot 
+                          { sModel | extra = { extra | mineOnly = mineOnly } }
               }
             , Maybe.withDefault (doIf mineOnly ((++) "My ") "Servants") <|
               Maybe.map (.base >> .name) sModel.focus
@@ -103,73 +121,70 @@ app onInit analytics title store =
       _             -> DoNothing
 
     init : Value -> Url -> Navigation.Key -> (Model, Cmd Msg)
-    init flags url key =
+    init val url key =
       let
+        (error, flags) =
+          case Json.decodeValue decodeFlags val of
+            Ok ok   -> (Nothing, ok)
+            Err err ->
+              (Just <| Json.errorToString err
+              , { today       = 0 |> Time.millisToPosix >> Date.today
+                , preferences = noPreferences
+                , mine        = Dict.empty
+                , teams       = []
+                }
+              )
         (st, newTitle) = stateFromPath url.path
-          { ceModel = ceChild.init flags key
-          , sModel  = sChild.init flags key
+          { error   = error
+          , navKey  = key
+          , teams   = flags.teams
+          , onTeam  = Nothing
           , viewing = Servants
+          , ceModel = ceChild.init flags key
+          , sModel  = sChild.init flags key
           }
       in
         (st, Cmd.batch [onInit, title newTitle])
 
     view : Model -> Document Msg
     view st =
-        Document "CHALDEAS" <| case st.viewing of
+      let
+        showError = case st.error of
+          Nothing -> identity
+          Just err -> (::) <| H.div [P.id "error"] [H.text err]
+      in
+        Document "CHALDEAS" << showError <| case st.viewing of
           CraftEssences ->
-            [ Html.map CraftEssencesMsg <| ceChild.view st.ceModel ]
+            [ H.map CraftEssencesMsg <| ceChild.view st.ceModel ]
           Servants ->
-            [ Html.map ServantsMsg <| sChild.view st.sModel ]
+            [ H.map ServantsMsg <| sChild.view st.sModel ]
+          Teams    ->
+            []
 
     update : Msg -> Model -> (Model, Cmd Msg)
     update parentMsg st = case parentMsg of
-      OnError err           -> pure st -- placeholder in case needed later
+      OnError (Ok _)        -> pure st
+      OnError (Err err)     -> pure { st | error = Just <| printError err }
       RequestUrl urlRequest -> case urlRequest of
-        Browser.Internal url  -> pure st
-        Browser.External href -> (st, Navigation.load href)
+        Browser.Internal url  -> 
+          if String.contains (showViewing st.viewing) url.path 
+          && String.contains "/" (String.dropLeft 1 url.path) then
+            pure st
+          else
+            (st, Navigation.pushUrl st.navKey <| Url.toString url)
+        Browser.External href -> 
+            (st, Navigation.load href)
       ChangeUrl {path} ->
         let
           (newSt, newTitle) = stateFromPath path st
         in
           (newSt, Cmd.batch [analytics path, title newTitle, resetPopup])
-      CraftEssencesMsg msg -> case msg of
-        Switch toServant ->
-          let
-            {sModel} = st
-            {extra}  = sModel
-            focus    = Maybe.map (owned sModel.team) toServant
-          in
-            ( { st
-              | viewing = Servants
-              , sModel  =
-                  { sModel
-                  | focus = focus
-                  , extra = { extra | mineOnly = False }
-                  }
-              }
-            , Cmd.map ServantsMsg <<
-              setFocus sModel.navKey "Servants" <|
-              Maybe.map (.base >> .name) focus
-            )
-        _ ->
+      CraftEssencesMsg msg ->
           let
             (model, cmd) = ceChild.update msg st.ceModel
           in
             ({ st | ceModel = model }, Cmd.map CraftEssencesMsg cmd)
-      ServantsMsg msg -> case msg of
-        Switch toCraftEssence ->
-          let
-            {ceModel} = st
-          in
-            ( { st
-              | viewing = CraftEssences
-              , ceModel = { ceModel | focus = toCraftEssence }
-              }
-            , Cmd.map CraftEssencesMsg <<
-              setFocus ceModel.navKey "CraftEssences" <|
-              Maybe.map .name toCraftEssence
-            )
-        _ ->
+      ServantsMsg msg ->
           let
             (model, cmd) = sChild.update msg st.sModel
           in

@@ -1,7 +1,5 @@
 module Site.Rendering exposing (siteView)
 
-import Browser exposing (Document)
-
 import Html            as H
 import Html.Events     as E
 import Html.Attributes as P
@@ -17,10 +15,10 @@ import Site.Filtering      exposing (..)
 import Class.Show    as Show
 import Class.ToImage as ToImage
 
-type alias Html a b c = H.Html (SiteMsg a b c)
+type alias Html a b = H.Html (SiteMsg a b)
 
-render : Section -> SiteModel a b d -> List SortBy -> List (Html a b c)
-      -> List (Html a b c)
+render : Section -> SiteModel a b c -> List SortBy 
+      -> List (Html a b) -> List (Html a b)
 render a st sorts nav = case a of
   SectionBrowse ->
     h_ 1 "Browse" :: nav ++
@@ -65,8 +63,8 @@ render a st sorts nav = case a of
         )
     ]
 
-siteView : SiteModel a b d -> List SortBy
-    -> List (Html a b c) -> Html a b c -> List (Html a b c)
+siteView : SiteModel a b c -> List SortBy
+    -> List (Html a b) -> Html a b -> List (Html a b)
 siteView st sorts nav content = case st.section of
   Just x ->
       [ H.div [P.id "bg"] []
@@ -76,11 +74,7 @@ siteView st sorts nav content = case st.section of
   Nothing ->
     let
       renderSection x = render x st sorts nav
-      showError = case st.error of
-          Nothing -> identity
-          Just err -> (::) <| H.div [P.id "error"] [H.text err]
     in
-      showError
       [ H.div [P.id "bg"] []
       , H.footer [] << flip List.map enumSection <| \section ->
           button_ (Show.section section) True << ToSection <| Just section
@@ -98,9 +92,9 @@ siteView st sorts nav content = case st.section of
       , H.aside [] <| h_ 1 "Browse" :: nav ++ renderSection SectionFilter
       ]
 
-filterSection : SiteModel a b d
+filterSection : SiteModel a b c
              -> { tab : FilterTab, filters : List (Filter a) }
-             -> List (Html a b c)
+             -> List (Html a b)
 filterSection st {tab, filters} = case filters of
   [] -> []
   _  ->

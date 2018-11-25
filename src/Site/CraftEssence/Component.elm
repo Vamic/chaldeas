@@ -1,10 +1,7 @@
 module Site.CraftEssence.Component exposing (Model, Msg, component)
 
 import Html.Keyed         as Keyed
-import List.Extra         as List
 import Browser.Navigation as Navigation
-import Browser   exposing (Document)
-import Date      exposing (Date)
 import Html.Lazy exposing (lazy3)
 
 import Html.Events     as E
@@ -12,10 +9,9 @@ import Html            as H exposing (Html)
 import Html.Attributes as P
 
 import StandardLibrary       exposing (..)
-import Database              exposing (..)
 import Database.CraftEssence exposing (..)
-import Database.Servant      exposing (..)
 import Database.Skill        exposing (..)
+import Persist.Flags         exposing (..)
 import Persist.Preferences   exposing (..)
 import Printing              exposing (..)
 import Site.Algebra          exposing (..)
@@ -25,7 +21,6 @@ import Site.Rendering        exposing (..)
 import Site.Update           exposing (..)
 import Sorting               exposing (..)
 
-import Class.Has     as Has
 import Class.ToImage as ToImage
 
 import Site.CraftEssence.Filters exposing (..)
@@ -33,7 +28,7 @@ import Site.CraftEssence.Sorting exposing (..)
 
 type alias Model = SiteModel CraftEssence CraftEssence ()
 
-type alias Msg = SiteMsg CraftEssence CraftEssence Servant
+type alias Msg = SiteMsg CraftEssence CraftEssence
 
 reSort : Model -> Model
 reSort st = { st | sorted = getSort st.sortBy }
@@ -41,7 +36,7 @@ reSort st = { st | sorted = getSort st.sortBy }
 component : (String -> Value -> Cmd Msg) -> Component Model Msg
 component store =
   let
-    init : Value -> Navigation.Key -> Model
+    init : Flags -> Navigation.Key -> Model
     init flags navKey =
         siteInit (collectFilters getFilters) flags navKey ()
         |> reSort
@@ -53,7 +48,7 @@ component store =
       let
         nav =
             [ text_ H.strong "Craft Essences"
-            , a_ "Servants" <| Switch Nothing
+            , a_ ["Servants"]
             ]
       in
         lazy3 unlazyView st.prefs st.listing st.sortBy
@@ -74,20 +69,32 @@ component store =
 portrait : Bool -> Preferences -> (String, CraftEssence) -> Html Msg
 portrait big prefs (label, ce) =
   if not big && prefer prefs Thumbnails then
-    H.div [P.class "thumb", E.onClick << Focus <| Just ce]
+    H.a 
+    [ P.class "thumb"
+    , P.href <| "/CraftEssences/" ++ urlName ce.name
+    , E.onClick << Focus <| Just ce
+    ]
     [ToImage.thumbnail <| ToImage.craftEssence ce]
   else
     let
+      class  = P.class <| "portrait stars" ++ String.fromInt ce.rarity
+      parent =
+        if big then 
+          H.div [class]
+        else 
+          H.a 
+          [ class
+          , E.onClick << Focus <| Just ce
+          , P.href <| "/CraftEssences/" ++ urlName ce.name
+          ]       
       noBreak  = noBreakName big False
       artorify = doIf (prefer prefs Artorify) <|
                  String.replace "Altria" "Artoria"
-      meta     = doIf (not big) ((::) (E.onClick << Focus <| Just ce)) <|
-                 [P.class <| "portrait stars" ++ String.fromInt ce.rarity]
       addLabel =
           doIf (label /= "") <| (++)
           [text_ H.span <| noBreak label, H.br [] []]
     in
-      H.div meta
+      parent
       [ ToImage.image <| ToImage.craftEssence ce
       , H.header [] << addLabel <|
         [text_ H.span << noBreak <| artorify ce.name]
@@ -105,21 +112,17 @@ popup : Preferences -> Maybe CraftEssence -> List (Html Msg) -> Html Msg
 popup prefs a = case a of
   Nothing ->
     H.div [P.id "elm", P.class <| mode prefs] << (++)
-    [ H.div [P.id "cover", E.onClick <| Focus Nothing] []
+    [ H.a [P.id "cover", P.href "/CraftEssences"] []
     , H.article [P.id "focus"] []
     ]
   Just ce ->
     let
       {base, max} = ce.stats
-      bondLink bond =
-          E.onClick << Switch <| List.find (.name >> (==) bond) servants
       bondMsg = case ce.bond of
         Nothing   -> []
         Just bond -> [ H.em []
                         [ H.text "If equipped by "
-                        , H.a
-                          [href_ "CraftEssences", P.class "link", bondLink bond]
-                          [H.text bond]
+                        , a_ ["Servants", bond]
                         , H.text ": "
                         ]
                       ]
@@ -140,7 +143,7 @@ popup prefs a = case a of
           >> List.singleton
     in
       H.div [P.id "elm", P.class <| mode prefs ++ " fade"] << (++)
-      [ H.div [P.id "cover", E.onClick <| Focus Nothing] []
+      [ H.a [P.id "cover", P.href "/CraftEssences"] []
       , H.article [P.id "focus"]
         [ H.div []
           [ portrait True prefs ("", ce)

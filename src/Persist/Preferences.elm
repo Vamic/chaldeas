@@ -6,7 +6,6 @@ module Persist.Preferences exposing
   , unfoldPreferences
   )
 
-import Dict exposing (Dict)
 import Set exposing (Set)
 
 import StandardLibrary exposing (..)

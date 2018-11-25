@@ -5,7 +5,7 @@ module Site.Base exposing
   )
 
 import StandardLibrary exposing (..)
-import Database.Skill exposing (..)
+import Database.Skill  exposing (..)
 
 {-| The site's layout is broken up into `Section`s.
 On mobile, instead of showing `Section`s in sidebars, eachis a separate page. -}

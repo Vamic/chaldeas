@@ -1,18 +1,11 @@
 module Site.Algebra exposing (..)
 
 import Browser.Navigation as Navigation
-import Json.Decode        as Json
 import Date exposing (Date)
-import Dict exposing (Dict)
 import Html exposing (Html)
-import Time
 
 import StandardLibrary     exposing (..)
 import Class.ToImage exposing (ImagePath)
-import Database.Base       exposing (..)
-import Database.Skill      exposing (..)
-import Database.Servant    exposing (..)
-import MyServant           exposing (..)
 import Persist.Preferences exposing (..)
 import Persist.Flags       exposing (..)
 import Site.Base           exposing (..)
@@ -21,12 +14,12 @@ import Sorting             exposing (..)
 import Class.Show as Show
 
 type alias Component model msg =
-    { init          : Value -> Navigation.Key -> model
+    { init          : Flags -> Navigation.Key -> model
     , view          : model -> Html msg
     , update        : msg -> model -> (model, Cmd msg)
     }
 
-type SiteMsg filt focus alt
+type SiteMsg filt focus
     = ToSection (Maybe Section)
     | Focus     (Maybe focus)
     | ClearAll
@@ -37,14 +30,11 @@ type SiteMsg filt focus alt
     | SetSort   SortBy
     | SetPref   Preference Bool
     | Ascend    focus Int
-    | OnTeam    Bool focus
-    | MineOnly  Bool
-    | Switch    (Maybe alt)
+    | OnMine    Bool focus
     | DoNothing
 
 type alias SiteModel filt focus extra =
-    { error      : Maybe String
-    , today      : Date
+    { today      : Date
     , navKey     : Navigation.Key
     , root       : String
     , allFilters : FilterList filt
@@ -57,40 +47,25 @@ type alias SiteModel filt focus extra =
     , prefs      : Preferences
     , sorted     : List (String, focus)
     , listing    : List (String, focus)
-    , team       : Dict OrdServant MyServant
     , extra      : extra
     }
 
-siteInit : (Date -> FilterList filt) -> Value -> Navigation.Key -> extra
+siteInit : (Date -> FilterList filt) -> Flags -> Navigation.Key -> extra
         -> SiteModel filt focus extra
-siteInit getFilters val navKey extra =
-  let
-    (error, {today, preferences, team}) =
-        case Json.decodeValue decodeFlags val of
-          Ok flags -> (Nothing, flags)
-          Err err  ->
-            (Just <| Json.errorToString err
-            , { today       = 0 |> Time.millisToPosix >> Date.today
-              , preferences = noPreferences
-              , team        = Dict.empty
-              }
-            )
-  in
-    { error      = error
-    , today      = today
+siteInit getFilters flags navKey extra =
+    { today      = flags.today
     , navKey     = navKey
     , root       = ""
-    , allFilters = getFilters today
+    , allFilters = getFilters flags.today
     , section    = Nothing
     , filters    = []
     , exclude    = []
     , matchAny   = True
     , focus      = Nothing
     , sortBy     = Rarity
-    , prefs      = preferences
+    , prefs      = flags.preferences
     , sorted     = []
     , listing    = []
-    , team       = team
     , extra      = extra
     }
 

@@ -1,14 +1,11 @@
-module Site.Servant.Component exposing (Model, Msg, component)
+module Site.Servant.Component exposing (Model, Msg, component, setRoot)
 
 import Html.Keyed         as Keyed
 import List.Extra         as List
 import Maybe.Extra        as Maybe
 import Browser.Navigation as Navigation
-import Browser   exposing (Document)
-import Date      exposing (Date)
 import Dict      exposing (Dict)
-import Html.Lazy exposing (lazy4)
-import Task
+import Html.Lazy exposing (lazy4, lazy5)
 
 import Html.Events     as E
 import Html            as H exposing (Html)
@@ -41,12 +38,13 @@ import Site.Servant.Filters exposing (..)
 import Site.Servant.Sorting exposing (..)
 
 type alias Model = SiteModel Servant MyServant
-    { mineOnly : Bool
+    { mine     : Dict OrdServant MyServant
+    , mineOnly : Bool
     , ascent   : Int
     , myServs  : List MyServant
     }
 
-type alias Msg = SiteMsg Servant MyServant CraftEssence
+type alias Msg = SiteMsg Servant MyServant
 
 reSort : Model -> Model
 reSort st =
@@ -54,25 +52,30 @@ reSort st =
     | sorted = getSort (prefer st.prefs AddSkills) st.sortBy st.extra.myServs
     }
 
-reTeam : Model -> Model
-reTeam ({extra} as st) =
-    { st | extra = { extra | myServs = List.map (owned st.team) servants } }
+reMine : Model -> Model
+reMine ({extra} as st) =
+    { st 
+    | extra = { extra | myServs = List.map (owned st.extra.mine) servants } 
+    }
+
+getRoot : Bool -> String
+getRoot mineOnly = if mineOnly then "MyServants" else "Servants"
 
 setRoot : Model -> Model
-setRoot st =
-    { st | root = if st.extra.mineOnly then "MyServants" else "Servants" }
+setRoot st = { st | root = getRoot st.extra.mineOnly }
 
 component : (String -> Value -> Cmd Msg) -> Component Model Msg
 component store =
   let
-    init : Value -> Navigation.Key -> Model
+    init : Flags -> Navigation.Key -> Model
     init flags navKey =
         siteInit (collectFilters getFilters) flags navKey
-            { mineOnly = False
+            { mine = flags.mine
+            , mineOnly = False
             , ascent = 1
             , myServs = []
             }
-        |> reTeam
+        |> reMine
         >> reSort
         >> updateListing .base
         >> setRoot
@@ -81,26 +84,26 @@ component store =
     view st =
       let
         nav =
-            [ a_ "Craft Essences" <| Switch Nothing
+            [ a_ ["Craft Essences"]
             , if st.extra.mineOnly then
-                a_ "Servants" <| MineOnly False
+                a_ ["Servants"]
               else
                 text_ H.strong "Servants"
             , if st.extra.mineOnly then
                 text_ H.strong "My Servants"
               else
-                a_ "My Servants" <| MineOnly True
+                a_ ["My Servants"]
             ]
       in
         lazy4 unlazyView st.prefs st.extra.mineOnly st.listing st.sortBy
         |> siteView st enumSortBy nav
-        >> popup st.prefs st.extra.ascent st.focus
+        >> popup st.prefs st.extra.mineOnly st.extra.ascent st.focus
 
     unlazyView prefs mineOnly listing sortBy =
       let
         baseAscend = if prefer prefs MaxAscension then 4 else 1
         doPortrait (label, ms) =
-            portrait False prefs baseAscend
+            portrait False prefs mineOnly baseAscend
             ( if label == "" && mineOnly then showStats ms else label
             , ms
             )
@@ -124,7 +127,7 @@ component store =
             ]
       in
         listed
-        |> List.map (keyedPortrait False prefs baseAscend)
+        |> List.map (keyedPortrait False prefs mineOnly baseAscend)
         >> doIf (sortBy /= Rarity) List.reverse
         >> doIf mineOnly
            ( flip (++) <|
@@ -141,36 +144,26 @@ component store =
       in case a of
         Ascend ms ascent -> case ms.level of
           0 -> pure { st | extra = { extra | ascent = ascent } }
-          _ -> update (OnTeam True { ms | ascent = ascent }) st
-        MineOnly mineOnly ->
-          let
-            newSt =
-                setRoot <|
-                relist { st | extra = { extra | mineOnly = mineOnly } }
-          in
-            ( newSt
-            , Cmd.batch
-              [ setPath newSt.navKey [newSt.root], scrollToTop "content" ]
-            )
+          _ -> update (OnMine True { ms | ascent = ascent }) st
         Focus focus ->
             ( { st | focus = focus, extra = { extra | ascent = 1 } }
             , setFocus st.navKey st.root <| Maybe.map (.base >> .name) focus
             )
-        OnTeam keep msPreCalc ->
+        OnMine keep msPreCalc ->
           let
             ms   = doIf keep recalc msPreCalc
-            team =
+            mine =
               if keep then
-                Dict.insert (ordServant ms.base) ms st.team
+                Dict.insert (ordServant ms.base) ms st.extra.mine
               else
-                Dict.remove (ordServant ms.base) st.team
+                Dict.remove (ordServant ms.base) st.extra.mine
           in
-            ( relist << reSort <| reTeam
+            ( relist << reSort <| reMine
               { st
-              | team    = team
-              , focus   = Maybe.next st.focus <| Just ms
+              | extra = { extra | mine = mine }
+              , focus = Maybe.next st.focus <| Just ms
               }
-            , storeTeam store team
+            , storeMine store mine
             )
         _ -> siteUpdate store .base .name reSort a st
   in
@@ -185,25 +178,38 @@ showStats ms =
 isMine : (a, MyServant) -> Bool
 isMine (_, ms) = ms.level /= 0
 
-portrait : Bool -> Preferences -> Int -> (String, MyServant) -> Html Msg
-portrait big prefs baseAscension (label, ms) =
+portrait : Bool -> Preferences -> Bool -> Int -> (String, MyServant) 
+        -> Html Msg
+portrait big prefs mineOnly baseAscension (label, ms) =
   if not big && prefer prefs Thumbnails then
-    H.div [P.class "thumb", E.onClick << Focus <| Just ms]
+    H.a 
+    [ P.class "thumb"
+    , P.href <| "/" ++ getRoot mineOnly ++  "/" ++ urlName ms.base.name
+    , E.onClick << Focus <| Just ms
+    ]
     [ToImage.thumbnail <| ToImage.servant ms.base]
   else
     let
+      class  = P.class <| "portrait stars" ++ String.fromInt ms.base.rarity
+      parent =
+        if big then 
+          H.div [class]
+        else 
+          H.a 
+          [ class
+          , E.onClick << Focus <| Just ms
+          , P.href <| "/" ++ getRoot mineOnly ++ "/" ++ urlName ms.base.name
+          ]          
       noBreak  = noBreakName big <| prefer prefs HideClasses
       artorify = doIf (prefer prefs Artorify) <|
                  String.replace "Altria" "Artoria"
-      meta     = doIf (not big) ((::) (E.onClick << Focus <| Just ms)) <|
-                 [P.class <| "portrait stars" ++ String.fromInt ms.base.rarity]
       addLabel =
           doIf (label /= "") <| (++)
           [text_ H.span <| noBreak label, H.br [] []]
       ascension = if ms.level /= 0 then ms.ascent else baseAscension
       ascent = if ascension <= 1 then "" else " " ++ String.fromInt ascension
     in
-      H.div meta
+      parent
       [ ToImage.image << ImagePath "Servant" <| ms.base.name ++ ascent
       , H.div [] [ ToImage.image <| ToImage.class ms.base.class ]
       , H.header [] << addLabel <|
@@ -223,16 +229,17 @@ portrait big prefs baseAscension (label, ms) =
         [text_ H.span <| stars True ms.base.rarity]-}
       ]
 
-keyedPortrait : Bool -> Preferences -> Int -> (String, MyServant)
+keyedPortrait : Bool -> Preferences -> Bool -> Int -> (String, MyServant)
              -> (String, Html Msg)
-keyedPortrait big prefs baseAscension (label, ms) =
-    (ms.base.name, lazy4 portrait big prefs baseAscension (label, ms))
+keyedPortrait big prefs mineOnly baseAscension (label, ms) =
+    (ms.base.name, lazy5 portrait big prefs mineOnly baseAscension (label, ms))
 
-popup : Preferences -> Int -> Maybe MyServant -> List (Html Msg) -> Html Msg
-popup prefs ascent a = case a of
+popup : Preferences -> Bool -> Int -> Maybe MyServant -> List (Html Msg) 
+     -> Html Msg
+popup prefs mineOnly ascent a = case a of
   Nothing ->
     H.div [P.id "elm", P.class <| mode prefs] << (++)
-    [ H.div [P.id "cover", E.onClick <| Focus Nothing] []
+    [ H.a [P.id "cover", P.href <| "/" ++ getRoot mineOnly] []
     , H.article [P.id "focus"] []
     ]
   Just ms ->
@@ -240,6 +247,12 @@ popup prefs ascent a = case a of
       b   = ms.base
       s   = ms.servant
       fou = ms.fou
+      link ({show} as has) tab x =
+          H.a
+          [ P.href <| "/" ++ getRoot mineOnly
+          , E.onClick << FilterBy <| singleFilter has tab x
+          ]
+          [H.text <| show x]
       npRank rank   = case rank of
         Unknown -> "--"
         _       -> Show.rank rank
@@ -276,30 +289,30 @@ popup prefs ascent a = case a of
       skillBox i ({icon}, lvl) =
           [ H.td [] [ToImage.image <| ToImage.icon icon]
           , H.td [] << int_ 1 10 lvl <| \val ->
-              OnTeam True
+              OnMine True
               { ms | skills = List.updateAt i (always val) ms.skills }
           ]
       myServantBox = List.singleton <| case ms.level of
         0 ->
-            button_ "+Add to My Servants" True << OnTeam True <| newServant s
+            button_ "+Add to My Servants" True << OnMine True <| newServant s
         _ ->
             H.table []
             [ H.tr []
                 [ H.td [] [text_ H.strong "Level:"]
                 , H.td [] << int_ 1 100 ms.level <| \val ->
-                  OnTeam True { ms | level = val }
+                  OnMine True { ms | level = val }
                 , H.td [] [text_ H.strong "NP:"]
                 , H.td [] << int_ 1 5 ms.npLvl <| \val ->
-                  OnTeam True { ms | npLvl = val }
+                  OnMine True { ms | npLvl = val }
                 , H.td [] [text_ H.strong "+ATK:"]
                 , H.td [] << int_ 0 990 fou.atk <| \val ->
-                  OnTeam True { ms | fou = { fou | atk = val } }
+                  OnMine True { ms | fou = { fou | atk = val } }
                 , H.td [] [text_ H.strong "+HP:"]
                 , H.td [] << int_ 0 990 fou.hp <| \val ->
-                  OnTeam True { ms | fou = { fou | hp = val } }
+                  OnMine True { ms | fou = { fou | hp = val } }
                 ]
             , H.tr [] << (++)
-                [ H.td [] [button_ "Delete" True << OnTeam False <| unowned s]
+                [ H.td [] [button_ "Delete" True << OnMine False <| unowned s]
                 , H.td [] [text_ H.strong "Skills:"]
                 ] << List.concat << List.map2 skillBox (List.range 0 10) <|
                   List.zip s.skills ms.skills
@@ -316,10 +329,10 @@ popup prefs ascent a = case a of
           >> List.singleton
     in
       H.div [P.id "elm", P.class <| mode prefs ++ " fade"] << (++)
-      [ H.div [P.id "cover", E.onClick <| Focus Nothing] []
+      [ H.a [P.id "cover", P.href <| "/" ++ getRoot mineOnly] []
       , H.article [P.id "focus"] <|
         [ H.div []
-          [ portrait True prefs ascent ("", ms)
+          [ portrait True prefs mineOnly ascent ("", ms)
           , H.div [] <|
             [ table_ ["", "ATK", "HP"]
                 [ H.tr []
@@ -445,7 +458,7 @@ ascendUpEl : Ascension -> List (List (Html Msg))
 ascendUpEl x = case x of
     Clear a b c d ->
         flip List.map [a, b, c, d] <|
-        (++) "Clear"
+        (++) "Clear "
         >> H.text
         >> List.singleton
     Welfare a ->
@@ -522,7 +535,7 @@ bondEl a = case a of
       [ h_ 2 "Max-Bond Craft Essence"
       , H.section []
         [ ToImage.image <| ToImage.icon ce.icon
-        , H.h3 [P.class "link", E.onClick <| Switch a] [H.text ce.name]
+        , H.h3 [] [a_ ["Craft Essences", ce.name]]
         , H.p [] <|
           [ text_ H.span "★★★★ "
           , text_ H.strong "ATK: ", text_ H.span "100 "
@@ -553,12 +566,3 @@ overRow r =
         >> toCell r.percent
   in
     H.tr [] << List.map col <| List.range 0 4
-
-link : Has Servant a -> FilterTab -> a -> Html Msg
-link ({show} as has) tab x =
-    H.a
-    [ href_ "Servants"
-    , P.class "link"
-    , E.onClick << FilterBy <| singleFilter has tab x
-    ]
-    [H.text <| show x]

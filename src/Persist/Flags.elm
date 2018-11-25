@@ -1,6 +1,7 @@
 module Persist.Flags exposing
-  ( Flags, decodeFlags
-  , storePreferences, storeTeam
+  ( Team
+  , Flags, decodeFlags
+  , storePreferences, storeMine, storeTeams
   )
 
 import Json.Decode as D
@@ -12,27 +13,40 @@ import Date exposing (Date)
 import Dict exposing (Dict)
 import Time
 
-import StandardLibrary     exposing (..)
-import Database            exposing (..)
-import Database.Base       exposing (..)
-import Database.Servant    exposing (..)
-import MyServant           exposing (..)
-import Persist.Preferences exposing (..)
+import StandardLibrary       exposing (..)
+import Database              exposing (..)
+import Database.Base         exposing (..)
+import Database.CraftEssence exposing (..)
+import Database.Servant      exposing (..)
+import MyServant             exposing (..)
+import Persist.Preferences   exposing (..)
 
 import Class.Show as Show
+
+type alias Team =
+    { name    : String
+    , members : List (Maybe Servant, Maybe CraftEssence)
+    }
 
 type alias Flags =
     { today       : Date
     , preferences : Preferences
-    , team        : Dict OrdServant MyServant
+    , mine        : Dict OrdServant MyServant
+    , teams       : List Team
     }
+
+encodeMaybe : (a -> Value) -> Maybe a -> Value
+encodeMaybe f a = case a of
+  Nothing -> E.null
+  Just x  -> f x
 
 decodeFlags : D.Decoder Flags
 decodeFlags =
-    D.map3 Flags
+    D.map4 Flags
     (D.field "today" decodeDate)
     (D.field "preferences" decodePreferences)
-    (D.field "team" decodeTeam)
+    (D.field "team" decodeMine)
+    (D.field "teams" <| D.list decodeTeam)
 
 decodeDate : D.Decoder Date
 decodeDate =
@@ -79,6 +93,18 @@ decodeStat =
     (D.field "atk" D.int)
     (D.field "hp"  D.int)
 
+encodeCraftEssence : CraftEssence -> Value
+encodeCraftEssence = .id >> E.int
+
+decodeCraftEssence : D.Decoder CraftEssence
+decodeCraftEssence =
+  let
+    fromId id = case List.find (.id >> (==) id) craftEssences of
+      Nothing -> D.fail <| "Unknown Craft Essence #" ++ String.fromInt id
+      Just s  -> D.succeed s
+  in
+    D.int |> D.andThen fromId
+
 encodeServant : Servant -> Value
 encodeServant = .id >> E.int
 
@@ -121,22 +147,54 @@ decodeMyServant =
     (D.field "servant" decodeServant)
     (D.succeed Dict.empty)
 
-encodeTeam : Dict OrdServant MyServant -> E.Value
-encodeTeam =
-    Dict.toList
-    >> List.map Tuple.second
-    >> E.list encodeMyServant
-
-decodeTeam : D.Decoder (Dict OrdServant MyServant)
-decodeTeam =
+decodeMine : D.Decoder (Dict OrdServant MyServant)
+decodeMine =
   let
     keyPair ms = (ordServant ms.base, recalc ms)
   in
     D.list decodeMyServant
     |> D.andThen (List.map keyPair >> Dict.fromList >> D.succeed)
 
+encodeMine : Dict OrdServant MyServant -> E.Value
+encodeMine =
+    Dict.toList
+    >> List.map Tuple.second
+    >> E.list encodeMyServant
+
+decodeTeamMember : D.Decoder (Maybe Servant, Maybe CraftEssence)
+decodeTeamMember =
+  let
+    tup x y = (x, y)
+  in
+    D.map2 tup
+    (D.field "s" <| D.nullable decodeServant)
+    (D.field "ce" <| D.nullable decodeCraftEssence)
+
+encodeTeamMember : (Maybe Servant, Maybe CraftEssence) -> Value
+encodeTeamMember (s, ce) = 
+    E.object
+    [ ("s", encodeMaybe encodeServant s)
+    , ("ce", encodeMaybe encodeCraftEssence ce)
+    ]
+
+decodeTeam : D.Decoder Team
+decodeTeam =
+    D.map2 Team
+    (D.field "name" D.string)
+    (D.field "members" <| D.list decodeTeamMember)
+
+encodeTeam : Team -> Value
+encodeTeam x =
+    E.object
+    [ ("name",    E.string x.name) 
+    , ("members", E.list encodeTeamMember x.members)
+    ]
+
 storePreferences : (String -> Value -> Cmd msg) -> Preferences -> Cmd msg
 storePreferences store = encodePreferences >> store "preferences"
 
-storeTeam : (String -> Value -> Cmd msg) -> Dict OrdServant MyServant -> Cmd msg
-storeTeam store = encodeTeam >> store "team"
+storeMine : (String -> Value -> Cmd msg) -> Dict OrdServant MyServant -> Cmd msg
+storeMine store = encodeMine >> store "team"
+
+storeTeams : (String -> Value -> Cmd msg) -> List Team -> Cmd msg
+storeTeams store = E.list encodeTeam >> store "teams"

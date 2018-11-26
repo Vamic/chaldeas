@@ -35,32 +35,42 @@ render a st sorts nav = case a of
         checkbox_ Nothing (Show.preference k) v
     ]
   SectionSortBy ->
+    if List.isEmpty sorts then [] else
     [ h_ 1 "Sort by"
     , H.form [] << flip List.map sorts <| \sort ->
         H.p [E.onClick <| SetSort sort] <|
         radio_ (Show.sortBy sort) (st.sortBy == sort)
     ]
   SectionInclude ->
-    List.filter (.tab >> exclusive) st.allFilters
-    |> List.concatMap (filterSection st)
-    >> (::) (h_ 1 "Include")
-  SectionFilter ->
-    [ h_ 1 "Filter"
-    , H.form [] <|
-      [ H.table []
-        [ H.tr []
-          [ text_ H.th "Match"
-          , H.td [E.onClick <| MatchAny False] <| radio_ "All" (not st.matchAny)
-          , H.td [E.onClick <| MatchAny True]  <| radio_ "Any" st.matchAny
-          ]
-         ]
-      , button_ "Reset All"
-        (not <| List.isEmpty st.filters && List.isEmpty st.exclude)
-        ClearAll
-      ] ++
-        ( List.filter (not << exclusive << .tab) st.allFilters
+    let 
+      filters = 
+          List.filter (.tab >> exclusive) st.allFilters
           |> List.concatMap (filterSection st)
-        )
+    in
+      if List.isEmpty filters then [] else
+      h_ 1 "Include" :: filters
+  SectionFilter ->
+    let
+      filters = 
+          List.filter (not << exclusive << .tab) st.allFilters
+          |> List.concatMap (filterSection st)
+    in
+      if List.isEmpty filters then [] else
+      [ h_ 1 "Filter"
+      , H.form [] <|
+        [ H.table []
+          [ H.tr []
+            [ text_ H.th "Match"
+            , H.td [E.onClick <| MatchAny False] <| 
+              radio_ "All" (not st.matchAny)
+            , H.td [E.onClick <| MatchAny True]  <| 
+              radio_ "Any" st.matchAny
+            ]
+          ]
+        , button_ "Reset All"
+          (not <| List.isEmpty st.filters && List.isEmpty st.exclude)
+          ClearAll
+        ] ++ filters
     ]
 
 siteView : SiteModel a b c -> List SortBy

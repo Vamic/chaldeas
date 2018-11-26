@@ -38,8 +38,8 @@ craftEssences =
         , rarity   = 4
         , icon     = icon
         , stats    = { base = { atk = 100, hp = 100 }
-                    , max  = { atk = 100, hp = 100 }
-                    }
+                     , max  = { atk = 100, hp = 100 }
+                     }
         , effect  = effect
         , bond    = Just servant
         , limited = False
@@ -2549,7 +2549,7 @@ craftEssences =
                   }
       , effect  = [ Grant Self 0 StarAbsorb <| Range 200 300 ]
       , bond    = Nothing
-      , limited = True
+      , limited = False
       }
     , { name    = "Inverted Moon of the Heavens"
       , id      = 332
@@ -2562,7 +2562,7 @@ craftEssences =
                   , Grant Self 0 DebuffResist <| Range 5 10
                   ]
       , bond    = Nothing
-      , limited = True
+      , limited = False
       }
     , { name    = "Hydra Dagger"
       , id      = 333
@@ -2573,7 +2573,7 @@ craftEssences =
                   }
       , effect  = [ Grant Self 0 KillUp <| Range 5 10 ]
       , bond    = Nothing
-      , limited = True
+      , limited = False
       }
     , bond 334 "Indomitableness" "Florence Nightingale" IconBusterUp
       [ party_ Buster 10, party HealingReceived 20 ]

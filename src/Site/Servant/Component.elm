@@ -93,6 +93,7 @@ component store =
                 text_ H.strong "My Servants"
               else
                 a_ ["My Servants"]
+            --, a_ ["Teams"]
             ]
       in
         lazy4 unlazyView st.prefs st.extra.mineOnly st.listing st.sortBy
@@ -456,19 +457,19 @@ popup prefs mineOnly ascent a = case a of
 
 ascendUpEl : Ascension -> List (List (Html Msg))
 ascendUpEl x = case x of
-    Clear a b c d ->
-        flip List.map [a, b, c, d] <|
-        (++) "Clear "
-        >> H.text
-        >> List.singleton
-    Welfare a ->
-        ImagePath "Material" a
-        |> ToImage.image
-        >> List.singleton
-        >> List.repeat 4
-    Ascension a b c d ->
-        [a, b, c, d]
-        |> List.map (List.map materialEl)
+  Clear a b c d ->
+      flip List.map [a, b, c, d] <|
+      (++) "Clear "
+      >> H.text
+      >> List.singleton
+  Welfare a ->
+      ImagePath "Material" a
+      |> ToImage.image
+      >> List.singleton
+      >> List.repeat 4
+  Ascension a b c d ->
+      [a, b, c, d]
+      |> List.map (List.map materialEl)
 
 skillUpEl : Reinforcement -> List (List (Html Msg))
 skillUpEl (Reinforcement a b c d e f g h) =

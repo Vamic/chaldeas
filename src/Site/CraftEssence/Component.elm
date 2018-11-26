@@ -49,6 +49,8 @@ component store =
         nav =
             [ text_ H.strong "Craft Essences"
             , a_ ["Servants"]
+            , a_ ["My Servants"]
+            --, a_ ["Teams"]
             ]
       in
         lazy3 unlazyView st.prefs st.listing st.sortBy

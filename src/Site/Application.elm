@@ -23,6 +23,7 @@ import Site.Algebra        exposing (..)
 
 import Site.CraftEssence.Component as CraftEssences
 import Site.Servant.Component      as Servants
+import Site.Team.Component         as Teams
 
 {-| The page currently being shown. -}
 type Viewing = CraftEssences | Servants | Teams
@@ -36,11 +37,11 @@ showViewing a = case a of
 type alias Model =
     { error   : Maybe String
     , navKey  : Navigation.Key
-    , teams   : List Team
     , onTeam  : Maybe (Team, Int)
     , viewing : Viewing
     , ceModel : CraftEssences.Model
     , sModel  : Servants.Model
+    , tModel  : Teams.Model
     }
 
 type Msg
@@ -48,6 +49,7 @@ type Msg
     | ChangeUrl        Url
     | CraftEssencesMsg CraftEssences.Msg
     | ServantsMsg      Servants.Msg
+    | TeamsMsg         Teams.Msg
     | OnError          (Result Dom.Error ())
 
 printError : Dom.Error -> String
@@ -71,15 +73,15 @@ focusFromPath path show st =
 stateFromPath : String -> Model -> (Model, String)
 stateFromPath fullPath st =
   let
-    path =
-        String.split "/" fullPath
-        |> List.reverse
-        >> List.head
-        >> Maybe.withDefault ""
-      in
-        if String.contains "CraftEssences" fullPath then
+    (main, sub) = case String.split "/" <| String.dropLeft 1 fullPath of
+      x :: y :: _ -> (x, y)
+      x :: _ -> (x, "")
+      [] -> ("", "")
+      in case main of
+        "Teams"         -> ({ st | viewing = Teams }, "Teams")
+        "CraftEssences" ->
           let
-            ceModel = focusFromPath path .name st.ceModel
+            ceModel = focusFromPath sub .name st.ceModel
           in
             ( { st
               | viewing = CraftEssences
@@ -88,11 +90,11 @@ stateFromPath fullPath st =
             , Maybe.withDefault "Craft Essences" <|
               Maybe.map .name ceModel.focus
             )
-        else
+        _               ->
           let
-            sModel   = focusFromPath path (.base >> .name) st.sModel
+            sModel   = focusFromPath sub (.base >> .name) st.sModel
             {extra}  = sModel
-            mineOnly = String.contains "MyServants" fullPath
+            mineOnly = main == "MyServants"
           in
             ( { st
               | viewing = Servants
@@ -120,6 +122,11 @@ app onInit analytics title store =
       ServantsMsg x -> x
       _             -> DoNothing
 
+    tChild : Component Teams.Model Teams.Msg
+    tChild = child Teams.component <| \a -> case a of
+      TeamsMsg x -> x
+      _          -> DoNothing
+
     init : Value -> Url -> Navigation.Key -> (Model, Cmd Msg)
     init val url key =
       let
@@ -137,11 +144,11 @@ app onInit analytics title store =
         (st, newTitle) = stateFromPath url.path
           { error   = error
           , navKey  = key
-          , teams   = flags.teams
           , onTeam  = Nothing
           , viewing = Servants
           , ceModel = ceChild.init flags key
           , sModel  = sChild.init flags key
+          , tModel  = tChild.init flags key
           }
       in
         (st, Cmd.batch [onInit, title newTitle])
@@ -159,7 +166,7 @@ app onInit analytics title store =
           Servants ->
             [ H.map ServantsMsg <| sChild.view st.sModel ]
           Teams    ->
-            []
+            [ H.map TeamsMsg <| tChild.view st.tModel ]
 
     update : Msg -> Model -> (Model, Cmd Msg)
     update parentMsg st = case parentMsg of
@@ -189,6 +196,11 @@ app onInit analytics title store =
             (model, cmd) = sChild.update msg st.sModel
           in
             ({ st | sModel = model }, Cmd.map ServantsMsg cmd)
+      TeamsMsg msg ->
+          let
+            (model, cmd) = tChild.update msg st.tModel
+          in
+            ({ st | tModel = model }, Cmd.map TeamsMsg cmd)
   in
     { init          = init
     , view          = view

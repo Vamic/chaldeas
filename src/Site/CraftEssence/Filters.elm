@@ -40,21 +40,28 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter CraftEssence)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
+  [ ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
     nameFilter FilterAvailability "Rate-Up"
-    [ "Present For My Master", "March of the Saint", "Lightning Reindeer" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterEventBonus "+20~40% Magical Stocking"
-    [ "Holy Night Sign" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterEventBonus "+1~2 Gold Star"
-    [ "Present For My Master" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterEventBonus "+1~2 Silver Bell"
-    [ "March of the Saint" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterEventBonus "+1~2 Mini Ribbon"
-    [ "Lightning Reindeer" ]
+    [ "A Moment of Tranquility", "Reading on the Holy Night"
+    , "Saint's Invitation" 
+    ]
+  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+    nameFilter FilterAvailability "Limited to Event"
+    [ "A Moment of Tranquility", "Reading on the Holy Night"
+    , "Saint's Invitation" 
+    ]
+  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+    nameFilter FilterEventBonus "+1~2 Miracle Stockings"
+    [ "Holy Night Supper" ]
+  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+    nameFilter FilterEventBonus "+1~2 Fruitcake"
+    [ "A Moment of Tranquility" ]
+  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+    nameFilter FilterEventBonus "+1~2 Shortcake"
+    [ "Reading on the Holy Night" ]
+  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+    nameFilter FilterEventBonus "+1~2 Cheesecake"
+    [ "Saint's Invitation" ]
   ]
 
 getExtraFilters : Date -> FilterTab -> List (Filter CraftEssence)

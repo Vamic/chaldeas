@@ -127,6 +127,7 @@ type Icon
     | IconBusterArtsUp
     | IconBusterUp
     | IconCircuits
+    | IconClockUp
     | IconDamageUp
     | IconDarkMagic
     | IconDash

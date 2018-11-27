@@ -108,6 +108,7 @@ icon a = case a of
   IconBusterArtsUp -> "BusterArtsUp"
   IconBusterUp -> "BusterUp"
   IconCircuits -> "Circuits"
+  IconClockUp -> "ClockUp"
   IconDamageUp -> "DamageUp"
   IconDarkMagic -> "DarkMagic"
   IconDash -> "Dash"
@@ -373,7 +374,6 @@ debuffEffect target amt a =
       SealSkills   -> "Seal" ++ p ++ " skills"
       StarDown     -> reduce "C. Star drop rate"
       Stun         -> "Stun" ++ s
-      StunBomb     -> "Stun" ++ s ++ " after 1 turn"
 
 nameDebuffEffect : DebuffEffect -> String
 nameDebuffEffect a = case a of
@@ -401,7 +401,6 @@ nameDebuffEffect a = case a of
   SealSkills   -> "SealSkills"
   StarDown     -> "StarDown"
   Stun         -> "Stun"
-  StunBomb     -> "StunBomb"
 
 buffEffect : Target -> Amount -> BuffEffect -> String
 buffEffect target amt a =
@@ -522,6 +521,9 @@ skillEffect =
       Times 1 ef           -> go ef ++ " (1 time)"
       Times times ef       -> go ef ++ " (" ++ String.fromInt times ++ " times)"
       ToMax amt ef         -> go ef ++ " every turn (max " ++ amount amt ++ ")"
+      After 1 ef           -> "After 1 turn: " ++ go ef
+      After amt ef         -> "After " ++ String.fromInt amt ++ " turns: " 
+                              ++ go ef
     turns a = case a of
       0 -> ""
       1 -> " for 1 turn"

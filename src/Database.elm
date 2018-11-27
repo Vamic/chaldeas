@@ -86,6 +86,7 @@ ranges =
       When _ ef      -> acc ef
       Times _ ef     -> acc ef
       ToMax _ ef     -> acc ef
+      After _ ef     -> acc ef
     go a = case a of
       Range x y -> [{from = x, to = y}]
       _         -> []

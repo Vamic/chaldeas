@@ -89,7 +89,6 @@ type DebuffEffect
     | SealSkills
     | StarDown
     | Stun
-    | StunBomb
 
 type BuffEffect
     = AttackUp
@@ -206,6 +205,7 @@ type SkillEffect
     | When String SkillEffect
     | Times Int SkillEffect
     | ToMax Amount SkillEffect
+    | After Int SkillEffect
 
 mapAmount : (Float -> Float -> Amount) -> SkillEffect -> SkillEffect
 mapAmount f eff =
@@ -222,6 +222,7 @@ mapAmount f eff =
       When a b       -> When a <| go b
       Times a b      -> Times a <| go b
       ToMax a b      -> ToMax (f_ a) <| go b
+      After a b      -> After a <| go b
       Chances a b c  -> case f (toFloat a) (toFloat b) of
                           Flat y      -> Chance (floor y) <| go c
                           Range y z   -> Chances (floor y) (floor z) <| go c
@@ -237,6 +238,7 @@ simplify a = case a of
   When _ ef      -> simplify ef
   Times _ ef     -> simplify ef
   ToMax _ ef     -> simplify ef
+  After _ ef     -> simplify ef
   _              -> a
 
 demerit : SkillEffect -> Bool
@@ -256,6 +258,7 @@ demerit a = case a of
   When _ ef            -> demerit ef
   Times _ ef           -> demerit ef
   ToMax _ ef           -> demerit ef
+  After _ ef           -> demerit ef
 
 type Amount
     = Placeholder

@@ -190,7 +190,7 @@ lancers =
                                , Grant Self 1 NPGen <| Range 30 50
                                , Grant Self 1 DebuffResist <| Range 30 50
                                , Grant Self 1 HealingReceived <| Range 30 50
-                               , Debuff Self 1 StunBomb Full
+                               , After 1 <| Debuff Self 1 Stun Full
                                ]
                     }
                   ]
@@ -650,6 +650,77 @@ lancers =
                   [(SecretGemOf Lancer, 10), (ProofOfHero, 12)]
                   [(ProofOfHero, 24), (OctupletCrystals, 5)]
                   [(OctupletCrystals, 15), (HeartOfTheForeignGod, 8)]
+    }
+  , { name      = "Jeanne d'Arc Alter Santa Lily"
+    , id        = 141
+    , rarity    = 4
+    , class     = Lancer
+    , attr      = Mankind
+    , deck      = Deck Quick Quick Arts Buster Buster
+    , curve     = 9
+    , stats     = { base  = { atk = 1543,  hp = 1899 }
+                  , max   = { atk = 9261,  hp = 11870 }
+                  , grail = { atk = 11213, hp = 14392 }
+                  }
+    , skills    = [ { name   = "Saint's Gift"
+                    , rank   = C
+                    , icon   = IconHeal
+                    , cd     = 7
+                    , effect = [ To Ally Heal <| Range 1000 3000 
+                               , Grant Ally 3 StarUp <| Flat 30
+                               ]
+                    }
+                  , { name   = "Self-Upheaval"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 7
+                    , effect = [ Grant Self 3 DebuffResist <| Range 20 50 
+                               , To Self GaugeUp <| Flat 20
+                               ]
+                    }
+                  , { name   = "Ephemeral Dream"
+                    , rank   = EX
+                    , icon   = IconBusterUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 35 55 
+                               , Grant Self 1 Invincibility Full
+                               , To Self DemeritHealth <| Flat 1200
+                               ]
+                    }
+                  ]
+    , passives  = [magicResistance APlus]
+    , phantasm  = { name   = "La Grâce Fille Noël"
+                  , desc   = "Sing Elegantly, For The Christmas"
+                  , rank   = APlus
+                  , card   = Buster
+                  , kind   = "Anti-Army"
+                  , hits   = 5
+                  , effect = [ To Enemies Damage <| Range 300 500
+                             , Debuff Enemies 1 DebuffVuln <| Flat 10
+                             ]
+                  , over   = [ Grant Party 1 AttackUp <| Range 10 30
+                             , Grant Party 1 HealingReceived <| Range 20 60
+                             ]
+                  , first  = False
+                  }
+    , gen       = { starWeight = 92, starRate = 12.1, npAtk = 0.72, npDef = 4 }
+    , hits      = { quick = 3, arts = 3, buster = 1, ex = 5 }
+    , gender    = Female
+    , traits    = [Saberface, EnumaElish]
+    , death     = 28
+    , align     = [Chaotic, Good]
+    , limited   = True
+    , free      = True
+    , ascendUp  = Welfare "Gilles de Rais Doll"
+    , skillUp   = Reinforcement
+                  [(GemOf Lancer, 4)]
+                  [(GemOf Lancer, 10)]
+                  [(MagicGemOf Lancer, 4)]
+                  [(MagicGemOf Lancer, 10), (ShellOfReminiscence, 4)]
+                  [(SecretGemOf Lancer, 4), (ShellOfReminiscence, 8)]
+                  [(SecretGemOf Lancer, 10), (SeedOfYggdrasil, 5)]
+                  [(SeedOfYggdrasil, 10), (WarhorsesYoungHorn, 3)]
+                  [(WarhorsesYoungHorn, 9), (SpiritRoot, 8)]
     }
   , { name      = "Elisabeth Bathory"
     , id        = 18

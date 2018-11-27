@@ -147,6 +147,75 @@ archers =
                   [(ShellOfReminiscence, 10), (WarhorsesYoungHorn, 4)]
                   [(WarhorsesYoungHorn, 11), (SpiritRoot, 10)]
     }
+  , { name      = "Ishtar"
+    , id        = 142
+    , rarity    = 5
+    , class     = Archer
+    , attr      = Star
+    , deck      = Deck Quick Arts Arts Buster Buster
+    , curve     = 5
+    , stats     = { base  = { atk = 1893,  hp = 2048 }
+                  , max   = { atk = 12252, hp = 13965 }
+                  , grail = { atk = 13412, hp = 15299 }
+                  }
+    , skills    = [ { name   = "Manifestation of Beauty"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10 20 
+                               , Grant Party 3 CritUp <| Range 10 20
+                               ]
+                    }
+                  , { name   = "Gleaming Brilliant Crown"
+                    , rank   = A
+                    , icon   = IconNoble
+                    , cd     = 8
+                    , effect = [ To Self GaugeUp <| Range 30 50 
+                               , Chance 80 <| Grant Self 1 Invincibility Full
+                               , Chance 80 <| Grant Self 1 IgnoreInvinc Full
+                               ]
+                    }
+                  , { name   = "Mana Burst (Gems)"
+                    , rank   = APlus
+                    , icon   = IconClockUp
+                    , cd     = 5
+                    , effect = [ After 1 << Grant Self 1 AttackUp <| Range 30 50 ]
+                    }
+                  ]
+    , passives  = [magicResistance A, independentAction A, coreOfGoddess B]
+    , phantasm  = { name   = "An Gal Tā Kigal Shē"
+                  , desc   = "Kindle of Venus For Tectonic Deformation"
+                  , rank   = APlusPlus
+                  , card   = Buster
+                  , kind   = "Anti-Terrain/Anti-Mountain/Anti-Volcano"
+                  , hits   = 3
+                  , effect = [ To Enemies Damage <| Range 300 500 ]
+                  , over   = [ Grant Self 1 (Performance Buster) <| Range 20 60 ]
+                  , first  = True
+                  }
+    , gen       = { starWeight = 153, starRate = 8, npAtk = 0.45, npDef = 3 }
+    , hits      = { quick = 4, arts = 4, buster = 1, ex = 7 }
+    , gender    = Female
+    , traits    = [Divine, EnumaElish]
+    , death     = 22.5
+    , align     = [Lawful, Good]
+    , limited   = True
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Archer, 5)]
+                  [(Piece Archer, 12), (OctupletCrystals, 8)]
+                  [(Monument Archer, 5), (PhoenixFeather, 8), (ScarabOfWisdom, 2)]
+                  [(Monument Archer, 12), (ScarabOfWisdom, 4), (TearstoneOfBlood, 8)]
+    , skillUp   = Reinforcement
+                  [(GemOf Archer, 5)]
+                  [(GemOf Archer, 12)]
+                  [(MagicGemOf Archer, 5)]
+                  [(MagicGemOf Archer, 12), (PhoenixFeather, 4)]
+                  [(SecretGemOf Archer, 5), (PhoenixFeather, 8)]
+                  [(SecretGemOf Archer, 12), (OctupletCrystals, 5)]
+                  [(OctupletCrystals, 10), (SerpentJewel, 5)]
+                  [(SerpentJewel, 15), (LampOfEvilSealing, 15)]
+    }
   , { name      = "Nikola Tesla"
     , id        = 77
     , rarity    = 5

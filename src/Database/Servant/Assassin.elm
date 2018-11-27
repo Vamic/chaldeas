@@ -240,7 +240,7 @@ assassins =
                     , rank   = EX
                     , icon   = IconStun
                     , cd     = 10
-                    , effect = [ Chances 60 80 <| Debuff Enemies 1 StunBomb Full ]
+                    , effect = [ After 1 << Chances 60 80 <| Debuff Enemies 1 Stun Full ]
                     }
                 , { name     = "Intuition"
                     , rank   = CPlus

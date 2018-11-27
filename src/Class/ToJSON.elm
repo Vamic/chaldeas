@@ -91,6 +91,9 @@ skillEffect =
       Times x effect ->
           go effect ++
           [("times", E.int x)]
+      After x effect ->
+          go effect
+          |> modEffect ((++) <| "After " ++ String.fromInt x ++ " turns: ")
   in
     go >> E.object
 

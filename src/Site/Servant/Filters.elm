@@ -22,9 +22,8 @@ import Class.ToImage as ToImage
 extraFilters : List (Filter Servant)
 extraFilters = List.concat
   [ [ nameFilter FilterAvailability "New"
-      [ "Elisabeth Bathory (Brave)"
-      , "Cleopatra"
-      , "Vlad III (EXTRA)"
+      [ "Ishtar"
+      , "Jeanne d'Arc Alter Santa Lily"
       ]
     , Filter Nothing FilterAvailability "Free" <|
       \_ s -> s.free
@@ -40,70 +39,21 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter Servant)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Nov 8) (Date 2018 Nov 9) <|
+  [ ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
     nameFilter FilterAvailability "Rate-Up"
-    [ "Altria Pendragon", "Mordred", "Altria Pendragon (Lancer)"
-    , "Altria Pendragon (Alter)", "Lancelot (Saber)", "Gawain", "Tristan"
-    , "Altria Pendragon (Lancer Alter)", "Lancelot" ]
-  , ScheduledFilter (Date 2018 Nov 10) (Date 2018 Nov 10) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Altria Pendragon", "Altria Pendragon (Alter)", "Lancelot (Saber)"
-    , "Gawain"
+    [ "Ishtar" ]
+  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+    nameFilter FilterEventBonus "+1 Fruitcake"
+    [ "Amakusa Shirou", "Ishtar", "Jeanne d'Arc Alter Santa Lily" ]
+  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+    nameFilter FilterEventBonus "+1 Shortcake"
+    [ "EMIYA", "Jeanne d'Arc", "Jeanne d'Arc (Alter)" ]
+  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+    nameFilter FilterEventBonus "+1 Cheesecake"
+    [ "Mash Kyrielight", "Ushiwakamaru", "Gilles de Rais (Caster)" 
+    , "Gilgamesh (Child)", "Fuuma \"Evil-wind\" Kotarou", "Tawara Touta"
+    , "Leonidas I", "Hassan of the Cursed Arm", "Asterios", "Mata Hari"
     ]
-  , ScheduledFilter (Date 2018 Nov 11) (Date 2018 Nov 11) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Mordred", "Altria Pendragon (Alter)", "Lancelot (Saber)", "Gawain" ]
-  , ScheduledFilter (Date 2018 Nov 12) (Date 2018 Nov 12) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Altria Pendragon (Lancer)", "Altria Pendragon (Alter)"
-    , "Lancelot (Saber)", "Gawain" 
-    ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 14) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Altria Pendragon", "Mordred", "Altria Pendragon (Lancer)"
-    , "Altria Pendragon (Alter)", "Lancelot (Saber)", "Gawain" ]
-  , ScheduledFilter (Date 2018 Nov 15) (Date 2018 Nov 15) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Altria Pendragon", "Tristan", "Altria Pendragon (Lancer Alter)" 
-    , "Lancelot"
-    ]
-  , ScheduledFilter (Date 2018 Nov 16) (Date 2018 Nov 16) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Mordred", "Tristan", "Altria Pendragon (Lancer Alter)", "Lancelot" ]
-  , ScheduledFilter (Date 2018 Nov 17) (Date 2018 Nov 17) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Altria Pendragon (Lancer)", "Tristan", "Altria Pendragon (Lancer Alter)" 
-    , "Lancelot"
-    ]
-  , ScheduledFilter (Date 2018 Nov 18) (Date 2018 Nov 19) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Altria Pendragon", "Mordred", "Altria Pendragon (Lancer)", "Tristan"
-    , "Altria Pendragon (Lancer Alter)", "Lancelot"
-    ]
-  , ScheduledFilter (Date 2018 Nov 20) (Date 2018 Nov 20) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Altria Pendragon", "Mordred", "Altria Pendragon (Lancer)"
-    , "Altria Pendragon (Alter)", "Lancelot (Saber)", "Gawain", "Tristan"
-    , "Altria Pendragon (Lancer Alter)", "Lancelot"
-    ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterAvailability "Rate-Up"
-    [ "Jack the Ripper", "Nursery Rhyme", "Marie Antoinette", "Robin Hood", "Jing Ke" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterAvailability "Limited to Event"
-    [ "Altria Pendragon (Santa Alter)" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterEventBonus "+4 Magical Stocking"
-    [ "Altria Pendragon (Santa Alter)" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterEventBonus "+3 Magical Stocking"
-    [ "Jack the Ripper" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterEventBonus "+2 Magical Stocking"
-    [ "Marie Antoinette", "Martha", "Nursery Rhyme" ]
-  , ScheduledFilter (Date 2018 Nov 13) (Date 2018 Nov 20) <|
-    nameFilter FilterEventBonus "+1 Magical Stocking"
-    [ "Gaius Julius Caesar", "Robin Hood", "Jing Ke", "Darius III", "David", "Phantom of the Opera" ]
   ]
 
 singleFilter : Has Servant a -> FilterTab -> a -> List (Filter Servant)

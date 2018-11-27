@@ -2816,6 +2816,60 @@ craftEssences =
       [ party_ Buster 10, party NPGen 10 ]
     , bond 386 "Proof of Existence" "Hassan of the Serenity" IconQuickUp
       [ party_ Quick 15 ]
+    , { name    = "A Moment of Tranquility"
+      , id      = 387
+      , rarity  = 5
+      , icon    = IconArtsQuickUp
+      , stats   = { base = { atk = 500,  hp = 0 }
+                  , max  = { atk = 2000, hp = 0 }
+                  }
+      , effect  = [ Grant Self 0 (Performance Quick) <| Range 10 15 
+                  , Grant Self 0 (Performance Arts) <| Range 10 15
+                  , Grant Self 0 NPGen <| Range 10 15
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Reading on the Holy Night"
+      , id      = 388
+      , rarity  = 4
+      , icon    = IconNobleUp
+      , stats   = { base = { atk = 200, hp = 320 }
+                  , max  = { atk = 750, hp = 1200 }
+                  }
+      , effect  = [ Grant Self 0 NPGen <| Range 15 20 
+                  , Grant Self 0 NPUp <| Range 15 20
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Saint's Invitation"
+      , id      = 389
+      , rarity  = 3
+      , icon    = IconShieldUp
+      , stats   = { base = { atk = 0, hp = 300 }
+                  , max  = { atk = 0, hp = 1500 }
+                  }
+      , effect  = [ Grant Self 0 DefenseUp <| Range 3 5 
+                  , Grant Self 0 DamageDown <| Range 100 200
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , { name    = "Holy Night Supper"
+      , id      = 390
+      , rarity  = 5
+      , icon    = IconNoble
+      , stats   = { base = { atk = 500,  hp = 0 }
+                  , max  = { atk = 2000, hp = 0 }
+                  }
+      , effect  = [ To Self GaugeUp <| Range 30 50 
+                  , Grant Self 0 CritUp <| Range 10 15
+                  , Grant Self 0 NPUp <| Range 10 15
+                  ]
+      , bond    = Nothing
+      , limited = True
+      }
     , bond 391 "Champion Cup" "Altria Pendragon (Archer)" IconSwordUp
       [ party AttackUp 15 ]
     , bond 392 "Phantasmal Summoning (Install)" "Illyasviel von Einzbern" IconAllUp
@@ -2834,6 +2888,21 @@ craftEssences =
       [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , { name    = "First Order"
       , id      = 399
+      , rarity  = 4
+      , icon    = IconRoad
+      , stats   = { base = { atk = 100, hp = 100 }
+                  , max  = { atk = 100, hp = 100 }
+                  }
+      , effect  = [ Bonus MysticCode False <| Flat 50 ]
+      , bond    = Nothing
+      , limited = True
+      }
+    , bond 403 "Seven-Headed Warhammer Sita" "Ishtar" IconBusterUp
+      [party_ Buster 20, demeritAll DebuffVuln 20]
+    , bond 406 "Door To The Ocean" "Jeanne d'Arc Alter Santa Lily" IconHealUp
+      [party HealingReceived 30]
+    , { name    = "Heroic Costume: Medusa"
+      , id      = 670
       , rarity  = 4
       , icon    = IconRoad
       , stats   = { base = { atk = 100, hp = 100 }

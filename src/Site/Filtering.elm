@@ -137,3 +137,4 @@ skillFilter xs a getEffects =
     When _ b      -> skillFilter xs b getEffects
     Times _ b     -> skillFilter xs b getEffects
     ToMax _ b     -> skillFilter xs b getEffects
+    After _ b     -> skillFilter xs b getEffects

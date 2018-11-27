@@ -670,7 +670,7 @@ lancers =
                                , Grant Ally 3 StarUp <| Flat 30
                                ]
                     }
-                  , { name   = "Self-Upheaval"
+                  , { name   = "Self-Transformation"
                     , rank   = A
                     , icon   = IconNoble
                     , cd     = 7

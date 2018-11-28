@@ -43,7 +43,7 @@ alignment a = case a of
 
 attribute : Attribute -> String
 attribute a = case a of
-  Mankind -> "Mankind"
+  Mankind -> "Humanity"
   Earth   -> "Earth"
   Heaven  -> "Heaven"
   Star    -> "Star"

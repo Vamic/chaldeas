@@ -15,7 +15,7 @@ output =
     String.join "\n" <<
     List.sort <<
     List.map ((++) "https://chaldeas.surge.sh/") <| 
-    ["Servants", "CraftEssences"]
+    ["Servants", "CraftEssences", "MyServants"]
     ++ List.map (.name >> urlName >> ((++) "Servants/")) servants
     ++ List.map (.name >> urlName >> ((++) "CraftEssences/")) craftEssences
 

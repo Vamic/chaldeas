@@ -430,7 +430,7 @@ sabers =
                   , max   = { atk = 9899,  hp = 11248 }
                   , grail = { atk = 11986, hp = 13638 }
                   }
-    , skills    = [ { name   = "Hero's Great Principles"
+    , skills    = [ { name   = "Hero's Principles"
                     , rank   = EX
                     , icon   = IconShield
                     , cd     = 8

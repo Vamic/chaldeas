@@ -2,7 +2,6 @@ port module Main exposing (main)
 
 import Browser
 
-import Html as H exposing (Html)
 import Platform exposing (worker)
 
 import StandardLibrary       exposing (..)

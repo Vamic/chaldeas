@@ -720,7 +720,7 @@ casters =
                   [(ForbiddenPage, 8), (HeartOfTheForeignGod, 2)]
                   [(HeartOfTheForeignGod, 6), (EvilBone, 60)]
     }
-  , { name      = "Irisviel (Dress of Heaven)"
+  , { name      = "Irisviel (Holy Grail)"
     , id        = 111
     , rarity    = 4
     , class     = Caster

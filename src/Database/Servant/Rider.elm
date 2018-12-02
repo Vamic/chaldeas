@@ -1028,7 +1028,7 @@ riders =
                   [(SecretGemOf Rider, 3), (OctupletCrystals, 5)]
                   [(SecretGemOf Rider, 6), (EvilBone, 8)]
                   [(EvilBone, 15), (HomunculusBaby, 3)]
-                  [(HomunculusBaby, 9), (GhostLantern, 15)]
+                  [(HomunculusBaby, 9), (GhostLantern, 12)]
     }
   , { name      = "Alexander"
     , id        = 28

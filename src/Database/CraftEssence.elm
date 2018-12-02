@@ -32,7 +32,7 @@ craftEssences =
     party_ card = party (Performance card)
     demeritAll debuff = Debuff Party 0 debuff << Flat
     atkChance chance  = When "attacking" << Chance chance
-    bond id name  servant icon effect =
+    bond id name servant icon effect =
         { name     = name
         , id       = id
         , rarity   = 4
@@ -2683,7 +2683,7 @@ craftEssences =
       [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , bond 353 "The Sun Shines Here" "Emiya (Assassin)" IconArtsQuickUp
       [ party_ Quick 10, party_ Arts 10 ]
-    , bond 354 "Dress of Heaven" "Irisviel (Dress of Heaven)" IconHealUp
+    , bond 354 "Dress of Heaven" "Irisviel (Holy Grail)" IconHealUp
       [ party HealingReceived 30 ]
     , bond 355 "Manifestation of The Golden Rule" "Gilgamesh (Child)" IconNobleUp
       [ party NPGen 15 ]

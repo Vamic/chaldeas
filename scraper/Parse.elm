@@ -80,6 +80,8 @@ translate a = case a of
   "Leonardo da Vinci" -> "Leonardo Da Vinci"
   "Beautiful Princess (Sea)" -> "Princess of Loveliness (Ocean)"
   "Jack-o'-lantern" -> "Jack-o'-Lantern"
+  "Fuuma \"Evil-wind\" Kotarou" -> "Fuuma Kotarou"
+  "[Heaven's Feel]" -> "\"Heaven's Feel\""
   _ -> prettify a
 
 printIcon : Icon -> String
@@ -136,6 +138,7 @@ effects =
       Times _ ef -> showEffect ef
       When _ ef -> showEffect ef
       ToMax _ ef -> showEffect ef
+      After _ ef -> showEffect ef
   in
     List.map showEffect
 
@@ -296,8 +299,6 @@ effectMap =
     , (["immobilize"], show [Stun])
     , (["increase","stun","success"], show [Success Stun])
     , (["increase","stun","resist"], show [Resist Stun])
-    , (["stun","later"], show [StunBomb])
-    , (["stun","delayed"], show [StunBomb])
     , (["sure-hit"], show [SureHit])
     , (["sure","hit"], show [SureHit])
     , (["target","focus"], show [Taunt])

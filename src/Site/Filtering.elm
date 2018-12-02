@@ -74,10 +74,11 @@ reduceFilters =
 {-| Creates a `Filter` from a `Has` instance. -}
 matchFilter : Maybe (ToImage b) -> Has a b -> FilterTab -> b -> Filter a
 matchFilter toImage {show, has} tab x =
-    { icon  = Maybe.map ((|>) x) toImage
-    , tab   = tab
-    , name  = show x
-    , match = \b -> List.member x << has b
+    { icon   = Maybe.map ((|>) x) toImage
+    , tab    = tab
+    , name   = show x
+    , errors = []
+    , match  = \b -> List.member x << has b
     }
 
 {-| Creates a `Filter` that matches a supplied list of `.name`s. -}
@@ -85,19 +86,15 @@ nameFilter : FilterTab -> String -> List String -> Filter { a | name : String }
 nameFilter tab name names =
   let
     valid = List.map .name servants ++ List.map .name craftEssences
-    warn label f =
-      let
-        xs = f names
-      in
-        doIf (not <| List.isEmpty xs) << flip (++) <|
-        label ++ ": " ++ String.join ", " xs
+    warn label f = suite (name ++ ": " ++ label) <| f names
   in
-    { icon  = Nothing
-    , tab   = tab
-    , name  = name 
-              |> warn "DUPLICATE" duplicates
-              >> warn "INVALID" (List.filter <| not << flip List.member valid)
-    , match = always <| .name >> flip List.member names
+    { icon   = Nothing
+    , tab    = tab
+    , name   = name 
+    , errors = 
+        warn "DUPLICATE" duplicates
+        ++ warn "INVALID" (List.filter <| not << flip List.member valid)
+    , match  = always <| .name >> flip List.member names
     }
 
 {-| Creates a `Filter` for a `SkillEffect`. -}

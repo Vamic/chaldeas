@@ -12,7 +12,7 @@ Install [Elm](https://guide.elm-lang.org/install.html) and [npm](https://www.npm
 
 To run a local development instance of the site, use `npm run dev`. Pushing your commits to the repository automatically uploads your changes to the server. It takes [Travis CI](https://travis-ci.com/) a few minutes to deploy everything up through [Surge](surge.sh), so changes will not be reflected immediately.
 
-To test the database's information against [GrandOrder.Wiki](https://grandorder.wiki), run `npm run tests`. The page will only work if you temporarily disable Cross-Origin security policies, which is easiest to do with a browser extension like [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/) or [this one for Chrome](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
+To test the database's information against [GrandOrder.Wiki](https://grandorder.wiki), run `npm run scrape`. The page will only work if you temporarily disable Cross-Origin security policies, which is easiest to do with a browser extension like [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/) or [this one for Chrome](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
 
 ## Skill Effects
 Skill effects are enumerated at the top of [Database.Skill](src/Database/Skill.elm). If you aren't sure what an effect means, check its text description in [Class.Show](src/Class/Show.elm). Before adding a new skill effect, make sure it isn't already on the list.

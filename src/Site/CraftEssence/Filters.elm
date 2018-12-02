@@ -1,4 +1,4 @@
-module Site.CraftEssence.Filters exposing (getFilters)
+module Site.CraftEssence.Filters exposing (getFilters, errors)
 
 import Maybe.Extra as Maybe
 import Date exposing (Date)
@@ -26,15 +26,15 @@ extraFilters = List.concat
       , "Dangerous Beast"
       , "Witch Under the Moonlight"
       ]
-    , Filter Nothing FilterSource "Limited" <|
+    , Filter [] Nothing FilterSource "Limited" <|
       \_ ce -> ce.limited && Maybe.isNothing ce.bond
-    , Filter Nothing FilterSource "Non-Limited" <|
+    , Filter [] Nothing FilterSource "Non-Limited" <|
       \_ ce -> not ce.limited && Maybe.isNothing ce.bond
-    , Filter Nothing FilterSource "Bond" <|
+    , Filter [] Nothing FilterSource "Bond" <|
       \_ ce -> Maybe.isJust ce.bond
     ]
   , flip List.map (List.range 1 5) <| \rarity ->
-    Filter Nothing FilterRarity (stars False rarity) <|
+    Filter [] Nothing FilterRarity (stars False rarity) <|
     \_ ce -> rarity == ce.rarity
   ]
 
@@ -88,3 +88,7 @@ getFilters today tab =
     FilterDamage -> allEffects Has.instantEffect Nothing <|
                     isDamage
     _            -> getExtraFilters today tab
+
+errors : List String
+errors = 
+    List.concatMap .errors <| extraFilters ++ List.map .filter scheduledFilters

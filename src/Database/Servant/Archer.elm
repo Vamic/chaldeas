@@ -151,7 +151,7 @@ archers =
     , id        = 142
     , rarity    = 5
     , class     = Archer
-    , attr      = Star
+    , attr      = Heaven
     , deck      = Deck Quick Arts Arts Buster Buster
     , curve     = 5
     , stats     = { base  = { atk = 1893,  hp = 2048 }
@@ -166,7 +166,7 @@ archers =
                                , Grant Party 3 CritUp <| Range 10 20
                                ]
                     }
-                  , { name   = "Gleaming Brilliant Crown"
+                  , { name   = "Shining Majestic Crown"
                     , rank   = A
                     , icon   = IconNoble
                     , cd     = 8
@@ -175,7 +175,7 @@ archers =
                                , Chance 80 <| Grant Self 1 IgnoreInvinc Full
                                ]
                     }
-                  , { name   = "Mana Burst (Gems)"
+                  , { name   = "Mana Burst (Gem)"
                     , rank   = APlus
                     , icon   = IconClockUp
                     , cd     = 5

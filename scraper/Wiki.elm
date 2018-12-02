@@ -185,7 +185,6 @@ splitAny needles haystack =
     oneOf <| List.map (flip splitAround haystack) needles
 
 -- Notation 2: Monadic Booga-Do
-
 bind : Maybe a -> (a -> Maybe b) -> Maybe b
 bind = flip Maybe.andThen
 
@@ -197,7 +196,7 @@ parseCol row col lines =
     let search = "|" ++ String.fromInt row ++ String.fromInt col in
     bind (List.find (String.left 3 >> (==) search) lines) <| \entry ->
     bind (splitAround "=" entry) <| \(_, after) ->
-    let val = unSpace <| String.trim after in
+    let val = after |> String.filter ((/=) '}') >> String.trim >> unSpace in
     parseCol row (col + 1) lines
     |> Maybe.map ((::) val)
     >> Maybe.withDefault [val]
@@ -220,10 +219,10 @@ parseRows =
 parseLists : String -> List (String, List (List String))
 parseLists text =
     Maybe.withDefault [] <<
-    bind (splitAround "==" text) <| \(_, headerStart) ->
+    bind (splitAround "==" text)        <| \(_,            headerStart) ->
     bind (splitAround "==" headerStart) <| \(beforeHeader, afterHeader) ->
-    let header = String.trim beforeHeader in
-    let (beforeSection, afterSection) = maybeSplit "==" afterHeader in
+    let header = String.trim beforeHeader
+        (beforeSection, afterSection) = maybeSplit "==" afterHeader in
     Just <|
     (header, parseRows beforeSection) :: parseLists ("==" ++ afterSection)
 

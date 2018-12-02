@@ -70,10 +70,11 @@ siteInit getFilters flags navKey extra =
     }
 
 type alias Filter a =
-    { icon  : Maybe ImagePath
-    , tab   : FilterTab
-    , name  : String
-    , match : Bool -> a -> Bool
+    { errors : List String
+    , icon   : Maybe ImagePath
+    , tab    : FilterTab
+    , name   : String
+    , match  : Bool -> a -> Bool
     }
 
 eqFilter : Filter a -> Filter a -> Bool

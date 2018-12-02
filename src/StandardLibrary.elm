@@ -13,6 +13,7 @@ module StandardLibrary exposing
   , pure
   , removeWith
   , stripPrefix, stripSuffix
+  , suite
   )
 
 {-| A "classy prelude" that fills in holes in `Basic`,
@@ -106,3 +107,9 @@ stripSuffix pattern s =
       String.dropRight (String.length pattern) s
     else
       s
+
+{-| Labels a suite of errors if any exist. -}
+suite : String -> List String -> List String
+suite label xs = case xs of
+  [] -> []
+  _  -> [label ++ ": " ++ String.join ", " xs]

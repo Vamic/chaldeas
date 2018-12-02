@@ -1,7 +1,4 @@
-module Site.Servant.Filters exposing
-  ( getFilters
-  , singleFilter
-  )
+module Site.Servant.Filters exposing (getFilters, singleFilter, errors)
 
 import List.Extra  as List
 import Date exposing (Date)
@@ -25,15 +22,15 @@ extraFilters = List.concat
       [ "Ishtar"
       , "Jeanne d'Arc Alter Santa Lily"
       ]
-    , Filter Nothing FilterAvailability "Free" <|
+    , Filter [] Nothing FilterAvailability "Free" <|
       \_ s -> s.free
-    , Filter Nothing FilterSource "Limited" <|
+    , Filter [] Nothing FilterSource "Limited" <|
       \_ s -> s.limited
-    , Filter Nothing FilterSource "Non-Limited" <|
+    , Filter [] Nothing FilterSource "Non-Limited" <|
       \_ s -> not s.limited
     ]
   , flip List.map (List.range 1 5) <| \rarity ->
-    Filter Nothing FilterRarity (stars False rarity) <|
+    Filter [] Nothing FilterRarity (stars False rarity) <|
     \_ s -> rarity == s.rarity
   ]
 
@@ -98,3 +95,7 @@ getFilters today tab =
     FilterDamage -> allEffects Has.instantEffect Nothing <|
                     isDamage
     _            -> getExtraFilters today tab
+
+errors : List String
+errors = 
+    List.concatMap .errors <| extraFilters ++ List.map .filter scheduledFilters

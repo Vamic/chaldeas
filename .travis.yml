@@ -11,3 +11,6 @@ deploy:
   project: ./publish/
   domain: chaldeas.surge.sh
   skip_cleanup: true
+after_deploy: # Just in case
+  - surge --project ./publish/ --domain chaldeas.surge.sh 
+  - surge --project ./publish/ --domain chaldeas.surge.sh 

@@ -34,17 +34,17 @@ reSort : Model -> Model
 reSort st = { st | sorted = getSort st.sortBy }
 
 component : (String -> Value -> Cmd Msg) -> Component Model Msg
-component store =
+component = always <|
   let
     init : Flags -> Navigation.Key -> Model
     init flags navKey =
         siteInit (collectFilters getFilters) flags navKey ()
         |> reSort
-        >> updateListing identity
+        >> updateListing flags.preferences identity
         >> \st -> { st | root = "CraftEssences" }
 
-    view : Model -> Html Msg
-    view st =
+    view : Preferences -> Model -> Html Msg
+    view prefs st =
       let
         nav =
             [ text_ H.strong "Craft Essences"
@@ -53,9 +53,9 @@ component store =
             --, a_ ["Teams"]
             ]
       in
-        lazy3 unlazyView st.prefs st.listing st.sortBy
-        |> siteView st [Rarity, ID, ATK, HP] nav
-        >> popup st.prefs st.focus
+        lazy3 unlazyView prefs st.listing st.sortBy
+        |> siteView prefs st [Rarity, ID, ATK, HP] nav
+        >> popup prefs st.focus
 
     unlazyView prefs listing sortBy =
         listing
@@ -63,8 +63,8 @@ component store =
         |> doIf (sortBy /= Rarity) List.reverse
         >> Keyed.node "section" [P.id "content"]
 
-    update : Msg -> Model -> (Model, Cmd Msg)
-    update = siteUpdate store identity .name reSort
+    update : Preferences -> Msg -> Model -> (Model, Cmd Msg)
+    update = siteUpdate identity .name reSort
   in
     { init = init, view = view, update = update }
 

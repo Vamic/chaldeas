@@ -17,9 +17,9 @@ import Class.ToImage as ToImage
 
 type alias Html a b = H.Html (SiteMsg a b)
 
-render : Section -> SiteModel a b c -> List SortBy 
+render : Preferences -> Section -> SiteModel a b c -> List SortBy 
       -> List (Html a b) -> List (Html a b)
-render a st sorts nav = case a of
+render prefs a st sorts nav = case a of
   SectionBrowse ->
     h_ 1 "Browse" :: nav ++
     [ h_ 1 "Links"
@@ -30,7 +30,7 @@ render a st sorts nav = case a of
     ]
   SectionSettings ->
     [ h_ 1 "Settings"
-    , H.form [] << flip List.map (unfoldPreferences st.prefs) <| \(k, v) ->
+    , H.form [] << flip List.map (unfoldPreferences prefs) <| \(k, v) ->
         H.p [E.onClick << SetPref k <| not v] <|
         checkbox_ Nothing (Show.preference k) v
     ]
@@ -73,17 +73,17 @@ render a st sorts nav = case a of
         ] ++ filters
     ]
 
-siteView : SiteModel a b c -> List SortBy
+siteView : Preferences -> SiteModel a b c -> List SortBy
     -> List (Html a b) -> Html a b -> List (Html a b)
-siteView st sorts nav content = case st.section of
+siteView prefs st sorts nav content = case st.section of
   Just x ->
       [ H.div [P.id "bg"] []
       , H.aside [] <|
-        button_ "X" True (ToSection Nothing) :: render x st sorts nav
+        button_ "X" True (ToSection Nothing) :: render prefs x st sorts nav
       ]
   Nothing ->
     let
-      renderSection x = render x st sorts nav
+      renderSection x = render prefs x st sorts nav
     in
       [ H.div [P.id "bg"] []
       , H.footer [] << flip List.map enumSection <| \section ->

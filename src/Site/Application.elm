@@ -37,8 +37,9 @@ showViewing a = case a of
 type alias Model =
     { error   : Maybe String
     , navKey  : Navigation.Key
-    , onTeam  : Maybe (Team, Int)
+    , onTeam  : Maybe (Int, Int)
     , viewing : Viewing
+    , prefs   : Preferences
     , ceModel : CraftEssences.Model
     , sModel  : Servants.Model
     , tModel  : Teams.Model
@@ -146,6 +147,7 @@ app onInit analytics title store =
           , navKey  = key
           , onTeam  = Nothing
           , viewing = Servants
+          , prefs   = flags.preferences
           , ceModel = ceChild.init flags key
           , sModel  = sChild.init flags key
           , tModel  = tChild.init flags key
@@ -162,11 +164,34 @@ app onInit analytics title store =
       in
         Document "CHALDEAS" << showError <| case st.viewing of
           CraftEssences ->
-            [ H.map CraftEssencesMsg <| ceChild.view st.ceModel ]
+            [ H.map CraftEssencesMsg <| ceChild.view st.prefs st.ceModel ]
           Servants ->
-            [ H.map ServantsMsg <| sChild.view st.sModel ]
+            [ H.map ServantsMsg <| sChild.view st.prefs st.sModel ]
           Teams    ->
-            [ H.map TeamsMsg <| tChild.view st.tModel ]
+            [ H.map TeamsMsg <| tChild.view st.prefs st.tModel ]
+
+    setPref : Model -> Preference -> Bool -> (Model, Cmd Msg)
+    setPref st k v =
+      let
+        prefs = setPreference k v st.prefs
+        msg = SetPref k v
+        (ceModel, ceCmd) = ceChild.update prefs msg st.ceModel
+        (sModel,  sCmd)  =  sChild.update prefs msg st.sModel
+        (tModel,  tCmd)  =  tChild.update prefs msg st.tModel
+      in
+        ( { st 
+          | prefs   = prefs
+          , ceModel = ceModel
+          , sModel  = sModel
+          , tModel  = tModel 
+          }
+        , Cmd.batch
+          [ storePreferences store prefs
+          , Cmd.map CraftEssencesMsg ceCmd
+          , Cmd.map ServantsMsg sCmd
+          , Cmd.map TeamsMsg tCmd 
+          ]
+        )
 
     update : Msg -> Model -> (Model, Cmd Msg)
     update parentMsg st = case parentMsg of
@@ -186,19 +211,23 @@ app onInit analytics title store =
           (newSt, newTitle) = stateFromPath path st
         in
           (newSt, Cmd.batch [analytics path, title newTitle, resetPopup])
+      CraftEssencesMsg (SetPref k v) -> setPref st k v
+      ServantsMsg      (SetPref k v) -> setPref st k v
+      TeamsMsg         (SetPref k v) -> setPref st k v
       CraftEssencesMsg msg ->
           let
-            (model, cmd) = ceChild.update msg st.ceModel
+            (model, cmd) = ceChild.update st.prefs msg st.ceModel
           in
             ({ st | ceModel = model }, Cmd.map CraftEssencesMsg cmd)
       ServantsMsg msg ->
           let
-            (model, cmd) = sChild.update msg st.sModel
+            (model, cmd) = sChild.update st.prefs msg st.sModel
           in
             ({ st | sModel = model }, Cmd.map ServantsMsg cmd)
+      TeamsMsg (OnTeam i j) -> pure { st | onTeam = Just (i, j) }
       TeamsMsg msg ->
           let
-            (model, cmd) = tChild.update msg st.tModel
+            (model, cmd) = tChild.update st.prefs msg st.tModel
           in
             ({ st | tModel = model }, Cmd.map TeamsMsg cmd)
   in

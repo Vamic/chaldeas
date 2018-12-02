@@ -15,8 +15,8 @@ import Class.Show as Show
 
 type alias Component model msg =
     { init          : Flags -> Navigation.Key -> model
-    , view          : model -> Html msg
-    , update        : msg -> model -> (model, Cmd msg)
+    , view          : Preferences -> model -> Html msg
+    , update        : Preferences -> msg -> model -> (model, Cmd msg)
     }
 
 type SiteMsg filt focus
@@ -31,6 +31,7 @@ type SiteMsg filt focus
     | SetPref   Preference Bool
     | Ascend    focus Int
     | OnMine    Bool focus
+    | OnTeam    Int Int
     | DoNothing
 
 type alias SiteModel filt focus extra =
@@ -44,7 +45,6 @@ type alias SiteModel filt focus extra =
     , matchAny   : Bool
     , focus      : Maybe focus
     , sortBy     : SortBy
-    , prefs      : Preferences
     , sorted     : List (String, focus)
     , listing    : List (String, focus)
     , extra      : extra
@@ -63,7 +63,6 @@ siteInit getFilters flags navKey extra =
     , matchAny   = True
     , focus      = Nothing
     , sortBy     = Rarity
-    , prefs      = flags.preferences
     , sorted     = []
     , listing    = []
     , extra      = extra

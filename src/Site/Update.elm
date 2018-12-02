@@ -10,16 +10,16 @@ import Site.Filtering      exposing (..)
 import Persist.Flags       exposing (..)
 import Persist.Preferences exposing (..)
 
-siteUpdate : (String -> Value -> Cmd (SiteMsg filt focus))
-          -> (focus -> filt)
+siteUpdate : (focus -> filt)
           -> (filt -> String)
           -> (SiteModel filt focus extra -> SiteModel filt focus extra)
+          -> Preferences
           -> SiteMsg filt focus
           -> SiteModel filt focus extra
           -> (SiteModel filt focus extra, Cmd (SiteMsg filt focus))
-siteUpdate store transform show reSort msg st =
+siteUpdate transform show reSort prefs msg st =
   let
-    relist        = updateListing transform
+    relist        = updateListing prefs transform
     goUp x        = (x, scrollToTop "content")
     toggleIn x xs =
         if List.any (eqFilter x) xs then
@@ -68,13 +68,7 @@ siteUpdate store transform show reSort msg st =
           , filters = filters
           , focus   = Nothing
           }
-    SetPref k v ->
-      let
-        prefs = setPreference k v st.prefs
-      in
-        ( relist <| reSort { st | prefs = prefs }
-        , storePreferences store prefs
-        )
+    SetPref k v -> pure << relist <| reSort st
     Toggle filter ->
         goUp << relist <|
         if exclusive filter.tab then
@@ -83,4 +77,5 @@ siteUpdate store transform show reSort msg st =
             { st | filters = toggleIn filter st.filters }
     Ascend _ _  -> pure st
     OnMine _ _  -> pure st
+    OnTeam _ _  -> pure st
     DoNothing   -> pure st

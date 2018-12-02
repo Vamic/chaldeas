@@ -46,10 +46,10 @@ type alias Model = SiteModel Servant MyServant
 
 type alias Msg = SiteMsg Servant MyServant
 
-reSort : Model -> Model
-reSort st =
+reSort : Preferences -> Model -> Model
+reSort prefs st =
     { st
-    | sorted = getSort (prefer st.prefs AddSkills) st.sortBy st.extra.myServs
+    | sorted = getSort (prefer prefs AddSkills) st.sortBy st.extra.myServs
     }
 
 reMine : Model -> Model
@@ -76,12 +76,12 @@ component store =
             , myServs = []
             }
         |> reMine
-        >> reSort
-        >> updateListing .base
+        >> reSort flags.preferences
+        >> updateListing flags.preferences .base
         >> setRoot
 
-    view : Model -> Html Msg
-    view st =
+    view : Preferences -> Model -> Html Msg
+    view prefs st =
       let
         nav =
             [ a_ ["Craft Essences"]
@@ -96,9 +96,9 @@ component store =
             --, a_ ["Teams"]
             ]
       in
-        lazy4 unlazyView st.prefs st.extra.mineOnly st.listing st.sortBy
-        |> siteView st enumSortBy nav
-        >> popup st.prefs st.extra.mineOnly st.extra.ascent st.focus
+        lazy4 unlazyView prefs st.extra.mineOnly st.listing st.sortBy
+        |> siteView prefs st enumSortBy nav
+        >> popup prefs st.extra.mineOnly st.extra.ascent st.focus
 
     unlazyView prefs mineOnly listing sortBy =
       let
@@ -137,15 +137,15 @@ component store =
            )
         >> Keyed.node "section" [P.id "content"]
 
-    update : Msg -> Model -> (Model, Cmd Msg)
-    update a st =
+    update : Preferences -> Msg -> Model -> (Model, Cmd Msg)
+    update prefs a st =
       let
         {extra} = st
-        relist  = updateListing .base
+        relist  = updateListing prefs .base
       in case a of
         Ascend ms ascent -> case ms.level of
           0 -> pure { st | extra = { extra | ascent = ascent } }
-          _ -> update (OnMine True { ms | ascent = ascent }) st
+          _ -> update prefs (OnMine True { ms | ascent = ascent }) st
         Focus focus ->
             ( { st | focus = focus, extra = { extra | ascent = 1 } }
             , setFocus st.navKey st.root <| Maybe.map (.base >> .name) focus
@@ -159,14 +159,14 @@ component store =
               else
                 Dict.remove (ordServant ms.base) st.extra.mine
           in
-            ( relist << reSort <| reMine
+            ( relist << reSort prefs <| reMine
               { st
               | extra = { extra | mine = mine }
               , focus = Maybe.next st.focus <| Just ms
               }
             , storeMine store mine
             )
-        _ -> siteUpdate store .base .name reSort a st
+        _ -> siteUpdate .base .name (reSort prefs) prefs a st
   in
     { init = init, view = view, update = update }
 

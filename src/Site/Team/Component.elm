@@ -32,8 +32,8 @@ component store =
         , listing = flip List.map flags.teams <| \x -> (x.name, x)
         }
 
-    view : Model -> Html Msg
-    view st =
+    view : Preferences -> Model -> Html Msg
+    view prefs st =
       let
         nav =
             [ a_ ["Craft Essences"]
@@ -42,17 +42,17 @@ component store =
             , text_ H.strong "Teams"
             ]
       in
-        H.div [P.id "elm", P.class <| mode st.prefs] << (++)
+        H.div [P.id "elm", P.class <| mode prefs] << (++)
         [ H.a [P.id "cover", P.href <| "/Teams"] []
         , H.article [P.id "focus"] []
         ] <<
-        siteView st [] nav <<
+        siteView prefs st [] nav <<
         H.section [P.id "content"] <<
         List.map teamEl <|
         st.listing ++ [("", emptyTeam)]
 
-    update : Msg -> Model -> (Model, Cmd Msg)
-    update = siteUpdate store identity (always "") identity
+    update : Preferences -> Msg -> Model -> (Model, Cmd Msg)
+    update = siteUpdate identity (always "") identity
   in
     { init = init, view = view, update = update }
 

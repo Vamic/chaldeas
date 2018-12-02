@@ -39,10 +39,10 @@ getScheduled xs today =
 
 {-| Updates a `SiteModel`'s `.listing` with its `.sorted`,
 filtered by its `.exclude` and `.filters`. -}
-updateListing : (b -> a) -> SiteModel a b c -> SiteModel a b c
-updateListing f st =
+updateListing : Preferences -> (b -> a) -> SiteModel a b c -> SiteModel a b c
+updateListing prefs f st =
   let
-    noSelf = prefer st.prefs ExcludeSelf
+    noSelf = prefer prefs ExcludeSelf
     matches x filter = filter.match noSelf x
     match x =
         ( List.isEmpty st.exclude

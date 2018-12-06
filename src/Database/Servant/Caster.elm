@@ -438,6 +438,74 @@ casters =
                   [(VoidsDust, 16), (HeartOfTheForeignGod, 2)]
                   [(HeartOfTheForeignGod, 6), (ForbiddenPage, 20)]
     }
+  , { name      = "Gilgamesh (Caster)"
+    , id        = 145
+    , rarity    = 4
+    , class     = Caster
+    , stats     = { base  = { atk = 1410,  hp = 1920 }
+                  , max   = { atk = 8460,  hp = 12005 }
+                  , grail = { atk = 10243, hp = 14556 }
+                  }
+    , gen       = { starWeight = 51, starRate = 10.9, npAtk = 0.32, npDef = 3 }
+    , death     = 42
+    , curve     = 29
+    , attr      = Mankind
+    , align     = [Lawful, Good]
+    , gender    = Male
+    , traits    = [Divine, BrynhildsBeloved, King]
+    , deck      = Deck Quick Arts Arts Arts Buster
+    , hits      = { quick = 2, arts = 5, buster = 6, ex = 5 }
+    , skills    = [ { name   = "King's Return"
+                    , rank   = A
+                    , icon   = IconStarHaloUp
+                    , cd     = 9
+                    , effect = [ Grant Party 3 StarUp <| Range 50 100 ]
+                    }
+                  , { name   = "Charisma"
+                    , rank   = APlus
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10.5 21 ]
+                    }
+                  , { name   = "Sovereign of Magic Wands"
+                    , rank   = EX
+                    , icon   = IconArtsUp
+                    , cd     = 8
+                    , effect = [ Grant Party 3 (Performance Arts) <| Range 20 30 
+                               , Grant Party 3 DebuffSuccess <| Range 20 30
+                               ]
+                    }
+                  ]
+    , passives  = [itemConstructionFalse A, territoryCreation A, divinity B]
+    , phantasm  = { name   = "Melammu Dingir"
+                  , desc   = "King's Signal Cannon"
+                  , rank   = B
+                  , card   = Arts
+                  , kind   = "Anti-Army/Anti-Fortress"
+                  , hits   = 10
+                  , effect = [ To Enemies Damage <| Range 450 750 
+                             , Grant Party 3 DefenseUp <| Flat 20
+                             ]
+                  , over   = [ Debuff Enemies 3 DefenseDown <| Range 20 40 ]
+                  , first  = False
+                  }
+    , limited   = False
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Caster, 4)]
+                  [(Piece Caster, 10), (ProofOfHero, 18)]
+                  [(Monument Caster, 4), (ForbiddenPage, 8), (PrimordialLanugo, 3)]
+                  [(Monument Caster, 10), (PrimordialLanugo, 5), (ScarabOfWisdom, 4)]
+    , skillUp   = Reinforcement
+                  [(GemOf Caster, 4)]
+                  [(GemOf Caster, 10)]
+                  [(MagicGemOf Caster, 4)]
+                  [(MagicGemOf Caster, 10), (ForbiddenPage, 4)]
+                  [(SecretGemOf Caster, 4), (ForbiddenPage, 8)]
+                  [(SecretGemOf Caster, 10), (ProofOfHero, 12)]
+                  [(ProofOfHero, 24), (GhostLantern, 5)]
+                  [(GhostLantern, 15), (DeadlyPoisonousNeedle, 48)]
+    }
   , { name      = "Elisabeth Bathory (Halloween)"
     , id        = 61
     , rarity    = 4

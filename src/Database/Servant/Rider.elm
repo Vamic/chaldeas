@@ -7,7 +7,78 @@ import Database.Skill exposing (..)
 
 riders : List Servant
 riders =
-  [ { name  =   "Ozymandias"
+  [ { name      = "Quetzalcoatl"
+    , id        = 144
+    , rarity    = 5
+    , class     = Rider
+    , stats     = { base  = { atk = 1854,  hp = 1900 }
+                  , max   = { atk = 12001, hp = 12960 }
+                  , grail = { atk = 13137, hp = 14198 }
+                  }
+    , gen       = { starWeight = 205, starRate = 9, npAtk = 0.9, npDef = 3 }
+    , death     = 25
+    , curve     = 5
+    , attr      = Heaven
+    , align     = [Lawful, Good]
+    , gender    = Female
+    , traits    = [Divine, Riding, EnumaElish, King]
+    , deck      = Deck Quick Arts Arts Buster Buster
+    , hits      = { quick = 3, arts = 2, buster = 3, ex = 5 }
+    , skills    = [ { name   = "Charisma"
+                    , rank   = APlus
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10.5 21 ]
+                    }
+                  , { name   = "Wisdom of Benevolent Gods"
+                    , rank   = APlus
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Grant Ally 3 Guts <| Flat 1000 
+                               , Grant Ally 3 (Performance Buster) <| Range 20 30
+                               ]
+                    }
+                  , { name   = "Lucha Libre"
+                    , rank   = EX
+                    , icon   = IconStarUp
+                    , cd     = 8
+                    , effect = [ Grant Self 1 StarAbsorb <| Range 300 600 
+                               , Grant Self 1 CritUp <| Range 30 50
+                               , To Self GaugeUp <| Range 20 30
+                               ]
+                    }
+                  ]
+    , passives  = [magicResistance A, riding EX, coreOfGoddess EX]
+    , phantasm  = { name   = "Xiuhcoatl"
+                  , desc   = "O Flame, Burn the Gods Themselves"
+                  , rank   = A
+                  , card   = Buster
+                  , kind   = "Anti-Army/Anti-Fortress"
+                  , hits   = 1
+                  , effect = [ To Enemy Damage <| Range 600 1000 
+                             , Debuff Enemy 1 SealNP Full
+                             ]
+                  , over   = [ Debuff Enemy 5 Burn <| Range 1000 3000 ]
+                  , first  = False
+                  }
+    , limited   = False
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Rider, 5)]
+                  [(Piece Rider, 12), (DragonFang, 18)]
+                  [(Monument Rider, 5), (SerpentJewel, 8), (DragonsReverseScale, 2)]
+                  [(Monument Rider, 12), (DragonsReverseScale, 4), (PhoenixFeather, 10)]
+    , skillUp   = Reinforcement
+                  [(GemOf Rider, 5)]
+                  [(GemOf Rider, 12)]
+                  [(MagicGemOf Rider, 5)]
+                  [(MagicGemOf Rider, 12), (SerpentJewel, 4)]
+                  [(SecretGemOf Rider, 5), (SerpentJewel, 8)]
+                  [(SecretGemOf Rider, 12), (DragonFang, 12)]
+                  [(DragonFang, 24), (FoolsChain, 18)]
+                  [(FoolsChain, 54), (CursedBeastGallstone, 10)]
+    }
+  , { name  =   "Ozymandias"
     , id        = 118
     , rarity    = 5
     , class     = Rider

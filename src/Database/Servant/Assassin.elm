@@ -545,7 +545,7 @@ assassins =
                   , hits   = 5
                   , effect = [ To Enemies Damage <| Range 600 1000 ]
                   , over   = [ To Enemies Kill <| Range 30 70 ]
-                  , first  = False
+                  , first  = True
                   }
     , gen       = { starWeight = 98, starRate = 25.6, npAtk = 0.71, npDef = 4 }
     , hits      = { quick = 3, arts = 3, buster = 3, ex = 5 }

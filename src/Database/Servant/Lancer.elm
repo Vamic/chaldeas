@@ -302,6 +302,80 @@ lancers =
                   [(HeartOfTheForeignGod, 4), (PhoenixFeather, 5)]
                   [(PhoenixFeather, 15), (ClawOfChaos, 15)]
     }
+  ,  { name      = "Enkidu"
+    , id        = 143
+    , rarity    = 5
+    , class     = Lancer
+    , stats     = { base  = { atk = 1666,  hp = 2244 }
+                  , max   = { atk = 10780, hp = 15300 }
+                  , grail = { atk = 11800, hp = 16762 }
+                  }
+    , gen       = { starWeight = 90, starRate = 12, npAtk = 0.53, npDef = 4 }
+    , death     = 28
+    , curve     = 10
+    , attr      = Heaven
+    , align     = [Neutral, Balanced]
+    , gender    = Nonbinary
+    , traits    = [EnumaElish]
+    , deck      = Deck Quick Quick Quick Arts Buster
+    , hits      = { quick = 4, arts = 5, buster = 1, ex = 6 }
+    , skills    = [ { name   = "Transfiguration"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 
+                               , To Self ApplyAtRandom Full
+                               , Grant Self 1 (Performance Arts) <| Range 30 50
+                               , Grant Self 1 (Performance Quick) <| Range 30 50
+                               ]
+                    }
+                  , { name   = "Presence Detection"
+                    , rank   = APlus
+                    , icon   = IconExclamationDown
+                    , cd     = 7
+                    , effect = [ Debuff Enemy 3 CritChance <| Range 30 50 
+                               , To Enemy (Remove Evasion) Full
+                               ]
+                    }
+                  , { name   = "Perfect Form"
+                    , rank   = A
+                    , icon   = IconHeal
+                    , cd     = 12
+                    , effect = [ To Self Heal <| Range 5000 10000 
+                               , To Self RemoveDebuffs Full
+                               ]
+                    }
+                  ]
+    , passives  = [magicResistance A]
+    , phantasm  = { name   = "Enuma Elish"
+                  , desc   = "O Humans, Let Us Restrain the Gods"
+                  , rank   = APlusPlus
+                  , card   = Buster
+                  , kind   = "Anti-Purge"
+                  , hits   = 5
+                  , effect = [ To Enemy Damage <| Range 600 1000 
+                             , Chance 500 <| Debuff (EnemyType Divine) 1 Stun Full
+                             ]
+                  , over   = [ Debuff Enemy 3 DefenseDown <| Range 20 40 ]
+                  , first  = True
+                  }
+    , limited   = False
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Lancer, 5)]
+                  [(Piece Lancer, 12), (FoolsChain, 22)]
+                  [(Monument Lancer, 5), (OctupletCrystals, 10), (SpiritRoot, 2)]
+                  [(Monument Lancer, 12), (SpiritRoot, 4), (HeartOfTheForeignGod, 5)]
+    , skillUp   = Reinforcement
+                  [(GemOf Lancer, 5)]
+                  [(GemOf Lancer, 12)]
+                  [(MagicGemOf Lancer, 5)]
+                  [(MagicGemOf Lancer, 12), (OctupletCrystals, 5)]
+                  [(SecretGemOf Lancer, 5), (OctupletCrystals, 10)]
+                  [(SecretGemOf Lancer, 12), (FoolsChain, 15)]
+                  [(FoolsChain, 29), (HomunculusBaby, 6)]
+                  [(HomunculusBaby, 18), (PrimordialLanugo, 15)]
+    }
   , { name      = "Altria Pendragon (Lancer)"
     , id        = 119
     , rarity    = 5
@@ -855,6 +929,72 @@ lancers =
                   [(PhoenixFeather, 7), (OctupletCrystals, 5)]
                   [(OctupletCrystals, 15), (SerpentJewel, 16)]
     }
+  , { name      = "Medusa (Lancer)"
+    , id        = 146
+    , rarity    = 4
+    , class     = Lancer
+    , stats     = { base  = { atk = 1375, hp = 2099 }
+                  , max   = { atk = 8253, hp = 13119 }
+                  , grail = { atk = 9993, hp = 15907 }
+                  }
+    , gen       = { starWeight = 89, starRate = 12.2, npAtk = 0.44, npDef = 4 }
+    , death     = 40
+    , curve     = 3
+    , attr      = Earth
+    , align     = [Neutral, Good]
+    , gender    = Female
+    , traits    = [Divine, EnumaElish]
+    , deck      = Deck Quick Quick Arts Arts Buster
+    , hits      = { quick = 3, arts = 4, buster = 1, ex = 5 }
+    , skills    = [ { name   = "Siren Song"
+                    , rank   = B
+                    , icon   = IconHeart
+                    , cd     = 9
+                    , effect = [ Chances 60 90 <| Debuff (EnemyType Male) 1 Charm Full ]
+                    }
+                  , { name   = "Monstrous Strength"
+                    , rank   = C
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 AttackUp <| Range 10 30 ]
+                    }
+                  , { name   = "Feelings Toward the Distance"
+                    , rank   = A
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Times 1 << Grant Self 3 Guts <| Range 1000 3000 
+                               , Times 1 <| Grant Self 1 Invincibility Full
+                               ]
+                    }
+                  ]
+    , passives  = [magicResistance B, coreOfGoddess A]
+    , phantasm  = { name   = "Caress of the Medusa"
+                  , desc   = "Embrace of the Goddess"
+                  , rank   = B
+                  , card   = Quick
+                  , kind   = "Anti-Unit"
+                  , hits   = 8
+                  , effect = [ To Enemy Damage <| Range 1100 2000 ]
+                  , over   = [ Chances 80 160 <| Debuff Enemy 1 Stun Full ]
+                  , first  = False
+                  }
+    , limited   = False
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Lancer, 4)]
+                  [(Piece Lancer, 10), (ShellOfReminiscence, 6)]
+                  [(Monument Lancer, 4), (SeedOfYggdrasil, 10), (PhoenixFeather, 4)]
+                  [(Monument Lancer, 10), (PhoenixFeather, 7), (DeadlyPoisonousNeedle, 24)]
+    , skillUp   = Reinforcement
+                  [(GemOf Lancer, 4)]
+                  [(GemOf Lancer, 10)]
+                  [(MagicGemOf Lancer, 4)]
+                  [(MagicGemOf Lancer, 10), (SeedOfYggdrasil, 5)]
+                  [(SecretGemOf Lancer, 4), (SeedOfYggdrasil, 10)]
+                  [(SecretGemOf Lancer, 10), (ShellOfReminiscence, 10)]
+                  [(ShellOfReminiscence, 8), (PrimordialLanugo, 3)]
+                  [(PrimordialLanugo, 9), (SerpentJewel, 16)]
+    }
   , { name      = "Cu Chulainn"
     , id        = 17
     , rarity    = 3
@@ -994,6 +1134,79 @@ lancers =
                   [(SecretGemOf Lancer, 8), (VoidsDust, 7)]
                   [(VoidsDust, 13), (ProofOfHero, 12)]
                   [(ProofOfHero, 36), (OctupletCrystals, 16)]
+    }
+  , { name      = "Jaguar Man"
+    , id        = 148
+    , rarity    = 3
+    , class     = Lancer
+    , stats     = { base  = { atk = 1304, hp = 1726 }
+                  , max   = { atk = 7022, hp = 9593 }
+                  , grail = { atk = 9503, hp = 13007 }
+                  }
+    , gen       = { starWeight = 90, starRate = 12, npAtk = 1.05, npDef = 4 }
+    , death     = 40
+    , curve     = 8
+    , attr      = Earth
+    , align     = [Chaotic, Balanced]
+    , gender    = Female
+    , traits    = [Beast, Divine, PseudoServant, EnumaElish]
+    , deck      = Deck Quick Quick Arts Buster Buster
+    , hits      = { quick = 2, arts = 2, buster = 4, ex = 6 }
+    , skills    = [ { name   = "Jaguar Punch"
+                    , rank   = A
+                    , icon   = IconBusterUp
+                    , cd     = 12
+                    , effect = [ Grant Self 3 (Performance Buster) <| Range 10 30 
+                               , Grant Self 3 DebuffResist <| Range 20 40
+                               , Times 2 <| Grant Self 0 Evasion Full
+                               , To Party GainStars <| Range 5 15
+                               ]
+                    }
+                  , { name   = "Jaguar Kick"
+                    , rank   = B
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 2 AttackUp <| Range 10 30 ]
+                    }
+                  , { name   = "Jaguar Eye"
+                    , rank   = APlus
+                    , icon   = IconExclamationUp
+                    , cd     = 8
+                    , effect = [ Grant Self 3 CritUp <| Range 30 50 
+                               , When "on Forest field" << Grant Self 3 StarUp <| Range 30 50
+                               , When "on Forest field" << Grant Self 3 StarAbsorb <| Range 300 600
+                               ]
+                    }
+                  ]
+    , passives  = [magicResistance A, madness E, divinity A]
+    , phantasm  = { name   = "Great Death Claw"
+                  , desc   = "The Inescapable Claw of Death"
+                  , rank   = B
+                  , card   = Buster
+                  , kind   = "Anti-Personnel"
+                  , hits   = 2
+                  , effect = [ Grant Self 1 SureHit Full
+                             , To Enemy Damage <| Range 600 1000 
+                             ]
+                  , over   = [ Debuff Enemy 3 DebuffVuln <| Range 10 50 ]
+                  , first  = False
+                  }
+    , limited   = False
+    , free      = True
+    , ascendUp  = Ascension
+                  [(Piece Lancer, 4)]
+                  [(Piece Lancer, 8), (SeedOfYggdrasil, 6)]
+                  [(Monument Lancer, 4), (ClawOfChaos, 4), (BlackBeastGrease, 2)]
+                  [(Monument Lancer, 8), (BlackBeastGrease, 4), (PrimordialLanugo, 5)]
+    , skillUp   = Reinforcement
+                  [(GemOf Lancer, 4)]
+                  [(GemOf Lancer, 8)]
+                  [(MagicGemOf Lancer, 4)]
+                  [(MagicGemOf Lancer, 8), (ClawOfChaos, 2)]
+                  [(SecretGemOf Lancer, 4), (ClawOfChaos, 4)]
+                  [(SecretGemOf Lancer, 8), (SeedOfYggdrasil, 4)]
+                  [(SeedOfYggdrasil, 8), (CursedBeastGallstone, 2)]
+                  [(CursedBeastGallstone, 5), (WarhorsesYoungHorn, 10)]
     }
   , { name      = "Leonidas I"
     , id        = 21

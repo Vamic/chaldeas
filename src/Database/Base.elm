@@ -197,6 +197,8 @@ type Material
     | QP
     | BlackBeastGrease
     | ClawOfChaos
+    | CursedBeastGallstone
+    | DeadlyPoisonousNeedle
     | DragonFang
     | DragonsReverseScale
     | EternalGear
@@ -211,6 +213,7 @@ type Material
     | MeteorHorseshoe
     | OctupletCrystals
     | PhoenixFeather
+    | PrimordialLanugo
     | ProofOfHero
     | ScarabOfWisdom
     | SeedOfYggdrasil
@@ -232,6 +235,7 @@ enumMaterial =
     [ QP
     , BlackBeastGrease
     , ClawOfChaos
+    , CursedBeastGallstone
     , DragonFang
     , DragonsReverseScale
     , EternalGear
@@ -246,12 +250,14 @@ enumMaterial =
     , MeteorHorseshoe
     , OctupletCrystals
     , PhoenixFeather
+    , PrimordialLanugo
     , ProofOfHero
     , ScarabOfWisdom
     , SeedOfYggdrasil
     , SerpentJewel
     , ShellOfReminiscence
     , SpiritRoot
+    , DeadlyPoisonousNeedle
     , TearstoneOfBlood
     , VoidsDust
     , WarhorsesYoungHorn

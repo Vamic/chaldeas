@@ -28,19 +28,19 @@ type alias Servant =
     , id       : Int
     , rarity   : Int
     , class    : Class
-    , attr     : Attribute
-    , deck     : Deck
-    , curve    : Int
     , stats    : { base : Stat, max : Stat, grail : Stat }
+    , gen      : Gen
+    , death    : Float
+    , curve    : Int
+    , attr     : Attribute
+    , align    : List Alignment
+    , gender   : Trait
+    , traits   : List Trait
+    , deck     : Deck
+    , hits     : Hits
     , skills   : List Skill
     , passives : List Skill
     , phantasm : NoblePhantasm
-    , gen      : Gen
-    , hits     : Hits
-    , gender   : Trait
-    , traits   : List Trait
-    , death    : Float
-    , align    : List Alignment
     , limited  : Bool
     , free     : Bool
     , ascendUp : Ascension

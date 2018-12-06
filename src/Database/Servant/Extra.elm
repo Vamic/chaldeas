@@ -112,14 +112,14 @@ extras =
     , passives  = [magicResistance A]
     , phantasm  = { name   = "Twin Arm—Big Crunch"
                   , desc   = "Dual Arm, Zero-Order Convergence"
-                  , rank   = APlus
+                  , rank   = EX
                   , card   = Buster
                   , kind   = "Anti-Army"
                   , hits   = 1
                   , effect = [ To Enemies RemoveBuffs Full
-                             , To Enemies Damage <| Range 300 500
+                             , To Enemies Damage <| Range 400 600
                              ]
-                  , over   = [ Debuff Enemies 1 CritChance <| Range 30 70 ]
+                  , over   = [ Debuff Enemies 3 CritChance <| Range 30 70 ]
                   , first  = False
                   }
     , gen       = { starWeight = 100, starRate = 10, npAtk = 0.86, npDef = 3 }
@@ -361,6 +361,74 @@ extras =
                   [(TearstoneOfBlood, 6)]
                   [(DragonsReverseScale, 12)]
     }
+  , { name      = "Gorgon"
+    , id        = 147
+    , rarity    = 4
+    , class     = Avenger
+    , stats     = { base  = { atk = 1784,  hp = 1631 }
+                  , max   = { atk = 10706, hp = 10197 }
+                  , grail = { atk = 12963, hp = 12364 }
+                  }
+    , gen       = { starWeight = 29, starRate = 6, npAtk = 0.37, npDef = 5 }
+    , death     = 7
+    , curve     = 14
+    , attr      = Earth
+    , align     = [Chaotic, Evil]
+    , gender    = Female
+    , traits    = [EnumaElish]
+    , deck      = Deck Quick Arts Arts Buster Buster
+    , hits      = { quick = 3, arts = 5, buster = 3, ex = 5 }
+    , skills    = [ { name   = "Monstrous Strength"
+                    , rank   = APlus
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Self 1 AttackUp <| Range 30 50 ]
+                    }
+                  , { name   = "Demonic Metamorphosis"
+                    , rank   = B
+                    , icon   = IconKneel
+                    , cd     = 9
+                    , effect = [ Grant Self 5 Guts <| Range 1000 3000 
+                               , Grant Self 3 CritUp <| Range 20 50
+                               ]
+                    }
+                  , { name   = "Mystic Eyes"
+                    , rank   = APlusPlus
+                    , icon   = IconStun
+                    , cd     = 8
+                    , effect = [ Chances 55 105 <| Debuff Enemy 1 Stun Full ]
+                    }
+                  ]
+    , passives  = [ avenger B, oblivionCorrection C, selfRestoreMagic A ]
+    , phantasm  = { name   = "Pandemonium Cetus"
+                  , desc   = "Forced Seal, Pandemonic Temple"
+                  , rank   = A
+                  , card   = Buster
+                  , kind   = "Anti-Army"
+                  , hits   = 3
+                  , effect = [ To Enemies Damage <| Range 300 500
+                             , To Party GaugeUp <| Flat 10
+                             ]
+                  , over   = [ Debuff Enemies 3 Curse <| Range 1000 3000 ]
+                  , first  = False
+                  }
+    , limited   = False
+    , free      = False
+    , ascendUp  = Ascension
+                  [(SerpentJewel, 8), (EvilBone, 8)]
+                  [(DeadlyPoisonousNeedle, 8), (FoolsChain, 8)]
+                  [(PrimordialLanugo, 8), (VoidsDust, 8)]
+                  [(CursedBeastGallstone, 8), (ClawOfChaos, 8)]
+    , skillUp   = Reinforcement
+                  [(EvilBone, 8)]
+                  [(FoolsChain, 8)]
+                  [(SerpentJewel, 10)]
+                  [(DeadlyPoisonousNeedle, 10)]
+                  [(TearstoneOfBlood, 10)]
+                  [(PrimordialLanugo, 12)]
+                  [(HeartOfTheForeignGod, 12)]
+                  [(CursedBeastGallstone, 12)]
+    }
   , { name      = "Mash Kyrielight"
     , id        = 1
     , rarity    = 3
@@ -462,12 +530,12 @@ extras =
                     , rank   = A
                     , icon   = IconQuickUp
                     , cd     = 10
-                    , effect = [ When "turn 1" <| Grant Self 1 (Performance Quick) <| Range 20 40
-                               , When "turn 2" <| Grant Self 1 (Performance Quick) <| Range 40 80
-                               , When "turn 3" <| Grant Self 1 (Performance Quick) <| Range 60 120
-                               , When "turn 4" <| Grant Self 1 (Performance Quick) <| Range 80 160
-                               , When "turn 5" <| Grant Self 1 (Performance Quick) <| Range 100 200
-                               , When "turn 6" <| To Self DemeritKill Full
+                    , effect = [ Grant Self 1 (Performance Quick) <| Range 20 40
+                               , After 1 <| Grant Self 1 (Performance Quick) <| Range 40 80
+                               , After 2 <| Grant Self 1 (Performance Quick) <| Range 60 120
+                               , After 3 <| Grant Self 1 (Performance Quick) <| Range 80 160
+                               , After 4 <| Grant Self 1 (Performance Quick) <| Range 100 200
+                               , After 5 <| To Self DemeritKill Full
                                ]
                     }
                   ]

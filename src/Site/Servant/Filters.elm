@@ -19,8 +19,12 @@ import Class.ToImage as ToImage
 extraFilters : List (Filter Servant)
 extraFilters = List.concat
   [ [ nameFilter FilterAvailability "New"
-      [ "Ishtar"
-      , "Jeanne d'Arc Alter Santa Lily"
+      [ "Enkidu"
+      , "Medusa (Lancer)"
+      , "Gilgamesh (Caster)"
+      , "Jaguar Man"
+      , "Gorgon"
+      , "Quetzalcoatl"
       ]
     , Filter [] Nothing FilterAvailability "Free" <|
       \_ s -> s.free
@@ -36,21 +40,9 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter Servant)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+  [ ScheduledFilter (Date 2018 Dec 6) (Date 2018 Dec 30) <|
     nameFilter FilterAvailability "Rate-Up"
-    [ "Ishtar" ]
-  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
-    nameFilter FilterEventBonus "+1 Fruitcake"
-    [ "Amakusa Shirou", "Ishtar", "Jeanne d'Arc Alter Santa Lily" ]
-  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
-    nameFilter FilterEventBonus "+1 Shortcake"
-    [ "EMIYA", "Jeanne d'Arc", "Jeanne d'Arc (Alter)" ]
-  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
-    nameFilter FilterEventBonus "+1 Cheesecake"
-    [ "Mash Kyrielight", "Ushiwakamaru", "Gilles de Rais (Caster)" 
-    , "Gilgamesh (Child)", "Fuuma \"Evil-wind\" Kotarou", "Tawara Touta"
-    , "Leonidas I", "Hassan of the Cursed Arm", "Asterios", "Mata Hari"
-    ]
+    [ "Enkidu", "Medusa (Lancer)", "Gilgamesh (Caster)" ]
   ]
 
 singleFilter : Has Servant a -> FilterTab -> a -> List (Filter Servant)

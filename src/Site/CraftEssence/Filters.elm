@@ -19,12 +19,9 @@ import Class.ToImage as ToImage
 extraFilters : List (Filter CraftEssence)
 extraFilters = List.concat
   [ [ nameFilter FilterAvailability "New"
-      [ "Wizard & Priest"
-      , "Mata Hari's Tavern"
-      , "Hero Elly's Adventure"
-      , "Count Romani Archaman's Hospitality"
-      , "Dangerous Beast"
-      , "Witch Under the Moonlight"
+      [ "Room Guard"
+      , "Seeker of Miracles"
+      , "Devilish Bodhisattva"
       ]
     , Filter [] Nothing FilterSource "Limited" <|
       \_ ce -> ce.limited && Maybe.isNothing ce.bond
@@ -40,28 +37,9 @@ extraFilters = List.concat
 
 scheduledFilters : List (ScheduledFilter CraftEssence)
 scheduledFilters =
-  [ ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
+  [ ScheduledFilter (Date 2018 Dec 6) (Date 2018 Dec 30) <|
     nameFilter FilterAvailability "Rate-Up"
-    [ "A Moment of Tranquility", "Reading on the Holy Night"
-    , "Saint's Invitation" 
-    ]
-  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
-    nameFilter FilterAvailability "Limited to Event"
-    [ "A Moment of Tranquility", "Reading on the Holy Night"
-    , "Saint's Invitation" 
-    ]
-  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
-    nameFilter FilterEventBonus "+1~2 Miracle Stockings"
-    [ "Holy Night Supper" ]
-  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
-    nameFilter FilterEventBonus "+1~2 Fruitcake"
-    [ "A Moment of Tranquility" ]
-  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
-    nameFilter FilterEventBonus "+1~2 Shortcake"
-    [ "Reading on the Holy Night" ]
-  , ScheduledFilter (Date 2018 Nov 27) (Date 2018 Dec 6) <|
-    nameFilter FilterEventBonus "+1~2 Cheesecake"
-    [ "Saint's Invitation" ]
+    [ "Devilish Bodhisattva", "Room Guard", "Seeker of Miracles" ]
   ]
 
 getExtraFilters : Date -> FilterTab -> List (Filter CraftEssence)

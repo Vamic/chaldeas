@@ -2897,6 +2897,43 @@ craftEssences =
       , bond    = Nothing
       , limited = True
       }
+    , { name    = "Devilish Bodhisattva"
+      , id      = 400
+      , rarity  = 5
+      , icon    = IconSunUp
+      , stats   = { base = { atk = 250,  hp = 400 }
+                  , max  = { atk = 1000, hp = 1600 }
+                  }
+      , effect  = [ To Self GaugeUp <| Range 50 60 
+                  , Times 1 << Grant Self 0 Overcharge <| Flat 2
+                  ]
+      , bond    = Nothing
+      , limited = False
+      }
+    , { name    = "Room Guard"
+      , id      = 401
+      , rarity  = 4
+      , icon    = IconStarUp
+      , stats   = { base = { atk = 0, hp = 600 }
+                  , max  = { atk = 0, hp = 2250 }
+                  }
+      , effect  = [ Grant Self 0 StarAbsorb <| Range 300 400
+                  , Grant Self 0 DamageDown <| Range 300 400
+                  ]
+      , bond    = Nothing
+      , limited = False
+      }
+    , { name    = "Seeker of Miracles"
+      , id      = 402
+      , rarity  = 3
+      , icon    = IconBeamUp
+      , stats   = { base = { atk = 200,  hp = 0 }
+                  , max  = { atk = 1000, hp = 0 }
+                  }
+      , effect  = [ When "equipped by [Divine]" << Grant Self 0 NPUp <| Range 15 25 ]
+      , bond    = Nothing
+      , limited = False
+      }
     , bond 403 "Seven-Headed Warhammer Sita" "Ishtar" IconBusterUp
       [party_ Buster 20, demeritAll DebuffVuln 20]
     , bond 406 "Door To The Ocean" "Jeanne d'Arc Alter Santa Lily" IconHealUp

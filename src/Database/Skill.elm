@@ -59,6 +59,7 @@ type InstantEffect
     | Kill
     | LastStand
     | OverChance
+    | Remove BuffEffect
     | RemoveBuffs
     | RemoveDebuffs
     | RemoveMental
@@ -70,6 +71,7 @@ type DebuffEffect
     | BuffBlock
     | BuffFail
     | Burn
+    | CardVuln Card
     | Charm
     | CharmVuln
     | CritChance

@@ -11,13 +11,19 @@ archers =
     , id        = 12
     , rarity    = 5
     , class     = Archer
-    , attr      = Heaven
-    , deck      = Deck Quick Arts Arts Buster Buster
-    , curve     = 10
     , stats     = { base  = { atk = 1897,  hp = 1920 }
                   , max   = { atk = 12280, hp = 13097 }
                   , grail = { atk = 13442, hp = 14348 }
                   }
+    , gen       = { starWeight = 153, starRate = 7.9, npAtk = 0.34, npDef = 3 }
+    , death     = 31.5
+    , curve     = 10
+    , attr      = Heaven
+    , align     = [Chaotic, Good]
+    , gender    = Male
+    , traits    = [Divine, EnumaElish, King]
+    , deck      = Deck Quick Arts Arts Buster Buster
+    , hits      = { quick = 5, arts = 5, buster = 5, ex = 8 }
     , skills    = [ { name   = "Charisma"
                     , rank   = APlus
                     , icon   = IconSwordUp
@@ -52,12 +58,6 @@ archers =
                   , over   = [ To Enemies (SpecialDamage <| VsTrait EnumaElish) <| Range 150 200 ]
                   , first  = False
                   }
-    , gen       = { starWeight = 153, starRate = 7.9, npAtk = 0.34, npDef = 3 }
-    , hits      = { quick = 5, arts = 5, buster = 5, ex = 8 }
-    , gender    = Male
-    , traits    = [Divine, EnumaElish, King]
-    , death     = 31.5
-    , align     = [Chaotic, Good]
     , limited   = True
     , free      = False
     , ascendUp  = Ascension

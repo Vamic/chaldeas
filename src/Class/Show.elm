@@ -178,6 +178,8 @@ material a = case a of
   QP -> "QP"
   BlackBeastGrease -> "Black Beast Grease"
   ClawOfChaos -> "Claw of Chaos"
+  CursedBeastGallstone -> "Cursed Beast Gallstone"
+  DeadlyPoisonousNeedle -> "Deadly Poisonous Needle"
   DragonFang -> "Dragon Fang"
   DragonsReverseScale -> "Dragon's Reverse Scale"
   EternalGear -> "Eternal Gear"
@@ -192,6 +194,7 @@ material a = case a of
   MeteorHorseshoe -> "Meteor Horseshoe"
   OctupletCrystals -> "Octuplet Crystals"
   PhoenixFeather -> "Phoenix Feather"
+  PrimordialLanugo -> "Primordial Lanugo"
   ProofOfHero -> "Proof of Hero"
   ScarabOfWisdom -> "Scarab of Wisdom"
   SeedOfYggdrasil -> "Seed of Yggdrasil"
@@ -325,6 +328,7 @@ instantEffect target amt a =
       LastStand     -> "Deal up to " ++ n ++ "% damage based on missing health"
                        ++ to
       OverChance    -> "Gain " ++ n ++ "% chance to apply Overcharge buffs"
+      Remove ef     -> "Remove" ++ p ++ " " ++ nameBuffEffect ef ++ " buffs"
       RemoveBuffs   -> "Remove" ++ p ++ " buffs"
       RemoveDebuffs -> "Remove" ++ p ++ " debuffs"
       RemoveMental  -> "Remove" ++ p ++ " mental debuffs"
@@ -355,6 +359,7 @@ debuffEffect target amt a =
       BuffBlock    -> "Inflict Buff Block status" ++ to
       BuffFail     -> reduce "attack buff success rate"
       Burn         -> damage "Burn"
+      CardVuln c   -> reduce <| "defense against " ++ card c ++ " cards"
       Charm        -> "Charm" ++ s
       CharmVuln    -> unresist "Charm"
       Confusion    -> eachTurn "Confusion" "Seal skills"
@@ -382,6 +387,7 @@ nameDebuffEffect a = case a of
   BuffBlock    -> "BuffBlock"
   BuffFail     -> "BuffFail"
   Burn         -> "Burn"
+  CardVuln _   -> "CardVuln"
   Charm        -> "Charm"
   CharmVuln    -> nameDebuffEffect DebuffVuln
   Confusion    -> "Confusion"

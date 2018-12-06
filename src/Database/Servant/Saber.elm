@@ -919,7 +919,7 @@ sabers =
                     , icon   = IconSwordUp
                     , cd     = 7
                     , effect = [ Grant Self 3 AttackUp <| Flat 20
-                               , When "on Open Field with Sunshine" << Grant Self 3 (Performance Buster) <| Range 20 30
+                               , When "on Open field with Sunshine" << Grant Self 3 (Performance Buster) <| Range 20 30
                                ]
                     }
                   , { name   = "Charisma"

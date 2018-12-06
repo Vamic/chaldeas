@@ -958,7 +958,7 @@ lancers =
                     , cd     = 7
                     , effect = [ Grant Self 1 AttackUp <| Range 10 30 ]
                     }
-                  , { name   = "Feelings Toward the Distance"
+                  , { name   = "Distant Thoughts"
                     , rank   = A
                     , icon   = IconKneel
                     , cd     = 9

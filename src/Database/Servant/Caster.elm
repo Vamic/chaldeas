@@ -467,7 +467,7 @@ casters =
                     , cd     = 7
                     , effect = [ Grant Party 3 AttackUp <| Range 10.5 21 ]
                     }
-                  , { name   = "Sovereign of Magic Wands"
+                  , { name   = "Sovereign of Magical Staff"
                     , rank   = EX
                     , icon   = IconArtsUp
                     , cd     = 8

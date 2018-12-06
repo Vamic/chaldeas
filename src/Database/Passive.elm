@@ -64,7 +64,7 @@ itemConstruction = passive "Item Construction" IconPotion
     [ (EX, 12), (A, 10), (BPlus, 9), (B, 8), (C, 6), (D, 4) ]
   ]
 
-itemConstructionFalse = passive "Item Construction (False)" IconPotion
+itemConstructionFake = passive "Item Construction (Fake)" IconPotion
   [ Give Self DebuffSuccess [ (A, 10) ] ]
 
 madness = passive "Madness Enhancement" IconTeeth

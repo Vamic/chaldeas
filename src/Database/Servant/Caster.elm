@@ -476,7 +476,7 @@ casters =
                                ]
                     }
                   ]
-    , passives  = [itemConstructionFalse A, territoryCreation A, divinity B]
+    , passives  = [itemConstructionFake A, territoryCreation A, divinity B]
     , phantasm  = { name   = "Melammu Dingir"
                   , desc   = "King's Signal Cannon"
                   , rank   = B
@@ -1302,7 +1302,7 @@ casters =
                                ]
                     }
                   ]
-    , passives  = [itemConstructionFalse A]
+    , passives  = [itemConstructionFake A]
     , phantasm  = { name   = "Dimension of Steam"
                   , desc   = "Glorious World of Fiery Desolation"
                   , rank   = EX

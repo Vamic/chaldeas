@@ -22,7 +22,7 @@ extraFilters = List.concat
       [ "Enkidu"
       , "Medusa (Lancer)"
       , "Gilgamesh (Caster)"
-      , "Jaguar Man"
+      , "Jaguar Warrior"
       , "Gorgon"
       , "Quetzalcoatl"
       ]

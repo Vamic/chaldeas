@@ -1135,7 +1135,7 @@ lancers =
                   [(VoidsDust, 13), (ProofOfHero, 12)]
                   [(ProofOfHero, 36), (OctupletCrystals, 16)]
     }
-  , { name      = "Jaguar Man"
+  , { name      = "Jaguar Warrior"
     , id        = 148
     , rarity    = 3
     , class     = Lancer

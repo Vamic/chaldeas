@@ -32,6 +32,9 @@ type SiteMsg filt focus
     | Ascend    focus Int
     | OnMine    Bool focus
     | OnTeam    Int Int
+    | Export    Bool
+    | Import
+    | Entry     String
     | DoNothing
 
 type alias SiteModel filt focus extra =

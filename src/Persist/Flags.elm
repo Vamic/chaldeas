@@ -2,6 +2,7 @@ module Persist.Flags exposing
   ( Team
   , Flags, decodeFlags
   , storePreferences, storeMine, storeTeams
+  , encodeMine, decodeMine
   )
 
 import Json.Decode as D

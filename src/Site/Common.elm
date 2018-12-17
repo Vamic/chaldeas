@@ -42,7 +42,7 @@ setFocus key root a = case a of
 toCell : Bool -> Float -> Html msg
 toCell isPercent =
     places 0
-    >> doIf isPercent (flip (++) "%")
+    >> (if not isPercent then identity else flip (++) "%")
     >> text_ H.td
 
 {-| Displays a `<tr>` of skill effect values that increase when leveled. -}
@@ -90,7 +90,7 @@ noBreakName shouldPrettify hideClasses =
     String.split " ("
     >> unBreak
     >> replacePirates
-    >> doIf shouldPrettify prettify
+    >> if not shouldPrettify then identity else prettify
 
 {-| `"light"` or `"dark"` depending on `NightMode` preference. -}
 mode : Preferences -> String

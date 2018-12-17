@@ -332,8 +332,8 @@ instantEffect target amt a =
       RemoveBuffs   -> "Remove" ++ p ++ " buffs"
       RemoveDebuffs -> "Remove" ++ p ++ " debuffs"
       RemoveMental  -> "Remove" ++ p ++ " mental debuffs"
-      Kill          -> doIf (not full) ((++) <| n ++ "% chance to ") <|
-                       "Instant-Kill" ++ s
+      Kill          -> (if full then identity else (++) <| n ++ "% chance to ") 
+                       <| "Instant-Kill" ++ s
       GainStars     -> "Gain " ++ n ++ " critical stars" ++ case target of
                          Self -> " for yourself"
                          _    -> ""

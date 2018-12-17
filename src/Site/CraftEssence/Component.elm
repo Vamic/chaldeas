@@ -60,7 +60,7 @@ component = always <|
     unlazyView prefs listing sortBy =
         listing
         |> List.map (keyedPortrait False prefs)
-        |> doIf (sortBy /= Rarity) List.reverse
+        |> (if sortBy == Rarity then identity else List.reverse)
         >> Keyed.node "section" [P.id "content"]
 
     update : Preferences -> Msg -> Model -> (Model, Cmd Msg)
@@ -90,11 +90,11 @@ portrait big prefs (label, ce) =
           , P.href <| "/CraftEssences/" ++ urlName ce.name
           ]       
       noBreak  = noBreakName big False
-      artorify = doIf (prefer prefs Artorify) <|
+      artorify = if not <| prefer prefs Artorify then identity else
                  String.replace "Altria" "Artoria"
       addLabel =
-          doIf (label /= "") <| (++)
-          [text_ H.span <| noBreak label, H.br [] []]
+          if (label == "") then identity else 
+          (++) [text_ H.span <| noBreak label, H.br [] []]
     in
       parent
       [ ToImage.image <| ToImage.craftEssence ce

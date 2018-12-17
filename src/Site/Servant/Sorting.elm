@@ -25,8 +25,9 @@ getSort addSkills a = case a of
             |> sorter
             >> abs
             >> formatSort a
-            >> doIf (List.member a [NPDmg, NPDmgOver, NPSpec, NPSpecOver])
-              ((++) <| "NP" ++ String.fromInt ms.npLvl ++ ": ")
+            >> if not <| List.member a [NPDmg, NPDmgOver, NPSpec, NPSpecOver]
+               then identity else
+               (++) <| "NP" ++ String.fromInt ms.npLvl ++ ": "
           , ms
           )
     in

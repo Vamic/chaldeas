@@ -100,9 +100,16 @@ stateFromPath fullPath st =
             ( { st
               | viewing = Servants
               , sModel  = Servants.setRoot 
-                          { sModel | extra = { extra | mineOnly = mineOnly } }
+                          { sModel 
+                          | extra = 
+                            { extra 
+                            | mineOnly = mineOnly
+                            , export = Nothing
+                            } 
+                          }
               }
-            , Maybe.withDefault (doIf mineOnly ((++) "My ") "Servants") <|
+            , Maybe.withDefault 
+              ((if not mineOnly then identity else (++) "My ") "Servants") <|
               Maybe.map (.base >> .name) sModel.focus
             )
 

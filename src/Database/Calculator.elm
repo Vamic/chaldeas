@@ -106,7 +106,7 @@ npDamage addSkills special maxOver s =
     ---------------------
     npDamageMultiplier =
         [Damage, DamageThruDef]
-        |> doIf special ((::) LastStand)
+        |> (if not special then identity else (::) LastStand)
         >> List.map (matchSum instants)
         >> List.sum
     superEffectiveModifier =
@@ -156,7 +156,9 @@ npDamage addSkills special maxOver s =
     skillFs      =
         s.passives
         |> List.concatMap .effect
-        >> doIf addSkills ((++) <| List.concatMap (.effect >> unCost) s.skills)
+        >> ( if not addSkills then identity else 
+             (++) <| List.concatMap (.effect >> unCost) s.skills
+           )
         >> List.map simplify
     npFs        = List.map simplify effect
     overFs      = List.map simplify over

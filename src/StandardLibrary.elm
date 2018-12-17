@@ -3,7 +3,6 @@ module StandardLibrary exposing
   , compareThen, alwaysEq
   , consAfter
   , curry
-  , doIf
   , dict
   , duplicates
   , enumToOrd
@@ -33,8 +32,7 @@ compareThen first next x y = case on compare first x y of
 alwaysEq : a -> a -> Order
 alwaysEq = always <| always EQ
 
-{-| Appends an element to the end of a list.
-Useful combined with `doIf` to conditionally append an HTML element. -}
+{-| Appends an element to the end of a list. -}
 consAfter : a -> List a -> List a
 consAfter = List.singleton >> flip (++)
 
@@ -42,16 +40,6 @@ consAfter = List.singleton >> flip (++)
 into one that accepts two arguments. -}
 curry : ((a, b) -> c) -> a -> b -> c
 curry f x y = f (x, y)
-
-{-| Conditionally performs a transformation.
-
-    doIf True  f x = f x
-    doIf False f x = x
--}
-doIf : Bool -> (a -> a) -> (a -> a)
-doIf a = case a of
-  True  -> identity
-  False -> always identity
 
 {-| Creates a `Dict` using a function that generates (key, value) pairs. -}
 dict : List a -> (a -> (comparable, b)) -> Dict comparable b

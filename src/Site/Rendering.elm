@@ -110,7 +110,9 @@ filterSection st {tab, filters} = case filters of
   _  ->
     let
       checked = List.length <| List.filter (.tab >> (==) tab) st.exclude
-      addAll = doIf (exclusive tab && List.length filters > 3) <| (++)
+      addAll = if not <| (exclusive tab && List.length filters > 3) 
+               then identity else 
+               (++)
           [ button_ "All" (checked /= 0) <| Check tab True
           , button_ "None" (checked /= List.length filters) <| Check tab False
           ]

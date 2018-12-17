@@ -75,7 +75,4 @@ siteUpdate transform show reSort prefs msg st =
             { st | exclude = toggleIn filter st.exclude }
         else
             { st | filters = toggleIn filter st.filters }
-    Ascend _ _  -> pure st
-    OnMine _ _  -> pure st
-    OnTeam _ _  -> pure st
-    DoNothing   -> pure st
+    _ -> pure st

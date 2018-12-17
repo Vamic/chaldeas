@@ -1,5 +1,7 @@
 module Site.Servant.Component exposing (Model, Msg, component, setRoot)
 
+import Json.Decode        as Decode
+import Json.Encode        as Encode
 import Html.Keyed         as Keyed
 import List.Extra         as List
 import Maybe.Extra        as Maybe
@@ -33,6 +35,7 @@ import Sorting               exposing (..)
 import Class.Has     as Has     exposing (Has)
 import Class.ToImage as ToImage exposing (ImagePath)
 import Class.Show    as Show
+import LZW
 
 import Site.Servant.Filters exposing (..)
 import Site.Servant.Sorting exposing (..)
@@ -42,6 +45,8 @@ type alias Model = SiteModel Servant MyServant
     , mineOnly : Bool
     , ascent   : Int
     , myServs  : List MyServant
+    , export   : Maybe String
+    , entry    : String
     }
 
 type alias Msg = SiteMsg Servant MyServant
@@ -54,7 +59,7 @@ reSort prefs st =
 
 reMine : Model -> Model
 reMine ({extra} as st) =
-    { st 
+    { st
     | extra = { extra | myServs = List.map (owned st.extra.mine) servants } 
     }
 
@@ -74,6 +79,8 @@ component store =
             , mineOnly = False
             , ascent = 1
             , myServs = []
+            , export = Nothing
+            , entry = ""
             }
         |> reMine
         >> reSort flags.preferences
@@ -98,7 +105,7 @@ component store =
       in
         lazy4 unlazyView prefs st.extra.mineOnly st.listing st.sortBy
         |> siteView prefs st enumSortBy nav
-        >> popup prefs st.extra.mineOnly st.extra.ascent st.focus
+        >> popup prefs st.extra.mineOnly st.extra.ascent st.focus st.extra.export
 
     unlazyView prefs mineOnly listing sortBy =
       let
@@ -113,7 +120,7 @@ component store =
           if mineOnly then
             listing
             |> List.filter isMine
-            >> doIf (sortBy == Rarity) (List.map withStats)
+            >> if sortBy /= Rarity then identity else List.map withStats
           else
             listing
         getMats label f = case f <| List.map Tuple.second listed of
@@ -129,10 +136,15 @@ component store =
       in
         listed
         |> List.map (keyedPortrait False prefs mineOnly baseAscend)
-        >> doIf (sortBy /= Rarity) List.reverse
-        >> doIf mineOnly
-           ( flip (++) <|
-             getMats "Ascension" ascendWishlist
+        >> (if sortBy == Rarity then identity else List.reverse)
+        >> ( if not mineOnly then identity else
+             flip (++) <|
+             [ ("I/O", H.div [P.id "io"] 
+               [ button_ "Export" True <| Export True
+               , button_ "Import" True <| Export False
+               ])
+             ]
+             ++ getMats "Ascension" ascendWishlist
              ++ getMats "Skill" skillWishlist
            )
         >> Keyed.node "section" [P.id "content"]
@@ -152,7 +164,7 @@ component store =
             )
         OnMine keep msPreCalc ->
           let
-            ms   = doIf keep recalc msPreCalc
+            ms   = (if not keep then identity else recalc) msPreCalc
             mine =
               if keep then
                 Dict.insert (ordServant ms.base) ms st.extra.mine
@@ -166,6 +178,26 @@ component store =
               }
             , storeMine store mine
             )
+        Entry x -> pure { st | extra = { extra | entry = x }}
+        Import  -> 
+          case Decode.decodeString decodeMine <| LZW.decompress st.extra.entry of
+            Err err -> pure
+              { st | extra = { extra | export = Just <| Decode.errorToString err } }
+            Ok mine -> 
+              ( relist << reSort prefs <| reMine 
+                { st | extra = { extra | mine = mine, export = Nothing } }
+              , storeMine store mine
+              )
+        Export actual -> pure 
+            { st 
+            | extra = 
+              { extra 
+              | export = Just <| 
+                         if not actual then "" 
+                         else LZW.compress << Encode.encode 0 <| 
+                         encodeMine st.extra.mine
+              } 
+            }
         _ -> siteUpdate .base .name (reSort prefs) prefs a st
   in
     { init = init, view = view, update = update }
@@ -202,10 +234,10 @@ portrait big prefs mineOnly baseAscension (label, ms) =
           , P.href <| "/" ++ getRoot mineOnly ++ "/" ++ urlName ms.base.name
           ]          
       noBreak  = noBreakName big <| prefer prefs HideClasses
-      artorify = doIf (prefer prefs Artorify) <|
+      artorify = if not <| prefer prefs Artorify then identity else
                  String.replace "Altria" "Artoria"
       addLabel =
-          doIf (label /= "") <| (++)
+          if label == "" then identity else (++)
           [text_ H.span <| noBreak label, H.br [] []]
       ascension = if ms.level /= 0 then ms.ascent else baseAscension
       ascent = if ascension <= 1 then "" else " " ++ String.fromInt ascension
@@ -223,11 +255,6 @@ portrait big prefs mineOnly baseAscension (label, ms) =
           ]
         else
           H.footer [] [text_ H.span <| stars True ms.base.rarity]
-
-    {-  , H.footer [] <<
-        doIf (big && ascension > 1) ((::) prevAscend) <<
-        doIf (big && ascension < 4) (consAfter nextAscend) <|
-        [text_ H.span <| stars True ms.base.rarity]-}
       ]
 
 keyedPortrait : Bool -> Preferences -> Bool -> Int -> (String, MyServant)
@@ -235,15 +262,28 @@ keyedPortrait : Bool -> Preferences -> Bool -> Int -> (String, MyServant)
 keyedPortrait big prefs mineOnly baseAscension (label, ms) =
     (ms.base.name, lazy5 portrait big prefs mineOnly baseAscension (label, ms))
 
-popup : Preferences -> Bool -> Int -> Maybe MyServant -> List (Html Msg) 
-     -> Html Msg
-popup prefs mineOnly ascent a = case a of
-  Nothing ->
+popup : Preferences -> Bool -> Int -> Maybe MyServant -> Maybe String
+     -> List (Html Msg) -> Html Msg
+popup prefs mineOnly ascent a ex = case (ex, a) of
+  (Just "", _) ->
+    H.div [P.id "elm", P.class <| mode prefs ++ " fade"] << (++)
+    [ H.a [P.id "cover", P.href <| "/" ++ getRoot mineOnly] []
+    , H.article [P.id "focus"] 
+      [ H.textarea [E.onInput Entry] []
+      , button_ "Import" True Import
+      ]
+    ]
+  (Just export, _) ->
+    H.div [P.id "elm", P.class <| mode prefs ++ " fade"] << (++)
+    [ H.a [P.id "cover", P.href <| "/" ++ getRoot mineOnly] []
+    , H.article [P.id "focus"] [H.textarea [P.value export] []]
+    ]
+  (_, Nothing) ->
     H.div [P.id "elm", P.class <| mode prefs] << (++)
     [ H.a [P.id "cover", P.href <| "/" ++ getRoot mineOnly] []
     , H.article [P.id "focus"] []
     ]
-  Just ms ->
+  (_, Just ms) ->
     let
       b   = ms.base
       s   = ms.servant
@@ -261,7 +301,7 @@ popup prefs mineOnly ascent a = case a of
       {max, grail}  = b.stats
       showTables    = prefer prefs ShowTables
       showTable showCol effects =
-          doIf showTables << consAfter <<
+          if not showTables then identity else consAfter <<
           table_ (List.map showCol <| List.range 1 5)
           <| List.map npRow (List.uniqueBy ordRangeInfo <| ranges effects)
       overMeta      = if s.phantasm.first then [P.class "activates"] else []
@@ -485,10 +525,11 @@ materialEl : (Material, Int) -> Html Msg
 materialEl (mat, amt) =
   let
     imageLinkEl =
-      doIf (not <| ignoreMat mat) ((++) 
-      [ P.class "link"
-      , E.onClick << FilterBy <| singleFilter Has.material FilterMaterial mat
-      ])
+      ( if ignoreMat mat then identity else (++) 
+        [ P.class "link"
+        , E.onClick << FilterBy <| singleFilter Has.material FilterMaterial mat
+        ] 
+      )
       [ ToImage.src <| ToImage.material mat
       , P.title <| Show.material mat
       ]
@@ -505,12 +546,15 @@ skillEl showTables sk base =
         table_ (List.map String.fromInt <| List.range 1 10) <<
         List.map lvlRow << List.uniqueBy ordRangeInfo <| ranges base.effect
   in
-    H.section [] << doIf showTables (consAfter effectTable) <|
+    H.section [] << 
+    (if not showTables then identity else consAfter effectTable) <|
     [ ToImage.image <| ToImage.icon sk.icon
     , h_ 3 <| sk.name ++ Show.rank sk.rank
     , text_ H.strong "CD: "
     , H.text <<
-      doIf (sk == base) (flip (++) <| "~" ++ String.fromInt (sk.cd - 2)) <|
+      ( if sk /= base then identity 
+        else flip (++) <| "~" ++ String.fromInt (sk.cd - 2)
+      ) <|
       String.fromInt sk.cd
     ] ++ List.map (effectEl servants <| Just Has.servant) sk.effect
 

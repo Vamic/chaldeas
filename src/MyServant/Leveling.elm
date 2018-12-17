@@ -39,37 +39,20 @@ ascendCost {name, rarity} =
           >> (*) 1000
 
 atAscension : MyServant -> Int
-atAscension {level, base} = case base.rarity of
-  5 ->
-    if      level <= 50 then 0
-    else if level <= 60 then 1
-    else if level <= 70 then 2
-    else if level <= 80 then 3
-    else                     4
-  4 ->
-    if      level <= 40 then 0
-    else if level <= 50 then 1
-    else if level <= 60 then 2
-    else if level <= 70 then 3
-    else                     4
-  3 ->
-    if      level <= 30 then 0
-    else if level <= 40 then 1
-    else if level <= 50 then 2
-    else if level <= 60 then 3
-    else                     4
-  1 ->
-    if      level <= 20 then 0
-    else if level <= 30 then 1
-    else if level <= 40 then 2
-    else if level <= 50 then 3
-    else                     4
-  _ ->
-    if      level <= 25 then 0
-    else if level <= 35 then 1
-    else if level <= 45 then 2
-    else if level <= 55 then 3
-    else                     4
+atAscension {level, base, ascent} = 
+  let
+    tier = (-) level <| case base.rarity of
+      5 -> 50
+      4 -> 40
+      3 -> 30
+      1 -> 20
+      _ -> 25
+    ascension = tier // 10
+  in min 4 << max 0 <|
+    if remainderBy 10 tier == 0 && ascent > ascension then 
+      ascension + 1
+    else 
+      ascension
 
 skillWishlist : List MyServant -> List (Material, Int)
 skillWishlist xs =

@@ -684,7 +684,7 @@ lancers =
                     , rank   = A
                     , icon   = IconStarTurn
                     , cd     = 7
-                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9
+                    , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
                                , Chances 100 300 <| Grant Self 1 Taunt Full
                                ]
                     }
@@ -991,7 +991,7 @@ lancers =
                   [(MagicGemOf Lancer, 4)]
                   [(MagicGemOf Lancer, 10), (SeedOfYggdrasil, 5)]
                   [(SecretGemOf Lancer, 4), (SeedOfYggdrasil, 10)]
-                  [(SecretGemOf Lancer, 10), (ShellOfReminiscence, 10)]
+                  [(SecretGemOf Lancer, 10), (ShellOfReminiscence, 4)]
                   [(ShellOfReminiscence, 8), (PrimordialLanugo, 3)]
                   [(PrimordialLanugo, 9), (SerpentJewel, 16)]
     }

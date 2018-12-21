@@ -81,6 +81,9 @@ magicResistance = passive "Magic Resistance" IconDiamonds
     ]
   ]
 
+mixedBlood = passive "Mixed Blood" IconNobleTurn
+  [ Give Self GaugePerTurn [ (EX, 5) ] ]
+
 oblivionCorrection = passive "Oblivion Correction" IconEclipse
   [ Give Self CritUp [ (A, 10), (B, 8), (C, 6) ] ]
 

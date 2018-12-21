@@ -82,6 +82,80 @@ casters =
                   [(VoidsDust, 20), (HeartOfTheForeignGod, 3)]
                   [(HeartOfTheForeignGod, 8), (PhoenixFeather, 20)]
     }
+  , { name      = "Merlin"
+    , id        = 150
+    , rarity    = 5
+    , class     = Caster
+    , stats     = { base  = { atk = 1692,  hp = 2091 }
+                  , max   = { atk = 10546, hp = 14259 }
+                  , grail = { atk = 11544, hp = 15621 }
+                  }
+    , gen       = { starWeight = 49, starRate = 10.8, npAtk = 0.81, npDef = 3 }
+    , death     = 36
+    , curve     = 30
+    , attr      = Earth
+    , align     = [Lawful, Good]
+    , gender    = Male
+    , traits    = [EnumaElish]
+    , deck      = Deck Quick Arts Arts Arts Buster
+    , hits      = { quick = 3, arts = 2, buster = 5, ex = 6 }
+    , skills    = [ { name   = "Dreamlike Charisma"
+                    , rank   = A
+                    , icon   = IconSwordUp
+                    , cd     = 7
+                    , effect = [ Grant Party 3 AttackUp <| Range 10 20 
+                               , To Party GaugeUp <| Flat 20 
+                               ]
+                    }
+                  , { name   = "Illusion"
+                    , rank   = A
+                    , icon   = IconShield
+                    , cd     = 9
+                    , effect = [ Grant Party 1 StarUp <| Range 30 50 
+                               , Grant Party 1 Invincibility Full
+                               , Debuff Enemies 3 CritChance <| Range 10 20
+                               ]
+                    }
+                  , { name   = "Hero Creation"
+                    , rank   = EX
+                    , icon   = IconBusterUp
+                    , cd     = 8
+                    , effect = [ Grant Ally 3 (Performance Buster) <| Range 30 50 
+                               , Grant Ally 3 MaxHP <| Range 2000 3000
+                               , Grant Ally 1 CritUp <| Range 50 100
+                               ]
+                    }
+                  ]
+    , passives  = [territoryCreation C, itemConstruction C, mixedBlood EX]
+    , phantasm  = { name   = "Garden of Avalon"
+                  , desc   = "The Forever-Sealed Utopia"
+                  , rank   = C
+                  , card   = Arts
+                  , kind   = "Anti-Unit"
+                  , hits   = 0
+                  , effect = [ Grant Party 5 HealPerTurn <| Range 1000 2000 
+                             , Grant Party 5 GaugePerTurn <| Flat 5
+                             ]
+                  , over   = [ Grant Party 5 StarsPerTurn <| Range 5 25 ]
+                  , first  = False
+                  }
+    , limited   = True
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Caster, 5)]
+                  [(Piece Caster, 12), (EternalGear, 8)]
+                  [(Monument Caster, 5), (ForbiddenPage, 10), (ScarabOfWisdom, 2)]
+                  [(Monument Caster, 12), (ScarabOfWisdom, 4), (DragonsReverseScale, 5)]
+    , skillUp   = Reinforcement
+                  [(GemOf Caster, 5)]
+                  [(GemOf Caster, 12)]
+                  [(MagicGemOf Caster, 5)]
+                  [(MagicGemOf Caster, 12), (ForbiddenPage, 5)]
+                  [(SecretGemOf Caster, 5), (ForbiddenPage, 10)]
+                  [(SecretGemOf Caster, 12), (EternalGear, 5)]
+                  [(EternalGear, 10), (SpiritRoot, 3)]
+                  [(SpiritRoot, 8), (HeartOfTheForeignGod, 10)]
+    }
   , { name      = "Tamamo-no-Mae"
     , id        = 62
     , rarity    = 5

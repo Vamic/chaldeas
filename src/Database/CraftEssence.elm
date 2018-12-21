@@ -2939,7 +2939,9 @@ craftEssences =
     , bond 406 "Door To The Ocean" "Jeanne d'Arc Alter Santa Lily" IconHealUp
       [party HealingReceived 30]
     , bond 410 "Primeval Flame" "Jaguar Warrior" IconBusterUp
-      [party (Performance Buster) 15]
+      [party_ Buster 15]
+    , bond 411 "The Furthest Tower" "Merlin" IconBusterUp
+      [party_ Buster 10, party CritUp 15]
     , { name    = "Heroic Costume: Medusa"
       , id      = 670
       , rarity  = 4

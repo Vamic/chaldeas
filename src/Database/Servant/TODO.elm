@@ -10,6 +10,7 @@ todo : List Servant
 todo =
   [ 
   -- Template
+  -- ,
     { name      = ø
     , id        = ø
     , rarity    = ø

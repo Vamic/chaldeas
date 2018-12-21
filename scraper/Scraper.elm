@@ -127,7 +127,7 @@ view st =
       [ H.text <| "Loading " ++ msg ++ "..."
       , H.ul [] <| (List.map renderTest <| Test.discardSuccesses st.errs)
       ]
-    :: doIf (loaded) ((::) <|
+    :: (if not loaded then identity else (::) <|
       H.li
       [ P.class <|
         if String.fromInt size == String.fromInt numPages then
@@ -168,8 +168,8 @@ testCraftEssence getWiki ce =
     match = Wiki.match wiki
     matchInt x = match x << String.fromInt
   in
-    doIf (Maybe.isNothing ce.bond)
-    ((::) << Wiki.matchEffects wiki "effect" (0, 6) <| effects ce.effect)
+    (if Maybe.isJust ce.bond then identity else
+    ((::) << Wiki.matchEffects wiki "effect" (0, 6) <| effects ce.effect))
     [ matchInt "id"           ce.id
     , matchInt "maxatk"       ce.stats.max.atk
     , matchInt "maxhp"        ce.stats.max.hp

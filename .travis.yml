@@ -14,4 +14,4 @@ deploy:
 after_deploy: # Just in case
   - surge --project ./publish/ --domain chaldeas.surge.sh 
   - surge --project ./publish/ --domain chaldeas.surge.sh 
-  - surge --project ./publish/ --domain chaldeas.surge.sh 
+  - surge --project ./publish/ --domain chaldeas.surge.sh

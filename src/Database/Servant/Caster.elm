@@ -136,7 +136,7 @@ casters =
                   , effect = [ Grant Party 5 HealPerTurn <| Range 1000 2000 
                              , Grant Party 5 GaugePerTurn <| Flat 5
                              ]
-                  , over   = [ Grant Party 5 StarsPerTurn <| Range 5 25 ]
+                  , over   = [ Grant Self 5 StarsPerTurn <| Range 5 25 ]
                   , first  = False
                   }
     , limited   = True
@@ -595,7 +595,7 @@ casters =
                   , rank   = EX
                   , icon    = IconStarTurn
                   , cd      = 7
-                  , effect = [ Grant Party 3 StarsPerTurn <| Range 6 12
+                  , effect = [ Grant Self 3 StarsPerTurn <| Range 6 12
                              , To Self Heal <| Range 1000 2000
                              ]
                   }
@@ -741,7 +741,7 @@ casters =
                     , rank   = A
                     , icon   = IconStarTurn
                     , cd     = 10
-                    , effect = [ Grant Party 5 StarsPerTurn <| Flat 5
+                    , effect = [ Grant Self 5 StarsPerTurn <| Flat 5
                                , Chances 60 80 << Grant Self 1 NPUp <| Flat 50
                                ]
                     }
@@ -947,7 +947,7 @@ casters =
                     , rank   = A
                     , icon   = IconStarTurn
                     , cd     = 9
-                    , effect = [ Grant Party 3 StarsPerTurn <| Range 5 10
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 5 10
                                , Grant Self 3 HealPerTurn <| Range 500 1000
                                ]
                     }
@@ -1017,7 +1017,7 @@ casters =
                     , rank   = A
                     , icon   = IconStarTurn
                     , cd     = 12
-                    , effect = [ Grant Party 5 StarsPerTurn <| Range 5 10
+                    , effect = [ Grant Self 5 StarsPerTurn <| Range 5 10
                                , Grant Self 5 GaugePerTurn <| Range 5 10
                                ]
                     }
@@ -1094,7 +1094,7 @@ casters =
                     , rank   = D
                     , icon   = IconStarTurn
                     , cd     = 7
-                    , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9
                                , Debuff Self 3 DefenseDown <| Flat 14
                                ]
                     }
@@ -1503,7 +1503,7 @@ casters =
                   , rank   = B
                   , icon   = IconStarTurn
                   , cd     = 7
-                  , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
+                  , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9
                              , Debuff Self 3 DefenseDown <| Flat 18
                              ]
                   }

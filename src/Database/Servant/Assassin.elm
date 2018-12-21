@@ -388,7 +388,7 @@ assassins =
                     , icon   = IconExclamationDown
                     , cd     = 8
                     , effect = [ Debuff Enemy 3 CritChance <| Range 30 50
-                               , Grant Party 3 StarsPerTurn <| Range 5 10
+                               , Grant Self 3 StarsPerTurn <| Range 5 10
                                ]
                     }
                   ]
@@ -1213,7 +1213,7 @@ assassins =
                     , rank   = D
                     , icon    = IconStarTurn
                     , cd      = 7
-                    , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9
                                , Debuff Self 3 DefenseDown <| Flat 14
                                ]
                     }

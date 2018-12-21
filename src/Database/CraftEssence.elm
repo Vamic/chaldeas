@@ -798,7 +798,7 @@ craftEssences =
       , stats   = { base = { atk = 0, hp = 750 }
                   , max  = { atk = 0, hp = 3000 }
                   }
-      , effect  = [ Grant Party 0 StarsPerTurn <| Range 8 10 ]
+      , effect  = [ Grant Self 0 StarsPerTurn <| Range 8 10 ]
       , bond    = Nothing
       , limited = False
       }
@@ -970,7 +970,7 @@ craftEssences =
       , stats   = { base = { atk = 0, hp = 2018 }
                   , max  = { atk = 0, hp = 2018 }
                   }
-      , effect  = [ Grant Party 0 StarsPerTurn <| Range 0 1 ]
+      , effect  = [ Grant Self 0 StarsPerTurn <| Range 0 1 ]
       , bond    = Nothing
       , limited = True
       }
@@ -1524,7 +1524,7 @@ craftEssences =
       , stats   = { base = { atk = 100, hp = 160 }
                   , max  = { atk = 500, hp = 800 }
                   }
-      , effect  = [ Grant Party 0 StarsPerTurn <| Range 1 2
+      , effect  = [ Grant Self 0 StarsPerTurn <| Range 1 2
                   , Grant Self 0 (Special AttackUp <| VsTrait Dragon) <| Range 8 10
                   ]
       , bond    = Nothing
@@ -1621,7 +1621,7 @@ craftEssences =
       , stats   = { base = { atk = 500,  hp = 0 }
                   , max  = { atk = 2000, hp = 0 }
                   }
-      , effect  = [ Grant Party 0 StarsPerTurn <| Range 3 4
+      , effect  = [ Grant Self 0 StarsPerTurn <| Range 3 4
                   , Grant Self 0 (Performance Buster) <| Range 10 15
                   ]
       , bond    = Nothing
@@ -1732,7 +1732,7 @@ craftEssences =
       , stats   = { base = { atk = 250,  hp = 400 }
                   , max  = { atk = 1000, hp = 1600 }
                   }
-      , effect  = [ Grant Party 0 StarsPerTurn <| Range 3 4
+      , effect  = [ Grant Self 0 StarsPerTurn <| Range 3 4
                   , To Self GaugeUp <| Range 30 50
                   ]
       , bond    = Nothing
@@ -1815,7 +1815,7 @@ craftEssences =
                   , max  = { atk = 1000, hp = 1600 }
                   }
       , effect  = [ Grant Self 0 NPGen <| Range 20 25
-                  , Grant Party 0 StarsPerTurn <| Range 3 4
+                  , Grant Self 0 StarsPerTurn <| Range 3 4
                   ]
       , bond    = Nothing
       , limited = True
@@ -1872,7 +1872,7 @@ craftEssences =
                   , max  = { atk = 1000, hp = 1600 }
                   }
       , effect  = [ Grant Self 0 NPUp <| Range 20 25
-                  , Grant Party 0 StarsPerTurn <| Range 3 4
+                  , Grant Self 0 StarsPerTurn <| Range 3 4
                   ]
       , bond    = Nothing
       , limited = True
@@ -2266,7 +2266,7 @@ craftEssences =
                   , max  = { atk = 2000, hp = 0 }
                   }
       , effect  = [ Grant Self 0 IgnoreInvinc Full
-                  , Grant Party 0 StarsPerTurn <| Range 3 4
+                  , Grant Self 0 StarsPerTurn <| Range 3 4
                   ]
       , bond    = Nothing
       , limited = True
@@ -2603,7 +2603,7 @@ craftEssences =
                   , max  = { atk = 2000, hp = 0 }
                   }
       , effect  = [ Grant Self 0 (Performance Quick) <| Range 15 20
-                  , Grant Party 0 StarsPerTurn <| Range 3 4
+                  , Grant Self 0 StarsPerTurn <| Range 3 4
                   ]
       , bond    = Nothing
       , limited = True
@@ -2703,7 +2703,7 @@ craftEssences =
                   , max  = { atk = 100, hp = 100 }
                   }
       , effect  = [ Grant Self 0 CritUp <| Flat 15
-                  , Grant Party 0 StarsPerTurn <| Flat 3
+                  , Grant Self 0 StarsPerTurn <| Flat 3
                   ]
       , bond    = Nothing
       , limited = True

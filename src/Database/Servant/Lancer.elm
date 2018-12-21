@@ -684,7 +684,7 @@ lancers =
                     , rank   = A
                     , icon   = IconStarTurn
                     , cd     = 7
-                    , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9
                                , Chances 100 300 <| Grant Self 1 Taunt Full
                                ]
                     }

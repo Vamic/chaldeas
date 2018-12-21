@@ -462,9 +462,7 @@ buffEffect target amt a =
       Success debuff  -> success <| nameDebuffEffect debuff
       SureHit         -> grant "Sure Hit"
       Taunt           -> "Draw attention of all enemies" ++ to
-      StarsPerTurn    -> "Gain " ++ n ++ " stars every turn" ++ case target of
-                            Self -> " for yourself"
-                            _    -> ""
+      StarsPerTurn    -> "Gain " ++ n ++ " stars every turn"
 
 nameBuffEffect : BuffEffect -> String
 nameBuffEffect a = case a of

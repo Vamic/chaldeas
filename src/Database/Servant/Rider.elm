@@ -782,7 +782,7 @@ riders =
                     , rank   = D
                     , icon   = IconStarTurn
                     , cd     = 10
-                    , effect = [ Chance 65 << Grant Party 3 StarsPerTurn <| Range 5 10
+                    , effect = [ Chance 65 << Grant Self 3 StarsPerTurn <| Range 5 10
                                , Chance 65 << Grant Self 3 StarUp <| Range 30 50
                                , Chance 65 << Grant Self 3 CritUp <| Range 20 40
                                ]

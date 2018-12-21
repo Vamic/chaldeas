@@ -384,7 +384,7 @@ archers =
                     , cd     = 12
                     , effect = [ To Self GaugeUp <| Flat 25
                                , Grant Self 5 HealPerTurn <| Range 1000 2000
-                               , Grant Party 5 StarsPerTurn <| Range 4 8
+                               , Grant Self 5 StarsPerTurn <| Range 4 8
                                ]
                     }
                   , { name = "Mana Burst (Flame)"

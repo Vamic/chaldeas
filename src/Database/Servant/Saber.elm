@@ -521,7 +521,7 @@ sabers =
                     , rank   = APlusPlus
                     , icon   = IconStarTurn
                     , cd     = 8
-                    , effect = [ Grant Party 3 StarsPerTurn <| Range 5 15
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 5 15
                                , Grant Self 3 CritUp <| Range 30 50
                                ]
                     }

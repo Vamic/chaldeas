@@ -22,7 +22,7 @@ extras =
                     , rank   = A
                     , icon   = IconStarTurn
                     , cd     = 8
-                    , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9 ]
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9 ]
                     }
                   , { name   = "True Name Revelation"
                     , rank   = B
@@ -90,7 +90,7 @@ extras =
                     , rank   = A
                     , icon   = IconStarTurn
                     , cd     = 8
-                    , effect = [ Grant Party 3 StarsPerTurn <| Range 3 9 ]
+                    , effect = [ Grant Self 3 StarsPerTurn <| Range 3 9 ]
                     }
                   , { name   = "Baptism Rite"
                     , rank   = BPlus

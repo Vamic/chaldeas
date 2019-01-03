@@ -128,6 +128,7 @@ type Icon
     | IconBusterUp
     | IconCircuits
     | IconClockUp
+    | IconCrosshairUp
     | IconDamageUp
     | IconDarkMagic
     | IconDash
@@ -178,11 +179,11 @@ type Icon
     | IconStarUp
     | IconStun
     | IconSwordDown
-    | IconSun
-    | IconSunUp
     | IconSwordUp
     | IconSwordShieldUp
-    | IconCrosshairUp
+    | IconSwords
+    | IconSun
+    | IconSunUp
     | IconTeeth
     | IconYinYang
 

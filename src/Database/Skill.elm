@@ -109,6 +109,7 @@ type BuffEffect
     | HealPerTurn
     | HealingReceived
     | HealUp
+    | HitCount
     | IgnoreInvinc
     | Invincibility
     | KillResist
@@ -164,6 +165,7 @@ buffCategory a = case a of
     HealingReceived -> BuffSupport
     HealPerTurn     -> BuffDefensive
     HealUp          -> BuffSupport
+    HitCount        -> BuffSupport
     IgnoreInvinc    -> BuffOffensive
     Invincibility   -> BuffDefensive
     KillResist      -> BuffUtility

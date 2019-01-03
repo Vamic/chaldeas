@@ -7,7 +7,80 @@ import Database.Skill exposing (..)
 
 sabers : List Servant
 sabers =
-  [ { name  =   "Okita Souji"
+  [ { name      = "Miyamoto Musashi"
+    , id        = 153
+    , rarity    = 5
+    , class     = Saber
+    , stats     = { base  = { atk = 1860,  hp = 1999 }
+                  , max   = { atk = 12037, hp = 13635 }
+                  , grail = { atk = 13176, hp = 14938 }
+                  }
+    , gen       = { starWeight = 100, starRate = 10, npAtk = 0.87, npDef = 3 }
+    , death     = 35
+    , curve     = 5
+    , attr      = Mankind
+    , align     = [Chaotic, Good]
+    , gender    = Female
+    , traits    = [EnumaElish]
+    , deck      = Deck Quick Arts Buster Buster Buster
+    , hits      = { quick = 3, arts = 3, buster = 2, ex = 4 }
+    , skills    = [ { name   = "Fifth Force"
+                    , rank   = A
+                    , icon   = IconSwords
+                    , cd     = 8
+                    , effect = [ Grant Self 1 HitCount <| Flat 200 
+                               , Grant Self 1 AttackUp <| Range 0 30
+                               ]
+                    }
+                  , { name   = "Heavenly Eyes"
+                    , rank   = A
+                    , icon   = IconShieldBreak
+                    , cd     = 7
+                    , effect = [ Grant Self 1 (Performance Buster) <| Range 30 50 
+                               , Grant Self 1 IgnoreInvinc Full
+                               ]
+                    }
+                  , { name   = "Emptiness"
+                    , rank   = A
+                    , icon   = IconShield
+                    , cd     = 8
+                    , effect = [ Grant Self 3 StarUp <| Range 10 30 
+                               , To Self RemoveDebuffs Full
+                               , Grant Self 1 Invincibility Full
+                               ]
+                    }
+                  ]
+    , passives  = [ magicResistance A ]
+    , phantasm  = { name   = "Six Paths, Five Rings: Kurikara Divine Blade"
+                  , desc   = "Five Planes of the Six Realms, The Divine Figure of Kurikara"
+                  , rank   = A
+                  , card   = Buster
+                  , kind   = "Anti-Unit"
+                  , hits   = 7
+                  , effect = [ To Enemy Damage <| Range 600 1000 
+                             , To Enemy RemoveBuffs Full
+                             ]
+                  , over   = [ Grant Self 1 NPUp <| Range 20 60 ]
+                  , first  = True
+                  }
+    , limited   = True
+    , free      = False
+    , ascendUp  = Ascension
+                  [(Piece Saber, 5)]
+                  [(Piece Saber, 12), (ProofOfHero, 22)]
+                  [(Monument Saber, 5), (OctupletCrystals, 10), (EternalGear, 5)]
+                  [(Monument Saber, 12), (EternalGear, 10), (HeartOfTheForeignGod, 5)]
+    , skillUp   = Reinforcement
+                  [(GemOf Saber, 5)]
+                  [(GemOf Saber, 12)]
+                  [(MagicGemOf Saber, 5)]
+                  [(MagicGemOf Saber, 12), (OctupletCrystals, 5)]
+                  [(SecretGemOf Saber, 5), (OctupletCrystals, 10)]
+                  [(OctupletCrystals, 12), (ProofOfHero, 15)]
+                  [(ProofOfHero, 29), (VoidsDust, 12)]
+                  [(VoidsDust, 36), (PrimordialLanugo, 15)]
+    }
+  , { name  =   "Okita Souji"
     , id        = 68
     , rarity    = 5
     , class     = Saber

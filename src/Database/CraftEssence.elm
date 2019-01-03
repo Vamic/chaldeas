@@ -44,6 +44,18 @@ craftEssences =
         , bond    = Just servant
         , limited = False
         }
+    gift id name icon effect =
+        { name     = name
+        , id       = id
+        , rarity   = 4
+        , icon     = icon
+        , stats    = { base = { atk = 100, hp = 100 }
+                     , max  = { atk = 100, hp = 100 }
+                     }
+        , effect  = effect
+        , bond    = Nothing
+        , limited = True
+        }
   in
     [ { name    = "Tenacity"
       , id      = 1
@@ -1544,19 +1556,8 @@ craftEssences =
       , bond    = Nothing
       , limited = True
       }
-    , { name    = "[Heaven's Feel]"
-      , id      = 174
-      , rarity  = 4
-      , icon    = IconQuickUp
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Grant Self 0 (Performance Quick) <| Flat 10
-                  , To Self GaugeUp <| Flat 40
-                  ]
-      , bond    = Nothing
-      , limited = True
-      }
+    , gift 174 "[Heaven's Feel]" IconQuickUp
+      [ self (Performance Quick) 10, To Self GaugeUp <| Flat 40 ]
     , { name    = "Ideal Holy King"
       , id      = 175
       , rarity  = 5
@@ -2173,19 +2174,8 @@ craftEssences =
       [ party_ Buster 15 ]
     , bond 275 "Haydn Quartets" "Wolfgang Amadeus Mozart" IconBeamUp
       [ party NPUp 20 ]
-    , { name    = "Anniversary Heroines"
-      , id      = 276
-      , rarity  = 4
-      , icon    = IconSwordUp
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Grant Self 0 AttackUp <| Flat 10
-                  , Grant Self 0 StarsPerTurn <| Flat 3
-                  ]
-      , bond    = Nothing
-      , limited = True
-      }
+    , gift 276 "Anniversary Heroines" IconSwordUp
+      [ self AttackUp 10, self StarsPerTurn 3 ]
     , { name    = "Leisure Stroll"
       , id      = 277
       , rarity  = 5
@@ -2695,85 +2685,20 @@ craftEssences =
       [ party_ Buster 8, party_ Quick 8, party_ Arts 8 ]
     , bond 359 "Last Splinter" "Angra Mainyu" IconDamageUp
       [ self (Special AttackUp <| VsTrait Beast) 200, gutsPercent 20 ]
-    , { name    = "Fate/EXTELLA"
-      , id      = 360
-      , rarity  = 4
-      , icon    = IconExclamationUp
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Grant Self 0 CritUp <| Flat 15
-                  , Grant Self 0 StarsPerTurn <| Flat 3
-                  ]
-      , bond    = Nothing
-      , limited = True
-      }
-    , { name    = "Spiritron Portrait: Nero Claudius"
-      , id      = 361
-      , rarity  = 4
-      , icon    = IconRoad
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Bonus EXP False <| Flat 50 ]
-      , bond    = Nothing
-      , limited = True
-      }
-    , { name    = "Spiritron Portrait: Nameless"
-      , id      = 362
-      , rarity  = 4
-      , icon    = IconRoad
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Bonus EXP False <| Flat 50 ]
-      , bond    = Nothing
-      , limited = True
-      }
-    , { name    = "Spiritron Portrait: Tamamo-no-Mae"
-      , id      = 363
-      , rarity  = 4
-      , icon    = IconRoad
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Bonus EXP False <| Flat 50 ]
-      , bond    = Nothing
-      , limited = True
-      }
-    , { name    = "Spiritron Portrait: Karna"
-      , id      = 364
-      , rarity  = 4
-      , icon    = IconRoad
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Bonus EXP False <| Flat 50 ]
-      , bond    = Nothing
-      , limited = True
-      }
-    , { name    = "Spiritron Portrait: Altera"
-      , id      = 365
-      , rarity  = 4
-      , icon    = IconRoad
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Bonus EXP False <| Flat 50 ]
-      , bond    = Nothing
-      , limited = True
-      }
-    , { name    = "Spiritron Portrait: Gilgamesh"
-      , id      = 366
-      , rarity  = 4
-      , icon    = IconRoad
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Bonus EXP False <| Flat 50 ]
-      , bond    = Nothing
-      , limited = True
-      }
+    , gift 360 "Fate/EXTELLA" IconExclamationUp
+      [ self CritUp 15, self StarsPerTurn 3 ]
+    , gift 361 "Spiritron Portrait: Nero Claudius" IconRoad
+      [ Bonus EXP False <| Flat 50 ]
+    , gift 362 "Spiritron Portrait: Nameless" IconRoad
+      [ Bonus EXP False <| Flat 50 ]
+    , gift 363 "Spiritron Portrait: Tamamo-no-Mae" IconRoad
+      [ Bonus EXP False <| Flat 50 ]
+    , gift 364 "Spiritron Portrait: Karna" IconRoad
+      [ Bonus EXP False <| Flat 50 ]
+    , gift 365 "Spiritron Portrait: Altera" IconRoad
+      [ Bonus EXP False <| Flat 50 ]
+    , gift 366 "Spiritron Portrait: Gilgamesh" IconRoad
+      [ Bonus EXP False <| Flat 50 ]
     , bond 367 "Divine Oni-Poison Sake" "Shuten-Douji" IconArtsQuickUp
       [ party_ Quick 10, party_ Arts 10 ]
     , bond 368 "Doujigiri Yasutsuna" "Minamoto-no-Raikou" IconBusterUp
@@ -2886,17 +2811,8 @@ craftEssences =
       [ party_ Quick 10, party_ Buster 10 ]
     , bond 398 "Invitation to Halloween" "Elisabeth Bathory (Brave)" IconBusterUp
       [ party_ Buster 20, demeritAll DefenseDown 10 ]
-    , { name    = "First Order"
-      , id      = 399
-      , rarity  = 4
-      , icon    = IconRoad
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Bonus MysticCode False <| Flat 50 ]
-      , bond    = Nothing
-      , limited = True
-      }
+    , gift 399 "First Order" IconRoad
+      [ Bonus MysticCode False <| Flat 50 ]
     , { name    = "Devilish Bodhisattva"
       , id      = 400
       , rarity  = 5
@@ -2942,18 +2858,13 @@ craftEssences =
       [party_ Buster 15]
     , bond 411 "The Furthest Tower" "Merlin" IconBusterUp
       [party_ Buster 10, party CritUp 15]
-    , { name    = "Heroic Costume: Medusa"
-      , id      = 670
-      , rarity  = 4
-      , icon    = IconRoad
-      , stats   = { base = { atk = 100, hp = 100 }
-                  , max  = { atk = 100, hp = 100 }
-                  }
-      , effect  = [ Bonus MysticCode False <| Flat 50 ]
-      , bond    = Nothing
-      , limited = True
-      }
-    ]
+    , bond 416 "Buddhism of Emptiness" "Miyamoto Musashi" IconHoodUp
+      [ self NPUp 30, Times 3 <| Grant Self 0 DebuffResist Full ]
+    , gift 670 "Heroic Costume: Medea" IconRoad
+      [ Bonus MysticCode False <| Flat 50 ]
+    , gift 671 "Heroic Costume: Leonardo da Vinci" IconRoad
+      [ Bonus MysticCode False <| Flat 50 ]
+  ]
 
 equipped : Class -> SkillEffect -> SkillEffect
 equipped = When << (++) "equipped by a " << Show.class

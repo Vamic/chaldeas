@@ -76,7 +76,7 @@ sabers =
                   [(MagicGemOf Saber, 5)]
                   [(MagicGemOf Saber, 12), (OctupletCrystals, 5)]
                   [(SecretGemOf Saber, 5), (OctupletCrystals, 10)]
-                  [(OctupletCrystals, 12), (ProofOfHero, 15)]
+                  [(SecretGemOf Saber, 12), (ProofOfHero, 15)]
                   [(ProofOfHero, 29), (VoidsDust, 12)]
                   [(VoidsDust, 36), (PrimordialLanugo, 15)]
     }

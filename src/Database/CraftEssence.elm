@@ -2232,7 +2232,7 @@ craftEssences =
       [ party NPUp 20 ]
     , bond 282 "Endowed Hero" "Arjuna" IconBeamUp
       [ self NPUp 30, self StarAbsorb 1000 ]
-    , bond 283 "Lamp of the Unfortunate" "Karna" IconAllUp
+    , bond 283 "Light of the Deprived" "Karna" IconAllUp
       [ party_ Quick 8, party_ Arts 8, party_ Buster 8 ]
     , bond 284 "Procedure to Humanity" "Frankenstein" IconQuickUp
       [ party_ Quick 15 ]
@@ -2669,7 +2669,7 @@ craftEssences =
       [ party_ Buster 15 ]
     , bond 351 "Gordian Knot" "Iskandar" IconSwordUp
       [ party AttackUp 15 ]
-    , bond 352 "Bai Long" "Xuanzang Sanzang" IconBusterUp
+    , bond 352 "White Dragon" "Xuanzang Sanzang" IconBusterUp
       [ party_ Buster 20, demeritAll DefenseDown 10 ]
     , bond 353 "The Sun Shines Here" "Emiya (Assassin)" IconArtsQuickUp
       [ party_ Quick 10, party_ Arts 10 ]
@@ -2683,7 +2683,7 @@ craftEssences =
       [ party CritUp 25 ]
     , bond 358 "Library of Hundred Men" "Hassan of the Hundred Personas" IconAllUp
       [ party_ Buster 8, party_ Quick 8, party_ Arts 8 ]
-    , bond 359 "Last Splinter" "Angra Mainyu" IconDamageUp
+    , bond 359 "Final Fragment" "Angra Mainyu" IconDamageUp
       [ self (Special AttackUp <| VsTrait Beast) 200, gutsPercent 20 ]
     , gift 360 "Fate/EXTELLA" IconExclamationUp
       [ self CritUp 15, self StarsPerTurn 3 ]
@@ -2699,7 +2699,7 @@ craftEssences =
       [ Bonus EXP False <| Flat 50 ]
     , gift 366 "Spiritron Portrait: Gilgamesh" IconRoad
       [ Bonus EXP False <| Flat 50 ]
-    , bond 367 "Divine Oni-Poison Sake" "Shuten-Douji" IconArtsQuickUp
+    , bond 367 "Divine Wine—Shinpen Kidoku" "Shuten-Douji" IconArtsQuickUp
       [ party_ Quick 10, party_ Arts 10 ]
     , bond 368 "Doujigiri Yasutsuna" "Minamoto-no-Raikou" IconBusterUp
       [ party_ Buster 10, party CritUp 15 ]
@@ -2860,7 +2860,7 @@ craftEssences =
       [party_ Buster 10, party CritUp 15]
     , bond 416 "Buddhism of Emptiness" "Miyamoto Musashi" IconHoodUp
       [ self NPUp 30, Times 3 <| Grant Self 0 DebuffResist Full ]
-    , gift 670 "Heroic Costume: Medea" IconRoad
+    , gift 670 "Heroic Costume: Medusa" IconRoad
       [ Bonus MysticCode False <| Flat 50 ]
     , gift 671 "Heroic Costume: Leonardo da Vinci" IconRoad
       [ Bonus MysticCode False <| Flat 50 ]
